@@ -8,7 +8,6 @@ set(SOURCE_TESTS
 
     scene/color
     scene/matrix4x4
-    scene/matrix4x4.benchmark
     scene/scenecontroller
     scene/scenemanager
     scene/scenenode
@@ -33,6 +32,19 @@ set(SOURCE_TESTS
     utils/object_factory
 )
 
+set(BENCHMARK_SOURCES
+    scene/matrix4x4.benchmark
+)
+
+#set(no_benchmark 1)
+
 add_haf_test_executable(SOURCE_TESTS ${SOURCE_TESTS})
 target_include_directories(${CURRENT_TARGET} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
 set_compile_warning_level_and_cxx_properties(${CURRENT_TARGET})
+
+if (NOT DEFINED no_benchmark)
+    set(CURRENT_TARGET "${CURRENT_TARGET}_benchmark")
+    add_haf_test_executable(SOURCE_TESTS ${BENCHMARK_SOURCES})
+    target_include_directories(${CURRENT_TARGET} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
+    set_compile_warning_level_and_cxx_properties(${CURRENT_TARGET})
+endif()
