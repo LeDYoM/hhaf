@@ -30,7 +30,9 @@ public:
                       htps::rptr<backend::BackendFactory> const backend_factory,
                       int const argc,
                       char const* const argv[]) = 0;
-    virtual bool runStep()                      = 0;
+    virtual bool preUpdate()                    = 0;
+    virtual bool update()                       = 0;
+    virtual bool postUpdate()                   = 0;
     virtual void terminate()                    = 0;
 };
 

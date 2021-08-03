@@ -46,7 +46,7 @@ public:
 
     bool addApplication(ManagedApp managed_app, htps::str name);
     bool loadApplication(htps::str const& app_name);
-    bool unloadApplication(htps::str const& app_name);
+    bool unloadApplication(htps::str app_name);
     bool unloadAllApplications();
 
     htps::str simulation_input_file;

@@ -67,6 +67,11 @@ size_type HostedAppGroup::size() const noexcept
     return app_.size();
 }
 
+HostedApplication& HostedAppGroup::front()
+{
+    return *(app_.begin());
+}
+
 HostedApplication& HostedAppGroup::back()
 {
     return app_.back();

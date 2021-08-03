@@ -28,7 +28,9 @@ public:
               htps::rptr<backend::BackendFactory> const backend_factory,
               int const argc,
               char const* const argv[]) override;
-    bool runStep() override;
+    bool preUpdate() override;
+    bool update() override;
+    bool postUpdate() override;
     void terminate() override;
 };
 }  // namespace haf::sys

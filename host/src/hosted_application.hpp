@@ -23,6 +23,26 @@ public:
     htps::uptr<IHostConnector> host_connector_;
     sys::DestructibleSystemController app_system_controller;
     AppState app_state{AppState::NotInitialized};
+
+    /**
+     * @brief Deleted copy constructor
+     */
+    HostedApplication(HostedApplication const&) = delete;
+
+    /**
+     * @brief Deleted copy assignment
+     */
+    HostedApplication& operator=(HostedApplication const&) = delete;
+
+    /**
+     * @brief Defaulted move constructor
+     */
+    HostedApplication(HostedApplication&&) = default;
+
+    /**
+     * @brief Defaulted move assignment
+     */
+    HostedApplication& operator=(HostedApplication&&) = default;
 };
 
 bool operator==(HostedApplication const& lhs,

@@ -33,7 +33,12 @@ void SystemController::terminate()
     SystemProvider::terminate();
 }
 
-bool SystemController::runStep()
+bool SystemController::preUpdate()
+{
+    return false;
+}
+
+bool SystemController::update()
 {
     const bool windowWants2Close{window().preLoop()};
     simulationSystem().update();
@@ -44,4 +49,10 @@ bool SystemController::runStep()
     window().postLoop();
     return windowWants2Close;
 }
+
+bool SystemController::postUpdate()
+{
+    return false;
+}
+
 }  // namespace haf::sys

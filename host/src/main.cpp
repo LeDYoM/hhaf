@@ -3,15 +3,16 @@
 
 #include "host_export.hpp"
 
-int host_main(int argc, char* argv[]) noexcept
+HOST_PRIVATE int host_main(int argc, char* argv[]) noexcept
 {
     using namespace haf;
-    using namespace haf::host;
 
     int result{-1};
 
     try
     {
+        using namespace haf::host;
+
         LogInitializer log_init;
         Host host(argc, argv);
         if (host.initialize())

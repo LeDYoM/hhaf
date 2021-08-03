@@ -34,8 +34,9 @@ public:
 
     bool empty() const noexcept;
     htps::size_type size() const noexcept;
+    HostedApplication& front();
     HostedApplication& back();
-
+    
     auto begin() const noexcept { return app_.begin(); }
 
     auto begin() noexcept { return app_.begin(); }
@@ -43,6 +44,8 @@ public:
     auto end() const noexcept { return app_.end(); }
 
     auto end() noexcept { return app_.end(); }
+
+    void pop_back() noexcept { app_.pop_back(); }
 
 private:
     htps::vector<HostedApplication> app_;

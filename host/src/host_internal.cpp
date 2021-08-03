@@ -56,14 +56,29 @@ bool HostInternal::update()
     // By default, the host wants to exit.
     // Only the existence of at least one application that
     // does not want to exit will avoid that.
-    bool host_wants_to_exit{true};
+    bool all_apps_want_to_exit{true};
 
-    for (auto& app : app_group_)
+    if (!app_group_.empty())
     {
-        host_wants_to_exit &= updateApp(app);
-    }
+        const bool pre_update_wants_tp_exit{
+            app_group_.front().app_system_controller->preUpdate()};
 
-    return host_wants_to_exit;
+        if (!pre_update_wants_tp_exit)
+        {
+            for (auto& app : app_group_)
+            {
+                // Any app not wanting to exit will return false,
+                // so any false will set all_apps_want_to_exit to false
+                all_apps_want_to_exit &= updateApp(app);
+            }
+        }
+
+        // If the system, in the post update stage requires to exit, we should
+        // exit
+        all_apps_want_to_exit |=
+            app_group_.front().app_system_controller->postUpdate();
+    }
+    return all_apps_want_to_exit;
 }
 
 bool HostInternal::updateApp(HostedApplication& app)
@@ -75,26 +90,12 @@ bool HostInternal::updateApp(HostedApplication& app)
         case AppState::ReadyToStart:
         {
             DisplayLog::info("Starting initialization of new App...");
-            app.app_state                    = AppState::Executing;
-            app.app_system_controller = system_loader_.create();
-            if (app.app_system_controller == nullptr)
-            {
-                DisplayLog::error("Cannot create haf system!");
-                app.app_state = AppState::ReadyToTerminate;
-            }
-            else
-            {
-                app.app_system_controller->init(app.managed_app_.app, nullptr,
-                                         backend_factory_.get(), argc_, argv_);
-
-                DisplayLog::info(appDisplayNameAndVersion(app),
-                                 ": Starting execution...");
-            }
+            app.app_state = AppState::Executing;
         }
         break;
         case AppState::Executing:
         {
-            if (app.app_system_controller->runStep())
+            if (app.app_system_controller->update())
             {
                 app.app_state = AppState::ReadyToTerminate;
                 DisplayLog::info(appDisplayNameAndVersion(app),
@@ -104,10 +105,8 @@ bool HostInternal::updateApp(HostedApplication& app)
         break;
         case AppState::ReadyToTerminate:
             DisplayLog::info(appDisplayNameAndVersion(app),
-                             ": started termination");
+                             ": ready to terminate");
             app.app_state = AppState::Terminated;
-            app.app_system_controller->terminate();
-            app.app_system_controller.reset();
             return true;
             break;
         case AppState::Terminated:
@@ -130,17 +129,45 @@ bool HostInternal::addApplication(ManagedApp managed_app, htps::str name)
 bool HostInternal::loadApplication(htps::str const& app_name)
 {
     ManagedApp managed_app = app_loader.loadApp(app_name);
-    return managed_app.app != nullptr
-        ? addApplication(std::move(managed_app), app_name)
-        : false;
+    bool const result_add{managed_app.app != nullptr
+                              ? addApplication(std::move(managed_app), app_name)
+                              : false};
+
+    if (result_add)
+    {
+        // Create a new system controller
+        auto app_system_controller{system_loader_.create()};
+        if (app_system_controller == nullptr)
+        {
+            // Remove the newly added app
+            app_group_.pop_back();
+            DisplayLog::error("Cannot create haf system!");
+        }
+        else
+        {
+            auto& app                 = app_group_.back();
+            app.app_system_controller = std::move(app_system_controller);
+            app.app_system_controller->init(app.managed_app_.app, nullptr,
+                                            backend_factory_.get(), argc_,
+                                            argv_);
+
+            DisplayLog::info(appDisplayNameAndVersion(app),
+                             ": Starting execution...");
+            return true;
+        }
+    }
+    return false;
 }
 
-bool HostInternal::unloadApplication(htps::str const& app_name)
+bool HostInternal::unloadApplication(str app_name)
 {
     if (app_group_.appExists(app_name))
     {
         // This is safe, given that app exists
-        auto& app = app_group_[app_name]->managed_app_;
+        auto hosted_app = app_group_[app_name];
+        auto& app = hosted_app->managed_app_;
+        hosted_app->app_system_controller->terminate();
+        hosted_app->app_system_controller.reset();
         app_loader.unloadApp(app);
         return app_group_.removeApp(app_name);
     }
