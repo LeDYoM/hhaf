@@ -59,23 +59,33 @@ public:
      * @param source Pointer to the first element of the
      * @param count Number of elements to copy.
      */
-    constexpr vector_base(T const* const source, size_type const count) :
+    constexpr vector_base(const_iterator const source, size_type const count) :
         base_(count)
     {
         reserve(count);
-        for (auto iterator = source; iterator != (source + count); ++iterator)
+        auto const end{source + count};
+        for (auto iterator{source}; iterator != end; ++iterator)
         {
             // Construct by copy.
             emplace_back(*iterator);
         }
     }
 
-    constexpr vector_base(std::initializer_list<value_type> ilist) noexcept :
+    /**
+     * @brief Construct a vector_base from an initializer list of elements
+     * @param iList Initializer list of elements
+     */
+    constexpr vector_base(std::initializer_list<value_type> ilist) :
         vector_base(ilist.begin(), ilist.size())
     {}
 
-    constexpr vector_base(const const_iterator _begin,
-                          const const_iterator _end) :
+    /**
+     * @brief Construct a vector_base from two iterators
+     * @param _begin Iterator pointing to the first element
+     * @param _end Iterator pointing one past the end of the range of elements
+     */
+    constexpr vector_base(const_iterator const _begin,
+                          const_iterator const _end) :
         vector_base{_begin, static_cast<size_type>(std::distance(_begin, _end))}
     {}
 
@@ -87,17 +97,25 @@ public:
      *
      * @param other Source vector to copy.
      */
-    constexpr vector_base(const vector_base& other) :
+    constexpr vector_base(vector_base const& other) :
         vector_base(other.begin(), other.begin() + other.size())
     {}
 
-    // Move constructor.
+    /**
+     * @brief Move constructor
+     * @param other Object to move from
+     */
     constexpr vector_base(vector_base&& other) noexcept :
         base_{std::move(other.base_)}
     {}
 
-    /// Copy assignment.
-    constexpr vector_base& operator=(const vector_base& other)
+    /**
+     * @brief Copy assignment
+     * 
+     * @param other Object to copy from
+     * @return Reference to the newly assigned object
+     */
+    constexpr vector_base& operator=(vector_base const& other)
     {
         if (this != &other)
         {
