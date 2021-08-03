@@ -1,6 +1,5 @@
 macro(setOptions)
   option(BUILD_PACKAGES "Build packages" ON)
-  option(BUILD_DOCS "Build docs" OFF)
 endmacro()
 
 macro(includeForOptions)
@@ -12,12 +11,6 @@ macro(includeForOptions)
     message("Building packages")
   else()
     message("Not building packages")
-  endif()
-
-  if(BUILD_DOCS)
-    message("Building documentation")
-  else()
-    message("Not building documentation")
   endif()
 endmacro()
 
@@ -176,24 +169,21 @@ function(build_concrete_backend)
 endfunction()
 
 function(build_docs module_list)
-  if(BUILD_DOCS)
-    set(DOXYGEN_GENERATE_HTML YES)
-    set(DOXYGEN_EXCLUDE build;tests)
-    set(DOXYGEN_EXCLUDE_PATTERNS 
-      */.git/*
-      */build/*
-    */tests/*)
-    set(DOXYGEN_USE_MDFILE_AS_MAINPAGE README.md)
+  set(DOXYGEN_GENERATE_HTML YES)
+  set(DOXYGEN_EXCLUDE build;tests)
+  set(DOXYGEN_EXCLUDE_PATTERNS 
+    */.git/*
+    */build/*
+  */tests/*)
+  set(DOXYGEN_USE_MDFILE_AS_MAINPAGE README.md)
 
-    find_package(Doxygen REQUIRED)
+  find_package(Doxygen REQUIRED)
 
-    doxygen_add_docs(
-        docs
-        ${module_list} README.md
-        ALL
-        COMMENT "Generate html pages for the framework"
-    )
-  endif()
+  doxygen_add_docs(
+      docs
+      ${module_list} README.md
+      COMMENT "Generate html pages for the framework"
+  )
 endfunction()
 
 function(generate_package module_list)

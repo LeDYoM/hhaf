@@ -15,8 +15,8 @@ namespace htps
 {
 /**
  * @brief Vector class to store a sequence of elements.
- * This class is a container to store sequences of Ts. It can be resized.
- * Other use cases include search, replacement, etc...
+ * @details This class is a container to store sequences of Ts. It can be
+ * resized. Other use cases include search, replacement, etc...
  *
  * @tparam T Type of the contained element.
  * @tparam Allocator Allocator to be used by the vector
@@ -28,13 +28,13 @@ class vector_base final
     vector_storage<T, Allocator, GrowPolicy> base_;
 
 public:
-    using iterator        = T*;       /**< Iterator for the values */
+    using iterator        = T*;       /*!< Iterator for the values */
     using const_iterator  = T const*; /**< Iterator pointing to const values */
-    using reference       = T&;       /**< Reference to member */
-    using const_reference = const T&; /**< Const reference to members */
-    using value_type      = T;        /** Value of the contained member */
-    using pointer         = T*;       /** Pointer to the contained member */
-    using const_pointer   = T const*; /**< Pointer to constant value */
+    using reference       = T&;       /// Reference to member
+    using const_reference = const T&; //< Const reference to members
+    using value_type      = T;        /*!< Value of the contained member */
+    using pointer         = T*;       /*!< Pointer to the contained member */
+    using const_pointer   = T const*; /*!< Pointer to constant value */
 
     /**
      * @brief Default constructor.
@@ -111,7 +111,7 @@ public:
 
     /**
      * @brief Copy assignment
-     * 
+     *
      * @param other Object to copy from
      * @return Reference to the newly assigned object
      */

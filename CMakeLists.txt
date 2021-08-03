@@ -83,4 +83,4 @@ add_subdirectory(haf_app_middleware)
 #  generate_package("${hhaf_core_module_list}")
 #endif()
 
-#build_docs("${module_list}")
+build_docs("${module_list}")

@@ -1,4 +1,4 @@
-# Host Application Framework (HAF)
+# Host Application Framework (HAF)  {#mainpaige}
 
 ## A C++ (game) application framework
 
@@ -15,4 +15,4 @@ about all of them to use the framework.
 
 ## Modules
 Here are the modules you can view the documentation from:
-> mtypes
+> [htypes module](@ref htypes_lib) 
