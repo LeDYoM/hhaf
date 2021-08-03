@@ -553,10 +553,14 @@ public:
             pop_back();
         }
 
-        // Append the necessary default constructed elements
-        while (size() < new_size)
+        if (size() < new_size)
         {
-            emplace_back();
+            reserve(new_size);
+            // Append the necessary default constructed elements
+            while (size() < new_size)
+            {
+                emplace_back();
+            }
         }
     }
 
