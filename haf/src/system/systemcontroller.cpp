@@ -35,23 +35,26 @@ void SystemController::terminate()
 
 bool SystemController::preUpdate()
 {
-    return false;
+    const bool pre_update_wants_to_close{window().preLoop()};
+    inputSystem().preUpdate();
+    return pre_update_wants_to_close;
 }
 
 bool SystemController::update()
 {
-    const bool windowWants2Close{window().preLoop()};
-    simulationSystem().update();
     inputSystem().update();
+    simulationSystem().update();
     sceneManager().update();
     renderSystem().update();
 
-    window().postLoop();
-    return windowWants2Close;
+    return false;
 }
 
 bool SystemController::postUpdate()
 {
+    inputSystem().postUpdate();
+    window().postLoop();
+
     return false;
 }
 

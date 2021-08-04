@@ -1,7 +1,7 @@
 #include "inputsystem.hpp"
 
 #include <hlog/include/hlog.hpp>
-#include <haf/include/input/inputdriver.hpp>
+#include <haf/include/input/inputdriver_wrapper.hpp>
 
 using namespace htps;
 using namespace haf::input;
@@ -9,28 +9,36 @@ using namespace haf::input;
 namespace haf::sys
 {
 
-void InputSystem::setInputDriver(sptr<InputDriver> input_driver)
+void InputSystem::setInputDriverWrapper(sptr<InputDriverWrapper> input_driver_wrapper)
 {
-    LogAsserter::log_assert(input_driver != nullptr, "Parameter is nullptr");
-    LogAsserter::log_assert(input_driver_ == nullptr,
-                            "Input driver was already set");
+    LogAsserter::log_assert(input_driver_wrapper != nullptr, "Parameter is nullptr");
+    LogAsserter::log_assert(input_driver_wrapper_ == nullptr,
+                            "Input driver wrapper was already set");
 
-    input_driver_ = std::move(input_driver);
+    input_driver_wrapper_ = std::move(input_driver_wrapper);
+}
+
+void InputSystem::preUpdate()
+{
 }
 
 void InputSystem::update()
 {
     m_pressedKeys.clear();
-    while (input_driver_->arePendingKeyPresses())
+    while (input_driver_wrapper_->arePendingKeyPresses())
     {
-        keyPressed(input_driver_->popKeyPress());
+        keyPressed(input_driver_wrapper_->popKeyPress());
     }
 
     m_releasedKeys.clear();
-    while (input_driver_->arePendingKeyReleases())
+    while (input_driver_wrapper_->arePendingKeyReleases())
     {
-        keyReleased(input_driver_->popKeyRelease());
+        keyReleased(input_driver_wrapper_->popKeyRelease());
     }
+}
+
+void InputSystem::postUpdate()
+{
 }
 
 const vector<Key>& InputSystem::pressedKeys() const noexcept
@@ -61,11 +69,11 @@ void InputSystem::keyReleased(const Key key)
 
 void InputSystem::simulatePressKey(const Key key)
 {
-    input_driver_->keyPressed(key);
+    input_driver_wrapper_->keyPressed(key);
 }
 
 void InputSystem::simulateReleaseKey(const Key key)
 {
-    input_driver_->keyReleased(key);
+    input_driver_wrapper_->keyReleased(key);
 }
 }  // namespace haf::sys

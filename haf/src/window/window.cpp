@@ -9,7 +9,7 @@
 #include "system/systemprovider.hpp"
 
 #include <haf/include/time/timepoint.hpp>
-#include <haf/include/input/inputdriver.hpp>
+#include <haf/include/input/inputdriver_wrapper.hpp>
 
 #include <hlog/include/hlog.hpp>
 
@@ -29,7 +29,7 @@ struct Window::WindowPrivate final
 {
     FPSCounter fps_counter;
     rptr<backend::IWindow> m_backendWindow{nullptr};
-    sptr<input::InputDriver> input_driver_;
+    sptr<input::InputDriverWrapper> input_driver_wrapper_;
     sptr<RenderTarget> m_renderTarget;
     str title_{};
 };
@@ -50,14 +50,14 @@ const sptr<RenderTarget> Window::renderTarget() const
     return priv_->m_renderTarget;
 }
 
-sptr<input::InputDriver> Window::inputDriver()
+sptr<input::InputDriverWrapper> Window::inputDriverWrapper()
 {
-    return priv_->input_driver_;
+    return priv_->input_driver_wrapper_;
 }
 
-const sptr<input::InputDriver> Window::inputDriver() const
+const sptr<input::InputDriverWrapper> Window::inputDriverWrapper() const
 {
-    return priv_->input_driver_;
+    return priv_->input_driver_wrapper_;
 }
 
 bool Window::create(uptr<win::WindowProperties> window_properties)
@@ -106,8 +106,8 @@ bool Window::create(uptr<win::WindowProperties> window_properties)
         msptr<RenderTarget>(priv_->m_backendWindow->renderTarget());
 
     // Also take the input driver.
-    priv_->input_driver_ =
-        msptr<input::InputDriver>(priv_->m_backendWindow->inputDriver());
+    priv_->input_driver_wrapper_ =
+        msptr<input::InputDriverWrapper>(priv_->m_backendWindow->inputDriver());
     DisplayLog::debug("Window driver info: ", bw.info());
     DisplayLog::debug("Window settings: ", bw.settingsInfo());
     return true;

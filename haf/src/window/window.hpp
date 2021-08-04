@@ -9,7 +9,7 @@
 
 namespace haf::input
 {
-class InputDriver;
+class InputDriverWrapper;
 }
 
 namespace haf::sys
@@ -63,8 +63,8 @@ public:
     htps::sptr<RenderTarget> renderTarget();
     const htps::sptr<RenderTarget> renderTarget() const;
 
-    htps::sptr<input::InputDriver> inputDriver();
-    const htps::sptr<input::InputDriver> inputDriver() const;
+    htps::sptr<input::InputDriverWrapper> inputDriverWrapper();
+    const htps::sptr<input::InputDriverWrapper> inputDriverWrapper() const;
 
 private:
     struct WindowPrivate;

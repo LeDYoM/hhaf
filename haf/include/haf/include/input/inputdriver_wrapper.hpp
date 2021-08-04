@@ -11,11 +11,11 @@ class IInputDriver;
 
 namespace haf::input
 {
-class InputDriver final
+class InputDriverWrapper final
 {
 public:
-    InputDriver(htps::rptr<backend::IInputDriver> input_driver);
-    ~InputDriver();
+    explicit InputDriverWrapper(htps::rptr<backend::IInputDriver> input_driver);
+    ~InputDriverWrapper();
 
     bool arePendingKeyPresses() const;
     bool arePendingKeyReleases() const;

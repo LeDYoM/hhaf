@@ -27,7 +27,7 @@ set(sources
   # Input
   ${src_dir}/input/input_component_base.cpp
   ${src_dir}/input/inputcomponent.cpp
-  ${src_dir}/input/inputdriver.cpp
+  ${src_dir}/input/inputdriver_wrapper.cpp
   ${src_dir}/input/inputsystem.cpp
   ${src_dir}/input/inputsystem.hpp
   ${src_dir}/input/key_manager.cpp
@@ -170,7 +170,7 @@ set(headers
   # Input
   ${inc_dir}/input/input_component_base.hpp
   ${inc_dir}/input/inputcomponent.hpp
-  ${inc_dir}/input/inputdriver.hpp
+  ${inc_dir}/input/inputdriver_wrapper.hpp
   ${inc_dir}/input/key_manager.hpp
   ${inc_dir}/input/key.hpp
   ${inc_dir}/input/virtual_input_component.hpp

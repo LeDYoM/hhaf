@@ -1,4 +1,4 @@
-#include <haf/include/input/inputdriver.hpp>
+#include <haf/include/input/inputdriver_wrapper.hpp>
 #include <backend_dev/include/iinputdriver.hpp>
 #include <backend_dev/include/ikey.hpp>
 
@@ -20,38 +20,38 @@ haf::backend::IKey toiKey(const haf::input::Key key)
 
 namespace haf::input
 {
-InputDriver::InputDriver(rptr<backend::IInputDriver> input_driver) :
+InputDriverWrapper::InputDriverWrapper(rptr<backend::IInputDriver> input_driver) :
     input_driver_{input_driver}
 {}
 
-InputDriver::~InputDriver() = default;
+InputDriverWrapper::~InputDriverWrapper() = default;
 
-bool InputDriver::arePendingKeyPresses() const
+bool InputDriverWrapper::arePendingKeyPresses() const
 {
     return input_driver_->arePendingKeyPresses();
 }
 
-bool InputDriver::arePendingKeyReleases() const
+bool InputDriverWrapper::arePendingKeyReleases() const
 {
     return input_driver_->arePendingKeyReleases();
 }
 
-Key InputDriver::popKeyPress()
+Key InputDriverWrapper::popKeyPress()
 {
     return toKey(input_driver_->popKeyPress());
 }
 
-Key InputDriver::popKeyRelease()
+Key InputDriverWrapper::popKeyRelease()
 {
     return toKey(input_driver_->popKeyRelease());
 }
 
-void InputDriver::keyPressed(const Key k)
+void InputDriverWrapper::keyPressed(const Key k)
 {
     return input_driver_->keyPressed(toiKey(k));
 }
 
-void InputDriver::keyReleased(const Key k)
+void InputDriverWrapper::keyReleased(const Key k)
 {
     return input_driver_->keyReleased(toiKey(k));
 }

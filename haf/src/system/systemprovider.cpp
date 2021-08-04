@@ -171,7 +171,7 @@ void SystemProvider::fastInit(InitSystemOptions const& init_system_options)
 
         if (init_system_options.init_input_system)
         {
-            p_->input_system_->setInputDriver(p_->window_->inputDriver());
+            p_->input_system_->setInputDriverWrapper(p_->window_->inputDriverWrapper());
         }
     }
 }
