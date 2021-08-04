@@ -28,13 +28,13 @@ class vector_base final
     vector_storage<T, Allocator, GrowPolicy> storage_;
 
 public:
-    using iterator        = T*;       /*!< Iterator for the values */
-    using const_iterator  = T const*; /**< Iterator pointing to const values */
-    using reference       = T&;       /// Reference to member
-    using const_reference = const T&; //< Const reference to members
-    using value_type      = T;        /*!< Value of the contained member */
-    using pointer         = T*;       /*!< Pointer to the contained member */
-    using const_pointer   = T const*; /*!< Pointer to constant value */
+    using iterator        = T*;        /*!< Iterator for the values */
+    using const_iterator  = T const*;  /**< Iterator pointing to const values */
+    using reference       = T&;        /// Reference to member
+    using const_reference = const T&;  //< Const reference to members
+    using value_type      = T;         /*!< Value of the contained member */
+    using pointer         = T*;        /*!< Pointer to the contained member */
+    using const_pointer   = T const*;  /*!< Pointer to constant value */
 
     /**
      * @brief Default constructor.
@@ -64,10 +64,11 @@ public:
     {
         reserve(count);
         auto const end{source + count};
-        for (auto iterator{source}; iterator != end; ++iterator)
+        auto iterator{source};
+        while (iterator != end)
         {
             // Construct by copy.
-            emplace_back(*iterator);
+            emplace_back((*iterator++));
         }
     }
 
@@ -147,12 +148,18 @@ public:
         return *(storage_.at(index));
     }
 
-    constexpr size_type capacity() const noexcept { return storage_.capacity(); }
+    constexpr size_type capacity() const noexcept
+    {
+        return storage_.capacity();
+    }
     constexpr size_type size() const noexcept { return storage_.size(); }
     constexpr bool empty() const noexcept { return storage_.empty(); }
     constexpr iterator begin() noexcept { return storage_.begin(); }
     constexpr const_iterator begin() const noexcept { return storage_.begin(); }
-    constexpr const_iterator cbegin() const noexcept { return storage_.cbegin(); }
+    constexpr const_iterator cbegin() const noexcept
+    {
+        return storage_.cbegin();
+    }
     constexpr iterator end() noexcept { return storage_.end(); }
     constexpr const_iterator end() const noexcept { return storage_.end(); }
     constexpr const_iterator cend() const noexcept { return storage_.cend(); }
@@ -369,7 +376,7 @@ public:
     }
 
     constexpr const_iterator find_first_of(
-        const vector_base& other) const noexcept
+        vector_base const& other) const noexcept
     {
         for (auto it(begin()); it != end(); ++it)
         {
@@ -471,7 +478,10 @@ public:
 
     constexpr void push_back(const T& value) { storage_.push_back(value); }
 
-    constexpr void push_back(T&& value) { storage_.push_back(std::move(value)); }
+    constexpr void push_back(T&& value)
+    {
+        storage_.push_back(std::move(value));
+    }
 
     constexpr void emplace_back() { storage_.emplace_back(); }
 
@@ -481,9 +491,8 @@ public:
         storage_.emplace_back(std::forward<Args>(args)...);
     }
 
-    constexpr void insert(const vector_base& other)
+    constexpr void insert(vector_base const& other)
     {
-        // TODO: Optimize
         if (!other.empty())
         {
             reserve(size() + other.size());
@@ -496,7 +505,6 @@ public:
 
     constexpr void insert(vector_base&& other)
     {
-        // TODO: Optimize
         reserve(size() + other.size());
         for (auto&& element : std::move(other))
         {
