@@ -28,13 +28,14 @@ class vector_base final
     vector_storage<T, Allocator, GrowPolicy> storage_;
 
 public:
-    using iterator        = T*;        /*!< Iterator for the values */
-    using const_iterator  = T const*;  /**< Iterator pointing to const values */
-    using reference       = T&;        /// Reference to member
+    using iterator        = T*;        //< Iterator for the values
+    using const_iterator  = T const*;  //< Iterator pointing to const values
+    using reference       = T&;        //< Reference to member
     using const_reference = const T&;  //< Const reference to members
-    using value_type      = T;         /*!< Value of the contained member */
-    using pointer         = T*;        /*!< Pointer to the contained member */
-    using const_pointer   = T const*;  /*!< Pointer to constant value */
+    using value_type      = T;   //< Value type of the contained data member
+    using pointer         = T*;  //< Pointer to the contained data type
+    using const_pointer =
+        T const*;  //< Pointer to const to the contained data type
 
     /**
      * @brief Default constructor.
