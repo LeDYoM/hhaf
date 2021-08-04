@@ -1,9 +1,6 @@
 #ifndef HTYPES_VECTOR_STORAGE_INCLUDE_HPP
 #define HTYPES_VECTOR_STORAGE_INCLUDE_HPP
 
-//#define LOG_MODE
-#include "debug_internal.hpp"
-
 #include <initializer_list>
 #include <utility>
 #include "memory/allocator.hpp"
@@ -19,6 +16,11 @@ namespace htps
 template <typename T, typename Allocator, typename GrowPolicy>
 class vector_storage
 {
+private:
+    size_type m_capacity{0U};
+    size_type m_size{0U};
+    T* m_buffer{nullptr};
+
 public:
     using iterator        = T*;
     using const_iterator  = const T*;
@@ -172,11 +174,6 @@ public:
             std::swap(*this, new_vector);
         }
     }
-
-    // private:
-    size_type m_capacity{0U};
-    size_type m_size{0U};
-    T* m_buffer{nullptr};
 };
 
 }  // namespace htps

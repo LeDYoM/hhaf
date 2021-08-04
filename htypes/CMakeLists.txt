@@ -49,6 +49,7 @@ set(headers
     ${include_dir}/types.hpp
     ${include_dir}/vector_base.hpp
     ${include_dir}/vector_storage.hpp
+    ${include_dir}/vector_view.hpp
     ${include_dir}/vector.hpp
     ${include_dir}/vector2d.hpp
     )
