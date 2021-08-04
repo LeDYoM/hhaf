@@ -135,13 +135,13 @@ public:
     /// Destructor.
     inline ~vector_base() noexcept { clear(); }
 
-    constexpr reference operator[](const size_type index) noexcept
+    constexpr reference operator[](const size_type index)
     {
         assert(index < size());
         return *(base_.at(index));
     }
 
-    constexpr const_reference operator[](const size_type index) const noexcept
+    constexpr const_reference operator[](const size_type index) const
     {
         assert(index < size());
         return *(base_.at(index));

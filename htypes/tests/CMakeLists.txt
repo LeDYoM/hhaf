@@ -20,6 +20,7 @@ set(SOURCE_TESTS
     propertystate
     str
     vector
+    vector_view
 )
 
 add_test_executable(SOURCE_TESTS ${SOURCE_TESTS})
