@@ -25,15 +25,19 @@ void InputSystem::preUpdate()
 void InputSystem::update()
 {
     m_pressedKeys.clear();
-    while (input_driver_wrapper_->arePendingKeyPresses())
+    decltype(m_pressedKeys) presed_keys_from_wrapper;
+    input_driver_wrapper_->readKeyPressed(presed_keys_from_wrapper);
+    for (auto const& key : presed_keys_from_wrapper)
     {
-        keyPressed(input_driver_wrapper_->popKeyPress());
+        keyPressed(key);
     }
 
     m_releasedKeys.clear();
-    while (input_driver_wrapper_->arePendingKeyReleases())
+    decltype(m_releasedKeys) released_keys_from_wrapper;
+    input_driver_wrapper_->readKeyReleased(released_keys_from_wrapper);
+    for (auto const& key : released_keys_from_wrapper)
     {
-        keyReleased(input_driver_wrapper_->popKeyRelease());
+        keyReleased(key);
     }
 }
 

@@ -1,6 +1,7 @@
 #ifndef HAF_BACKEND_IINPUTDRIVER_INCLUDE_HPP
 #define HAF_BACKEND_IINPUTDRIVER_INCLUDE_HPP
 
+#include <htypes/include/vector.hpp>
 #include "ikey.hpp"
 
 namespace haf::backend
@@ -18,46 +19,21 @@ public:
     virtual ~IInputDriver() {}
 
     /**
-     * @brief Ask if there is a pending press @b iKey ready to be read
-     *
-     * @return true There is a @b iKey press ready to be read
-     * @return false The queue is empty.
-     */
-    virtual bool arePendingKeyPresses() const = 0;
-
-    /**
-     * @brief Ask if there is a pending release @b iKey ready to be read
-     *
-     * @return true There is a @b iKey release ready to be read
-     * @return false The queue is empty.
-     */
-    virtual bool arePendingKeyReleases() const = 0;
-
-    /**
-     * @brief Extract the last @b iKey that has been pressed.
-     * @return Key The extracted @b iKey
-     */
-    virtual IKey popKeyPress() = 0;
-
-    /**
-     * @brief Extract the last @b iKey that has been released.
-     * @return Key The extracted @b iKey
-     */
-    virtual IKey popKeyRelease() = 0;
-
-    /**
      * @brief Users of this class should call this method to add any
      * pending key pressed.
      *  @param[in] iKey indicating the element to add.
      */
-    virtual void keyPressed(const IKey) = 0;
+    virtual void keyPressed(IKey const) = 0;
 
     /**
      * @brief Users of this class should call this method to add any
      * pending key released.
      *  @param[in] iKey indicating the element to add.
      */
-    virtual void keyReleased(const IKey) = 0;
+    virtual void keyReleased(IKey const) = 0;
+
+    virtual void readKeyPressed(htps::vector<IKey>& keys_pressed) const = 0;
+    virtual void readKeyReleased(htps::vector<IKey>& keys_released) const = 0;
 };
 }  // namespace haf::backend
 
