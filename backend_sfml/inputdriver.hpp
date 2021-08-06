@@ -18,6 +18,7 @@ public:
 
     void keyEvent(sf::Event const& e);
 
+    void clearInternalInputBuffer() override;
     void readKeyPressed(htps::vector<IKey>& keys_pressed) const override;
     void readKeyReleased(htps::vector<IKey>& keys_released) const override;
 

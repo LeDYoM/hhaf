@@ -97,6 +97,7 @@ bool RenderWindow::setActive(bool active)
 
 bool RenderWindow::processEvents()
 {
+    input_driver_.clearInternalInputBuffer();
     sf::Event event;
     while (pollEvent(event))
     {

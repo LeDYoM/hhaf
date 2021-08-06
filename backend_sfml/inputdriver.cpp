@@ -56,4 +56,10 @@ void InputDriver::readKeyReleased(htps::vector<IKey>& keys_released) const
     keys_released = keys_released_;
 }
 
+void InputDriver::clearInternalInputBuffer()
+{
+    keys_pressed_.clear();
+    keys_released_.clear();
+}
+
 }  // namespace haf::backend::sfmlb
