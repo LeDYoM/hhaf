@@ -13,7 +13,7 @@ bool InputComponentBase::isPressed(const Key key)
     if (attachedNode())
     {
         return sys::getSystem<sys::InputSystem>(attachedNode())
-            .keyStates()[KeyIndex(key)];
+            .keyStates()[keyIndex(key)];
     }
     return false;
 }
@@ -25,6 +25,6 @@ bool InputComponentBase::isShiftPressed() const noexcept
 
 char InputComponentBase::toAscii(const Key key) const noexcept
 {
-    return static_cast<char>(KeyIndex(key) + (isShiftPressed() ? 65 : 65));
+    return static_cast<char>(keyIndex(key) + (isShiftPressed() ? 65 : 65));
 }
 }  // namespace haf::input

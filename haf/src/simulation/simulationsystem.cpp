@@ -171,7 +171,7 @@ void SimulationSystem::update()
             if (simulation_action.type == SimulationActionType::KeyPressed)
             {
                 DisplayLog::info("SimulationSystem: Pressing key: ",
-                                 KeyIndex(simulation_action.key));
+                                 keyIndex(simulation_action.key));
                 systemProvider().inputSystem().simulatePressKey(
                     simulation_action.key);
             }
@@ -179,7 +179,7 @@ void SimulationSystem::update()
                      SimulationActionType::KeyReleased)
             {
                 DisplayLog::info("SimulationSystem: releasing key: ",
-                                 KeyIndex(simulation_action.key));
+                                 keyIndex(simulation_action.key));
                 systemProvider().inputSystem().simulateReleaseKey(
                     simulation_action.key);
             }

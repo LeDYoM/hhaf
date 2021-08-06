@@ -20,45 +20,55 @@ haf::backend::IKey toiKey(haf::input::Key const key)
 
 namespace haf::input
 {
+struct InputDriverWrapper::InputDriverWrapperPrivate
+{
+    rptr<backend::IInputDriver> input_driver_;
+    vector<Key> keys_pressed_;
+    vector<Key> keys_released_;
+    vector<backend::IKey> driver_keys_pressed;
+    vector<backend::IKey> driver_keys_released;
+
+    constexpr InputDriverWrapperPrivate(
+        rptr<backend::IInputDriver> input_driver) noexcept :
+        input_driver_{input_driver}
+    {}
+};
+
 InputDriverWrapper::InputDriverWrapper(
     rptr<backend::IInputDriver> input_driver) :
-    input_driver_{input_driver}
+    p_{make_pimplp<InputDriverWrapperPrivate>(input_driver)}
 {}
 
 InputDriverWrapper::~InputDriverWrapper() = default;
 
-void InputDriverWrapper::readKeyPressed(htps::vector<Key>& keys_pressed) const
+void InputDriverWrapper::readKeyPressed(htps::vector<Key>& keys_pressed)
 {
-    // TODO: Optimize: We are creating the vector each time we call the function
-    vector<haf::backend::IKey> driver_keys_pressed;
-    input_driver_->readKeyPressed(driver_keys_pressed);
+    p_->input_driver_->readKeyPressed(p_->driver_keys_pressed);
     keys_pressed.clear();
-    for (auto const& key : driver_keys_pressed)
+    for (auto const& key : p_->driver_keys_pressed)
     {
         keys_pressed.push_back(toKey(key));
     }
 }
 
-void InputDriverWrapper::readKeyReleased(htps::vector<Key>& keys_released) const
+void InputDriverWrapper::readKeyReleased(htps::vector<Key>& keys_released)
 {
-    // TODO: Optimize: We are creating the vector each time we call the function
-    vector<haf::backend::IKey> driver_keys_released;
-    input_driver_->readKeyPressed(driver_keys_released);
+    p_->input_driver_->readKeyPressed(p_->driver_keys_released);
     keys_released.clear();
-    for (auto const& key : driver_keys_released)
+    for (auto const& key : p_->driver_keys_released)
     {
         keys_released.push_back(toKey(key));
     }
 }
 
-void InputDriverWrapper::keyPressed(const Key k)
+void InputDriverWrapper::keyPressed(Key const key)
 {
-    return input_driver_->keyPressed(toiKey(k));
+    return p_->input_driver_->keyPressed(toiKey(key));
 }
 
-void InputDriverWrapper::keyReleased(const Key k)
+void InputDriverWrapper::keyReleased(Key const key)
 {
-    return input_driver_->keyReleased(toiKey(k));
+    return p_->input_driver_->keyReleased(toiKey(key));
 }
 
 }  // namespace haf::input

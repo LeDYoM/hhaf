@@ -24,16 +24,16 @@ void InputSystem::preUpdate()
 
 void InputSystem::update()
 {
-    m_pressedKeys.clear();
-    decltype(m_pressedKeys) presed_keys_from_wrapper;
+    pressed_keys_.clear();
+    decltype(pressed_keys_) presed_keys_from_wrapper;
     input_driver_wrapper_->readKeyPressed(presed_keys_from_wrapper);
     for (auto const& key : presed_keys_from_wrapper)
     {
         keyPressed(key);
     }
 
-    m_releasedKeys.clear();
-    decltype(m_releasedKeys) released_keys_from_wrapper;
+    released_keys_.clear();
+    decltype(released_keys_) released_keys_from_wrapper;
     input_driver_wrapper_->readKeyReleased(released_keys_from_wrapper);
     for (auto const& key : released_keys_from_wrapper)
     {
@@ -47,36 +47,36 @@ void InputSystem::postUpdate()
 
 const vector<Key>& InputSystem::pressedKeys() const noexcept
 {
-    return m_pressedKeys;
+    return pressed_keys_;
 }
 
 const vector<Key>& InputSystem::releasedKeys() const noexcept
 {
-    return m_releasedKeys;
+    return released_keys_;
 }
 
 void InputSystem::keyPressed(const Key key)
 {
-    LogAsserter::log_assert(key < Key::KeyCount, "Incorrect key value");
-    DisplayLog::info("InputSystem: Key pressed: ", KeyIndex(key));
-    m_keyStates[KeyIndex(key)] = true;
-    m_pressedKeys.push_back(key);
+    LogAsserter::log_assert(isValidKey(key), "Incorrect key value");
+    DisplayLog::info("InputSystem: Key pressed: ", keyIndex(key));
+    key_states_[keyIndex(key)] = true;
+    pressed_keys_.push_back(key);
 }
 
 void InputSystem::keyReleased(const Key key)
 {
-    LogAsserter::log_assert(key < Key::KeyCount, "Incorrect key value");
-    DisplayLog::info("InputSystem: Key released: ", KeyIndex(key));
-    m_keyStates[KeyIndex(key)] = false;
-    m_releasedKeys.push_back(key);
+    LogAsserter::log_assert(isValidKey(key), "Incorrect key value");
+    DisplayLog::info("InputSystem: Key released: ", keyIndex(key));
+    key_states_[keyIndex(key)] = false;
+    released_keys_.push_back(key);
 }
 
-void InputSystem::simulatePressKey(const Key key)
+void InputSystem::simulatePressKey(Key const key)
 {
     input_driver_wrapper_->keyPressed(key);
 }
 
-void InputSystem::simulateReleaseKey(const Key key)
+void InputSystem::simulateReleaseKey(Key const key)
 {
     input_driver_wrapper_->keyReleased(key);
 }

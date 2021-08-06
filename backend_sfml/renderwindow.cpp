@@ -85,7 +85,7 @@ sf::Vector2u RenderWindow::getSize() const
     return Window::getSize();
 }
 
-IRenderTarget* RenderWindow::renderTarget()
+rptr<IRenderTarget> RenderWindow::renderTarget()
 {
     return this;
 }
@@ -129,7 +129,7 @@ void RenderWindow::closeWindow()
     Window::close();
 }
 
-IInputDriver* RenderWindow::inputDriver()
+rptr<IInputDriver> RenderWindow::inputDriver()
 {
     return &input_driver_;
 }

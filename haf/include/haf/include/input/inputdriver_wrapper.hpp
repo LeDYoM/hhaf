@@ -3,6 +3,7 @@
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/vector.hpp>
+#include <htypes/include/p_impl_pointer.hpp>
 #include <haf/include/input/key.hpp>
 
 namespace haf::backend
@@ -21,13 +22,12 @@ public:
     void keyPressed(const Key);
     void keyReleased(const Key);
 
-    void readKeyPressed(htps::vector<Key>& keys_pressed) const;
-    void readKeyReleased(htps::vector<Key>& keys_released) const;
+    void readKeyPressed(htps::vector<Key>& keys_pressed);
+    void readKeyReleased(htps::vector<Key>& keys_released);
 
 private:
-    htps::rptr<backend::IInputDriver> input_driver_;
-    htps::vector<Key> keys_pressed_;
-    htps::vector<Key> keys_released_;
+    struct InputDriverWrapperPrivate;
+    htps::PImplPointer<InputDriverWrapperPrivate> p_;
 };
 
 }  // namespace haf::input

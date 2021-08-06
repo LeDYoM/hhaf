@@ -117,9 +117,21 @@ enum class Key : htps::s32
 
 inline constexpr htps::s32 KeyCount = static_cast<htps::s32>(Key::KeyCount);
 
-constexpr htps::s32 KeyIndex(const Key key)
+constexpr htps::s32 keyIndex(Key const key) noexcept
 {
     return static_cast<htps::s32>(key);
+}
+
+constexpr bool isValidKeyEnumValue(Key const key) noexcept
+{
+    return keyIndex(key) <= keyIndex(Key::KeyCount) &&
+        keyIndex(key) >= keyIndex(Key::Unknown);
+}
+
+constexpr bool isValidKey(Key const key) noexcept
+{
+    return keyIndex(key) < keyIndex(Key::KeyCount) &&
+        keyIndex(key) > keyIndex(Key::Unknown);
 }
 
 using KeyStates = bool[KeyCount];

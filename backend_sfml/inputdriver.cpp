@@ -36,14 +36,14 @@ IKey popKey(T& container)
     return k;
 }
 
-void InputDriver::keyPressed(const IKey k)
+void InputDriver::keyPressed(IKey const key)
 {
-    keys_pressed_.push_back(k);
+    keys_pressed_.push_back(key);
 }
 
-void InputDriver::keyReleased(const IKey k)
+void InputDriver::keyReleased(IKey const key)
 {
-    keys_released_.push_back(k);
+    keys_released_.push_back(key);
 }
 
 void InputDriver::readKeyPressed(htps::vector<IKey>& keys_pressed) const

@@ -36,14 +36,14 @@ public:
 
     bool setActive(bool active) override;
 
-    IRenderTarget* renderTarget() override;
+    htps::rptr<IRenderTarget> renderTarget() override;
 
     bool processEvents() override;
     void display() override;
     void setWindowTitle(htps::str newTitle) override;
     void closeWindow() override;
 
-    IInputDriver* inputDriver() override;
+    htps::rptr<IInputDriver> inputDriver() override;
     htps::str info() const override;
     htps::str settingsInfo() override;
 
