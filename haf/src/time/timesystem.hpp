@@ -1,5 +1,5 @@
-#ifndef HAF_CORE_SYSTEM_TIMESYSTEM_INCLUDE_HPP
-#define HAF_CORE_SYSTEM_TIMESYSTEM_INCLUDE_HPP
+#ifndef HAF_SYSTEM_TIMESYSTEM_INCLUDE_HPP
+#define HAF_SYSTEM_TIMESYSTEM_INCLUDE_HPP
 
 #include "system/systembase.hpp"
 
@@ -18,12 +18,16 @@ public:
      * @brief Construct a new Time System object
      * @param system_provider The system provider instance
      */
-    TimeSystem(sys::ISystemProvider& system_provider);
+    explicit TimeSystem(sys::ISystemProvider& system_provider);
+
+    /**
+     * @brief Destroy the Time System object
+     */
     ~TimeSystem();
 
     time::TimePoint timeSinceStart() const;
     time::TimePoint now() const;
-
+    time::TimePoint lastFrameTime() const;
     void startFrame();
     void endFrame();
 

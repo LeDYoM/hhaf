@@ -29,33 +29,48 @@ struct TimeSystem::TimeSystemPrivate final
         DisplayLog::info("TimeSystem started at: ", globalStart_.seconds());
     }
 
-    ~TimeSystemPrivate() {}
-
     TimePoint timeSinceStart() const
     {
-        return (timepoint_global_now() - globalStart_)
 #ifdef HAF_ALLOW_ACCELERATION
-            * acceleration_;
+        TimePoint temp{(timepoint_global_now() - globalStart_)};
+        if (!use_acceleration)
+        {
+            return temp;
+        }
+        else
+        {
+            return temp * acceleration_;
+        }
+#else
+        return (timepoint_global_now() - globalStart_);
 #endif
-        ;
     }
 
-    void updateStartFrameTime() { last_start_frame_ = timepoint_global_now(); }
+    void updateStartFrameTime()
+    {
+        auto const tmp_start_frame_{last_start_frame_};
+        last_start_frame_ = timepoint_global_now();
+        last_frame_time_  = last_start_frame_ - tmp_start_frame_;
+    }
 
     void updateEndFrameTime() { last_end_frame_ = timepoint_global_now(); }
 
+    TimePoint lastFrameTime() const noexcept { return last_frame_time_; }
 #ifdef HAF_ALLOW_ACCELERATION
-    void setAcceleration(const f32 acceleration) noexcept
+    void setAcceleration(f32 const acceleration) noexcept
     {
+        use_acceleration = true;
         acceleration_ = acceleration;
     }
 #endif
 private:
     TimePoint globalStart_;
+    TimePoint last_frame_time_{0U};
     TimePoint last_start_frame_{0U};
     TimePoint last_end_frame_{0U};
 #ifdef HAF_ALLOW_ACCELERATION
     f32 acceleration_ = 1.0f;
+    bool use_acceleration{false};
 #endif
 };
 
@@ -75,7 +90,7 @@ TimePoint TimeSystem::now() const
     return priv_->timeSinceStart();
 }
 
-void TimeSystem::setAcceleration(const f32 acceleration)
+void TimeSystem::setAcceleration(f32 const acceleration)
 {
 #ifdef HAF_ALLOW_ACCELERATION
     priv_->setAcceleration(acceleration);
@@ -91,4 +106,10 @@ void TimeSystem::endFrame()
 {
     priv_->updateEndFrameTime();
 }
+
+TimePoint TimeSystem::lastFrameTime() const
+{
+    return priv_->lastFrameTime();
+}
+
 }  // namespace haf::sys
