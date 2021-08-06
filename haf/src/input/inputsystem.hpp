@@ -29,7 +29,7 @@ public:
 
     const htps::vector<input::Key>& pressedKeys() const noexcept;
     const htps::vector<input::Key>& releasedKeys() const noexcept;
-    const input::KeyStates& keyStates() const noexcept { return m_keyStates; }
+    const input::KeyStates& keyStates() const noexcept { return key_states_; }
 
     /**
      * @brief Force or simulate a key press.
@@ -51,13 +51,13 @@ public:
         htps::sptr<input::InputDriverWrapper> input_driver);
 
 private:
-    void keyPressed(const input::Key key);
-    void keyReleased(const input::Key key);
+    void keyPressed(input::Key const key);
+    void keyReleased(input::Key const key);
 
     htps::sptr<input::InputDriverWrapper> input_driver_wrapper_;
-    input::KeyStates m_keyStates{};
-    htps::vector<input::Key> m_pressedKeys;
-    htps::vector<input::Key> m_releasedKeys;
+    input::KeyStates key_states_{};
+    htps::vector<input::Key> pressed_keys_;
+    htps::vector<input::Key> released_keys_;
 };
 }  // namespace haf::sys
 

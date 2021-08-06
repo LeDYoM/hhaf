@@ -17,18 +17,18 @@ template <typename T, typename Allocator, typename GrowPolicy>
 class vector_storage
 {
 private:
-    size_type m_capacity{0U};
-    size_type m_size{0U};
-    T* m_buffer{nullptr};
+    size_type capacity_{0U};
+    size_type size_{0U};
+    T* buffer_{nullptr};
 
 public:
     using iterator        = T*;
-    using const_iterator  = const T*;
+    using const_iterator  = T const*;
     using reference       = T&;
-    using const_reference = const T&;
+    using const_reference = T const&;
     using value_type      = T;
     using pointer         = T*;
-    using const_pointer   = const T*;
+    using const_pointer   = T const*;
 
     /**
      * @brief Default constructor
@@ -41,86 +41,103 @@ public:
      * @param size Number of elements to reserve memory for
      */
     explicit vector_storage(size_type const size) :
-        m_capacity{size},
-        m_buffer{size > 0U ? Allocator::allocate(size) : nullptr}
+        capacity_{size},
+        buffer_{size > 0U ? Allocator::allocate(size) : nullptr}
     {}
 
-    constexpr vector_storage(vector_storage const& other) = delete;
-    constexpr vector_storage& operator=(vector_storage const& other) = delete;
+    /**
+     * @brief Deleted copy constructor
+     */
+    vector_storage(vector_storage const&) = delete;
 
-    // Move constructor.
+    /**
+     * @brief Deleted copy assignment
+     */
+    vector_storage& operator=(vector_storage const&) = delete;
+
+    /**
+     * @brief Move constructor.
+     * @param other r-value reference to an object
+     * @return this vector
+     */
     constexpr vector_storage(vector_storage&& other) noexcept :
-        m_capacity{std::exchange(other.m_capacity, 0U)},
-        m_size{std::exchange(other.m_size, 0U)},
-        m_buffer{std::exchange(other.m_buffer, nullptr)}
+        capacity_{std::exchange(other.capacity_, 0U)},
+        size_{std::exchange(other.size_, 0U)},
+        buffer_{std::exchange(other.buffer_, nullptr)}
     {}
 
-    /// Move assignment
+    /**
+     * @brief Move assignment
+     * @param other r-value reference to an object
+     * @return This vector
+     */
     constexpr vector_storage& operator=(vector_storage&& other) noexcept
     {
         swap(other);
         return *this;
     }
 
-    /// Destructor.
-    inline ~vector_storage() noexcept
+    /**
+     * @brief Destroy the vector storage object
+     */
+    ~vector_storage() noexcept
     {
-        if (m_buffer)
+        if (buffer_ != nullptr)
         {
-            Allocator::deallocate(m_buffer);
-            m_buffer   = nullptr;
-            m_size     = 0U;
-            m_capacity = 0U;
+            Allocator::deallocate(buffer_);
+            buffer_   = nullptr;
+            size_     = 0U;
+            capacity_ = 0U;
         }
     }
 
     constexpr pointer at(const size_type index) noexcept
     {
-        return (m_buffer + index);
+        return (buffer_ + index);
     }
 
     constexpr const_pointer at(const size_type index) const noexcept
     {
-        return (m_buffer + index);
+        return (buffer_ + index);
     }
 
     constexpr const_pointer cat(const size_type index) const noexcept
     {
-        return (m_buffer + index);
+        return (buffer_ + index);
     }
 
-    constexpr size_type capacity() const noexcept { return m_capacity; }
-    constexpr size_type size() const noexcept { return m_size; }
-    constexpr bool empty() const noexcept { return m_size == 0U; }
-    constexpr iterator begin() noexcept { return m_buffer; }
-    constexpr const_iterator begin() const noexcept { return m_buffer; }
-    constexpr const_iterator cbegin() const noexcept { return m_buffer; }
-    constexpr iterator end() noexcept { return m_buffer + m_size; }
-    constexpr const_iterator end() const noexcept { return m_buffer + m_size; }
-    constexpr const_iterator cend() const noexcept { return m_buffer + m_size; }
+    constexpr size_type capacity() const noexcept { return capacity_; }
+    constexpr size_type size() const noexcept { return size_; }
+    constexpr bool empty() const noexcept { return size_ == 0U; }
+    constexpr iterator begin() noexcept { return buffer_; }
+    constexpr const_iterator begin() const noexcept { return buffer_; }
+    constexpr const_iterator cbegin() const noexcept { return buffer_; }
+    constexpr iterator end() noexcept { return buffer_ + size_; }
+    constexpr const_iterator end() const noexcept { return buffer_ + size_; }
+    constexpr const_iterator cend() const noexcept { return buffer_ + size_; }
 
     constexpr void swap(vector_storage& other) noexcept
     {
-        std::swap(m_buffer, other.m_buffer);
-        std::swap(m_size, other.m_size);
-        std::swap(m_capacity, other.m_capacity);
+        std::swap(buffer_, other.buffer_);
+        std::swap(size_, other.size_);
+        std::swap(capacity_, other.capacity_);
     }
 
     constexpr void shrink_to_fit()
     {
-        if (m_size < m_capacity)
+        if (size_ < capacity_)
         {
-            auto tmp_buffer = m_buffer;
-            m_capacity      = m_size;
+            auto tmp_buffer{buffer_};
+            capacity_ = size_;
 
-            m_buffer = m_size > 0U ? Allocator::allocate(m_size) : nullptr;
-            auto m_buffer_iterator = m_buffer;
+            buffer_ = size_ > 0U ? Allocator::allocate(size_) : nullptr;
+            auto m_buffer_iterator = buffer_;
+            auto const tmp_end{tmp_buffer + size_};
 
-            for (auto it = tmp_buffer; it != (tmp_buffer + m_size); ++it)
+            for (auto it{tmp_buffer}; it != tmp_end; ++it)
             {
-                Allocator::construct(m_buffer_iterator, std::move(*it));
+                Allocator::construct(m_buffer_iterator++, std::move(*it));
                 Allocator::destruct(it);
-                ++m_buffer_iterator;
             }
             Allocator::deallocate(tmp_buffer);
         }
@@ -128,50 +145,47 @@ public:
 
     constexpr void push_back(const T& value)
     {
-        reserve(GrowPolicy::growSize(m_size));
-        Allocator::construct(m_buffer + m_size, value);
-        ++m_size;
+        reserve(GrowPolicy::growSize(size_));
+        Allocator::construct((buffer_ + size_++), value);
     }
 
     constexpr void push_back(T&& value)
     {
-        reserve(GrowPolicy::growSize(m_size));
-        Allocator::construct(static_cast<T*>(m_buffer + m_size),
+        reserve(GrowPolicy::growSize(size_));
+        Allocator::construct(static_cast<T*>(buffer_ + size_++),
                              std::move(value));
-        ++m_size;
     }
 
     template <typename... Args>
     constexpr void emplace_back(Args&&... args)
     {
-        reserve(GrowPolicy::growSize(m_size));
-        Allocator::construct(static_cast<T*>(m_buffer + m_size),
+        reserve(GrowPolicy::growSize(size_));
+        Allocator::construct(static_cast<T*>(buffer_ + size_++),
                              std::forward<Args>(args)...);
-        m_size++;
     }
 
     constexpr void pop_back() noexcept
     {
-        if (m_size > 0U)
+        if (size_ > 0U)
         {
             Allocator::destruct(end() - 1U);
-            --m_size;
+            --size_;
         }
     }
 
     constexpr void reserve(const size_type capacity)
     {
-        if (m_capacity < capacity)
+        if (capacity_ < capacity)
         {
-            vector_storage new_vector =
-                vector_storage(static_cast<size_type>(capacity));
+            vector_storage new_vector{
+                vector_storage(static_cast<size_type>(capacity))};
 
-            for (auto iterator = begin(); iterator != end(); ++iterator)
+            for (auto iterator{begin()}; iterator != end(); ++iterator)
             {
                 new_vector.push_back(std::move(*iterator));
             }
 
-            std::swap(*this, new_vector);
+            *this = std::move(new_vector);
         }
     }
 };

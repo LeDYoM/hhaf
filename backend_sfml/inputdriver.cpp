@@ -5,7 +5,10 @@
 
 namespace haf::backend::sfmlb
 {
-void InputDriver::keyEvent(const sf::Event& e)
+InputDriver::InputDriver()  = default;
+InputDriver::~InputDriver() = default;
+
+void InputDriver::keyEvent(sf::Event const& e)
 {
     const IKey k(doCast(e.key.code));
     if (k != IKey::Unknown)
@@ -21,16 +24,6 @@ void InputDriver::keyEvent(const sf::Event& e)
     }
 }
 
-bool InputDriver::arePendingKeyPresses() const
-{
-    return !keysPressed_.empty();
-}
-
-bool InputDriver::arePendingKeyReleases() const
-{
-    return !keysReleased_.empty();
-}
-
 template <typename T>
 IKey popKey(T& container)
 {
@@ -43,23 +36,30 @@ IKey popKey(T& container)
     return k;
 }
 
-IKey InputDriver::popKeyPress()
+void InputDriver::keyPressed(IKey const key)
 {
-    return popKey(keysPressed_);
+    keys_pressed_.push_back(key);
 }
 
-IKey InputDriver::popKeyRelease()
+void InputDriver::keyReleased(IKey const key)
 {
-    return popKey(keysReleased_);
+    keys_released_.push_back(key);
 }
 
-void InputDriver::keyPressed(const IKey k)
+void InputDriver::readKeyPressed(htps::vector<IKey>& keys_pressed) const
 {
-    keysPressed_.push(k);
+    keys_pressed = keys_pressed_;
 }
 
-void InputDriver::keyReleased(const IKey k)
+void InputDriver::readKeyReleased(htps::vector<IKey>& keys_released) const
 {
-    keysReleased_.push(k);
+    keys_released = keys_released_;
 }
+
+void InputDriver::clearInternalInputBuffer()
+{
+    keys_pressed_.clear();
+    keys_released_.clear();
+}
+
 }  // namespace haf::backend::sfmlb
