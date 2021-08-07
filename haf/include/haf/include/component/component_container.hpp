@@ -1,6 +1,7 @@
 #ifndef HAF_COMPONENT_COMPONENT_CONTAINER_INCLUDE_HPP
 #define HAF_COMPONENT_COMPONENT_CONTAINER_INCLUDE_HPP
 
+#include <haf/include/haf_export.hpp>
 #include <htypes/include/types.hpp>
 #include <htypes/include/p_impl_pointer.hpp>
 #include <haf/include/component/icomponent.hpp>
@@ -13,7 +14,7 @@ namespace haf::component
  * @brief class representing a container for components.
  * @see IComponent
  */
-class ComponentContainer : private utils::AttachableManager<IComponent>
+class HAF_API ComponentContainer : private utils::AttachableManager<IComponent>
 {
     using BaseClass      = utils::AttachableManager<IComponent>;
     using AttachableType = typename BaseClass::AttachableType;

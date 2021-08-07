@@ -1,6 +1,7 @@
 #ifndef HAF_ATTACHABLE_MANAGER_INCLUDE_HPP
 #define HAF_ATTACHABLE_MANAGER_INCLUDE_HPP
 
+#include <haf/include/haf_export.hpp>
 #include <haf/include/utils/attachable.hpp>
 #include <htypes/include/types.hpp>
 #include <hlog/include/hlog.hpp>
@@ -14,7 +15,7 @@ namespace haf::utils
  * @tparam AttachedBase Base Type of the objects to create
  */
 template <typename AttachedBase>
-class AttachableManager
+class HAF_API AttachableManager
 {
 public:
     using AttachableType = typename AttachedBase::AttachedNodeType;
