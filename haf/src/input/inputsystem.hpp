@@ -27,9 +27,10 @@ public:
     void update();
     void postUpdate();
 
-    const htps::vector<input::Key>& pressedKeys() const noexcept;
-    const htps::vector<input::Key>& releasedKeys() const noexcept;
-    const input::KeyStates& keyStates() const noexcept { return key_states_; }
+    htps::vector<input::Key> const& pressedKeys() const noexcept;
+    htps::vector<input::Key> const& releasedKeys() const noexcept;
+    input::KeyStates const& keyStates() const noexcept;
+    input::KeyState keyState(input::Key const key) const;
 
     /**
      * @brief Force or simulate a key press.

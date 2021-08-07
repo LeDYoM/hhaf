@@ -9,9 +9,11 @@ using namespace haf::input;
 namespace haf::sys
 {
 
-void InputSystem::setInputDriverWrapper(sptr<InputDriverWrapper> input_driver_wrapper)
+void InputSystem::setInputDriverWrapper(
+    sptr<InputDriverWrapper> input_driver_wrapper)
 {
-    LogAsserter::log_assert(input_driver_wrapper != nullptr, "Parameter is nullptr");
+    LogAsserter::log_assert(input_driver_wrapper != nullptr,
+                            "Parameter is nullptr");
     LogAsserter::log_assert(input_driver_wrapper_ == nullptr,
                             "Input driver wrapper was already set");
 
@@ -19,8 +21,7 @@ void InputSystem::setInputDriverWrapper(sptr<InputDriverWrapper> input_driver_wr
 }
 
 void InputSystem::preUpdate()
-{
-}
+{}
 
 void InputSystem::update()
 {
@@ -42,7 +43,16 @@ void InputSystem::update()
 }
 
 void InputSystem::postUpdate()
+{}
+
+KeyStates const& InputSystem::keyStates() const noexcept
 {
+    return key_states_;
+}
+
+KeyState InputSystem::keyState(Key const key) const
+{
+    return key_states_[keyIndex(key)];
 }
 
 const vector<Key>& InputSystem::pressedKeys() const noexcept

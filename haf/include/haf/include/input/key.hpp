@@ -134,7 +134,8 @@ constexpr bool isValidKey(Key const key) noexcept
         keyIndex(key) > keyIndex(Key::Unknown);
 }
 
-using KeyStates = bool[KeyCount];
+using KeyState = bool;
+using KeyStates = KeyState[KeyCount];
 }  // namespace haf::input
 
 #endif
