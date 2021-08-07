@@ -50,8 +50,8 @@ void Player::update()
     if (currentDirection.readResetHasChanged())
     {
         const auto direction{currentDirection()};
-
         const auto tileCenter{board2SceneFactor() / 2.0F};
+
         getTransformation(move_in_).prop<Position>() = tileCenter;
 
         getTransformation(rotator_).prop<Rotation>().set(direction.angle());
