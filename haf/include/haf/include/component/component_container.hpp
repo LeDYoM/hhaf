@@ -1,10 +1,10 @@
 #ifndef HAF_COMPONENT_COMPONENT_CONTAINER_INCLUDE_HPP
 #define HAF_COMPONENT_COMPONENT_CONTAINER_INCLUDE_HPP
 
+#include <htypes/include/types.hpp>
+#include <htypes/include/p_impl_pointer.hpp>
 #include <haf/include/component/icomponent.hpp>
 #include <haf/include/utils/attachable_manager.hpp>
-#include <htypes/include/lockablevector.hpp>
-#include <htypes/include/types.hpp>
 #include <typeindex>
 
 namespace haf::component
@@ -19,6 +19,9 @@ class ComponentContainer : private utils::AttachableManager<IComponent>
     using AttachableType = typename BaseClass::AttachableType;
 
 public:
+    explicit ComponentContainer(
+        htps::rptr<BaseClass::AttachableType> attachable);
+
     /**
      * @brief Use constructors from base class
      */
@@ -45,17 +48,16 @@ public:
         return result;
     }
 
-        template <typename T>
-        htps::sptr<T> componentOfType() const
-        {
-            htps::sptr<IComponent> cot(
-                componentOfType(std::type_index(typeid(T))));
-            return cot ? std::dynamic_pointer_cast<T>(cot) : nullptr;
-        }
+    template <typename T>
+    htps::sptr<T> componentOfType() const
+    {
+        htps::sptr<IComponent> cot{componentOfType(type_of<T>())};
+        return cot ? std::dynamic_pointer_cast<T>(cot) : nullptr;
+    }
 
     /**
      * @brief Retrieve an instance of a component type. Either newly created
-     * or newly added.
+     * or already existing
      *
      * @tparam T Type of the component
      * @param element Return value as a reference. Template deduction will
@@ -76,17 +78,22 @@ public:
     void updateComponents();
 
     /**
-     * @brief Clear all elements of this container     * 
+     * @brief Clear all elements of this container     *
      */
     void clearComponents() noexcept;
 
 private:
-
-    htps::sptr<IComponent> componentOfType(const std::type_index& ti) const;
+    template <typename T>
+    std::type_index type_of() const noexcept
+    {
+        return std::type_index{typeid(T)};
+    }
 
     bool addComponent(htps::sptr<IComponent> nc);
+    htps::sptr<IComponent> componentOfType(std::type_index const& ti) const;
 
-    htps::LockableVector<htps::sptr<IComponent>> components_;
+    struct ComponentContainerPrivate;
+    htps::PImplPointer<ComponentContainerPrivate> p_;
 };
 
 }  // namespace haf::component
