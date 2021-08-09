@@ -102,7 +102,7 @@ void Player::launchAnimation(const vector2df& toWhere)
         TimePoint_as_miliseconds(
             gameplay::constants::MillisAnimationLaunchPlayerStep),
         prop<Position>(), prop<Position>()(), toWhere,
-        Animation::AnimationDirection::Forward,
+        AnimationDirection::Forward,
         [this, currentPosition = prop<Position>()()]() {
             launchAnimationBack(currentPosition);
         });

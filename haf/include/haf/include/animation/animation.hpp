@@ -1,6 +1,7 @@
 #ifndef HAF_ANIMATION_IANIMATION_INCLUDE_HPP
 #define HAF_ANIMATION_IANIMATION_INCLUDE_HPP
 
+#include <haf/include/animation/animation_data.hpp>
 #include <haf/include/time/timepoint.hpp>
 #include <haf/include/time/timeview.hpp>
 #include <haf/include/time/timer.hpp>
@@ -18,17 +19,6 @@ namespace haf::anim
 class Animation
 {
 public:
-    /**
-     * @brief Type to represent an animation
-     */
-    using ActionFunc = htps::function<void()>;
-
-    enum class AnimationDirection : htps::u8
-    {
-        Forward = 0U,
-        Backward
-    };
-
     /**
      * @brief Construct a new Animation object
      *
@@ -67,11 +57,8 @@ protected:
     htps::f32 delta() const noexcept { return delta_; }
 
 private:
-    htps::uptr<time::Timer> timer_;
-    time::TimePoint m_duration;
+    AnimationData animation_data_;
     time::TimePoint m_currentTime;
-    ActionFunc m_endAction;
-    AnimationDirection animation_direction_;
     htps::f32 raw_delta_;
     htps::f32 delta_;
 

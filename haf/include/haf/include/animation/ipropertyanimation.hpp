@@ -44,7 +44,7 @@ public:
                        htps::IProperty<T, PropertyTag>& prop,
                        T start,
                        T end,
-                       Animation::AnimationDirection animation_direction,
+                       AnimationDirection animation_direction,
                        ActionFunc endAction = {}) :
         Animation{std::move(timer), std::move(duration),
                   std::move(animation_direction), std::move(endAction)},

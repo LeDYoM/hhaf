@@ -44,9 +44,8 @@ public:
         htps::IProperty<PropertyType, PropertyTag>& property,
         PropertyType start,
         PropertyType dest,
-        Animation::AnimationDirection animation_direction =
-            Animation::AnimationDirection::Forward,
-        Animation::ActionFunc endAction = {})
+        AnimationDirection animation_direction = AnimationDirection::Forward,
+        ActionFunc endAction                   = {})
     {
         auto anim = htps::muptr<IPropertyAnimation<PropertyType, PropertyTag>>(
             attachedNode()->subsystems().dataWrapper<time::Timer>(),
@@ -75,9 +74,8 @@ public:
         htps::IProperty<PropertyType, PropertyTag>& property,
         PropertyType start,
         PropertyType dest,
-        Animation::AnimationDirection animation_direction =
-            Animation::AnimationDirection::Forward,
-        Animation::ActionFunc endAction = {})
+        AnimationDirection animation_direction = AnimationDirection::Forward,
+        ActionFunc endAction                   = {})
     {
         addPropertyAnimation(
             time, property, start, dest, animation_direction,
@@ -117,9 +115,8 @@ public:
         htps::IProperty<PropertyType, PropertyTag>& property,
         PropertyType start,
         PropertyType dest,
-        Animation::AnimationDirection animation_direction =
-            Animation::AnimationDirection::Forward,
-        Animation::ActionFunc endAction = {})
+        AnimationDirection animation_direction = AnimationDirection::Forward,
+        ActionFunc endAction                   = {})
     {
         addPropertyAnimation(
             time, property, start, dest, animation_direction,
@@ -137,10 +134,9 @@ public:
                 }
                 addCircledPropertyAnimation(
                     time, property, start, dest,
-                    (animation_direction ==
-                     Animation::AnimationDirection::Forward)
-                        ? Animation::AnimationDirection::Backward
-                        : Animation::AnimationDirection::Forward,
+                    (animation_direction == AnimationDirection::Forward)
+                        ? AnimationDirection::Backward
+                        : AnimationDirection::Forward,
                     std::move(endAction));
             });
     }
