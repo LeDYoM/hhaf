@@ -26,8 +26,8 @@ class AnimationData
 {
 public:
     htps::uptr<time::Timer> timer_;
-    time::TimePoint m_duration;
-    ActionFunc m_endAction;
+    time::TimePoint duration_;
+    ActionFunc end_action_;
     AnimationDirection animation_direction_;
 };
 

@@ -58,7 +58,7 @@ protected:
 
 private:
     AnimationData animation_data_;
-    time::TimePoint m_currentTime;
+    time::TimePoint current_time_;
     htps::f32 raw_delta_;
     htps::f32 delta_;
 
