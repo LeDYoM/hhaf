@@ -55,6 +55,14 @@ public:
         addAnimation(std::move(anim));
     }
 
+    template <typename T, typename PropertyTag>
+    PropertyAnimationBuilder<T, PropertyTag> buildPropertyAnimation()
+    {
+        PropertyAnimationBuilder<T, PropertyTag> property_animation_builder{
+            this};
+        return property_animation_builder;
+    }
+
     /**
      * @brief Add an animation that animates a certain property of the node.
      *  When the animation finishes, it starts again setting the property

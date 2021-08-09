@@ -10,6 +10,7 @@
 #include <htypes/include/function.hpp>
 #include <haf/include/animation/animation.hpp>
 #include <haf/include/animation/animabletypes.hpp>
+#include <haf/include/animation/property_animation_data.hpp>
 
 namespace haf::anim
 {
@@ -48,24 +49,21 @@ public:
                        ActionFunc endAction = {}) :
         Animation{std::move(timer), std::move(duration),
                   std::move(animation_direction), std::move(endAction)},
-        property_{prop},
-        startValue_{std::move(start)},
-        endValue_{std::move(end)},
-        deltaValue_{static_cast<AT>(AT{endValue_} - AT{startValue_})}
+        data_{&prop, std::move(start), std::move(end)},
+        deltaValue_{
+            static_cast<AT>(AT{data_.endValue_} - AT{data_.startValue_})}
     {}
 
     virtual bool animate() override
     {
         const bool bResult{Animation::animate()};
-        auto const p = AT{startValue_ + (deltaValue_ * delta())};
-        property_.set(p);
+        auto const p = AT{data_.startValue_ + (deltaValue_ * delta())};
+        (*(data_.property_)).set(p);
         return bResult;
     }
 
 private:
-    htps::IProperty<T, PropertyTag>& property_;
-    const T startValue_;
-    const T endValue_;
+    PropertyAnimationData<T, PropertyTag> data_;
     const AT deltaValue_{};
 };
 }  // namespace haf::anim

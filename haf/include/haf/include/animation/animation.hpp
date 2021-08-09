@@ -2,6 +2,10 @@
 #define HAF_ANIMATION_IANIMATION_INCLUDE_HPP
 
 #include <haf/include/animation/animation_data.hpp>
+#include <haf/include/animation/animation_builder.hpp>
+#include <haf/include/animation/property_animation_data.hpp>
+#include <haf/include/animation/property_animation_builder.hpp>
+
 #include <haf/include/time/timepoint.hpp>
 #include <haf/include/time/timeview.hpp>
 #include <haf/include/time/timer.hpp>
