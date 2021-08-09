@@ -40,6 +40,7 @@ using namespace haf;
 using namespace haf::render;
 using namespace haf::scene;
 using namespace haf::scene::nodes;
+using namespace haf::anim;
 
 namespace zoper
 {

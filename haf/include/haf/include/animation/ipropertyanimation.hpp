@@ -1,5 +1,5 @@
-#ifndef HAF_SCENE_IPROPERTY_ANIMATION_INCLUDE_HPP
-#define HAF_SCENE_IPROPERTY_ANIMATION_INCLUDE_HPP
+#ifndef HAF_ANIM_IPROPERTY_ANIMATION_INCLUDE_HPP
+#define HAF_ANIM_IPROPERTY_ANIMATION_INCLUDE_HPP
 
 #include <haf/include/time/timepoint.hpp>
 #include <haf/include/time/timeview.hpp>
@@ -8,10 +8,10 @@
 #include <htypes/include/types.hpp>
 #include <htypes/include/properties.hpp>
 #include <htypes/include/function.hpp>
-#include <haf/include/scene_components/animation.hpp>
-#include <haf/include/scene_components/animabletypes.hpp>
+#include <haf/include/animation/animation.hpp>
+#include <haf/include/animation/animabletypes.hpp>
 
-namespace haf::scene
+namespace haf::anim
 {
 
 /**
@@ -68,6 +68,6 @@ private:
     const T endValue_;
     const AT deltaValue_{};
 };
-}  // namespace haf::scene
+}  // namespace haf::anim
 
 #endif

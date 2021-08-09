@@ -5,7 +5,7 @@
 
 #include <haf/include/scene/scenenode.hpp>
 #include <haf/include/scene_nodes/scenenodetext.hpp>
-#include <haf/include/scene_components/animationcomponent.hpp>
+#include <haf/include/animation/animationcomponent.hpp>
 
 namespace zoper
 {
@@ -25,7 +25,7 @@ public:
 
 private:
     htps::sptr<haf::scene::nodes::SceneNodeText> m_pauseText;
-    htps::sptr<haf::scene::AnimationComponent> animation_component_;
+    htps::sptr<haf::anim::AnimationComponent> animation_component_;
 };
 }  // namespace zoper
 

@@ -37,10 +37,9 @@ void HighScoreTextController::onCreated()
                        .dataWrapper<res::ResourceRetriever>()
                        ->getTTFont(HighScoresResources::MenuFontId)
                        ->font(72);
-    m_normalColor   = colors::Blue;
-    m_selectedColor = colors::Red;
-    animation_component_ =
-        components().component<scene::AnimationComponent>();
+    m_normalColor        = colors::Blue;
+    m_selectedColor      = colors::Red;
+    animation_component_ = components().component<anim::AnimationComponent>();
 
     // Request the high scores.
     subsystems().dataWrapper<sys::FileSerializer>()->deserializeFromFile(
@@ -75,8 +74,7 @@ void HighScoreTextController::onCreated()
 
     if (!isInserting)
     {
-        auto input_component(
-            components().component<input::InputComponent>());
+        auto input_component(components().component<input::InputComponent>());
         input_component->KeyPressed.connect(
             [this](const auto&) { Finished(); });
     }

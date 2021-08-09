@@ -7,7 +7,7 @@
 #include <htypes/include/vector2d.hpp>
 
 #include <boardmanager/include/itile.hpp>
-#include <haf/include/scene_components/animationcomponent.hpp>
+#include <haf/include/animation/animationcomponent.hpp>
 
 namespace zoper
 {
@@ -42,7 +42,7 @@ public:
 private:
     static htps::u32 m_tileCounter;
     htps::vector2df board2SceneFactor_;
-    htps::sptr<haf::scene::AnimationComponent> animation_component_;
+    htps::sptr<haf::anim::AnimationComponent> animation_component_;
 };
 }  // namespace zoper
 

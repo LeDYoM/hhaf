@@ -2,12 +2,14 @@
 #include "constants.hpp"
 #include <htypes/include/types.hpp>
 
-#include <haf/include/scene_components/animationcomponent.hpp>
+#include <haf/include/animation/animationcomponent.hpp>
 #include <haf/include/random/randomnumberscomponent.hpp>
 #include <haf/include/render/fig_type.hpp>
 
 using namespace haf::scene;
 using namespace haf::render;
+using namespace haf::anim;
+
 using namespace htps;
 
 namespace zoper

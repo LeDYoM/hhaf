@@ -30,8 +30,7 @@ Token::Token(SceneNode* const parent, str name) :
                   .name("Node" + str::to_str(m_tileCounter))
                   .figType(FigType_t::Shape)
                   .pointCount(30U));
-    animation_component_ =
-        components().component<scene::AnimationComponent>();
+    animation_component_ = components().component<anim::AnimationComponent>();
 }
 
 Token::~Token() = default;

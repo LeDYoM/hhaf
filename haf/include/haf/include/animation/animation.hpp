@@ -1,5 +1,5 @@
-#ifndef HAF_SCENE_IANIMATION_INCLUDE_HPP
-#define HAF_SCENE_IANIMATION_INCLUDE_HPP
+#ifndef HAF_ANIMATION_IANIMATION_INCLUDE_HPP
+#define HAF_ANIMATION_IANIMATION_INCLUDE_HPP
 
 #include <haf/include/time/timepoint.hpp>
 #include <haf/include/time/timeview.hpp>
@@ -9,7 +9,7 @@
 #include <htypes/include/properties.hpp>
 #include <htypes/include/function.hpp>
 
-namespace haf::scene
+namespace haf::anim
 {
 /**
  * @brief Class representing an animation. The animation will be updated when
@@ -78,6 +78,6 @@ private:
     htps::f32 postProcessDelta(const htps::f32 delta);
 };
 
-}  // namespace haf::scene
+}  // namespace haf::anim
 
 #endif

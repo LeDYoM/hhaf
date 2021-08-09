@@ -16,6 +16,7 @@ using namespace haf;
 using namespace haf::scene;
 using namespace haf::render;
 using namespace haf::time;
+using namespace haf::anim;
 
 Player::Player(rptr<SceneNode> parent, str name) :
     BaseClass{std::move(parent), std::move(name)},

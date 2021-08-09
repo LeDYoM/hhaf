@@ -1,8 +1,8 @@
-#include <haf/include/scene_components/animation.hpp>
+#include <haf/include/animation/animation.hpp>
 
 using namespace htps;
 
-namespace haf::scene
+namespace haf::anim
 {
 Animation::Animation(uptr<time::Timer> timer,
                      time::TimePoint duration,
@@ -54,4 +54,4 @@ f32 Animation::postProcessDelta(const f32 delta)
             break;
     }
 }
-}  // namespace haf::scene
+}  // namespace haf::anim

@@ -8,7 +8,7 @@
 #include <haf/include/scene_nodes/renderizable_scenenode.hpp>
 #include <haf/include/scene_nodes/tablenode.hpp>
 #include <haf/include/scene_nodes/scenenodetext.hpp>
-#include <haf/include/scene_components/animationcomponent.hpp>
+#include <haf/include/animation/animationcomponent.hpp>
 #include "../loaders/highscoresresources.hpp"
 #include "highscoresdata.hpp"
 
@@ -42,7 +42,7 @@ private:
     void addEditAnimation(const htps::size_type line_index);
     HighScoresData m_hsData;
     htps::sptr<res::IFont> m_normalFont;
-    htps::sptr<scene::AnimationComponent> animation_component_;
+    htps::sptr<anim::AnimationComponent> animation_component_;
 
     Color m_normalColor;
     Color m_selectedColor;

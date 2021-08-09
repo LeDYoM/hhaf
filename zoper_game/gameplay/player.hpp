@@ -6,7 +6,7 @@
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/function.hpp>
-#include <haf/include/scene_components/animationcomponent.hpp>
+#include <haf/include/animation/animationcomponent.hpp>
 
 namespace zoper
 {
@@ -45,8 +45,7 @@ private:
     htps::size_type scalator_;
     htps::size_type move_out_;
     void launchAnimationBack(const htps::vector2df& toWhere);
-    htps::sptr<haf::scene::AnimationComponent> animation_component_;
-    //    htps::sptr<haf::scene::RenderizableSceneNode> render_scene_node_;
+    htps::sptr<haf::anim::AnimationComponent> animation_component_;
 };
 }  // namespace zoper
 

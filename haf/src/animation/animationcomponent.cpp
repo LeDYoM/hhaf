@@ -1,10 +1,10 @@
-#include <haf/include/scene_components/animationcomponent.hpp>
+#include <haf/include/animation/animationcomponent.hpp>
 #include <hlog/include/hlog.hpp>
 #include <htypes/include/lockablevector.hpp>
 
 using namespace htps;
 
-namespace haf::scene
+namespace haf::anim
 {
 class AnimationComponent::AnimationComponentPrivate
 {
@@ -34,4 +34,4 @@ void AnimationComponent::update()
         }
     });
 }
-}  // namespace haf::scene
+}  // namespace haf::anim

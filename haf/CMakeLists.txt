@@ -16,6 +16,10 @@ set(sources
   ${src_dir}/main.cpp 
   ${src_dir}/systemprovider_init.cpp
 
+  # Animation
+  ${src_dir}/animation/animation.cpp
+  ${src_dir}/animation/animationcomponent.cpp
+
   # Component
   ${src_dir}/component/component_container.cpp
 
@@ -92,8 +96,6 @@ set(sources
   ${src_dir}/scene/transformation.cpp
 
   # Scene components
-  ${src_dir}/scene_components/animation.cpp
-  ${src_dir}/scene_components/animationcomponent.cpp
   ${src_dir}/scene_components/app_finisher.cpp
   ${src_dir}/scene_components/app_initializer.cpp
   ${src_dir}/scene_components/discretetextcomponent.cpp
@@ -158,6 +160,12 @@ set(headers
   # Global
   ${inc_dir}/haf_export.hpp
 
+  # Animation
+  ${inc_dir}/animation/animabletypes.hpp
+  ${inc_dir}/animation/animation.hpp
+  ${inc_dir}/animation/animationcomponent.hpp
+  ${inc_dir}/animation/ipropertyanimation.hpp
+
   # Component
   ${inc_dir}/component/component_container.hpp
   ${inc_dir}/component/icomponent_mixin.hpp
@@ -217,13 +225,9 @@ set(headers
   ${inc_dir}/scene/transformation.hpp
 
   # Scene components
-  ${inc_dir}/scene_components/animabletypes.hpp
-  ${inc_dir}/scene_components/animation.hpp
-  ${inc_dir}/scene_components/animationcomponent.hpp
   ${inc_dir}/scene_components/app_finisher.hpp
   ${inc_dir}/scene_components/app_initializer.hpp
   ${inc_dir}/scene_components/discretetextcomponent.hpp
-  ${inc_dir}/scene_components/ipropertyanimation.hpp
   ${inc_dir}/scene_components/scenecontrol.hpp
   ${inc_dir}/scene_components/scenefactory.hpp
   ${inc_dir}/scene_components/scenemetrics.hpp

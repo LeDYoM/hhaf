@@ -1,11 +1,12 @@
 #include "catch.hpp"
 
 #include <htypes/include/types.hpp>
-#include <haf/include/scene_components/animationcomponent.hpp>
+#include <haf/include/animation/animationcomponent.hpp>
 
 using namespace htps;
 using namespace haf;
 using namespace haf::scene;
+using namespace haf::anim;
 
 namespace
 {
@@ -16,7 +17,7 @@ struct CommonData
 }  // namespace
 
 TEST_CASE(
-    "haf::scene::AnimationComponent",
+    "haf::anim::AnimationComponent",
     "[StatesController][lib][scene][component][AnimationComponent][IComponent]")
 {
     //    constexpr u32 Start_State  = 0U;

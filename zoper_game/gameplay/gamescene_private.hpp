@@ -3,7 +3,7 @@
 
 #include <htypes/include/types.hpp>
 
-#include <haf/include/scene_components/animationcomponent.hpp>
+#include <haf/include/animation/animationcomponent.hpp>
 #include <haf/include/random/randomnumberscomponent.hpp>
 #include "gamescene.hpp"
 #include "gamescene_state_manager.hpp"
@@ -13,7 +13,7 @@ namespace zoper
 {
 struct GameScene::GameScenePrivate
 {
-    htps::sptr<haf::scene::AnimationComponent> scene_animation_component_;
+    htps::sptr<haf::anim::AnimationComponent> scene_animation_component_;
     htps::sptr<haf::rnd::RandomNumbersComponent> token_type_generator_;
     htps::sptr<haf::rnd::RandomNumbersComponent> token_position_generator_;
     htps::uptr<GameSceneStateManager> m_states_manager;
