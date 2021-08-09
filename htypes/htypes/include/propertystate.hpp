@@ -42,7 +42,7 @@ public:
     constexpr PropertyState& operator=(PropertyState&&) noexcept = default;
     constexpr PropertyState& operator=(const PropertyState&) = default;
 
-    constexpr const T& operator=(const T& v) noexcept
+    constexpr T const& operator=(T const& v) noexcept
     {
         set(v);
         return v;
@@ -58,7 +58,7 @@ public:
         return v;
     }
 
-    inline bool set(const T& v) override
+    bool set(const T& v) override
     {
         const bool is_different{BaseClass::set(v)};
 
@@ -69,7 +69,7 @@ public:
         return is_different;
     }
 
-    inline bool set(T&& v) override
+    bool set(T&& v) override
     {
         const bool is_different{BaseClass::set(std::move(v))};
 
