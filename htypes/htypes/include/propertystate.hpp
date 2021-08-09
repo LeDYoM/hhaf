@@ -14,21 +14,33 @@ namespace htps
 template <typename T, typename Tag = DummyTag>
 class PropertyState final : public BasicProperty<T, Tag>
 {
-    using BaseClass       = BasicProperty<T, Tag>;
-    using type            = typename BaseClass::type;
+private:
+    bool has_changed_{true};
+    using BaseClass = BasicProperty<T, Tag>;
+
+public:
+    using value_type      = typename BaseClass::value_type;
     using const_type      = typename BaseClass::const_type;
     using reference       = typename BaseClass::reference;
     using const_reference = typename BaseClass::const_reference;
     using pointer         = typename BaseClass::pointer;
     using const_pointer   = typename BaseClass::const_pointer;
 
-public:
+    /**
+     * @brief Default constructor.
+     * Constructs a property state with the default value of the contained
+     * type.
+     */
     constexpr PropertyState() noexcept : BaseClass{} {}
+
+    /**
+     * @brief Constructs a property from a value from the property
+     */
     constexpr PropertyState(T iv) noexcept : BaseClass{std::move(iv)} {}
     constexpr PropertyState(PropertyState&&) noexcept = default;
     PropertyState(const PropertyState&)               = default;
     constexpr PropertyState& operator=(PropertyState&&) noexcept = default;
-    constexpr PropertyState& operator=(const PropertyState&) noexcept = default;
+    constexpr PropertyState& operator=(const PropertyState&) = default;
 
     constexpr const T& operator=(const T& v) noexcept
     {
@@ -36,12 +48,12 @@ public:
         return v;
     }
 
-    constexpr bool hasChanged() const noexcept { return m_hasChanged; }
-    constexpr void resetHasChanged() noexcept { m_hasChanged = false; }
-    constexpr void setChanged() noexcept { m_hasChanged = true; }
+    constexpr bool hasChanged() const noexcept { return has_changed_; }
+    constexpr void resetHasChanged() noexcept { has_changed_ = false; }
+    constexpr void setChanged() noexcept { has_changed_ = true; }
     constexpr bool readResetHasChanged() noexcept
     {
-        const bool v{m_hasChanged};
+        const bool v{has_changed_};
         resetHasChanged();
         return v;
     }
@@ -67,9 +79,6 @@ public:
         }
         return is_different;
     }
-
-private:
-    bool m_hasChanged{true};
 };
 
 template <typename T, typename... Args>

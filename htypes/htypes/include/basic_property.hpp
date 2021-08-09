@@ -12,7 +12,7 @@ class BasicProperty : public IProperty<T, Tag>
 public:
     using Base            = IProperty<T, Tag>;
     using tag             = typename Base::tag;
-    using type            = typename Base::type;
+    using value_type      = typename Base::value_type;
     using const_type      = typename Base::const_type;
     using reference       = typename Base::reference;
     using const_reference = typename Base::const_reference;

@@ -16,7 +16,7 @@ class IProperty
 {
 public:
     using tag             = Tag;
-    using type            = T;
+    using value_type      = T;
     using const_type      = T const;
     using reference       = T&;
     using const_reference = T const&;
