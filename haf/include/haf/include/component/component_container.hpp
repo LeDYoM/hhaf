@@ -23,6 +23,8 @@ public:
     explicit ComponentContainer(
         htps::rptr<BaseClass::AttachableType> attachable);
 
+    ~ComponentContainer();
+    
     /**
      * @brief Use constructors from base class
      */

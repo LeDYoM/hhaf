@@ -28,6 +28,8 @@ ComponentContainer::ComponentContainer(
     BaseClass{attachable}, p_{make_pimplp<ComponentContainerPrivate>()}
 {}
 
+ComponentContainer::~ComponentContainer() = default;
+
 void ComponentContainer::updateComponents()
 {
     p_->components_.performUpdate(
