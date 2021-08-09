@@ -39,6 +39,8 @@ public:
               const AnimationDirection animation_direction,
               ActionFunc endAction = {}) noexcept;
 
+    Animation(AnimationData&& animation_data) noexcept;
+
     /**
      * @brief Performs one step on the animation
      *

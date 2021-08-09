@@ -2,6 +2,7 @@
 #define HAF_ANIMATION_PROPERTY_ANIMATION_DATA_INCLUDE_HPP
 
 #include <htypes/include/properties.hpp>
+#include <haf/include/animation/animation_data.hpp>
 
 namespace haf::anim
 {

@@ -15,6 +15,15 @@ Animation::Animation(uptr<time::Timer> timer,
     delta_{postProcessDelta(raw_delta_)}
 {}
 
+Animation::Animation(AnimationData&& animation_data) noexcept
+    : animation_data_{std::move(animation_data)},
+    current_time_{},
+    raw_delta_{0.0F},
+    delta_{postProcessDelta(raw_delta_)}
+{
+
+}
+
 Animation::~Animation() = default;
 
 bool Animation::animate()

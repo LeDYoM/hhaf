@@ -6,19 +6,15 @@
 
 namespace haf::anim
 {
-class AnimationComponent;
-
 class AnimationBuilder
 {
-    AnimationBuilder(htps::rptr<AnimationComponent>) noexcept;
-
     AnimationBuilder& duration(time::TimePoint _duration);
     AnimationBuilder& endAction(ActionFunc _end_action);
     AnimationBuilder& animationDirection(
         AnimationDirection _animation_direction);
 
+    AnimationData animationData() noexcept;
 private:
-    htps::rptr<AnimationComponent> animation_component_;
     AnimationData data_;
 };
 }  // namespace haf::anim

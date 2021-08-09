@@ -1,14 +1,10 @@
 #include <haf/include/animation/animation_builder.hpp>
+#include <haf/include/animation/animationcomponent.hpp>
 
 using namespace htps;
 
 namespace haf::anim
 {
-AnimationBuilder::AnimationBuilder(
-    htps::rptr<AnimationComponent> animation_component) noexcept :
-    animation_component_{animation_component}
-{}
-
 AnimationBuilder& AnimationBuilder::duration(time::TimePoint _duration)
 {
     data_.duration_ = std::move(_duration);
@@ -27,4 +23,10 @@ AnimationBuilder& AnimationBuilder::animationDirection(
     data_.animation_direction_ = std::move(_animation_direction);
     return *this;
 }
+
+AnimationData AnimationBuilder::animationData() noexcept
+{
+    return std::move(data_);
+}
+
 }  // namespace haf::anim

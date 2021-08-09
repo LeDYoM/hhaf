@@ -11,8 +11,6 @@ template <typename T, typename Tag>
 class PropertyAnimationBuilder : public AnimationBuilder
 {
 public:
-    using AnimationBuilder::AnimationBuilder;
-
     PropertyAnimationBuilder& property(htps::IProperty<T, Tag>* property)
     {
         data_.property_ = std::move(property);
@@ -31,6 +29,10 @@ public:
         return *this;
     }
 
+    PropertyAnimationData<T, Tag> propertyAnimationData() noexcept
+    {
+        return data_;
+    }
 private:
     PropertyAnimationData<T, Tag> data_;
 };
