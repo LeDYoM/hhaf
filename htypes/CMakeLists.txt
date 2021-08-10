@@ -30,6 +30,7 @@ set(headers
     ${include_dir}/debug_internal.hpp
     ${include_dir}/dictionary.hpp
     ${include_dir}/function.hpp
+    ${include_dir}/grouping_property_impl.hpp
     ${include_dir}/grouping_property.hpp
     ${include_dir}/growpolicy.hpp
     ${include_dir}/lockablevector.hpp
