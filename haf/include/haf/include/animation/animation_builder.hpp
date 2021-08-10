@@ -8,6 +8,7 @@ namespace haf::anim
 {
 class AnimationBuilder
 {
+public:
     AnimationBuilder& duration(time::TimePoint _duration);
     AnimationBuilder& endAction(ActionFunc _end_action);
     AnimationBuilder& animationDirection(

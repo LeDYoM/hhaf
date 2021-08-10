@@ -8,6 +8,7 @@
 #include <haf/include/animation/ipropertyanimation.hpp>
 #include <haf/include/scene/scenenode.hpp>
 #include <haf/include/system/datawrappercreator.hpp>
+#include <htypes/include/properties.hpp>
 
 namespace haf::anim
 {
@@ -56,10 +57,11 @@ public:
     }
 
     template <typename T, typename PropertyTag>
-    PropertyAnimationBuilder<T, PropertyTag> buildPropertyAnimation()
+    PropertyAnimationBuilder<T, PropertyTag> buildPropertyAnimation(
+        htps::IProperty<T, PropertyTag>* property)
     {
-        PropertyAnimationBuilder<T, PropertyTag> property_animation_builder{
-            this};
+        PropertyAnimationBuilder<T, PropertyTag> property_animation_builder;
+        property_animation_builder.property(property);
         return property_animation_builder;
     }
 
