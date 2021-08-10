@@ -14,8 +14,8 @@ namespace htps
  * This Tag should export a value_type with the tyè contained
  * in this Tag
  */
-template <typename Tag>
-using GroupableProperty = PropertyState<typename Tag::value_type, Tag>;
+//template <typename Tag>
+//using GroupableProperty = PropertyState<typename Tag::value_type, Tag>;
 
 template <typename Tag, typename = void>
 struct PropertyTypeSelector
@@ -32,6 +32,12 @@ struct PropertyTypeSelector<Tag, std::void_t<typename Tag::UseBasicProperty>>
 template <typename Tag>
 struct GroupablePropertyImpl
 {
+private:
+    PropertyTypeSelector<Tag>::type prop_;
+
+public:
+    using GroupablePropertyOne = PropertyTypeSelector<Tag>::type;
+
     template <typename Tag_>
     struct ContainsTag
     {
@@ -52,7 +58,7 @@ struct GroupablePropertyImpl
 
     template <typename Tag_>
     std::enable_if_t<GroupablePropertyImpl::ContainsTag_v<Tag_>,
-                     GroupableProperty<Tag_>&>
+                     GroupablePropertyOne&>
     get_property_reference() noexcept
     {
         return prop_;
@@ -60,14 +66,11 @@ struct GroupablePropertyImpl
 
     template <typename Tag_>
     std::enable_if_t<GroupablePropertyImpl::ContainsTag_v<Tag_>,
-                     GroupableProperty<Tag_> const&>
+                     GroupablePropertyOne const&>
     get_property_reference() const noexcept
     {
         return prop_;
     }
-
-private:
-    PropertyTypeSelector<Tag>::type prop_;
 };
 
 /**
@@ -106,7 +109,7 @@ struct PropertyGroupImpl : public GroupablePropertyImpl<FirstTag>,
     template <
         typename Tag_,
         std::enable_if_t<PropertyGroupImpl::ContainsTag_v<Tag_>>* = nullptr>
-    GroupableProperty<Tag_> const& get_property_reference() const noexcept
+    auto const& get_property_reference() const noexcept
     {
         if constexpr (std::is_same_v<Tag_, FirstTag>)
         {
@@ -123,7 +126,7 @@ struct PropertyGroupImpl : public GroupablePropertyImpl<FirstTag>,
     template <
         typename Tag_,
         std::enable_if_t<PropertyGroupImpl::ContainsTag_v<Tag_>>* = nullptr>
-    GroupableProperty<Tag_>& get_property_reference() noexcept
+    auto& get_property_reference() noexcept
     {
         if constexpr (std::is_same_v<Tag_, FirstTag>)
         {
