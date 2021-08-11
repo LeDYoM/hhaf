@@ -288,3 +288,55 @@ TEST_CASE("PropertyGroup inheritance", "[htypes][property]")
     CHECK(efsn.prop<StrTag>().set("hello"));
     CHECK(efsn.prop<StrTag>().get() == "hello");
 }
+
+struct IntTagBasic
+{
+    using value_type = int;
+    struct UseBasicProperty
+    {};
+};
+
+struct StrTagBasic
+{
+    using value_type = str;
+    struct UseBasicProperty
+    {};
+};
+
+TEST_CASE("PropertyGroup with basic", "[htypes][property]")
+{
+    PropertyGroup<IntTagBasic> pg;
+    CHECK(pg.set<IntTagBasic>(2));
+    CHECK_FALSE(pg.set<IntTagBasic>(2));
+
+    CHECK(pg.set<IntTagBasic>(3));
+    CHECK_FALSE(pg.set<IntTagBasic>(3));
+
+    CHECK(pg.get<IntTagBasic>() == 3);
+
+    CHECK(pg.set<IntTagBasic>(5));
+    CHECK_FALSE(pg.set<IntTagBasic>(5));
+
+    CHECK(pg.get<IntTagBasic>() == 5);
+}
+
+TEST_CASE("PropertyGroup with two basic properties", "[htypes][property]")
+{
+    PropertyGroup<IntTagBasic, StrTagBasic> pg;
+    CHECK(pg.set<IntTagBasic>(2));
+    CHECK_FALSE(pg.set<IntTagBasic>(2));
+    CHECK(pg.set<StrTagBasic>("hi"));
+    CHECK_FALSE(pg.set<StrTagBasic>("hi"));
+
+    CHECK(pg.set<IntTagBasic>(3));
+    CHECK_FALSE(pg.set<IntTagBasic>(3));
+
+    CHECK(pg.get<IntTagBasic>() == 3);
+    CHECK(pg.set<IntTagBasic>(5));
+    CHECK_FALSE(pg.set<IntTagBasic>(5));
+    CHECK(pg.set<StrTagBasic>("hiloop"));
+    CHECK_FALSE(pg.set<StrTagBasic>("hiloop"));
+
+    CHECK(pg.get<IntTagBasic>() == 5);
+    CHECK(pg.get<StrTagBasic>() == "hiloop");
+}
