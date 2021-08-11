@@ -4,6 +4,7 @@
 
 #include <haf/include/scene_nodes/scenenodetext.hpp>
 #include <haf/include/animation/animationcomponent.hpp>
+#include <haf/include/animation/property_animation_builder.hpp>
 #include <haf/include/scene_components/scenemetricsview.hpp>
 #include <haf/include/component/component_container.hpp>
 
@@ -47,6 +48,7 @@ void PauseSceneNode::enterPause()
     //    animation_component_->addPropertyAnimation(
     //        TimePoint_as_miliseconds(1000U), m_pauseText->prop<TextColor>(),
     //        Color{255U, 255U, 255U, 0U}, Color{255U, 255U, 255U, 255U});
+
     animation_component_
         ->buildPropertyAnimation(&m_pauseText->prop<TextColor>())
         .startValue(Color{255U, 255U, 255U, 0U})

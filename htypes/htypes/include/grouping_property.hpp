@@ -26,7 +26,7 @@ public:
     PropertyGroupBasic& operator=(PropertyGroupBasic const&) = delete;
     PropertyGroupBasic(PropertyGroupBasic&&) noexcept(
         noexcept(PropertyGroupImpl<Tag...>{
-            std::move(decval(PropertyGroupImpl<Tag...>))})) = default;
+            std::move(PropertyGroupImpl<Tag...>{})})) = default;
     PropertyGroupBasic& operator=(PropertyGroupBasic&&) = default;
 
     PropertyGroupBasic(typename Tag::value_type const&... values) :
