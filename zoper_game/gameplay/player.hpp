@@ -13,10 +13,11 @@ namespace zoper
 
 class Player : public GameBaseTile
 {
+   using BaseClass     = GameBaseTile;
+
 public:
     using BoardTileData = GameBaseTile::BoardTileData;
-    using BaseClass     = GameBaseTile;
-
+ 
     Player(htps::rptr<haf::scene::SceneNode> parent, htps::str name);
     ~Player() override;
 
@@ -25,16 +26,16 @@ public:
 
     bool canBeMoved(htps::vector2dst const& dest_position) const;
 
-    void movePlayer(const Direction& direction);
-    void launchAnimation(const htps::vector2df& toWhere);
+    void movePlayer(Direction const& direction);
+    void launchAnimation(htps::vector2df const& toWhere);
 
-    void tileAdded(const htps::vector2dst& position) override;
-    void tileChanged(const htps::vector2dst& position,
-                     const BoardTileData oldValue,
-                     const BoardTileData newValue) override;
+    void tileAdded(htps::vector2dst const& position) override;
+    void tileChanged(htps::vector2dst const& position,
+                     BoardTileData const oldValue,
+                     BoardTileData const newValue) override;
 
-    void tileMoved(const htps::vector2dst& source,
-                   const htps::vector2dst& dest) override;
+    void tileMoved(htps::vector2dst const& source,
+                   htps::vector2dst const& dest) override;
 
     void update() override;
 

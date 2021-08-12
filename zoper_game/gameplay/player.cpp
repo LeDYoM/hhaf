@@ -67,12 +67,12 @@ void Player::update()
     }
 }
 
-bool Player::canBeMoved(htps::vector2dst const& dest_position) const
+bool Player::canBeMoved(vector2dst const& dest_position) const
 {
     return TokenZones::pointInCenter(dest_position);
 }
 
-void Player::movePlayer(const Direction& direction)
+void Player::movePlayer(Direction const& direction)
 {
     LogAsserter::log_assert(direction.isValid(),
                             "Invalid direction passed to move");
@@ -85,7 +85,7 @@ void Player::movePlayer(const Direction& direction)
     }
 }
 
-void Player::tileMoved(const vector2dst& source, const vector2dst& dest)
+void Player::tileMoved(vector2dst const& source, vector2dst const& dest)
 {
     BaseClass::tileMoved(source, dest);
     DisplayLog::info("Player board position: ", dest);
@@ -95,31 +95,40 @@ void Player::tileMoved(const vector2dst& source, const vector2dst& dest)
     boardPosition.set(dest);
 }
 
-void Player::launchAnimation(const vector2df& toWhere)
+void Player::launchAnimation(vector2df const& toWhere)
 {
     components().component(animation_component_);
-    animation_component_->addPropertyAnimation(
-        TimePoint_as_miliseconds(
-            gameplay::constants::MillisAnimationLaunchPlayerStep),
-        prop<Position>(), prop<Position>()(), toWhere,
-        AnimationDirection::Forward,
-        [this, currentPosition = prop<Position>()()]() {
+
+    auto property_animation_builder =
+        animation_component_->make_property_animation_builder(prop<Position>());
+    property_animation_builder->startValue(prop<Position>()())
+        .endValue(toWhere)
+        .baseBuilder()
+        .duration(TimePoint_as_miliseconds(
+            gameplay::constants::MillisAnimationLaunchPlayerStep))
+        .endAction([this, currentPosition = prop<Position>()()]() {
             launchAnimationBack(currentPosition);
         });
+    animation_component_->addAnimation(std::move(property_animation_builder));
 }
 
-void Player::launchAnimationBack(const vector2df& toWhere)
+void Player::launchAnimationBack(vector2df const& toWhere)
 {
     DisplayLog::info("Creating animation for player to go back");
     currentDirection = currentDirection().negate();
     components().component(animation_component_);
-    animation_component_->addPropertyAnimation(
-        TimePoint_as_miliseconds(
-            gameplay::constants::MillisAnimationLaunchPlayerStep),
-        prop<Position>(), prop<Position>().get(), toWhere);
+
+    auto property_animation_builder =
+        animation_component_->make_property_animation_builder(prop<Position>());
+    property_animation_builder->startValue(prop<Position>()())
+        .endValue(toWhere)
+        .baseBuilder()
+        .duration(TimePoint_as_miliseconds(
+            gameplay::constants::MillisAnimationLaunchPlayerStep));
+    animation_component_->addAnimation(std::move(property_animation_builder));
 }
 
-void Player::tileAdded(const vector2dst& position_)
+void Player::tileAdded(vector2dst const& position_)
 {
     DisplayLog::info("TokenPlayer appeared at ", position_);
     node()->color.set(getColorForToken());
@@ -128,9 +137,9 @@ void Player::tileAdded(const vector2dst& position_)
     boardPosition.set(position_);
 }
 
-void Player::tileChanged(const vector2dst& position_,
-                         const BoardTileData oldValue,
-                         const BoardTileData newValue)
+void Player::tileChanged(vector2dst const& position_,
+                         BoardTileData const oldValue,
+                         BoardTileData const newValue)
 {
     BaseClass::tileChanged(position_, oldValue, newValue);
     DisplayLog::info("Player (position ", position_, ") changed from ",

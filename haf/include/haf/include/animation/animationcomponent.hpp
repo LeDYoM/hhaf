@@ -76,7 +76,7 @@ public:
             timer = attachedNode()->subsystems().dataWrapper<time::Timer>();
         }
 
-        auto builder = muptr<PropertyAnimationBuilder<T, PropertyTag>>();
+        auto builder = htps::muptr<PropertyAnimationBuilder<T, PropertyTag>>();
         builder->property(&property).baseBuilder().timer(std::move(timer));
         return builder;
     }
