@@ -34,14 +34,21 @@ void GameScene::GameScenePrivate::createScoreIncrementPoints(
         using namespace gameplay::constants;
 
         DisplayLog::info("Creating animation for points to score");
-        scene_animation_component_->addPropertyAnimation(
-            time::TimePoint_as_miliseconds(MillisAnimationPointsToScore),
-            renderizableSceneNode->prop<Position>(), lastTokenPosition,
-            EndPositionPointsToScore, AnimationDirection::Forward,
-            [renderizableSceneNode]() {
+        auto property_animation_builder =
+            scene_animation_component_->make_property_animation_builder(
+                renderizableSceneNode->prop<Position>());
+        property_animation_builder->startValue(lastTokenPosition)
+            .endValue(EndPositionPointsToScore)
+            .baseBuilder()
+            .duration(
+                time::TimePoint_as_miliseconds(MillisAnimationPointsToScore))
+            .endAction([renderizableSceneNode]() {
                 renderizableSceneNode->parentAs<SceneNode>()->removeSceneNode(
                     renderizableSceneNode);
             });
+
+        scene_animation_component_->addAnimation(
+            std::move(property_animation_builder));
     }
 }
 }  // namespace zoper
