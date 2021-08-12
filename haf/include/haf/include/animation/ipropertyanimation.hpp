@@ -58,8 +58,7 @@ public:
         AnimationData&& animation_data,
         PropertyAnimationData<T, PropertyTag>&& property_animation_data) :
         Animation{std::move(animation_data)},
-        PropertyAnimationData<T, PropertyTag>{
-            std::move(property_animation_data)},
+        data_{std::move(property_animation_data)},
         deltaValue_{
             static_cast<AT>(AT{data_.endValue_} - AT{data_.startValue_})}
     {}

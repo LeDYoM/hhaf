@@ -4,12 +4,16 @@
 #include <htypes/include/types.hpp>
 #include <haf/include/animation/property_animation_data.hpp>
 #include <haf/include/animation/animation_builder.hpp>
+#include <haf/include/time/timer.hpp>
 
 namespace haf::anim
 {
 template <typename T, typename Tag>
-class PropertyAnimationBuilder : public AnimationBuilder
+class PropertyAnimationBuilder
 {
+private:
+    AnimationBuilder base_animation_builder_;
+
 public:
     PropertyAnimationBuilder& property(htps::IProperty<T, Tag>* property)
     {
@@ -29,13 +33,14 @@ public:
         return *this;
     }
 
-    PropertyAnimationData<T, Tag> propertyAnimationData() noexcept
-    {
-        return data_;
-    }
+    PropertyAnimationData<T, Tag> extractData() { return std::move(data_); }
+
+    AnimationBuilder& baseBuilder() { return base_animation_builder_; }
+
 private:
     PropertyAnimationData<T, Tag> data_;
 };
+
 }  // namespace haf::anim
 
 #endif

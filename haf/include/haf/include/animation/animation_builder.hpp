@@ -3,6 +3,7 @@
 
 #include <htypes/include/types.hpp>
 #include <haf/include/animation/animation_data.hpp>
+#include <haf/include/time/timer.hpp>
 
 namespace haf::anim
 {
@@ -13,11 +14,14 @@ public:
     AnimationBuilder& endAction(ActionFunc _end_action);
     AnimationBuilder& animationDirection(
         AnimationDirection _animation_direction);
+    AnimationBuilder& timer(htps::uptr<time::Timer> timer);
 
-    AnimationData animationData() noexcept;
+    AnimationData extractData() noexcept;
+
 private:
     AnimationData data_;
 };
+
 }  // namespace haf::anim
 
 #endif

@@ -24,7 +24,13 @@ AnimationBuilder& AnimationBuilder::animationDirection(
     return *this;
 }
 
-AnimationData AnimationBuilder::animationData() noexcept
+AnimationBuilder& AnimationBuilder::timer(htps::uptr<time::Timer> timer)
+{
+    data_.timer_ = std::move(timer);
+    return *this;
+}
+
+AnimationData AnimationBuilder::extractData() noexcept
 {
     return std::move(data_);
 }

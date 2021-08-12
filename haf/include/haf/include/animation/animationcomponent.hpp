@@ -57,12 +57,28 @@ public:
     }
 
     template <typename T, typename PropertyTag>
-    PropertyAnimationBuilder<T, PropertyTag> buildPropertyAnimation(
-        htps::IProperty<T, PropertyTag>* property)
+    void addAnimation(
+        htps::uptr<PropertyAnimationBuilder<T, PropertyTag>> builder)
     {
-        PropertyAnimationBuilder<T, PropertyTag> property_animation_builder;
-        property_animation_builder.property(property);
-        return property_animation_builder;
+        auto anim = htps::muptr<IPropertyAnimation<T, PropertyTag>>(
+            builder->baseBuilder().extractData(), builder->extractData());
+
+        addAnimation(std::move(anim));
+    }
+
+    template <typename T, typename PropertyTag>
+    htps::uptr<PropertyAnimationBuilder<T, PropertyTag>>
+    make_property_animation_builder(htps::IProperty<T, PropertyTag>& property,
+                                    htps::uptr<time::Timer> timer = nullptr)
+    {
+        if (timer == nullptr)
+        {
+            timer = attachedNode()->subsystems().dataWrapper<time::Timer>();
+        }
+
+        auto builder = muptr<PropertyAnimationBuilder<T, PropertyTag>>();
+        builder->property(&property).baseBuilder().timer(std::move(timer));
+        return builder;
     }
 
     /**

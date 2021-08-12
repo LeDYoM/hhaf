@@ -45,15 +45,14 @@ void PauseSceneNode::enterPause()
 {
     prop<Visible>().set(true);
     components().component(animation_component_);
-    //    animation_component_->addPropertyAnimation(
-    //        TimePoint_as_miliseconds(1000U), m_pauseText->prop<TextColor>(),
-    //        Color{255U, 255U, 255U, 0U}, Color{255U, 255U, 255U, 255U});
-
-    animation_component_
-        ->buildPropertyAnimation(&m_pauseText->prop<TextColor>())
-        .startValue(Color{255U, 255U, 255U, 0U})
+    auto property_animation_builder =
+        animation_component_->make_property_animation_builder(
+            m_pauseText->prop<TextColor>());
+    property_animation_builder->startValue(Color{255U, 255U, 255U, 0U})
         .endValue(Color{255U, 255U, 255U, 255U})
+        .baseBuilder()
         .duration(TimePoint_as_miliseconds(1000U));
+    animation_component_->addAnimation(std::move(property_animation_builder));
 }
 
 void PauseSceneNode::exitPause()
