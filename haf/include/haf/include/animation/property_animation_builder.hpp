@@ -15,6 +15,32 @@ private:
     AnimationBuilder base_animation_builder_;
 
 public:
+    PropertyAnimationBuilder& duration(time::TimePoint duration)
+    {
+        base_animation_builder_.duration(std::move(duration));
+        return *this;
+    }
+
+    PropertyAnimationBuilder& endAction(ActionFunc end_action)
+    {
+        base_animation_builder_.endAction(std::move(end_action));
+        return *this;
+    }
+
+    PropertyAnimationBuilder& animationDirection(
+        AnimationDirection animation_direction)
+    {
+        base_animation_builder_.animationDirection(
+            std::move(animation_direction));
+        return *this;
+    }
+
+    PropertyAnimationBuilder& timer(htps::uptr<time::Timer> timer)
+    {
+        base_animation_builder_.timer(std::move(timer));
+        return *this;
+    }
+
     PropertyAnimationBuilder& property(htps::IProperty<T, Tag>* property)
     {
         data_.property_ = std::move(property);
@@ -34,8 +60,10 @@ public:
     }
 
     PropertyAnimationData<T, Tag> extractData() { return std::move(data_); }
-
-    AnimationBuilder& baseBuilder() { return base_animation_builder_; }
+    AnimationData extractBaseData()
+    {
+        return std::move(base_animation_builder_.extractData());
+    }
 
 private:
     PropertyAnimationData<T, Tag> data_;

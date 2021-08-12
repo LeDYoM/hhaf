@@ -103,7 +103,6 @@ void Player::launchAnimation(vector2df const& toWhere)
         animation_component_->make_property_animation_builder(prop<Position>());
     property_animation_builder->startValue(prop<Position>()())
         .endValue(toWhere)
-        .baseBuilder()
         .duration(TimePoint_as_miliseconds(
             gameplay::constants::MillisAnimationLaunchPlayerStep))
         .endAction([this, currentPosition = prop<Position>()()]() {
@@ -122,7 +121,6 @@ void Player::launchAnimationBack(vector2df const& toWhere)
         animation_component_->make_property_animation_builder(prop<Position>());
     property_animation_builder->startValue(prop<Position>()())
         .endValue(toWhere)
-        .baseBuilder()
         .duration(TimePoint_as_miliseconds(
             gameplay::constants::MillisAnimationLaunchPlayerStep));
     animation_component_->addAnimation(std::move(property_animation_builder));

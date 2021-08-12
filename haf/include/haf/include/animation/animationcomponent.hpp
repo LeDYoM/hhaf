@@ -61,7 +61,7 @@ public:
         htps::uptr<PropertyAnimationBuilder<T, PropertyTag>> builder)
     {
         auto anim = htps::muptr<IPropertyAnimation<T, PropertyTag>>(
-            builder->baseBuilder().extractData(), builder->extractData());
+            builder->extractBaseData(), builder->extractData());
 
         addAnimation(std::move(anim));
     }
@@ -77,7 +77,7 @@ public:
         }
 
         auto builder = htps::muptr<PropertyAnimationBuilder<T, PropertyTag>>();
-        builder->property(&property).baseBuilder().timer(std::move(timer));
+        builder->property(&property).timer(std::move(timer));
         return builder;
     }
 
