@@ -8,6 +8,12 @@
 
 namespace haf::anim
 {
+/**
+ * @brief Class to build a property animation
+ * 
+ * @tparam T Type of the property to animate
+ * @tparam Tag Type tag of the property to animate
+ */
 template <typename T, typename Tag>
 class PropertyAnimationBuilder
 {
