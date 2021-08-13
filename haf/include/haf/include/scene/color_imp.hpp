@@ -62,18 +62,47 @@ struct ColorImp
      */
     static constexpr value_type value_min = detail::value_min<value_type>;
 
+    /**
+     * @brief Ensure that a value is between the required limits
+     *
+     * @tparam Source Type of the source value
+     * @param source Source value of type Source
+     * @return value_type Value of the type required for this ColorImp
+     */
     template <typename Source>
     static constexpr value_type ensureLimits(Source source) noexcept
     {
         return detail::ensureLimits<value_type, Source>(std::move(source));
     }
 
-    constexpr ColorImp() noexcept : r{}, g{}, b{}, a{value_max} {}
+    /**
+     * @brief Static constant defining the value for opaque colors
+     */
+    static constexpr value_type Opaque = value_max;
 
-    ColorImp(value_type const red,
-             value_type const green,
-             value_type const blue,
-             value_type const alpha = value_max) noexcept :
+    /**
+     * @brief Static constant defining the value for transparent colors
+     */
+    static constexpr value_type Transparent = value_min;
+
+    /**
+     * @brief Default constructor. Sets color to black opaque
+     */
+    constexpr ColorImp() noexcept :
+        r{value_min}, g{value_min}, b{value_min}, a{value_max}
+    {}
+
+    /**
+     * @brief Construct a ColorImp object from four values
+     * @param red Red component of the color
+     * @param green Green component of the color
+     * @param blue Blue component of the color
+     * @param alpha Alpha component of the color (Defaulted to opaque)
+     */
+    constexpr ColorImp(value_type const red,
+                       value_type const green,
+                       value_type const blue,
+                       value_type const alpha = value_max) noexcept :
         r{red}, g{green}, b{blue}, a{alpha}
     {}
 
@@ -81,6 +110,17 @@ struct ColorImp
     constexpr ColorImp& operator=(ColorImp const&) noexcept = default;
     constexpr ColorImp(ColorImp&&) noexcept                 = default;
     constexpr ColorImp& operator=(ColorImp&&) noexcept = default;
+
+    /**
+     * @brief Construct a ColorImp object from another color, but with a
+     * different alpha.
+     * @param base_color The color that will give the r,g,b values
+     * @param alpha The alpha value
+     */
+    constexpr ColorImp(ColorImp const& base_color,
+                       value_type const alpha) noexcept :
+        r{base_color.r}, g{base_color.g}, b{base_color.b}, a{alpha}
+    {}
 
     // TODO: Enable_if for value_type = u8
     constexpr explicit ColorImp(const htps::u32 color) noexcept :
@@ -90,6 +130,13 @@ struct ColorImp
         a{static_cast<value_type>((color & 0x000000FF) >> 0U)}
     {}
 
+    /**
+     * @brief Copy assignment from a color from a different value_type
+     * 
+     * @tparam vt Value type of the other color
+     * @param other Other color
+     * @return ColorImp& This color
+     */
     template <typename vt>
     constexpr ColorImp& operator=(const ColorImp<vt>& other) noexcept
     {
@@ -97,6 +144,7 @@ struct ColorImp
         g = ensureLimits(static_cast<value_type>(other.g));
         b = ensureLimits(static_cast<value_type>(other.b));
         a = ensureLimits(static_cast<value_type>(other.a));
+        return *this;
     }
 
     static constexpr ColorImp fromFloats(htps::f32 const red,

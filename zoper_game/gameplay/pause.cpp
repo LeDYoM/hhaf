@@ -2,6 +2,7 @@
 
 #include "../loaders/gameresources.hpp"
 
+#include <haf/include/scene/color.hpp>
 #include <haf/include/scene_nodes/scenenodetext.hpp>
 #include <haf/include/animation/animationcomponent.hpp>
 #include <haf/include/animation/property_animation_builder.hpp>
@@ -43,13 +44,15 @@ void PauseSceneNode::onCreated()
 
 void PauseSceneNode::enterPause()
 {
+    using namespace colors;
+
     prop<Visible>().set(true);
     components().component(animation_component_);
     auto property_animation_builder =
         animation_component_->make_property_animation_builder(
             m_pauseText->prop<TextColor>());
-    property_animation_builder->startValue(Color{255U, 255U, 255U, 0U})
-        .endValue(Color{255U, 255U, 255U, 255U})
+    property_animation_builder->startValue(Color{White, Color::Transparent})
+        .endValue(Color{White, Color::Opaque})
         .duration(TimePoint_as_miliseconds(1000U));
     animation_component_->addAnimation(std::move(property_animation_builder));
 }
