@@ -132,7 +132,7 @@ struct ColorImp
 
     /**
      * @brief Copy assignment from a color from a different value_type
-     * 
+     *
      * @tparam vt Value type of the other color
      * @param other Other color
      * @return ColorImp& This color
@@ -166,32 +166,70 @@ struct ColorImp
         a{ensureLimits(static_cast<value_type>(other.a))}
     {}
 
-    constexpr bool operator==(ColorImp const& right) const noexcept
+    /**
+     * @brief Equality comparation with another ColorImp of the same type
+     *
+     * @param rhs Right part of the comparison
+     * @return The colors are equal
+     * @return The colors are not equal
+     */
+    constexpr bool operator==(ColorImp const& rhs) const noexcept
     {
-        return (r == right.r && g == right.g && b == right.b && a == right.a);
+        return (r == rhs.r && g == rhs.g && b == rhs.b && a == rhs.a);
     }
 
-    constexpr bool operator!=(ColorImp const& right) const noexcept
+    /**
+     * @brief Unequality comparation with another ColorImp of the same type
+     *
+     * @param rhs Right part of the comparison
+     * @return The colors are not equal
+     * @return The colors are equal
+     */
+    constexpr bool operator!=(ColorImp const& rhs) const noexcept
     {
-        return !(*this == right);
+        return !(*this == rhs);
     }
 
+    /**
+     * @brief Add two colors (They might be of different type). The result
+     * is ensured to be a valid color of the source type
+     * 
+     * @tparam VT Value type of the second color
+     * @param rhs  Right hand side operand
+     * @return ColorImp with the resulting color
+     */
     template <typename VT>
-    constexpr ColorImp operator+(ColorImp<VT> const& right) const noexcept
+    constexpr ColorImp operator+(ColorImp<VT> const& rhs) const noexcept
     {
-        return (ColorImp(*this) += right);
+        return (ColorImp{*this} += rhs);
     }
 
+    /**
+     * @brief Substract two colors (They might be of different type). The result
+     * is ensured to be a valid color of the source type
+     * 
+     * @tparam VT Value type of the second color
+     * @param rhs  Right hand side operand
+     * @return ColorImp with the resulting color
+     */
     template <typename VT>
-    constexpr ColorImp operator-(ColorImp<VT> const& right) const noexcept
+    constexpr ColorImp operator-(ColorImp<VT> const& rhs) const noexcept
     {
-        return (ColorImp(*this) -= right);
+        return (ColorImp{*this} -= rhs);
     }
 
+    /**
+     * @brief Multiply two colors (They might be of different type). The result
+     * is ensured to be a valid color of the source type
+     * 
+     * @tparam VT Value type of the second color
+     * @param rhs  Right hand side operand
+     * @return ColorImp with the resulting color
+     */
     template <typename VT>
-    constexpr ColorImp operator*(ColorImp<VT> const& right) const noexcept
+    constexpr ColorImp operator*(ColorImp<VT> const& rhs) const noexcept
     {
-        return (ColorImp(*this) *= right);
+        return (ColorImp{*this} *= rhs);
     }
 
     template <typename vt>
@@ -215,13 +253,13 @@ struct ColorImp
 
     constexpr ColorImp& operator*=(const ColorImp& right) noexcept
     {
-        r = static_cast<value_type>(static_cast<htps::u32>(r) * right.r /
+        r = static_cast<value_type>((static_cast<htps::u32>(r) * right.r) /
                                     value_max);
-        g = static_cast<value_type>(static_cast<htps::u32>(g) * right.g /
+        g = static_cast<value_type>((static_cast<htps::u32>(g) * right.g) /
                                     value_max);
-        b = static_cast<value_type>(static_cast<htps::u32>(b) * right.b /
+        b = static_cast<value_type>((static_cast<htps::u32>(b) * right.b) /
                                     value_max);
-        a = static_cast<value_type>(static_cast<htps::u32>(a) * right.a /
+        a = static_cast<value_type>((static_cast<htps::u32>(a) * right.a) /
                                     value_max);
         return *this;
     }
@@ -244,6 +282,16 @@ struct ColorImp
         return *this;
     }
 
+    constexpr ColorImp operator*(htps::f32 const delta) const noexcept
+    {
+        return ColorImp{*this} *= delta;
+    }
+
+    constexpr ColorImp operator/(htps::f32 const delta) noexcept
+    {
+        return ColorImp{*this} /= delta;
+    }
+
     constexpr value_type red() const noexcept { return r; }
     constexpr value_type green() const noexcept { return g; }
     constexpr value_type blue() const noexcept { return b; }
@@ -260,31 +308,17 @@ private:
 };
 
 template <typename vt>
-constexpr ColorImp<vt> operator*(ColorImp<vt> color,
-                                 htps::f32 const delta) noexcept
-{
-    return ColorImp<vt>{std::move(color)} *= delta;
-}
-
-template <typename vt>
 constexpr ColorImp<vt> operator*(htps::f32 const delta,
-                                 ColorImp<vt> color) noexcept
+                                 ColorImp<vt> const& color) noexcept
 {
-    return std::move(color) * delta;
-}
-
-template <typename vt>
-constexpr ColorImp<vt> operator/(ColorImp<vt> color,
-                                 htps::f32 const delta) noexcept
-{
-    return ColorImp<vt>{std::move(color)} /= delta;
+    return color * delta;
 }
 
 template <typename vt>
 constexpr ColorImp<vt> operator/(htps::f32 const delta,
-                                 ColorImp<vt> color) noexcept
+                                 ColorImp<vt> const& color) noexcept
 {
-    return std::move(color) / delta;
+    return color / delta;
 }
 
 }  // namespace haf::scene
