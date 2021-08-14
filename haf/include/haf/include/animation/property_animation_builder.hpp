@@ -10,7 +10,7 @@ namespace haf::anim
 {
 /**
  * @brief Class to build a property animation
- * 
+ *
  * @tparam T Type of the property to animate
  * @tparam Tag Type tag of the property to animate
  */
@@ -65,10 +65,24 @@ public:
         return *this;
     }
 
-    PropertyAnimationData<T, Tag> extractData() { return std::move(data_); }
-    AnimationData extractBaseData()
+    PropertyAnimationData<T, Tag> extractData() noexcept
+    {
+        return std::move(data_);
+    }
+
+    void setData(PropertyAnimationData<T, Tag>&& data) noexcept
+    {
+        data_ = std::move(data);
+    }
+
+    AnimationData extractBaseData() noexcept
     {
         return std::move(base_animation_builder_.extractData());
+    }
+
+    void setBaseData(AnimationData&& animation_data) noexcept
+    {
+        base_animation_builder_.setData(std::move(animation_data));
     }
 
 private:

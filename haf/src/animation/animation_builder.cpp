@@ -35,4 +35,9 @@ AnimationData AnimationBuilder::extractData() noexcept
     return std::move(data_);
 }
 
+void AnimationBuilder::setData(AnimationData&& animation_data) noexcept
+{
+    data_ = std::move(animation_data);
+}
+
 }  // namespace haf::anim

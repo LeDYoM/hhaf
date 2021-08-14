@@ -17,6 +17,7 @@ public:
     AnimationBuilder& timer(htps::uptr<time::Timer> timer);
 
     AnimationData extractData() noexcept;
+    void setData(AnimationData&& animation_data) noexcept;
 
 private:
     AnimationData data_;
