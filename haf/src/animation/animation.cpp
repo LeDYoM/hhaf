@@ -1,4 +1,5 @@
 #include <haf/include/animation/animation.hpp>
+#include <hlog/include/hlog.hpp>
 
 using namespace htps;
 
@@ -27,16 +28,14 @@ Animation::~Animation() = default;
 bool Animation::animate()
 {
     current_time_ = animation_data_.timer_->ellapsed();
-    if (current_time_ > animation_data_.duration_)
-    {
-        delta_ = postProcessDelta(1.0F);
-        return false;
-    }
-    raw_delta_ =
+
+    bool const continue_animation{current_time_ <= animation_data_.duration_};
+    raw_delta_ = (continue_animation) ? (
         static_cast<decltype(raw_delta_)>(current_time_.milliseconds()) /
-        animation_data_.duration_.milliseconds();
+        animation_data_.duration_.milliseconds()) : 1.0F;
+
     delta_ = postProcessDelta(raw_delta_);
-    return true;
+    return continue_animation;
 }
 
 void Animation::executeEndAction()
