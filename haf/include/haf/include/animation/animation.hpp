@@ -68,7 +68,7 @@ private:
     htps::f32 raw_delta_;
     htps::f32 delta_;
 
-    htps::f32 postProcessDelta(const htps::f32 delta);
+    htps::f32 postProcessDelta(htps::f32 const delta);
 };
 
 }  // namespace haf::anim

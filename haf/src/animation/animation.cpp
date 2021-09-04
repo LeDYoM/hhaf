@@ -15,14 +15,12 @@ Animation::Animation(uptr<time::Timer> timer,
     delta_{postProcessDelta(raw_delta_)}
 {}
 
-Animation::Animation(AnimationData&& animation_data) noexcept
-    : animation_data_{std::move(animation_data)},
+Animation::Animation(AnimationData&& animation_data) noexcept :
+    animation_data_{std::move(animation_data)},
     current_time_{},
     raw_delta_{0.0F},
     delta_{postProcessDelta(raw_delta_)}
-{
-
-}
+{}
 
 Animation::~Animation() = default;
 
@@ -49,7 +47,7 @@ void Animation::executeEndAction()
     }
 }
 
-f32 Animation::postProcessDelta(const f32 delta)
+f32 Animation::postProcessDelta(f32 const delta)
 {
     switch (animation_data_.animation_direction_)
     {
