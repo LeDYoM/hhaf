@@ -5,7 +5,7 @@
 #include <haf/include/component/icomponent.hpp>
 #include <haf/include/time/timeview.hpp>
 #include <haf/include/animation/animation.hpp>
-#include <haf/include/animation/ipropertyanimation.hpp>
+#include <haf/include/animation/propertyanimation.hpp>
 #include <haf/include/scene/scenenode.hpp>
 #include <haf/include/system/datawrappercreator.hpp>
 #include <htypes/include/properties.hpp>

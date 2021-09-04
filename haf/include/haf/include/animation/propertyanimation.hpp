@@ -63,7 +63,7 @@ public:
             static_cast<AT>(AT{data_.endValue_} - AT{data_.startValue_})}
     {}
 
-    virtual bool animate() override
+    bool animate() override
     {
         const bool bResult{Animation::animate()};
         auto const p = AT{data_.startValue_ + (deltaValue_ * delta())};
