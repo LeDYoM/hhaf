@@ -38,11 +38,27 @@ enum class AnimationDeltaMode : htps::u8
 class AnimationData
 {
 public:
-    htps::uptr<time::Timer> timer_;
-    time::TimePoint duration_;
-    ActionFunc end_action_;
-    AnimationDirection animation_direction_{AnimationDirection::Forward};
-    AnimationCountMode animation_count_mode_{AnimationCountMode::FixedCount};
+    /*
+     * @param timer @b Timer to use to animate
+     * @param duration @b time::TimePoint containing the time the animation is
+     *  going to last
+     * @param animation_direction @b AnimationDirection Direction of the
+     *  animation
+     * @param endAction Functor containing an action to perform when the
+     *  animation finishes
+     */
+
+    htps::uptr<time::Timer> timer_;  //< Timer to use to animate
+    time::TimePoint duration_;  //< @b time::TimePoint containing the time the
+                                // animation is going to last
+    ActionFunc end_action_;     //< Functor containing an action to perform when
+                                // the animation finishes
+    AnimationDirection animation_direction_{
+        AnimationDirection::Forward};  //< Direction of the animation
+    AnimationCountMode animation_count_mode_{
+        AnimationCountMode::FixedCount};  //< Option specifying if the animation
+                                          //is going to be performed only once
+                                          //or a conted number.
     AnimationDeltaMode animation_delta_mode_{AnimationDeltaMode::Linear};
     htps::size_type times_{1U};
 };

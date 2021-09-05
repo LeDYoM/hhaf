@@ -1,7 +1,4 @@
 #include <haf/include/time/timer.hpp>
-#include "timesystem.hpp"
-
-#include <hlog/include/hlog.hpp>
 
 namespace haf::time
 {
@@ -12,14 +9,7 @@ void Timer::restart()
 
 TimePoint Timer::ellapsed() const
 {
-    if (isPaused())
-    {
-        return time_paused_ - started_at_;
-    }
-    else
-    {
-        return now() - started_at_;
-    }
+    return ((isPaused() ? time_paused_ : now()) - started_at_);
 }
 
 void Timer::pause()

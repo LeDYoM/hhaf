@@ -63,12 +63,16 @@ protected:
     htps::f32 delta() const noexcept { return delta_; }
 
 private:
-    AnimationData animation_data_;
-    time::TimePoint current_time_;
-    htps::f32 raw_delta_;
-    htps::f32 delta_;
+    using AnimationDeltaType = htps::f32;
 
-    htps::f32 postProcessDelta(htps::f32 const delta);
+    AnimationData animation_data_;
+    AnimationDirection current_direction_;
+    time::TimePoint current_time_;
+    AnimationDeltaType raw_delta_;
+    AnimationDeltaType delta_;
+    bool end_reached_;
+
+    AnimationDeltaType postProcessDelta(AnimationDeltaType const delta);
 };
 
 }  // namespace haf::anim

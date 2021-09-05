@@ -11,6 +11,7 @@ Animation::Animation(uptr<time::Timer> timer,
                      ActionFunc endAction) noexcept :
     animation_data_{std::move(timer), std::move(duration), std::move(endAction),
                     std::move(animation_direction)},
+    current_direction_{animation_data_.animation_direction_},
     current_time_{},
     raw_delta_{0.0F},
     delta_{postProcessDelta(raw_delta_)}
@@ -18,9 +19,11 @@ Animation::Animation(uptr<time::Timer> timer,
 
 Animation::Animation(AnimationData&& animation_data) noexcept :
     animation_data_{std::move(animation_data)},
+    current_direction_{animation_data_.animation_direction_},
     current_time_{},
     raw_delta_{0.0F},
-    delta_{postProcessDelta(raw_delta_)}
+    delta_{postProcessDelta(raw_delta_)},
+    end_reached_{false}
 {}
 
 Animation::~Animation() = default;
@@ -46,9 +49,9 @@ void Animation::executeEndAction()
     }
 }
 
-f32 Animation::postProcessDelta(f32 const delta)
+f32 Animation::postProcessDelta(AnimationDeltaType const delta)
 {
-    switch (animation_data_.animation_direction_)
+    switch (current_direction_)
     {
         default:
         case AnimationDirection::Forward:
