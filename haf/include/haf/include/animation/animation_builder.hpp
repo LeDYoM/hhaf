@@ -15,6 +15,9 @@ public:
     AnimationBuilder& animationDirection(
         AnimationDirection _animation_direction);
     AnimationBuilder& timer(htps::uptr<time::Timer> timer);
+    AnimationBuilder& times(htps::u32 times);
+    AnimationBuilder& continuous();
+    AnimationBuilder& switchAnimation(bool const value);
 
     AnimationData extractData() noexcept;
     void setData(AnimationData&& animation_data) noexcept;

@@ -50,11 +50,10 @@ public:
     void executeEndAction();
 
 protected:
-    htps::f32 delta() const noexcept { return delta_; }
+    using AnimationDeltaType = htps::f32;
+    AnimationDeltaType delta() const noexcept { return delta_; }
 
 private:
-    using AnimationDeltaType = htps::f32;
-
     AnimationData animation_data_;
     AnimationDirection current_direction_;
     time::TimePoint current_time_;

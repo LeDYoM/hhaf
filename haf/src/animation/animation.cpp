@@ -9,7 +9,7 @@ Animation::Animation(AnimationData&& animation_data) noexcept :
     animation_data_{std::move(animation_data)},
     current_direction_{animation_data_.animation_direction_},
     current_time_{},
-    raw_delta_{0.0F},
+    raw_delta_{static_cast<AnimationDeltaType>(0.0)},
     delta_{postProcessDelta(raw_delta_)},
     end_reached_{false}
 {}
@@ -20,12 +20,30 @@ bool Animation::animate()
 {
     current_time_ = animation_data_.timer_->ellapsed();
 
-    bool const continue_animation{current_time_ <= animation_data_.duration_};
-    raw_delta_ = (continue_animation) ? (
-        static_cast<decltype(raw_delta_)>(current_time_.milliseconds()) /
-        animation_data_.duration_.milliseconds()) : 1.0F;
+    bool continue_animation{current_time_ <= animation_data_.duration_};
+    raw_delta_ = (continue_animation)
+        ? (static_cast<decltype(raw_delta_)>(current_time_.milliseconds()) /
+           animation_data_.duration_.milliseconds())
+        : static_cast<AnimationDeltaType>(1.0);
 
-    delta_ = postProcessDelta(raw_delta_);
+    delta_       = postProcessDelta(raw_delta_);
+    end_reached_ = !continue_animation;
+
+    if (end_reached_)
+    {
+        if (animation_data_.switch_)
+        {
+            current_direction_ =
+                ((current_direction_ == AnimationDirection::Forward)
+                     ? AnimationDirection::Backward
+                     : AnimationDirection::Forward);
+        }
+        if (animation_data_.times_ != -1)
+        {
+            --animation_data_.times_;
+        }
+        continue_animation = animation_data_.times_ != 0;
+    }
     return continue_animation;
 }
 
@@ -46,7 +64,7 @@ f32 Animation::postProcessDelta(AnimationDeltaType const delta)
             return delta;
             break;
         case AnimationDirection::Backward:
-            return (1.0F - delta);
+            return (static_cast<AnimationDeltaType>(1.0) - delta);
             break;
     }
 }
