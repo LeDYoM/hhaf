@@ -4,6 +4,8 @@ project(haf_utests CXX)
 set(CURRENT_TARGET ${PROJECT_NAME})
 
 set(SOURCE_TESTS
+    animation/animationcomponent
+
     components/component_container
 
     scene/color
@@ -17,7 +19,6 @@ set(SOURCE_TESTS
     scene/transformable
     scene/transformation
 
-    scene_components/animationcomponent
     scene_components/statescontroller
 
     shareddata/address

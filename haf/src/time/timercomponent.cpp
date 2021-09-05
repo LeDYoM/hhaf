@@ -23,7 +23,7 @@ TimerConnectorSPtr TimerComponent::addTimer(TimerType timerType,
 
 void TimerComponent::update()
 {
-    activeTimers_.performUpdate([&](auto& timerConnector) {
+    activeTimers_.performUpdate([this](auto& timerConnector) {
         if (timerConnector->timeOut())
         {
             // Delta time has passed, so trigger

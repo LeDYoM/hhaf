@@ -26,19 +26,9 @@ public:
     /**
      * @brief Construct a new Animation object
      *
-     * @param timer @b Timer to use to animate
-     * @param duration @b time::TimePoint containing the time the animation is
-     *  going to last
-     * @param animation_direction @b AnimationDirection Direction of the
-     *  animation
-     * @param endAction Functor containing an action to perform when the
-     *  animation finishes
+     * @param animation_data Data for the animation
+     * @see AnimationData
      */
-    Animation(htps::uptr<time::Timer> timer,
-              time::TimePoint duration,
-              const AnimationDirection animation_direction,
-              ActionFunc endAction = {}) noexcept;
-
     Animation(AnimationData&& animation_data) noexcept;
 
     /**

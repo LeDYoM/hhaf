@@ -112,7 +112,14 @@ void Token::tileMoved(const vector2dst& source, const vector2dst& dest)
     auto const MoveTokenTime = time::TimePoint_as_miliseconds(1000U);
 
     const auto destination(board2Scene(dest));
-    animation_component_->addPropertyAnimation(MoveTokenTime, prop<Position>(),
-                                               prop<Position>()(), destination);
+
+    auto property_animation_builder =
+        animation_component_->make_property_animation_builder(
+            prop<Position>());
+    property_animation_builder->startValue(prop<Position>()())
+        .endValue(destination)
+        .duration(MoveTokenTime);
+    animation_component_->addAnimation(std::move(property_animation_builder));
+
 }
 }  // namespace zoper

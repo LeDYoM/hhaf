@@ -31,29 +31,9 @@ public:
     /**
      * @brief Construct a new IPropertyAnimation object
      *
-     * @param timer Timer to be used to control the animation
-     * @param duration Duration of the animation
-     * @param prop Reference to an IProperty<T> to use
-     * @param start Start value for the property
-     * @param end End value for the property
-     * @param animation_direction Direction to where the delta will go
-     * @param endAction Functor with an action to perform when the animation
-     *  is completed
+     * @param animation_data Data for the animation
+     * @param property_animation_data Data for the property animation
      */
-    IPropertyAnimation(htps::uptr<time::Timer> timer,
-                       time::TimePoint duration,
-                       htps::IProperty<T, PropertyTag>& prop,
-                       T start,
-                       T end,
-                       AnimationDirection animation_direction,
-                       ActionFunc endAction = {}) :
-        Animation{std::move(timer), std::move(duration),
-                  std::move(animation_direction), std::move(endAction)},
-        data_{&prop, std::move(start), std::move(end)},
-        deltaValue_{
-            static_cast<AT>(AT{data_.endValue_} - AT{data_.startValue_})}
-    {}
-
     IPropertyAnimation(
         AnimationData&& animation_data,
         PropertyAnimationData<T, PropertyTag>&& property_animation_data) :

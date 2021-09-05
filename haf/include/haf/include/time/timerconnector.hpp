@@ -14,6 +14,12 @@ namespace haf::time
 using timer_emitter_t  = htps::emitter<TimePoint>;
 using timer_callback_t = timer_emitter_t::emitter_callback_t;
 
+/**
+ * @brief Facade class around a @b Timer .
+ * Instances of this class will be returned from @b TimerComponent
+ * A @b TimerComponent can control all the attached instances to it, this way
+ * one can perform pauses and time outs to a group of timers.
+ */
 class TimerConnector
 {
 public:
