@@ -53,7 +53,9 @@ void PauseSceneNode::enterPause()
             m_pauseText->prop<TextColor>());
     property_animation_builder->startValue(Color{White, Color::Transparent})
         .endValue(Color{White, Color::Opaque})
-        .duration(TimePoint_as_miliseconds(1000U));
+        .duration(TimePoint_as_miliseconds(1000U))
+        .continuous()
+        .switchAnimation(true);
     animation_component_->addAnimation(std::move(property_animation_builder));
 }
 

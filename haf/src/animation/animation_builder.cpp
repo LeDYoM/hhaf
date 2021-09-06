@@ -42,7 +42,8 @@ void AnimationBuilder::setData(AnimationData&& animation_data) noexcept
 
 AnimationBuilder& AnimationBuilder::times(htps::u32 times)
 {
-    if (times > static_cast<decltype(times)>(std::numeric_limits<decltype(data_.times_)>::max()))
+    if (times > static_cast<decltype(times)>(
+                    std::numeric_limits<decltype(data_.times_)>::max()))
     {
         return continuous();
     }

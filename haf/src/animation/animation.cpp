@@ -31,18 +31,26 @@ bool Animation::animate()
 
     if (end_reached_)
     {
-        if (animation_data_.switch_)
-        {
-            current_direction_ =
-                ((current_direction_ == AnimationDirection::Forward)
-                     ? AnimationDirection::Backward
-                     : AnimationDirection::Forward);
-        }
+        // Should we stop animations?
+        // Reduce the number of pending loops if animation type is not
+        // infinite
         if (animation_data_.times_ != -1)
         {
             --animation_data_.times_;
         }
         continue_animation = animation_data_.times_ != 0;
+
+        if (continue_animation)
+        {
+            if (animation_data_.switch_)
+            {
+                current_direction_ =
+                    ((current_direction_ == AnimationDirection::Forward)
+                         ? AnimationDirection::Backward
+                         : AnimationDirection::Forward);
+            }
+            animation_data_.timer_->restart();
+        }
     }
     return continue_animation;
 }

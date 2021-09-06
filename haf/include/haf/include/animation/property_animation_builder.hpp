@@ -47,6 +47,24 @@ public:
         return *this;
     }
 
+    PropertyAnimationBuilder& times(htps::u32 times)
+    {
+        base_animation_builder_.times(std::move(times));
+        return *this;
+    }
+
+    PropertyAnimationBuilder& continuous()
+    {
+        base_animation_builder_.continuous();
+        return *this;
+    }
+
+    PropertyAnimationBuilder& switchAnimation(bool const value)
+    {
+        base_animation_builder_.switchAnimation(std::move(value));
+        return *this;
+    }
+
     PropertyAnimationBuilder& property(htps::IProperty<T, Tag>* property)
     {
         data_.property_ = std::move(property);
