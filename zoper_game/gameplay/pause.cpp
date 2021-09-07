@@ -44,16 +44,15 @@ void PauseSceneNode::onCreated()
 
 void PauseSceneNode::enterPause()
 {
-    using namespace colors;
-    TimePoint pause_animation_time{TimePoint_as_miliseconds(1000U)};
+    TimePoint const pause_animation_time{TimePoint_as_miliseconds(1000U)};
 
     prop<Visible>().set(true);
     components().component(animation_component_);
     auto property_animation_builder =
         animation_component_->make_property_animation_builder(
             m_pauseText->prop<TextColor>());
-    property_animation_builder->startValue(Color{White, Color::Transparent})
-        .endValue(Color{White, Color::Opaque})
+    property_animation_builder->startValue(Color{colors::White, Color::Transparent})
+        .endValue(Color{colors::White, Color::Opaque})
         .duration(pause_animation_time);
     animation_component_->addAnimation(std::move(property_animation_builder));
 }
