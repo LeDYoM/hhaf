@@ -173,12 +173,12 @@ protected:
 
 private:
     /**
-     * @brief SceneNode that owns this group
+     * @brief @b SceneNode that owns this group
      */
-    const htps::rptr<SceneNode> scene_node_;
+    htps::rptr<SceneNode> const scene_node_;
 
     /**
-     * @brief Container of a group of SceneNode
+     * @brief Container of a group of @b SceneNode (s)
      */
     SceneNodeVector scene_nodes_;
 };
