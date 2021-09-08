@@ -26,11 +26,6 @@ public:
     ~ComponentContainer();
     
     /**
-     * @brief Use constructors from base class
-     */
-    using BaseClass::AttachableManager;
-
-    /**
      * @brief Create or get a reference to a component type. This method
      * could create an instance of the component and add it to the component
      * list or retrieve a pointer to it
