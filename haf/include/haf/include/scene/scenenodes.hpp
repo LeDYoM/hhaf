@@ -14,7 +14,7 @@ class SceneNodes
 public:
     using SceneNodeVector = htps::vector<htps::sptr<SceneNode>>;
 
-    SceneNodes(const htps::rptr<SceneNode> scene_node);
+    explicit SceneNodes(htps::rptr<SceneNode> const scene_node);
 
     /**
      * @brief Create a Scene Node object.
@@ -26,9 +26,9 @@ public:
      * @return htps::sptr<T> The created object
      */
     template <typename T = SceneNode>
-    htps::sptr<T> createSceneNode(htps::str name)
+    auto createSceneNode(htps::str name)
     {
-        auto result(htps::msptr<T>(scene_node_, std::move(name)));
+        auto result{htps::msptr<T>(scene_node_, std::move(name))};
         addSceneNode(result);
         return result;
     }
@@ -60,7 +60,7 @@ public:
      * @return Get a constant reference to the underlying container
      * of scenenodes.
      */
-    const SceneNodeVector& sceneNodes() const noexcept;
+    SceneNodeVector const& sceneNodes() const noexcept;
 
     /**
      * @return Get a mutable reference to the underlying container
@@ -104,7 +104,8 @@ public:
         htps::function<void(htps::sptr<T> const&)> action)
     {
         for_each_sceneNode([&action](htps::sptr<SceneNode> const& node) {
-            if (auto const tnode = std::dynamic_pointer_cast<T>(node))
+            if (auto const tnode = std::dynamic_pointer_cast<T>(node);
+                tnode != nullptr)
             {
                 action(tnode);
             }
