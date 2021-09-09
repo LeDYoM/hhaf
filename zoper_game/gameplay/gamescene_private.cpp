@@ -35,8 +35,9 @@ void GameScene::GameScenePrivate::createScoreIncrementPoints(
 
         DisplayLog::info("Creating animation for points to score");
         auto property_animation_builder =
-            scene_animation_component_->make_property_animation_builder(
-                pointsToScoreSceneNode->prop<Position>());
+            scene_animation_component_
+                ->make_property_animation_builder<Position>(
+                    pointsToScoreSceneNode);
         property_animation_builder->startValue(lastTokenPosition)
             .endValue(EndPositionPointsToScore)
             .duration(
