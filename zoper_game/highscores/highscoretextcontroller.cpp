@@ -128,17 +128,24 @@ void HighScoreTextController::addEditAnimation(const size_type line_index)
 {
     LogAsserter::log_assert(line_index < prop<TableSize>().get().y,
                             "Invalid line_index");
-/*
+
     for_each_tableSceneNode_in_y(
         line_index,
         [this](const auto, const sptr<nodes::SceneNodeText>& element) {
-            animation_component_->addCircledPropertyAnimation(
-                time::TimePoint_as_miliseconds(2000U),
-                element->prop<nodes::SceneNodeTextProperties>()
-                    .get_property_reference<nodes::TextColor>(),
-                colors::White, colors::Black);
+            auto property_animation_builder =
+                animation_component_->make_property_animation_builder(
+                    element->prop<nodes::SceneNodeTextProperties>()
+                        .get_property_reference<nodes::TextColor>());
+            property_animation_builder
+                ->duration(time::TimePoint_as_miliseconds(2000U))
+                .startValue(colors::White)
+                .endValue(colors::Black)
+                .switchAnimation(true)
+                .continuous();
+
+            animation_component_->addAnimation(
+                std::move(property_animation_builder));
         });
-*/
 }
 
 void HighScoreTextController::standarizeText(
