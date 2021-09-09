@@ -1,13 +1,11 @@
 #include "scenecontroller.hpp"
 #include "scenemanager.hpp"
+#include "scene_render.hpp"
+
 #include "system/systemprovider.hpp"
 
 #include <haf/include/scene/scene.hpp>
-#include <haf/include/scene/renderizables_scenenode.hpp>
-#include <haf/include/scene/transformable_scenenode.hpp>
 #include <haf/include/system/isystemprovider.hpp>
-#include <haf/include/render/renderizables.hpp>
-#include <haf/include/component/component_container.hpp>
 
 #include <hlog/include/hlog.hpp>
 
@@ -78,57 +76,7 @@ void SceneController::update()
 
     if (auto current_scene = currentScene(); current_scene != nullptr)
     {
-        renderScene(*current_scene, false);
-    }
-}
-
-void SceneController::renderScene(Scene& scene,
-                                  bool parentTransformationChanged)
-{
-    render(scene, parentTransformationChanged);
-}
-
-void SceneController::render(SceneNode& scene_node,
-                             bool parentTransformationChanged)
-{
-    if (scene_node.prop<Visible>().get())
-    {
-        // Update the node components
-        scene_node.components().updateComponents();
-
-        // Update node
-        if (scene_node.hasComponents())
-        {
-            scene_node.update();
-        }
-
-        // Update the transformation (local and global)
-        if (auto* const transformable_scene_node =
-                dynamic_cast<TransformableSceneNode*>(&scene_node);
-            transformable_scene_node != nullptr)
-        {
-            parentTransformationChanged =
-                transformable_scene_node->updateTransformations(
-                    parentTransformationChanged,
-                    scene_node.parentAs<TransformableSceneNode>()
-                        ? scene_node.parentAs<TransformableSceneNode>()
-                              ->globalTransform()
-                        : Matrix4x4::Identity);
-        }
-
-        // Update the renderizables added to this node
-        if (auto* const renderizable_scene_node =
-                dynamic_cast<RenderizablesSceneNode*>(&scene_node);
-            renderizable_scene_node != nullptr)
-        {
-            renderizable_scene_node->updateRenderizables();
-        }
-
-        // Render the nodes added to this node
-        for (auto& group : scene_node.sceneNodes())
-        {
-            render(*group, parentTransformationChanged);
-        }
+        render(*current_scene, false);
     }
 }
 

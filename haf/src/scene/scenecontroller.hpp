@@ -85,9 +85,6 @@ public:
     const htps::sptr<Scene>& currentScene() const noexcept;
     bool currentSceneIsNull();
 
-    void renderScene(Scene& scene, bool parentTransformationChanged);
-    void render(SceneNode& scene, bool parentTransformationChanged);
-
     void requestExit();
     bool exitRequested() const;
 
