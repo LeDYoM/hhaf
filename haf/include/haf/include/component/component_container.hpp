@@ -6,7 +6,7 @@
 #include <htypes/include/p_impl_pointer.hpp>
 #include <haf/include/component/icomponent.hpp>
 #include <haf/include/utils/attachable_manager.hpp>
-#include <typeindex>
+#include <haf/include/utils/type_data.hpp>
 
 namespace haf::component
 {
@@ -59,7 +59,7 @@ public:
     template <typename T>
     htps::sptr<T> componentOfType() const
     {
-        htps::sptr<IComponent> cot{componentOfType(type_of<T>())};
+        auto cot{componentOfType(type_of<T>())};
         return cot ? std::dynamic_pointer_cast<T>(cot) : nullptr;
     }
 
@@ -92,13 +92,13 @@ public:
 
 private:
     template <typename T>
-    std::type_index type_of() const noexcept
+    utils::type_index type_of() const noexcept
     {
-        return std::type_index{typeid(T)};
+        return utils::type_index{typeid(T)};
     }
 
     bool addComponent(htps::sptr<IComponent> nc);
-    htps::sptr<IComponent> componentOfType(std::type_index const& ti) const;
+    htps::sptr<IComponent> componentOfType(utils::type_index const& ti) const;
 
     struct ComponentContainerPrivate;
     htps::PImplPointer<ComponentContainerPrivate> p_;

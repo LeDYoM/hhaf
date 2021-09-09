@@ -1,7 +1,6 @@
 #include <haf/include/component/component_container.hpp>
 
 #include <htypes/include/lockablevector.hpp>
-#include <typeindex>
 
 using namespace htps;
 
@@ -10,12 +9,12 @@ namespace haf::component
 struct ComponentContainer::ComponentContainerPrivate
 {
     htps::sptr<IComponent> getComponentFromTypeIndex(
-        std::type_index const& tindex) const
+        utils::type_index const& tindex) const
     {
         const auto v{components_.next()};
         auto iterator(v.find_if(
             v.cbegin(), v.cend(), [&tindex](sptr<IComponent> const& component) {
-                return std::type_index(typeid(*component)) == tindex;
+                return utils::type_index(typeid(*component)) == tindex;
             }));
         return (iterator == v.cend()) ? nullptr : (*iterator);
     }
@@ -49,7 +48,7 @@ bool ComponentContainer::addComponent(sptr<IComponent> nc)
 }
 
 sptr<IComponent> ComponentContainer::componentOfType(
-    std::type_index const& ti) const
+    utils::type_index const& ti) const
 {
     return p_->getComponentFromTypeIndex(ti);
 }

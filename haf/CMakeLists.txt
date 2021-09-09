@@ -151,6 +151,9 @@ set(sources
   ${src_dir}/time/timesystem.hpp
   ${src_dir}/time/timeview.cpp
 
+  # Utils
+  ${src_dir}/utils/type_data.cpp
+  
   # Window
   ${src_dir}/window/window_properties.cpp
   ${src_dir}/window/window.cpp
@@ -285,6 +288,7 @@ set(headers
   ${inc_dir}/utils/attachable_manager.hpp
   ${inc_dir}/utils/attachable.hpp
   ${inc_dir}/utils/object_factory.hpp
+  ${inc_dir}/utils/type_data.hpp
 
   # Window
   ${inc_dir}/window/window_properties.hpp
