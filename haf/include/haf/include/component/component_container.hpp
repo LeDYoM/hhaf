@@ -23,10 +23,14 @@ public:
     explicit ComponentContainer(
         htps::rptr<BaseClass::AttachableType> attachable);
 
+    /**
+     * @brief Destroy the Component Container object
+     * @note It is not virtual because the base class is private
+     */
     ~ComponentContainer();
     
     /**
-     * @brief Create or get a reference to a component type. This method
+     * @brief Create or get a pointer to a component type. This method
      * could create an instance of the component and add it to the component
      * list or retrieve a pointer to it
      *
@@ -46,6 +50,12 @@ public:
         return result;
     }
 
+    /**
+     * @brief Retrieve the attached instance of a component if it exists.
+     * 
+     * @tparam T Type of the component
+     * @return Pointer to the component or nullptr
+     */
     template <typename T>
     htps::sptr<T> componentOfType() const
     {
