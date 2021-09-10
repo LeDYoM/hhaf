@@ -24,11 +24,6 @@ public:
     void update() override;
 
     /**
-     * @brief Add an already created animation to the list of animations.
-     */
-    void addAnimation(htps::uptr<Animation>);
-
-    /**
      * @brief Add an animation that animates a certain property of the node.
      * @param builder Builder containing the data
      */
@@ -36,22 +31,14 @@ public:
     void addAnimation(
         htps::uptr<PropertyAnimationBuilder<T, PropertyTag>> builder)
     {
-        auto anim = htps::muptr<IPropertyAnimation<T, PropertyTag>>(
-            builder->extractBaseData(), builder->extractData());
-
-        addAnimation(std::move(anim));
+        addAnimation(htps::muptr<IPropertyAnimation<T, PropertyTag>>(
+            builder->extractBaseData(), builder->extractData()));
     }
 
     template <typename PropertyTag, typename PropertyGroup>
-    auto make_property_animation_builder(
-        PropertyGroup& scene_node,
-        htps::uptr<time::Timer> timer = nullptr)
+    auto make_property_animation_builder(PropertyGroup& scene_node)
     {
-        if (timer == nullptr)
-        {
-            timer = attachedNode()->subsystems().dataWrapper<time::Timer>();
-        }
-
+        auto timer{attachedNode()->subsystems().dataWrapper<time::Timer>()};
         auto builder = htps::muptr<PropertyAnimationBuilder<
             typename PropertyTag::value_type, PropertyTag>>();
         builder->property(&(scene_node.prop<PropertyTag>()))
@@ -60,15 +47,18 @@ public:
     }
 
     template <typename PropertyTag, typename PropertyGroup>
-    auto make_property_animation_builder(
-        htps::sptr<PropertyGroup> scene_node,
-        htps::uptr<time::Timer> timer = nullptr)
+    auto make_property_animation_builder(htps::sptr<PropertyGroup> scene_node)
     {
         return make_property_animation_builder<PropertyTag, PropertyGroup>(
-            *scene_node.get(), std::move(timer));
+            *scene_node.get());
     }
 
 private:
+    /**
+     * @brief Add an already created animation to the list of animations.
+     */
+    void addAnimation(htps::uptr<Animation>);
+
     class AnimationComponentPrivate;
     htps::uptr<AnimationComponentPrivate> p_;
 };
