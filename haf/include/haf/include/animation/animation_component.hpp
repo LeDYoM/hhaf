@@ -3,7 +3,6 @@
 
 #include <htypes/include/types.hpp>
 #include <haf/include/component/icomponent.hpp>
-#include <haf/include/time/timeview.hpp>
 #include <haf/include/animation/animation.hpp>
 #include <haf/include/animation/propertyanimation.hpp>
 #include <haf/include/scene/scenenode.hpp>
@@ -38,11 +37,10 @@ public:
     template <typename PropertyTag, typename PropertyGroup>
     auto make_property_animation_builder(PropertyGroup& scene_node)
     {
-        auto timer{attachedNode()->subsystems().dataWrapper<time::Timer>()};
         auto builder = htps::muptr<PropertyAnimationBuilder<
             typename PropertyTag::value_type, PropertyTag>>();
         builder->property(&(scene_node.prop<PropertyTag>()))
-            .timer(std::move(timer));
+            .timer(attachedNode()->subsystems().dataWrapper<time::Timer>());
         return builder;
     }
 
@@ -50,7 +48,7 @@ public:
     auto make_property_animation_builder(htps::sptr<PropertyGroup> scene_node)
     {
         return make_property_animation_builder<PropertyTag, PropertyGroup>(
-            *scene_node.get());
+            *scene_node);
     }
 
 private:
@@ -62,6 +60,7 @@ private:
     class AnimationComponentPrivate;
     htps::uptr<AnimationComponentPrivate> p_;
 };
+
 }  // namespace haf::anim
 
 #endif

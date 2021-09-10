@@ -19,7 +19,7 @@ set(sources
   # Animation
   ${src_dir}/animation/animation_builder.cpp
   ${src_dir}/animation/animation.cpp
-  ${src_dir}/animation/animationcomponent.cpp
+  ${src_dir}/animation/animation_component.cpp
 
   # Component
   ${src_dir}/component/component_container.cpp
