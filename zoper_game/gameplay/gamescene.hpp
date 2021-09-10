@@ -55,15 +55,15 @@ private:
 
     void generateNextToken();
 
-    htps::sptr<scene::StatesController<GameSceneStates>> m_sceneStates;
+    htps::sptr<scene::StatesController<GameSceneStates>> scene_states_;
 
     void _debugDisplayBoard() const;
 
-    htps::sptr<BoardGroup> m_boardGroup;
+    htps::sptr<BoardGroup> board_group_;
 
     // Timer related properties
     htps::sptr<time::TimerComponent> scene_timer_component_;
-    time::TimerConnectorSPtr m_nextTokenTimer;
+    time::TimerConnectorSPtr next_token_timer_;
     htps::sptr<NextToken> next_token_;
 
     // General properties.

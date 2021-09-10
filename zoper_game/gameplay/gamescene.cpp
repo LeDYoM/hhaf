@@ -72,9 +72,9 @@ void GameScene::onCreated()
 
     using namespace haf::board;
 
-    LogAsserter::log_assert(!m_boardGroup, "m_boardGroup is not empty");
-    m_boardGroup = createSceneNode<BoardGroup>("BoardGroup");
-    //    m_boardGroup->token_hit.connect(&(this->tokenHitAnimation));
+    LogAsserter::log_assert(!board_group_, "board_group_ is not empty");
+    board_group_ = createSceneNode<BoardGroup>("BoardGroup");
+    //    board_group_->token_hit.connect(&(this->tokenHitAnimation));
 
     next_token_part_ = 0U;
 
@@ -105,7 +105,7 @@ void GameScene::onCreated()
     level_properties_->configure(start_level, game_mode,
                                  scene_timer_component_);
 
-    m_boardGroup->configure(TokenZones::size, level_properties_);
+    board_group_->configure(TokenZones::size, level_properties_);
 
 #ifdef USE_DEBUG_ACTIONS
     components().component<DebugActions>();
@@ -125,7 +125,7 @@ void GameScene::onCreated()
             createSceneNode<GameOverSceneNode>("gameOverSceneNode");
         game_over_scene_node->prop<Visible>().set(false);
 
-        p_->m_states_manager = muptr<GameSceneStateManager>(
+        p_->states_manager_ = muptr<GameSceneStateManager>(
             scene_timer_component_,
             createSceneNode<PauseSceneNode>("PauseNode"),
             std::move(game_over_scene_node));
@@ -133,12 +133,12 @@ void GameScene::onCreated()
 
     // Set state control.
     {
-        components().component(m_sceneStates);
+        components().component(scene_states_);
 
         StatesControllerActuatorRegister<GameSceneStates>
             gameSceneActuatorRegister;
         gameSceneActuatorRegister.registerStatesControllerActuator(
-            *m_sceneStates, *(p_->m_states_manager));
+            *scene_states_, *(p_->states_manager_));
     }
 
     p_->token_type_generator_ =
@@ -151,7 +151,7 @@ void GameScene::onCreated()
                             "Cannot create RandomNumbersComponent");
 
     auto game_scene_input = components().component<GameSceneInput>();
-    game_scene_input->configure(m_sceneStates, m_boardGroup);
+    game_scene_input->configure(scene_states_, board_group_);
 
     p_->key_mapping_ = muptr<KeyMapping>();
     p_->key_mapping_->reset();
@@ -161,7 +161,7 @@ void GameScene::onCreated()
     subsystems().dataWrapper<sys::FileSerializer>()->serializeToFile(
         "keys.txt", *p_->key_mapping_);
 
-    m_sceneStates->start(GameSceneStates::Playing);
+    scene_states_->start(GameSceneStates::Playing);
 }
 
 void GameScene::generateNextToken()
@@ -186,18 +186,18 @@ void GameScene::generateNextToken()
 
     // Now, we have the data for the new token generated, but first,
     /// lets start to move the row or col.
-    const auto game_over = m_boardGroup->moveTowardsCenter(
+    const auto game_over = board_group_->moveTowardsCenter(
         currentTokenZone.direction, new_position);
 
     // Set the new token
-    m_boardGroup->createNewToken(
+    board_group_->createNewToken(
         static_cast<BoardGroup::BoardTileData>(newToken), new_position,
-        m_boardGroup->tileSize());
+        board_group_->tileSize());
 
     // Select the next token zone.
     next_token_part_ = ((next_token_part_ + 1U) % NumWays);
 
-    DisplayLog::debug(m_boardGroup->boardManager()->toStr());
+    DisplayLog::debug(board_group_->boardManager()->toStr());
 
     if (game_over)
     {
@@ -207,7 +207,7 @@ void GameScene::generateNextToken()
 
 void GameScene::goGameOver()
 {
-    m_sceneStates->setState(GameSceneStates::GameOver);
+    scene_states_->setState(GameSceneStates::GameOver);
 }
 
 void GameScene::launchPlayer()
@@ -216,7 +216,7 @@ void GameScene::launchPlayer()
     ScoreIncrementer score_incrementer{level_properties_};
 
     PlayerLauncher player_launcher;
-    player_launcher(score_incrementer, *m_boardGroup,
+    player_launcher(score_incrementer, *board_group_,
                     [this](vector2df const& v) {
                         p_->createScoreIncrementPoints(*this, v);
                     });
@@ -224,7 +224,7 @@ void GameScene::launchPlayer()
 
 void GameScene::tokenHitAnimation(vector2dst const& pos)
 {
-    auto const lastTokenPosition = m_boardGroup->board2Scene(pos);
+    auto const lastTokenPosition = board_group_->board2Scene(pos);
     p_->createScoreIncrementPoints(*this, lastTokenPosition);
 }
 

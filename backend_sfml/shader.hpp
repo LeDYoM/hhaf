@@ -17,10 +17,10 @@ public:
     void setUniform(const htps::str& name, htps::vector2df v) override;
     void setUniform(const htps::str& name, ITexture* texture) override;
 
-    const sf::Shader& backEndShader() const { return *m_shaderPrivate; }
+    const sf::Shader& backEndShader() const { return *priv_; }
 
 private:
-    htps::uptr<sf::Shader> m_shaderPrivate;
+    htps::uptr<sf::Shader> priv_;
 };
 }  // namespace haf::backend::sfmlb
 

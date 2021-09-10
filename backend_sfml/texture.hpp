@@ -18,11 +18,11 @@ public:
 
     virtual htps::vector2du32 size() const override;
 
-    const sf::Texture& backEndTexture() const { return *m_texturePrivate; }
+    const sf::Texture& backEndTexture() const { return *priv_; }
     htps::str info() const;
 
 private:
-    const sf::Texture* const m_texturePrivate;
+    const sf::Texture* const priv_;
     const bool owned_;
 };
 }  // namespace haf::backend::sfmlb

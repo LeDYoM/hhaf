@@ -40,7 +40,7 @@ private:
     void createBackgroundTile(const htps::Rectf32& tileBox);
 
     htps::sptr<haf::render::Renderizable> background_tile_;
-    htps::sptr<haf::scene::RenderizableSceneNode> m_pointInCenter;
+    htps::sptr<haf::scene::RenderizableSceneNode> point_in_center_;
 };
 }  // namespace zoper
 

@@ -20,7 +20,7 @@ public:
     backend::IShader const* backEndShader() const noexcept;
 
 private:
-    backend::IShader* m_ShaderPrivate;
+    backend::IShader* priv_;
 };
 }  // namespace haf::res
 

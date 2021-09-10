@@ -24,23 +24,23 @@ public:
 
     constexpr void update()
     {
-        if (!m_pendingActions.current().empty())
+        if (!pending_actions_.current().empty())
         {
-            for (auto action : m_pendingActions.current())
+            for (auto action : pending_actions_.current())
             {
                 action();
-                m_pendingActions.erase_value(action);
+                pending_actions_.erase_value(action);
             }
-            m_pendingActions.update();
+            pending_actions_.update();
         }
     }
 
     constexpr void start(T firstState) noexcept
     {
         LogAsserter::log_assert(
-            m_statesStack.empty(),
+            states_stack_.empty(),
             "You cannot call start if the stack is not empty");
-        if (m_statesStack.empty())
+        if (states_stack_.empty())
         {
             BeforeStart();
             push_state(std::move(firstState));
@@ -50,31 +50,31 @@ public:
     constexpr void push_state(T firstState) noexcept
     {
         postAction([this, first_state = std::move(firstState)]() mutable {
-            if (!m_statesStack.empty())
+            if (!states_stack_.empty())
             {
-                StatePaused(m_statesStack.back());
+                StatePaused(states_stack_.back());
             }
             StatePushed(first_state);
             StateStarted(first_state);
-            m_statesStack.push_back(std::move(first_state));
+            states_stack_.push_back(std::move(first_state));
         });
     }
 
     constexpr void pop_state() noexcept
     {
         postAction([this]() {
-            LogAsserter::log_assert(m_statesStack.size() > 0U,
-                                    "m_statesStack.size() is 0");
-            StateFinished(m_statesStack.back());
-            StatePopped(m_statesStack.back());
-            if (m_statesStack.size() > 1U)
+            LogAsserter::log_assert(states_stack_.size() > 0U,
+                                    "states_stack_.size() is 0");
+            StateFinished(states_stack_.back());
+            StatePopped(states_stack_.back());
+            if (states_stack_.size() > 1U)
             {
-                m_statesStack.pop_back();
-                StateResumed(m_statesStack.back());
+                states_stack_.pop_back();
+                StateResumed(states_stack_.back());
             }
             else
             {
-                m_statesStack.pop_back();
+                states_stack_.pop_back();
                 AfterFinish();
             }
         });
@@ -84,20 +84,20 @@ public:
 
     constexpr bool hasActiveState() const noexcept
     {
-        return !m_statesStack.empty();
+        return !states_stack_.empty();
     }
 
     constexpr htps::size_type stateStackSize() const noexcept
     {
-        return m_statesStack.size();
+        return states_stack_.size();
     }
 
     constexpr const T& currentState() const noexcept
     {
-        return m_statesStack.cback();
+        return states_stack_.cback();
     }
 
-    constexpr T& currentState() noexcept { return m_statesStack.back(); }
+    constexpr T& currentState() noexcept { return states_stack_.back(); }
 
     htps::emitter<const T&> StateFinished;
     htps::emitter<const T&> StateStarted;
@@ -112,22 +112,22 @@ private:
     inline void changeState(T newState)
     {
         postAction([this, newState = std::move(newState)]() {
-            LogAsserter::log_assert(m_statesStack.size() != 0U,
+            LogAsserter::log_assert(states_stack_.size() != 0U,
                                     "States stack size is 0");
-            StateFinished(m_statesStack.back());
-            m_statesStack.pop_back();
+            StateFinished(states_stack_.back());
+            states_stack_.pop_back();
             StateStarted(newState);
-            m_statesStack.push_back(std::move(newState));
+            states_stack_.push_back(std::move(newState));
         });
     }
 
     constexpr void postAction(Action action)
     {
-        m_pendingActions.push_back(std::move(action));
+        pending_actions_.push_back(std::move(action));
     }
 
-    htps::stack<T> m_statesStack;
-    htps::LockableVector<Action> m_pendingActions;
+    htps::stack<T> states_stack_;
+    htps::LockableVector<Action> pending_actions_;
 };
 
 template <typename T>

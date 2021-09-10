@@ -16,7 +16,7 @@ public:
     ~ShaderFactory() override;
 
 private:
-    htps::vector<htps::sptr<Shader>> m_shaderCache;
+    htps::vector<htps::sptr<Shader>> shader_cache_;
 };
 }  // namespace haf::backend::sfmlb
 

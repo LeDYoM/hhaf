@@ -131,12 +131,12 @@ public:
             capacity_ = size_;
 
             buffer_ = size_ > 0U ? Allocator::allocate(size_) : nullptr;
-            auto m_buffer_iterator = buffer_;
+            auto buffer_iterator = buffer_;
             auto const tmp_end{tmp_buffer + size_};
 
             for (auto it{tmp_buffer}; it != tmp_end; ++it)
             {
-                Allocator::construct(m_buffer_iterator++, std::move(*it));
+                Allocator::construct(buffer_iterator++, std::move(*it));
                 Allocator::destruct(it);
             }
             Allocator::deallocate(tmp_buffer);

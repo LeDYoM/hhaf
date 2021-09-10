@@ -36,7 +36,7 @@ public:
 
 private:
     struct FontPrivate;
-    htps::uptr<FontPrivate> m_private;
+    htps::uptr<FontPrivate> priv_;
 };
 }  // namespace haf::res
 

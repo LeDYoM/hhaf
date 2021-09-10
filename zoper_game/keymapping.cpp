@@ -15,20 +15,20 @@ void KeyMapping::reset()
 {
     using namespace input;
 
-    m_keys = {Key::Left, Key::Right, Key::Up,
+    keys_ = {Key::Left, Key::Right, Key::Up,
               Key::Down, Key::Space, Key::Escape};
 }
 
 input::Key KeyMapping::getKey(const Direction d) const noexcept
 {
-    return m_keys[d];
+    return keys_[d];
 }
 
 Direction KeyMapping::getDirectionFromKey(const input::Key key) const noexcept
 {
     for (u8 i = 0U; i < Direction::Total; ++i)
     {
-        if (m_keys[i] == key)
+        if (keys_[i] == key)
         {
             return static_cast<Direction>(i);
         }
@@ -38,7 +38,7 @@ Direction KeyMapping::getDirectionFromKey(const input::Key key) const noexcept
 
 input::Key KeyMapping::getLaunchKey() const noexcept
 {
-    return m_keys[Direction::Total];
+    return keys_[Direction::Total];
 }
 
 bool KeyMapping::isLaunchKey(const input::Key key) const noexcept
@@ -48,7 +48,7 @@ bool KeyMapping::isLaunchKey(const input::Key key) const noexcept
 
 input::Key KeyMapping::getPauseKey() const noexcept
 {
-    return m_keys[Direction::Total + 1];
+    return keys_[Direction::Total + 1];
 }
 
 bool KeyMapping::isPauseKey(const input::Key key) const noexcept
@@ -62,24 +62,24 @@ bool KeyMapping::setKey(const u32 index, const input::Key key)
 
     for (u32 i{0U}; i < index; ++i)
     {
-        if (m_keys[i] == key)
+        if (keys_[i] == key)
         {
             return false;
         }
     }
-    m_keys[index] = key;
+    keys_[index] = key;
     return true;
 }
 
 bool KeyMapping::serialize(htps::Object& obj) const
 {
-    obj.set("keys", m_keys);
+    obj.set("keys", keys_);
     return true;
 }
 
 bool KeyMapping::deserialize(htps::Object const& obj)
 {
-    obj["keys"].getObject() >> m_keys;
+    obj["keys"].getObject() >> keys_;
     return true;
 }
 

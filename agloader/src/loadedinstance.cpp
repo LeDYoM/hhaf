@@ -81,22 +81,22 @@ namespace agloader
 class LoadedInstancePrivate
 {
 public:
-    void* m_sharedFileHandle{nullptr};
-    std::map<std::string, void*> m_methods;
+    void* shared_file_handle{nullptr};
+    std::map<std::string, void*> methods_;
 };
 
-LoadedInstance::LoadedInstance() : m_private{new LoadedInstancePrivate}
+LoadedInstance::LoadedInstance() : priv_{new LoadedInstancePrivate}
 {}
 
 LoadedInstance::~LoadedInstance()
 {
     unload();
-    delete m_private;
+    delete priv_;
 }
 
 bool LoadedInstance::load(char const* fileName)
 {
-    m_private->m_sharedFileHandle =
+    priv_->shared_file_handle =
         loadSharedObject(formatFileName(fileName, extension, prefix).c_str());
     return loaded();
 }
@@ -105,15 +105,15 @@ void const* LoadedInstance::loadMethod(char const* methodName)
 {
     if (loaded())
     {
-        auto node = m_private->m_methods.find(methodName);
-        if (node == m_private->m_methods.end())
+        auto node = priv_->methods_.find(methodName);
+        if (node == priv_->methods_.end())
         {
             auto methodAddress(
-                getMethod(m_private->m_sharedFileHandle, methodName));
+                getMethod(priv_->shared_file_handle, methodName));
 
             // Add the result of getMethod even if is nullptr to avoid
             // trying to load it more times
-            m_private->m_methods[methodName] = methodAddress;
+            priv_->methods_[methodName] = methodAddress;
             return methodAddress;
         }
         else
@@ -127,7 +127,7 @@ void const* LoadedInstance::loadMethod(char const* methodName)
 
 bool LoadedInstance::loaded() const
 {
-    return m_private->m_sharedFileHandle != nullptr;
+    return priv_->shared_file_handle != nullptr;
 }
 
 bool LoadedInstance::unload()
@@ -136,16 +136,16 @@ bool LoadedInstance::unload()
 
     if (loaded())
     {
-        result = freeSharedObject(m_private->m_sharedFileHandle);
+        result = freeSharedObject(priv_->shared_file_handle);
     }
-    m_private->m_sharedFileHandle = nullptr;
-    m_private->m_methods.clear();
+    priv_->shared_file_handle = nullptr;
+    priv_->methods_.clear();
     return result;
 }
 
 void const* LoadedInstance::loadedData() const
 {
-    return m_private->m_sharedFileHandle;
+    return priv_->shared_file_handle;
 }
 
 }  // namespace agloader

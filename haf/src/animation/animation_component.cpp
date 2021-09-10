@@ -10,7 +10,7 @@ class AnimationComponent::AnimationComponentPrivate
 {
 public:
     AnimationComponentPrivate() {}
-    LockableVector<sptr<Animation>> m_animations;
+    LockableVector<sptr<Animation>> animations_;
 };
 
 AnimationComponent::AnimationComponent() :
@@ -21,16 +21,16 @@ AnimationComponent::~AnimationComponent() = default;
 
 void AnimationComponent::addAnimation(uptr<Animation> nanimation)
 {
-    p_->m_animations.emplace_back(std::move(nanimation));
+    p_->animations_.emplace_back(std::move(nanimation));
 }
 
 void AnimationComponent::update()
 {
-    p_->m_animations.performUpdate([this](auto& animation) {
+    p_->animations_.performUpdate([this](auto& animation) {
         if (!animation->animate())
         {
             animation->executeEndAction();
-            p_->m_animations.erase_value(animation);
+            p_->animations_.erase_value(animation);
         }
     });
 }

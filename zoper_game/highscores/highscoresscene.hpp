@@ -29,10 +29,10 @@ public:
 private:
     using BaseClass = haf::scene::Scene;
 
-    htps::sptr<HighScoreTextController> m_highScoreTextController;
-    htps::sptr<haf::res::IFont> m_normalFont;
-    haf::scene::Color m_normalColor;
-    haf::scene::Color m_selectedColor;
+    htps::sptr<HighScoreTextController> high_score_text_controller_;
+    htps::sptr<haf::res::IFont> normal_font_;
+    haf::scene::Color normal_color_;
+    haf::scene::Color selected_color_;
 };
 }  // namespace zoper
 

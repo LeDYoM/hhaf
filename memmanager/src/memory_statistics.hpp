@@ -12,10 +12,10 @@ void destroyMemoryStatistics() noexcept;
 class MemoryStatistics
 {
 public:
-    std::size_t m_numAlloc{0U};
-    std::size_t m_numDealloc{0U};
-    std::size_t m_BytesAlloc{0U};
-    std::size_t m_BytesDealloc{0U};
+    std::size_t num_alloc_{0U};
+    std::size_t num_dealloc_{0U};
+    std::size_t bytes_alloc_{0U};
+    std::size_t bytes_dealloc_{0U};
 };
 
 void onAllocated(std::size_t size) noexcept;

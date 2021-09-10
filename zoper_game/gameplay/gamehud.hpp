@@ -23,8 +23,8 @@ public:
     void setScore(const htps::size_type score);
 
 private:
-    htps::sptr<haf::scene::nodes::TextQuad> m_scoreQuad;
-    htps::sptr<haf::scene::nodes::TextQuad> m_goalQuad;
+    htps::sptr<haf::scene::nodes::TextQuad> score_quad_;
+    htps::sptr<haf::scene::nodes::TextQuad> goal_quad_;
 };
 }  // namespace zoper
 

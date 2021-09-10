@@ -13,7 +13,7 @@ constexpr char hsfile[] = "hscores.txt";
 HighScoresData::HighScoresData()
 {
     size_type counter{10U};
-    for (auto& element : m_highScoreList)
+    for (auto& element : high_score_list_)
     {
         element.name  = "AAA";
         element.score = counter * 100;
@@ -26,7 +26,7 @@ bool HighScoresData::positionForScore(const Score score,
 {
     for (u32 i{0U}; i < NumHighScore; ++i)
     {
-        if (score > m_highScoreList[i].score)
+        if (score > high_score_list_[i].score)
         {
             positionInTable = i;
             return true;
@@ -38,9 +38,9 @@ bool HighScoresData::positionForScore(const Score score,
 void HighScoresData::setHighScoreName(const size_type positionInTable,
                                       const str& nName)
 {
-    LogAsserter::log_assert(positionInTable < m_highScoreList.size(),
+    LogAsserter::log_assert(positionInTable < high_score_list_.size(),
                             "Invalid index");
-    m_highScoreList[positionInTable].name = nName;
+    high_score_list_[positionInTable].name = nName;
 }
 
 bool HighScoresData::tryInsertHighScore(const Score score,
@@ -48,7 +48,7 @@ bool HighScoresData::tryInsertHighScore(const Score score,
 {
     if (positionForScore(score, positionInTable))
     {
-        m_highScoreList.insert(positionInTable, {"", score});
+        high_score_list_.insert(positionInTable, {"", score});
         return true;
     }
     return false;

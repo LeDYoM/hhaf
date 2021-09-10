@@ -33,17 +33,17 @@ void HighScoreTextController::onCreated()
 {
     BaseClass::onCreated();
 
-    m_normalFont = subsystems()
+    normal_font_ = subsystems()
                        .dataWrapper<res::ResourceRetriever>()
                        ->getTTFont(HighScoresResources::MenuFontId)
                        ->font(72);
-    m_normalColor        = colors::Blue;
-    m_selectedColor      = colors::Red;
+    normal_color_        = colors::Blue;
+    selected_color_      = colors::Red;
     animation_component_ = components().component<anim::AnimationComponent>();
 
     // Request the high scores.
     subsystems().dataWrapper<sys::FileSerializer>()->deserializeFromFile(
-        HighScoresFileName, m_hsData);
+        HighScoresFileName, high_scores_data_);
 
     // Request game score
     Score gameScore =
@@ -62,10 +62,10 @@ void HighScoreTextController::onCreated()
 
     size_type positionInTable{0U};
     const bool isInserting{
-        m_hsData.tryInsertHighScore(gameScore, positionInTable)};
+        high_scores_data_.tryInsertHighScore(gameScore, positionInTable)};
 
     size_type counter{0U};
-    for (const auto& element : m_hsData.highScoresList())
+    for (const auto& element : high_scores_data_.highScoresList())
     {
         addHighScoresLine(counter, element,
                           (isInserting && positionInTable == counter));
@@ -116,7 +116,7 @@ void HighScoreTextController::addHighScoreEditor(
     auto editor(label->components().component<TextEditorComponent>());
     editor->setTextValidator(muptr<HighScoreValidator>());
     editor->Accepted.connect([this, counter](const str& entry) mutable {
-        m_hsData.setHighScoreName(counter, entry);
+        high_scores_data_.setHighScoreName(counter, entry);
         saveHighScores();
         Finished();
     });
@@ -152,8 +152,8 @@ void HighScoreTextController::standarizeText(
     const sptr<nodes::SceneNodeText>& ntext)
 {
     ntext->prop<nodes::SceneNodeTextProperties>()
-        .put<nodes::TextColor>(m_normalColor)
-        .put<nodes::Font>(m_normalFont);
+        .put<nodes::TextColor>(normal_color_)
+        .put<nodes::Font>(normal_font_);
 }
 
 void HighScoreTextController::saveHighScores()
@@ -161,7 +161,7 @@ void HighScoreTextController::saveHighScores()
     DisplayLog::info("Saving highscores...");
 
     subsystems().dataWrapper<sys::FileSerializer>()->serializeToFileTemplate(
-        HighScoresFileName, m_hsData);
+        HighScoresFileName, high_scores_data_);
     DisplayLog::info("High Scores saved");
 }
 }  // namespace zoper

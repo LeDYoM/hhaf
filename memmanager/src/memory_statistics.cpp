@@ -30,8 +30,8 @@ void onAllocated(std::size_t size) noexcept
 {
     if (memory_statistics != nullptr)
     {
-        memory_statistics->m_numAlloc++;
-        memory_statistics->m_BytesAlloc += size;
+        memory_statistics->num_alloc_++;
+        memory_statistics->bytes_alloc_ += size;
     }
 }
 
@@ -39,8 +39,8 @@ void onDeallocate(std::size_t size) noexcept
 {
     if (memory_statistics != nullptr)
     {
-        memory_statistics->m_numDealloc++;
-        memory_statistics->m_BytesDealloc += size;
+        memory_statistics->num_dealloc_++;
+        memory_statistics->bytes_dealloc_ += size;
     }
 }
 

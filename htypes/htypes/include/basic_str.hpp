@@ -25,17 +25,17 @@ public:
         char_type const*;  //< Const iterator type of the string
 
 private:
-    vector<char_type> m_data;
+    vector<char_type> data_;
 
 public:
-    constexpr basic_str() noexcept : m_data{} {}
+    constexpr basic_str() noexcept : data_{} {}
 
     template <size_type N>
-    constexpr basic_str(const char_type (&a)[N]) : m_data(a, N)
+    constexpr basic_str(const char_type (&a)[N]) : data_(a, N)
     {}
 
     constexpr basic_str(const_iterator const n, size_type const N) :
-        m_data(n, N + 1)
+        data_(n, N + 1)
     {}
 
     constexpr basic_str(char_type const* const n) :
@@ -58,7 +58,7 @@ public:
         return *this;
     }
 
-    void swap(basic_str& other) { m_data.swap(other.m_data); }
+    void swap(basic_str& other) { data_.swap(other.data_); }
 
     static basic_str to_str(u64 const n)
     {
@@ -150,15 +150,15 @@ public:
         basic_str temp;
         while (start < size() && len > 0U)
         {
-            if (m_data[start] != 0)
+            if (data_[start] != 0)
             {
-                temp.m_data.push_back(m_data[start]);
+                temp.data_.push_back(data_[start]);
             }
             ++start;
             --len;
         }
 
-        temp.m_data.push_back(0);
+        temp.data_.push_back(0);
         return temp;
     }
 
@@ -166,15 +166,15 @@ public:
 
     basic_str& append(basic_str const& n)
     {
-        m_data.pop_back();
-        m_data.insert(n.m_data);
+        data_.pop_back();
+        data_.insert(n.data_);
         return *this;
     }
 
     basic_str& append(basic_str&& n)
     {
-        m_data.pop_back();
-        m_data.insert(std::move(n.m_data));
+        data_.pop_back();
+        data_.insert(std::move(n.data_));
         return *this;
     }
 
@@ -275,7 +275,7 @@ public:
 
     constexpr size_type size() const noexcept
     {
-        return m_data.empty() ? 0 : m_data.size() - 1;
+        return data_.empty() ? 0 : data_.size() - 1;
     }
 
     inline void ltrim()
@@ -284,7 +284,7 @@ public:
         {
             for (size_type index = 0U; index < size(); ++index)
             {
-                if (!std::isspace(static_cast<char_type>(m_data[index])))
+                if (!std::isspace(static_cast<char_type>(data_[index])))
                 {
                     *this = substr(index);
                     return;
@@ -296,8 +296,8 @@ public:
 
     constexpr size_type find(char_type const ch) const noexcept
     {
-        const auto it(m_data.cfind(ch));
-        return ((it == m_data.cend()) ? npos : std::distance(cbegin(), it));
+        const auto it(data_.cfind(ch));
+        return ((it == data_.cend()) ? npos : std::distance(cbegin(), it));
     }
 
     // trim from end (in place)
@@ -307,14 +307,14 @@ public:
         {
             for (size_type index{size() - 1U}; index > 0U; --index)
             {
-                if (!std::isspace(static_cast<unsigned char>(m_data[index])))
+                if (!std::isspace(static_cast<unsigned char>(data_[index])))
                 {
                     *this = substr(0U, index + 1U);
                     return;
                 }
             }
 
-            *this = (std::isspace(static_cast<unsigned char>(m_data[0U])))
+            *this = (std::isspace(static_cast<unsigned char>(data_[0U])))
                 ? ""
                 : substr(0U, 1U);
         }
@@ -331,31 +331,31 @@ public:
     // using vector<T>::begin();
     constexpr reference operator[](size_type const index) noexcept
     {
-        return m_data[index];
+        return data_[index];
     }
 
     constexpr const_reference operator[](size_type const index) const noexcept
     {
-        return m_data[index];
+        return data_[index];
     }
 
-    constexpr iterator begin() noexcept { return m_data.begin(); }
-    constexpr const_iterator begin() const noexcept { return m_data.begin(); }
-    constexpr const_iterator cbegin() const noexcept { return m_data.cbegin(); }
-    constexpr iterator end() noexcept { return m_data.begin() + size(); }
+    constexpr iterator begin() noexcept { return data_.begin(); }
+    constexpr const_iterator begin() const noexcept { return data_.begin(); }
+    constexpr const_iterator cbegin() const noexcept { return data_.cbegin(); }
+    constexpr iterator end() noexcept { return data_.begin() + size(); }
     constexpr const_iterator end() const noexcept
     {
-        return m_data.begin() + size();
+        return data_.begin() + size();
     }
 
     constexpr const_iterator cend() const noexcept
     {
-        return m_data.cbegin() + size();
+        return data_.cbegin() + size();
     }
 
     constexpr char_type const* c_str() const noexcept
     {
-        return m_data.empty() ? "" : m_data.cbegin();
+        return data_.empty() ? "" : data_.cbegin();
     }
 
     constexpr bool empty() const noexcept { return size() == 0; }
@@ -363,8 +363,8 @@ public:
     constexpr auto find_first_of(
         vector<char_type> const& chValue) const noexcept
     {
-        const auto it{m_data.find_first_of(chValue)};
-        return (it == m_data.cend()) ? basic_str::npos
+        const auto it{data_.find_first_of(chValue)};
+        return (it == data_.cend()) ? basic_str::npos
                                      : std::distance(cbegin(), it);
     }
 
@@ -393,12 +393,12 @@ public:
 
     constexpr bool operator==(basic_str const& rhs) const noexcept
     {
-        return m_data == rhs.m_data;
+        return data_ == rhs.data_;
     }
 
     constexpr bool operator!=(basic_str const& rhs) const noexcept
     {
-        return !(m_data == rhs.m_data);
+        return !(data_ == rhs.data_);
     }
 
     constexpr bool operator==(char_type const* const rhs) const noexcept
@@ -406,7 +406,7 @@ public:
         size_type counter{0U};
         for (; counter < size() && rhs[counter] != 0U; ++counter)
         {
-            if (m_data[counter] != rhs[counter])
+            if (data_[counter] != rhs[counter])
             {
                 return false;
             }
@@ -430,11 +430,11 @@ public:
     {
         for (size_type i{0U}; i < size() && i < rhs.size(); ++i)
         {
-            if (m_data[i] < rhs[i])
+            if (data_[i] < rhs[i])
             {
                 return true;
             }
-            else if (m_data[i] > rhs[i])
+            else if (data_[i] > rhs[i])
             {
                 return false;
             }

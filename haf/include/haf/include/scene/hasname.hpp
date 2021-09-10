@@ -9,20 +9,20 @@ namespace haf::sys
 class HAF_API HasName
 {
 public:
-    constexpr HasName(htps::str const& name) noexcept : m_name(name) {}
-    constexpr HasName(htps::str&& name) noexcept : m_name(std::move(name)) {}
+    constexpr HasName(htps::str const& name) noexcept : name_(name) {}
+    constexpr HasName(htps::str&& name) noexcept : name_(std::move(name)) {}
     constexpr HasName(HasName&& other) noexcept = default;
     constexpr HasName(const HasName& other)     = default;
     HasName& operator=(HasName&& other) noexcept = default;
     HasName& operator=(const HasName& other) = default;
 
-    inline const htps::str& name() const noexcept { return m_name; }
+    htps::str const& name() const noexcept { return name_; }
 
 protected:
     ~HasName() {}
 
 private:
-    htps::str m_name;
+    htps::str name_;
 };
 }  // namespace haf::sys
 

@@ -9,12 +9,12 @@ namespace haf::render
 VertexArray::VertexArray() noexcept = default;
 
 VertexArray::VertexArray(const PrimitiveType type) noexcept :
-    m_vertices(), m_primitiveType{type}
+    vertices_(), primitive_type_{type}
 {}
 
 VertexArray::VertexArray(const PrimitiveType type,
                          const htps::size_type vertexCount) noexcept :
-    m_vertices(vertexCount), m_primitiveType{type}
+    vertices_(vertexCount), primitive_type_{type}
 {}
 
 VertexArray::VertexArray(
@@ -24,39 +24,39 @@ VertexArray::VertexArray(
 
 bool VertexArray::empty() const noexcept
 {
-    return m_vertices.empty();
+    return vertices_.empty();
 }
 
 const BasicVertexArray& VertexArray::verticesArray() const noexcept
 {
-    return m_vertices;
+    return vertices_;
 }
 
 BasicVertexArray& VertexArray::verticesArray() noexcept
 {
-    return m_vertices;
+    return vertices_;
 }
 
 PrimitiveType VertexArray::primitiveType() const noexcept
 {
-    return m_primitiveType;
+    return primitive_type_;
 }
 
 void VertexArray::move(const vector2df& offset) noexcept
 {
-    for (auto& v : m_vertices)
+    for (auto& v : vertices_)
         v.position += offset;
 }
 
 void VertexArray::moveX(const f32 xOffset) noexcept
 {
-    for (auto& v : m_vertices)
+    for (auto& v : vertices_)
         v.position.x += xOffset;
 }
 
 void VertexArray::moveY(const f32 yOffset) noexcept
 {
-    for (auto& v : m_vertices)
+    for (auto& v : vertices_)
         v.position.y += yOffset;
 }
 }  // namespace haf::render

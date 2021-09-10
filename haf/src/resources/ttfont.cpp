@@ -12,58 +12,58 @@ namespace haf::res
 {
 struct TTFont::FontPrivate
 {
-    FontPrivate(backend::ITTFont* font) : m_font{font} {}
-    backend::ITTFont* m_font;
-    std::map<u32, sptr<TTFontInstance>> m_fontMap;
+    FontPrivate(backend::ITTFont* font) : font_{font} {}
+    backend::ITTFont* font_;
+    std::map<u32, sptr<TTFontInstance>> font_map_;
 };
 
-TTFont::TTFont(backend::ITTFont* font) : m_private{muptr<FontPrivate>(font)}
+TTFont::TTFont(backend::ITTFont* font) : priv_{muptr<FontPrivate>(font)}
 {}
 
 TTFont::~TTFont() = default;
 
 Rectf32 TTFont::getBounds(const u32 codePoint, const u32 characterSize) const
 {
-    return m_private->m_font->getBounds(codePoint, characterSize);
+    return priv_->font_->getBounds(codePoint, characterSize);
 }
 
 Rectf32 TTFont::getTextureBounds(const u32 codePoint,
                                  const u32 characterSize) const
 {
-    return m_private->m_font->getTextureBounds(codePoint, characterSize);
+    return priv_->font_->getTextureBounds(codePoint, characterSize);
 }
 
 f32 TTFont::getAdvance(const u32 codePoint, const u32 characterSize) const
 {
-    return m_private->m_font->getAdvance(codePoint, characterSize);
+    return priv_->font_->getAdvance(codePoint, characterSize);
 }
 
 f32 TTFont::getLineSpacing(const u32 characterSize) const
 {
-    return m_private->m_font->getLineSpacing(characterSize);
+    return priv_->font_->getLineSpacing(characterSize);
 }
 
 f32 TTFont::getKerning(const u32 first,
                        const u32 second,
                        const u32 characterSize) const
 {
-    return m_private->m_font->getKerning(first, second, characterSize);
+    return priv_->font_->getKerning(first, second, characterSize);
 }
 
 sptr<ITexture> TTFont::getTexture(const u32 characterSize) const
 {
     return std::dynamic_pointer_cast<ITexture>(
-        msptr<Texture>(m_private->m_font->getTexture(characterSize)));
+        msptr<Texture>(priv_->font_->getTexture(characterSize)));
 }
 
 sptr<IFont> TTFont::font(const u32 charactersize)
 {
-    if (auto iterator = m_private->m_fontMap.find(charactersize);
-        iterator == m_private->m_fontMap.end())
+    if (auto iterator = priv_->font_map_.find(charactersize);
+        iterator == priv_->font_map_.end())
     {
         sptr<TTFontInstance> newFont{
             msptr<TTFontInstance>(*this, charactersize)};
-        return m_private->m_fontMap[charactersize] = newFont;
+        return priv_->font_map_[charactersize] = newFont;
     }
     else
     {

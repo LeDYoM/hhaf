@@ -9,7 +9,7 @@ namespace agloader
 {
 struct Loader::LoaderPrivate
 {
-    std::map<std::string, std::shared_ptr<LoadedInstance>> m_loadedInstances;
+    std::map<std::string, std::shared_ptr<LoadedInstance>> loaded_instances_;
 };
 
 static std::unique_ptr<Loader> loaderInstance;
@@ -17,16 +17,16 @@ static uintmax_t reference_counter{0U};
 
 Loader::Loader()
 {
-    m_private = new LoaderPrivate;
+    priv_ = new LoaderPrivate;
 }
 
 Loader::~Loader()
 {
-    if (m_private)
+    if (priv_)
     {
-        m_private->m_loadedInstances.clear();
-        delete m_private;
-        m_private = nullptr;
+        priv_->loaded_instances_.clear();
+        delete priv_;
+        priv_ = nullptr;
     }
 }
 
@@ -37,7 +37,7 @@ void const* Loader::loadModule(const char* const fileName)
 
     if (loadedInstace->loaded())
     {
-        m_private->m_loadedInstances[fileName] = loadedInstace;
+        priv_->loaded_instances_[fileName] = loadedInstace;
     }
     return loadedInstace->loadedData();
 }
@@ -45,8 +45,8 @@ void const* Loader::loadModule(const char* const fileName)
 void const* Loader::loadMethod(const char* const fileName,
                          const char* const methodName)
 {
-    auto iterator{m_private->m_loadedInstances.find(fileName)};
-    if (iterator != m_private->m_loadedInstances.end())
+    auto iterator{priv_->loaded_instances_.find(fileName)};
+    if (iterator != priv_->loaded_instances_.end())
     {
         auto loadedInstance{(*iterator).second};
         return loadedInstance->loadMethod(methodName);
@@ -56,10 +56,10 @@ void const* Loader::loadMethod(const char* const fileName,
 
 bool Loader::unloadModule(const char* fileName)
 {
-    auto iterator{m_private->m_loadedInstances.find(fileName)};
-    if (iterator != m_private->m_loadedInstances.end())
+    auto iterator{priv_->loaded_instances_.find(fileName)};
+    if (iterator != priv_->loaded_instances_.end())
     {
-        m_private->m_loadedInstances.erase(iterator);
+        priv_->loaded_instances_.erase(iterator);
         return true;
     }
     return false;

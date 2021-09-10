@@ -16,7 +16,7 @@ struct GameScene::GameScenePrivate
     htps::sptr<haf::anim::AnimationComponent> scene_animation_component_;
     htps::sptr<haf::rnd::RandomNumbersComponent> token_type_generator_;
     htps::sptr<haf::rnd::RandomNumbersComponent> token_position_generator_;
-    htps::uptr<GameSceneStateManager> m_states_manager;
+    htps::uptr<GameSceneStateManager> states_manager_;
     htps::uptr<KeyMapping> key_mapping_;
 
     void createScoreIncrementPoints(haf::scene::SceneNode& main_node,

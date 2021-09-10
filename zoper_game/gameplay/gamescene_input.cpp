@@ -17,8 +17,8 @@ void GameSceneInput::configure(
     htps::sptr<haf::scene::StatesController<GameSceneStates>> sceneStates,
     htps::sptr<BoardGroup> boardGroup)
 {
-    m_sceneStates = std::move(sceneStates);
-    m_boardGroup  = std::move(boardGroup);
+    scene_states_ = std::move(sceneStates);
+    board_group_  = std::move(boardGroup);
 }
 
 void GameSceneInput::onKeyPressed(haf::input::Key const& key)
@@ -28,14 +28,14 @@ void GameSceneInput::onKeyPressed(haf::input::Key const& key)
     KeyMapping keyMapping__;
     KeyMapping* keyMapping = &keyMapping__;
 
-    switch (m_sceneStates->currentState())
+    switch (scene_states_->currentState())
     {
         case GameSceneStates::Playing:
         {
             auto dir(keyMapping->getDirectionFromKey(key));
             if (dir.isValid())
             {
-                m_boardGroup->player()->movePlayer(dir);
+                board_group_->player()->movePlayer(dir);
             }
             else if (keyMapping->isLaunchKey(key))
             {
@@ -43,7 +43,7 @@ void GameSceneInput::onKeyPressed(haf::input::Key const& key)
             }
             else if (keyMapping->isPauseKey(key))
             {
-                m_sceneStates->setState(GameSceneStates::Pause);
+                scene_states_->setState(GameSceneStates::Pause);
             }
         }
         break;
@@ -61,7 +61,7 @@ void GameSceneInput::onKeyPressed(haf::input::Key const& key)
         {
             if (keyMapping->isPauseKey(key))
             {
-                m_sceneStates->setState(GameSceneStates::Playing);
+                scene_states_->setState(GameSceneStates::Playing);
             }
         }
         break;

@@ -17,7 +17,7 @@ public:
     ~TTFontFactory() override;
 
 private:
-    htps::vector<htps::uptr<TTFont>> m_fontCache;
+    htps::vector<htps::uptr<TTFont>> font_cache_;
 };
 }  // namespace haf::backend::sfmlb
 

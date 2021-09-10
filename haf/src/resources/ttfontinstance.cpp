@@ -10,40 +10,40 @@ namespace haf::res
 using namespace backend;
 
 TTFontInstance::TTFontInstance(const TTFont& parent, const u32 characterSize) :
-    m_parentInstance{parent}, m_characterSize{characterSize}
+    parent_instance_{parent}, character_size_{characterSize}
 {}
 
 TTFontInstance::~TTFontInstance() = default;
 
 Rectf32 TTFontInstance::getBounds(const u32 codePoint) const
 {
-    return m_parentInstance.getBounds(codePoint, m_characterSize);
+    return parent_instance_.getBounds(codePoint, character_size_);
 }
 
 Rectf32 TTFontInstance::getTextureBounds(const u32 codePoint) const
 {
-    return m_parentInstance.getTextureBounds(codePoint, m_characterSize);
+    return parent_instance_.getTextureBounds(codePoint, character_size_);
 }
 
 f32 TTFontInstance::getAdvance(const u32 codePoint) const
 {
-    return m_parentInstance.getAdvance(codePoint, m_characterSize);
+    return parent_instance_.getAdvance(codePoint, character_size_);
 }
 
 f32 TTFontInstance::getLineSpacing() const
 {
-    return m_parentInstance.getLineSpacing(m_characterSize);
+    return parent_instance_.getLineSpacing(character_size_);
 }
 
 f32 TTFontInstance::getKerning(const u32 first, const u32 second) const
 {
-    return m_parentInstance.getKerning(first, second, m_characterSize);
+    return parent_instance_.getKerning(first, second, character_size_);
 }
 
 sptr<ITexture> TTFontInstance::getTexture() const
 {
     return std::dynamic_pointer_cast<ITexture>(
-        m_parentInstance.getTexture(m_characterSize));
+        parent_instance_.getTexture(character_size_));
 }
 
 }  // namespace haf::res

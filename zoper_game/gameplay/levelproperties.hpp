@@ -20,14 +20,14 @@ using LevelType = htps::size_type;
 class LevelProperties : public haf::component::IComponent
 {
 public:
-    void configure(const htps::size_type currentLevel,
-                   const GameMode gameMode,
+    void configure(htps::size_type const currentLevel,
+                   GameMode const gameMode,
                    htps::sptr<time::TimerComponent> scene_timer_component);
 
     htps::size_type millisBetweenTokens() const;
-    inline size_t baseScore() const noexcept { return base_score_; }
-    inline size_t stayCounter() const noexcept { return stay_counter_; }
-    inline LevelType currentLevel() const noexcept { return current_level_; }
+    htps::size_type baseScore() const noexcept { return base_score_; }
+    htps::size_type stayCounter() const noexcept { return stay_counter_; }
+    LevelType currentLevel() const noexcept { return current_level_; }
     void increaseScore(const htps::size_type scoreIncrement);
     void nextLevel();
     static constexpr size_t maxLevelWithProperties{25U};
@@ -38,12 +38,12 @@ public:
 private:
     void updateGoals();
     void updateLevelData();
-    void setLevel(const LevelType currentLevel);
-    void setScore(const htps::size_type new_score);
+    void setLevel(LevelType const currentLevel);
+    void setScore(htps::size_type const new_score);
 
     htps::uptr<time::Timer> level_timer_;
-    time::TimerConnectorSPtr update_levelData_timer_;
-    htps::sptr<time::TimerComponent> scene_timerComponent_;
+    time::TimerConnectorSPtr update_level_data_timer_;
+    htps::sptr<time::TimerComponent> scene_timer_component_;
 
     htps::size_type consumed_tokens_{0U};
     LevelType current_level_{0U};

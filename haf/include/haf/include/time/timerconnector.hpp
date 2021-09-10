@@ -28,21 +28,21 @@ public:
                    TimePoint timeOut,
                    timer_callback_t emitter) :
         timer_{std::move(timer)},
-        m_timeOut{std::move(timeOut)},
-        m_emitter{std::move(emitter)},
-        m_timerType{timerType}
+        time_out_{std::move(timeOut)},
+        emitter_{std::move(emitter)},
+        timer_type_{timerType}
     {}
 
-    inline bool timeOut() const { return timer_->ellapsed() >= m_timeOut; }
-    inline void pause() { timer_->pause(); }
-    inline void resume() { timer_->resume(); }
-    inline void switchPause() { timer_->switchPause(); }
+    bool timeOut() const { return timer_->ellapsed() >= time_out_; }
+    void pause() { timer_->pause(); }
+    void resume() { timer_->resume(); }
+    void switchPause() { timer_->switchPause(); }
 
 private:
     htps::uptr<Timer> timer_;
-    TimePoint m_timeOut;
-    timer_emitter_t m_emitter;
-    TimerType m_timerType;
+    TimePoint time_out_;
+    timer_emitter_t emitter_;
+    TimerType timer_type_;
     friend class TimerComponent;
 };
 

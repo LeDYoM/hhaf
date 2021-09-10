@@ -94,8 +94,8 @@ public:
     void moveY(const htps::f32 yOffset) noexcept;
 
 private:
-    BasicVertexArray m_vertices;
-    PrimitiveType m_primitiveType{PrimitiveType::Triangles};
+    BasicVertexArray vertices_;
+    PrimitiveType primitive_type_{PrimitiveType::Triangles};
 };
 }  // namespace haf::render
 

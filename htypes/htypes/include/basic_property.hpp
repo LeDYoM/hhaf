@@ -26,21 +26,21 @@ public:
     constexpr BasicProperty& operator=(BasicProperty&&) noexcept = default;
     constexpr BasicProperty& operator=(const BasicProperty&) noexcept = default;
 
-    constexpr BasicProperty(T&& iv) noexcept : m_value{std::move(iv)} {}
-    constexpr BasicProperty(const T& iv) noexcept : m_value{iv} {}
+    constexpr BasicProperty(T&& iv) noexcept : value_{std::move(iv)} {}
+    constexpr BasicProperty(const T& iv) noexcept : value_{iv} {}
 
-    constexpr const T& operator()() const noexcept { return m_value; }
+    constexpr const T& operator()() const noexcept { return value_; }
     constexpr const T& operator=(const T& v) noexcept
     {
         set(v);
         return v;
     }
-    inline const T& get() const noexcept override final { return m_value; }
+    inline const T& get() const noexcept override final { return value_; }
     inline bool set(const T& v) override
     {
-        if (!(m_value == v))
+        if (!(value_ == v))
         {
-            m_value = v;
+            value_ = v;
             return true;
         }
         return false;
@@ -48,16 +48,16 @@ public:
 
     inline bool set(T&& v) override
     {
-        if (!(m_value == std::forward<T>(v)))
+        if (!(value_ == std::forward<T>(v)))
         {
-            m_value = std::move(v);
+            value_ = std::move(v);
             return true;
         }
         return false;
     }
 
 protected:
-    T m_value{};
+    T value_{};
 };
 }  // namespace htps
 

@@ -19,15 +19,15 @@ using namespace haf::board;
 namespace zoper
 {
 
-u32 Token::m_tileCounter{0};
+u32 Token::tile_counter_{0};
 
 Token::Token(SceneNode* const parent, str name) :
     GameBaseTile{parent,
-                 name + str::to_str(m_tileCounter) + str::to_str(m_tileCounter)}
+                 name + str::to_str(tile_counter_) + str::to_str(tile_counter_)}
 {
-    ++m_tileCounter;
+    ++tile_counter_;
     buildNode(renderizableBuilder()
-                  .name("Node" + str::to_str(m_tileCounter))
+                  .name("Node" + str::to_str(tile_counter_))
                   .figType(FigType_t::Shape)
                   .pointCount(30U));
     animation_component_ = components().component<anim::AnimationComponent>();
@@ -48,7 +48,7 @@ bool Token::canBeMoved(htps::vector2dst const&) const
 
 void Token::resetTileCounter()
 {
-    m_tileCounter = 0U;
+    tile_counter_ = 0U;
 }
 
 void Token::tileAdded(const vector2dst& position_)

@@ -40,12 +40,12 @@ private:
     void addHighScoreEditor(const htps::sptr<nodes::SceneNodeText>& label,
                             const htps::size_type counter);
     void addEditAnimation(const htps::size_type line_index);
-    HighScoresData m_hsData;
-    htps::sptr<res::IFont> m_normalFont;
+    HighScoresData high_scores_data_;
+    htps::sptr<res::IFont> normal_font_;
     htps::sptr<anim::AnimationComponent> animation_component_;
 
-    Color m_normalColor;
-    Color m_selectedColor;
+    Color normal_color_;
+    Color selected_color_;
 };
 }  // namespace zoper
 

@@ -28,9 +28,9 @@ struct FPSCounter
 struct Window::WindowPrivate final
 {
     FPSCounter fps_counter;
-    rptr<backend::IWindow> m_backendWindow{nullptr};
+    rptr<backend::IWindow> backend_window_{nullptr};
     sptr<input::InputDriverWrapper> input_driver_wrapper_;
-    sptr<RenderTarget> m_renderTarget;
+    sptr<RenderTarget> render_target_;
     str title_{};
 };
 
@@ -42,12 +42,12 @@ Window::~Window() = default;
 
 sptr<RenderTarget> Window::renderTarget()
 {
-    return priv_->m_renderTarget;
+    return priv_->render_target_;
 }
 
 const sptr<RenderTarget> Window::renderTarget() const
 {
-    return priv_->m_renderTarget;
+    return priv_->render_target_;
 }
 
 sptr<input::InputDriverWrapper> Window::inputDriverWrapper()
@@ -70,14 +70,14 @@ bool Window::create(uptr<win::WindowProperties> window_properties)
 
     DisplayLog::info("Going to create Window");
 
-    LogAsserter::log_assert(!priv_->m_backendWindow,
+    LogAsserter::log_assert(!priv_->backend_window_,
                             "Pointer to window already initialized");
 
     DisplayLog::info("Creating window...");
 
     // Create window object
-    priv_->m_backendWindow = systemProvider().backendFactory().getWindow();
-    backend::IWindow& bw(*priv_->m_backendWindow);
+    priv_->backend_window_ = systemProvider().backendFactory().getWindow();
+    backend::IWindow& bw(*priv_->backend_window_);
 
     DisplayLog::info_if(bw.isAlreadyCreated(), "Window was already created.");
 
@@ -102,12 +102,12 @@ bool Window::create(uptr<win::WindowProperties> window_properties)
 
     // If window created successfully, extract the render target
     // associated with the window.
-    priv_->m_renderTarget =
-        msptr<RenderTarget>(priv_->m_backendWindow->renderTarget());
+    priv_->render_target_ =
+        msptr<RenderTarget>(priv_->backend_window_->renderTarget());
 
     // Also take the input driver.
     priv_->input_driver_wrapper_ =
-        msptr<input::InputDriverWrapper>(priv_->m_backendWindow->inputDriver());
+        msptr<input::InputDriverWrapper>(priv_->backend_window_->inputDriver());
     DisplayLog::debug("Window driver info: ", bw.info());
     DisplayLog::debug("Window settings: ", bw.settingsInfo());
     return true;
@@ -115,7 +115,7 @@ bool Window::create(uptr<win::WindowProperties> window_properties)
 
 bool Window::preLoop()
 {
-    backend::IWindow& bw(*priv_->m_backendWindow);
+    backend::IWindow& bw(*priv_->backend_window_);
     auto& fps_counter{priv_->fps_counter};
 
     const TimePoint eMs{systemProvider().timeSystem().timeSinceStart()};
@@ -129,14 +129,14 @@ bool Window::preLoop()
             make_str(priv_->title_, " FPS:", fps_counter.lastFps));
     }
     ++(fps_counter.currentFps);
-    priv_->m_renderTarget->clear();
+    priv_->render_target_->clear();
 
     return bw.processEvents();
 }
 
 void Window::postLoop()
 {
-    priv_->m_backendWindow->display();
+    priv_->backend_window_->display();
 }
 
 }  // namespace haf::sys

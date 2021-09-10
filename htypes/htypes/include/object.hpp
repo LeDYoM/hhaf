@@ -64,7 +64,7 @@ public:
 
     constexpr bool operator==(const Object& obj) const noexcept
     {
-        return m_values == obj.m_values && m_objects == obj.m_objects;
+        return values_ == obj.values_ && objects_ == obj.objects_;
     }
 
     constexpr bool operator!=(const Object& obj) const noexcept
@@ -76,16 +76,16 @@ public:
     {
     public:
         constexpr Value() = default;
-        constexpr Value(const Object* obj) : m_object{obj} {}
-        constexpr Value(const str* val) : m_value{val} {}
+        constexpr Value(const Object* obj) : object_{obj} {}
+        constexpr Value(const str* val) : value_{val} {}
 
-        constexpr bool isValid() const noexcept { return m_object || m_value; }
-        constexpr bool isValue() const noexcept { return m_value != nullptr; }
-        constexpr bool isObject() const noexcept { return m_object != nullptr; }
+        constexpr bool isValid() const noexcept { return object_ || value_; }
+        constexpr bool isValue() const noexcept { return value_ != nullptr; }
+        constexpr bool isObject() const noexcept { return object_ != nullptr; }
 
         constexpr bool operator==(const str& key) const noexcept
         {
-            return ((isValue()) ? (*m_value) == key : false);
+            return ((isValue()) ? (*value_) == key : false);
         }
 
         constexpr bool operator!=(const str& key) const noexcept
@@ -95,7 +95,7 @@ public:
 
         constexpr bool operator==(const Object& obj) const noexcept
         {
-            return ((isObject()) ? (*m_object) == obj : false);
+            return ((isObject()) ? (*object_) == obj : false);
         }
 
         constexpr bool operator!=(const Object& obj) const noexcept
@@ -131,7 +131,7 @@ public:
         {
             // Using indexing operator in a value returns empty value.
             // If the key exists, forward the key to it.
-            return (isObject() ? (*m_object)[key] : Value{});
+            return (isObject() ? (*object_)[key] : Value{});
         }
 
         /// Get a @Value in the array form. That is the
@@ -141,9 +141,9 @@ public:
             return (isObject() ? getObject()[index] : Value{});
         }
 
-        const Object& getObject() const noexcept { return (*m_object); }
+        const Object& getObject() const noexcept { return (*object_); }
 
-        const str& getValue() const noexcept { return (*m_value); }
+        const str& getValue() const noexcept { return (*value_); }
 
         template <typename T>
         [[nodiscard]] T as() const
@@ -152,26 +152,26 @@ public:
             {
                 if constexpr (sizeof(T) == sizeof(char))
                 {
-                    return static_cast<T>((*m_value).convertOrDefault<s16>());
+                    return static_cast<T>((*value_).convertOrDefault<s16>());
                 }
                 else
                 {
                     return static_cast<T>(
-                        (*m_value)
+                        (*value_)
                             .convertOrDefault<std::underlying_type_t<T>>());
                 }
             }
             else if constexpr (std::is_same_v<T, str>)
             {
-                return (*m_value);
+                return (*value_);
             }
             else if constexpr (std::is_same_v<T, Object>)
             {
-                return (*m_object);
+                return (*object_);
             }
             else
             {
-                return (*m_value).convertOrDefault<T>();
+                return (*value_).convertOrDefault<T>();
             }
         }
 
@@ -182,7 +182,7 @@ public:
             {
                 if constexpr (sizeof(T) == sizeof(char))
                 {
-                    auto [result, nval] = (*m_value).convert<s16>();
+                    auto [result, nval] = (*value_).convert<s16>();
                     if (result)
                     {
                         value = static_cast<T>(nval);
@@ -193,7 +193,7 @@ public:
                 else
                 {
                     auto [result, nval] =
-                        (*m_value).convert<std::underlying_type_t<T>>();
+                        (*value_).convert<std::underlying_type_t<T>>();
                     if (result)
                     {
                         value = static_cast<T>(nval);
@@ -204,17 +204,17 @@ public:
             }
             else if constexpr (std::is_same_v<T, str>)
             {
-                value = (*m_value);
+                value = (*value_);
                 return true;
             }
             else if constexpr (std::is_same_v<T, Object>)
             {
-                value = (*m_object);
+                value = (*object_);
                 return true;
             }
             else
             {
-                auto [result, nval] = (*m_value).convert<T>();
+                auto [result, nval] = (*value_).convert<T>();
                 if (result)
                 {
                     std::swap(value, nval);
@@ -243,27 +243,27 @@ public:
         }
 
     private:
-        const Object* m_object{nullptr};
-        const str* m_value{nullptr};
+        const Object* object_{nullptr};
+        const str* value_{nullptr};
     };
 
     using KeyValueValue = KeyValuePair<Value>;
 
     constexpr size_type size_objects() const noexcept
     {
-        return m_objects.size();
+        return objects_.size();
     }
 
-    constexpr size_type size_values() const noexcept { return m_values.size(); }
+    constexpr size_type size_values() const noexcept { return values_.size(); }
 
     constexpr size_type size() const noexcept
     {
         return size_objects() + size_values();
     }
 
-    constexpr bool empty_objects() const noexcept { return m_objects.empty(); }
+    constexpr bool empty_objects() const noexcept { return objects_.empty(); }
 
-    constexpr bool empty_values() const noexcept { return m_values.empty(); }
+    constexpr bool empty_values() const noexcept { return values_.empty(); }
 
     constexpr size_type empty() const noexcept
     {
@@ -272,13 +272,13 @@ public:
 
     Value getObject(const str& key) const
     {
-        auto token(m_objects.find_checked(key));
+        auto token(objects_.find_checked(key));
         return (token.first ? Value(&(token.second->second)) : Value());
     }
 
     Value getValue(const str& key) const
     {
-        auto token(m_values.find_checked(key));
+        auto token(values_.find_checked(key));
         return (token.first ? Value(&(token.second->second)) : Value());
     }
 
@@ -298,14 +298,14 @@ public:
 
     Object* acquireObject(const str& key) noexcept
     {
-        auto token(m_objects.find(key));
-        return ((token != m_objects.end()) ? &(token->second) : nullptr);
+        auto token(objects_.find(key));
+        return ((token != objects_.end()) ? &(token->second) : nullptr);
     }
 
     str* acquireValue(const str& key) noexcept
     {
-        auto token(m_values.find(key));
-        return ((token != m_values.end()) ? &(token->second) : nullptr);
+        auto token(values_.find(key));
+        return ((token != values_.end()) ? &(token->second) : nullptr);
     }
 
     static constexpr const char* const arraySeparator = "::";
@@ -328,7 +328,7 @@ public:
         bool ok{true};
         for (auto&& element : iListValues)
         {
-            ok &= m_values.add(std::move(element.first),
+            ok &= values_.add(std::move(element.first),
                                std::move(element.second));
         }
         return ok;
@@ -339,7 +339,7 @@ public:
         bool ok{true};
         for (auto&& element : iListObject)
         {
-            ok &= m_objects.add(element.first, element.second);
+            ok &= objects_.add(element.first, element.second);
         }
         return ok;
     }
@@ -460,46 +460,46 @@ public:
 
     constexpr ObjectDictionary::iterator begin_objects() noexcept
     {
-        return m_objects.begin();
+        return objects_.begin();
     }
     constexpr ObjectDictionary::const_iterator begin_objects() const noexcept
     {
-        return m_objects.begin();
+        return objects_.begin();
     }
     constexpr ObjectDictionary::iterator end_objects() noexcept
     {
-        return m_objects.end();
+        return objects_.end();
     }
     constexpr ObjectDictionary::const_iterator end_objects() const noexcept
     {
-        return m_objects.end();
+        return objects_.end();
     }
 
     constexpr ValueDictionary::iterator begin_values() noexcept
     {
-        return m_values.begin();
+        return values_.begin();
     }
     constexpr ValueDictionary::const_iterator begin_values() const noexcept
     {
-        return m_values.begin();
+        return values_.begin();
     }
     constexpr ValueDictionary::iterator end_values() noexcept
     {
-        return m_values.end();
+        return values_.end();
     }
     constexpr ValueDictionary::const_iterator end_values() const noexcept
     {
-        return m_values.end();
+        return values_.end();
     }
 
     constexpr ObjectDictionary const& objects() const noexcept
     {
-        return m_objects;
+        return objects_;
     }
 
     constexpr ValueDictionary const& values() const noexcept
     {
-        return m_values;
+        return values_;
     }
 
     template <typename T>
@@ -509,8 +509,8 @@ public:
     }
 
 private:
-    ValueDictionary m_values;
-    ObjectDictionary m_objects;
+    ValueDictionary values_;
+    ObjectDictionary objects_;
 };
 
 //////////////////////////////////////////////////////////////////////////////////

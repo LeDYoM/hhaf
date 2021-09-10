@@ -24,8 +24,8 @@ public:
     TTFontInstance(const TTFont& parent, const htps::u32 characterSize);
 
 private:
-    const TTFont& m_parentInstance;
-    htps::u32 m_characterSize;
+    const TTFont& parent_instance_;
+    htps::u32 character_size_;
     friend class TTFont;
 };
 }  // namespace haf::res

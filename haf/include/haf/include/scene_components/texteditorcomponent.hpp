@@ -32,8 +32,8 @@ public:
 private:
     void onKeyPressed(const input::Key&) override;
 
-    htps::uptr<TextValidator> m_textValidator;
-    htps::str m_originalText;
+    htps::uptr<TextValidator> text_validator_;
+    htps::str original_text_;
 };
 }  // namespace haf::scene
 

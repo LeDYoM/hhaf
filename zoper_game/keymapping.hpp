@@ -39,7 +39,7 @@ public:
     bool deserialize(htps::Object const&) override;
 
 private:
-    htps::array<haf::input::Key, KeyMapping::TotalKeys> m_keys;
+    htps::array<haf::input::Key, KeyMapping::TotalKeys> keys_;
 };
 
 }  // namespace zoper

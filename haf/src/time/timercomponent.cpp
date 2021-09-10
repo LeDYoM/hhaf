@@ -28,8 +28,8 @@ void TimerComponent::update()
         {
             // Delta time has passed, so trigger
             // the callback and update the timer
-            timerConnector->m_emitter(timerConnector->timer_->ellapsed());
-            if (timerConnector->m_timerType == TimerType::Continuous)
+            timerConnector->emitter_(timerConnector->timer_->ellapsed());
+            if (timerConnector->timer_type_ == TimerType::Continuous)
             {
                 timerConnector->timer_->restart();
             }

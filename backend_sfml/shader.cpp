@@ -5,7 +5,7 @@ using namespace htps;
 
 namespace haf::backend::sfmlb
 {
-Shader::Shader(uptr<sf::Shader> shader) : m_shaderPrivate{std::move(shader)}
+Shader::Shader(uptr<sf::Shader> shader) : priv_{std::move(shader)}
 {}
 
 Shader::~Shader()
@@ -13,7 +13,7 @@ Shader::~Shader()
 
 void Shader::setUniform(const str& name, vector2df v)
 {
-    m_shaderPrivate->setUniform(to_sf_type(name), to_sf_type(v));
+    priv_->setUniform(to_sf_type(name), to_sf_type(v));
 }
 
 void Shader::setUniform(const str&, ITexture*)

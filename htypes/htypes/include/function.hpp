@@ -28,7 +28,7 @@ public:
      * @brief Default constructor.
      * Construct an empty object
      */
-    constexpr function() noexcept : m_callable{nullptr} {}
+    constexpr function() noexcept : callable_{nullptr} {}
 
     /**
      * @brief Construct from a callable object. Normally, a lambda or a pointer
@@ -38,7 +38,7 @@ public:
      * @param t Object to construct from
      */
     template <typename T>
-    constexpr function(T t) : m_callable{msptr<CallableT<T>>(std::move(t))}
+    constexpr function(T t) : callable_{msptr<CallableT<T>>(std::move(t))}
     {}
 
     /**
@@ -50,12 +50,12 @@ public:
      */
     template <typename T>
     constexpr function(T* const t, ReturnValue (T::*f)(Args...)) :
-        m_callable{msptr<CallableMethodPointerT<T>>(t, f)}
+        callable_{msptr<CallableMethodPointerT<T>>(t, f)}
     {}
 
     template <typename T>
     constexpr function(T const* const t, ReturnValue (T::*f)(Args...) const) :
-        m_callable{msptr<ConstCallableMethodPointerT<T>>(t, f)}
+        callable_{msptr<ConstCallableMethodPointerT<T>>(t, f)}
     {}
 
     /**
@@ -64,7 +64,7 @@ public:
      * @return true The object contains data.
      * @return false The object is empty
      */
-    constexpr operator bool() const noexcept { return m_callable != nullptr; }
+    constexpr operator bool() const noexcept { return callable_ != nullptr; }
 
     /**
      * @brief Operator invoke to perform the actual call.
@@ -77,8 +77,8 @@ public:
     template <typename... Args2>
     constexpr ReturnValue operator()(Args2&&... args) const
     {
-        assert(m_callable);
-        return m_callable->Invoke(std::forward<Args2>(args)...);
+        assert(callable_);
+        return callable_->Invoke(std::forward<Args2>(args)...);
     }
 
     /**
@@ -92,7 +92,7 @@ public:
      */
     constexpr bool operator==(const function& other) const noexcept
     {
-        return m_callable == other.m_callable;
+        return callable_ == other.callable_;
     }
 
     /**
@@ -106,7 +106,7 @@ public:
      */
     constexpr bool equals(function const& other) const noexcept
     {
-        return m_callable->equals(*(other.m_callable));
+        return callable_->equals(*(other.callable_));
     }
 
 private:
@@ -123,17 +123,17 @@ private:
     {
     public:
         template <typename Y>
-        constexpr CallableT(Y&& t) noexcept : m_t{std::forward<Y>(t)}
+        constexpr CallableT(Y&& t) noexcept : t_{std::forward<Y>(t)}
         {}
 
         inline ReturnValue Invoke(Args... args) override
         {
-            return m_t(std::forward<Args>(args)...);
+            return t_(std::forward<Args>(args)...);
         }
 
         inline bool equals(CallableT const& other) const noexcept
         {
-            return &m_t == &other.m_t;
+            return &t_ == &other.t_;
         }
 
         inline bool equals(ICallable const& other) const noexcept override
@@ -147,7 +147,7 @@ private:
         }
 
     private:
-        T m_t;
+        T t_;
     };
 
     template <class T>
@@ -227,7 +227,7 @@ private:
         const HandlerFunctionPtr function_;
     };
 
-    sptr<ICallable> m_callable;
+    sptr<ICallable> callable_;
 };
 
 /**

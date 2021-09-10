@@ -44,8 +44,8 @@ protected:
     Color normalColor() const;
     Color selectedColor() const;
 
-    htps::size_type m_previouslySelectedItem{0U};
-    htps::size_type m_selectedItem{0U};
+    htps::size_type previously_selected_item_{0U};
+    htps::size_type selected_item_{0U};
 
 public:
     using BaseClass::BaseClass;

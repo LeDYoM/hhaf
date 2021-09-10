@@ -34,9 +34,9 @@ public:
     ITexture* getTexture(const htps::u32 characterSize) override;
 
 private:
-    htps::uptr<sf::Font> m_font;
+    htps::uptr<sf::Font> font_;
     htps::RawMemory raw_memory_;
-    std::map<htps::u32, htps::uptr<Texture>> m_fontTexturesCache;
+    std::map<htps::u32, htps::uptr<Texture>> font_textures_cache_;
 };
 }  // namespace haf::backend::sfmlb
 

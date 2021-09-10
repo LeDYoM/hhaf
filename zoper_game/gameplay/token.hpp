@@ -40,7 +40,7 @@ public:
                    const htps::vector2dst& dest) override;
 
 private:
-    static htps::u32 m_tileCounter;
+    static htps::u32 tile_counter_;
     htps::vector2df board2SceneFactor_;
     htps::sptr<haf::anim::AnimationComponent> animation_component_;
 };

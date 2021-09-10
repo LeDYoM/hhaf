@@ -147,15 +147,15 @@ vector<s32> MenuPage::optionsSelected() const
 
 void MenuPage::setSelectedItem(const size_type index)
 {
-    m_previouslySelectedItem = m_selectedItem;
-    m_selectedItem           = index;
+    previously_selected_item_ = selected_item_;
+    selected_item_           = index;
     updateSelection();
 }
 
 void MenuPage::updateSelection()
 {
-    setColorToLine(m_previouslySelectedItem, normalColor());
-    setColorToLine(m_selectedItem, selectedColor());
+    setColorToLine(previously_selected_item_, normalColor());
+    setColorToLine(selected_item_, selectedColor());
 }
 
 void MenuPage::setColorToLine(const size_type index, const Color& color)
@@ -178,32 +178,32 @@ void MenuPage::standarizeText(const sptr<ContainedElement>& ntext)
 
 void MenuPage::goDown()
 {
-    m_previouslySelectedItem = m_selectedItem;
-    setSelectedItem((m_selectedItem < (prop<TableSize>().get().y - 1U))
-                        ? (m_selectedItem + 1U)
+    previously_selected_item_ = selected_item_;
+    setSelectedItem((selected_item_ < (prop<TableSize>().get().y - 1U))
+                        ? (selected_item_ + 1U)
                         : (0U));
 }
 
 void MenuPage::goUp()
 {
-    m_previouslySelectedItem = m_selectedItem;
-    setSelectedItem((m_selectedItem > 0U) ? (m_selectedItem - 1U)
+    previously_selected_item_ = selected_item_;
+    setSelectedItem((selected_item_ > 0U) ? (selected_item_ - 1U)
                                           : (prop<TableSize>().get().y - 1U));
 }
 
 void MenuPage::goLeft()
 {
-    if (nodeHasOptions(m_selectedItem))
+    if (nodeHasOptions(selected_item_))
     {
-        optionsLabelAt(m_selectedItem)->decrementIndex();
+        optionsLabelAt(selected_item_)->decrementIndex();
     }
 }
 
 void MenuPage::goRight()
 {
-    if (nodeHasOptions(m_selectedItem))
+    if (nodeHasOptions(selected_item_))
     {
-        optionsLabelAt(m_selectedItem)->incrementIndex();
+        optionsLabelAt(selected_item_)->incrementIndex();
     }
 }
 
@@ -211,13 +211,13 @@ void MenuPage::goSelected()
 {
     s32 option_selected_in_node{-1};
 
-    if (nodeHasOptions(m_selectedItem))
+    if (nodeHasOptions(selected_item_))
     {
         option_selected_in_node =
-            static_cast<s32>(optionsLabelAt(m_selectedItem)->index());
+            static_cast<s32>(optionsLabelAt(selected_item_)->index());
     }
 
-    Selection(m_selectedItem, option_selected_in_node);
+    Selection(selected_item_, option_selected_in_node);
 }
 
 sptr<DiscreteTextComponent> MenuPage::optionsLabelAt(const size_type y) const

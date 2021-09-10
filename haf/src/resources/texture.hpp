@@ -23,7 +23,7 @@ public:
     backend::ITexture const* backEndTexture() const noexcept;
 
 private:
-    backend::ITexture* m_texturePrivate;
+    backend::ITexture* priv_;
 };
 
 }  // namespace haf::res

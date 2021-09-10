@@ -3,15 +3,14 @@
 
 namespace haf::res
 {
-Shader::Shader(backend::IShader* shader) : m_ShaderPrivate{shader}
+Shader::Shader(backend::IShader* shader) : priv_{shader}
 {}
 
-Shader::~Shader()
-{}
+Shader::~Shader() = default;
 
 backend::IShader const* Shader::backEndShader() const noexcept
 {
-    return m_ShaderPrivate;
+    return priv_;
 }
 
 }  // namespace haf::res

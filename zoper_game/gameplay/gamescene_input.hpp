@@ -24,8 +24,8 @@ private:
     void onKeyPressed(haf::input::Key const&) override;
     void onKeyReleased(haf::input::Key const&) override;
 
-    htps::sptr<haf::scene::StatesController<GameSceneStates>> m_sceneStates;
-    htps::sptr<BoardGroup> m_boardGroup;
+    htps::sptr<haf::scene::StatesController<GameSceneStates>> scene_states_;
+    htps::sptr<BoardGroup> board_group_;
 };
 }  // namespace zoper
 

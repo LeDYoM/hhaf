@@ -19,7 +19,7 @@ public:
     void const* loadedData() const;
 
 private:
-    LoadedInstancePrivate* m_private;
+    LoadedInstancePrivate* priv_;
 };
 }  // namespace agloader
 #endif

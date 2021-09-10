@@ -5,19 +5,19 @@ using namespace htps;
 
 namespace haf::res
 {
-Texture::Texture(backend::ITexture* texture) : m_texturePrivate{texture}
+Texture::Texture(backend::ITexture* texture) : priv_{texture}
 {}
 
 Texture::~Texture() = default;
 
 vector2du32 Texture::size() const
 {
-    return m_texturePrivate->size();
+    return priv_->size();
 }
 
 backend::ITexture const* Texture::backEndTexture() const noexcept
 {
-    return m_texturePrivate;
+    return priv_;
 }
 
 }  // namespace haf::res

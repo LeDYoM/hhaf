@@ -31,7 +31,7 @@ public:
     /**
      * @brief Create an emitter with one receiver attached
      */
-    constexpr emitter_t(emitter_callback_t f) : m_receivers{std::move(f)} {}
+    constexpr emitter_t(emitter_callback_t f) : receivers_{std::move(f)} {}
     constexpr emitter_t(const emitter_t&) = default;
     constexpr emitter_t& operator=(const emitter_t&) = default;
     constexpr emitter_t(emitter_t&&) noexcept        = default;
@@ -39,9 +39,9 @@ public:
 
     constexpr void operator()(Args... args)
     {
-        if (!m_receivers.empty())
+        if (!receivers_.empty())
         {
-            for (auto& f : m_receivers)
+            for (auto& f : receivers_)
             {
                 f(std::forward<Args>(args)...);
             }
@@ -50,7 +50,7 @@ public:
 
     constexpr void connect(emitter_callback_t f) noexcept
     {
-        m_receivers.emplace_back(std::move(f));
+        receivers_.emplace_back(std::move(f));
     }
 
     constexpr emitter_t& operator+=(emitter_callback_t f) noexcept
@@ -61,12 +61,12 @@ public:
 
     constexpr bool disconnect(emitter_callback_t const& f) noexcept
     {
-        auto const old_size = m_receivers.size();
+        auto const old_size = receivers_.size();
 
-        (void)(m_receivers.erase_if(
+        (void)(receivers_.erase_if(
             [&f](auto const& element) { return f.equals(element); }));
 
-        return m_receivers.size() < old_size;
+        return receivers_.size() < old_size;
     }
 
     constexpr emitter_t& operator-=(emitter_callback_t const& f) noexcept
@@ -75,11 +75,11 @@ public:
         return *this;
     }
 
-    constexpr auto size() const noexcept { return m_receivers.size(); }
-    constexpr bool empty() const noexcept { return m_receivers.empty(); }
+    constexpr auto size() const noexcept { return receivers_.size(); }
+    constexpr bool empty() const noexcept { return receivers_.empty(); }
 
 private:
-    vector_type<emitter_callback_t> m_receivers;
+    vector_type<emitter_callback_t> receivers_;
 };
 
 template <typename... Args>
@@ -107,9 +107,9 @@ public:
      * @param f Function to connect.
      */
     constexpr connection_t(emitter_type& e, function_type<void(Args...)> f) :
-        m_emitter{e}, m_function{std::move(f)}
+        emitter_{e}, function_{std::move(f)}
     {
-        m_emitter.connect(m_function);
+        emitter_.connect(function_);
     }
 
     /**
@@ -121,23 +121,23 @@ public:
      * @param r Emitter receiver.
      */
     constexpr connection_t(emitter_type& e, emitter_type& r) :
-        m_emitter{e}, m_function{[&r](Args... args) {
+        emitter_{e}, function_{[&r](Args... args) {
             r(std::forward<Args>(args)...);
         }}
     {
-        m_emitter.connect(m_function);
+        emitter_.connect(function_);
     }
 
     inline bool disconnect() override
     {
-        return m_emitter.disconnect(m_function);
+        return emitter_.disconnect(function_);
     }
 
-    ~connection_t() { (void)(m_emitter.disconnect(m_function)); }
+    ~connection_t() { (void)(emitter_.disconnect(function_)); }
 
 private:
-    emitter_type& m_emitter;
-    function_type<void(Args...)> m_function;
+    emitter_type& emitter_;
+    function_type<void(Args...)> function_;
 };
 
 template <typename... Args>
@@ -149,17 +149,17 @@ public:
     template <typename R, typename... Args>
     constexpr void connect(emitter<Args...>& e, R r)
     {
-        m_connections.push_back(msptr<connection<Args...>>(e, std::move(r)));
+        connections_.push_back(msptr<connection<Args...>>(e, std::move(r)));
     }
 
     template <typename... Args>
     constexpr void connect(emitter<Args...>& e, emitter<Args...>& r)
     {
-        m_connections.push_back(msptr<connection<Args...>>(e, r));
+        connections_.push_back(msptr<connection<Args...>>(e, r));
     }
 
 private:
-    vector<sptr<iconnection>> m_connections;
+    vector<sptr<iconnection>> connections_;
 };
 
 using ireceiver = ireceiver_t;

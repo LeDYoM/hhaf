@@ -44,12 +44,12 @@ void HighScoresScene::onCreated()
         components()
             .component<StatesController<HighScoresSceneStates>>());
 
-    m_normalFont = subsystems()
+    normal_font_ = subsystems()
                        .dataWrapper<res::ResourceRetriever>()
                        ->getTTFont(HighScoresResources::MenuFontId)
                        ->font(72);
-    m_normalColor   = colors::Blue;
-    m_selectedColor = colors::Red;
+    normal_color_   = colors::Blue;
+    selected_color_ = colors::Red;
 
     auto renderizable_builder = createSceneNode<RenderizablesSceneNode>(
                                     "high_scores_main_menu_background")

@@ -14,7 +14,7 @@ void TextEditorComponent::onAttached()
 
     auto& text_prop(attachedNodeAs<nodes::SceneNodeText>()
                         ->prop<nodes::SceneNodeTextProperties>());
-    m_originalText = text_prop.get<Text>();
+    original_text_ = text_prop.get<Text>();
     text_prop.set<Text>("");
 }
 
@@ -31,10 +31,10 @@ void TextEditorComponent::onKeyPressed(const input::Key& key)
         {
             const char c_ascii{this->toAscii(key)};
             bool success{true};
-            if (m_textValidator)
+            if (text_validator_)
             {
                 success =
-                    m_textValidator->canAddChar(text_prop.get<Text>(), c_ascii);
+                    text_validator_->canAddChar(text_prop.get<Text>(), c_ascii);
             }
 
             if (success)
@@ -52,9 +52,9 @@ void TextEditorComponent::onKeyPressed(const input::Key& key)
         else if (key == Key::Return)
         {
             bool success{true};
-            if (m_textValidator)
+            if (text_validator_)
             {
-                success = m_textValidator->isValidText(text_prop.get<Text>());
+                success = text_validator_->isValidText(text_prop.get<Text>());
             }
             if (success)
             {
@@ -64,7 +64,7 @@ void TextEditorComponent::onKeyPressed(const input::Key& key)
         }
         else if (key == Key::Escape)
         {
-            text_prop.set<Text>(m_originalText);
+            text_prop.set<Text>(original_text_);
             enabled = false;
             Rejected();
         }
@@ -74,7 +74,7 @@ void TextEditorComponent::onKeyPressed(const input::Key& key)
 void TextEditorComponent::setTextValidator(
     htps::uptr<TextValidator> nTextValidator) noexcept
 {
-    std::swap(m_textValidator, nTextValidator);
+    std::swap(text_validator_, nTextValidator);
 }
 
 }  // namespace haf::scene

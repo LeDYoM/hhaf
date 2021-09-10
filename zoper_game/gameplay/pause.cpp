@@ -26,8 +26,8 @@ PauseSceneNode::~PauseSceneNode() = default;
 
 void PauseSceneNode::onCreated()
 {
-    m_pauseText = createSceneNode<SceneNodeText>("pausetext");
-    m_pauseText->prop<SceneNodeTextProperties>()
+    pause_text_ = createSceneNode<SceneNodeText>("pausetext");
+    pause_text_->prop<SceneNodeTextProperties>()
         .put<Text>("PAUSE")
         .put<Font>(subsystems()
                        .dataWrapper<res::ResourceRetriever>()
@@ -51,7 +51,7 @@ void PauseSceneNode::enterPause()
 
     auto property_animation_builder =
         animation_component_->make_property_animation_builder<TextColor>(
-            m_pauseText);
+            pause_text_);
 
     property_animation_builder
         ->startValue(Color{colors::White, Color::Transparent})

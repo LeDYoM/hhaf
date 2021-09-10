@@ -20,24 +20,24 @@ void BoardTileSceneNode::createBackgroundTile(const htps::Rectf32& tileBox)
     const Rectf32 point_box{tileBox.center() - (centerPointSize / 2.0F),
                             centerPointSize};
 
-    if (m_pointInCenter)
+    if (point_in_center_)
     {
-        auto const result = removeSceneNode(m_pointInCenter);
-        m_pointInCenter.reset();
+        auto const result = removeSceneNode(point_in_center_);
+        point_in_center_.reset();
         LogAsserter::log_assert(result);
     }
 
-    m_pointInCenter =
+    point_in_center_ =
         createSceneNode<RenderizableSceneNode>("backgroundTilePoint");
 
-    auto builder = m_pointInCenter->renderizableBuilder();
+    auto builder = point_in_center_->renderizableBuilder();
     builder.name("backgroundTilePoint")
         .figType(FigType_t::Quad)
         .box(Rectf32{0, 0, point_box.width, point_box.height})
         .color(colors::White);
-    m_pointInCenter->buildNode(builder);
+    point_in_center_->buildNode(builder);
 
-    m_pointInCenter->prop<Position>().set(point_box.leftTop());
+    point_in_center_->prop<Position>().set(point_box.leftTop());
 
     background_tile_ = renderizableBuilder()
                            .name("backgroundTile")
@@ -50,7 +50,7 @@ void BoardTileSceneNode::update()
 {
     if (prop<NodeSize>().readResetHasChanged())
     {
-        LogAsserter::log_assert(m_pointInCenter == nullptr,
+        LogAsserter::log_assert(point_in_center_ == nullptr,
                                 "Point in center already initialized");
         LogAsserter::log_assert(background_tile_ == nullptr,
                                 "Background tile already initialized");

@@ -21,7 +21,7 @@ namespace haf::render
 
 struct Renderizable::RenderizablePrivate
 {
-    rptr<TransformableSceneNode> m_parent;
+    rptr<TransformableSceneNode> parent_;
     VertexArray vertices_;
     RenderData render_data_;
     rptr<Renderizable const> const i_this_;
@@ -33,7 +33,7 @@ struct Renderizable::RenderizablePrivate
                         rptr<res::ITexture> texture,
                         rptr<res::IShader> shader,
                         rptr<Renderizable const> i_this) :
-        m_parent{parent},
+        parent_{parent},
         vertices_{initDataVertexPerFigureAndNumPoints(figure_type,
                                                       initial_point_count)},
         render_data_{vertices_, matrix, texture, shader},
@@ -78,12 +78,12 @@ Renderizable::~Renderizable() = default;
 
 htps::rptr<TransformableSceneNode> Renderizable::parent() noexcept
 {
-    return p_->m_parent;
+    return p_->parent_;
 }
 
 htps::rptr<TransformableSceneNode const> Renderizable::parent() const noexcept
 {
-    return p_->m_parent;
+    return p_->parent_;
 }
 
 void Renderizable::render()

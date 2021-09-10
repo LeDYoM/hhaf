@@ -18,7 +18,7 @@ public:
     ~TextureFactory() override;
 
 private:
-    htps::vector<htps::sptr<Texture>> m_textureCache;
+    htps::vector<htps::sptr<Texture>> texture_cache_;
 };
 }  // namespace haf::backend::sfmlb
 

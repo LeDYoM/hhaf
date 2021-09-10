@@ -14,8 +14,8 @@ using namespace haf::scene;
 using namespace haf::sys;
 
 void LevelProperties::configure(
-    const size_type currentLevel,
-    const GameMode gameMode,
+    size_type const currentLevel,
+    GameMode const gameMode,
     sptr<time::TimerComponent> scene_timer_component)
 {
     using namespace time;
@@ -25,14 +25,14 @@ void LevelProperties::configure(
         level_timer_ = attachedNode()->subsystems().dataWrapper<Timer>();
     }
     LogAsserter::log_assert(scene_timer_component != nullptr,
-                            "m_sceneNodeComponent already contains a value");
-    LogAsserter::log_assert(scene_timerComponent_ == nullptr,
                             "Passed nullptr sceneTimerComponent");
+    LogAsserter::log_assert(scene_timer_component_ == nullptr,
+                            "m_sceneNodeComponent already contains a value");
 
     game_mode_ = gameMode;
-    scene_timerComponent_.swap(scene_timer_component);
+    scene_timer_component_.swap(scene_timer_component);
 
-    update_levelData_timer_ = scene_timerComponent_->addTimer(
+    update_level_data_timer_ = scene_timer_component_->addTimer(
         TimerType::Continuous, TimePoint_as_miliseconds(120),
         [this](TimePoint /*realEllapsed*/) { updateLevelData(); });
 
@@ -42,7 +42,7 @@ void LevelProperties::configure(
     setLevel(currentLevel);
 }
 
-void LevelProperties::setScore(const size_type new_score)
+void LevelProperties::setScore(size_type const new_score)
 {
     current_score_ = new_score;
 
@@ -71,7 +71,7 @@ htps::size_type LevelProperties::millisBetweenTokens() const
     return millis_between_tokens_;
 }
 
-void LevelProperties::setLevel(const LevelType currentLevel)
+void LevelProperties::setLevel(LevelType const currentLevel)
 {
     level_timer_->restart();
 
@@ -157,7 +157,7 @@ void LevelProperties::updateLevelData()
     }
 }
 
-void LevelProperties::increaseScore(const size_type scoreIncrement)
+void LevelProperties::increaseScore(size_type const scoreIncrement)
 {
     setScore(current_score_ + scoreIncrement);
 }

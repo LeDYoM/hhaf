@@ -47,11 +47,11 @@ public:
                           const htps::str& nName);
     const HighScore& operator[](const htps::size_type index) const
     {
-        return m_highScoreList[index];
+        return high_score_list_[index];
     }
     const HighScoresList& highScoresList() const noexcept
     {
-        return m_highScoreList;
+        return high_score_list_;
     }
 
     friend htps::Object& operator<<(htps::Object& obj,
@@ -72,7 +72,7 @@ public:
     }
 
 private:
-    HighScoresList m_highScoreList;
+    HighScoresList high_score_list_;
 };
 
 inline const htps::Object& operator>>(const htps::Object& obj,
@@ -81,7 +81,7 @@ inline const htps::Object& operator>>(const htps::Object& obj,
     if (const auto obj_high_scores_data = obj["high_scores"];
         obj_high_scores_data.isObject())
     {
-        obj_high_scores_data.getObject() >> high_scores_data.m_highScoreList;
+        obj_high_scores_data.getObject() >> high_scores_data.high_score_list_;
     }
     return obj;
 }
@@ -89,7 +89,7 @@ inline const htps::Object& operator>>(const htps::Object& obj,
 inline htps::Object& operator<<(htps::Object& obj,
                                 const HighScoresData& high_scores_data)
 {
-    obj.set("high_scores", high_scores_data.m_highScoreList);
+    obj.set("high_scores", high_scores_data.high_score_list_);
     return obj;
 }
 
