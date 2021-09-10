@@ -4,7 +4,7 @@
 
 #include <haf/include/scene/color.hpp>
 #include <haf/include/scene_nodes/scenenodetext.hpp>
-#include <haf/include/animation/animationcomponent.hpp>
+#include <haf/include/animation/animation_component.hpp>
 #include <haf/include/animation/property_animation_builder.hpp>
 #include <haf/include/scene_components/scenemetricsview.hpp>
 #include <haf/include/component/component_container.hpp>

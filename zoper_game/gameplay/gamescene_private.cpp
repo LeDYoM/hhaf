@@ -2,7 +2,7 @@
 #include "constants.hpp"
 #include <htypes/include/types.hpp>
 
-#include <haf/include/animation/animationcomponent.hpp>
+#include <haf/include/animation/animation_component.hpp>
 #include <haf/include/random/randomnumberscomponent.hpp>
 #include <haf/include/render/fig_type.hpp>
 

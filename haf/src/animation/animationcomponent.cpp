@@ -1,4 +1,4 @@
-#include <haf/include/animation/animationcomponent.hpp>
+#include <haf/include/animation/animation_component.hpp>
 #include <hlog/include/hlog.hpp>
 #include <htypes/include/lockablevector.hpp>
 

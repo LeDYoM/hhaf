@@ -3,7 +3,7 @@
 
 #include <htypes/include/types.hpp>
 
-#include <haf/include/animation/animationcomponent.hpp>
+#include <haf/include/animation/animation_component.hpp>
 #include <haf/include/random/randomnumberscomponent.hpp>
 #include "gamescene.hpp"
 #include "gamescene_state_manager.hpp"

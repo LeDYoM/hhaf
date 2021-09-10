@@ -5,7 +5,7 @@
 
 #include <haf/include/scene/scenenode.hpp>
 #include <haf/include/scene_nodes/scenenodetext.hpp>
-#include <haf/include/animation/animationcomponent.hpp>
+#include <haf/include/animation/animation_component.hpp>
 
 namespace zoper
 {
