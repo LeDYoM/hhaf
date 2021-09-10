@@ -75,7 +75,9 @@ public:
      * @return htps::sptr<SceneNode> Pointer to the node with the
      * specified name or nullptr if not found.
      */
-    htps::sptr<SceneNode> getByName(const htps::str& name) const;
+    htps::sptr<SceneNode> getByName(htps::str const& name) const;
+
+    htps::sptr<SceneNode> getShared(htps::rptr<SceneNode> node) const;
 
     /**
      * @brief Execute a mutable action for every SceneNode in the

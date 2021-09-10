@@ -20,8 +20,22 @@ void SceneNodes::addSceneNode(sptr<SceneNode> node)
 
 sptr<SceneNode> SceneNodes::getByName(const str& name) const
 {
+    auto const iterator{sceneNodes().find_if(
+        [&name](auto const& node) { return node->name() == name; })};
+
+    return iterator == sceneNodes().cend() ? nullptr : *iterator;
+}
+
+htps::sptr<SceneNode> SceneNodes::getShared(
+    htps::rptr<SceneNode> node = nullptr) const
+{
+    if (node == nullptr)
+    {
+        node = scene_node_;
+    }
+
     auto const iterator = sceneNodes().find_if(
-        [&name](const auto& node) { return node->name() == name; });
+        [&node](auto const& rhs_node) { return node == rhs_node.get(); });
 
     return iterator == sceneNodes().cend() ? nullptr : *iterator;
 }

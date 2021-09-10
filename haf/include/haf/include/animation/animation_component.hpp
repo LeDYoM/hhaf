@@ -26,28 +26,30 @@ public:
      * @brief Add an animation that animates a certain property of the node.
      * @param builder Builder containing the data
      */
-    template <typename T, typename PropertyTag>
+    template <typename T, typename PropertyTag, typename SceneNodeType>
     void addAnimation(
-        htps::uptr<PropertyAnimationBuilder<T, PropertyTag>> builder)
+        htps::uptr<PropertyAnimationBuilder<T, PropertyTag, SceneNodeType>>
+            builder)
     {
         addAnimation(htps::muptr<IPropertyAnimation<T, PropertyTag>>(
             builder->extractBaseData(), builder->extractData()));
     }
 
-    template <typename PropertyTag, typename PropertyGroup>
-    auto make_property_animation_builder(PropertyGroup& scene_node)
+    template <typename PropertyTag, typename PropertyContainer>
+    auto make_property_animation_builder(PropertyContainer& scene_node)
     {
         auto builder = htps::muptr<PropertyAnimationBuilder<
-            typename PropertyTag::value_type, PropertyTag>>();
+            typename PropertyTag::value_type, PropertyTag, PropertyContainer>>();
         builder->property(&(scene_node.prop<PropertyTag>()))
             .timer(attachedNode()->subsystems().dataWrapper<time::Timer>());
         return builder;
     }
 
-    template <typename PropertyTag, typename PropertyGroup>
-    auto make_property_animation_builder(htps::sptr<PropertyGroup> scene_node)
+    template <typename PropertyTag, typename PropertyContainer>
+    auto make_property_animation_builder(
+        htps::sptr<PropertyContainer> scene_node)
     {
-        return make_property_animation_builder<PropertyTag, PropertyGroup>(
+        return make_property_animation_builder<PropertyTag, PropertyContainer>(
             *scene_node);
     }
 

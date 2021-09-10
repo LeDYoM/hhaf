@@ -1,16 +1,23 @@
 #ifndef HAF_ANIMATION_PROPERTY_ANIMATION_DATA_INCLUDE_HPP
 #define HAF_ANIMATION_PROPERTY_ANIMATION_DATA_INCLUDE_HPP
 
+#include <htypes/include/types.hpp>
 #include <htypes/include/properties.hpp>
 #include <haf/include/animation/animation_data.hpp>
 
+namespace haf::scene
+{
+    class SceneNode;
+}
+
 namespace haf::anim
 {
-template <typename T, typename PropertyTag>
+template <typename T, typename PropertyTag, typename SceneNodeType = scene::SceneNode>
 class PropertyAnimationData
 {
 public:
     htps::IProperty<T, PropertyTag>* property_;
+    htps::wptr<SceneNodeType> scene_node_; 
     T startValue_;
     T endValue_;
 };
