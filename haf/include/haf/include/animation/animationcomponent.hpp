@@ -42,24 +42,9 @@ public:
         addAnimation(std::move(anim));
     }
 
-    template <typename T, typename PropertyTag>
+    template <typename PropertyTag, typename PropertyGroup>
     auto make_property_animation_builder(
-        htps::IProperty<T, PropertyTag>& property,
-        htps::uptr<time::Timer> timer = nullptr)
-    {
-        if (timer == nullptr)
-        {
-            timer = attachedNode()->subsystems().dataWrapper<time::Timer>();
-        }
-
-        auto builder = htps::muptr<PropertyAnimationBuilder<T, PropertyTag>>();
-        builder->property(&property).timer(std::move(timer));
-        return builder;
-    }
-
-    template <typename PropertyTag, typename SceneNodeType>
-    auto make_property_animation_builder(
-        SceneNodeType* const scene_node,
+        PropertyGroup& scene_node,
         htps::uptr<time::Timer> timer = nullptr)
     {
         if (timer == nullptr)
@@ -69,19 +54,18 @@ public:
 
         auto builder = htps::muptr<PropertyAnimationBuilder<
             typename PropertyTag::value_type, PropertyTag>>();
-        builder->property(&(scene_node->prop<PropertyTag>()))
+        builder->property(&(scene_node.prop<PropertyTag>()))
             .timer(std::move(timer));
         return builder;
     }
 
-    template <typename PropertyTag, typename SceneNodeType>
+    template <typename PropertyTag, typename PropertyGroup>
     auto make_property_animation_builder(
-        htps::sptr<SceneNodeType> scene_node,
+        htps::sptr<PropertyGroup> scene_node,
         htps::uptr<time::Timer> timer = nullptr)
     {
-        return make_property_animation_builder<PropertyTag, SceneNodeType>(
-            static_cast<htps::rptr<SceneNodeType>>(scene_node.get()),
-            std::move(timer));
+        return make_property_animation_builder<PropertyTag, PropertyGroup>(
+            *scene_node.get(), std::move(timer));
     }
 
 private:

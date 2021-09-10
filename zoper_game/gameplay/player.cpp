@@ -101,7 +101,7 @@ void Player::launchAnimation(vector2df const& toWhere)
 
     auto property_animation_builder =
         animation_component_->make_property_animation_builder<Position>(
-            this);
+            *this);
     property_animation_builder->startValue(prop<Position>()())
         .endValue(toWhere)
         .duration(TimePoint_as_miliseconds(
@@ -119,7 +119,7 @@ void Player::launchAnimationBack(vector2df const& toWhere)
     components().component(animation_component_);
 
     auto property_animation_builder =
-        animation_component_->make_property_animation_builder(prop<Position>());
+        animation_component_->make_property_animation_builder<Position>(*this);
     property_animation_builder->startValue(prop<Position>()())
         .endValue(toWhere)
         .duration(TimePoint_as_miliseconds(
