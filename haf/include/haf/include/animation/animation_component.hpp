@@ -9,6 +9,11 @@
 #include <haf/include/system/datawrappercreator.hpp>
 #include <htypes/include/properties.hpp>
 
+namespace haf::scene
+{
+class SceneNode;
+}
+
 namespace haf::anim
 {
 /**
@@ -26,11 +31,12 @@ public:
      * @brief Add an animation that animates a certain property of the node.
      * @param builder Builder containing the data
      */
-    template <typename T, typename PropertyTag>
+    template <typename T, typename PropertyTag, typename SceneNodeType>
     void addAnimation(
-        htps::uptr<PropertyAnimationBuilder<T, PropertyTag>> builder)
+        htps::uptr<PropertyAnimationBuilder<T, PropertyTag, SceneNodeType>>
+            builder)
     {
-        addAnimation(htps::muptr<PropertyAnimation<T, PropertyTag>>(
+        addAnimation(htps::muptr<PropertyAnimation<T, PropertyTag, SceneNodeType>>(
             builder->extractBaseData(), builder->extractData()));
     }
 
@@ -38,9 +44,11 @@ public:
     auto make_property_animation_builder(PropertyGroup& scene_node)
     {
         auto builder = htps::muptr<PropertyAnimationBuilder<
-            typename PropertyTag::value_type, PropertyTag>>();
+            typename PropertyTag::value_type, PropertyTag, PropertyGroup>>();
+
         builder->property(&(scene_node.prop<PropertyTag>()))
             .timer(attachedNode()->subsystems().dataWrapper<time::Timer>());
+        builder->node(&scene_node);
         return builder;
     }
 
@@ -48,6 +56,14 @@ public:
     auto make_property_animation_builder(htps::sptr<PropertyGroup> scene_node)
     {
         return make_property_animation_builder<PropertyTag, PropertyGroup>(
+            *scene_node);
+    }
+
+    template <typename PropertyTag, typename PropertyGroupType>
+    auto make_property_animation_builder2(
+        htps::sptr<PropertyGroupType> scene_node)
+    {
+        return make_property_animation_builder<PropertyTag, PropertyGroupType>(
             *scene_node);
     }
 

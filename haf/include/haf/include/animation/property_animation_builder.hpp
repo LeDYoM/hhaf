@@ -94,7 +94,7 @@ public:
         return *this;
     }
 
-    PropertyAnimationData<T, Tag> extractData() noexcept
+    PropertyAnimationData<T, Tag, SceneNodeType> extractData() noexcept
     {
         return std::move(data_);
     }

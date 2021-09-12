@@ -14,7 +14,7 @@
 
 namespace haf::scene
 {
-    class SceneNode;
+class SceneNode;
 }
 
 namespace haf::anim
@@ -30,8 +30,8 @@ namespace haf::anim
  */
 template <typename T,
           typename PropertyTag,
-          typename AT = typename AnimableType<T>::type,
-        typename SceneNodeType = scene::SceneNode>
+          typename SceneNodeType = scene::SceneNode,
+          typename AT            = typename AnimableType<T>::type>
 class PropertyAnimation : public Animation
 {
 public:
@@ -41,9 +41,9 @@ public:
      * @param animation_data Data for the animation
      * @param property_animation_data Data for the property animation
      */
-    PropertyAnimation(
-        AnimationData&& animation_data,
-        PropertyAnimationData<T, PropertyTag, SceneNodeType>&& property_animation_data) :
+    PropertyAnimation(AnimationData&& animation_data,
+                      PropertyAnimationData<T, PropertyTag, SceneNodeType>&&
+                          property_animation_data) :
         Animation{std::move(animation_data)},
         data_{std::move(property_animation_data)},
         deltaValue_{AT{data_.endValue_} - AT{data_.startValue_}}
