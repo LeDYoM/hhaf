@@ -30,7 +30,7 @@ public:
     void addAnimation(
         htps::uptr<PropertyAnimationBuilder<T, PropertyTag>> builder)
     {
-        addAnimation(htps::muptr<IPropertyAnimation<T, PropertyTag>>(
+        addAnimation(htps::muptr<PropertyAnimation<T, PropertyTag>>(
             builder->extractBaseData(), builder->extractData()));
     }
 

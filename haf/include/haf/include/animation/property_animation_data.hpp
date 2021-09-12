@@ -4,13 +4,19 @@
 #include <htypes/include/properties.hpp>
 #include <haf/include/animation/animation_data.hpp>
 
+namespace haf::scene
+{
+    class SceneNode;
+}
+
 namespace haf::anim
 {
-template <typename T, typename PropertyTag>
+template <typename T, typename PropertyTag, typename SceneNodeType = scene::SceneNode>
 class PropertyAnimationData
 {
 public:
     htps::IProperty<T, PropertyTag>* property_;
+    htps::rptr<SceneNodeType> scene_node_{nullptr};
     T startValue_;
     T endValue_;
 };
