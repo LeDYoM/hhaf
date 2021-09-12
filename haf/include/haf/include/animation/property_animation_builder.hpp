@@ -6,6 +6,11 @@
 #include <haf/include/animation/animation_builder.hpp>
 #include <haf/include/time/timer.hpp>
 
+namespace haf::scene
+{
+    class SceneNode;
+}
+
 namespace haf::anim
 {
 /**
@@ -14,7 +19,7 @@ namespace haf::anim
  * @tparam T Type of the property to animate
  * @tparam Tag Type tag of the property to animate
  */
-template <typename T, typename Tag>
+template <typename T, typename Tag, typename SceneNodeType = scene::SceneNode>
 class PropertyAnimationBuilder
 {
 private:
@@ -83,6 +88,12 @@ public:
         return *this;
     }
 
+    PropertyAnimationBuilder& node(htps::rptr<SceneNodeType> node)
+    {
+        data_.scene_node_ = std::move(node);
+        return *this;
+    }
+
     PropertyAnimationData<T, Tag> extractData() noexcept
     {
         return std::move(data_);
@@ -104,7 +115,7 @@ public:
     }
 
 private:
-    PropertyAnimationData<T, Tag> data_;
+    PropertyAnimationData<T, Tag, SceneNodeType> data_;
 };
 
 }  // namespace haf::anim
