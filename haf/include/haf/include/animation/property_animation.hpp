@@ -53,8 +53,16 @@ public:
     {
         // Get result from parent
         const bool bResult{Animation::animate()};
-        (*(data_.property_))
-            .set(AT{data_.startValue_ + (deltaValue_ * delta())});
+        if (data_.scene_node_ != nullptr)
+        {
+            data_.scene_node_->template prop<PropertyTag>().set(
+                AT{data_.startValue_ + (deltaValue_ * delta())});
+        }
+        else
+        {
+            (*(data_.property_))
+                .set(AT{data_.startValue_ + (deltaValue_ * delta())});
+        }
         return bResult;
     }
 

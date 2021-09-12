@@ -59,14 +59,6 @@ public:
             *scene_node);
     }
 
-    template <typename PropertyTag, typename PropertyGroupType>
-    auto make_property_animation_builder2(
-        htps::sptr<PropertyGroupType> scene_node)
-    {
-        return make_property_animation_builder<PropertyTag, PropertyGroupType>(
-            *scene_node);
-    }
-
 private:
     /**
      * @brief Add an already created animation to the list of animations.
