@@ -4,10 +4,15 @@
 #include <htypes/include/types.hpp>
 #include <haf/include/component/icomponent.hpp>
 #include <haf/include/animation/animation.hpp>
-#include <haf/include/animation/propertyanimation.hpp>
+#include <haf/include/animation/property_animation.hpp>
 #include <haf/include/scene/scenenode.hpp>
 #include <haf/include/system/datawrappercreator.hpp>
 #include <htypes/include/properties.hpp>
+
+namespace haf::scene
+{
+class SceneNode;
+}
 
 namespace haf::anim
 {
@@ -31,7 +36,7 @@ public:
         htps::uptr<PropertyAnimationBuilder<T, PropertyTag, SceneNodeType>>
             builder)
     {
-        addAnimation(htps::muptr<IPropertyAnimation<T, PropertyTag>>(
+        addAnimation(htps::muptr<PropertyAnimation<T, PropertyTag, SceneNodeType>>(
             builder->extractBaseData(), builder->extractData()));
     }
 
@@ -42,6 +47,7 @@ public:
             typename PropertyTag::value_type, PropertyTag, PropertyContainer>>();
         builder->property(&(scene_node.prop<PropertyTag>()))
             .timer(attachedNode()->subsystems().dataWrapper<time::Timer>());
+        builder->node(&scene_node);
         return builder;
     }
 
@@ -50,6 +56,14 @@ public:
         htps::sptr<PropertyContainer> scene_node)
     {
         return make_property_animation_builder<PropertyTag, PropertyContainer>(
+            *scene_node);
+    }
+
+    template <typename PropertyTag, typename PropertyGroupType>
+    auto make_property_animation_builder2(
+        htps::sptr<PropertyGroupType> scene_node)
+    {
+        return make_property_animation_builder<PropertyTag, PropertyGroupType>(
             *scene_node);
     }
 

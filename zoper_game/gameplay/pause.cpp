@@ -50,7 +50,7 @@ void PauseSceneNode::enterPause()
     components().component(animation_component_);
 
     auto property_animation_builder =
-        animation_component_->make_property_animation_builder<TextColor>(
+        animation_component_->make_property_animation_builder2<TextColor>(
             pause_text_);
 
     property_animation_builder

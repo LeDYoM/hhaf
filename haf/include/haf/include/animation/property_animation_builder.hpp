@@ -6,6 +6,11 @@
 #include <haf/include/animation/animation_builder.hpp>
 #include <haf/include/time/timer.hpp>
 
+namespace haf::scene
+{
+    class SceneNode;
+}
+
 namespace haf::anim
 {
 /**
@@ -80,6 +85,12 @@ public:
     PropertyAnimationBuilder& endValue(T end_value)
     {
         data_.endValue_ = std::move(end_value);
+        return *this;
+    }
+
+    PropertyAnimationBuilder& node(htps::rptr<SceneNodeType> node)
+    {
+        data_.scene_node_ = std::move(node);
         return *this;
     }
 

@@ -17,7 +17,7 @@ class PropertyAnimationData
 {
 public:
     htps::IProperty<T, PropertyTag>* property_;
-    htps::wptr<SceneNodeType> scene_node_; 
+    htps::rptr<SceneNodeType> scene_node_{nullptr};
     T startValue_;
     T endValue_;
 };
