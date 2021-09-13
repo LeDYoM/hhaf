@@ -31,13 +31,13 @@ public:
     static void resetTileCounter();
 
     bool canBeMoved(htps::vector2dst const& dest_position) const;
-    void tileAdded(const htps::vector2dst& position) override;
-    void tileRemoved(const htps::vector2dst& position) override;
-    void tileChanged(const htps::vector2dst& position,
-                     const BoardTileData oldValue,
-                     const BoardTileData newValue) override;
-    void tileMoved(const htps::vector2dst& source,
-                   const htps::vector2dst& dest) override;
+    void tileAdded(htps::vector2dst const& position) override;
+    void tileRemoved(htps::vector2dst const& position) override;
+    void tileChanged(htps::vector2dst const& position,
+                     BoardTileData const oldValue,
+                     BoardTileData const newValue) override;
+    void tileMoved(htps::vector2dst const& source,
+                   htps::vector2dst const& dest) override;
 
 private:
     static htps::u32 tile_counter_;

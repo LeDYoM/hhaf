@@ -34,14 +34,14 @@ public:
 
     haf::scene::Color getColorForToken() const;
 
-    void tileChanged(const htps::vector2dst& /*position */,
-                     const BoardTileData /* oldValue */,
-                     const BoardTileData /* newValue */) override;
+    void tileChanged(htps::vector2dst const& position,
+                     BoardTileData const oldValue,
+                     BoardTileData const newValue) override;
 
-    void tileAdded(const htps::vector2dst& /* position */) override;
+    void tileAdded(htps::vector2dst const& position) override;
 
-    void tileMoved(const htps::vector2dst& /* source */,
-                   const htps::vector2dst& /* dest */) override;
+    void tileMoved(htps::vector2dst const& source,
+                   htps::vector2dst const& dest) override;
 
     htps::sptr<haf::board::BoardManager> getBoardManager();
     htps::sptr<haf::board::BoardManager const> const getBoardManager() const;

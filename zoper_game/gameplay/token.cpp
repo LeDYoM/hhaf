@@ -22,15 +22,15 @@ namespace zoper
 u32 Token::tile_counter_{0};
 
 Token::Token(SceneNode* const parent, str name) :
-    GameBaseTile{parent,
-                 name + str::to_str(tile_counter_) + str::to_str(tile_counter_)}
+    GameBaseTile{
+        parent, name + str::to_str(tile_counter_) + str::to_str(tile_counter_)},
+    animation_component_{components().component<anim::AnimationComponent>()}
 {
     ++tile_counter_;
     buildNode(renderizableBuilder()
                   .name("Node" + str::to_str(tile_counter_))
                   .figType(FigType_t::Shape)
                   .pointCount(30U));
-    animation_component_ = components().component<anim::AnimationComponent>();
 }
 
 Token::~Token() = default;
@@ -110,12 +110,10 @@ void Token::tileMoved(const vector2dst& source, const vector2dst& dest)
     const auto destination(board2Scene(dest));
 
     auto property_animation_builder =
-        animation_component_->make_property_animation_builder<Position>(
-            *this);
+        animation_component_->make_property_animation_builder<Position>(*this);
     property_animation_builder->startValue(prop<Position>()())
         .endValue(destination)
         .duration(MoveTokenTime);
     animation_component_->addAnimation(std::move(property_animation_builder));
-
 }
 }  // namespace zoper

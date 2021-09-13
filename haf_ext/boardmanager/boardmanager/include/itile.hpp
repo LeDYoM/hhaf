@@ -16,21 +16,21 @@ public:
     virtual ~ITile() {}
 
     virtual bool canBeMoved(htps::vector2dst const&) const { return true; }
-    virtual void tileAdded(const htps::vector2dst& /* position */) {}
-    virtual void tileRemoved(const htps::vector2dst& /* position */) {}
-    virtual void tileChanged(const htps::vector2dst& /*position */,
-                             const BoardTileData /* oldValue */,
-                             const BoardTileData /* newValue */)
+    virtual void tileAdded(htps::vector2dst const& /* position */) {}
+    virtual void tileRemoved(htps::vector2dst const& /* position */) {}
+    virtual void tileChanged(htps::vector2dst const& /*position */,
+                             BoardTileData const /* oldValue */,
+                             BoardTileData const /* newValue */)
     {}
 
-    virtual void tileMoved(const htps::vector2dst& /* source */,
-                           const htps::vector2dst& /* dest */)
+    virtual void tileMoved(htps::vector2dst const& /* source */,
+                           htps::vector2dst const& /* dest */)
     {}
 
     BoardTileData value() const noexcept { return data_; }
 
 private:
-    BoardTileData data_{0};
+    BoardTileData data_{static_cast<BoardTileData>(0)};
     friend class BoardManager;
 };
 
