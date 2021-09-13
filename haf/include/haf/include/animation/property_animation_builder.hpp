@@ -19,7 +19,7 @@ namespace haf::anim
  * @tparam T Type of the property to animate
  * @tparam Tag Type tag of the property to animate
  */
-template <typename T, typename Tag, typename SceneNodeType>
+template <typename Tag, typename SceneNodeType>
 class PropertyAnimationBuilder
 {
 private:
@@ -70,19 +70,13 @@ public:
         return *this;
     }
 
-    PropertyAnimationBuilder& property(htps::IProperty<T, Tag>* property)
-    {
-        data_.property_ = std::move(property);
-        return *this;
-    }
-
-    PropertyAnimationBuilder& startValue(T start_value)
+    PropertyAnimationBuilder& startValue(Tag::value_type start_value)
     {
         data_.startValue_ = std::move(start_value);
         return *this;
     }
 
-    PropertyAnimationBuilder& endValue(T end_value)
+    PropertyAnimationBuilder& endValue(Tag::value_type end_value)
     {
         data_.endValue_ = std::move(end_value);
         return *this;
@@ -94,12 +88,12 @@ public:
         return *this;
     }
 
-    PropertyAnimationData<T, Tag, SceneNodeType> extractData() noexcept
+    PropertyAnimationData<Tag, SceneNodeType> extractData() noexcept
     {
         return std::move(data_);
     }
 
-    void setData(PropertyAnimationData<T, Tag, SceneNodeType>&& data) noexcept
+    void setData(PropertyAnimationData<Tag, SceneNodeType>&& data) noexcept
     {
         data_ = std::move(data);
     }
@@ -115,7 +109,7 @@ public:
     }
 
 private:
-    PropertyAnimationData<T, Tag, SceneNodeType> data_;
+    PropertyAnimationData<Tag, SceneNodeType> data_;
 };
 
 }  // namespace haf::anim
