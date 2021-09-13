@@ -24,14 +24,14 @@ namespace haf::anim
  * @brief Class representing an animation of a property. It uses functionality
  * from @b Animation to do that.
  *
- * @tparam T Type of the property to animate
  * @tparam PropertyTag Tag attached to the property
+ * @tparam SceneNodeType Type of the scene node it contains
  * @tparam AT Animable type corresponding to T
  */
-template <typename T,
-          typename PropertyTag,
-          typename SceneNodeType = scene::SceneNode,
-          typename AT            = typename AnimableType<T>::type>
+template <typename PropertyTag,
+          typename SceneNodeType,
+          typename AT =
+              typename AnimableType<typename PropertyTag::value_type>::type>
 class PropertyAnimation : public Animation
 {
 public:
@@ -42,7 +42,7 @@ public:
      * @param property_animation_data Data for the property animation
      */
     PropertyAnimation(AnimationData&& animation_data,
-                      PropertyAnimationData<T, PropertyTag, SceneNodeType>&&
+                      PropertyAnimationData<PropertyTag, SceneNodeType>&&
                           property_animation_data) :
         Animation{std::move(animation_data)},
         data_{std::move(property_animation_data)},
@@ -53,21 +53,17 @@ public:
     {
         // Get result from parent
         const bool bResult{Animation::animate()};
-        if (data_.scene_node_ != nullptr)
-        {
-            data_.scene_node_->template prop<PropertyTag>().set(
-                AT{data_.startValue_ + (deltaValue_ * delta())});
-        }
-        else
-        {
-            (*(data_.property_))
-                .set(AT{data_.startValue_ + (deltaValue_ * delta())});
-        }
+
+        // Apply current animation value
+        data_.scene_node_->template prop<PropertyTag>().set(
+            AT{data_.startValue_ + (deltaValue_ * delta())});
+
+        // Return result of base animation
         return bResult;
     }
 
 private:
-    PropertyAnimationData<T, PropertyTag, SceneNodeType> data_;
+    PropertyAnimationData<PropertyTag, SceneNodeType> data_;
     const AT deltaValue_{};
 };
 }  // namespace haf::anim

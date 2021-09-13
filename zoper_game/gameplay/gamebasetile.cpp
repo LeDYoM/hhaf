@@ -12,7 +12,7 @@ using namespace htps;
 namespace zoper
 {
 GameBaseTile::GameBaseTile(rptr<SceneNode> const parent, str name) :
-    ITile{}, BaseClass{parent, std::move(name)}
+    TileBase{}, BaseClass{parent, std::move(name)}
 {}
 
 GameBaseTile::~GameBaseTile() = default;

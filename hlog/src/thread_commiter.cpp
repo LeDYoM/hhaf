@@ -62,9 +62,9 @@ void ThreadCommiter::thread_func()
         // adding, not deleting elements.
         if (!data_->msg_queue_.empty())
         {
-            message = data_->msg_queue_.front();
             {
                 std::lock_guard<std::mutex> lck{data_->mutex_};
+                message = data_->msg_queue_.front();
                 data_->msg_queue_.pop();
             }
             const char* const msg = message.c_str();

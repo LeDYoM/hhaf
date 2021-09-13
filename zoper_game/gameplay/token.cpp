@@ -22,15 +22,15 @@ namespace zoper
 u32 Token::tile_counter_{0};
 
 Token::Token(SceneNode* const parent, str name) :
-    GameBaseTile{parent,
-                 name + str::to_str(tile_counter_) + str::to_str(tile_counter_)}
+    GameBaseTile{
+        parent, name + str::to_str(tile_counter_) + str::to_str(tile_counter_)},
+    animation_component_{components().component<anim::AnimationComponent>()}
 {
     ++tile_counter_;
     buildNode(renderizableBuilder()
                   .name("Node" + str::to_str(tile_counter_))
                   .figType(FigType_t::Shape)
                   .pointCount(30U));
-    animation_component_ = components().component<anim::AnimationComponent>();
 }
 
 Token::~Token() = default;
@@ -63,9 +63,9 @@ void Token::tileAdded(const vector2dst& position_)
     auto newTransformationScale    = addTransformation();
 
     {
-        auto property_animation_builder =
+        auto property_animation_builder{
             animation_component_->make_property_animation_builder<Scale>(
-                getTransformation(newTransformationScale));
+                getTransformation(newTransformationScale))};
         property_animation_builder->startValue(Scale::Zeros)
             .endValue(Scale::Ones)
             .duration(AppearTokenTime);
@@ -73,14 +73,10 @@ void Token::tileAdded(const vector2dst& position_)
             std::move(property_animation_builder));
     }
 
-    getTransformation(newTransformationPosition)
-        .prop<Position>()
-        .set(Position::value_type{nodeBox});
-
     {
-        auto property_animation_builder =
+        auto property_animation_builder{
             animation_component_->make_property_animation_builder<Position>(
-                getTransformation(newTransformationPosition));
+                getTransformation(newTransformationPosition))};
         property_animation_builder->startValue(nodeBox)
             .endValue(Position::value_type{0.0F, 0.0F})
             .duration(AppearTokenTime);
@@ -114,12 +110,10 @@ void Token::tileMoved(const vector2dst& source, const vector2dst& dest)
     const auto destination(board2Scene(dest));
 
     auto property_animation_builder =
-        animation_component_->make_property_animation_builder<Position>(
-            *this);
+        animation_component_->make_property_animation_builder<Position>(*this);
     property_animation_builder->startValue(prop<Position>()())
         .endValue(destination)
         .duration(MoveTokenTime);
     animation_component_->addAnimation(std::move(property_animation_builder));
-
 }
 }  // namespace zoper
