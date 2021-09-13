@@ -63,9 +63,9 @@ void Token::tileAdded(const vector2dst& position_)
     auto newTransformationScale    = addTransformation();
 
     {
-        auto property_animation_builder =
+        auto property_animation_builder{
             animation_component_->make_property_animation_builder<Scale>(
-                getTransformation(newTransformationScale));
+                getTransformation(newTransformationScale))};
         property_animation_builder->startValue(Scale::Zeros)
             .endValue(Scale::Ones)
             .duration(AppearTokenTime);
@@ -73,14 +73,10 @@ void Token::tileAdded(const vector2dst& position_)
             std::move(property_animation_builder));
     }
 
-    getTransformation(newTransformationPosition)
-        .prop<Position>()
-        .set(Position::value_type{nodeBox});
-
     {
-        auto property_animation_builder =
+        auto property_animation_builder{
             animation_component_->make_property_animation_builder<Position>(
-                getTransformation(newTransformationPosition));
+                getTransformation(newTransformationPosition))};
         property_animation_builder->startValue(nodeBox)
             .endValue(Position::value_type{0.0F, 0.0F})
             .duration(AppearTokenTime);
