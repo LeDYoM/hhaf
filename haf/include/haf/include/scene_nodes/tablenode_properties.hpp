@@ -2,7 +2,7 @@
 #define HAF_SCENE_TABLENODE_PROPERTIES_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
-#include <htypes/include/grouping_property.hpp>
+#include <haf/include/types/property_group.hpp>
 
 namespace haf::scene
 {
@@ -16,7 +16,7 @@ struct TableSize
     using value_type = htps::vector2dst;
 };
 
-using TableNodeProperties = htps::PropertyGroup<TableSize, SceneNodeSize>;
+using TableNodeProperties = types::PropertyGroup<TableSize, SceneNodeSize>;
 
 }  // namespace haf::scene
 

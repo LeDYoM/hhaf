@@ -4,7 +4,7 @@
 #include <htypes/include/types.hpp>
 #include <htypes/include/properties.hpp>
 #include <htypes/include/str.hpp>
-#include <htypes/include/grouping_property.hpp>
+#include <haf/include/types/property_group.hpp>
 #include <haf/include/resources/ifont.hpp>
 #include <haf/include/scene/scenenode.hpp>
 #include <haf/include/scene/color.hpp>
@@ -56,7 +56,7 @@ struct AlignmentSize
     using value_type = htps::vector2df;
 };
 
-using SceneNodeTextProperties = htps::
+using SceneNodeTextProperties = types::
     PropertyGroup<Text, Font, TextColor, AlignmentX, AlignmentY, AlignmentSize>;
 
 }  // namespace haf::scene::nodes

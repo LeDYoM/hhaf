@@ -2,7 +2,7 @@
 #define HAF_EXT_MENUPAGED_MENUPAGED_PROPERTIES_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
-#include <htypes/include/grouping_property.hpp>
+#include <haf/include/types/property_group.hpp>
 #include <haf/include/resources/ifont.hpp>
 #include <haf/include/scene/color.hpp>
 
@@ -28,7 +28,7 @@ struct SceneNodeSizeForPages
     using value_type = htps::vector2df;
 };
 
-using MenuPagedProperties = htps::PropertyGroup<NormalTextFont,
+using MenuPagedProperties = types::PropertyGroup<NormalTextFont,
                                                 NormalColor,
                                                 SelectedColor,
                                                 SceneNodeSizeForPages>;

@@ -42,10 +42,9 @@ public:
     template <typename Tag_>
     static constexpr bool ContainsTag_v = ContainsTag<Tag_>::value;
 
-    template <typename Tag_,
-              typename Tag__ = Tag_,
-              bool contains  = PropertyGroupBasic::ContainsTag_v<Tag__>,
-              std::enable_if_t<contains>* = nullptr>
+    template <
+        typename Tag_,
+        std::enable_if_t<PropertyGroupBasic::ContainsTag_v<Tag_>>* = nullptr>
     typename Tag_::value_type get() const noexcept
     {
         return Base::template get_property_reference<Tag_>().get();
@@ -107,15 +106,17 @@ public:
             .readResetHasChanged();
     }
 
-    template <typename Tag_,
-    std::enable_if_t<PropertyGroupBasic::ContainsTag_v<Tag_>>* = nullptr>
+    template <
+        typename Tag_,
+        std::enable_if_t<PropertyGroupBasic::ContainsTag_v<Tag_>>* = nullptr>
     auto& prop() noexcept
     {
         return Base::template get_property_reference<Tag_>();
     }
 
-    template <typename Tag_,
-    std::enable_if_t<PropertyGroupBasic::ContainsTag_v<Tag_>>* = nullptr>
+    template <
+        typename Tag_,
+        std::enable_if_t<PropertyGroupBasic::ContainsTag_v<Tag_>>* = nullptr>
     auto const& prop() const noexcept
     {
         return Base::template get_property_reference<Tag_>();
@@ -137,6 +138,8 @@ public:
     }
 };
 
+namespace detail
+{
 template <typename TagFirst, typename... Tag>
 bool anyHasChanged_(PropertyGroupImpl<TagFirst, Tag...> const& pg) noexcept
 {
@@ -148,15 +151,6 @@ bool anyHasChanged_(PropertyGroupImpl<TagFirst, Tag...> const& pg) noexcept
             anyHasChanged_(static_cast<PropertyGroupImpl<Tag...>>(pg));
     }
     return any_has_changed;
-}
-
-template <typename... Tag>
-using PropertyGroup = PropertyGroupBasic<Tag...>;
-
-template <typename... Tag>
-bool anyHasChanged(PropertyGroup<Tag...> const& pg) noexcept
-{
-    return anyHasChanged_(static_cast<PropertyGroupImpl<Tag...>>(pg));
 }
 
 template <typename TagFirst, typename... Tag>
@@ -172,12 +166,6 @@ bool allHaveChanged_(PropertyGroupImpl<TagFirst, Tag...> const& pg) noexcept
     return all_have_changed;
 }
 
-template <typename... Tag>
-bool allHaveChanged(PropertyGroup<Tag...> const& pg) noexcept
-{
-    return allHaveChanged_(static_cast<PropertyGroupImpl<Tag...>>(pg));
-}
-
 template <typename TagFirst, typename... Tag>
 void resetHasChanged_(PropertyGroupImpl<TagFirst, Tag...>& pg) noexcept
 {
@@ -188,14 +176,28 @@ void resetHasChanged_(PropertyGroupImpl<TagFirst, Tag...>& pg) noexcept
     }
 }
 
+}  // namespace detail
+
 template <typename... Tag>
-void resetHasChanged(PropertyGroup<Tag...>& pg) noexcept
+bool anyHasChanged(PropertyGroupBasic<Tag...> const& pg) noexcept
 {
-    resetHasChanged_(static_cast<PropertyGroupImpl<Tag...>&>(pg));
+    return detail::anyHasChanged_(static_cast<PropertyGroupImpl<Tag...>>(pg));
 }
 
 template <typename... Tag>
-bool readResetAnyHasChanged(PropertyGroup<Tag...>& pg) noexcept
+bool allHaveChanged(PropertyGroupBasic<Tag...> const& pg) noexcept
+{
+    return detail::allHaveChanged_(static_cast<PropertyGroupImpl<Tag...>>(pg));
+}
+
+template <typename... Tag>
+void resetHasChanged(PropertyGroupBasic<Tag...>& pg) noexcept
+{
+    detail::resetHasChanged_(static_cast<PropertyGroupImpl<Tag...>&>(pg));
+}
+
+template <typename... Tag>
+bool readResetAnyHasChanged(PropertyGroupBasic<Tag...>& pg) noexcept
 {
     bool const any_changed{anyHasChanged(pg)};
     resetHasChanged(pg);
@@ -203,7 +205,7 @@ bool readResetAnyHasChanged(PropertyGroup<Tag...>& pg) noexcept
 }
 
 template <typename... Tag>
-bool readResetAllHaveChanged(PropertyGroup<Tag...>& pg) noexcept
+bool readResetAllHaveChanged(PropertyGroupBasic<Tag...>& pg) noexcept
 {
     bool const all_changed{allHaveChanged(pg)};
     resetHasChanged(pg);

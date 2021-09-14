@@ -21,9 +21,9 @@ TEST_CASE("PropertyGroupImpl one element", "[htypes][property][Grouping]")
     (void)(b);
 }
 
-TEST_CASE("PropertyGroup one element", "[htypes][property][Grouping]")
+TEST_CASE("PropertyGroupBase one element", "[htypes][property][Grouping]")
 {
-    PropertyGroup<IntTag> pg;
+    PropertyGroupBasic<IntTag> pg;
     CHECK(pg.set<IntTag>(2));
     CHECK_FALSE(pg.set<IntTag>(2));
 
@@ -96,7 +96,8 @@ TEST_CASE("PropertyGroupImpl four elements", "[htypes][property][Grouping]")
 
 TEST_CASE("PropertyGroup four elements", "[htypes][property][Grouping]")
 {
-    using TTPropertyGroup = PropertyGroup<CharTag, IntTag, StrTag, SptrIntTag>;
+    using TTPropertyGroup =
+        PropertyGroupBasic<CharTag, IntTag, StrTag, SptrIntTag>;
 
     TTPropertyGroup pg;
     CHECK(pg.set<IntTag>(10000));
@@ -121,7 +122,8 @@ TEST_CASE("PropertyGroup four elements", "[htypes][property][Grouping]")
 
 TEST_CASE("PropertyGroup changes check", "[htypes][property]")
 {
-    using TTPropertyGroup = PropertyGroup<CharTag, IntTag, StrTag, SptrIntTag>;
+    using TTPropertyGroup =
+        PropertyGroupBasic<CharTag, IntTag, StrTag, SptrIntTag>;
 
     TTPropertyGroup pg;
 
@@ -190,7 +192,7 @@ TEST_CASE("PropertyGroup changes check", "[htypes][property]")
 
 TEST_CASE("PropertyGroupImp one element construction", "[htypes][property]")
 {
-    using TPropertyGroup = PropertyGroup<IntTag>;
+    using TPropertyGroup = PropertyGroupBasic<IntTag>;
     TPropertyGroup pg(99);
 
     CHECK(pg.get<IntTag>() == 99);
@@ -198,7 +200,8 @@ TEST_CASE("PropertyGroupImp one element construction", "[htypes][property]")
 
 TEST_CASE("PropertyGroup four elements construction", "[htypes][property]")
 {
-    using TTPropertyGroup = PropertyGroup<CharTag, IntTag, StrTag, SptrIntTag>;
+    using TTPropertyGroup =
+        PropertyGroupBasic<CharTag, IntTag, StrTag, SptrIntTag>;
     TTPropertyGroup pg('2', 3, "a", msptr<int>(6));
 
     CHECK(pg.get<CharTag>() == '2');
@@ -214,10 +217,11 @@ struct AnotherTag
 
 TEST_CASE("PropertyGroup::ContainsTag", "[htypes][property]")
 {
-    using TTPropertyGroup = PropertyGroup<CharTag, IntTag, StrTag, SptrIntTag>;
-    using TPropertyGroup  = PropertyGroup<IntTag>;
-    using ATPropertyGroup = PropertyGroup<AnotherTag, IntTag>;
-    using APropertyGroup  = PropertyGroup<AnotherTag>;
+    using TTPropertyGroup =
+        PropertyGroupBasic<CharTag, IntTag, StrTag, SptrIntTag>;
+    using TPropertyGroup  = PropertyGroupBasic<IntTag>;
+    using ATPropertyGroup = PropertyGroupBasic<AnotherTag, IntTag>;
+    using APropertyGroup  = PropertyGroupBasic<AnotherTag>;
 
     static_assert(TTPropertyGroup::ContainsTag<IntTag>::value);
     static_assert(TTPropertyGroup::ContainsTag<CharTag>::value);
@@ -244,7 +248,7 @@ TEST_CASE("PropertyGroup::ContainsTag", "[htypes][property]")
     static_assert(APropertyGroup::ContainsTag<AnotherTag>::value);
 }
 
-using FakeSceneNodeProperties = PropertyGroup<IntTag, CharTag>;
+using FakeSceneNodeProperties = PropertyGroupBasic<IntTag, CharTag>;
 
 class FakeSceneNode : public FakeSceneNodeProperties
 {
@@ -252,7 +256,7 @@ public:
     void notUsed() {}
 };
 
-using EnhancedFakeSceneNodeProperties = PropertyGroup<SptrIntTag, StrTag>;
+using EnhancedFakeSceneNodeProperties = PropertyGroupBasic<SptrIntTag, StrTag>;
 
 class EnhancedFakeSceneNode : public FakeSceneNode,
                               public EnhancedFakeSceneNodeProperties
@@ -294,6 +298,12 @@ struct IntTagBasic
     using value_type = int;
     struct UseBasicProperty
     {};
+
+    struct UseCustomProperty
+    {
+        template <typename Tag>
+        using PropertyType = BasicProperty<typename Tag::value_type, Tag>;
+    };
 };
 
 struct StrTagBasic
@@ -301,11 +311,32 @@ struct StrTagBasic
     using value_type = str;
     struct UseBasicProperty
     {};
+
+    struct UseCustomProperty
+    {
+        template <typename Tag>
+        using PropertyType = BasicProperty<typename Tag::value_type, Tag>;
+    };
 };
 
 TEST_CASE("PropertyGroup with basic", "[htypes][property]")
 {
-    PropertyGroup<IntTagBasic> pg;
+    //    static_assert(
+    //        std::is_same_v<
+    //            decltype(PropertyGroupBasic<IntTagBasic>::get_property_reference()),
+    //            BasicProperty<IntTagBasic>>);
+    {
+        PropertyGroupImpl<IntTagBasic> pg;
+        auto& b = pg.get_property_reference<IntTagBasic>();
+        b.set(4);
+//        static_assert(
+//            std::is_same_v<
+//                decltype(PropertyGroupImpl<IntTagBasic>::cget_property_reference<IntTagBasic>()),
+//                decltype(PropertyGroupImpl<IntTagBasic>::cget_property_reference<IntTagBasic>())>,
+//            "Failure in type deduction for properties");
+    }
+
+    PropertyGroupBasic<IntTagBasic> pg;
     CHECK(pg.set<IntTagBasic>(2));
     CHECK_FALSE(pg.set<IntTagBasic>(2));
 
@@ -322,7 +353,7 @@ TEST_CASE("PropertyGroup with basic", "[htypes][property]")
 
 TEST_CASE("PropertyGroup with two basic properties", "[htypes][property]")
 {
-    PropertyGroup<IntTagBasic, StrTagBasic> pg;
+    PropertyGroupBasic<IntTagBasic, StrTagBasic> pg;
     CHECK(pg.set<IntTagBasic>(2));
     CHECK_FALSE(pg.set<IntTagBasic>(2));
     CHECK(pg.set<StrTagBasic>("hi"));

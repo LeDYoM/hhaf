@@ -3,7 +3,7 @@
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/properties.hpp>
-#include <htypes/include/grouping_property.hpp>
+#include <haf/include/types/property_group.hpp>
 #include <haf/include/scene_nodes/scenenodetext_properties.hpp>
 #include <haf/include/scene/transformable_scenenode.hpp>
 

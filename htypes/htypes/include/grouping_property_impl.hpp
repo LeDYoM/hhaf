@@ -14,19 +14,25 @@ namespace htps
  * This Tag should export a value_type with the tyè contained
  * in this Tag
  */
-//template <typename Tag>
-//using GroupableProperty = PropertyState<typename Tag::value_type, Tag>;
+// template <typename Tag>
+// using GroupableProperty = PropertyState<typename Tag::value_type, Tag>;
 
 template <typename Tag, typename = void>
 struct PropertyTypeSelector
 {
     using type = PropertyState<typename Tag::value_type, Tag>;
 };
-
+/*
 template <typename Tag>
 struct PropertyTypeSelector<Tag, std::void_t<typename Tag::UseBasicProperty>>
 {
     using type = BasicProperty<typename Tag::value_type, Tag>;
+};
+*/
+template <typename Tag>
+struct PropertyTypeSelector<Tag, std::void_t<typename Tag::UseCustomProperty>>
+{
+    using type = typename Tag::UseCustomProperty::template PropertyType<Tag>;
 };
 
 template <typename Tag>
@@ -67,9 +73,17 @@ public:
     template <typename Tag_>
     std::enable_if_t<GroupablePropertyImpl::ContainsTag_v<Tag_>,
                      GroupablePropertyOne const&>
-    get_property_reference() const noexcept
+    cget_property_reference() const noexcept
     {
         return prop_;
+    }
+
+    template <typename Tag_>
+    std::enable_if_t<GroupablePropertyImpl::ContainsTag_v<Tag_>,
+                     GroupablePropertyOne const&>
+    get_property_reference() const noexcept
+    {
+        return cget_property_reference<Tag_>();
     }
 };
 
@@ -126,6 +140,14 @@ struct PropertyGroupImpl : public GroupablePropertyImpl<FirstTag>,
     template <
         typename Tag_,
         std::enable_if_t<PropertyGroupImpl::ContainsTag_v<Tag_>>* = nullptr>
+    auto const& cget_property_reference() const noexcept
+    {
+        return get_property_reference<Tag_>();
+    }
+
+    template <
+        typename Tag_,
+        std::enable_if_t<PropertyGroupImpl::ContainsTag_v<Tag_>>* = nullptr>
     auto& get_property_reference() noexcept
     {
         if constexpr (std::is_same_v<Tag_, FirstTag>)
@@ -162,6 +184,7 @@ struct PropertyGroupImpl<FirstTag> : public GroupablePropertyImpl<FirstTag>
 
     using GroupablePropertyImpl<FirstTag>::GroupablePropertyImpl;
     using GroupablePropertyImpl<FirstTag>::get_property_reference;
+    using GroupablePropertyImpl<FirstTag>::cget_property_reference;
 };
 
 }  // namespace htps

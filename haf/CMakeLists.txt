@@ -284,6 +284,9 @@ set(headers
   ${inc_dir}/time/timertype.hpp
   ${inc_dir}/time/timeview.hpp
 
+  # Types
+  ${inc_dir}/types/property_group.hpp
+
   # Utils
   ${inc_dir}/utils/attachable_manager.hpp
   ${inc_dir}/utils/attachable.hpp

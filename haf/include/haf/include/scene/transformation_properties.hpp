@@ -1,7 +1,7 @@
 #ifndef HAF_SCENE_TRANSFORMATION_PROPERTIES_INCLUDE_HPP
 #define HAF_SCENE_TRANSFORMATION_PROPERTIES_INCLUDE_HPP
 
-#include <htypes/include/grouping_property.hpp>
+#include <haf/include/types/property_group.hpp>
 #include <htypes/include/vector2d.hpp>
 #include <haf/include/scene/matrix4x4.hpp>
 
@@ -41,7 +41,7 @@ using Scale    = ScaleScalar<Matrix4x4::Scalar>;
 using Position = PositionScalar<Matrix4x4::Scalar>;
 
 using TransformationProperties =
-    htps::PropertyGroup<Origin, Rotation, Scale, Position>;
+    types::PropertyGroup<Origin, Rotation, Scale, Position>;
 
 }  // namespace haf::scene
 
