@@ -19,7 +19,6 @@ namespace zoper
 class GameBaseTile : public haf::board::ITile,
                      public haf::scene::RenderizableSceneNode
 {
-
     using BaseClass = haf::scene::RenderizableSceneNode;
 
 protected:
@@ -32,8 +31,6 @@ public:
                  htps::str name);
     ~GameBaseTile() override;
 
-    haf::scene::Color getColorForToken() const;
-
     void tileChanged(htps::vector2dst const& position,
                      BoardTileData const oldValue,
                      BoardTileData const newValue) override;
@@ -43,14 +40,16 @@ public:
     void tileMoved(htps::vector2dst const& source,
                    htps::vector2dst const& dest) override;
 
+    bool isInCenter() const noexcept;
+
+protected:
+    haf::scene::Color getColorForToken() const;
+
     htps::sptr<haf::board::BoardManager> getBoardManager();
     htps::sptr<haf::board::BoardManager const> const getBoardManager() const;
     htps::rptr<BoardGroup> getBoardGroup();
     htps::rptr<BoardGroup const> getBoardGroup() const;
 
-    bool isInCenter() const noexcept { return is_in_center; }
-
-protected:
     htps::vector2df board2SceneFactor() const;
     htps::vector2df board2Scene(const htps::vector2dst& bPosition) const;
     htps::vector2df tileSize() const;

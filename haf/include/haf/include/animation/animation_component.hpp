@@ -19,7 +19,7 @@ namespace haf::anim
 /**
  * @brief Component designed to store, manage and update animations.
  */
-class AnimationComponent : public component::IComponent
+class AnimationComponent final : public component::IComponent
 {
 public:
     AnimationComponent();

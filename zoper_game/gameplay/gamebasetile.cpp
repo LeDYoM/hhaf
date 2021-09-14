@@ -32,26 +32,26 @@ vector2df GameBaseTile::board2SceneFactor() const
     return getBoardGroup()->board2SceneFactor();
 }
 
-vector2df GameBaseTile::board2Scene(const vector2dst& bPosition) const
+vector2df GameBaseTile::board2Scene(vector2dst const& bPosition) const
 {
     return getBoardGroup()->board2Scene(bPosition);
 }
 
-void GameBaseTile::tileAdded(const vector2dst& position)
+void GameBaseTile::tileAdded(vector2dst const& position)
 {
     TileBase::tileAdded(position);
     is_in_center = TokenZones::pointInCenter(position);
 }
 
-void GameBaseTile::tileMoved(const vector2dst& source, const vector2dst& dest)
+void GameBaseTile::tileMoved(vector2dst const& source, vector2dst const& dest)
 {
     TileBase::tileMoved(source, dest);
     is_in_center = TokenZones::pointInCenter(dest);
 }
 
-void GameBaseTile::tileChanged(const vector2dst& /*position */,
-                               const BoardTileData /* oldValue */,
-                               const BoardTileData /* newValue */)
+void GameBaseTile::tileChanged(vector2dst const& /*position */,
+                               BoardTileData const /* oldValue */,
+                               BoardTileData const /* newValue */)
 {
     if (node())
     {
@@ -100,6 +100,11 @@ sptr<BoardManager const> const GameBaseTile::getBoardManager() const
     LogAsserter::log_assert(board_group != nullptr, "Invalid BoardModel found");
 
     return board_group != nullptr ? board_group->boardManager() : nullptr;
+}
+
+bool GameBaseTile::isInCenter() const noexcept
+{
+    return is_in_center;
 }
 
 }  // namespace zoper
