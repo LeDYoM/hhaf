@@ -14,25 +14,18 @@ namespace htps
  * This Tag should export a value_type with the tyè contained
  * in this Tag
  */
-// template <typename Tag>
-// using GroupableProperty = PropertyState<typename Tag::value_type, Tag>;
-
 template <typename Tag, typename = void>
 struct PropertyTypeSelector
 {
     using type = PropertyState<typename Tag::value_type, Tag>;
 };
-/*
+
 template <typename Tag>
-struct PropertyTypeSelector<Tag, std::void_t<typename Tag::UseBasicProperty>>
+struct PropertyTypeSelector<Tag,
+                            std::void_t<typename Tag::UseCustomPropertyType>>
 {
-    using type = BasicProperty<typename Tag::value_type, Tag>;
-};
-*/
-template <typename Tag>
-struct PropertyTypeSelector<Tag, std::void_t<typename Tag::UseCustomProperty>>
-{
-    using type = typename Tag::UseCustomProperty::template PropertyType<Tag>;
+    using type =
+        typename Tag::UseCustomPropertyType::template PropertyType<Tag>;
 };
 
 template <typename Tag>

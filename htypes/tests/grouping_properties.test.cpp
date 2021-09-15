@@ -4,6 +4,9 @@
 #include <htypes/include/grouping_property.hpp>
 #include <htypes/include/str.hpp>
 
+#include <type_traits>
+#include <utility>
+
 using namespace htps;
 
 struct IntTag
@@ -296,10 +299,8 @@ TEST_CASE("PropertyGroup inheritance", "[htypes][property]")
 struct IntTagBasic
 {
     using value_type = int;
-    struct UseBasicProperty
-    {};
 
-    struct UseCustomProperty
+    struct UseCustomPropertyType
     {
         template <typename Tag>
         using PropertyType = BasicProperty<typename Tag::value_type, Tag>;
@@ -309,10 +310,8 @@ struct IntTagBasic
 struct StrTagBasic
 {
     using value_type = str;
-    struct UseBasicProperty
-    {};
 
-    struct UseCustomProperty
+    struct UseCustomPropertyType
     {
         template <typename Tag>
         using PropertyType = BasicProperty<typename Tag::value_type, Tag>;
@@ -321,20 +320,14 @@ struct StrTagBasic
 
 TEST_CASE("PropertyGroup with basic", "[htypes][property]")
 {
-    //    static_assert(
-    //        std::is_same_v<
-    //            decltype(PropertyGroupBasic<IntTagBasic>::get_property_reference()),
-    //            BasicProperty<IntTagBasic>>);
-    {
-        PropertyGroupImpl<IntTagBasic> pg;
-        auto& b = pg.get_property_reference<IntTagBasic>();
-        b.set(4);
-//        static_assert(
-//            std::is_same_v<
-//                decltype(PropertyGroupImpl<IntTagBasic>::cget_property_reference<IntTagBasic>()),
-//                decltype(PropertyGroupImpl<IntTagBasic>::cget_property_reference<IntTagBasic>())>,
-//            "Failure in type deduction for properties");
-    }
+    // Check statically that, given IntTagBasic, that contains UseCustomProperty
+    // with a PropertyType of BasicProperty, the type returned from 
+    // get_property_reference is BasicProperty.
+    static_assert(std::is_same_v<
+                  std::remove_reference_t<
+                      decltype(std::declval<PropertyGroupImpl<IntTagBasic>>()
+                                   .get_property_reference<IntTagBasic>())>,
+                  BasicProperty<IntTagBasic::value_type, IntTagBasic>>);
 
     PropertyGroupBasic<IntTagBasic> pg;
     CHECK(pg.set<IntTagBasic>(2));
