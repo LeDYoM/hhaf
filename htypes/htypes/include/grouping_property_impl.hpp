@@ -7,13 +7,6 @@
 
 namespace htps
 {
-/**
- * @brief Alias to encapsulate a @b PropertyState given a Tag
- *
- * @tparam Tag Type encapsulated in the PropertyState.
- * This Tag should export a value_type with the tyè contained
- * in this Tag
- */
 template <typename Tag, typename = void>
 struct PropertyTypeSelector
 {
@@ -28,6 +21,13 @@ struct PropertyTypeSelector<Tag,
         typename Tag::UseCustomPropertyType::template PropertyType<Tag>;
 };
 
+/**
+ * @brief Alias to encapsulate a PropertyType given a Tag
+ *
+ * @tparam Tag Type encapsulated in the PropertyState.
+ * This Tag should export a value_type with the the contained
+ * in this Tag
+ */
 template <typename Tag>
 struct GroupablePropertyImpl
 {
@@ -35,7 +35,7 @@ private:
     PropertyTypeSelector<Tag>::type prop_;
 
 public:
-    using GroupablePropertyOne = PropertyTypeSelector<Tag>::type;
+    using SelectedPropertyType = PropertyTypeSelector<Tag>::type;
 
     template <typename Tag_>
     struct ContainsTag
@@ -46,35 +46,37 @@ public:
     template <typename Tag_>
     static constexpr bool ContainsTag_v = ContainsTag<Tag_>::value;
 
-    GroupablePropertyImpl() = default;
-    GroupablePropertyImpl(typename Tag::value_type const& value) noexcept :
+    constexpr GroupablePropertyImpl() = default;
+    constexpr explicit GroupablePropertyImpl(
+        typename Tag::value_type const& value) noexcept :
         prop_{value}
     {}
 
-    GroupablePropertyImpl(typename Tag::value_type&& value) noexcept :
+    constexpr explicit GroupablePropertyImpl(
+        typename Tag::value_type&& value) noexcept :
         prop_{std::move(value)}
     {}
 
-    template <typename Tag_>
-    std::enable_if_t<GroupablePropertyImpl::ContainsTag_v<Tag_>,
-                     GroupablePropertyOne&>
-    get_property_reference() noexcept
+    template <
+        typename Tag_,
+        std::enable_if_t<GroupablePropertyImpl::ContainsTag_v<Tag_>>* = nullptr>
+    constexpr auto& get_property_reference() noexcept
     {
         return prop_;
     }
 
-    template <typename Tag_>
-    std::enable_if_t<GroupablePropertyImpl::ContainsTag_v<Tag_>,
-                     GroupablePropertyOne const&>
-    cget_property_reference() const noexcept
+    template <
+        typename Tag_,
+        std::enable_if_t<GroupablePropertyImpl::ContainsTag_v<Tag_>>* = nullptr>
+    constexpr auto const& cget_property_reference() const noexcept
     {
         return prop_;
     }
 
-    template <typename Tag_>
-    std::enable_if_t<GroupablePropertyImpl::ContainsTag_v<Tag_>,
-                     GroupablePropertyOne const&>
-    get_property_reference() const noexcept
+    template <
+        typename Tag_,
+        std::enable_if_t<GroupablePropertyImpl::ContainsTag_v<Tag_>>* = nullptr>
+    constexpr auto const& get_property_reference() const noexcept
     {
         return cget_property_reference<Tag_>();
     }
@@ -116,7 +118,7 @@ struct PropertyGroupImpl : public GroupablePropertyImpl<FirstTag>,
     template <
         typename Tag_,
         std::enable_if_t<PropertyGroupImpl::ContainsTag_v<Tag_>>* = nullptr>
-    auto const& get_property_reference() const noexcept
+    constexpr auto const& get_property_reference() const noexcept
     {
         if constexpr (std::is_same_v<Tag_, FirstTag>)
         {
@@ -133,7 +135,7 @@ struct PropertyGroupImpl : public GroupablePropertyImpl<FirstTag>,
     template <
         typename Tag_,
         std::enable_if_t<PropertyGroupImpl::ContainsTag_v<Tag_>>* = nullptr>
-    auto const& cget_property_reference() const noexcept
+    constexpr auto const& cget_property_reference() const noexcept
     {
         return get_property_reference<Tag_>();
     }

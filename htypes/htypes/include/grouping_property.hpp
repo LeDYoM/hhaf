@@ -50,16 +50,18 @@ public:
         return Base::template get_property_reference<Tag_>().get();
     }
 
-    template <typename Tag_>
-    std::enable_if_t<PropertyGroupBasic::ContainsTag_v<Tag_>, bool> set(
-        typename Tag_::value_type const& value) noexcept
+    template <
+        typename Tag_,
+        std::enable_if_t<PropertyGroupBasic::ContainsTag_v<Tag_>>* = nullptr>
+    constexpr bool set(typename Tag_::value_type const& value) noexcept
     {
         return Base::template get_property_reference<Tag_>().set(value);
     }
 
-    template <typename Tag_>
-    std::enable_if_t<PropertyGroupBasic::ContainsTag_v<Tag_>, bool> set(
-        typename Tag_::value_type&& value) noexcept
+    template <
+        typename Tag_,
+        std::enable_if_t<PropertyGroupBasic::ContainsTag_v<Tag_>>* = nullptr>
+    constexpr bool set(typename Tag_::value_type&& value) noexcept
     {
         return Base::template get_property_reference<Tag_>().set(
             std::move(value));
