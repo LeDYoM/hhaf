@@ -1,6 +1,7 @@
 #ifndef HAF_SCENE_TRANSFORMABLE_SCENENODE_INCLUDE_HPP
 #define HAF_SCENE_TRANSFORMABLE_SCENENODE_INCLUDE_HPP
 
+#include <haf/include/haf_export.hpp>
 #include <htypes/include/types.hpp>
 
 #include <haf/include/scene/scenenode.hpp>
