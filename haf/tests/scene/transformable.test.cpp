@@ -1,7 +1,7 @@
 #include "catch.hpp"
 
 #include <htypes/include/types.hpp>
-#include <haf/include/scene/transformable.hpp>
+#include <haf/include/scene/transformable_scenenode.hpp>
 #include "matrix_utils.hpp"
 
 using namespace haf;
@@ -10,7 +10,7 @@ using namespace haf::scene::testing;
 
 TEST_CASE("haf::scene::Transformable", "[haf][scene][Transformable]")
 {
-    Transformable transformable;
+    TransformableSceneNode transformable{nullptr, ""};
     CHECK(transformable.updateTransformIfNecessary());
     CHECK_FALSE(transformable.updateTransformIfNecessary());
 
@@ -38,7 +38,7 @@ TEST_CASE("haf::scene::Transformable", "[haf][scene][Transformable]")
 TEST_CASE("haf::scene::Transformable adding transformations",
           "[haf][scene][Transformable]")
 {
-    Transformable transformable;
+    TransformableSceneNode transformable{nullptr, ""};
     CHECK(transformable.updateTransformIfNecessary());
     CHECK_FALSE(transformable.updateTransformIfNecessary());
 
@@ -89,7 +89,7 @@ TEST_CASE("haf::scene::Transformable adding transformations",
 
 TEST_CASE("haf::scene::Transformable remove transformations")
 {
-    Transformable transformable;
+    TransformableSceneNode transformable{nullptr, ""};
     CHECK(transformable.updateTransformIfNecessary());
     CHECK_FALSE(transformable.updateTransformIfNecessary());
 
@@ -119,10 +119,10 @@ TEST_CASE("haf::scene::Transformable remove transformations")
 
 TEST_CASE("haf::scene::Transformable check math", "[haf][scene][Transformable]")
 {
-    Transformable transformable;
+    TransformableSceneNode transformable{nullptr, ""};
     transformable.prop<Position>() = {3.0F, 3.0F};
 
-    Transformable transformable_temp;
+    TransformableSceneNode transformable_temp{nullptr, ""};
     transformable_temp.prop<Position>() = {2.0F, 2.0F};
 
     CHECK(transformable_temp.updateLocalTransformationsIfNecessary());

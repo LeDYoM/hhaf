@@ -95,7 +95,7 @@ set(sources
   ${src_dir}/scene/scenenode.cpp
   ${src_dir}/scene/scenenodefactory.cpp
   ${src_dir}/scene/scenenodes.cpp
-  ${src_dir}/scene/transformable.cpp
+  ${src_dir}/scene/transformable_scenenode.cpp
   ${src_dir}/scene/transformation.cpp
 
   # Scene components
@@ -230,7 +230,6 @@ set(headers
   ${inc_dir}/scene/scenenodeparent.hpp
   ${inc_dir}/scene/scenenodes.hpp
   ${inc_dir}/scene/transformable_scenenode.hpp
-  ${inc_dir}/scene/transformable.hpp
   ${inc_dir}/scene/transformation_properties.hpp
   ${inc_dir}/scene/transformation.hpp
 

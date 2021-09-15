@@ -1,37 +1,39 @@
-#include <haf/include/scene/transformable.hpp>
+#include <haf/include/scene/transformable_scenenode.hpp>
+
 #include <hlog/include/hlog.hpp>
-#include <cmath>
 
 using namespace htps;
 
 namespace haf::scene
 {
-Transformable::Transformable() noexcept :
+TransformableSceneNode::TransformableSceneNode(htps::rptr<SceneNode> parent,
+                                               htps::str name) :
+    SceneNode{std::move(parent), std::move(name)},
     Transformation(),
     local_transform_{},
     global_transform_{},
     extra_transformations_{}
 {}
 
-Transformable::~Transformable() = default;
+TransformableSceneNode::~TransformableSceneNode() = default;
 
-Matrix4x4 const& Transformable::globalTransform() const noexcept
+Matrix4x4 const& TransformableSceneNode::globalTransform() const noexcept
 {
     return global_transform_;
 }
 
-Matrix4x4 const& Transformable::localTransform() const noexcept
+Matrix4x4 const& TransformableSceneNode::localTransform() const noexcept
 {
     return local_transform_;
 }
 
-size_type Transformable::addTransformation()
+size_type TransformableSceneNode::addTransformation()
 {
     extra_transformations_.resize(extra_transformations_.size() + 1U);
     return extra_transformations_.size();
 }
 
-size_type Transformable::removeTransformation()
+size_type TransformableSceneNode::removeTransformation()
 {
     LogAsserter::log_assert(
         !extra_transformations_.empty(),
@@ -40,12 +42,12 @@ size_type Transformable::removeTransformation()
     return extra_transformations_.size();
 }
 
-size_type Transformable::numTransformations() const noexcept
+size_type TransformableSceneNode::numTransformations() const noexcept
 {
     return extra_transformations_.size() + 1U;
 }
 
-bool Transformable::updateLocalTransformationsIfNecessary() noexcept
+bool TransformableSceneNode::updateLocalTransformationsIfNecessary() noexcept
 {
     bool result{false};
 
@@ -67,7 +69,7 @@ bool Transformable::updateLocalTransformationsIfNecessary() noexcept
     return result;
 }
 
-bool Transformable::updateTransformations(
+bool TransformableSceneNode::updateTransformations(
     bool const parentTransformationChanged,
     Matrix4x4 const& parentTransformation) noexcept
 {
@@ -81,7 +83,7 @@ bool Transformable::updateTransformations(
     return localTransformationChanged;
 }
 
-Transformation& Transformable::getTransformation(size_type const index) noexcept
+Transformation& TransformableSceneNode::getTransformation(size_type const index) noexcept
 {
     LogAsserter::log_assert(index < numTransformations());
 
@@ -90,7 +92,7 @@ Transformation& Transformable::getTransformation(size_type const index) noexcept
         : extra_transformations_[index - 1U];
 }
 
-void Transformable::updateGlobalTransformation(
+void TransformableSceneNode::updateGlobalTransformation(
     Matrix4x4 const& currentGlobalTransformation) noexcept
 {
     global_transform_ = currentGlobalTransformation * local_transform_;
