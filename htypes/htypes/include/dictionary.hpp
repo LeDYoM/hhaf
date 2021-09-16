@@ -42,7 +42,7 @@ public:
     constexpr const_iterator cbegin() const noexcept { return data_.begin(); }
     constexpr const_iterator cend() const noexcept { return data_.end(); }
 
-    constexpr bool add(const content& eList, const bool overwrite = true)
+    constexpr bool add(content const& eList, bool const overwrite = true)
     {
         bool result{true};
         for (const element& elems : eList)
@@ -78,6 +78,12 @@ public:
             return true;
         }
         return false;
+    }
+
+    constexpr bool put(str key, T value, const bool overwrite = true)
+    {
+        (void)(add(std::move(key), std::move(value), overwrite));
+        return *this;
     }
 
     constexpr void clear() { data_.clear(); }
@@ -142,6 +148,9 @@ public:
 private:
     content data_;
 };
+
+using PureDictionary = Dictionary<str>;
+
 }  // namespace htps
 
 #endif

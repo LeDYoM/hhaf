@@ -16,11 +16,6 @@ HostInternal::HostInternal(const int argc, char const* const argv[]) :
     params_{parpar::create(argc, argv)}
 {}
 
-str HostInternal::configuredFirstApp() const
-{
-    return config_.configuredFirstApp();
-}
-
 bool HostInternal::initializeBackend()
 {
     // Initialize and create the backend factory
@@ -43,12 +38,15 @@ bool HostInternal::initializeHaf()
 
 bool HostInternal::initialize()
 {
+    // Parse command line arguments and process parameters
+    config_.processCommandLineArguments();
+
     auto const result_init_backend{initializeBackend()};
     auto const result_load_functions{initializeHaf()};
 
     // Return the status of loading the first application
     return result_init_backend && result_load_functions &&
-        loadApplication(configuredFirstApp());
+        loadApplication(config_.configuredFirstApp());
 }
 
 bool HostInternal::update()

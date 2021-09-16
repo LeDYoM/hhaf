@@ -33,8 +33,6 @@ public:
 
     bool initialize();
 
-    htps::str configuredFirstApp() const;
-
     /**
      * @brief Performs the main update cycle, updating all current active
      * applications.
