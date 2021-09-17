@@ -556,3 +556,40 @@ TEST_CASE("Scenenodes::removeSceneNodeByNodeTestNode",
     testScene->clearSceneNodes();
     CHECK(testScene->sceneNodes().size() == 0U);
 }
+
+template <size_type kNumSceneNodes>
+auto createTestTransformableSceneNodes(sptr<haf::scene::Scene> scene)
+{
+    sptr<TestTransformableSceneNode> node_test;
+
+    // Create 10 scene nodes
+    for (size_type index{0U}; index < kNumSceneNodes; ++index)
+    {
+        auto result{scene->createSceneNode<TestTransformableSceneNode>(
+            make_str("SceneNode_test_", index))};
+        if (index == 0U)
+        {
+            node_test = std::move(result);
+        }
+    }
+    return node_test;
+}
+
+TEST_CASE("Scenenodes::autoRemove", "[SceneNode][SceneNodes]")
+{
+    using namespace haf;
+    using namespace haf::scene;
+
+    constexpr size_type kNumSceneNodes{10U};
+    auto testScene(unitTestScene());
+    sptr<TestTransformableSceneNode> node_test{
+        createTestTransformableSceneNodes<kNumSceneNodes>(testScene)};
+
+    CHECK(testScene->sceneNodes().size() == kNumSceneNodes);
+
+    // Get the raw pointer
+    TestTransformableSceneNode* node_test_raw{node_test.get()};
+    CHECK(node_test == testScene->getShared(node_test_raw));
+    CHECK(node_test->autoRemove());
+    CHECK(testScene->sceneNodes().size() == (kNumSceneNodes - 1U));
+}
