@@ -14,7 +14,8 @@ GameSceneInput::GameSceneInput()
 GameSceneInput::~GameSceneInput() = default;
 
 void GameSceneInput::configure(
-    htps::sptr<haf::scene::StatesControllerComponent<GameSceneStates>> sceneStates,
+    htps::sptr<haf::scene::StatesControllerComponent<GameSceneStates>>
+        sceneStates,
     htps::sptr<BoardGroup> boardGroup)
 {
     scene_states_ = std::move(sceneStates);
