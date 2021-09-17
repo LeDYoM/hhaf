@@ -34,6 +34,8 @@ template <typename PropertyTag,
               typename AnimableType<typename PropertyTag::value_type>::type>
 class PropertyAnimation : public Animation
 {
+    using BaseClass = Animation;
+
 public:
     /**
      * @brief Construct a new PropertyAnimation object
@@ -44,7 +46,7 @@ public:
     PropertyAnimation(AnimationData&& animation_data,
                       PropertyAnimationData<PropertyTag, SceneNodeType>&&
                           property_animation_data) :
-        Animation{std::move(animation_data)},
+        BaseClass{std::move(animation_data)},
         data_{std::move(property_animation_data)},
         deltaValue_{AT{data_.endValue_} - AT{data_.startValue_}}
     {}
@@ -52,7 +54,7 @@ public:
     bool animate() override
     {
         // Get result from parent
-        const bool bResult{Animation::animate()};
+        const bool bResult{BaseClass::animate()};
 
         // Apply current animation value
         data_.scene_node_->template prop<PropertyTag>().set(

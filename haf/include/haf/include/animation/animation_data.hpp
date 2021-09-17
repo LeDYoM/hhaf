@@ -33,8 +33,8 @@ public:
     htps::uptr<time::Timer> timer_;  //< Timer to use to animate
     time::TimePoint duration_;  //< @b time::TimePoint containing the time the
                                 // animation is going to last
-    ActionFunc end_action_;  //< Functor containing an action to perform when
-                             //< the animation finishes
+    ActionFunc end_action_;     //< Functor containing an action to perform when
+                                //< the animation finishes
     AnimationDirection animation_direction_{
         AnimationDirection::Forward};  //< Direction of the animation
     AnimationDeltaMode animation_delta_mode_{
