@@ -42,7 +42,7 @@ void HighScoresScene::onCreated()
 
     auto statesController(
         components()
-            .component<StatesController<HighScoresSceneStates>>());
+            .component<StatesControllerComponent<HighScoresSceneStates>>());
 
     normal_font_ = subsystems()
                        .dataWrapper<res::ResourceRetriever>()

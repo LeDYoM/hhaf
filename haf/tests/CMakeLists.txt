@@ -4,7 +4,7 @@ project(haf_utests CXX)
 set(CURRENT_TARGET ${PROJECT_NAME})
 
 set(SOURCE_TESTS
-    animation/animationcomponent
+    animation/animation_component
 
     components/component_container
 

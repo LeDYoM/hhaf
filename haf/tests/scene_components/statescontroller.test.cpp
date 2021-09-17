@@ -7,8 +7,8 @@ using namespace htps;
 using namespace haf;
 using namespace haf::scene;
 
-TEST_CASE("haf::StatesController",
-          "[StatesController][lib][scene][component][StatesController]")
+TEST_CASE("haf::StatesControllerComponent",
+          "[StatesControllerComponent][lib][scene][component][StatesControllerComponent]")
 {
     constexpr u32 Start_State  = 0U;
     constexpr u32 Finish_State = 1U;
@@ -17,11 +17,11 @@ TEST_CASE("haf::StatesController",
     {
         bool exit = false;
         u32 step{0U};
-        sptr<StatesController<u32>> states_controller;
+        sptr<StatesControllerComponent<u32>> states_controller;
     };
 
     CommonData common;
-    common.states_controller = msptr<StatesController<u32>>();
+    common.states_controller = msptr<StatesControllerComponent<u32>>();
 
     common.states_controller->BeforeStart.connect([&common]() {
         CHECK(common.step == 0U);

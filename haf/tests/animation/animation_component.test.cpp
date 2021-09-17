@@ -16,9 +16,7 @@ struct CommonData
 };
 }  // namespace
 
-TEST_CASE(
-    "haf::anim::AnimationComponent",
-    "[StatesController][lib][scene][component][AnimationComponent][IComponent]")
+TEST_CASE("haf::anim::AnimationComponent", "[AnimationComponent][IComponent]")
 {
     //    constexpr u32 Start_State  = 0U;
     //    constexpr u32 Finish_State = 1U;

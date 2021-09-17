@@ -17,14 +17,14 @@ public:
     ~GameSceneInput();
 
     void configure(
-        htps::sptr<haf::scene::StatesController<GameSceneStates>> sceneStates,
+        htps::sptr<haf::scene::StatesControllerComponent<GameSceneStates>> sceneStates,
         htps::sptr<BoardGroup> boardGroup);
 
 private:
     void onKeyPressed(haf::input::Key const&) override;
     void onKeyReleased(haf::input::Key const&) override;
 
-    htps::sptr<haf::scene::StatesController<GameSceneStates>> scene_states_;
+    htps::sptr<haf::scene::StatesControllerComponent<GameSceneStates>> scene_states_;
     htps::sptr<BoardGroup> board_group_;
 };
 }  // namespace zoper

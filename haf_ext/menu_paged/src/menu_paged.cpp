@@ -43,7 +43,7 @@ void MenuPaged::configure_menu(
     auto visibility_selector =
         components().component<VisibilitySelectorComponent>();
     auto statesController =
-        components().component<StatesController<s32>>();
+        components().component<StatesControllerComponent<s32>>();
     menu_steps_ = std::move(menu_steps);
 
     for (auto&& menu_page : menu_steps_)

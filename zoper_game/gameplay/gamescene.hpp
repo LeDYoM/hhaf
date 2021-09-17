@@ -55,7 +55,7 @@ private:
 
     void generateNextToken();
 
-    htps::sptr<scene::StatesController<GameSceneStates>> scene_states_;
+    htps::sptr<scene::StatesControllerComponent<GameSceneStates>> scene_states_;
 
     void _debugDisplayBoard() const;
 

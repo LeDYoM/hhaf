@@ -24,7 +24,7 @@ class StatesControllerActuatorRegister
 {
 public:
     void registerStatesControllerActuator(
-        StatesController<T>& statesController,
+        StatesControllerComponent<T>& statesController,
         StatesControllerActuator<T>& statesControllerActuator)
     {
         statesController.StateStarted.connect(

@@ -16,6 +16,12 @@ using Action = htps::function<void()>;
 
 namespace haf::scene
 {
+/**
+ * @brief Class to control states.
+ * Its main use is via the StatesControllerComponent
+ * 
+ * @tparam T 
+ */
 template <class T>
 class StatesControllerRaw
 {
@@ -112,8 +118,8 @@ private:
     inline void changeState(T newState)
     {
         postAction([this, newState = std::move(newState)]() {
-            LogAsserter::log_assert(states_stack_.size() != 0U,
-                                    "States stack size is 0");
+            LogAsserter::log_assert(!states_stack_.empty(),
+                                    "States stack size is empty");
             StateFinished(states_stack_.back());
             states_stack_.pop_back();
             StateStarted(newState);
@@ -131,10 +137,10 @@ private:
 };
 
 template <typename T>
-class StatesController : public StatesControllerRaw<T>, public component::IComponent
+class StatesControllerComponent : public StatesControllerRaw<T>, public component::IComponent
 {
 public:
-    ~StatesController() override {}
+    ~StatesControllerComponent() override {}
 
     void update() override { StatesControllerRaw<T>::update(); }
 };

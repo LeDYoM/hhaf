@@ -1,11 +1,10 @@
 #ifndef ZOOPER_GAMESCENE_STATES_INCLUDE_HPP
 #define ZOOPER_GAMESCENE_STATES_INCLUDE_HPP
 
-namespace zoper
-{
-
 #include <htypes/include/str.hpp>
 
+namespace zoper
+{
 enum class GameSceneStates : htps::u8
 {
     Playing = 0U,
@@ -13,7 +12,7 @@ enum class GameSceneStates : htps::u8
     Pause
 };
 
-constexpr const auto make_str(const GameSceneStates gss)
+constexpr auto const make_str(GameSceneStates const gss) noexcept
 {
     switch (gss)
     {
