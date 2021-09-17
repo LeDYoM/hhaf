@@ -88,25 +88,6 @@ public:
         return *this;
     }
 
-    PropertyAnimationBuilder& endActionType(AnimationEndAction action)
-    {
-        data_.animation_end_action_ = std::move(action);
-        switch (data_.animation_end_action_)
-        {
-            case AnimationEndAction::PerformUserAction:
-            {
-
-            }
-            break;
-            case AnimationEndAction::RemoveAnimatedNode:
-            {
-                
-            }
-            break;
-        }
-        return *this;
-    }
-
     PropertyAnimationData<Tag, SceneNodeType> extractData() noexcept
     {
         return std::move(data_);
