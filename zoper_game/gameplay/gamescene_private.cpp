@@ -16,7 +16,7 @@ namespace zoper
 {
 void GameScene::GameScenePrivate::createScoreIncrementPoints(
     SceneNode& main_node,
-    const vector2df& lastTokenPosition)
+    vector2df const& lastTokenPosition)
 {
     auto pointsToScoreSceneNode =
         main_node.createSceneNode<RenderizablesSceneNode>(
