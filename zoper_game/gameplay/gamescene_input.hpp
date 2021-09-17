@@ -3,7 +3,7 @@
 
 #include <htypes/include/types.hpp>
 #include <haf/include/input/virtual_input_component.hpp>
-#include <haf/include/scene_components/statescontroller.hpp>
+#include <haf/include/scene_components/states_controller_component.hpp>
 #include "gamescene_states.hpp"
 
 namespace zoper

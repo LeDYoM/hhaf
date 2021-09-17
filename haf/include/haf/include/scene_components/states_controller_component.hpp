@@ -19,8 +19,8 @@ namespace haf::scene
 /**
  * @brief Class to control states.
  * Its main use is via the StatesControllerComponent
- * 
- * @tparam T 
+ *
+ * @tparam T
  */
 template <class T>
 class StatesControllerRaw
@@ -137,7 +137,8 @@ private:
 };
 
 template <typename T>
-class StatesControllerComponent : public StatesControllerRaw<T>, public component::IComponent
+class StatesControllerComponent : public StatesControllerRaw<T>,
+                                  public component::IComponent
 {
 public:
     ~StatesControllerComponent() override {}

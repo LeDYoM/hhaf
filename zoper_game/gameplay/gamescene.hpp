@@ -17,7 +17,7 @@
 #include <boardmanager/include/boardmanager.hpp>
 #include <haf/include/render/renderizable.hpp>
 #include <haf/include/time/timercomponent.hpp>
-#include <haf/include/scene_components/statescontroller.hpp>
+#include <haf/include/scene_components/states_controller_component.hpp>
 #include <haf/include/scene_components/statescontrolleractuator.hpp>
 #include <haf/include/time/timercomponent.hpp>
 

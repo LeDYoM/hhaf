@@ -1,7 +1,7 @@
 #include "catch.hpp"
 
 #include <htypes/include/types.hpp>
-#include <haf/include/scene_components/statescontroller.hpp>
+#include <haf/include/scene_components/states_controller_component.hpp>
 
 using namespace htps;
 using namespace haf;

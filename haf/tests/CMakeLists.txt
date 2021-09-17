@@ -19,7 +19,7 @@ set(SOURCE_TESTS
     scene/transformable
     scene/transformation
 
-    scene_components/statescontroller
+    scene_components/states_controller_component
 
     shareddata/address
     shareddata/shareddata
