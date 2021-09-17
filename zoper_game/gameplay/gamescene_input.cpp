@@ -6,6 +6,11 @@
 
 #include <haf/include/scene_components/scenecontrol.hpp>
 
+using namespace haf;
+using namespace haf::scene;
+using namespace haf::input;
+using namespace htps;
+
 namespace zoper
 {
 GameSceneInput::GameSceneInput()
@@ -14,14 +19,14 @@ GameSceneInput::GameSceneInput()
 GameSceneInput::~GameSceneInput() = default;
 
 void GameSceneInput::configure(
-    htps::sptr<haf::scene::StatesControllerComponent<GameSceneStates>> sceneStates,
-    htps::sptr<BoardGroup> boardGroup)
+    sptr<StatesControllerComponent<GameSceneStates>> sceneStates,
+    sptr<BoardGroup> boardGroup)
 {
     scene_states_ = std::move(sceneStates);
     board_group_  = std::move(boardGroup);
 }
 
-void GameSceneInput::onKeyPressed(haf::input::Key const& key)
+void GameSceneInput::onKeyPressed(Key const& key)
 {
     DisplayLog::info("Key pressed in GameScene");
     // TODO: Fixme
@@ -68,7 +73,7 @@ void GameSceneInput::onKeyPressed(haf::input::Key const& key)
     }
 }
 
-void GameSceneInput::onKeyReleased(haf::input::Key const&)
+void GameSceneInput::onKeyReleased(Key const&)
 {}
 
 }  // namespace zoper
