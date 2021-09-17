@@ -42,6 +42,8 @@ public:
      */
     bool removeSceneNode(htps::sptr<SceneNode> element);
 
+    bool autoRemove();
+
     /**
      * @brief Remove a given SceneNode by name
      *

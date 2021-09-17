@@ -64,6 +64,17 @@ bool SceneNodes::removeSceneNode(htps::str const& name)
     return false;
 }
 
+bool SceneNodes::autoRemove()
+{
+    auto this_parent{scene_node_->parentAs<SceneNode>()};
+    LogAsserter::log_assert(this_parent != nullptr,
+                            "Error removing a node without parent");
+    auto this_shared = this_parent->getShared(scene_node_);
+    LogAsserter::log_assert(this_shared != nullptr,
+                            "Cannot find this node on the parent");
+    return this_parent->removeSceneNode(std::move(this_shared));
+}
+
 void SceneNodes::clearSceneNodes()
 {
     scene_nodes_.clear();

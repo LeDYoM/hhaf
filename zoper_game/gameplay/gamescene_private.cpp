@@ -43,8 +43,7 @@ void GameScene::GameScenePrivate::createScoreIncrementPoints(
             .duration(
                 time::TimePoint_as_miliseconds(MillisAnimationPointsToScore))
             .endAction([pointsToScoreSceneNode]() {
-                pointsToScoreSceneNode->parentAs<SceneNode>()->removeSceneNode(
-                    pointsToScoreSceneNode);
+                pointsToScoreSceneNode->autoRemove();
             });
 
         scene_animation_component_->addAnimation(
