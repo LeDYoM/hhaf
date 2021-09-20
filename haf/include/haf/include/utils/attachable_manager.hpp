@@ -2,8 +2,8 @@
 #define HAF_ATTACHABLE_MANAGER_INCLUDE_HPP
 
 #include <haf/include/haf_export.hpp>
+#include <haf/include/types/basic_types.hpp>
 #include <haf/include/utils/attachable.hpp>
-#include <htypes/include/types.hpp>
 #include <hlog/include/hlog.hpp>
 
 namespace haf::utils

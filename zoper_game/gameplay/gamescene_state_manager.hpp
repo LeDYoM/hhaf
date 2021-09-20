@@ -25,8 +25,8 @@ public:
         htps::sptr<PauseSceneNode> pause_scene_node,
         htps::sptr<GameOverSceneNode> game_over_scene_node);
 
-    void onEnterState(const GameSceneStates&) override;
-    void onExitState(const GameSceneStates&) override;
+    void onEnterState(GameSceneStates const&) override;
+    void onExitState(GameSceneStates const&) override;
 
 private:
     htps::sptr<haf::time::TimerComponent> scene_timer_component_;

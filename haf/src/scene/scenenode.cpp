@@ -4,7 +4,7 @@
 #include <haf/include/scene/scene.hpp>
 #include <haf/include/system/datawrappercreator.hpp>
 
-using namespace htps;
+using namespace haf::types;
 
 namespace haf::scene
 {
@@ -16,7 +16,7 @@ struct SceneNode::SceneNodePrivate
 
 SceneNode::SceneNode(rptr<SceneNode> parent, str name) :
     sys::HasName{std::move(name)},
-    SceneNodeParent{parent},
+    SceneNodeParent{std::move(parent)},
     SceneNodes{this},
     sys::SystemAccess{ancestor<Scene>() != nullptr
                           ? &(ancestor<Scene>()->isystemProvider())
@@ -30,14 +30,14 @@ SceneNode::~SceneNode() = default;
 void SceneNode::clearAll()
 {
     clearSceneNodes();
-    // clearComponents();
 }
 
 component::ComponentContainer& SceneNode::components()
 {
     if (p_->component_container_ == nullptr)
     {
-        p_->component_container_ = muptr<component::ComponentContainer>(this);
+        p_->component_container_ =
+            types::muptr<component::ComponentContainer>(this);
     }
 
     return *(p_->component_container_);
@@ -57,7 +57,7 @@ sys::DataWrapperCreator& SceneNode::subsystems()
 {
     if (p_->subsystems_ == nullptr)
     {
-        p_->subsystems_ = muptr<sys::DataWrapperCreator>(this);
+        p_->subsystems_ = types::muptr<sys::DataWrapperCreator>(this);
     }
 
     return *(p_->subsystems_);

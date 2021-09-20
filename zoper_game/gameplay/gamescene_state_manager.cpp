@@ -23,7 +23,7 @@ GameSceneStateManager::GameSceneStateManager(
     game_over_scene_node_{std::move(game_over_scene_node)}
 {}
 
-void GameSceneStateManager::onEnterState(const GameSceneStates& state)
+void GameSceneStateManager::onEnterState(GameSceneStates const& state)
 {
     switch (state)
     {
@@ -48,7 +48,7 @@ void GameSceneStateManager::onEnterState(const GameSceneStates& state)
     DisplayLog::info("Entered state: ", make_str(state));
 }
 
-void GameSceneStateManager::onExitState(const GameSceneStates& state)
+void GameSceneStateManager::onExitState(GameSceneStates const& state)
 {
     switch (state)
     {

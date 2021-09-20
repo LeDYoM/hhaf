@@ -284,6 +284,7 @@ set(headers
   ${inc_dir}/time/timeview.hpp
 
   # Types
+  ${inc_dir}/types/basic_types.hpp
   ${inc_dir}/types/property_group.hpp
 
   # Utils

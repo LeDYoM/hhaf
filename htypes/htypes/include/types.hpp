@@ -41,7 +41,7 @@ constexpr uptr<T> muptr(Args&&... args)
 }
 
 template <typename T>
-constexpr wptr<T> mwptr(const sptr<T>& sp)
+constexpr wptr<T> mwptr(sptr<T> const& sp)
 {
     return wptr<T>(sp);
 }

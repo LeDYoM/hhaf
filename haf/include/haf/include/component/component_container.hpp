@@ -2,8 +2,7 @@
 #define HAF_COMPONENT_COMPONENT_CONTAINER_INCLUDE_HPP
 
 #include <haf/include/haf_export.hpp>
-#include <htypes/include/types.hpp>
-#include <htypes/include/p_impl_pointer.hpp>
+#include <haf/include/types/basic_types.hpp>
 #include <haf/include/component/icomponent.hpp>
 #include <haf/include/utils/attachable_manager.hpp>
 #include <haf/include/utils/type_data.hpp>
@@ -39,9 +38,9 @@ public:
      * existing
      */
     template <typename T>
-    htps::sptr<T> component()
+    types::sptr<T> component()
     {
-        htps::sptr<T> result{componentOfType<T>()};
+        types::sptr<T> result{componentOfType<T>()};
         if (result == nullptr)
         {
             result = BaseClass::template create<T>();
@@ -57,7 +56,7 @@ public:
      * @return Pointer to the component or nullptr
      */
     template <typename T>
-    htps::sptr<T> componentOfType() const
+    types::sptr<T> componentOfType() const
     {
         auto cot{componentOfType(type_of<T>())};
         return cot ? std::dynamic_pointer_cast<T>(cot) : nullptr;
@@ -98,10 +97,10 @@ private:
     }
 
     bool addComponent(htps::sptr<IComponent> nc);
-    htps::sptr<IComponent> componentOfType(utils::type_index const& ti) const;
+    types::sptr<IComponent> componentOfType(utils::type_index const& ti) const;
 
     struct ComponentContainerPrivate;
-    htps::PImplPointer<ComponentContainerPrivate> p_;
+    types::PImplPointer<ComponentContainerPrivate> p_;
 };
 
 }  // namespace haf::component

@@ -2,13 +2,13 @@
 
 #include <htypes/include/lockablevector.hpp>
 
-using namespace htps;
+using namespace haf::types;
 
 namespace haf::component
 {
 struct ComponentContainer::ComponentContainerPrivate
 {
-    htps::sptr<IComponent> getComponentFromTypeIndex(
+    sptr<IComponent> getComponentFromTypeIndex(
         utils::type_index const& tindex) const
     {
         const auto v{components_.next()};
@@ -19,7 +19,7 @@ struct ComponentContainer::ComponentContainerPrivate
         return (iterator == v.cend()) ? nullptr : (*iterator);
     }
 
-    htps::LockableVector<htps::sptr<IComponent>> components_;
+    htps::LockableVector<sptr<IComponent>> components_;
 };
 
 ComponentContainer::ComponentContainer(

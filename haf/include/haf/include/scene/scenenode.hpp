@@ -2,14 +2,12 @@
 #define HAF_SCENE_SCENENODE_INCLUDE_HPP
 
 #include <haf/include/haf_export.hpp>
-#include <htypes/include/types.hpp>
+#include <haf/include/types/basic_types.hpp>
 #include <haf/include/scene/scenenodeparent.hpp>
 #include <haf/include/scene/scenenode_properties.hpp>
 #include <haf/include/scene/scenenodes.hpp>
 #include <haf/include/scene/hasname.hpp>
 #include <haf/include/system/systemaccess.hpp>
-
-#include <htypes/include/p_impl_pointer.hpp>
 
 namespace haf::sys
 {
@@ -64,7 +62,7 @@ public:
      * @param parent Parent of this element.
      * @param name Name of this element.
      */
-    SceneNode(htps::rptr<SceneNode> parent, htps::str name);
+    SceneNode(types::rptr<SceneNode> parent, types::str name);
 
     /**
      * @brief Destroy the Scene Node object.
@@ -96,10 +94,10 @@ public:
 
 private:
     struct SceneNodePrivate;
-    htps::PImplPointer<SceneNodePrivate> p_;
+    types::PImplPointer<SceneNodePrivate> p_;
 };
 
-using SceneNodeSPtr = htps::sptr<SceneNode>;
+using SceneNodeSPtr = types::sptr<SceneNode>;
 }  // namespace haf::scene
 
 #endif

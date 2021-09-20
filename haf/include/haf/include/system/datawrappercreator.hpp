@@ -1,7 +1,7 @@
 #ifndef HAF_SYSTEM_DATA_WRAPPER_CREATOR_INCLUDE_HPP
 #define HAF_SYSTEM_DATA_WRAPPER_CREATOR_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
+#include <haf/include/types/basic_types.hpp>
 #include <haf/include/system/idatawrapper.hpp>
 #include <haf/include/utils/attachable_manager.hpp>
 
@@ -33,7 +33,7 @@ public:
      * @return htps::uptr<T> containing the data wrapper.
      */
     template <typename T>
-    htps::uptr<T> dataWrapper() const
+    types::uptr<T> dataWrapper() const
     {
         return BaseClass::create<T>();
     }

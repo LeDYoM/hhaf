@@ -13,9 +13,7 @@ using namespace htps;
 
 namespace zoper
 {
-GameSceneInput::GameSceneInput()
-{}
-
+GameSceneInput::GameSceneInput()  = default;
 GameSceneInput::~GameSceneInput() = default;
 
 void GameSceneInput::configure(

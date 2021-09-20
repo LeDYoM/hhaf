@@ -2,6 +2,7 @@
 #define HAF_SCENE_ICOMPONENT_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
+#include <haf/include/types/basic_types.hpp>
 #include <haf/include/utils/attachable.hpp>
 
 namespace haf::scene

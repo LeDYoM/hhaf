@@ -2,7 +2,7 @@
 #define HAF_SYS_ATTACHABLE_INCLUDE_HPP
 
 #include <haf/include/haf_export.hpp>
-#include <htypes/include/types.hpp>
+#include <haf/include/types/basic_types.hpp>
 
 namespace haf::utils
 {
@@ -30,7 +30,7 @@ public:
      * @brief Get the attached node.
      * @return const htps::rptr<const T> The const attached node.
      */
-    constexpr htps::rptr<const T> attachedNode() const noexcept
+    constexpr types::rptr<const T> attachedNode() const noexcept
     {
         return attachedNode_;
     }
@@ -39,7 +39,7 @@ public:
      * @brief Get the attached node.
      * @return const htps::rptr<const T> The attached node.
      */
-    constexpr htps::rptr<T> attachedNode() noexcept
+    constexpr types::rptr<T> attachedNode() noexcept
     {
         return attachedNode_;
     }
@@ -52,7 +52,7 @@ public:
      * conversion was possible.
      */
     template <typename Y>
-    htps::rptr<Y> attachedNodeAs() noexcept
+    types::rptr<Y> attachedNodeAs() noexcept
     {
         return dynamic_cast<Y*>(attachedNode());
     }
@@ -66,13 +66,13 @@ public:
      * conversion was possible.
      */
     template <typename Y>
-    htps::rptr<Y const> attachedNodeAs() const noexcept
+    types::rptr<Y const> attachedNodeAs() const noexcept
     {
         return dynamic_cast<Y const*>(attachedNode());
     }
 
 public:
-    htps::rptr<T> attachedNode_{nullptr};
+    types::rptr<T> attachedNode_{nullptr};
 };
 
 }  // namespace haf::utils
