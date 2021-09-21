@@ -2,9 +2,7 @@
 #define HAF_ANIMATION_IANIMATION_INCLUDE_HPP
 
 #include <haf/include/animation/animation_data.hpp>
-#include <haf/include/animation/animation_builder.hpp>
 #include <haf/include/animation/property_animation_data.hpp>
-#include <haf/include/animation/property_animation_builder.hpp>
 
 #include <haf/include/time/timepoint.hpp>
 #include <haf/include/time/timeview.hpp>
@@ -29,7 +27,7 @@ public:
      * @param animation_data Data for the animation
      * @see AnimationData
      */
-    Animation(AnimationData&& animation_data) noexcept;
+    Animation(AnimationProperties&& animation_data) noexcept;
 
     /**
      * @brief Performs one step on the animation
@@ -54,7 +52,7 @@ protected:
     AnimationDeltaType delta() const noexcept { return delta_; }
 
 private:
-    AnimationData animation_data_;
+    AnimationProperties animation_data_;
     AnimationDirection current_direction_;
     time::TimePoint current_time_;
     AnimationDeltaType raw_delta_;

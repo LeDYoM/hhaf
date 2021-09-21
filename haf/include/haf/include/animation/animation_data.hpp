@@ -4,17 +4,25 @@
 #include <haf/include/time/timepoint.hpp>
 #include <haf/include/time/timeview.hpp>
 #include <haf/include/time/timer.hpp>
-
-#include <htypes/include/types.hpp>
+#include <haf/include/types/basic_types.hpp>
+#include <haf/include/types/property_group.hpp>
 #include <htypes/include/properties.hpp>
-#include <htypes/include/function.hpp>
 
 namespace haf::anim
 {
 /**
  * @brief Type to represent an animation
  */
-using ActionFunc = htps::function<void()>;
+struct ActionWhenFinished
+{
+    using value_type = htps::function<void()>;
+
+    struct UseCustomPropertyType
+    {
+        template <typename Tag>
+        using PropertyType = htps::BasicProperty<typename Tag::value_type, Tag>;
+    };
+};
 
 enum class AnimationDirection : htps::u8
 {
@@ -22,28 +30,83 @@ enum class AnimationDirection : htps::u8
     Backward = 1U,  //< Animate decreasing the delta value
 };
 
-enum class AnimationDeltaMode : htps::u8
+/**
+ * @brief Direction of the animation
+ */
+struct AnimationDirectionProperty
 {
-    Linear = 0U,  //< Update the delta value in a linear way
+    using value_type = AnimationDirection;
+
+    struct UseCustomPropertyType
+    {
+        template <typename Tag>
+        using PropertyType = htps::BasicProperty<typename Tag::value_type, Tag>;
+    };
 };
 
-class AnimationData
+/**
+ * @brief Timer to use in the animation
+ */
+struct TimerProperty
 {
-public:
-    htps::uptr<time::Timer> timer_;  //< Timer to use to animate
-    time::TimePoint duration_;  //< @b time::TimePoint containing the time the
-                                // animation is going to last
-    ActionFunc end_action_;     //< Functor containing an action to perform when
-                                //< the animation finishes
-    AnimationDirection animation_direction_{
-        AnimationDirection::Forward};  //< Direction of the animation
-    AnimationDeltaMode animation_delta_mode_{
-        AnimationDeltaMode::Linear};  //< Select equation to update the delta
-                                      // value
-    htps::s32 times_{1U};  //< Number of times to perform the animation
-    bool switch_{false};   //< Switch between forward and backward
+    using value_type = types::sptr<time::Timer>;
+
+    struct UseCustomPropertyType
+    {
+        template <typename Tag>
+        using PropertyType = htps::BasicProperty<typename Tag::value_type, Tag>;
+    };
 };
 
+/**
+ * @brief Time computing the duration of the animation
+ */
+struct Duration
+{
+    using value_type = time::TimePoint;
+
+    struct UseCustomPropertyType
+    {
+        template <typename Tag>
+        using PropertyType = htps::BasicProperty<typename Tag::value_type, Tag>;
+    };
+};
+
+/**
+ * @brief Number of times to perform the animation
+ * 
+ */
+struct Times
+{
+    using value_type = types::s32;
+
+    struct UseCustomPropertyType
+    {
+        template <typename Tag>
+        using PropertyType = htps::BasicProperty<typename Tag::value_type, Tag>;
+    };
+};
+
+/**
+ * @brief Switch between forward and backward
+ */
+struct Switch
+{
+    using value_type = bool;
+
+    struct UseCustomPropertyType
+    {
+        template <typename Tag>
+        using PropertyType = htps::BasicProperty<typename Tag::value_type, Tag>;
+    };
+};
+
+using AnimationProperties = types::PropertyGroup<TimerProperty,
+                                                 Duration,
+                                                 ActionWhenFinished,
+                                                 AnimationDirectionProperty,
+                                                 Times,
+                                                 Switch>;
 }  // namespace haf::anim
 
 #endif

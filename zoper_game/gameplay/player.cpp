@@ -95,10 +95,10 @@ void Player::tileMoved(vector2dst const& source, vector2dst const& dest)
     boardPosition.set(dest);
 }
 
-void Player::launchAnimation(vector2df const& toWhere)
+void Player::launchAnimation(vector2df const& /*toWhere*/)
 {
     components().component(animation_component_);
-
+/*
     auto property_animation_builder =
         animation_component_->make_property_animation_builder<Position>(
             *this);
@@ -110,14 +110,15 @@ void Player::launchAnimation(vector2df const& toWhere)
             launchAnimationBack(currentPosition);
         });
     animation_component_->addAnimation(std::move(property_animation_builder));
+*/
 }
 
-void Player::launchAnimationBack(vector2df const& toWhere)
+void Player::launchAnimationBack(vector2df const& /*toWhere*/)
 {
     DisplayLog::info("Creating animation for player to go back");
     currentDirection = currentDirection().negate();
     components().component(animation_component_);
-
+/*
     auto property_animation_builder =
         animation_component_->make_property_animation_builder<Position>(*this);
     property_animation_builder->startValue(prop<Position>()())
@@ -125,6 +126,7 @@ void Player::launchAnimationBack(vector2df const& toWhere)
         .duration(TimePoint_as_miliseconds(
             gameplay::constants::MillisAnimationLaunchPlayerStep));
     animation_component_->addAnimation(std::move(property_animation_builder));
+*/
 }
 
 void Player::tileAdded(vector2dst const& position_)

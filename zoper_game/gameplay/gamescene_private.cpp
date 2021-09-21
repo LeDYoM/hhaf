@@ -16,7 +16,7 @@ namespace zoper
 {
 void GameScene::GameScenePrivate::createScoreIncrementPoints(
     SceneNode& main_node,
-    vector2df const& lastTokenPosition)
+    vector2df const& /*lastTokenPosition*/)
 {
     auto pointsToScoreSceneNode =
         main_node.createSceneNode<RenderizablesSceneNode>(
@@ -34,6 +34,7 @@ void GameScene::GameScenePrivate::createScoreIncrementPoints(
         using namespace gameplay::constants;
 
         DisplayLog::info("Creating animation for points to score");
+/*
         auto property_animation_builder =
             scene_animation_component_
                 ->make_property_animation_builder<Position>(
@@ -48,6 +49,7 @@ void GameScene::GameScenePrivate::createScoreIncrementPoints(
 
         scene_animation_component_->addAnimation(
             std::move(property_animation_builder));
+*/
     }
 }
 }  // namespace zoper

@@ -33,28 +33,33 @@ public:
      */
     template <typename PropertyTag, typename SceneNodeType>
     void addAnimation(
-        htps::uptr<PropertyAnimationBuilder<PropertyTag, SceneNodeType>>
-            builder)
+        PropertyAnimationData<PropertyTag, SceneNodeType>&& builder)
     {
         addAnimation(htps::muptr<PropertyAnimation<PropertyTag, SceneNodeType>>(
-            builder->extractBaseData(), builder->extractData()));
+            std::move(builder)));
     }
 
     template <typename PropertyTag, typename PropertyContainer>
-    auto make_property_animation_builder(PropertyContainer& scene_node)
+    auto make_property_animation_data(PropertyContainer& scene_node)
     {
-        auto builder = htps::muptr<
-            PropertyAnimationBuilder<PropertyTag, PropertyContainer>>();
-        builder->timer(attachedNode()->subsystems().dataWrapper<time::Timer>())
-            .node(&scene_node);
+        auto builder = PropertyAnimationData<PropertyTag, PropertyContainer>();
+        builder
+            .prop<PropertyAnimationPropertiesSingle<PropertyTag,
+                                                    PropertyContainer>>()
+            .put<SceneNodeType<PropertyContainer>>(&scene_node);
+
+        builder.prop<AnimationProperties>()
+            .put<TimerProperty>(
+                attachedNode()->subsystems().dataWrapper<time::Timer>())
+            .put<Times>(1);
         return builder;
     }
 
     template <typename PropertyTag, typename PropertyContainer>
-    auto make_property_animation_builder(
+    auto make_property_animation_data(
         htps::sptr<PropertyContainer> scene_node)
     {
-        return make_property_animation_builder<PropertyTag, PropertyContainer>(
+        return make_property_animation_data<PropertyTag, PropertyContainer>(
             *scene_node);
     }
 

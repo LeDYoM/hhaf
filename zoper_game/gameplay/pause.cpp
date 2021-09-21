@@ -5,7 +5,6 @@
 #include <haf/include/scene/color.hpp>
 #include <haf/include/scene_nodes/scenenodetext.hpp>
 #include <haf/include/animation/animation_component.hpp>
-#include <haf/include/animation/property_animation_builder.hpp>
 #include <haf/include/scene_components/scenemetricsview.hpp>
 #include <haf/include/component/component_container.hpp>
 
@@ -44,19 +43,19 @@ void PauseSceneNode::onCreated()
 
 void PauseSceneNode::enterPause()
 {
-    TimePoint const pause_animation_time{TimePoint_as_miliseconds(1000U)};
-
     prop<Visible>().set(true);
     components().component(animation_component_);
 
-    auto property_animation_builder =
-        animation_component_->make_property_animation_builder<TextColor>(
-            pause_text_);
+    auto property_animation_builder{
+        animation_component_->make_property_animation_data<TextColor>(
+            pause_text_)};
+
+    using namespace haf::anim;
 
     property_animation_builder
-        ->startValue(Color{colors::White, Color::Transparent})
-        .endValue(Color{colors::White, Color::Opaque})
-        .duration(pause_animation_time);
+        .put<StartValue<TextColor>>(Color{colors::White, Color::Transparent})
+        .put<EndValue<TextColor>>(Color{colors::White, Color::Opaque});
+    property_animation_builder.put<Duration>(TimePoint_as_miliseconds(1000U));
     animation_component_->addAnimation(std::move(property_animation_builder));
 }
 

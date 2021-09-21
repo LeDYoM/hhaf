@@ -43,12 +43,12 @@ public:
      * @param animation_data Data for the animation
      * @param property_animation_data Data for the property animation
      */
-    PropertyAnimation(AnimationData&& animation_data,
-                      PropertyAnimationData<PropertyTag, SceneNodeType>&&
+    PropertyAnimation(PropertyAnimationData<PropertyTag, SceneNodeType>&&
                           property_animation_data) :
-        BaseClass{std::move(animation_data)},
+        BaseClass{std::move(property_animation_data)},
         data_{std::move(property_animation_data)},
-        deltaValue_{AT{data_.endValue_} - AT{data_.startValue_}}
+        deltaValue_{AT{data_.prop<EndValue<PropertyTag>>()()} -
+                    AT{data_.prop<StartValue<PropertyTag>>()()}}
     {}
 
     bool animate() override
@@ -57,15 +57,17 @@ public:
         const bool bResult{BaseClass::animate()};
 
         // Apply current animation value
-        data_.scene_node_->template prop<PropertyTag>().set(
-            AT{data_.startValue_ + (deltaValue_ * delta())});
+        data_.prop<anim::SceneNodeType<SceneNodeType>>()()
+            ->template prop<PropertyTag>()
+            .set(AT{data_.prop<StartValue<PropertyTag>>()() +
+                    (deltaValue_ * delta())});
 
         // Return result of base animation
         return bResult;
     }
 
 private:
-    PropertyAnimationData<PropertyTag, SceneNodeType> data_;
+    PropertyAnimationPropertiesSingle<PropertyTag, SceneNodeType> data_;
     const AT deltaValue_{};
 };
 }  // namespace haf::anim

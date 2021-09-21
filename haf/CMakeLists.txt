@@ -17,7 +17,6 @@ set(sources
   ${src_dir}/systemprovider_init.cpp
 
   # Animation
-  ${src_dir}/animation/animation_builder.cpp
   ${src_dir}/animation/animation.cpp
   ${src_dir}/animation/animation_component.cpp
 
@@ -168,12 +167,10 @@ set(headers
 
   # Animation
   ${inc_dir}/animation/animabletypes.hpp
-  ${inc_dir}/animation/animation_builder.hpp
   ${inc_dir}/animation/animation_data.hpp
   ${inc_dir}/animation/animation.hpp
   ${inc_dir}/animation/animation_component.hpp
   ${inc_dir}/animation/property_animation.hpp
-  ${inc_dir}/animation/property_animation_builder.hpp
   ${inc_dir}/animation/property_animation_data.hpp
 
   # Component
