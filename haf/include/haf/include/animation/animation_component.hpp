@@ -33,20 +33,23 @@ public:
      */
     template <typename PropertyTag, typename SceneNodeType>
     void addAnimation(
-        htps::uptr<PropertyAnimationBuilder<PropertyTag, SceneNodeType>>
-            builder)
+        PropertyAnimationData<PropertyTag, SceneNodeType>&& builder)
     {
         addAnimation(htps::muptr<PropertyAnimation<PropertyTag, SceneNodeType>>(
-            builder->extractBaseData(), builder->extractData()));
+            std::move(builder)));
     }
 
     template <typename PropertyTag, typename PropertyContainer>
     auto make_property_animation_builder(PropertyContainer& scene_node)
     {
-        auto builder = htps::muptr<
-            PropertyAnimationBuilder<PropertyTag, PropertyContainer>>();
-        builder->timer(attachedNode()->subsystems().dataWrapper<time::Timer>())
-            .node(&scene_node);
+        auto builder = PropertyAnimationData<PropertyTag, PropertyContainer>();
+        auto& property = builder
+            .prop<PropertyAnimationPropertiesSingle<PropertyTag,
+                                                     PropertyContainer>>();
+        property.put<SceneNodeType<PropertyContainer>>(&scene_node);
+
+        builder.prop<AnimationProperties>().put<TimerProperty>(
+            attachedNode()->subsystems().dataWrapper<time::Timer>());
         return builder;
     }
 

@@ -53,10 +53,12 @@ void PauseSceneNode::enterPause()
         animation_component_->make_property_animation_builder<TextColor>(
             pause_text_);
 
+    using namespace haf::anim;
+
     property_animation_builder
-        ->startValue(Color{colors::White, Color::Transparent})
-        .endValue(Color{colors::White, Color::Opaque})
-        .duration(pause_animation_time);
+        .put<StartValue<TextColor>>(Color{colors::White, Color::Transparent})
+        .put<EndValue<TextColor>>(Color{colors::White, Color::Opaque});
+    property_animation_builder.put<Duration>(pause_animation_time);
     animation_component_->addAnimation(std::move(property_animation_builder));
 }
 

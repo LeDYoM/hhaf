@@ -140,6 +140,16 @@ public:
     }
 };
 
+template <typename T1, typename T2>
+class PropertyGroupMixin : public T1, public T2
+{
+public:
+    using T1::prop;
+    using T2::prop;
+    using T1::put;
+    using T2::put;
+};
+
 namespace detail
 {
 template <typename TagFirst, typename... Tag>

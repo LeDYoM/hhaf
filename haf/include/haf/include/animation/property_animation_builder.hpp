@@ -19,6 +19,7 @@ namespace haf::anim
  * @tparam T Type of the property to animate
  * @tparam Tag Type tag of the property to animate
  */
+/*
 template <typename Tag, typename SceneNodeType>
 class PropertyAnimationBuilder
 {
@@ -111,7 +112,7 @@ public:
 private:
     PropertyAnimationData<Tag, SceneNodeType> data_;
 };
-
+*/
 }  // namespace haf::anim
 
 #endif

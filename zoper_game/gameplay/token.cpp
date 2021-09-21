@@ -58,7 +58,7 @@ void Token::tileAdded(const vector2dst& position_)
 
     auto const AppearTokenTime = time::TimePoint_as_miliseconds(1000U);
     auto const nodeBox{node()->box().size() / 2.0F};
-
+/*
     auto newTransformationPosition = addTransformation();
     auto newTransformationScale    = addTransformation();
 
@@ -83,6 +83,7 @@ void Token::tileAdded(const vector2dst& position_)
         animation_component_->addAnimation(
             std::move(property_animation_builder));
     }
+*/
 }
 
 void Token::tileRemoved(const vector2dst& position_)
@@ -104,7 +105,7 @@ void Token::tileChanged(const vector2dst& position_,
 void Token::tileMoved(const vector2dst& source, const vector2dst& dest)
 {
     BaseClass::tileMoved(source, dest);
-
+/*
     auto const MoveTokenTime = time::TimePoint_as_miliseconds(1000U);
 
     const auto destination(board2Scene(dest));
@@ -115,5 +116,6 @@ void Token::tileMoved(const vector2dst& source, const vector2dst& dest)
         .endValue(destination)
         .duration(MoveTokenTime);
     animation_component_->addAnimation(std::move(property_animation_builder));
+*/
 }
 }  // namespace zoper

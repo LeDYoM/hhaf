@@ -5,6 +5,7 @@ using namespace htps;
 
 namespace haf::anim
 {
+/*
 AnimationBuilder& AnimationBuilder::duration(time::TimePoint _duration)
 {
     data_.duration_ = std::move(_duration);
@@ -63,5 +64,5 @@ AnimationBuilder& AnimationBuilder::switchAnimation(bool const value)
     data_.switch_ = value;
     return *this;
 }
-
+*/
 }  // namespace haf::anim

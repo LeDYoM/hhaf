@@ -4,7 +4,7 @@
 #include <htypes/include/types.hpp>
 #include <haf/include/animation/animation_data.hpp>
 #include <haf/include/time/timer.hpp>
-
+/*
 namespace haf::anim
 {
 class AnimationBuilder
@@ -27,5 +27,5 @@ private:
 };
 
 }  // namespace haf::anim
-
+*/
 #endif
