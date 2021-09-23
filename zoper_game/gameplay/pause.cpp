@@ -44,19 +44,16 @@ void PauseSceneNode::onCreated()
 void PauseSceneNode::enterPause()
 {
     prop<Visible>().set(true);
-    components().component(animation_component_);
+    pause_text_->components().component(animation_component_);
 
-    auto property_animation_builder{
-        animation_component_->make_property_animation_data<TextColor>(
-            pause_text_)};
+    auto builder{
+        animation_component_->make_property_animation_builder_from_attached<
+            TextColor, SceneNodeText>()};
+    builder.startValue(Color{colors::White, Color::Transparent})
+        .endValue(Color{colors::White, Color::Opaque})
+        .duration(TimePoint_as_miliseconds(1000U));
 
-    using namespace haf::anim;
-
-    property_animation_builder
-        .put<StartValue<TextColor>>(Color{colors::White, Color::Transparent})
-        .put<EndValue<TextColor>>(Color{colors::White, Color::Opaque});
-    property_animation_builder.put<Duration>(TimePoint_as_miliseconds(1000U));
-    animation_component_->addAnimation(std::move(property_animation_builder));
+    animation_component_->addAnimation(std::move(builder));
 }
 
 void PauseSceneNode::exitPause()

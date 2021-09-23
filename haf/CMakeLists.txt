@@ -170,8 +170,9 @@ set(headers
   ${inc_dir}/animation/animation_data.hpp
   ${inc_dir}/animation/animation.hpp
   ${inc_dir}/animation/animation_component.hpp
-  ${inc_dir}/animation/property_animation.hpp
+  ${inc_dir}/animation/property_animation_builder.hpp
   ${inc_dir}/animation/property_animation_data.hpp
+  ${inc_dir}/animation/property_animation.hpp
 
   # Component
   ${inc_dir}/component/component_container.hpp
