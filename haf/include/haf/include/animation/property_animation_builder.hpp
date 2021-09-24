@@ -42,10 +42,24 @@ public:
         return *this;
     }
 
+    PropertyAnimationBuilder& switchAnimation(Switch::value_type value)
+    {
+        data_.prop<Switch>() = std::move(value);
+        return *this;
+    }
+
+    PropertyAnimationBuilder& actionWhenFinished(
+        ActionWhenFinished::value_type value)
+    {
+        data_.prop<ActionWhenFinished>() = std::move(value);
+        return *this;
+    }
+
     PropertyAnimationData<PropertyTag, SceneNodeT>&& extract() noexcept
     {
         return std::move(data_);
     }
+
 private:
     PropertyAnimationData<PropertyTag, SceneNodeT> data_;
 };

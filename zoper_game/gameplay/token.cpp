@@ -58,15 +58,15 @@ void Token::tileAdded(const vector2dst& position_)
 
     auto const AppearTokenTime = time::TimePoint_as_miliseconds(1000U);
     auto const nodeBox{node()->box().size() / 2.0F};
-/*
+
     auto newTransformationPosition = addTransformation();
     auto newTransformationScale    = addTransformation();
 
     {
         auto property_animation_builder{
-            animation_component_->make_property_animation_builder<Scale>(
-                getTransformation(newTransformationScale))};
-        property_animation_builder->startValue(Scale::Zeros)
+            animation_component_->make_property_animation_builder<Scale, Transformation>(
+                &(getTransformation(newTransformationScale)))};
+        property_animation_builder.startValue(Scale::Zeros)
             .endValue(Scale::Ones)
             .duration(AppearTokenTime);
         animation_component_->addAnimation(
@@ -75,15 +75,14 @@ void Token::tileAdded(const vector2dst& position_)
 
     {
         auto property_animation_builder{
-            animation_component_->make_property_animation_builder<Position>(
-                getTransformation(newTransformationPosition))};
-        property_animation_builder->startValue(nodeBox)
+            animation_component_->make_property_animation_builder<Position, Transformation>(
+                &(getTransformation(newTransformationPosition)))};
+        property_animation_builder.startValue(nodeBox)
             .endValue(Position::value_type{0.0F, 0.0F})
             .duration(AppearTokenTime);
         animation_component_->addAnimation(
             std::move(property_animation_builder));
     }
-*/
 }
 
 void Token::tileRemoved(const vector2dst& position_)

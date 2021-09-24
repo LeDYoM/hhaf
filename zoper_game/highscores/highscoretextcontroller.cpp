@@ -128,7 +128,7 @@ void HighScoreTextController::addEditAnimation(const size_type line_index)
 {
     LogAsserter::log_assert(line_index < prop<TableSize>().get().y,
                             "Invalid line_index");
-/*
+
     for_each_tableSceneNode_in_y(
         line_index,
         [this](const auto, const sptr<nodes::SceneNodeText>& element) {
@@ -137,7 +137,7 @@ void HighScoreTextController::addEditAnimation(const size_type line_index)
                     ->make_property_animation_builder<nodes::TextColor>(
                         element);
             property_animation_builder
-                ->duration(time::TimePoint_as_miliseconds(2000U))
+                .duration(time::TimePoint_as_miliseconds(2000U))
                 .startValue(colors::White)
                 .endValue(colors::Black)
                 .switchAnimation(true)
@@ -146,7 +146,6 @@ void HighScoreTextController::addEditAnimation(const size_type line_index)
             animation_component_->addAnimation(
                 std::move(property_animation_builder));
         });
-*/
 }
 
 void HighScoreTextController::standarizeText(

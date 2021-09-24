@@ -16,7 +16,7 @@ namespace zoper
 {
 void GameScene::GameScenePrivate::createScoreIncrementPoints(
     SceneNode& main_node,
-    vector2df const& /*lastTokenPosition*/)
+    vector2df const& lastTokenPosition)
 {
     auto pointsToScoreSceneNode =
         main_node.createSceneNode<RenderizablesSceneNode>(
@@ -30,26 +30,21 @@ void GameScene::GameScenePrivate::createScoreIncrementPoints(
                     .pointCount(30U)
                     .create();
 
-    {
-        using namespace gameplay::constants;
+    using namespace gameplay::constants;
 
-        DisplayLog::info("Creating animation for points to score");
-/*
-        auto property_animation_builder =
-            scene_animation_component_
-                ->make_property_animation_data<Position>(
-                    pointsToScoreSceneNode);
-        property_animation_builder->startValue(lastTokenPosition)
-            .endValue(EndPositionPointsToScore)
-            .duration(
-                time::TimePoint_as_miliseconds(MillisAnimationPointsToScore))
-            .endAction([pointsToScoreSceneNode]() {
-                pointsToScoreSceneNode->autoRemove();
-            });
+    DisplayLog::info("Creating animation for points to score");
 
-        scene_animation_component_->addAnimation(
-            std::move(property_animation_builder));
-*/
-    }
+    auto property_animation_builder{
+        scene_animation_component_->make_property_animation_builder<Position>(
+            pointsToScoreSceneNode)};
+    property_animation_builder.startValue(lastTokenPosition)
+        .endValue(EndPositionPointsToScore)
+        .duration(time::TimePoint_as_miliseconds(MillisAnimationPointsToScore))
+        .actionWhenFinished([pointsToScoreSceneNode]() {
+            pointsToScoreSceneNode->autoRemove();
+        });
+
+    scene_animation_component_->addAnimation(
+        std::move(property_animation_builder));
 }
 }  // namespace zoper
