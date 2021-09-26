@@ -7,6 +7,6 @@
 
 namespace haf
 {
-using str = htypes::str;
+using str = htps::str;
 }  // namespace haf::types
 #endif

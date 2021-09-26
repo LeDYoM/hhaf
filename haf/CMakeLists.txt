@@ -150,6 +150,9 @@ set(sources
   ${src_dir}/time/timesystem.hpp
   ${src_dir}/time/timeview.cpp
 
+  # Types
+  ${src_dir}/types/str.cpp
+
   # Utils
   ${src_dir}/utils/type_data.cpp
   
