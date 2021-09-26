@@ -1,7 +1,7 @@
 #ifndef HAF_SCENE_TEXTQUAD_INCLUDE_HPP
 #define HAF_SCENE_TEXTQUAD_INCLUDE_HPP
 
-#include <haf/include/scene_nodes/tablenode.hpp>
+#include <haf/include/scene_nodes/table_node.hpp>
 #include <haf/include/scene_nodes/scenenodetext.hpp>
 #include <haf/include/scene_nodes/text_table_node.hpp>
 

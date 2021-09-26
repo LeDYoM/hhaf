@@ -1,6 +1,7 @@
 #ifndef HAF_SCENE_TRANSFORMABLE_INCLUDE_HPP
 #define HAF_SCENE_TRANSFORMABLE_INCLUDE_HPP
 
+#include <haf/include/types/basic_types.hpp>
 #include <haf/include/scene/matrix4x4.hpp>
 #include <haf/include/scene/transformation_properties.hpp>
 #include <haf/include/scene/transformation.hpp>
@@ -18,7 +19,7 @@ namespace haf::scene
  * Transformation.
  * @see Transofrmation
  */
-class TransformableSceneNode : public SceneNode, public Transformation
+class HAF_API TransformableSceneNode : public SceneNode, public Transformation
 {
 public:
     using SceneNode::prop;  ///< Export properties

@@ -251,7 +251,7 @@ set(headers
   ${inc_dir}/scene_nodes/scenenodetext.hpp
   ${inc_dir}/scene_nodes/tablenode_imp.hpp
   ${inc_dir}/scene_nodes/tablenode_properties.hpp
-  ${inc_dir}/scene_nodes/tablenode.hpp
+  ${inc_dir}/scene_nodes/table_node.hpp
   ${inc_dir}/scene_nodes/text_table_node.hpp
   ${inc_dir}/scene_nodes/textquad.hpp
 
@@ -284,6 +284,7 @@ set(headers
   # Types
   ${inc_dir}/types/basic_types.hpp
   ${inc_dir}/types/property_group.hpp
+  ${inc_dir}/types/str.hpp
 
   # Utils
   ${inc_dir}/utils/attachable_manager.hpp

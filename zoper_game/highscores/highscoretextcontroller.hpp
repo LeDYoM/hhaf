@@ -6,7 +6,7 @@
 #include <haf/include/scene/scenenode.hpp>
 #include <haf/include/resources/ifont.hpp>
 #include <haf/include/scene_nodes/renderizable_scenenode.hpp>
-#include <haf/include/scene_nodes/tablenode.hpp>
+#include <haf/include/scene_nodes/table_node.hpp>
 #include <haf/include/scene_nodes/scenenodetext.hpp>
 #include <haf/include/animation/animation_component.hpp>
 #include "../loaders/highscoresresources.hpp"

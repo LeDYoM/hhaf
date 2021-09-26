@@ -5,7 +5,7 @@
 #include <haf/include/scene/scenenode.hpp>
 #include "console.hpp"
 
-namespace zoper
+namespace haf
 {
 class DisplayVarConsole : public Console
 {
@@ -13,6 +13,6 @@ public:
     DisplayVarConsole(htps::rptr<haf::scene::SceneNode> const parent,
                       htps::str name);
 };
-}  // namespace zoper
+}  // namespace haf
 
 #endif

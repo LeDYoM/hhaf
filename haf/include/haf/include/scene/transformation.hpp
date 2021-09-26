@@ -1,6 +1,7 @@
 #ifndef HAF_SCENE_TRANSFORMATION_INCLUDE_HPP
 #define HAF_SCENE_TRANSFORMATION_INCLUDE_HPP
 
+#include <haf/include/types/basic_types.hpp>
 #include "matrix4x4.hpp"
 #include "transformation_properties.hpp"
 #include <htypes/include/vector2d.hpp>
@@ -9,7 +10,7 @@
 
 namespace haf::scene
 {
-class Transformation : public TransformationProperties
+class HAF_API Transformation : public TransformationProperties
 {
 public:
     using BaseClass = TransformationProperties;

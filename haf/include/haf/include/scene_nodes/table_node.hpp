@@ -1,6 +1,7 @@
 #ifndef HAF_SCENE_TABLENODE_INCLUDE_HPP
 #define HAF_SCENE_TABLENODE_INCLUDE_HPP
 
+#include <haf/include/haf_export.hpp>
 #include <haf/include/scene_nodes/tablenode_imp.hpp>
 #include <hlog/include/hlog.hpp>
 
@@ -12,7 +13,7 @@ namespace haf::scene::nodes
  * @tparam T
  */
 template <typename T>
-class TableNode : public TableNodeImp
+class HAF_API TableNode : public TableNodeImp
 {
     using BaseClass = TableNodeImp;
 
@@ -22,16 +23,16 @@ public:
     using BaseClass::BaseClass;
     using BaseClass::prop;
 
-    htps::sptr<T> createNodeAt(const htps::vector2dst& index,
-                               const htps::str& name)
+    htps::sptr<T> createNodeAt(htps::vector2dst const& index,
+                               htps::str const& name)
     {
         using ContainedType_t = BaseClass::ContainedType_t;
 
-        ContainedType_t inner_node(createSceneNode<TransformableSceneNode>(
-            name + "inner_node" + make_str(index)));
+        ContainedType_t inner_node{createSceneNode<TransformableSceneNode>(
+            make_str(name, "_inner_node", index))};
 
-        htps::sptr<T> result(
-            inner_node->createSceneNode<T>("inner_inner_node"));
+        htps::sptr<T> result{
+            inner_node->createSceneNode<T>("inner_inner_node")};
 
         updateTableSizeIfNecessary();
 

@@ -4,7 +4,7 @@
 #include <htypes/include/types.hpp>
 #include <menu_paged/include/menu_paged_option.hpp>
 #include <haf/include/scene/scenenode.hpp>
-#include <haf/include/scene_nodes/tablenode.hpp>
+#include <haf/include/scene_nodes/table_node.hpp>
 #include <haf/include/scene_nodes/scenenodetext.hpp>
 
 #include <htypes/include/connection.hpp>

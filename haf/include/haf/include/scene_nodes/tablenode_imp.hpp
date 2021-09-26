@@ -1,8 +1,9 @@
 #ifndef HAF_SCENE_TABLENODE_IMP_INCLUDE_HPP
 #define HAF_SCENE_TABLENODE_IMP_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
 #include <htypes/include/properties.hpp>
+#include <haf/include/haf_export.hpp>
+#include <haf/include/types/basic_types.hpp>
 #include <haf/include/scene/transformable_scenenode.hpp>
 #include <haf/include/scene_nodes/tablenode_properties.hpp>
 #include <hlog/include/hlog.hpp>
@@ -12,7 +13,8 @@ namespace haf::scene::nodes
 /**
  * @brief class Node with implementation details for a Table node.
  */
-class TableNodeImp : public TransformableSceneNode, public TableNodeProperties
+class HAF_API TableNodeImp : public TransformableSceneNode,
+                             public TableNodeProperties
 {
     using BaseClass = TransformableSceneNode;
 

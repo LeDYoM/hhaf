@@ -15,12 +15,12 @@ using namespace haf;
 using namespace haf::scene;
 using namespace haf::scene::nodes;
 
-namespace zoper
+namespace haf
 {
 
 void Console::onCreated()
 {
-    SceneNode::onCreated();
+    BaseClass::onCreated();
 
     auto a = createSceneNode<SceneNodeText>("scnText");
     a->prop<Font>().set(

@@ -14,7 +14,7 @@ using namespace haf;
 using namespace haf::scene;
 using namespace haf::scene::nodes;
 
-namespace zoper
+namespace haf
 {
 DisplayVarConsole::DisplayVarConsole(
     htps::rptr<haf::scene::SceneNode> const parent,

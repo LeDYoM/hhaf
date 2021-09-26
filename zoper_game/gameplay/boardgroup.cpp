@@ -7,7 +7,7 @@
 #include "boardutils.hpp"
 
 #include <haf/include/scene/scenenode.hpp>
-#include <haf/include/scene_nodes/tablenode.hpp>
+#include <haf/include/scene_nodes/table_node.hpp>
 #include <haf/include/scene_nodes/scene_node_size.hpp>
 #include <haf/include/scene_components/scenemetricsview.hpp>
 #include <haf/include/render/renderizable.hpp>
