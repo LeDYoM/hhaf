@@ -48,6 +48,11 @@ public:
         return *this;
     }
 
+    PropertyAnimationBuilder& continuous()
+    {
+        return times(-1);
+    }
+
     PropertyAnimationBuilder& actionWhenFinished(
         ActionWhenFinished::value_type value)
     {
