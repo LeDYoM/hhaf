@@ -33,6 +33,34 @@ public:
         return *this;
     }
 
+    /**
+     * @brief Set the Startvalue property of the animation to the current value
+     * for the property in the SceneNodeType object attached.
+     * @note Set the scene node object first.
+     * 
+     * @return PropertyAnimationBuilder& The current builder
+     */
+    PropertyAnimationBuilder& startValueIsCurrent()
+    {
+        data_.prop<StartValue<PropertyTag>>() =
+            data_.prop<SceneNodeType<SceneNodeT>>()()->template prop<PropertyTag>()();
+        return *this;
+    }
+
+    /**
+     * @brief Set the EndValue property of the animation to the current value
+     * for the property in the SceneNodeType object attached.
+     * @note Set the scene node object first.
+     * 
+     * @return PropertyAnimationBuilder& The current builder
+     */
+    PropertyAnimationBuilder& endValueIsCurrent()
+    {
+        data_.prop<EndValue<PropertyTag>>() =
+            data_.prop<SceneNodeType<SceneNodeT>>()()->template prop<PropertyTag>()();
+        return *this;
+    }
+
     PropertyAnimationBuilder& endValue(
         EndValue<PropertyTag>::value_type const& value)
     {

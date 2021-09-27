@@ -113,7 +113,7 @@ void Token::tileMoved(const BoardPosition_t& source,
     auto property_animation_builder{
         animation_component_
             ->make_property_animation_builder_from_attached<Position, Token>()};
-    property_animation_builder.startValue(prop<Position>()())
+    property_animation_builder.startValueIsCurrent()
         .endValue(destination)
         .duration(time::TimePoint_as_miliseconds(1000U));
     animation_component_->addAnimation(std::move(property_animation_builder));
