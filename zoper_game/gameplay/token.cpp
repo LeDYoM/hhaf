@@ -59,13 +59,15 @@ void Token::tileAdded(const vector2dst& position_)
     auto const AppearTokenTime = time::TimePoint_as_miliseconds(1000U);
     auto const nodeBox{node()->box().size() / 2.0F};
 
-    auto newTransformationPosition = addTransformation();
-    auto newTransformationScale    = addTransformation();
+    reserveExtraTransformations(2U);
+    auto const newTransformationPosition{addTransformation()};
+    auto const newTransformationScale{addTransformation()};
 
     {
         auto property_animation_builder{
-            animation_component_->make_property_animation_builder<Scale, Transformation>(
-                &(getTransformation(newTransformationScale)))};
+            animation_component_
+                ->make_property_animation_builder<Scale, Transformation>(
+                    &(getTransformation(newTransformationScale)))};
         property_animation_builder.startValue(Scale::Zeros)
             .endValue(Scale::Ones)
             .duration(AppearTokenTime);
@@ -75,8 +77,9 @@ void Token::tileAdded(const vector2dst& position_)
 
     {
         auto property_animation_builder{
-            animation_component_->make_property_animation_builder<Position, Transformation>(
-                &(getTransformation(newTransformationPosition)))};
+            animation_component_
+                ->make_property_animation_builder<Position, Transformation>(
+                    &(getTransformation(newTransformationPosition)))};
         property_animation_builder.startValue(nodeBox)
             .endValue(Position::value_type{0.0F, 0.0F})
             .duration(AppearTokenTime);
@@ -104,17 +107,14 @@ void Token::tileChanged(const vector2dst& position_,
 void Token::tileMoved(const vector2dst& source, const vector2dst& dest)
 {
     BaseClass::tileMoved(source, dest);
-/*
-    auto const MoveTokenTime = time::TimePoint_as_miliseconds(1000U);
-
     const auto destination(board2Scene(dest));
 
-    auto property_animation_builder =
-        animation_component_->make_property_animation_builder<Position>(*this);
-    property_animation_builder->startValue(prop<Position>()())
+    auto property_animation_builder{
+        animation_component_
+            ->make_property_animation_builder_from_attached<Position, Token>()};
+    property_animation_builder.startValue(prop<Position>()())
         .endValue(destination)
-        .duration(MoveTokenTime);
+        .duration(time::TimePoint_as_miliseconds(1000U));
     animation_component_->addAnimation(std::move(property_animation_builder));
-*/
 }
 }  // namespace zoper
