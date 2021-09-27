@@ -29,7 +29,7 @@ Matrix4x4 const& TransformableSceneNode::localTransform() const noexcept
 
 size_type TransformableSceneNode::addTransformation()
 {
-    extra_transformations_.resize(extra_transformations_.size() + 1U);
+    extra_transformations_.emplace_back();
     return extra_transformations_.size();
 }
 
@@ -83,7 +83,8 @@ bool TransformableSceneNode::updateTransformations(
     return localTransformationChanged;
 }
 
-Transformation& TransformableSceneNode::getTransformation(size_type const index) noexcept
+Transformation& TransformableSceneNode::getTransformation(
+    size_type const index) noexcept
 {
     LogAsserter::log_assert(index < numTransformations());
 
@@ -96,6 +97,12 @@ void TransformableSceneNode::updateGlobalTransformation(
     Matrix4x4 const& currentGlobalTransformation) noexcept
 {
     global_transform_ = currentGlobalTransformation * local_transform_;
+}
+
+void TransformableSceneNode::reserveExtraTransformations(
+    types::size_type const minimum_size)
+{
+    extra_transformations_.reserve(minimum_size);
 }
 
 }  // namespace haf::scene

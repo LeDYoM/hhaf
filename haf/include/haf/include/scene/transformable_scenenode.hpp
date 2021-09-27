@@ -93,6 +93,14 @@ public:
 
     bool updateLocalTransformationsIfNecessary() noexcept;
 
+    /**
+     * @brief Optimization helper function. Reserve memory (but not initialize)
+     * of the number of @b Transform that the object will store. This function
+     * is not necessary to be used, but decreases allocations.
+     * @param minimum_size Minimum number of transformations you will use.
+     */
+    void reserveExtraTransformations(types::size_type const minimum_size);
+
 private:
     void updateGlobalTransformation(Matrix4x4 const&) noexcept;
 

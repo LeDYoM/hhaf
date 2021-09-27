@@ -29,6 +29,7 @@ Player::Player(rptr<SceneNode> parent, str name) :
                   .pointCount(3U));
     node()->box.set(rectFromSize(board2Scene({1, 1})));
 
+    reserveExtraTransformations(4U);
     move_in_  = addTransformation();
     rotator_  = addTransformation();
     scalator_ = addTransformation();
@@ -77,9 +78,8 @@ void Player::movePlayer(Direction const& direction)
     LogAsserter::log_assert(direction.isValid(),
                             "Invalid direction passed to move");
     currentDirection = direction;
-    auto nPosition   = direction.applyToVector(boardPosition());
-    auto result      = getBoardManager()->moveTile(boardPosition(), nPosition);
-    if (result)
+    auto nPosition{currentDirection().applyToVector(boardPosition())};
+    if (getBoardManager()->moveTile(boardPosition(), nPosition))
     {
         ++movements_;
     }
@@ -92,7 +92,7 @@ void Player::tileMoved(vector2dst const& source, vector2dst const& dest)
     prop<Position>() = board2Scene(dest);
     DisplayLog::info("Player scene position: ", prop<Position>().get());
 
-    boardPosition.set(dest);
+    boardPosition = dest;
 }
 
 void Player::launchAnimation(vector2df const& toWhere)
