@@ -68,7 +68,7 @@ void Player::update()
     }
 }
 
-bool Player::canBeMoved(vector2dst const& dest_position) const
+bool Player::canBeMoved(BoardPosition_t const& dest_position) const
 {
     return TokenZones::pointInCenter(dest_position);
 }
@@ -85,7 +85,8 @@ void Player::movePlayer(Direction const& direction)
     }
 }
 
-void Player::tileMoved(vector2dst const& source, vector2dst const& dest)
+void Player::tileMoved(BoardPosition_t const& source,
+                       BoardPosition_t const& dest)
 {
     BaseClass::tileMoved(source, dest);
     DisplayLog::info("Player board position: ", dest);
@@ -128,7 +129,7 @@ void Player::launchAnimationBack(vector2df const& toWhere)
     animation_component_->addAnimation(std::move(property_animation_builder));
 }
 
-void Player::tileAdded(vector2dst const& position_)
+void Player::tileAdded(BoardPosition_t const& position_)
 {
     DisplayLog::info("TokenPlayer appeared at ", position_);
     node()->color.set(getColorForToken());
@@ -137,7 +138,7 @@ void Player::tileAdded(vector2dst const& position_)
     boardPosition.set(position_);
 }
 
-void Player::tileChanged(vector2dst const& position_,
+void Player::tileChanged(BoardPosition_t const& position_,
                          BoardTileData const oldValue,
                          BoardTileData const newValue)
 {

@@ -40,7 +40,7 @@ void Token::setBox(const Rectf32& box)
     node()->box = box;
 }
 
-bool Token::canBeMoved(htps::vector2dst const&) const
+bool Token::canBeMoved(BoardPosition_t const&) const
 {
     return true;
     //    return !TokenZones::pointInCenter(dest_position);
@@ -51,7 +51,7 @@ void Token::resetTileCounter()
     tile_counter_ = 0U;
 }
 
-void Token::tileAdded(const vector2dst& position_)
+void Token::tileAdded(const BoardPosition_t& position_)
 {
     BaseClass::tileAdded(position_);
     DisplayLog::info("Token ", name(), " appeared at ", position_);
@@ -88,14 +88,14 @@ void Token::tileAdded(const vector2dst& position_)
     }
 }
 
-void Token::tileRemoved(const vector2dst& position_)
+void Token::tileRemoved(const BoardPosition_t& position_)
 {
     BaseClass::tileRemoved(position_);
     DisplayLog::info("Deleting token ", name(), " from scene at position ",
                      position_);
 }
 
-void Token::tileChanged(const vector2dst& position_,
+void Token::tileChanged(const BoardPosition_t& position_,
                         const BoardTileData oldValue,
                         const BoardTileData newValue)
 {
@@ -104,10 +104,11 @@ void Token::tileChanged(const vector2dst& position_,
                      oldValue, " to ", newValue);
 }
 
-void Token::tileMoved(const vector2dst& source, const vector2dst& dest)
+void Token::tileMoved(const BoardPosition_t& source,
+                      const BoardPosition_t& dest)
 {
     BaseClass::tileMoved(source, dest);
-    const auto destination(board2Scene(dest));
+    auto const destination{board2Scene(dest)};
 
     auto property_animation_builder{
         animation_component_

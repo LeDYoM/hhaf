@@ -17,25 +17,26 @@ class Player : public GameBaseTile
 
 public:
     using BoardTileData = GameBaseTile::BoardTileData;
+   using BoardPosition_t = GameBaseTile::BoardPosition_t;
  
     Player(htps::rptr<haf::scene::SceneNode> parent, htps::str name);
     ~Player() override;
 
-    htps::PropertyState<htps::vector2dst> boardPosition;
+    htps::PropertyState<BoardPosition_t> boardPosition;
     htps::PropertyState<Direction> currentDirection;
 
-    bool canBeMoved(htps::vector2dst const& dest_position) const;
+    bool canBeMoved(BoardPosition_t const& dest_position) const;
 
     void movePlayer(Direction const& direction);
     void launchAnimation(htps::vector2df const& toWhere);
 
-    void tileAdded(htps::vector2dst const& position) override;
-    void tileChanged(htps::vector2dst const& position,
+    void tileAdded(BoardPosition_t const& position) override;
+    void tileChanged(BoardPosition_t const& position,
                      BoardTileData const oldValue,
                      BoardTileData const newValue) override;
 
-    void tileMoved(htps::vector2dst const& source,
-                   htps::vector2dst const& dest) override;
+    void tileMoved(BoardPosition_t const& source,
+                   BoardPosition_t const& dest) override;
 
     void update() override;
 

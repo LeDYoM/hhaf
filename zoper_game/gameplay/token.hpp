@@ -19,9 +19,9 @@ namespace zoper
 class Token : public GameBaseTile
 {
     using BaseClass = GameBaseTile;
-
 public:
     using BoardTileData = GameBaseTile::BoardTileData;
+    using BoardPosition_t = BaseClass::BoardPosition_t;
 
     Token(htps::rptr<haf::scene::SceneNode> parent, htps::str name);
     ~Token() override;
@@ -30,14 +30,14 @@ public:
 
     static void resetTileCounter();
 
-    bool canBeMoved(htps::vector2dst const& dest_position) const;
-    void tileAdded(htps::vector2dst const& position) override;
-    void tileRemoved(htps::vector2dst const& position) override;
-    void tileChanged(htps::vector2dst const& position,
+    bool canBeMoved(BoardPosition_t const& dest_position) const;
+    void tileAdded(BoardPosition_t const& position) override;
+    void tileRemoved(BoardPosition_t const& position) override;
+    void tileChanged(BoardPosition_t const& position,
                      BoardTileData const oldValue,
                      BoardTileData const newValue) override;
-    void tileMoved(htps::vector2dst const& source,
-                   htps::vector2dst const& dest) override;
+    void tileMoved(BoardPosition_t const& source,
+                   BoardPosition_t const& dest) override;
 
 private:
     static htps::u32 tile_counter_;

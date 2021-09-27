@@ -33,4 +33,9 @@ void Console::onCreated()
     //    a->prop<Scale>().set({1, 1});
 }
 
+void Console::setText(str const& text)
+{
+    (void)(text);
+}
+
 }  // namespace zoper

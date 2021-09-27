@@ -37,19 +37,20 @@ vector2df GameBaseTile::board2Scene(vector2dst const& bPosition) const
     return getBoardGroup()->board2Scene(bPosition);
 }
 
-void GameBaseTile::tileAdded(vector2dst const& position)
+void GameBaseTile::tileAdded(BoardPosition_t const& position)
 {
     TileBase::tileAdded(position);
     is_in_center = TokenZones::pointInCenter(position);
 }
 
-void GameBaseTile::tileMoved(vector2dst const& source, vector2dst const& dest)
+void GameBaseTile::tileMoved(BoardPosition_t const& source,
+                             BoardPosition_t const& dest)
 {
     TileBase::tileMoved(source, dest);
     is_in_center = TokenZones::pointInCenter(dest);
 }
 
-void GameBaseTile::tileChanged(vector2dst const& /*position */,
+void GameBaseTile::tileChanged(BoardPosition_t const& /*position */,
                                BoardTileData const /* oldValue */,
                                BoardTileData const /* newValue */)
 {

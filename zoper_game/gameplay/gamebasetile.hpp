@@ -25,20 +25,21 @@ protected:
     using TileBase = haf::board::ITile;
 
 public:
+    using BoardPosition_t = TileBase::BoardPosition_t;
     using BoardTileData = haf::board::ITile::BoardTileData;
 
     GameBaseTile(htps::rptr<haf::scene::SceneNode> const parent,
                  htps::str name);
     ~GameBaseTile() override;
 
-    void tileChanged(htps::vector2dst const& position,
+    void tileChanged(BoardPosition_t const& position,
                      BoardTileData const oldValue,
                      BoardTileData const newValue) override;
 
-    void tileAdded(htps::vector2dst const& position) override;
+    void tileAdded(BoardPosition_t const& position) override;
 
-    void tileMoved(htps::vector2dst const& source,
-                   htps::vector2dst const& dest) override;
+    void tileMoved(BoardPosition_t const& source,
+                   BoardPosition_t const& dest) override;
 
     bool isInCenter() const noexcept;
 
