@@ -320,14 +320,13 @@ const htps::sptr<Player> BoardGroup::player() const noexcept
 void BoardGroup::launchPlayer()
 {
     haf::DisplayLog::info("Launching player");
-    const Direction loopDirection{player_->currentDirection()};
-    const vector2dst loopPosition{player_->boardPosition()};
     const BoardTileData tokenType{player_->value()};
     ScoreIncrementer score_incrementer{level_properties_};
     vector2df lastTokenPosition{};
 
     BoardUtils::for_each_coordinate_in_rect(
-        loopPosition, loopDirection, boardManager()->size(),
+        player_->boardPosition(), player_->currentDirection(),
+        boardManager()->size(),
         [this, tokenType, &score_incrementer, &lastTokenPosition](
             const vector2dst& loopPosition, const Direction&) {
             bool result{true};
