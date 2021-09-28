@@ -12,7 +12,7 @@
 #include <haf/include/resources/resourceretriever.hpp>
 #include <haf/include/shareddata/shareddata.hpp>
 #include <haf/include/shareddata/shareddataviewer.hpp>
-#include <haf/include/input/inputcomponent.hpp>
+#include <haf/include/input/input_component.hpp>
 #include <haf/include/component/component_container.hpp>
 
 using namespace htps;

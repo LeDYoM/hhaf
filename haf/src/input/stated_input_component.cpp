@@ -1,4 +1,4 @@
-#include <haf/include/input/inputcomponent.hpp>
+#include <haf/include/input/stated_input_component.hpp>
 #include "inputsystem.hpp"
 
 #include <hlog/include/hlog.hpp>
@@ -8,10 +8,10 @@
 namespace haf::input
 {
 
-InputComponent::InputComponent()  = default;
-InputComponent::~InputComponent() = default;
+StatedInputComponent::StatedInputComponent()  = default;
+StatedInputComponent::~StatedInputComponent() = default;
 
-void InputComponent::update()
+void StatedInputComponent::update()
 {
     if (attachedNode())
     {
