@@ -5,8 +5,10 @@
 
 #include <htypes/include/str.hpp>
 
+extern template htps::basic_str<char>;
+
 namespace haf
 {
-using str = htps::str;
+using str = htps::basic_str<char>;
 }  // namespace haf::types
 #endif

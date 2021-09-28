@@ -10,7 +10,8 @@ using str = basic_str<char>;
 template <typename... Args>
 constexpr str make_str(Args&&... args)
 {
-    return make_basic_str<typename str::value_type>(std::forward<Args>(args)...);
+    return make_basic_str<typename str::value_type>(
+        std::forward<Args>(args)...);
 }
 
 static_assert(std::is_move_constructible_v<str>, "str must be movable");
