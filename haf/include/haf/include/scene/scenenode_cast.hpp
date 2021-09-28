@@ -21,7 +21,7 @@ const htps::rptr<const T> sceneNodeCast(
 }
 
 template <typename T>
-htps::sptr<T> sceneNodeCast(htps::sptr<SceneNode> const scene_node) noexcept
+htps::sptr<T> sceneNodeCast(htps::sptr<SceneNode> scene_node) noexcept
 {
     return std::dynamic_pointer_cast<T>(scene_node);
 }

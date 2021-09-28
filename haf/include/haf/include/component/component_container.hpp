@@ -27,7 +27,7 @@ public:
      * @note It is not virtual because the base class is private
      */
     ~ComponentContainer();
-    
+
     /**
      * @brief Create or get a pointer to a component type. This method
      * could create an instance of the component and add it to the component
@@ -60,6 +60,19 @@ public:
     {
         auto cot{componentOfType(type_of<T>())};
         return cot ? std::dynamic_pointer_cast<T>(cot) : nullptr;
+    }
+
+    /**
+     * @brief Retrieve the attached instance of a component if it exists.
+     * 
+     * @tparam T Type of the component
+     * @param element Pointer where the output wil be stored. It will be nullptr
+     * if the component does not exist.
+     */
+    template <typename T>
+    void componentOfType(types::sptr<T>& element) const
+    {
+        element = componentOfType<T>();
     }
 
     /**

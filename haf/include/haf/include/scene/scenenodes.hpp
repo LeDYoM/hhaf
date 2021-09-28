@@ -5,6 +5,8 @@
 #include <htypes/include/str.hpp>
 #include <htypes/include/vector.hpp>
 
+#include <haf/include/scene/scenenode_cast.hpp>
+
 namespace haf::scene
 {
 class SceneNode;
@@ -77,7 +79,14 @@ public:
      * @return htps::sptr<SceneNode> Pointer to the node with the
      * specified name or nullptr if not found.
      */
-    htps::sptr<SceneNode> getByName(htps::str const& name) const;
+    htps::sptr<SceneNode> getByName(htps::str const& name);
+
+    template <typename T>
+    htps::sptr<T> getByNameAs(htps::str const& name)
+    {
+        auto node{getByName(name)};
+        return ((node != nullptr) ? sceneNodeCast<T>(node) : nullptr);
+    }
 
     htps::sptr<SceneNode> getShared(htps::rptr<SceneNode> node) const;
 

@@ -24,6 +24,7 @@ class Player;
 class BoardGroup : public haf::scene::nodes::TableNode<BoardTileSceneNode>,
                    public haf::board::IBoardManagerActuator
 {
+
 private:
     using BaseClass = haf::scene::nodes::TableNode<BoardTileSceneNode>;
     using BaseClass::prop;
@@ -31,6 +32,7 @@ private:
 public:
     using BoardTileData = haf::board::IBoardManagerActuator::BoardTileData;
     using BaseClass::BaseClass;
+    constexpr static char const StaticName[] = "BoardGroup";
 
     ~BoardGroup() override;
 

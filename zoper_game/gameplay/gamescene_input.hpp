@@ -16,14 +16,15 @@ public:
     GameSceneInput();
     ~GameSceneInput() override;
 
-    void configure(
-        htps::sptr<haf::scene::StatesControllerComponent<GameSceneStates>>
-            sceneStates,
-        htps::sptr<BoardGroup> boardGroup);
-
 private:
     void onKeyPressed(haf::input::Key const&) override;
     void onKeyReleased(haf::input::Key const&) override;
+
+    void onKeyPressedPlaying(haf::input::Key const&);
+    void onKeyPressedPause(haf::input::Key const&);
+    void onKeyPressedGameOver(haf::input::Key const&);
+
+    void onAttached() override;
 
     htps::sptr<haf::scene::StatesControllerComponent<GameSceneStates>>
         scene_states_;

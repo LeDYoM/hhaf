@@ -18,7 +18,7 @@ void SceneNodes::addSceneNode(sptr<SceneNode> node)
     node->onCreated();
 }
 
-sptr<SceneNode> SceneNodes::getByName(const str& name) const
+sptr<SceneNode> SceneNodes::getByName(const str& name)
 {
     auto const iterator{sceneNodes().find_if(
         [&name](auto const& node) { return node->name() == name; })};

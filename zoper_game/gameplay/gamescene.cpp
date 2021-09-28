@@ -150,8 +150,7 @@ void GameScene::onCreated()
     LogAsserter::log_assert(p_->token_position_generator_ != nullptr,
                             "Cannot create RandomNumbersComponent");
 
-    auto game_scene_input = components().component<GameSceneInput>();
-    game_scene_input->configure(scene_states_, board_group_);
+    auto game_scene_input{components().component<GameSceneInput>()};
 
     p_->key_mapping_ = muptr<KeyMapping>();
     p_->key_mapping_->reset();
