@@ -141,7 +141,7 @@ class StatesControllerComponent : public StatesControllerRaw<T>,
                                   public component::IComponent
 {
 public:
-    ~StatesControllerComponent() override {}
+    ~StatesControllerComponent() override = default;
 
     void update() override { StatesControllerRaw<T>::update(); }
 };

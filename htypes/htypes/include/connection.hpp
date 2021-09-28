@@ -1,5 +1,5 @@
-#ifndef MTPS_CONNECTION_INCLUDE_HPP
-#define MTPS_CONNECTION_INCLUDE_HPP
+#ifndef HTPS_CONNECTION_INCLUDE_HPP
+#define HTPS_CONNECTION_INCLUDE_HPP
 
 #include "function.hpp"
 #include "vector.hpp"
@@ -32,7 +32,7 @@ public:
      * @brief Create an emitter with one receiver attached
      */
     constexpr emitter_t(emitter_callback_t f) : receivers_{std::move(f)} {}
-    constexpr emitter_t(const emitter_t&) = default;
+    constexpr emitter_t(emitter_t const&) = default;
     constexpr emitter_t& operator=(const emitter_t&) = default;
     constexpr emitter_t(emitter_t&&) noexcept        = default;
     constexpr emitter_t& operator=(emitter_t&&) noexcept = default;
@@ -61,7 +61,7 @@ public:
 
     constexpr bool disconnect(emitter_callback_t const& f) noexcept
     {
-        auto const old_size = receivers_.size();
+        auto const old_size{receivers_.size()};
 
         (void)(receivers_.erase_if(
             [&f](auto const& element) { return f.equals(element); }));

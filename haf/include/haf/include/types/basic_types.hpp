@@ -85,4 +85,5 @@ PImplPointer<T> make_pimplp(Args&&... args)
 }
 
 }  // namespace haf::types
+
 #endif

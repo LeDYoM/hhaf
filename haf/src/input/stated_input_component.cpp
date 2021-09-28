@@ -8,25 +8,36 @@
 namespace haf::input
 {
 
-StatedInputComponent::StatedInputComponent()  = default;
+struct StatedInputComponent::StatedInputComponentPrivate
+{
+    vector<htps::pair<InputInState, InputInState>> data_;
+};
+
+StatedInputComponent::StatedInputComponent() :
+    p_{htps::make_pimplp<StatedInputComponentPrivate>()}
+{}
+
 StatedInputComponent::~StatedInputComponent() = default;
 
-void StatedInputComponent::update()
+void StatedInputComponent::addStateKeyInputFunction(
+    types::u32 const value,
+    InputInState key_pressed_function,
+    InputInState key_released_function)
 {
-    if (attachedNode())
+    p_->data_.reserve(value + 1U);
+    while (p_->data_.size() < (value + 1U))
     {
-        const sys::InputSystem& input_system{
-            sys::getSystem<sys::InputSystem>(attachedNode())};
-
-        for (const auto& pressedKey : input_system.pressedKeys())
-        {
-            KeyPressed(pressedKey);
-        }
-
-        for (const auto& releasedKey : input_system.releasedKeys())
-        {
-            KeyReleased(releasedKey);
-        }
+        p_->data_.emplace_back();
     }
+    p_->data_[value] = {std::move(key_pressed_function),
+                        std::move(key_released_function)};
 }
+
+void StatedInputComponent::onKeyPressed(Key const&)
+{
+    
+}
+
+void StatedInputComponent::onKeyReleased(Key const&)
+{}
 }  // namespace haf::input
