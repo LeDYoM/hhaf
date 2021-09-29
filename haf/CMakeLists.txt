@@ -35,7 +35,7 @@ set(sources
   ${src_dir}/input/inputsystem.cpp
   ${src_dir}/input/inputsystem.hpp
   ${src_dir}/input/key_manager.cpp
-  ${src_dir}/input/stated_input_component.cpp
+  ${src_dir}/input/stated_input_component_base.cpp
   ${src_dir}/input/virtual_input_component.cpp
 
   # Random
@@ -193,6 +193,7 @@ set(headers
   ${inc_dir}/input/inputdriver_wrapper.hpp
   ${inc_dir}/input/key_manager.hpp
   ${inc_dir}/input/key.hpp
+  ${inc_dir}/input/stated_input_component_base.hpp
   ${inc_dir}/input/stated_input_component.hpp
   ${inc_dir}/input/virtual_input_component.hpp
 

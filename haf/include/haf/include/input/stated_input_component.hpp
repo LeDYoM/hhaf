@@ -2,34 +2,36 @@
 #define HAF_STATED_INPUT_COMPONENT_INCLUDE_HPP
 
 #include <haf/include/types/basic_types.hpp>
-#include <haf/include/types/vector.hpp>
-#include <haf/include/types/function.hpp>
-#include <haf/include/input/virtual_input_component.hpp>
-#include <haf/include/input/key.hpp>
-#include <htypes/include/p_impl_pointer.hpp>
+#include <haf/include/input/stated_input_component_base.hpp>
+#include <haf/include/component/component_container.hpp>
+#include <haf/include/scene_components/states_controller_component.hpp>
+#include <hlog/include/hlog.hpp>
 
 namespace haf::input
 {
-class StatedInputComponent : public VirtualInputComponent
+template <typename T>
+class StatedInputComponent : public StatedInputComponentBase
 {
-    using BaseClass = VirtualInputComponent;
+    using BaseClass             = StatedInputComponentBase;
+    using StatesController_t    = haf::scene::StatesControllerComponent<T>;
+    using StatesControllerPtr_t = types::sptr<StatesController_t>;
 
 public:
-    using InputInState = function<void()>;
+    void onKeyPressed(Key const& key) override
+    {
+        auto states_controller{
+            attachedNode().components().componentOfType<StatesController_t>()};
 
-    StatedInputComponent();
-    ~StatedInputComponent() override;
+        LogAsserter::log_assert(
+            states_controller != nullptr,
+            "StatedInputComponent requires a state component sibling");
 
-    void onKeyPressed(Key const&) override;
-    void onKeyReleased(Key const&) override;
+        setCurrentState(
+            static_cast<types::u32>(states_controller->currentState()));
+        BaseClass::onKeyPressed(key);
+    }
 
-    void addStateKeyInputFunction(types::u32 const value,
-                                  InputInState key_pressed_function,
-                                  InputInState key_released_function);
-
-private:
-    struct StatedInputComponentPrivate;
-    htps::PImplPointer<StatedInputComponentPrivate> p_;
+    void onKeyReleased(Key const&) override {}
 };
 }  // namespace haf::input
 
