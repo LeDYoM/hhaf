@@ -6,6 +6,7 @@
 #include <haf/include/component/component_container.hpp>
 #include <haf/include/scene/scenenode.hpp>
 #include <haf/include/scene_components/states_controller_component.hpp>
+#include <htypes/include/connection.hpp>
 #include <hlog/include/hlog.hpp>
 
 namespace haf::input
@@ -37,6 +38,12 @@ public:
         LogAsserter::log_assert(
             states_controller != nullptr,
             "StatedInputComponent requires a state component sibling");
+
+        states_controller->StateStarted.connect([this](auto const state)
+        {
+            setProcessingState(state);
+        });
+
         return states_controller;
     }
 
