@@ -34,26 +34,27 @@ void StatedInputComponentBase::addStateKeyInputFunction(
                         std::move(key_released_function)};
 }
 
-void StatedInputComponentBase::setCurrentState(types::u32 const current_state)
+void StatedInputComponentBase::setProcessingState(
+    types::u32 const current_state)
 {
     p_->current_state_ = current_state;
 }
 
-void StatedInputComponentBase::onKeyPressed(Key const&)
+void StatedInputComponentBase::onKeyPressed(Key const& key)
 {
-    auto& functions{p_->data_[p_->current_state_]};
+    auto const& functions{p_->data_[p_->current_state_]};
     if (functions.first)
     {
-        functions.first();
+        functions.first(key);
     }
 }
 
-void StatedInputComponentBase::onKeyReleased(Key const&)
+void StatedInputComponentBase::onKeyReleased(Key const& key)
 {
-    auto& functions{p_->data_[p_->current_state_]};
+    auto const& functions{p_->data_[p_->current_state_]};
     if (functions.second)
     {
-        functions.second();
+        functions.second(key);
     }
 }
 }  // namespace haf::input

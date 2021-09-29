@@ -11,16 +11,15 @@ namespace zoper
 {
 class BoardGroup;
 
-class GameSceneInput final : public haf::input::VirtualInputComponent
+class GameSceneInput final
+    : public haf::input::StatedInputComponent<GameSceneStates>
 {
+    using BaseClass = haf::input::StatedInputComponent<GameSceneStates>;
 public:
     GameSceneInput();
     ~GameSceneInput() override;
 
 private:
-    void onKeyPressed(haf::input::Key const&) override;
-    void onKeyReleased(haf::input::Key const&) override;
-
     void onKeyPressedPlaying(haf::input::Key const&);
     void onKeyPressedPause(haf::input::Key const&);
     void onKeyPressedGameOver(haf::input::Key const&);

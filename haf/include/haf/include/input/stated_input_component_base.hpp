@@ -15,7 +15,7 @@ class StatedInputComponentBase : public VirtualInputComponent
     using BaseClass = VirtualInputComponent;
 
 public:
-    using InputInState = function<void()>;
+    using InputInState = function<void(Key const&)>;
 
     StatedInputComponentBase();
     ~StatedInputComponentBase() override;
@@ -23,12 +23,12 @@ public:
     void onKeyPressed(Key const&) override;
     void onKeyReleased(Key const&) override;
 
+protected:
     void addStateKeyInputFunction(types::u32 const value,
                                   InputInState key_pressed_function,
                                   InputInState key_released_function);
 
-protected:
-    void setCurrentState(types::u32 const current_state);
+    void setProcessingState(types::u32 const current_state);
 private:
     struct StatedInputComponentBasePrivate;
     htps::PImplPointer<StatedInputComponentBasePrivate> p_;

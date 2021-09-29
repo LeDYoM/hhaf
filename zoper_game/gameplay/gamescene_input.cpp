@@ -19,7 +19,9 @@ GameSceneInput::~GameSceneInput() = default;
 
 void GameSceneInput::onAttached()
 {
-    // Get all necessary external dependencies
+    BaseClass::onAttached();
+
+   // Get all necessary external dependencies
     attachedNodeAs<GameScene>()->components().componentOfType(scene_states_);
 
     LogAsserter::log_assert(scene_states_ != nullptr,
@@ -30,36 +32,17 @@ void GameSceneInput::onAttached()
         attachedNode()->getByNameAs<BoardGroup>(BoardGroup::StaticName);
     LogAsserter::log_assert(board_group_ != nullptr,
                             "GameSceneInput needs a parent with a board group");
+
+    addStateKeyInputFunction(
+        GameSceneStates::Playing,
+        htps::make_function(this, &GameSceneInput::onKeyPressedPlaying), {});
+    addStateKeyInputFunction(
+        GameSceneStates::Pause,
+        htps::make_function(this, &GameSceneInput::onKeyPressedPause), {});
+    addStateKeyInputFunction(
+        GameSceneStates::GameOver,
+        htps::make_function(this, &GameSceneInput::onKeyPressedGameOver), {});
 }
-
-void GameSceneInput::onKeyPressed(Key const& key)
-{
-    DisplayLog::info("Key pressed in GameScene");
-
-    switch (scene_states_->currentState())
-    {
-        case GameSceneStates::Playing:
-        {
-            onKeyPressedPlaying(key);
-        }
-        break;
-
-        case GameSceneStates::GameOver:
-        {
-            onKeyPressedGameOver(key);
-        }
-        break;
-
-        case GameSceneStates::Pause:
-        {
-            onKeyPressedPause(key);
-        }
-        break;
-    }
-}
-
-void GameSceneInput::onKeyReleased(Key const&)
-{}
 
 void GameSceneInput::onKeyPressedPlaying(haf::input::Key const& key)
 {
