@@ -24,9 +24,8 @@ public:
      */
     static void for_each_coordinate(
         htps::vector2dst startPosition,
-        const Direction& direction,
-        htps::function<bool(const htps::vector2dst&, const Direction&)>
-            updatePredicate);
+        Direction const& direction,
+        htps::function<bool(const htps::vector2dst&)> updatePredicate);
 
     /**
      * @brief For a rectangle, given a start point and a direction, the update
@@ -40,11 +39,10 @@ public:
      * @param updatePredicate Function to call for each position
      */
     static void for_each_coordinate_in_rect(
-        const htps::vector2dst& startPosition,
-        const Direction& direction,
-        const htps::vector2dst& board_size,
-        htps::function<bool(const htps::vector2dst&, const Direction&)>
-            updatePredicate);
+        htps::vector2dst const& startPosition,
+        Direction const& direction,
+        htps::vector2dst const& board_size,
+        htps::function<bool(const htps::vector2dst&)> updatePredicate);
 };
 }  // namespace zoper
 

@@ -21,16 +21,15 @@ void PlayerLauncher::operator()(
     htps::function<void(htps::vector2df)> createScoreIncrementPoints)
 {
     haf::DisplayLog::info("Launching player");
-    auto const loopDirection{board_group.player()->currentDirection()};
-    auto const loopPosition{board_group.player()->boardPosition()};
-    auto const tokenType{board_group.player()->value()};
     vector2df lastTokenPosition{};
 
     BoardUtils::for_each_coordinate_in_rect(
-        loopPosition, loopDirection, board_group.boardManager()->size(),
-        [&board_group, tokenType, &score_incrementer, &lastTokenPosition,
-         &createScoreIncrementPoints](const vector2dst& loopPosition,
-                                      const Direction&) {
+        board_group.player()->boardPosition(),
+        board_group.player()->currentDirection(),
+        board_group.boardManager()->size(),
+        [&board_group, tokenType = board_group.player()->value(),
+         &score_incrementer, &lastTokenPosition,
+         &createScoreIncrementPoints](const vector2dst& loopPosition) {
             bool result{true};
             bool found{false};
 

@@ -77,10 +77,6 @@ public:
     htps::vector2df board2Scene(const htps::vector2dst& bPosition) const;
     htps::vector2df tileSize() const;
 
-    void launchPlayer();
-
-    htps::emitter<htps::vector2dst const> token_hit;
-
 private:
     htps::sptr<Player> player_;
     htps::sptr<haf::scene::SceneNode> tokens_scene_node;
