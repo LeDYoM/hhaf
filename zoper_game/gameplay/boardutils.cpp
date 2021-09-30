@@ -1,4 +1,5 @@
 #include "boardutils.hpp"
+#include <hlog/include/hlog.hpp>
 
 using namespace haf;
 using namespace htps;

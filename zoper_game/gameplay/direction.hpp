@@ -1,18 +1,16 @@
 #ifndef ZOPER_DIRECTION_INCLUDE_HPP
 #define ZOPER_DIRECTION_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
 #include <htypes/include/vector2d.hpp>
-
-#include <hlog/include/hlog.hpp>
+#include <haf/include/types/basic_types.hpp>
 
 namespace zoper
 {
-
 class Direction
 {
+    using DirectionDataUnderlying = haf::types::u8;
 public:
-    enum class DirectionData : htps::u8
+    enum class DirectionData : DirectionDataUnderlying
     {
         Left    = 0U,
         Right   = 1U,
@@ -20,8 +18,8 @@ public:
         Down    = 3U,
         Invalid = 4U,
     };
-    static constexpr htps::u8 Total =
-        static_cast<htps::u8>(DirectionData::Invalid);
+    static constexpr DirectionDataUnderlying Total =
+        static_cast<DirectionDataUnderlying>(DirectionData::Invalid);
 
     constexpr Direction(DirectionData const d) noexcept : data{d} {}
     constexpr Direction() noexcept : Direction{DirectionData::Up} {}
@@ -55,77 +53,17 @@ public:
         return data == DirectionData::Up || data == DirectionData::Down;
     }
 
-    constexpr Direction negate() const noexcept
-    {
-        switch (data)
-        {
-            case DirectionData::Left:
-                return DirectionData::Right;
-            case DirectionData::Right:
-                return DirectionData::Left;
-            case DirectionData::Up:
-                return DirectionData::Down;
-            case DirectionData::Down:
-                return DirectionData::Up;
-            case DirectionData::Invalid:
-            default:
-                haf::DisplayLog::error("Invalid direction. Cannot convert");
-        }
-        return DirectionData::Invalid;
-    }
+    Direction negate() const noexcept;
 
-    constexpr htps::vector2dst applyToVector(
-        const htps::vector2dst& v,
-        const htps::u32 scale = 1U) const noexcept
-    {
-        const htps::vector2ds32 dv{directionVector(scale)};
-        return {v.x + dv.x, v.y + dv.y};
-    }
+    htps::vector2dst applyToVector(htps::vector2dst const& v,
+                                   htps::u32 const scale = 1U) const noexcept;
 
-    constexpr htps::vector2ds32 directionVector(
-        const htps::s32 scale = 1) const noexcept
-    {
-        switch (data)
-        {
-            case DirectionData::Left:
-                return {-scale, 0};
-            case DirectionData::Right:
-                return {scale, 0};
-            case DirectionData::Up:
-                return {0, -scale};
-            case DirectionData::Down:
-                return {0, scale};
-            case DirectionData::Invalid:
-            default:
-                haf::DisplayLog::error("Invalid direction. Cannot convert");
-        }
-        return {};
-    }
+    htps::vector2ds32 directionVector(const htps::s32 scale = 1) const noexcept;
 
-    constexpr htps::vector2ds32 negatedDirectionVector(
-        const htps::u32 scale = 1U) const noexcept
-    {
-        return directionVector(scale) * -1;
-    }
+    htps::vector2ds32 negatedDirectionVector(
+        const htps::u32 scale = 1U) const noexcept;
 
-    constexpr htps::f32 angle() const noexcept
-    {
-        switch (data)
-        {
-            case DirectionData::Left:
-                return 180.F;
-            case DirectionData::Right:
-                return 0.F;
-            case DirectionData::Up:
-                return 270.F;
-            case DirectionData::Down:
-                return 90.F;
-            case DirectionData::Invalid:
-            default:
-                haf::DisplayLog::error("Invalid direction. Cannot convert");
-        }
-        return 0.f;
-    }
+    htps::f32 angle() const noexcept;
 
 private:
     DirectionData data;
