@@ -11,6 +11,11 @@
 
 namespace haf::input
 {
+/**
+ * @brief Component to control Input querties and dispatch them according to
+ * the current state.
+ * @tparam T A states enum
+ */
 template <typename T>
 class StatedInputComponent : public StatedInputComponentBase
 {
@@ -30,8 +35,9 @@ public:
                                             std::move(key_released_function));
     }
 
-    StatesControllerPtr_t statesController()
+    void onAttached()
     {
+        BaseClass::onAttached();
         auto states_controller{
             attachedNode()->components().componentOfType<StatesController_t>()};
 
@@ -43,22 +49,9 @@ public:
         {
             setProcessingState(state);
         });
-
-        return states_controller;
     }
 
-    void onKeyPressed(Key const& key) override
-    {
-        setProcessingState(statesController()->currentState());
-        BaseClass::onKeyPressed(key);
-    }
-
-    void onKeyReleased(Key const& key) override 
-    {
-        setProcessingState(statesController()->currentState());
-        BaseClass::onKeyReleased(key);
-    }
-
+protected:
     void setProcessingState(T const& value)
     {
         BaseClass::setProcessingState(static_cast<types::u32>(value));
