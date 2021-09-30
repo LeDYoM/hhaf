@@ -14,31 +14,33 @@ class Direction
 public:
     enum class DirectionData : htps::u8
     {
-        Left    = 0,
-        Right   = 1,
-        Up      = 2,
-        Down    = 3,
-        Invalid = 4
+        Left    = 0U,
+        Right   = 1U,
+        Up      = 2U,
+        Down    = 3U,
+        Invalid = 4U,
     };
     static constexpr htps::u8 Total =
         static_cast<htps::u8>(DirectionData::Invalid);
 
-    constexpr Direction(DirectionData d) noexcept : data{d} {}
+    constexpr Direction(DirectionData const d) noexcept : data{d} {}
     constexpr Direction() noexcept : Direction{DirectionData::Up} {}
-    constexpr Direction(htps::u8 d) noexcept :
-        Direction{static_cast<DirectionData>(d)}
-    {}
-    constexpr Direction(const Direction& other) noexcept = default;
-    constexpr Direction& operator=(const Direction& other) noexcept = default;
+    constexpr Direction(Direction const& other) noexcept = default;
+    constexpr Direction& operator=(Direction const& other) noexcept = default;
     constexpr Direction(Direction&& other) noexcept                 = default;
     constexpr Direction& operator=(Direction&& other) noexcept = default;
 
-    constexpr operator htps::u8() const noexcept
+    constexpr DirectionData value() const noexcept { return data; }
+    constexpr bool operator==(Direction const& rhs) const noexcept
     {
-        return static_cast<htps::u8>(data);
+        return data == rhs.data;
     }
 
-    constexpr DirectionData value() const noexcept { return data; }
+    constexpr bool operator!=(Direction const& rhs) const noexcept
+    {
+        return data != rhs.data;
+    }
+
     constexpr bool isValid() const noexcept
     {
         return data < DirectionData::Invalid;

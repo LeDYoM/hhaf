@@ -21,16 +21,16 @@ void KeyMapping::reset()
 
 input::Key KeyMapping::getKey(const Direction d) const noexcept
 {
-    return keys_[d];
+    return keys_[static_cast<size_type>(d.value())];
 }
 
 Direction KeyMapping::getDirectionFromKey(const input::Key key) const noexcept
 {
-    for (u8 i = 0U; i < Direction::Total; ++i)
+    for (fast_u8 i{0U}; i < Direction::Total; ++i)
     {
         if (keys_[i] == key)
         {
-            return static_cast<Direction>(i);
+            return static_cast<Direction::DirectionData>(i);
         }
     }
     return Direction::DirectionData::Invalid;
