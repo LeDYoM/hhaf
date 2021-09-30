@@ -15,6 +15,19 @@ using namespace haf::scene::nodes;
 namespace zoper
 {
 
+class TileHitChecker
+{
+public:
+    explicit TileHitChecker(BoardGroup& board_group,
+                            haf::board::ITile::BoardTileData token_type) :
+        board_group_{board_group}, tokenType{token_type}
+    {}
+
+private:
+    BoardGroup& board_group_;
+    haf::board::ITile::BoardTileData tokenType;
+};
+
 void PlayerLauncher::operator()(
     ScoreIncrementer& score_incrementer,
     BoardGroup& board_group,
