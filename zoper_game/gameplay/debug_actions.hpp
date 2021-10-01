@@ -15,7 +15,7 @@ class DebugActions : public haf::input::VirtualInputComponent
 private:
     using BaseClass = haf::component::IComponent;
 
-    void onKeyPressed(const haf::input::Key& key) override;
+    void onKeyPressed(haf::input::Key const& key) override;
 };
 }  // namespace zoper
 

@@ -13,7 +13,7 @@ namespace zoper
 using namespace haf::scene;
 using namespace haf::input;
 
-void DebugActions::onKeyPressed(const Key& key)
+void DebugActions::onKeyPressed(Key const& key)
 {
     switch (key)
     {
