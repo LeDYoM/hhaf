@@ -18,25 +18,17 @@ void DebugActions::onKeyPressed(const Key& key)
     switch (key)
     {
         case Key::Num1:
-            gameScene()->levelProperties()->increaseScore(100);
+            attachedNodeAs<GameScene>()->levelProperties()->increaseScore(100U);
             break;
         case Key::Q:
-            gameScene()->goGameOver();
+            attachedNodeAs<GameScene>()->goGameOver();
             break;
         case Key::A:
-            gameScene()->levelProperties()->nextLevel();
+            attachedNodeAs<GameScene>()->levelProperties()->nextLevel();
             break;
         default:
             break;
     }
-}
-
-void DebugActions::onKeyReleased(const Key&)
-{}
-
-rptr<GameScene> DebugActions::gameScene()
-{
-    return attachedNodeAs<GameScene>();
 }
 
 }  // namespace zoper
