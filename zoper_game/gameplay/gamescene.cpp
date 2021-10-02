@@ -23,6 +23,7 @@
 #include <htypes/include/properties.hpp>
 
 #include <boardmanager/include/boardmanager.hpp>
+#include <boardmanager/include/board_types.hpp>
 #include <hlog/include/hlog.hpp>
 #include <haf/include/component/component_container.hpp>
 #include <haf/include/render/renderizable.hpp>
@@ -75,13 +76,11 @@ void GameScene::onCreated()
 
     LogAsserter::log_assert(!board_group_, "board_group_ is not empty");
     board_group_ = createSceneNode<BoardGroup>("BoardGroup");
-    //    board_group_->token_hit.connect(&(this->tokenHitAnimation));
 
     next_token_part_ = 0U;
 
     // Create the general timer component for the scene.
-    scene_timer_component_ =
-        components().component<time::TimerComponent>();
+    scene_timer_component_ = components().component<time::TimerComponent>();
 
     p_->scene_animation_component_ =
         components().component<AnimationComponent>();
@@ -217,12 +216,10 @@ void GameScene::launchPlayer()
 
     PlayerLauncher player_launcher;
     player_launcher(score_incrementer, board_group_,
-                    [this](vector2df const& v) {
-                        p_->createScoreIncrementPoints(*this, v);
-                    });
+                    htps::make_function(this, &GameScene::tokenHitAnimation));
 }
 
-void GameScene::tokenHitAnimation(vector2dst const& pos)
+void GameScene::tokenHitAnimation(board::BoardPositionType const& pos)
 {
     auto const lastTokenPosition = board_group_->board2Scene(pos);
     p_->createScoreIncrementPoints(*this, lastTokenPosition);

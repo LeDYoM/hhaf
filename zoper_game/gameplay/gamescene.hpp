@@ -15,6 +15,7 @@
 #include <htypes/include/function.hpp>
 #include <haf/include/scene/scene.hpp>
 #include <boardmanager/include/boardmanager.hpp>
+#include <boardmanager/include/board_types.hpp>
 #include <haf/include/render/renderizable.hpp>
 #include <haf/include/time/timercomponent.hpp>
 #include <haf/include/scene_components/states_controller_component.hpp>
@@ -46,7 +47,7 @@ public:
     }
 
     void goGameOver();
-    void tokenHitAnimation(htps::vector2dst const& pos);
+    void tokenHitAnimation(haf::board::BoardPositionType const& pos);
     void launchPlayer();
 
 private:

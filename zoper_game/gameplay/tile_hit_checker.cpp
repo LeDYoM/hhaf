@@ -19,7 +19,7 @@ TileHitChecker::TileHitChecker(
     haf::board::ITile::BoardTileData const token_type,
     ScoreIncrementer& score_incrementer,
     WorldCoord& last_token_position,
-    function<void(WorldCoord)> createScoreIncrementPoints) :
+    function<void(board::BoardPositionType)> createScoreIncrementPoints) :
     board_group_{std::move(board_group)},
     tokenType{token_type},
     score_incrementer_{score_incrementer},
@@ -27,7 +27,7 @@ TileHitChecker::TileHitChecker(
     createScoreIncrementPoints_{std::move(createScoreIncrementPoints)}
 {}
 
-bool TileHitChecker::operator()(htps::vector2dst const& loopPosition)
+bool TileHitChecker::operator()(board::BoardPositionType const& loopPosition)
 {
     bool result{true};
 
@@ -53,7 +53,7 @@ bool TileHitChecker::operator()(htps::vector2dst const& loopPosition)
             // You found a token, launch animation
             DisplayLog::info("Tile with same color found");
             DisplayLog::info("Creating points to score");
-            createScoreIncrementPoints_(last_token_position_);
+            createScoreIncrementPoints_(loopPosition);
         }
         else
         {

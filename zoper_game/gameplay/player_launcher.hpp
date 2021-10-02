@@ -10,6 +10,7 @@
 #include "player.hpp"
 
 #include <haf/include/types/basic_types.hpp>
+#include <boardmanager/include/board_types.hpp>
 
 namespace zoper
 {
@@ -22,7 +23,7 @@ class PlayerLauncher
 public:
     void operator()(ScoreIncrementer& score_incrementer,
                     haf::types::sptr<BoardGroup> board_group,
-                    haf::function<void(haf::WorldCoord)>
+                    haf::function<void(haf::board::BoardPositionType)>
                         createScoreIncrementPoints);
 };
 }  // namespace zoper
