@@ -9,6 +9,7 @@
 
 using namespace htps;
 using namespace haf;
+using namespace haf::types;
 using namespace haf::render;
 using namespace haf::scene;
 using namespace haf::scene::nodes;
@@ -18,7 +19,7 @@ namespace zoper
 void PlayerLauncher::operator()(
     ScoreIncrementer& score_incrementer,
     BoardGroup& board_group,
-    htps::function<void(htps::vector2df)> createScoreIncrementPoints)
+    htps::function<void(WorldCoord)> createScoreIncrementPoints)
 {
     haf::DisplayLog::info("Launching player");
     vector2df lastTokenPosition{};

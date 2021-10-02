@@ -11,6 +11,7 @@
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/function.hpp>
+#include <haf/include/scene/scene_types.hpp>
 
 namespace zoper
 {
@@ -21,10 +22,10 @@ class BoardGroup;
 class PlayerLauncher
 {
 public:
-    void operator()(
-        ScoreIncrementer& score_incrementer,
-        BoardGroup& board_group,
-        htps::function<void(htps::vector2df)> createScoreIncrementPoints);
+    void operator()(ScoreIncrementer& score_incrementer,
+                    BoardGroup& board_group,
+                    htps::function<void(haf::types::WorldCoord)>
+                        createScoreIncrementPoints);
 };
 }  // namespace zoper
 

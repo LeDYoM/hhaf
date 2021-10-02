@@ -7,6 +7,7 @@
 #include <haf/include/scene/scenenode_properties.hpp>
 #include <haf/include/scene/scenenodes.hpp>
 #include <haf/include/scene/hasname.hpp>
+#include <haf/include/scene/scene_types.hpp>
 #include <haf/include/system/systemaccess.hpp>
 
 namespace haf::sys

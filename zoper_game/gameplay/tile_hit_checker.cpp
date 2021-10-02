@@ -17,14 +17,14 @@ namespace zoper
 {
 TileHitChecker::TileHitChecker(
     BoardGroup& board_group,
-    haf::board::ITile::BoardTileData token_type,
-    ScoreIncrementer score_incrementer,
-    vector2df& lastTokenPosition,
-    function<void(vector2df)> createScoreIncrementPoints) :
+    haf::board::ITile::BoardTileData const token_type,
+    ScoreIncrementer& score_incrementer,
+    vector2df& last_token_position,
+    haf::function<void(types::WorldCoord)> createScoreIncrementPoints) :
     board_group_{board_group},
     tokenType{token_type},
     score_incrementer_{score_incrementer},
-    lastTokenPosition_{lastTokenPosition},
+    last_token_position_{last_token_position},
     createScoreIncrementPoints_{std::move(createScoreIncrementPoints)}
 {}
 
@@ -38,7 +38,7 @@ bool TileHitChecker::operator()(vector2dst const& loopPosition)
             TokenZones::BoardBackgroundType::Center)
     {
         // Store the position of this last cosumed token
-        lastTokenPosition_ = board_group_.board2Scene(loopPosition);
+        last_token_position_ = board_group_.board2Scene(loopPosition);
 
         if (board_group_.boardManager()->getTile(loopPosition)->value() ==
             tokenType)
@@ -54,7 +54,7 @@ bool TileHitChecker::operator()(vector2dst const& loopPosition)
             // You found a token, launch animation
             DisplayLog::info("Tile with same color found");
             DisplayLog::info("Creating points to score");
-            createScoreIncrementPoints_(lastTokenPosition_);
+            createScoreIncrementPoints_(last_token_position_);
         }
         else
         {

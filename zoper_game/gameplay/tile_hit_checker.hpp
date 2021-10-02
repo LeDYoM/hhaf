@@ -1,8 +1,9 @@
-#ifndef ZOOPER_TOKEN_HIT_LAUNCHER_INCLUDE_HPP
-#define ZOOPER_TOKEN_HIT_LAUNCHER_INCLUDE_HPP
+#ifndef ZOOPER_TILE_HIT_LAUNCHER_INCLUDE_HPP
+#define ZOOPER_TILE_HIT_LAUNCHER_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
-#include <htypes/include/function.hpp>
+#include <haf/include/types/basic_types.hpp>
+#include <haf/include/types/function.hpp>
+#include <haf/include/scene/scene_types.hpp>
 
 #include <boardmanager/include/itile.hpp>
 
@@ -17,17 +18,17 @@ public:
     TileHitChecker(
         BoardGroup& board_group,
         haf::board::ITile::BoardTileData token_type,
-        ScoreIncrementer score_incrementer,
+        ScoreIncrementer& score_incrementer,
         htps::vector2df& lastTokenPosition,
-        htps::function<void(htps::vector2df)> createScoreIncrementPoints);
+        haf::function<void(haf::types::WorldCoord)> createScoreIncrementPoints);
 
     bool operator()(htps::vector2dst const& loopPosition);
 
 private:
     BoardGroup& board_group_;
-    haf::board::ITile::BoardTileData tokenType;
+    haf::board::ITile::BoardTileData const tokenType;
     ScoreIncrementer& score_incrementer_;
-    htps::vector2df& lastTokenPosition_;
+    htps::vector2df& last_token_position_;
     htps::function<void(htps::vector2df)> createScoreIncrementPoints_;
 };
 }  // namespace zoper

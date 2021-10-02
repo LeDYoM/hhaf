@@ -21,6 +21,7 @@ public:
      * @param level_properties
      */
     ScoreIncrementer(htps::sptr<LevelProperties> level_properties);
+    ScoreIncrementer(ScoreIncrementer &) = delete;
 
     /**
      * @brief Destroy the Score Incrementer object
