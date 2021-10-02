@@ -246,6 +246,7 @@ set(headers
   ${inc_dir}/scene_components/scenemetrics.hpp
   ${inc_dir}/scene_components/scenemetricsview.hpp
   ${inc_dir}/scene_components/states_controller_component.hpp
+  ${inc_dir}/scene_components/statescontrolleractuator_register.hpp
   ${inc_dir}/scene_components/statescontrolleractuator.hpp
   ${inc_dir}/scene_components/texteditorcomponent.hpp
   ${inc_dir}/scene_components/visibility_selector_component.hpp

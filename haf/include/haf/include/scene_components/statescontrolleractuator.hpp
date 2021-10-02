@@ -19,24 +19,6 @@ public:
     virtual void onResumedState(const T&) {}
 };
 
-template <typename T>
-class StatesControllerActuatorRegister
-{
-public:
-    void registerStatesControllerActuator(
-        StatesControllerComponent<T>& statesController,
-        StatesControllerActuator<T>& statesControllerActuator)
-    {
-        statesController.StateStarted.connect(
-            [&statesControllerActuator](const T& startedState) {
-                statesControllerActuator.onEnterState(startedState);
-            });
-        statesController.StateFinished.connect(
-            [&statesControllerActuator](const T& startedState) {
-                statesControllerActuator.onExitState(startedState);
-            });
-    }
-};
 }  // namespace haf::scene
 
 #endif
