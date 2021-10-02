@@ -4,6 +4,8 @@
 #define HAF_TYPES_BASIC_TYPES_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
+#include <htypes/include/vector2d.hpp>
+#include <htypes/include/function.hpp>
 #include <htypes/include/str.hpp>
 #include <htypes/include/p_impl_pointer.hpp>
 
@@ -83,7 +85,15 @@ PImplPointer<T> make_pimplp(Args&&... args)
     T* p = new T(std::forward<Args>(args)...);
     return PImplPointer<T>(p);
 }
-
 }  // namespace haf::types
+
+namespace haf
+{
+using WorldCoord = htps::vector2df;
+
+template <typename T>
+using function = htps::function<T>;
+
+}
 
 #endif

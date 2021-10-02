@@ -3,7 +3,6 @@
 
 #include <haf/include/types/basic_types.hpp>
 #include <haf/include/types/vector.hpp>
-#include <haf/include/types/function.hpp>
 #include <haf/include/input/virtual_input_component.hpp>
 #include <haf/include/input/key.hpp>
 #include <htypes/include/p_impl_pointer.hpp>

@@ -9,7 +9,7 @@ namespace zoper
 void BoardUtils::for_each_coordinate(
     vector2dst startPosition,
     const Direction& direction,
-    function<bool(const vector2dst&)> updatePredicate)
+    haf::function<bool(const vector2dst&)> updatePredicate)
 {
     bool stay{true};
 
@@ -24,7 +24,7 @@ void BoardUtils::for_each_coordinate_in_rect(
     vector2dst const& startPosition,
     Direction const& direction,
     vector2dst const& board_size,
-    function<bool(const vector2dst&)> updatePredicate)
+    haf::function<bool(const vector2dst&)> updatePredicate)
 {
     LogAsserter::log_assert(
         (board_size.x > startPosition.x) && (board_size.y > startPosition.y),

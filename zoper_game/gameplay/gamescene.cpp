@@ -216,7 +216,7 @@ void GameScene::launchPlayer()
     ScoreIncrementer score_incrementer{level_properties_};
 
     PlayerLauncher player_launcher;
-    player_launcher(score_incrementer, *board_group_,
+    player_launcher(score_incrementer, board_group_,
                     [this](vector2df const& v) {
                         p_->createScoreIncrementPoints(*this, v);
                     });

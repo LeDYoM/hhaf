@@ -9,9 +9,7 @@
 
 #include "player.hpp"
 
-#include <htypes/include/types.hpp>
-#include <htypes/include/function.hpp>
-#include <haf/include/scene/scene_types.hpp>
+#include <haf/include/types/basic_types.hpp>
 
 namespace zoper
 {
@@ -23,8 +21,8 @@ class PlayerLauncher
 {
 public:
     void operator()(ScoreIncrementer& score_incrementer,
-                    BoardGroup& board_group,
-                    htps::function<void(haf::types::WorldCoord)>
+                    haf::types::sptr<BoardGroup> board_group,
+                    haf::function<void(haf::WorldCoord)>
                         createScoreIncrementPoints);
 };
 }  // namespace zoper

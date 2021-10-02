@@ -1,8 +1,7 @@
 #ifndef ZOOPER_NEXT_TOKEN_INCLUDE_HPP
 #define ZOOPER_NEXT_TOKEN_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
-#include <htypes/include/function.hpp>
+#include <haf/include/types/basic_types.hpp>
 #include <haf/include/time/timercomponent.hpp>
 #include <haf/include/time/timerconnector.hpp>
 
@@ -14,17 +13,17 @@ namespace zoper
 class NextToken
 {
 public:
-    NextToken(htps::wptr<haf::time::TimerComponent> timer_component);
-    void prepareNextToken(htps::function<htps::size_type()> nextTokenTime,
-                          htps::function<void()> nextTokenAction);
+    NextToken(haf::types::wptr<haf::time::TimerComponent> timer_component);
+    void prepareNextToken(haf::function<htps::size_type()> nextTokenTime,
+                          haf::function<void()> nextTokenAction);
 
 private:
     void prepareNextTokenImpl();
 
     htps::wptr<haf::time::TimerComponent> timer_component_;
     haf::time::TimerConnectorSPtr timer_;
-    htps::function<void()> action_;
-    htps::function<htps::size_type()> time_point_getter_;
+    haf::function<void()> action_;
+    haf::function<htps::size_type()> time_point_getter_;
 };
 }  // namespace zoper
 

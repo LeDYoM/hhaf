@@ -1,8 +1,8 @@
 #include "next_token.hpp"
 #include <hlog/include/hlog.hpp>
 
-using namespace htps;
 using namespace haf;
+using namespace haf::types;
 
 namespace zoper
 {
