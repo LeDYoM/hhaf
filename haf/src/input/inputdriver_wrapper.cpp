@@ -41,7 +41,7 @@ InputDriverWrapper::InputDriverWrapper(
 
 InputDriverWrapper::~InputDriverWrapper() = default;
 
-void InputDriverWrapper::readKeyPressed(htps::vector<Key>& keys_pressed)
+void InputDriverWrapper::readKeyPressed(vector<Key>& keys_pressed)
 {
     p_->input_driver_->readKeyPressed(p_->driver_keys_pressed);
     keys_pressed.clear();
@@ -51,7 +51,7 @@ void InputDriverWrapper::readKeyPressed(htps::vector<Key>& keys_pressed)
     }
 }
 
-void InputDriverWrapper::readKeyReleased(htps::vector<Key>& keys_released)
+void InputDriverWrapper::readKeyReleased(vector<Key>& keys_released)
 {
     p_->input_driver_->readKeyPressed(p_->driver_keys_released);
     keys_released.clear();
