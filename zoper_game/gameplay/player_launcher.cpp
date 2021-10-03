@@ -32,7 +32,7 @@ void PlayerLauncher::operator()(
         board_group->boardManager()->size(), tile_hit_checker);
 
     DisplayLog::info("Launching player");
-    board_group->player()->launchAnimation(lastTokenPosition);
+    board_group->player()->launchPlayerAnimation(lastTokenPosition);
 }
 
 }  // namespace zoper

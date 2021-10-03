@@ -2,8 +2,7 @@
 #define ZOPER_GAMEBASETILE_HPP
 
 #include <htypes/include/types.hpp>
-#include <htypes/include/vector2d.hpp>
-#include <haf/include/scene/scenenode.hpp>
+#include <haf/include/types/basic_types.hpp>
 #include <haf/include/render/renderizable.hpp>
 #include <boardmanager/include/itile.hpp>
 #include "boardgroup.hpp"
@@ -25,21 +24,21 @@ protected:
     using TileBase = haf::board::ITile;
 
 public:
-    using BoardPosition_t = TileBase::BoardPosition_t;
+    using BoardPositionType = TileBase::BoardPositionType;
     using BoardTileData = haf::board::ITile::BoardTileData;
 
     GameBaseTile(htps::rptr<haf::scene::SceneNode> const parent,
                  htps::str name);
     ~GameBaseTile() override;
 
-    void tileChanged(BoardPosition_t const& position,
+    void tileChanged(BoardPositionType const& position,
                      BoardTileData const oldValue,
                      BoardTileData const newValue) override;
 
-    void tileAdded(BoardPosition_t const& position) override;
+    void tileAdded(BoardPositionType const& position) override;
 
-    void tileMoved(BoardPosition_t const& source,
-                   BoardPosition_t const& dest) override;
+    void tileMoved(BoardPositionType const& source,
+                   BoardPositionType const& dest) override;
 
     bool isInCenter() const noexcept;
 

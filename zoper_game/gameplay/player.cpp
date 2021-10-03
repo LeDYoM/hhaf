@@ -18,7 +18,7 @@ using namespace haf::render;
 using namespace haf::time;
 using namespace haf::anim;
 
-Player::Player(rptr<SceneNode> parent, str name) :
+Player::Player(types::rptr<SceneNode> parent, types::str name) :
     BaseClass{std::move(parent), std::move(name)},
     boardPosition{},
     currentDirection{Direction{Direction::DirectionData::Up}}
@@ -68,7 +68,7 @@ void Player::update()
     }
 }
 
-bool Player::canBeMoved(BoardPosition_t const& dest_position) const
+bool Player::canBeMoved(BoardPositionType const& dest_position) const
 {
     return TokenZones::pointInCenter(dest_position);
 }
@@ -85,8 +85,8 @@ void Player::movePlayer(Direction const& direction)
     }
 }
 
-void Player::tileMoved(BoardPosition_t const& source,
-                       BoardPosition_t const& dest)
+void Player::tileMoved(BoardPositionType const& source,
+                       BoardPositionType const& dest)
 {
     BaseClass::tileMoved(source, dest);
     DisplayLog::info("Player board position: ", dest);
@@ -96,7 +96,7 @@ void Player::tileMoved(BoardPosition_t const& source,
     boardPosition = dest;
 }
 
-void Player::launchAnimation(vector2df const& toWhere)
+void Player::launchPlayerAnimation(vector2df const& toWhere)
 {
     components().component(animation_component_);
 
@@ -128,7 +128,7 @@ void Player::launchAnimationBack(vector2df const& toWhere)
     animation_component_->addAnimation(std::move(property_animation_builder));
 }
 
-void Player::tileAdded(BoardPosition_t const& position_)
+void Player::tileAdded(BoardPositionType const& position_)
 {
     DisplayLog::info("TokenPlayer appeared at ", position_);
     node()->color.set(getColorForToken());
@@ -137,7 +137,7 @@ void Player::tileAdded(BoardPosition_t const& position_)
     boardPosition.set(position_);
 }
 
-void Player::tileChanged(BoardPosition_t const& position_,
+void Player::tileChanged(BoardPositionType const& position_,
                          BoardTileData const oldValue,
                          BoardTileData const newValue)
 {

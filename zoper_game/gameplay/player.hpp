@@ -4,8 +4,7 @@
 #include "gamebasetile.hpp"
 #include "direction.hpp"
 
-#include <htypes/include/types.hpp>
-#include <htypes/include/function.hpp>
+#include <haf/include/types/basic_types.hpp>
 #include <haf/include/animation/animation_component.hpp>
 
 namespace zoper
@@ -13,30 +12,31 @@ namespace zoper
 
 class Player : public GameBaseTile
 {
-   using BaseClass     = GameBaseTile;
+    using BaseClass = GameBaseTile;
 
 public:
-    using BoardTileData = GameBaseTile::BoardTileData;
-   using BoardPosition_t = GameBaseTile::BoardPosition_t;
- 
-    Player(htps::rptr<haf::scene::SceneNode> parent, htps::str name);
+    using BoardTileData     = GameBaseTile::BoardTileData;
+    using BoardPositionType = GameBaseTile::BoardPositionType;
+
+    Player(haf::types::rptr<haf::scene::SceneNode> parent,
+           haf::types::str name);
     ~Player() override;
 
-    htps::PropertyState<BoardPosition_t> boardPosition;
+    htps::PropertyState<BoardPositionType> boardPosition;
     htps::PropertyState<Direction> currentDirection;
 
-    bool canBeMoved(BoardPosition_t const& dest_position) const;
+    bool canBeMoved(BoardPositionType const& dest_position) const;
 
     void movePlayer(Direction const& direction);
-    void launchAnimation(htps::vector2df const& toWhere);
+    void launchPlayerAnimation(htps::vector2df const& toWhere);
 
-    void tileAdded(BoardPosition_t const& position) override;
-    void tileChanged(BoardPosition_t const& position,
+    void tileAdded(BoardPositionType const& position) override;
+    void tileChanged(BoardPositionType const& position,
                      BoardTileData const oldValue,
                      BoardTileData const newValue) override;
 
-    void tileMoved(BoardPosition_t const& source,
-                   BoardPosition_t const& dest) override;
+    void tileMoved(BoardPositionType const& source,
+                   BoardPositionType const& dest) override;
 
     void update() override;
 
@@ -47,7 +47,7 @@ private:
     htps::size_type scalator_;
     htps::size_type move_out_;
     void launchAnimationBack(const htps::vector2df& toWhere);
-    htps::sptr<haf::anim::AnimationComponent> animation_component_;
+    haf::types::sptr<haf::anim::AnimationComponent> animation_component_;
 };
 }  // namespace zoper
 

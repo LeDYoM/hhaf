@@ -3,6 +3,7 @@
 
 #include <haf/include/types/basic_types.hpp>
 #include <htypes/include/vector2d.hpp>
+#include <boardmanager/include/board_types.hpp>
 
 namespace haf::board
 {
@@ -14,21 +15,21 @@ class ITile
 {
 public:
     using BoardTileData = types::s32;
-    using BoardPosition_t = htps::vector2dst;
+    using BoardPositionType = BoardPositionType;
 
     constexpr ITile() noexcept = default;
     virtual ~ITile() = default;
 
-    virtual bool canBeMoved(BoardPosition_t const&) const { return true; }
-    virtual void tileAdded(BoardPosition_t const& /* position */) {}
-    virtual void tileRemoved(BoardPosition_t const& /* position */) {}
-    virtual void tileChanged(BoardPosition_t const& /*position */,
+    virtual bool canBeMoved(BoardPositionType const&) const { return true; }
+    virtual void tileAdded(BoardPositionType const& /* position */) {}
+    virtual void tileRemoved(BoardPositionType const& /* position */) {}
+    virtual void tileChanged(BoardPositionType const& /*position */,
                              BoardTileData const /* oldValue */,
                              BoardTileData const /* newValue */)
     {}
 
-    virtual void tileMoved(BoardPosition_t const& /* source */,
-                           BoardPosition_t const& /* dest */)
+    virtual void tileMoved(BoardPositionType const& /* source */,
+                           BoardPositionType const& /* dest */)
     {}
 
     BoardTileData value() const noexcept { return data_; }
