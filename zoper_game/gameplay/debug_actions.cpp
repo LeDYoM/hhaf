@@ -19,15 +19,14 @@ struct DebugActions::DebugActionsPrivate
     using DebugActionVectorTypeIterator = DebugActionVectorType::iterator;
     DebugActionVectorType debug_actions_;
 
-    DebugActionVectorTypeIterator find(Key const key)
+    auto find(Key const key)
     {
-        debug_actions_.cfind_if(
+        auto const iterator{debug_actions_.cfind_if(
             [key](DebugActionVectorType::value_type const element) {
                 return element.first == key;
-            });
+            })};
+        return std::make_pair(iterator != debug_actions_.cend(), iterator);
     }
-
-    
 };
 
 DebugActions::DebugActions() : p_{make_pimplp<DebugActionsPrivate>()}
@@ -41,19 +40,10 @@ void DebugActions::addDebugAction(haf::input::Key const key,
 
 void DebugActions::onKeyPressed(Key const& key)
 {
-    switch (key)
+    auto element{p_->find(key)};
+    if (element.first)
     {
-        case Key::Num1:
-            attachedNodeAs<GameScene>()->levelProperties()->increaseScore(100U);
-            break;
-        case Key::Q:
-            attachedNodeAs<GameScene>()->goGameOver();
-            break;
-        case Key::A:
-            attachedNodeAs<GameScene>()->levelProperties()->nextLevel();
-            break;
-        default:
-            break;
+        element.second->second();
     }
 }
 
