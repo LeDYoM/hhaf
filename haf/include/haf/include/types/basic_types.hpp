@@ -8,6 +8,7 @@
 #include <htypes/include/function.hpp>
 #include <htypes/include/str.hpp>
 #include <htypes/include/p_impl_pointer.hpp>
+#include <htypes/include/rect.hpp>
 
 namespace haf::types
 {
@@ -89,11 +90,16 @@ PImplPointer<T> make_pimplp(Args&&... args)
 
 namespace haf
 {
-using WorldCoord = htps::vector2df;
+using SceneUnit        = htps::f32;
+using SceneCoordinates = htps::vector2d<SceneUnit>;
+using SceneBox  = htps::Rect<SceneUnit>;
 
+}  // namespace haf
+
+namespace haf
+{
 template <typename T>
 using function = htps::function<T>;
-
 }
 
 #endif

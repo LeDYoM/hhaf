@@ -2,10 +2,8 @@
 #define HAF_SCENE_SCENEMETRICS_VIEW_INCLUDE_HPP
 
 #include <haf/include/haf_export.hpp>
+#include <haf/include/types/basic_types.hpp>
 #include <haf/include/system/idatawrapper.hpp>
-
-#include <htypes/include/types.hpp>
-#include <htypes/include/rect.hpp>
 
 namespace haf::scene
 {
@@ -15,18 +13,20 @@ namespace haf::scene
  */
 class SceneMetricsView : public sys::IDataWrapper
 {
+    using BaseClass = sys::IDataWrapper;
+    static constexpr char const StaticTypeName[] = "SceneMetricsView";
 public:
     /**
      * @brief Get the current view set for the Scene
-     * @return htps::Rectf32 containing the view
+     * @return SceneBox containing the view
      */
-    htps::Rectf32 currentView() const;
+    SceneBox currentView() const;
 
     /**
      * @brief Get The current Viewport of the Scene
-     * @return htps::Rectf32 Containing the view port
+     * @return SceneBox Containing the view port
      */
-    htps::Rectf32 currentViewPort() const;
+    SceneBox currentViewPort() const;
 };
 
 }  // namespace haf::scene

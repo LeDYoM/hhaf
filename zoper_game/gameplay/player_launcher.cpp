@@ -21,7 +21,7 @@ void PlayerLauncher::operator()(
     haf::function<void(board::BoardPositionType)> createScoreIncrementPoints)
 {
     DisplayLog::info("Launching player");
-    haf::WorldCoord lastTokenPosition{};
+    haf::SceneCoordinates lastTokenPosition{};
 
     TileHitChecker tile_hit_checker{board_group, board_group->player()->value(),
                                     score_incrementer, lastTokenPosition,

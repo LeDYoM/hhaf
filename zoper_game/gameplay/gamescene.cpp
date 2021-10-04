@@ -14,7 +14,7 @@
 #include "gamescene_input.hpp"
 
 #ifdef USE_DEBUG_ACTIONS
-#include "debug_actions.hpp"
+#include <haf/include/debug/debug_actions.hpp> 
 #endif
 
 #include "../zoperprogramcontroller.hpp"
@@ -108,15 +108,15 @@ void GameScene::onCreated()
     board_group_->configure(TokenZones::size, level_properties_);
 
 #ifdef USE_DEBUG_ACTIONS
-    components().component<DebugActions>()->addDebugAction(
+    components().component<debug::DebugActions>()->addDebugAction(
         input::Key::Num1, [this]() {
             levelProperties()->increaseScore(100U);
         });
-    components().component<DebugActions>()->addDebugAction(
+    components().component<debug::DebugActions>()->addDebugAction(
         input::Key::Q, [this]() {
            goGameOver();
          });
-    components().component<DebugActions>()->addDebugAction(
+    components().component<debug::DebugActions>()->addDebugAction(
         input::Key::A, [this]() {
             levelProperties()->nextLevel();
         });

@@ -3,16 +3,14 @@
 
 #include "system/get_system.hpp"
 
-using namespace htps;
-
 namespace haf::scene
 {
-Rectf32 SceneMetricsView::currentView() const
+SceneBox SceneMetricsView::currentView() const
 {
     return sys::getSystem<scene::SceneManager>(attachedNode()).currentView();
 }
 
-Rectf32 SceneMetricsView::currentViewPort() const
+SceneBox SceneMetricsView::currentViewPort() const
 {
     return sys::getSystem<scene::SceneManager>(attachedNode())
         .currentViewPort();

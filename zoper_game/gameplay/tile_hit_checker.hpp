@@ -16,7 +16,7 @@ public:
     TileHitChecker(haf::types::sptr<BoardGroup> board_group,
                    haf::board::ITile::BoardTileData token_type,
                    ScoreIncrementer& score_incrementer,
-                   haf::WorldCoord& lastTokenPosition,
+                   haf::SceneCoordinates& lastTokenPosition,
                    haf::function<void(haf::board::BoardPositionType)>
                        createScoreIncrementPoints);
 
@@ -26,7 +26,7 @@ private:
     haf::types::sptr<BoardGroup> board_group_;
     haf::board::ITile::BoardTileData const tokenType;
     ScoreIncrementer& score_incrementer_;
-    haf::WorldCoord& last_token_position_;
+    haf::SceneCoordinates& last_token_position_;
     htps::function<void(haf::board::BoardPositionType)>
         createScoreIncrementPoints_;
 };

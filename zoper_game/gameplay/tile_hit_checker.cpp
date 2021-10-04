@@ -18,7 +18,7 @@ TileHitChecker::TileHitChecker(
     types::sptr<BoardGroup> board_group,
     haf::board::ITile::BoardTileData const token_type,
     ScoreIncrementer& score_incrementer,
-    WorldCoord& last_token_position,
+    SceneCoordinates& last_token_position,
     function<void(board::BoardPositionType)> createScoreIncrementPoints) :
     board_group_{std::move(board_group)},
     tokenType{token_type},

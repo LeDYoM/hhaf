@@ -13,6 +13,8 @@ class HAF_API Scene : public SceneNode
 {
 public:
     explicit Scene(htps::str name);
+
+    void onCreated();
     virtual htps::str nextSceneName();
     virtual void onFinished();
 

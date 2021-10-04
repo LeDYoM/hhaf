@@ -23,6 +23,9 @@ set(sources
   # Component
   ${src_dir}/component/component_container.cpp
 
+  # Debug
+  ${src_dir}/debug/debug_actions.cpp
+
   # FileSystem
   ${src_dir}/filesystem/fileserializer.cpp
   ${src_dir}/filesystem/filesystem.cpp
@@ -182,6 +185,9 @@ set(headers
   ${inc_dir}/component/component_container.hpp
   ${inc_dir}/component/icomponent_mixin.hpp
   ${inc_dir}/component/icomponent.hpp
+
+  # Debug
+  ${inc_dir}/debug/debug_actions.hpp
 
   # File system
   ${inc_dir}/filesystem/fileserializer.hpp
