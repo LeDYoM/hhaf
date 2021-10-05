@@ -18,6 +18,7 @@ set(SOURCE_TESTS
     parpar
     properties
     propertystate
+    rect
     str
     vector
     vector_view

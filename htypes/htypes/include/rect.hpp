@@ -58,39 +58,42 @@ struct Rect
 
     constexpr bool operator!=(const Rect& r) const { return !(operator==(r)); }
 
-    constexpr Rect& operator+=(const vector2d<T>& rhs)
+    constexpr Rect& operator+=(vector2d<T> const& rhs)
     {
         left += rhs.x;
         top += rhs.y;
         return *this;
     }
 
-    constexpr Rect& operator+=(const Rect& rhs)
+    constexpr Rect& operator+=(Rect const& rhs) noexcept
     {
         left += rhs.left;
         top += rhs.top;
         return *this;
     }
 
-    constexpr Rect& setLeftTop(const vector2d<T>& nleftTop)
+    constexpr Rect& setLeftTop(vector2d<T> const& nleftTop) noexcept
     {
         left = nleftTop.x;
         top  = nleftTop.y;
         return *this;
     }
-    constexpr Rect& move(const vector2d<T>& relativePosition)
+
+    constexpr Rect& move(vector2d<T> const& relativePosition) noexcept
     {
         left += relativePosition.x;
         top += relativePosition.y;
         return *this;
     }
-    constexpr Rect& setSize(const vector2d<T>& nsize)
+
+    constexpr Rect& setSize(vector2d<T> const& nsize) noexcept
     {
         width  = nsize.x;
         height = nsize.y;
         return *this;
     }
-    constexpr Rect& setRadiusFromCenter(const vector2d<T>& radius)
+
+    constexpr Rect& setRadiusFromCenter(vector2d<T> const& radius) noexcept
     {
         const auto c(center());
         left   = static_cast<T>(c.x - radius.x);
@@ -105,14 +108,16 @@ struct Rect
         return {width / static_cast<T>(2), height / static_cast<T>(2)};
     }
 
-    constexpr const vector2d<T> leftTop() const noexcept
+    constexpr vector2d<T> leftTop() const noexcept
     {
         return vector2d<T>{left, top};
     }
-    constexpr const vector2d<T> size() const noexcept
+
+    constexpr vector2d<T> size() const noexcept
     {
         return vector2d<T>{width, height};
     }
+
     constexpr const T right() const noexcept { return left + width; }
     constexpr void setRight(const T& r) noexcept { width = r - left; }
     constexpr const T bottom() const noexcept { return top + height; }
@@ -121,6 +126,7 @@ struct Rect
     {
         return vector2d<T>{right(), bottom()};
     }
+
     constexpr const vector2d<T> rightTop() const noexcept
     {
         return vector2d<T>{right(), top};
@@ -130,14 +136,11 @@ struct Rect
         return vector2d<T>{left, bottom()};
     }
 
-    constexpr void move(const vector2d<T>& offset) const noexcept
-    {
-        (*this) += offset;
-    };
     constexpr Rect moved(const vector2d<T>& offset) const noexcept
     {
         return (Rect(*this) += offset);
     };
+
     constexpr Rect resize(const vector2d<T>& sSize) const noexcept
     {
         return Rect{left, top, width + sSize.x, height + sSize.y};
@@ -186,8 +189,8 @@ template <typename T>
 constexpr Rect<T> rectFromCenterAndRadius(const vector2d<T>& center,
                                           const vector2d<T>& radius) noexcept
 {
-    return {center.x - radius.x, center.y - radius.y, center.x + radius.x,
-            center.y + radius.y};
+    return {center.x - radius.x, center.y - radius.y,
+            radius.x * static_cast<T>(2), radius.y * static_cast<T>(2)};
 }
 
 template <typename T>
