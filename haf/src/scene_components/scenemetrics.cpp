@@ -18,11 +18,8 @@ void SceneMetrics::setViewPort(SceneBox const& new_view_port)
 
 void SceneMetrics::move(SceneCoordinates const& delta)
 {
-    auto current = BaseClass::currentView();
-    DisplayLog::debug("Current view: ", current);
-    current += delta;
-    DisplayLog::debug("Going to set view: ", current);
-    setViewRect(current);
+    DisplayLog::debug("Current view: ", BaseClass::currentView());
+    setViewRect(BaseClass::currentView() + delta);
     DisplayLog::debug("Current view after set: ", currentView());
 }
 
