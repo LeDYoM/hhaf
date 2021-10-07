@@ -34,7 +34,6 @@ public:
 
     /**
      * @brief Update the node
-     *
      */
     void update() override;
 
