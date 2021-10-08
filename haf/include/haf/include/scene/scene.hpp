@@ -3,7 +3,7 @@
 
 #include <haf/include/haf_export.hpp>
 #include <haf/include/types/basic_types.hpp>
-#include <haf/include/scene/scenenode.hpp>
+#include <haf/include/scene/scene_node.hpp>
 
 namespace haf::scene
 {

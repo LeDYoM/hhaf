@@ -5,7 +5,7 @@
 #include <htypes/include/properties.hpp>
 #include <haf/include/types/property_group.hpp>
 #include <haf/include/scene_nodes/scenenodetext_properties.hpp>
-#include <haf/include/scene/transformable_scenenode.hpp>
+#include <haf/include/scene/transformable_scene_node.hpp>
 
 namespace haf::scene::nodes
 {

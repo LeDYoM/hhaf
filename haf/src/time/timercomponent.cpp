@@ -3,7 +3,7 @@
 #include <htypes/include/function.hpp>
 #include <htypes/include/algoutils.hpp>
 #include <hlog/include/hlog.hpp>
-#include <haf/include/scene/scenenode.hpp>
+#include <haf/include/scene/scene_node.hpp>
 #include <haf/include/system/datawrappercreator.hpp>
 
 using namespace htps;

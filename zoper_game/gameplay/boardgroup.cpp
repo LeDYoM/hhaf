@@ -6,7 +6,7 @@
 #include "scoreutils.hpp"
 #include "boardutils.hpp"
 
-#include <haf/include/scene/scenenode.hpp>
+#include <haf/include/scene/scene_node.hpp>
 #include <haf/include/scene_nodes/table_node.hpp>
 #include <haf/include/scene_nodes/scene_node_size.hpp>
 #include <haf/include/scene_components/scenemetricsview.hpp>

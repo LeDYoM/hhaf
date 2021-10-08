@@ -4,7 +4,7 @@
 #include <haf/include/types/basic_types.hpp>
 #include <haf/include/input/stated_input_component_base.hpp>
 #include <haf/include/component/component_container.hpp>
-#include <haf/include/scene/scenenode.hpp>
+#include <haf/include/scene/scene_node.hpp>
 #include <haf/include/scene_components/states_controller_component.hpp>
 #include <htypes/include/connection.hpp>
 #include <hlog/include/hlog.hpp>

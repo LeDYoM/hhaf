@@ -1,4 +1,4 @@
-#include <haf/include/scene/renderizables_scenenode.hpp>
+#include <haf/include/scene/renderizables_scene_node.hpp>
 #include "scenemanager.hpp"
 #include "system/get_system.hpp"
 

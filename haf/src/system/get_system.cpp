@@ -1,5 +1,5 @@
 #include <haf/include/system/isystemprovider.hpp>
-#include <haf/include/scene/scenenode.hpp>
+#include <haf/include/scene/scene_node.hpp>
 #include <haf/include/system/systemaccess.hpp>
 #include "get_systemprovider.hpp"
 #include "systemprovider.hpp"

@@ -2,7 +2,7 @@
 
 #include <htypes/include/types.hpp>
 #include <haf/include/scene/scene.hpp>
-#include <haf/include/scene/scenenode.hpp>
+#include <haf/include/scene/scene_node.hpp>
 #include <haf/include/scene/scenenodefactory.hpp>
 
 #include <typeinfo>

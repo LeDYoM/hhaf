@@ -3,9 +3,9 @@
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/connection.hpp>
-#include <haf/include/scene/scenenode.hpp>
+#include <haf/include/scene/scene_node.hpp>
 #include <haf/include/resources/ifont.hpp>
-#include <haf/include/scene_nodes/renderizable_scenenode.hpp>
+#include <haf/include/scene_nodes/renderizable_scene_node.hpp>
 #include <haf/include/scene_nodes/table_node.hpp>
 #include <haf/include/scene_nodes/scenenodetext.hpp>
 #include <haf/include/animation/animation_component.hpp>

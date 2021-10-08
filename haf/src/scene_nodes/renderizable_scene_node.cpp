@@ -1,10 +1,10 @@
-#include <haf/include/scene_nodes/renderizable_scenenode.hpp>
+#include <haf/include/scene_nodes/renderizable_scene_node.hpp>
 #include <htypes/include/types.hpp>
 #include <haf/include/render/renderizable.hpp>
 #include <hlog/include/hlog.hpp>
 #include <haf/include/render/renderizable_builder.hpp>
 
-#include <haf/include/scene/scenenode.hpp>
+#include <haf/include/scene/scene_node.hpp>
 
 namespace haf::scene
 {

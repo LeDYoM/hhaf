@@ -4,7 +4,7 @@
 #include <htypes/include/types.hpp>
 #include <htypes/include/connection.hpp>
 
-#include <haf/include/scene/transformable_scenenode.hpp>
+#include <haf/include/scene/transformable_scene_node.hpp>
 #include <haf/include/scene/color.hpp>
 #include <haf/include/resources/ifont.hpp>
 #include "menu_paged_properties.hpp"

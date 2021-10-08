@@ -2,7 +2,7 @@
 #include "../loaders/mainmenuresources.hpp"
 #include "../gameshareddata.hpp"
 #include <menu_paged/include/menu_page.hpp>
-#include <haf/include/scene/scenenode.hpp>
+#include <haf/include/scene/scene_node.hpp>
 #include <hlog/include/hlog.hpp>
 #include <haf/include/resources/resourceretriever.hpp>
 #include <haf/include/resources/ittfont.hpp>

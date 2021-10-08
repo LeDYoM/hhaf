@@ -1,7 +1,7 @@
 #include "catch.hpp"
 
 #include <htypes/include/types.hpp>
-#include <haf/include/scene/transformable_scenenode.hpp>
+#include <haf/include/scene/transformable_scene_node.hpp>
 #include "matrix_utils.hpp"
 
 using namespace haf;

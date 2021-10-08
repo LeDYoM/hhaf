@@ -87,7 +87,7 @@ set(sources
   # Scene
   ${src_dir}/scene/color.cpp
   ${src_dir}/scene/matrix4x4.cpp
-  ${src_dir}/scene/renderizables_scenenode.cpp
+  ${src_dir}/scene/renderizables_scene_node.cpp
   ${src_dir}/scene/scene_render.cpp
   ${src_dir}/scene/scene_render.hpp
   ${src_dir}/scene/scene.cpp
@@ -95,10 +95,10 @@ set(sources
   ${src_dir}/scene/scenecontroller.hpp
   ${src_dir}/scene/scenemanager.cpp
   ${src_dir}/scene/scenemanager.hpp
-  ${src_dir}/scene/scenenode.cpp
+  ${src_dir}/scene/scene_node.cpp
   ${src_dir}/scene/scenenodefactory.cpp
   ${src_dir}/scene/scenenodes.cpp
-  ${src_dir}/scene/transformable_scenenode.cpp
+  ${src_dir}/scene/transformable_scene_node.cpp
   ${src_dir}/scene/transformation.cpp
 
   # Scene components
@@ -113,7 +113,7 @@ set(sources
   ${src_dir}/scene_components/visibility_selector_component.cpp
 
   # Scene nodes
-  ${src_dir}/scene_nodes/renderizable_scenenode.cpp
+  ${src_dir}/scene_nodes/renderizable_scene_node.cpp
   ${src_dir}/scene_nodes/scenenodetext.cpp
   ${src_dir}/scene_nodes/tablenode_imp.cpp
   ${src_dir}/scene_nodes/text_table_node.cpp
@@ -231,15 +231,15 @@ set(headers
   ${inc_dir}/scene/color.hpp
   ${inc_dir}/scene/hasname.hpp
   ${inc_dir}/scene/matrix4x4.hpp
-  ${inc_dir}/scene/renderizables_scenenode.hpp
+  ${inc_dir}/scene/renderizables_scene_node.hpp
   ${inc_dir}/scene/scene.hpp
   ${inc_dir}/scene/scenenode_cast.hpp
   ${inc_dir}/scene/scenenode_properties.hpp
-  ${inc_dir}/scene/scenenode.hpp
+  ${inc_dir}/scene/scene_node.hpp
   ${inc_dir}/scene/scenenodefactory.hpp
   ${inc_dir}/scene/scenenodeparent.hpp
   ${inc_dir}/scene/scenenodes.hpp
-  ${inc_dir}/scene/transformable_scenenode.hpp
+  ${inc_dir}/scene/transformable_scene_node.hpp
   ${inc_dir}/scene/transformation_properties.hpp
   ${inc_dir}/scene/transformation.hpp
 
@@ -258,7 +258,7 @@ set(headers
   ${inc_dir}/scene_components/visibility_selector_component.hpp
 
   # Scene nodes
-  ${inc_dir}/scene_nodes/renderizable_scenenode.hpp
+  ${inc_dir}/scene_nodes/renderizable_scene_node.hpp
   ${inc_dir}/scene_nodes/scene_node_size.hpp
   ${inc_dir}/scene_nodes/scenenodetext_properties.hpp
   ${inc_dir}/scene_nodes/scenenodetext.hpp

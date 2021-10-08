@@ -1,5 +1,5 @@
 #include <haf/include/scene_components/visibility_selector_component.hpp>
-#include <haf/include/scene/scenenode.hpp>
+#include <haf/include/scene/scene_node.hpp>
 
 #include <htypes/include/types.hpp>
 #include <hlog/include/hlog.hpp>

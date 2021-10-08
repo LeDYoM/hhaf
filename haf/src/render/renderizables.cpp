@@ -1,7 +1,7 @@
 #include <haf/include/render/renderizables.hpp>
 
 #include <hlog/include/hlog.hpp>
-#include <haf/include/scene/transformable_scenenode.hpp>
+#include <haf/include/scene/transformable_scene_node.hpp>
 #include <haf/include/render/renderizable_builder.hpp>
 
 using namespace htps;

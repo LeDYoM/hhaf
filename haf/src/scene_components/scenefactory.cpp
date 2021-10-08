@@ -1,5 +1,5 @@
 #include <haf/include/scene_components/scenefactory.hpp>
-#include <haf/include/scene/scenenode.hpp>
+#include <haf/include/scene/scene_node.hpp>
 #include "scene/scenemanager.hpp"
 #include "scene/scenecontroller.hpp"
 #include "system/get_system.hpp"

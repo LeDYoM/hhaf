@@ -1,5 +1,5 @@
 #include <haf/include/scene/scenenodes.hpp>
-#include <haf/include/scene/scenenode.hpp>
+#include <haf/include/scene/scene_node.hpp>
 #include <hlog/include/hlog.hpp>
 
 using namespace htps;

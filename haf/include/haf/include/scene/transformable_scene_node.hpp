@@ -5,7 +5,7 @@
 #include <haf/include/scene/matrix4x4.hpp>
 #include <haf/include/scene/transformation_properties.hpp>
 #include <haf/include/scene/transformation.hpp>
-#include <haf/include/scene/scenenode.hpp>
+#include <haf/include/scene/scene_node.hpp>
 #include <htypes/include/vector.hpp>
 #include <htypes/include/vector2d.hpp>
 #include <htypes/include/rect.hpp>

@@ -5,7 +5,7 @@
 #include <boardmanager/include/boardmanager.hpp>
 
 #include <hlog/include/hlog.hpp>
-#include <haf/include/scene_nodes/renderizable_scenenode.hpp>
+#include <haf/include/scene_nodes/renderizable_scene_node.hpp>
 #include <haf/include/render/renderizables.hpp>
 #include <haf/include/component/component_container.hpp>
 

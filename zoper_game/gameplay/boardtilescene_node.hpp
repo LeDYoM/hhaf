@@ -3,14 +3,14 @@
 
 #include <htypes/include/types.hpp>
 #include <haf/include/types/property_group.hpp>
-#include <haf/include/scene/scenenode.hpp>
+#include <haf/include/scene/scene_node.hpp>
 #include <haf/include/scene_nodes/scene_node_size.hpp>
 #include <haf/include/scene/color.hpp>
 #include <haf/include/render/renderizable.hpp>
-#include <haf/include/scene/renderizables_scenenode.hpp>
-#include <haf/include/scene_nodes/renderizable_scenenode.hpp>
+#include <haf/include/scene/renderizables_scene_node.hpp>
+#include <haf/include/scene_nodes/renderizable_scene_node.hpp>
 #include <haf/include/scene_nodes/scene_node_size.hpp>
-#include "boardtilescenenode_properties.hpp"
+#include "boardtile_scene_node_properties.hpp"
 
 namespace zoper
 {

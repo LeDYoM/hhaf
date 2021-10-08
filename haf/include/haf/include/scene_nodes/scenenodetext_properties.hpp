@@ -6,7 +6,7 @@
 #include <htypes/include/str.hpp>
 #include <haf/include/types/property_group.hpp>
 #include <haf/include/resources/ifont.hpp>
-#include <haf/include/scene/scenenode.hpp>
+#include <haf/include/scene/scene_node.hpp>
 #include <haf/include/scene/color.hpp>
 
 namespace haf::scene::nodes

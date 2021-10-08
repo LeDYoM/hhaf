@@ -2,7 +2,7 @@
 #define ZOPER_GAMEHUD_SCENENODE_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
-#include <haf/include/scene/transformable_scenenode.hpp>
+#include <haf/include/scene/transformable_scene_node.hpp>
 #include <haf/include/scene_nodes/textquad.hpp>
 
 namespace zoper
