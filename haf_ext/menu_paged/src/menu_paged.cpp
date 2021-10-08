@@ -41,9 +41,9 @@ void MenuPaged::configure_menu(
     vector_shared_pointers<scene::MenuPage> menu_steps)
 {
     auto visibility_selector =
-        components().component<VisibilitySelectorComponent>();
+        component<VisibilitySelectorComponent>();
     auto statesController =
-        components().component<StatesControllerComponent<s32>>();
+        component<StatesControllerComponent<s32>>();
     menu_steps_ = std::move(menu_steps);
 
     for (auto&& menu_page : menu_steps_)

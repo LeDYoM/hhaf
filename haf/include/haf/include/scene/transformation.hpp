@@ -12,8 +12,9 @@ namespace haf::scene
 {
 class HAF_API Transformation : public TransformationProperties
 {
-public:
     using BaseClass = TransformationProperties;
+
+public:
     using BaseClass::prop;
 
     using Scalar       = Matrix4x4::Scalar;

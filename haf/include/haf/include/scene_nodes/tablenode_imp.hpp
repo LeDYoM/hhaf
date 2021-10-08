@@ -19,9 +19,10 @@ class HAF_API TableNodeImp : public TransformableSceneNode,
     using BaseClass = TransformableSceneNode;
 
 public:
-    using BaseClass::BaseClass;       ///< Inherited constuctor
-    using BaseClass::prop;            ///< Properties from @b SceneNode
-    using TableNodeProperties::prop;  ///< Properties TableNodeProperties
+    using TableNodeProperties::prop;     ///< Properties TableNodeProperties
+    using TransformableSceneNode::prop;  ///< Properties from @b SceneNode
+    using TransformableSceneNode::TransformableSceneNode;  ///< Inherited
+                                                           ///< constuctor
 
     using ContainedType_t = htps::sptr<TransformableSceneNode>;
 

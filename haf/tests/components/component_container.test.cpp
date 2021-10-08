@@ -17,7 +17,7 @@ struct TestComponent : public IComponent
 
     sptr<TestComponent> addAnother()
     {
-        return attachedNode()->components().component<TestComponent>();
+        return attachedNode()->component<TestComponent>();
     }
 
 private:

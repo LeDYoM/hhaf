@@ -40,9 +40,8 @@ void HighScoresScene::onCreated()
     resources_configurator->setResourceConfigFile("resources.txt");
     resources_configurator->loadSection("high_scores");
 
-    auto statesController(
-        components()
-            .component<StatesControllerComponent<HighScoresSceneStates>>());
+    auto statesController{
+        component<StatesControllerComponent<HighScoresSceneStates>>()};
 
     normal_font_ = subsystems()
                        .dataWrapper<res::ResourceRetriever>()

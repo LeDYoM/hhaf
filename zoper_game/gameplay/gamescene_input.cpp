@@ -22,7 +22,7 @@ void GameSceneInput::onAttached()
     BaseClass::onAttached();
 
    // Get all necessary external dependencies
-    attachedNodeAs<GameScene>()->components().componentOfType(scene_states_);
+    attachedNodeAs<GameScene>()->componentOfType(scene_states_);
 
     LogAsserter::log_assert(scene_states_ != nullptr,
                             "GameSceneInput needs an attached node with a "

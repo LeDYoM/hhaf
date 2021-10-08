@@ -39,7 +39,7 @@ public:
     {
         BaseClass::onAttached();
         auto states_controller{
-            attachedNode()->components().componentOfType<StatesController_t>()};
+            attachedNode()->componentOfType<StatesController_t>()};
 
         LogAsserter::log_assert(
             states_controller != nullptr,

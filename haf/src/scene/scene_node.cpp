@@ -1,6 +1,5 @@
 #include <haf/include/scene/scene_node.hpp>
 
-#include <haf/include/component/component_container.hpp>
 #include <haf/include/scene/scene.hpp>
 #include <haf/include/system/datawrappercreator.hpp>
 
@@ -10,7 +9,6 @@ namespace haf::scene
 {
 struct SceneNode::SceneNodePrivate
 {
-    uptr<component::ComponentContainer> component_container_;
     uptr<sys::DataWrapperCreator> subsystems_;
 };
 
@@ -22,6 +20,7 @@ SceneNode::SceneNode(rptr<SceneNode> parent, str name) :
                           ? &(ancestor<Scene>()->isystemProvider())
                           : nullptr},
     SceneNodeProperties(true),
+    component::ComponentContainer{this},
     p_{make_pimplp<SceneNodePrivate>()}
 {}
 
@@ -30,27 +29,6 @@ SceneNode::~SceneNode() = default;
 void SceneNode::clearAll()
 {
     clearSceneNodes();
-}
-
-component::ComponentContainer& SceneNode::components()
-{
-    if (p_->component_container_ == nullptr)
-    {
-        p_->component_container_ =
-            types::muptr<component::ComponentContainer>(this);
-    }
-
-    return *(p_->component_container_);
-}
-
-component::ComponentContainer const& SceneNode::components() const noexcept
-{
-    return *(p_->component_container_);
-}
-
-bool SceneNode::hasComponents() const noexcept
-{
-    return p_->component_container_ != nullptr;
 }
 
 sys::DataWrapperCreator& SceneNode::subsystems()

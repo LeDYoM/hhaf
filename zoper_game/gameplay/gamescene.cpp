@@ -80,14 +80,14 @@ void GameScene::onCreated()
     next_token_part_ = 0U;
 
     // Create the general timer component for the scene.
-    scene_timer_component_ = components().component<time::TimerComponent>();
+    scene_timer_component_ = component<time::TimerComponent>();
 
     p_->scene_animation_component_ =
-        components().component<AnimationComponent>();
+        component<AnimationComponent>();
 
     // At this point, we setup level properties.
     // level_properties_ should not be used before this point.
-    level_properties_ = components().component<LevelProperties>();
+    level_properties_ = component<LevelProperties>();
 
     size_type start_level;
     GameMode game_mode;
@@ -108,15 +108,15 @@ void GameScene::onCreated()
     board_group_->configure(TokenZones::size, level_properties_);
 
 #ifdef USE_DEBUG_ACTIONS
-    components().component<debug::DebugActions>()->addDebugAction(
+    component<debug::DebugActions>()->addDebugAction(
         input::Key::Num1, [this]() {
             levelProperties()->increaseScore(100U);
         });
-    components().component<debug::DebugActions>()->addDebugAction(
+    component<debug::DebugActions>()->addDebugAction(
         input::Key::Q, [this]() {
            goGameOver();
          });
-    components().component<debug::DebugActions>()->addDebugAction(
+    component<debug::DebugActions>()->addDebugAction(
         input::Key::A, [this]() {
             levelProperties()->nextLevel();
         });
@@ -145,7 +145,7 @@ void GameScene::onCreated()
 
     // Set state control.
     {
-        components().component(scene_states_);
+        component(scene_states_);
 
         StatesControllerActuatorRegister<GameSceneStates>
             gameSceneActuatorRegister;
@@ -154,7 +154,7 @@ void GameScene::onCreated()
     }
 
     p_->token_type_generator_ =
-        components().component<rnd::RandomNumbersComponent>();
+        component<rnd::RandomNumbersComponent>();
     LogAsserter::log_assert(p_->token_type_generator_ != nullptr,
                             "Cannot create RandomNumbersComponent");
 
@@ -162,7 +162,7 @@ void GameScene::onCreated()
     LogAsserter::log_assert(p_->token_position_generator_ != nullptr,
                             "Cannot create RandomNumbersComponent");
 
-    auto game_scene_input{components().component<GameSceneInput>()};
+    auto game_scene_input{component<GameSceneInput>()};
 
     p_->key_mapping_ = muptr<KeyMapping>();
     p_->key_mapping_->reset();
@@ -197,8 +197,8 @@ void GameScene::generateNextToken()
 
     // Now, we have the data for the new token generated, but first,
     /// lets start to move the row or col.
-    const auto game_over = board_group_->moveTowardsCenter(
-        currentTokenZone.direction, new_position);
+    const auto game_over{board_group_->moveTowardsCenter(
+        currentTokenZone.direction, new_position)};
 
     // Set the new token
     board_group_->createNewToken(

@@ -39,7 +39,7 @@ void HighScoreTextController::onCreated()
                        ->font(72);
     normal_color_        = colors::Blue;
     selected_color_      = colors::Red;
-    animation_component_ = components().component<anim::AnimationComponent>();
+    animation_component_ = component<anim::AnimationComponent>();
 
     // Request the high scores.
     subsystems().dataWrapper<sys::FileSerializer>()->deserializeFromFile(
@@ -74,7 +74,7 @@ void HighScoreTextController::onCreated()
 
     if (!isInserting)
     {
-        auto input_component(components().component<input::InputComponent>());
+        auto input_component{component<input::InputComponent>()};
         input_component->KeyPressed.connect(
             [this](const auto&) { Finished(); });
     }
@@ -113,7 +113,7 @@ void HighScoreTextController::addHighScoreEditor(
     const size_type counter)
 {
     addEditAnimation(counter);
-    auto editor(label->components().component<TextEditorComponent>());
+    auto editor{label->component<TextEditorComponent>()};
     editor->setTextValidator(muptr<HighScoreValidator>());
     editor->Accepted.connect([this, counter](const str& entry) mutable {
         high_scores_data_.setHighScoreName(counter, entry);

@@ -54,7 +54,7 @@ void BoardGroup::configure(vector2dst size,
     }
 
     // Create and initialize the BoardManager
-    auto board_model = components().component<board::BoardManager>();
+    auto board_model{component<board::BoardManager>()};
     board_model->initialize(tableSize, this);
 
     board_model->setBackgroundFunction(
@@ -80,7 +80,7 @@ void BoardGroup::addPlayer()
     player_ = tokens_scene_node->createSceneNode<Player>("playerNode");
 
     // Add it to the board and to the scene nodes
-    components().componentOfType<board::BoardManager>()->setTile(
+    componentOfType<board::BoardManager>()->setTile(
         TokenZones::centerRect.leftTop(), player_);
 }
 
@@ -101,7 +101,7 @@ void BoardGroup::createNewToken(const BoardTileData data,
     new_tile_token->setBox(rectFromSize(size));
 
     // Add it to the board
-    auto board_model = components().componentOfType<board::BoardManager>();
+    auto board_model{componentOfType<board::BoardManager>()};
     board_model->setTile(board_position, new_tile_token);
     board_model->changeTileData(board_position, data);
 }
@@ -220,7 +220,7 @@ Color BoardGroup::getBackgroundTileColor(const size_type level,
 bool BoardGroup::moveTileInDirection(Direction const direction,
                                      vector2dst const position)
 {
-    auto board_model = components().componentOfType<board::BoardManager>();
+    auto board_model{componentOfType<board::BoardManager>()};
 
     // Is the current tile position empty?
     if (!board_model->tileEmpty(position))
@@ -241,7 +241,7 @@ bool BoardGroup::moveTowardsCenter(Direction const direction,
                                    vector2dst const& position)
 {
     bool moved_to_center{false};
-    auto board_model = components().componentOfType<board::BoardManager>();
+    auto board_model{componentOfType<board::BoardManager>()};
 
     // Is the current tile position empty?
     if (!board_model->tileEmpty(position))
@@ -273,7 +273,7 @@ bool BoardGroup::moveTowardsCenter(Direction const direction,
 vector2df BoardGroup::board2SceneFactor() const
 {
     return subsystems().dataWrapper<SceneMetricsView>()->currentView().size() /
-        components().componentOfType<board::BoardManager>()->size();
+        componentOfType<board::BoardManager>()->size();
 }
 
 vector2df BoardGroup::board2Scene(const vector2dst& bPosition) const
@@ -288,13 +288,13 @@ vector2df BoardGroup::tileSize() const
 
 htps::sptr<board::BoardManager> BoardGroup::boardManager() noexcept
 {
-    return components().componentOfType<board::BoardManager>();
+    return componentOfType<board::BoardManager>();
 }
 
 const htps::sptr<const board::BoardManager> BoardGroup::boardManager()
     const noexcept
 {
-    return components().componentOfType<board::BoardManager>();
+    return componentOfType<board::BoardManager>();
 }
 
 htps::sptr<scene::SceneNode> BoardGroup::tokensSceneNode() noexcept

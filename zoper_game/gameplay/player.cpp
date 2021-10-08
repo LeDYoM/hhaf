@@ -98,7 +98,7 @@ void Player::tileMoved(BoardPositionType const& source,
 
 void Player::launchPlayerAnimation(vector2df const& toWhere)
 {
-    components().component(animation_component_);
+    component(animation_component_);
 
     auto property_animation_builder{
         animation_component_->make_property_animation_builder_from_attached<
@@ -117,7 +117,7 @@ void Player::launchAnimationBack(vector2df const& toWhere)
 {
     DisplayLog::info("Creating animation for player to go back");
     currentDirection = currentDirection().negate();
-    components().component(animation_component_);
+    component(animation_component_);
 
     auto property_animation_builder{
         animation_component_->make_property_animation_builder<Position, Player>(

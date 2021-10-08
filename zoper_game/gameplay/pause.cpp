@@ -44,7 +44,7 @@ void PauseSceneNode::onCreated()
 void PauseSceneNode::enterPause()
 {
     prop<Visible>().set(true);
-    pause_text_->components().component(animation_component_);
+    pause_text_->component(animation_component_);
 
     auto builder{
         animation_component_->make_property_animation_builder_from_attached<

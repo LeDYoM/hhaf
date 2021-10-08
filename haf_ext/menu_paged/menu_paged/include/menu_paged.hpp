@@ -20,9 +20,9 @@ class MenuPaged : public TransformableSceneNode, MenuPagedProperties
     using BaseClass = TransformableSceneNode;
 
 public:
-    using BaseClass::BaseClass;
+    using TransformableSceneNode::TransformableSceneNode;
 
-    using BaseClass::prop;
+    using TransformableSceneNode::prop;
     using MenuPagedProperties::prop;
 
     ~MenuPaged() override;

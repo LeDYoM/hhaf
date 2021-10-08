@@ -8,6 +8,7 @@
 #include <haf/include/scene/scenenodes.hpp>
 #include <haf/include/scene/hasname.hpp>
 #include <haf/include/system/systemaccess.hpp>
+#include <haf/include/component/component_container.hpp>
 
 namespace haf::sys
 {
@@ -30,7 +31,8 @@ class HAF_API SceneNode : public sys::HasName,
                           public SceneNodeParent,
                           public SceneNodes,
                           public sys::SystemAccess,
-                          public SceneNodeProperties
+                          public SceneNodeProperties,
+                          public component::ComponentContainer
 {
 public:
     using SceneNodeProperties::prop;
@@ -84,10 +86,6 @@ public:
      * @brief Clear all elements in this scene node
      */
     void clearAll();
-
-    component::ComponentContainer& components();
-    component::ComponentContainer const& components() const noexcept;
-    bool hasComponents() const noexcept;
 
     sys::DataWrapperCreator& subsystems();
     sys::DataWrapperCreator& subsystems() const;

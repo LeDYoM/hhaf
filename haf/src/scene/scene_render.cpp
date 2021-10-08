@@ -15,13 +15,8 @@ void render(SceneNode& scene_node, bool parent_transformation_changed)
     if (scene_node.prop<Visible>().get())
     {
         // Update the node components
-        scene_node.components().updateComponents();
-
-        // Update node
-        if (scene_node.hasComponents())
-        {
-            scene_node.update();
-        }
+        scene_node.updateComponents();
+        scene_node.update();
 
         // Update the transformation (local and global)
         if (auto* const transformable_scene_node =
