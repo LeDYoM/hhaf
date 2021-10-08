@@ -47,8 +47,7 @@ TEST_CASE("haf::scene::ComponentContainer", "[ComponentContainer][constructor]")
             SECTION("Try Add twice")
             {
                 sptr<TestComponent> component2 = component;
-                component_container_no_parent->component(
-                    component2);
+                component_container_no_parent->component(component2);
                 component_container_no_parent->updateComponents();
                 CHECK(component->data_ == 2);
                 CHECK(component2->data_ == 2);
@@ -61,8 +60,7 @@ TEST_CASE("haf::scene::ComponentContainer", "[ComponentContainer][constructor]")
             SECTION("Add twice")
             {
                 sptr<TestComponent> component2 = component;
-                component_container_no_parent->component(
-                    component2);
+                component_container_no_parent->component(component2);
                 CHECK(component == component2);
             }
         }

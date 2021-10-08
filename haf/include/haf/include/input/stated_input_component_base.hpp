@@ -28,6 +28,7 @@ protected:
                                   InputInState key_released_function);
 
     void setProcessingState(types::u32 const current_state);
+
 private:
     struct StatedInputComponentBasePrivate;
     htps::PImplPointer<StatedInputComponentBasePrivate> p_;

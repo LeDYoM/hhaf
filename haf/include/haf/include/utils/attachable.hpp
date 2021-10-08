@@ -39,10 +39,7 @@ public:
      * @brief Get the attached node.
      * @return const htps::rptr<const T> The attached node.
      */
-    constexpr types::rptr<T> attachedNode() noexcept
-    {
-        return attachedNode_;
-    }
+    constexpr types::rptr<T> attachedNode() noexcept { return attachedNode_; }
 
     /**
      * @brief Shortcut method to get the attached node converted to a type.

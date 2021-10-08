@@ -9,5 +9,5 @@ namespace haf
 {
 template <typename T>
 using vector = htps::vector<T>;
-}  // namespace haf::types
+}  // namespace haf
 #endif

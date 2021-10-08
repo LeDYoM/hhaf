@@ -60,7 +60,7 @@ struct TimeSystem::TimeSystemPrivate final
     void setAcceleration(f32 const acceleration) noexcept
     {
         use_acceleration = true;
-        acceleration_ = acceleration;
+        acceleration_    = acceleration;
     }
 #endif
 private:

@@ -10,8 +10,8 @@ namespace haf::scene
 class DiscreteTextComponent final : public component::IComponent
 {
     using BaseClass = component::IComponent;
-public:
 
+public:
     htps::BasicProperty<bool> circleAroud{true};
     htps::BasicProperty<htps::string_vector> data;
     void incrementIndex() noexcept;

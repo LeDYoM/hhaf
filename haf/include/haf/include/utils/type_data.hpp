@@ -4,7 +4,7 @@
 #include <haf/include/haf_export.hpp>
 #include <htypes/include/types.hpp>
 #include <compare>
- 
+
 #include <typeinfo>
 
 namespace haf::utils
@@ -19,6 +19,7 @@ public:
     [[nodiscard]] bool operator==(type_index const& rhs) const noexcept;
     [[nodiscard]] std::strong_ordering operator<=>(
         const type_index& rhs) const noexcept;
+
 private:
     std::type_info const* t_info_;
 };

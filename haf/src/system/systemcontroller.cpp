@@ -16,11 +16,12 @@ namespace haf::sys
 SystemController::SystemController()  = default;
 SystemController::~SystemController() = default;
 
-void SystemController::init(rptr<IApp> iapp,
-                      htps::rptr<host::IHostConnector> const host_connector,
-                            rptr<backend::BackendFactory> backend_factory,
-                            int const argc,
-                            char const* const argv[])
+void SystemController::init(
+    rptr<IApp> iapp,
+    htps::rptr<host::IHostConnector> const host_connector,
+    rptr<backend::BackendFactory> backend_factory,
+    int const argc,
+    char const* const argv[])
 {
     (void)(host_connector);
     LogAsserter::log_assert(

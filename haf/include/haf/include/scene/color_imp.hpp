@@ -193,7 +193,7 @@ struct ColorImp
     /**
      * @brief Add two colors (They might be of different type). The result
      * is ensured to be a valid color of the source type
-     * 
+     *
      * @tparam VT Value type of the second color
      * @param rhs  Right hand side operand
      * @return ColorImp with the resulting color
@@ -207,7 +207,7 @@ struct ColorImp
     /**
      * @brief Substract two colors (They might be of different type). The result
      * is ensured to be a valid color of the source type
-     * 
+     *
      * @tparam VT Value type of the second color
      * @param rhs  Right hand side operand
      * @return ColorImp with the resulting color
@@ -221,7 +221,7 @@ struct ColorImp
     /**
      * @brief Multiply two colors (They might be of different type). The result
      * is ensured to be a valid color of the source type
-     * 
+     *
      * @tparam VT Value type of the second color
      * @param rhs  Right hand side operand
      * @return ColorImp with the resulting color

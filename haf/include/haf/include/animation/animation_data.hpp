@@ -74,7 +74,7 @@ struct Duration
 
 /**
  * @brief Number of times to perform the animation
- * 
+ *
  */
 struct Times
 {

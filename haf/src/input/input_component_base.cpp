@@ -12,8 +12,7 @@ bool InputComponentBase::isPressed(const Key key)
 {
     if (attachedNode())
     {
-        return sys::getSystem<sys::InputSystem>(attachedNode())
-            .keyState(key);
+        return sys::getSystem<sys::InputSystem>(attachedNode()).keyState(key);
     }
     return false;
 }

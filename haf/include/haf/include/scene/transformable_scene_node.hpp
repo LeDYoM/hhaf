@@ -22,7 +22,7 @@ namespace haf::scene
 class HAF_API TransformableSceneNode : public SceneNode, public Transformation
 {
 public:
-    using SceneNode::prop;  ///< Export properties
+    using SceneNode::prop;       ///< Export properties
     using Transformation::prop;  ///< Export properties
 
     using Scalar = Matrix4x4::Scalar;  ///< Type Scalar for this class

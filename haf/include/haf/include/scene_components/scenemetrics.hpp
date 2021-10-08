@@ -11,8 +11,9 @@ namespace haf::scene
 {
 class HAF_API SceneMetrics : public SceneMetricsView
 {
-    using BaseClass = SceneMetricsView;
+    using BaseClass                              = SceneMetricsView;
     static constexpr char const StaticTypeName[] = "SceneMetrics";
+
 public:
     void setViewRect(SceneBox const& new_view);
     void setViewPort(SceneBox const& new_view_port);

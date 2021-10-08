@@ -10,5 +10,5 @@ extern template htps::basic_str<char>;
 namespace haf
 {
 using str = htps::basic_str<char>;
-}  // namespace haf::types
+}  // namespace haf
 #endif

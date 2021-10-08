@@ -13,8 +13,9 @@ namespace haf::scene
  */
 class SceneMetricsView : public sys::IDataWrapper
 {
-    using BaseClass = sys::IDataWrapper;
+    using BaseClass                              = sys::IDataWrapper;
     static constexpr char const StaticTypeName[] = "SceneMetricsView";
+
 public:
     /**
      * @brief Get the current view set for the Scene

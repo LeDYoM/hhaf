@@ -51,7 +51,7 @@ public:
 
     /**
      * @brief Retrieve the attached instance of a component if it exists.
-     * 
+     *
      * @tparam T Type of the component
      * @return Pointer to the component or nullptr
      */
@@ -64,7 +64,7 @@ public:
 
     /**
      * @brief Retrieve the attached instance of a component if it exists.
-     * 
+     *
      * @tparam T Type of the component
      * @param element Pointer where the output wil be stored. It will be nullptr
      * if the component does not exist.

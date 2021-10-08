@@ -45,10 +45,8 @@ public:
             states_controller != nullptr,
             "StatedInputComponent requires a state component sibling");
 
-        states_controller->StateStarted.connect([this](auto const state)
-        {
-            setProcessingState(state);
-        });
+        states_controller->StateStarted.connect(
+            [this](auto const state) { setProcessingState(state); });
     }
 
 protected:

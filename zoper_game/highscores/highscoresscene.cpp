@@ -35,8 +35,8 @@ void HighScoresScene::onCreated()
 {
     BaseClass::onCreated();
 
-    auto resources_configurator =
-        subsystems().dataWrapper<res::ResourcesConfigurator>();
+    auto resources_configurator{
+        subsystems().dataWrapper<res::ResourcesConfigurator>()};
     resources_configurator->setResourceConfigFile("resources.txt");
     resources_configurator->loadSection("high_scores");
 
@@ -50,14 +50,14 @@ void HighScoresScene::onCreated()
     normal_color_   = colors::Blue;
     selected_color_ = colors::Red;
 
-    auto renderizable_builder = createSceneNode<RenderizablesSceneNode>(
-                                    "high_scores_main_menu_background")
-                                    ->renderizableBuilder();
+    auto renderizable_builder{createSceneNode<RenderizablesSceneNode>(
+                                  "high_scores_main_menu_background")
+                                  ->renderizableBuilder()};
 
     createStandardBackground(renderizable_builder);
 
-    auto highScoreTextController(
-        createSceneNode<HighScoreTextController>("HighScoreTextController"));
+    auto highScoreTextController{
+        createSceneNode<HighScoreTextController>("HighScoreTextController")};
     highScoreTextController->Finished.connect([this, statesController]() {
         subsystems().dataWrapper<SceneControl>()->switchToNextScene();
     });
