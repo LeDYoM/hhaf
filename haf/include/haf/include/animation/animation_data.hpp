@@ -6,7 +6,6 @@
 #include <haf/include/time/timer.hpp>
 #include <haf/include/types/basic_types.hpp>
 #include <haf/include/types/property_group.hpp>
-#include <htypes/include/properties.hpp>
 
 namespace haf::anim
 {
