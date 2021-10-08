@@ -1,10 +1,10 @@
 #ifndef HAF_RENDERIZABLE_BUILDER_DATA_INCLUDE_HPP
 #define HAF_RENDERIZABLE_BUILDER_DATA_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
+#include <haf/include/types/basic_types.hpp>
+#include <haf/include/types/property_group.hpp>
 #include <htypes/include/rect.hpp>
 #include <htypes/include/str.hpp>
-#include <htypes/include/function.hpp>
 
 #include <haf/include/scene/color.hpp>
 
@@ -23,6 +23,72 @@ class Renderizables;
 
 namespace haf::render
 {
+struct RenderizableName
+{
+    using value_type = types::str;
+
+    struct UseCustomPropertyType
+    {
+        template <typename Tag>
+        using PropertyType = htps::BasicProperty<typename Tag::value_type, Tag>;
+    };
+};
+
+struct FigureType
+{
+    using value_type = FigType_t;
+
+    struct UseCustomPropertyType
+    {
+        template <typename Tag>
+        using PropertyType = htps::BasicProperty<typename Tag::value_type, Tag>;
+    };
+};
+
+struct RenderizableSceneBoxProperty
+{
+    using value_type = SceneBox;
+
+    struct UseCustomPropertyType
+    {
+        template <typename Tag>
+        using PropertyType = htps::BasicProperty<typename Tag::value_type, Tag>;
+    };
+};
+
+struct ColorProperty
+{
+    using value_type = scene::Color;
+
+    struct UseCustomPropertyType
+    {
+        template <typename Tag>
+        using PropertyType = htps::BasicProperty<typename Tag::value_type, Tag>;
+    };
+};
+
+struct ShaderProperty
+{
+    using value_type = types::sptr<res::IShader>;
+
+    struct UseCustomPropertyType
+    {
+        template <typename Tag>
+        using PropertyType = htps::BasicProperty<typename Tag::value_type, Tag>;
+    };
+};
+
+struct TextureProperty
+{
+    using value_type = types::sptr<res::ITexture>;
+
+    struct UseCustomPropertyType
+    {
+        template <typename Tag>
+        using PropertyType = htps::BasicProperty<typename Tag::value_type, Tag>;
+    };
+};
+
 struct RenderizableBuilderData
 {
     htps::rptr<Renderizables> renderizables_;
@@ -31,9 +97,9 @@ struct RenderizableBuilderData
     htps::Rectf32 box_{};
     scene::Color color_{scene::colors::White};
     htps::size_type pointCount_{4U};
-    htps::sptr<res::IShader> shader_{nullptr};
-    htps::sptr<res::ITexture> texture_{nullptr};
-    htps::function<scene::Color(const RenderizableModifierContext&)>
+    types::sptr<res::IShader> shader_{nullptr};
+    types::sptr<res::ITexture> texture_{nullptr};
+    function<scene::Color(const RenderizableModifierContext&)>
         color_modifier_{};
 };
 }  // namespace haf::render
