@@ -16,7 +16,7 @@ using namespace haf::render;
 
 void createStandardBackground(RenderizableBuilder& renderizable_builder)
 {
-    auto background =
+    auto background{
         renderizable_builder.name("background")
             .figType(FigType_t::Quad)
             .box(rectFromSize(2000.0f, 2000.0f))
@@ -27,7 +27,7 @@ void createStandardBackground(RenderizableBuilder& renderizable_builder)
                                          n.y * decrease_ratio,
                                          n.y * decrease_ratio);
             })
-            .create();
+            .create()};
 
     background->color_modifier =
         [](const RenderizableModifierContext& context) {
