@@ -34,7 +34,7 @@ struct RenderizableName
     };
 };
 
-struct FigureType
+struct FigureTypeProperty
 {
     using value_type = FigType_t;
 
@@ -89,6 +89,26 @@ struct TextureProperty
     };
 };
 
+struct ColorModifierProperty
+{
+    using value_type =
+        function<scene::Color(const RenderizableModifierContext&)>;
+
+    struct UseCustomPropertyType
+    {
+        template <typename Tag>
+        using PropertyType = htps::BasicProperty<typename Tag::value_type, Tag>;
+    };
+};
+
+using RenderizableBuilderDataGroup =
+    types::PropertyGroup<RenderizableName,
+                         FigureTypeProperty,
+                         RenderizableSceneBoxProperty,
+                         ColorProperty,
+                         Times,
+                         Switch>;
+
 struct RenderizableBuilderData
 {
     htps::rptr<Renderizables> renderizables_;
@@ -102,6 +122,7 @@ struct RenderizableBuilderData
     function<scene::Color(const RenderizableModifierContext&)>
         color_modifier_{};
 };
+
 }  // namespace haf::render
 
 #endif
