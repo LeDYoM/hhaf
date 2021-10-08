@@ -46,7 +46,7 @@ private:
     htps::size_type rotator_;
     htps::size_type scalator_;
     htps::size_type move_out_;
-    void launchAnimationBack(const htps::vector2df& toWhere);
+    void launchAnimationBack(haf::SceneCoordinates const& toWhere);
     haf::types::sptr<haf::anim::AnimationComponent> animation_component_;
 };
 }  // namespace zoper

@@ -113,7 +113,7 @@ void Player::launchPlayerAnimation(vector2df const& toWhere)
     animation_component_->addAnimation(std::move(property_animation_builder));
 }
 
-void Player::launchAnimationBack(vector2df const& toWhere)
+void Player::launchAnimationBack(SceneCoordinates const& toWhere)
 {
     DisplayLog::info("Creating animation for player to go back");
     currentDirection = currentDirection().negate();

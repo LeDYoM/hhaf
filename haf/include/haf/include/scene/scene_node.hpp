@@ -15,11 +15,6 @@ namespace haf::sys
 class DataWrapperCreator;
 }
 
-namespace haf::component
-{
-class ComponentContainer;
-}
-
 namespace haf::scene
 {
 /**
