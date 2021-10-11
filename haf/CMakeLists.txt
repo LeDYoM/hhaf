@@ -24,7 +24,7 @@ set(sources
   ${src_dir}/component/component_container.cpp
 
   # Debug
-  ${src_dir}/debug/debug_actions.cpp
+  ${src_dir}/debug_utils/debug_actions.cpp
 
   # FileSystem
   ${src_dir}/filesystem/fileserializer.cpp
@@ -187,7 +187,7 @@ set(headers
   ${inc_dir}/component/icomponent.hpp
 
   # Debug
-  ${inc_dir}/debug/debug_actions.hpp
+  ${inc_dir}/debug_utils/debug_actions.hpp
 
   # File system
   ${inc_dir}/filesystem/fileserializer.hpp

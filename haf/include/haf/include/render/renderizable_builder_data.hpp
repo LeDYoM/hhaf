@@ -100,7 +100,7 @@ struct ColorModifierProperty
         using PropertyType = htps::BasicProperty<typename Tag::value_type, Tag>;
     };
 };
-
+/*
 using RenderizableBuilderDataGroup =
     types::PropertyGroup<RenderizableName,
                          FigureTypeProperty,
@@ -108,7 +108,7 @@ using RenderizableBuilderDataGroup =
                          ColorProperty,
                          Times,
                          Switch>;
-
+*/
 struct RenderizableBuilderData
 {
     htps::rptr<Renderizables> renderizables_;

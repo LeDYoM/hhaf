@@ -14,7 +14,7 @@
 #include "gamescene_input.hpp"
 
 #ifdef USE_DEBUG_ACTIONS
-#include <haf/include/debug/debug_actions.hpp> 
+#include <haf/include/debug_utils/debug_actions.hpp> 
 #endif
 
 #include "../zoperprogramcontroller.hpp"

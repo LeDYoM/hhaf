@@ -1,4 +1,4 @@
-#include <haf/include/debug/debug_actions.hpp>
+#include <haf/include/debug_utils/debug_actions.hpp>
 
 #include <haf/include/types/vector.hpp>
 #include <hlog/include/hlog.hpp>
