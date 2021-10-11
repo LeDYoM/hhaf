@@ -67,6 +67,17 @@ struct ColorProperty
     };
 };
 
+struct PointCount
+{
+    using value_type = types::size_type;
+
+    struct UseCustomPropertyType
+    {
+        template <typename Tag>
+        using PropertyType = htps::BasicProperty<typename Tag::value_type, Tag>;
+    };
+};
+
 struct ShaderProperty
 {
     using value_type = types::sptr<res::IShader>;
@@ -100,15 +111,16 @@ struct ColorModifierProperty
         using PropertyType = htps::BasicProperty<typename Tag::value_type, Tag>;
     };
 };
-/*
-using RenderizableBuilderDataGroup =
+using RenderizableBuilderPropertyGroup =
     types::PropertyGroup<RenderizableName,
                          FigureTypeProperty,
                          RenderizableSceneBoxProperty,
                          ColorProperty,
-                         Times,
-                         Switch>;
-*/
+                         PointCount,
+                         ShaderProperty,
+                         TextureProperty,
+                         ColorModifierProperty>;
+
 struct RenderizableBuilderData
 {
     htps::rptr<Renderizables> renderizables_;
