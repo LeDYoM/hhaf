@@ -124,9 +124,8 @@ using RenderizableBuilderPropertyGroup =
 struct RenderizableBuilderData
 {
     htps::rptr<Renderizables> renderizables_;
+    RenderizableBuilderPropertyGroup bulder_data_;
     htps::str name_;
-    FigType_t figType_;
-    htps::Rectf32 box_{};
     scene::Color color_{scene::colors::White};
     htps::size_type pointCount_{4U};
     types::sptr<res::IShader> shader_{nullptr};

@@ -36,11 +36,11 @@ public:
     explicit RenderizableBuilder(
         htps::rptr<Renderizables> renderizables) noexcept;
 
-    htps::sptr<Renderizable> create();
+    htps::sptr<Renderizable> create() const;
 
     RenderizableBuilder& name(htps::str _name);
     RenderizableBuilder& figType(FigType_t fig_type);
-    RenderizableBuilder& box(htps::Rectf32 _box);
+    RenderizableBuilder& box(SceneBox _box);
     RenderizableBuilder& color(scene::Color _color);
     RenderizableBuilder& pointCount(htps::size_type point_count);
     RenderizableBuilder& shader(htps::sptr<res::IShader> _shader);

@@ -8,15 +8,17 @@ namespace haf::render
 
 RenderizableBuilder::RenderizableBuilder(
     htps::rptr<Renderizables> renderizables) noexcept :
-    data_{
-        RenderizableBuilderData{std::move(renderizables), {}, FigType_t::Shape}}
-{}
+    data_{RenderizableBuilderData{std::move(renderizables), {}}}
+{
+    data_.bulder_data_.prop<FigureTypeProperty>() = FigType_t::Shape;
+}
 
-htps::sptr<Renderizable> RenderizableBuilder::create()
+htps::sptr<Renderizable> RenderizableBuilder::create() const
 {
     return data_.renderizables_->createRenderizable(
-        data_.name_, data_.figType_, data_.box_, data_.color_, data_.texture_,
-        data_.shader_, data_.pointCount_);
+        data_.name_, data_.bulder_data_.prop<FigureTypeProperty>()(),
+        data_.bulder_data_.prop<RenderizableSceneBoxProperty>()(), data_.color_,
+        data_.texture_, data_.shader_, data_.pointCount_);
 }
 
 RenderizableBuilder& RenderizableBuilder::name(htps::str _name)
@@ -27,13 +29,13 @@ RenderizableBuilder& RenderizableBuilder::name(htps::str _name)
 
 RenderizableBuilder& RenderizableBuilder::figType(FigType_t fig_type)
 {
-    data_.figType_ = std::move(fig_type);
+    data_.bulder_data_.prop<FigureTypeProperty>() = std::move(fig_type);
     return *this;
 }
 
 RenderizableBuilder& RenderizableBuilder::box(htps::Rectf32 _box)
 {
-    data_.box_ = std::move(_box);
+    data_.bulder_data_.prop<RenderizableSceneBoxProperty>() = std::move(_box);
     return *this;
 }
 

@@ -13,7 +13,14 @@ RenderizableSceneNode::RenderizableSceneNode(htps::rptr<SceneNode> parent,
     BaseClass{std::move(parent), name}, node_{}
 {}
 
-void RenderizableSceneNode::buildNode(render::RenderizableBuilder& node_builder)
+void RenderizableSceneNode::buildNode(
+    render::RenderizableBuilder const& node_builder)
+{
+    node_ = node_builder.create();
+}
+
+void RenderizableSceneNode::buildNode(
+    render::RenderizableBuilder&& node_builder)
 {
     node_ = node_builder.create();
 }
