@@ -11,19 +11,25 @@ RenderizableBuilder::RenderizableBuilder(
     data_{RenderizableBuilderData{std::move(renderizables), {}}}
 {
     data_.bulder_data_.prop<FigureTypeProperty>() = FigType_t::Shape;
+    data_.bulder_data_.prop<ColorProperty>()      = scene::colors::White;
+    data_.bulder_data_.prop<PointCount>()         = 4U;
 }
 
 htps::sptr<Renderizable> RenderizableBuilder::create() const
 {
     return data_.renderizables_->createRenderizable(
-        data_.name_, data_.bulder_data_.prop<FigureTypeProperty>()(),
-        data_.bulder_data_.prop<RenderizableSceneBoxProperty>()(), data_.color_,
-        data_.texture_, data_.shader_, data_.pointCount_);
+        data_.bulder_data_.prop<RenderizableName>()(),
+        data_.bulder_data_.prop<FigureTypeProperty>()(),
+        data_.bulder_data_.prop<RenderizableSceneBoxProperty>()(),
+        data_.bulder_data_.prop<ColorProperty>()(),
+        data_.bulder_data_.prop<TextureProperty>()(),
+        data_.bulder_data_.prop<ShaderProperty>()(),
+        data_.bulder_data_.prop<PointCount>()());
 }
 
 RenderizableBuilder& RenderizableBuilder::name(htps::str _name)
 {
-    data_.name_.swap(_name);
+    data_.bulder_data_.prop<RenderizableName>() = std::move(_name);
     return *this;
 }
 
@@ -41,28 +47,28 @@ RenderizableBuilder& RenderizableBuilder::box(htps::Rectf32 _box)
 
 RenderizableBuilder& RenderizableBuilder::color(scene::Color _color)
 {
-    data_.color_ = std::move(_color);
+    data_.bulder_data_.prop<ColorProperty>() = std::move(_color);
     return *this;
 }
 
 RenderizableBuilder& RenderizableBuilder::pointCount(
     htps::size_type point_count)
 {
-    data_.pointCount_ = std::move(point_count);
+    data_.bulder_data_.prop<PointCount>() = std::move(point_count);
     return *this;
 }
 
 RenderizableBuilder& RenderizableBuilder::shader(
     htps::sptr<res::IShader> _shader)
 {
-    data_.shader_ = std::move(_shader);
+    data_.bulder_data_.prop<ShaderProperty>() = std::move(_shader);
     return *this;
 }
 
 RenderizableBuilder& RenderizableBuilder::texture(
     htps::sptr<res::ITexture> _texture)
 {
-    data_.texture_ = std::move(_texture);
+    data_.bulder_data_.prop<TextureProperty>() = std::move(_texture);
     return *this;
 }
 

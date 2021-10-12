@@ -125,13 +125,8 @@ struct RenderizableBuilderData
 {
     htps::rptr<Renderizables> renderizables_;
     RenderizableBuilderPropertyGroup bulder_data_;
-    htps::str name_;
-    scene::Color color_{scene::colors::White};
-    htps::size_type pointCount_{4U};
-    types::sptr<res::IShader> shader_{nullptr};
-    types::sptr<res::ITexture> texture_{nullptr};
     function<scene::Color(const RenderizableModifierContext&)>
-        color_modifier_{};
+        color_modifier_;
 };
 
 }  // namespace haf::render
