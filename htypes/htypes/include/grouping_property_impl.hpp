@@ -7,6 +7,7 @@
 
 namespace htps
 {
+
 template <typename Tag, typename = void>
 struct PropertyTypeSelector
 {
@@ -21,7 +22,7 @@ struct PropertyTypeSelector<Tag,
         typename Tag::UseCustomPropertyType::template PropertyType<Tag>;
 };
 
-template <typename T, typename Tag>
+template <typename T>
 struct BasicPropertyBase
 {
     using value_type = T;
@@ -33,7 +34,7 @@ struct BasicPropertyBase
     };
 };
 
-template <typename T, typename Tag>
+template <typename T>
 struct PropertyStateBase
 {
     using value_type = T;

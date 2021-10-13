@@ -296,10 +296,10 @@ TEST_CASE("PropertyGroup inheritance", "[htypes][property]")
     CHECK(efsn.prop<StrTag>().get() == "hello");
 }
 
-struct IntTagBasic : public BasicPropertyBase<int, IntTagBasic>
+struct IntTagBasic : public BasicPropertyBase<int>
 {};
 
-struct StrTagBasic : public BasicPropertyBase<str, StrTagBasic>
+struct StrTagBasic : public BasicPropertyBase<str>
 {};
 
 TEST_CASE("PropertyGroup with basic", "[htypes][property]")
