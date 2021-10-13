@@ -21,6 +21,30 @@ struct PropertyTypeSelector<Tag,
         typename Tag::UseCustomPropertyType::template PropertyType<Tag>;
 };
 
+template <typename T, typename Tag>
+struct BasicPropertyBase
+{
+    using value_type = T;
+
+    struct UseCustomPropertyType
+    {
+        template <typename Tag>
+        using PropertyType = BasicProperty<typename Tag::value_type, Tag>;
+    };
+};
+
+template <typename T, typename Tag>
+struct PropertyStateBase
+{
+    using value_type = T;
+
+    struct UseCustomPropertyType
+    {
+        template <typename Tag>
+        using PropertyType = PropertyState<typename Tag::value_type, Tag>;
+    };
+};
+
 /**
  * @brief Alias to encapsulate a PropertyType given a Tag
  *

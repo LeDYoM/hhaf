@@ -18,6 +18,8 @@ public:
     virtual htps::str nextSceneName();
     virtual void onFinished();
 
+    void installDebugUtils();
+
 private:
     types::rptr<SceneManager> scene_manager_;
     friend class SceneController;

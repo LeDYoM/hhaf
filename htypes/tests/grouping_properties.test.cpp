@@ -296,32 +296,16 @@ TEST_CASE("PropertyGroup inheritance", "[htypes][property]")
     CHECK(efsn.prop<StrTag>().get() == "hello");
 }
 
-struct IntTagBasic
-{
-    using value_type = int;
+struct IntTagBasic : public BasicPropertyBase<int, IntTagBasic>
+{};
 
-    struct UseCustomPropertyType
-    {
-        template <typename Tag>
-        using PropertyType = BasicProperty<typename Tag::value_type, Tag>;
-    };
-};
-
-struct StrTagBasic
-{
-    using value_type = str;
-
-    struct UseCustomPropertyType
-    {
-        template <typename Tag>
-        using PropertyType = BasicProperty<typename Tag::value_type, Tag>;
-    };
-};
+struct StrTagBasic : public BasicPropertyBase<str, StrTagBasic>
+{};
 
 TEST_CASE("PropertyGroup with basic", "[htypes][property]")
 {
     // Check statically that, given IntTagBasic, that contains UseCustomProperty
-    // with a PropertyType of BasicProperty, the type returned from 
+    // with a PropertyType of BasicProperty, the type returned from
     // get_property_reference is BasicProperty.
     static_assert(std::is_same_v<
                   std::remove_reference_t<

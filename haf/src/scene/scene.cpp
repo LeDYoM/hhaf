@@ -18,6 +18,12 @@ str Scene::nextSceneName()
 }
 
 void Scene::onCreated()
+{}
+
+void Scene::onFinished()
+{}
+
+void Scene::installDebugUtils()
 {
     component<debug::DebugActions>()->addDebugAction(input::Key::I, [this]() {
         subsystems().dataWrapper<SceneMetrics>()->move({0.0F, 100.0F});
@@ -32,8 +38,5 @@ void Scene::onCreated()
         subsystems().dataWrapper<SceneMetrics>()->move({-100.0F, 0.0F});
     });
 }
-
-void Scene::onFinished()
-{}
 
 }  // namespace haf::scene
