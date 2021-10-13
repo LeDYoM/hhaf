@@ -111,7 +111,7 @@ struct ColorModifierProperty
         using PropertyType = htps::BasicProperty<typename Tag::value_type, Tag>;
     };
 };
-using RenderizableBuilderPropertyGroup =
+using RenderizableData =
     types::PropertyGroup<RenderizableName,
                          FigureTypeProperty,
                          RenderizableSceneBoxProperty,
@@ -124,7 +124,7 @@ using RenderizableBuilderPropertyGroup =
 struct RenderizableBuilderData
 {
     htps::rptr<Renderizables> renderizables_;
-    RenderizableBuilderPropertyGroup bulder_data_;
+    RenderizableData bulder_data_;
     function<scene::Color(const RenderizableModifierContext&)>
         color_modifier_;
 };
