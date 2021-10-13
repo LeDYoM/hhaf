@@ -6,10 +6,7 @@
 
 namespace haf::scene
 {
-struct NodeSize
-{
-    using value_type = htps::Rectf32;
-};
+struct NodeSize : PropertyStateBase<htps::Rectf32> {};
 
 using SceneNodeSizeProperties = types::PropertyGroup<NodeSize>;
 

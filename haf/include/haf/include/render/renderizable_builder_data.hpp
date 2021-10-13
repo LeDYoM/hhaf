@@ -23,110 +23,46 @@ class Renderizables;
 
 namespace haf::render
 {
-struct RenderizableName
-{
-    using value_type = types::str;
+struct RenderizableName : BasicPropertyBase<types::str>
+{};
 
-    struct UseCustomPropertyType
-    {
-        template <typename Tag>
-        using PropertyType = htps::BasicProperty<typename Tag::value_type, Tag>;
-    };
-};
+struct FigureTypeProperty : BasicPropertyBase<FigType_t>
+{};
 
-struct FigureTypeProperty
-{
-    using value_type = FigType_t;
+struct RenderizableSceneBoxProperty : BasicPropertyBase<SceneBox>
+{};
 
-    struct UseCustomPropertyType
-    {
-        template <typename Tag>
-        using PropertyType = htps::BasicProperty<typename Tag::value_type, Tag>;
-    };
-};
+struct ColorProperty : BasicPropertyBase<scene::Color>
+{};
 
-struct RenderizableSceneBoxProperty
-{
-    using value_type = SceneBox;
+struct PointCount : BasicPropertyBase<types::size_type>
+{};
 
-    struct UseCustomPropertyType
-    {
-        template <typename Tag>
-        using PropertyType = htps::BasicProperty<typename Tag::value_type, Tag>;
-    };
-};
+struct ShaderProperty : BasicPropertyBase<types::sptr<res::IShader>>
+{};
 
-struct ColorProperty
-{
-    using value_type = scene::Color;
-
-    struct UseCustomPropertyType
-    {
-        template <typename Tag>
-        using PropertyType = htps::BasicProperty<typename Tag::value_type, Tag>;
-    };
-};
-
-struct PointCount
-{
-    using value_type = types::size_type;
-
-    struct UseCustomPropertyType
-    {
-        template <typename Tag>
-        using PropertyType = htps::BasicProperty<typename Tag::value_type, Tag>;
-    };
-};
-
-struct ShaderProperty
-{
-    using value_type = types::sptr<res::IShader>;
-
-    struct UseCustomPropertyType
-    {
-        template <typename Tag>
-        using PropertyType = htps::BasicProperty<typename Tag::value_type, Tag>;
-    };
-};
-
-struct TextureProperty
-{
-    using value_type = types::sptr<res::ITexture>;
-
-    struct UseCustomPropertyType
-    {
-        template <typename Tag>
-        using PropertyType = htps::BasicProperty<typename Tag::value_type, Tag>;
-    };
-};
+struct TextureProperty : BasicPropertyBase<types::sptr<res::ITexture>>
+{};
 
 struct ColorModifierProperty
-{
-    using value_type =
-        function<scene::Color(const RenderizableModifierContext&)>;
+    : BasicPropertyBase<
+          function<scene::Color(const RenderizableModifierContext&)>>
+{};
 
-    struct UseCustomPropertyType
-    {
-        template <typename Tag>
-        using PropertyType = htps::BasicProperty<typename Tag::value_type, Tag>;
-    };
-};
-using RenderizableData =
-    types::PropertyGroup<RenderizableName,
-                         FigureTypeProperty,
-                         RenderizableSceneBoxProperty,
-                         ColorProperty,
-                         PointCount,
-                         ShaderProperty,
-                         TextureProperty,
-                         ColorModifierProperty>;
+using RenderizableData = types::PropertyGroup<RenderizableName,
+                                              FigureTypeProperty,
+                                              RenderizableSceneBoxProperty,
+                                              ColorProperty,
+                                              PointCount,
+                                              ShaderProperty,
+                                              TextureProperty,
+                                              ColorModifierProperty>;
 
 struct RenderizableBuilderData
 {
     htps::rptr<Renderizables> renderizables_;
     RenderizableData bulder_data_;
-    function<scene::Color(const RenderizableModifierContext&)>
-        color_modifier_;
+    function<scene::Color(const RenderizableModifierContext&)> color_modifier_;
 };
 
 }  // namespace haf::render

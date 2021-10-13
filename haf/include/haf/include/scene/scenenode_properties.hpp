@@ -5,10 +5,7 @@
 
 namespace haf::scene
 {
-struct Visible
-{
-    using value_type = bool;
-};
+struct Visible : PropertyStateBase<bool> {};
 
 using SceneNodeProperties = types::PropertyGroup<Visible>;
 

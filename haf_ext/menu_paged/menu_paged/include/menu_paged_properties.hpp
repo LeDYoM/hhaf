@@ -8,25 +8,13 @@
 
 namespace haf::scene
 {
-struct NormalTextFont
-{
-    using value_type = htps::sptr<haf::res::IFont>;
-};
+struct NormalTextFont : PropertyStateBase<types::sptr<res::IFont>> {};
 
-struct NormalColor
-{
-    using value_type = haf::scene::Color;
-};
+struct NormalColor : PropertyStateBase<Color> {};
 
-struct SelectedColor
-{
-    using value_type = haf::scene::Color;
-};
+struct SelectedColor : PropertyStateBase<Color> {};
 
-struct SceneNodeSizeForPages
-{
-    using value_type = htps::vector2df;
-};
+struct SceneNodeSizeForPages : PropertyStateBase<htps::vector2df> {};
 
 using MenuPagedProperties = types::PropertyGroup<NormalTextFont,
                                                 NormalColor,

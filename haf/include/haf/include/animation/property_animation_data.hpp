@@ -7,40 +7,13 @@
 namespace haf::anim
 {
 template <typename T>
-struct SceneNodeType
-{
-    using value_type = types::rptr<T>;
-
-    struct UseCustomPropertyType
-    {
-        template <typename Tag>
-        using PropertyType = htps::BasicProperty<typename Tag::value_type, Tag>;
-    };
-};
+struct SceneNodeType : BasicPropertyBase<types::rptr<T>> {};
 
 template <typename PropertyTag>
-struct StartValue
-{
-    using value_type = typename PropertyTag::value_type;
-
-    struct UseCustomPropertyType
-    {
-        template <typename Tag>
-        using PropertyType = htps::BasicProperty<typename Tag::value_type, Tag>;
-    };
-};
+struct StartValue : BasicPropertyBase<typename PropertyTag::value_type> {};
 
 template <typename PropertyTag>
-struct EndValue
-{
-    using value_type = typename PropertyTag::value_type;
-
-    struct UseCustomPropertyType
-    {
-        template <typename Tag>
-        using PropertyType = htps::BasicProperty<typename Tag::value_type, Tag>;
-    };
-};
+struct EndValue : BasicPropertyBase<typename PropertyTag::value_type> {};
 
 template <typename PropertyTag, typename SceneNodeT>
 using PropertyAnimationPropertiesSingle =

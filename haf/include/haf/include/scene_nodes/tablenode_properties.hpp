@@ -6,15 +6,9 @@
 
 namespace haf::scene
 {
-struct SceneNodeSize
-{
-    using value_type = htps::vector2df;
-};
+struct SceneNodeSize : PropertyStateBase<htps::vector2df> {};
 
-struct TableSize
-{
-    using value_type = htps::vector2dst;
-};
+struct TableSize : PropertyStateBase<htps::vector2dst> {};
 
 using TableNodeProperties = types::PropertyGroup<TableSize, SceneNodeSize>;
 

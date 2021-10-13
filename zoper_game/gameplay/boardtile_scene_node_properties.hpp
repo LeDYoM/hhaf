@@ -6,10 +6,7 @@
 
 namespace zoper
 {
-struct BackgroundColor
-{
-    using value_type = haf::scene::Color;
-};
+struct BackgroundColor : haf::PropertyStateBase<haf::scene::Color> {};
 
 using BoardTileSceneNodeProperties = haf::types::PropertyGroup<BackgroundColor>;
 
