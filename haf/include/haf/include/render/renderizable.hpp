@@ -25,15 +25,6 @@ class Renderizable final : public sys::HasName
 {
 public:
     Renderizable(htps::rptr<scene::TransformableSceneNode> parent,
-                 htps::str name,
-                 FigType_t const figure_type,
-                 htps::size_type const initial_point_count,
-                 htps::Rectf32 _box,
-                 scene::Color color,
-                 htps::sptr<res::ITexture> _texture,
-                 htps::sptr<res::IShader> _shader);
-
-    Renderizable(htps::rptr<scene::TransformableSceneNode> parent,
                 RenderizableData&& renderizable_data);
 
     ~Renderizable();

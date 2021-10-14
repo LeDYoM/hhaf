@@ -50,31 +50,6 @@ struct Renderizable::RenderizablePrivate
 };
 
 Renderizable::Renderizable(rptr<TransformableSceneNode> parent,
-                           str name,
-                           FigType_t const figure_type,
-                           size_type const initial_point_count,
-                           Rectf32 _box,
-                           Color _color,
-                           sptr<res::ITexture> _texture,
-                           sptr<res::IShader> _shader) :
-    sys::HasName{std::move(name)},
-    figType{figure_type},
-    box{std::move(_box)},
-    color{std::move(_color)},
-    pointCount{initial_point_count},
-    shader{std::move(_shader)},
-    p_{make_pimplp<RenderizablePrivate>(parent,
-                                        figure_type,
-                                        initial_point_count,
-                                        parent->globalTransform(),
-                                        texture().get(),
-                                        shader().get(),
-                                        this)},
-    textureRect{textureFillQuad(_texture)},
-    texture{std::move(_texture)}
-{}
-
-Renderizable::Renderizable(rptr<TransformableSceneNode> parent,
                            RenderizableData&& renderizable_data) :
     sys::HasName{std::move(renderizable_data.prop<RenderizableName>()())},
     figType{renderizable_data.prop<FigureTypeProperty>()()},

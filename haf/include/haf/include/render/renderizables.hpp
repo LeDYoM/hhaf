@@ -38,15 +38,6 @@ public:
      * @return htps::sptr<Renderizable>
      */
     htps::sptr<Renderizable> createRenderizable(
-        htps::str name,
-        FigType_t figure_type,
-        htps::Rectf32 box,
-        scene::Color color,
-        htps::sptr<res::ITexture> texture,
-        htps::sptr<res::IShader> shader,
-        htps::size_type num_points);
-
-    htps::sptr<Renderizable> createRenderizable(
         RenderizableBuilderData&& renderizable_data);
 
     RenderizableBuilder renderizableBuilder();
