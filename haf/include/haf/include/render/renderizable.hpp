@@ -8,6 +8,7 @@
 
 #include <haf/include/render/renderizable_modifier_context.hpp>
 #include <haf/include/scene/color.hpp>
+#include <haf/include/render/renderizable_data.hpp>
 #include <haf/include/scene/hasname.hpp>
 #include <haf/include/render/fig_type.hpp>
 #include <haf/include/resources/itexture.hpp>
@@ -31,6 +32,9 @@ public:
                  scene::Color color,
                  htps::sptr<res::ITexture> _texture,
                  htps::sptr<res::IShader> _shader);
+
+    Renderizable(htps::rptr<scene::TransformableSceneNode> parent,
+                RenderizableData&& renderizable_data);
 
     ~Renderizable();
 

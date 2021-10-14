@@ -74,6 +74,26 @@ Renderizable::Renderizable(rptr<TransformableSceneNode> parent,
     texture{std::move(_texture)}
 {}
 
+Renderizable::Renderizable(rptr<TransformableSceneNode> parent,
+                           RenderizableData&& renderizable_data) :
+    sys::HasName{std::move(renderizable_data.prop<RenderizableName>()())},
+    figType{renderizable_data.prop<FigureTypeProperty>()()},
+    box{renderizable_data.prop<RenderizableSceneBoxProperty>()()},
+    color{renderizable_data.prop<ColorProperty>()()},
+    pointCount{renderizable_data.prop<PointCount>()()},
+    shader{renderizable_data.prop<ShaderProperty>()()},
+    p_{make_pimplp<RenderizablePrivate>(
+        parent,
+        renderizable_data.prop<FigureTypeProperty>()(),
+        renderizable_data.prop<PointCount>()(),
+        parent->globalTransform(),
+        renderizable_data.prop<TextureProperty>()().get(),
+        renderizable_data.prop<ShaderProperty>()().get(),
+        this)},
+    textureRect{textureFillQuad(renderizable_data.prop<TextureProperty>()())},
+    texture{renderizable_data.prop<TextureProperty>()()}
+{}
+
 Renderizable::~Renderizable() = default;
 
 htps::rptr<TransformableSceneNode> Renderizable::parent() noexcept

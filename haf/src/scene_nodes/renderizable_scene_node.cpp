@@ -14,13 +14,7 @@ RenderizableSceneNode::RenderizableSceneNode(htps::rptr<SceneNode> parent,
 {}
 
 void RenderizableSceneNode::buildNode(
-    render::RenderizableBuilder const& node_builder)
-{
-    node_ = node_builder.create();
-}
-
-void RenderizableSceneNode::buildNode(
-    render::RenderizableBuilder&& node_builder)
+    render::RenderizableBuilder& node_builder)
 {
     node_ = node_builder.create();
 }

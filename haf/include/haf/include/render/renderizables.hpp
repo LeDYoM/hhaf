@@ -46,6 +46,9 @@ public:
         htps::sptr<res::IShader> shader,
         htps::size_type num_points);
 
+    htps::sptr<Renderizable> createRenderizable(
+        RenderizableBuilderData&& renderizable_data);
+
     RenderizableBuilder renderizableBuilder();
 
     void removeRenderizable(const htps::sptr<Renderizable>& element);
@@ -53,7 +56,7 @@ public:
 
     template <typename T>
     constexpr void for_each_node_as(
-        htps::function<void(const htps::sptr<T>&)> action)
+        htps::function<void(htps::sptr<T> const&)> action)
     {
         for_each_node([&action](const htps::sptr<Renderizable>& node) {
             if (auto tnode = std::dynamic_pointer_cast<T>(node))
@@ -64,7 +67,7 @@ public:
     }
 
     void for_each_node(
-        htps::function<void(const htps::sptr<Renderizable>&)> action) const;
+        htps::function<void(htps::sptr<Renderizable> const&)> action) const;
 
     void updateRenderizables();
 

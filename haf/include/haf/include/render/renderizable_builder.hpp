@@ -36,7 +36,7 @@ public:
     explicit RenderizableBuilder(
         htps::rptr<Renderizables> renderizables) noexcept;
 
-    htps::sptr<Renderizable> create() const;
+    htps::sptr<Renderizable> create();
 
     RenderizableBuilder& name(htps::str _name);
     RenderizableBuilder& figType(FigType_t fig_type);
@@ -49,6 +49,7 @@ public:
         htps::function<scene::Color(const RenderizableModifierContext&)>
             color_modifier);
 
+    RenderizableBuilderData&& extract() noexcept;
 private:
     RenderizableBuilderData data_;
 };

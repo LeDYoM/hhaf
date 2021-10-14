@@ -23,10 +23,19 @@ sptr<Renderizable> Renderizables::createRenderizable(
     sptr<res::IShader> shader,
     size_type num_points)
 {
-    auto result(msptr<Renderizable>(scene_node_, std::move(name), figure_type,
+    auto result{msptr<Renderizable>(scene_node_, std::move(name), figure_type,
                                     std::move(num_points), std::move(box),
                                     std::move(color), std::move(texture),
-                                    std::move(shader)));
+                                    std::move(shader))};
+    addRenderizable(result);
+    return result;
+}
+
+htps::sptr<Renderizable> Renderizables::createRenderizable(
+    RenderizableBuilderData&& renderizable_builder_data)
+{
+    auto result{msptr<Renderizable>(
+        scene_node_, renderizable_builder_data.extract())};
     addRenderizable(result);
     return result;
 }
