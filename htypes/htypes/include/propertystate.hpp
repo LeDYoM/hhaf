@@ -31,20 +31,39 @@ public:
      * Constructs a property state with the default value of the contained
      * type.
      */
-    constexpr PropertyState() noexcept : BaseClass{} {}
+    constexpr PropertyState() noexcept(std::is_default_constructible_v<T>) =
+        default;
 
     /**
      * @brief Constructs a property from a value from the property
      */
-    constexpr PropertyState(T iv) noexcept : BaseClass{std::move(iv)} {}
-    constexpr PropertyState(PropertyState&&) noexcept = default;
-    PropertyState(const PropertyState&)               = default;
-    constexpr PropertyState& operator=(PropertyState&&) noexcept = default;
-    constexpr PropertyState& operator=(const PropertyState&) = default;
+    constexpr PropertyState(T const& iv) noexcept(
+        std::is_nothrow_copy_constructible_v<T>) :
+        BaseClass{iv}
+    {}
+    constexpr PropertyState(T&& iv) noexcept(
+        std::is_nothrow_move_constructible_v<T>) :
+        BaseClass{std::move(iv)}
+    {}
 
-    constexpr T const& operator=(T const& v) noexcept
+    PropertyState(const PropertyState&) noexcept(
+        std::is_nothrow_copy_constructible_v<T>) = default;
+    constexpr PropertyState& operator            =(PropertyState&&) noexcept(
+        std::is_nothrow_move_assignable_v<T>) = default;
+    constexpr PropertyState& operator         =(PropertyState const&) noexcept(
+        std::is_nothrow_copy_assignable_v<T>) = default;
+
+    constexpr T const& operator=(T const& v) noexcept(
+        std::is_nothrow_copy_assignable_v<T>)
     {
         set(v);
+        return v;
+    }
+
+    constexpr T const& operator=(T&& v) noexcept(
+        std::is_nothrow_move_assignable_v<T>)
+    {
+        set(std::move(v));
         return v;
     }
 
@@ -53,12 +72,12 @@ public:
     constexpr void setChanged() noexcept { has_changed_ = true; }
     constexpr bool readResetHasChanged() noexcept
     {
-        const bool v{has_changed_};
+        auto const v{has_changed_};
         resetHasChanged();
         return v;
     }
 
-    bool set(const T& v) override
+    bool set(const T& v) noexcept(noexcept(BaseClass::set(v))) override
     {
         const bool is_different{BaseClass::set(v)};
 
@@ -69,7 +88,7 @@ public:
         return is_different;
     }
 
-    bool set(T&& v) override
+    bool set(T&& v) noexcept(noexcept(BaseClass::set(std::move(v)))) override
     {
         const bool is_different{BaseClass::set(std::move(v))};
 

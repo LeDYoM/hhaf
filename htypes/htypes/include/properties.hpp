@@ -1,6 +1,8 @@
 #ifndef MTPS_PROPERTIES_INCLUDE_HPP
 #define MTPS_PROPERTIES_INCLUDE_HPP
 
+#include <type_traits>
+
 namespace htps
 {
 struct DummyTag
@@ -36,8 +38,10 @@ public:
      * @return true The value has changed
      * @return false v was equal to the content, so no changes made.
      */
-    virtual bool set(const T& v) = 0;
-    virtual bool set(T&& v)      = 0;
+    virtual bool set(const T& v) noexcept(
+        std::is_nothrow_copy_assignable_v<T>) = 0;
+    virtual bool set(T&& v) noexcept(
+        std::is_nothrow_move_assignable_v<T>) = 0;
 };
 
 }  // namespace htps
