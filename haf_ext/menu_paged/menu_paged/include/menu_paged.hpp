@@ -12,6 +12,12 @@
 
 namespace haf::scene
 {
+enum class MenuFinishedStatus : htps::u8
+{
+    Backward,
+    Forward
+};
+
 /**
  * @brief Main class to model a menu in paged style.
  */
@@ -27,12 +33,12 @@ public:
 
     ~MenuPaged() override;
 
-    void setMenuPagedStatus(const htps::s32 status);
-    htps::s32 status() const;
+    void setMenuPagedStatus(MenuFinishedStatus const status);
+    MenuFinishedStatus status() const;
 
-    void terminate(const htps::s32 status);
+    void terminate(MenuFinishedStatus const status);
 
-    htps::emitter<const htps::s32> MenuFinished;
+    htps::emitter<const MenuFinishedStatus> MenuFinished;
 
     void update() override;
 
@@ -51,7 +57,7 @@ protected:
 
 private:
     htps::vector_shared_pointers<MenuPage> menu_steps_;
-    htps::s32 status_{};
+    MenuFinishedStatus status_{MenuFinishedStatus::Backward};
 };
 }  // namespace haf::scene
 

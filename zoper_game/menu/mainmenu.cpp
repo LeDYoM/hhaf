@@ -69,7 +69,7 @@ void goGame(rptr<MenuPaged> scene_node,
             GameSharedData::address(), game_shared_data);
     }
 
-    scene_node->terminate(1);
+    scene_node->terminate(MenuFinishedStatus::Forward);
 }
 
 void MainMenu::onCreated()

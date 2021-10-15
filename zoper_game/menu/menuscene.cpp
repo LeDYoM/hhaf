@@ -65,11 +65,12 @@ void MenuScene::onCreated()
         .create();
 
     createSceneNode<MainMenu>(MainMenu::ClassName)
-        ->MenuFinished.connect([this](const s32 status) {
-            if (status == 0)
+        ->MenuFinished.connect([this](MenuFinishedStatus const status) {
+            if (status == MenuFinishedStatus::Backward)
             {
                 subsystems().dataWrapper<SceneControl>()->requestExit();
             }
+            // status == MenuFinished::Forward
             subsystems().dataWrapper<SceneControl>()->switchToNextScene();
         });
 

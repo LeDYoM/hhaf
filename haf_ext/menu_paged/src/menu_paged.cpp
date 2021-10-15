@@ -22,12 +22,12 @@ void MenuPaged::update()
     }
 }
 
-void MenuPaged::setMenuPagedStatus(const s32 status)
+void MenuPaged::setMenuPagedStatus(MenuFinishedStatus const status)
 {
     status_ = status;
 }
 
-s32 MenuPaged::status() const
+MenuFinishedStatus MenuPaged::status() const
 {
     return status_;
 }
@@ -82,7 +82,7 @@ void MenuPaged::configure_menu(
     visibility_selector->visible_index.set(0U);
 }
 
-void MenuPaged::terminate(const s32 status)
+void MenuPaged::terminate(MenuFinishedStatus const status)
 {
     setMenuPagedStatus(status);
     MenuFinished(status_);
