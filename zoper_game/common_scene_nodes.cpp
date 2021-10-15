@@ -14,27 +14,19 @@ using namespace haf;
 using namespace haf::scene;
 using namespace haf::render;
 
-void createStandardBackground(RenderizableBuilder& renderizable_builder)
+void createStandardBackground(RenderizableBuilder&& renderizable_builder)
 {
     auto background{
         renderizable_builder.name("background")
             .figType(FigType_t::Quad)
             .box(rectFromSize(2000.0f, 2000.0f))
-/*            .colorModifier([](const RenderizableModifierContext& context) {
+            .colorModifier([](const RenderizableModifierContext& context) {
                 const auto n = context.normalizedVertexInBox();
                 static constexpr auto decrease_ratio = 0.5F;
                 return Color::fromFloats(n.y * decrease_ratio,
                                          n.y * decrease_ratio,
                                          n.y * decrease_ratio);
-            })*/
+            })
             .create()};
-
-    background->color_modifier =
-        [](const RenderizableModifierContext& context) {
-            const auto n = context.normalizedVertexInBox();
-            static constexpr auto decrease_ratio = 0.5F;
-            return Color::fromFloats(n.y * decrease_ratio, n.y * decrease_ratio,
-                                     n.y * decrease_ratio);
-        };
 }
 }  // namespace zoper

@@ -46,35 +46,34 @@ void MenuScene::onCreated()
     subsystems().dataWrapper<SceneMetrics>()->setViewRect(DefaultView);
 
     // Load the necessary resources
-    auto resources_configurator =
-        subsystems().dataWrapper<res::ResourcesConfigurator>();
+    auto resources_configurator{
+        subsystems().dataWrapper<res::ResourcesConfigurator>()};
     resources_configurator->setResourceConfigFile("resources.txt");
     resources_configurator->setResourcesDirectory("resources/");
     resources_configurator->loadSection("menu");
 
-    auto renderizable_builder =
-        createSceneNode<RenderizablesSceneNode>("main_menu_background")
-            ->renderizableBuilder();
-    createStandardBackground(renderizable_builder);
+    // Create the background
+    auto main_menu_background{
+        createSceneNode<RenderizablesSceneNode>("main_menu_background")};
+    createStandardBackground(main_menu_background->renderizableBuilder());
 
-    auto logo =
-        renderizable_builder.name("mainLogo")
-            .figType(FigType_t::Quad)
-            .box(Rectf32{500.f, 150.f, 1000.f, 500.f})
-            .texture(
-                subsystems().dataWrapper<res::ResourceRetriever>()->getTexture(
-                    MainMenuResources::LogoId))
-            .create();
+    // Create the logo
+    main_menu_background->renderizableBuilder()
+        .name("mainLogo")
+        .figType(FigType_t::Quad)
+        .box(Rectf32{500.f, 150.f, 1000.f, 500.f})
+        .texture(subsystems().dataWrapper<res::ResourceRetriever>()->getTexture(
+            MainMenuResources::LogoId))
+        .create();
 
-    auto mainMenu(createSceneNode<MainMenu>(MainMenu::ClassName));
-
-    mainMenu->MenuFinished.connect([this](const s32 status) {
-        if (status == 0)
-        {
-            subsystems().dataWrapper<SceneControl>()->requestExit();
-        }
-        subsystems().dataWrapper<SceneControl>()->switchToNextScene();
-    });
+    createSceneNode<MainMenu>(MainMenu::ClassName)
+        ->MenuFinished.connect([this](const s32 status) {
+            if (status == 0)
+            {
+                subsystems().dataWrapper<SceneControl>()->requestExit();
+            }
+            subsystems().dataWrapper<SceneControl>()->switchToNextScene();
+        });
 
     auto a = createSceneNode<DisplayVarConsole>("a");
 }
