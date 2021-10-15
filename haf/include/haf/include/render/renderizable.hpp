@@ -13,6 +13,7 @@
 #include <haf/include/render/fig_type.hpp>
 #include <haf/include/resources/itexture.hpp>
 #include <haf/include/resources/ishader.hpp>
+#include <haf/include/render/renderizable_data.hpp>
 
 namespace haf::scene
 {
@@ -21,9 +22,12 @@ class TransformableSceneNode;
 
 namespace haf::render
 {
-class Renderizable final : public sys::HasName
+class Renderizable final : public sys::HasName, public RenderizableData
 {
 public:
+    using RenderizableData::prop;
+    using RenderizableData::put;
+
     Renderizable(htps::rptr<scene::TransformableSceneNode> parent,
                 RenderizableData&& renderizable_data);
 
@@ -36,6 +40,7 @@ public:
     htps::PropertyState<scene::Color> color;
     htps::PropertyState<htps::size_type> pointCount;
     htps::PropertyState<htps::sptr<res::IShader>> shader;
+
     htps::PropertyState<
         htps::function<scene::Color(const RenderizableModifierContext&)>>
         color_modifier;

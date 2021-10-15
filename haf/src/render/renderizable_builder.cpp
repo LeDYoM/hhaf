@@ -69,7 +69,8 @@ RenderizableBuilder& RenderizableBuilder::colorModifier(
     htps::function<scene::Color(const RenderizableModifierContext&)>
         color_modifier)
 {
-    data_.color_modifier_ = std::move(color_modifier);
+    data_.builder_data_.prop<ColorModifierProperty>() =
+        std::move(color_modifier);
     return *this;
 }
 

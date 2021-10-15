@@ -66,7 +66,8 @@ Renderizable::Renderizable(rptr<TransformableSceneNode> parent,
         renderizable_data.prop<ShaderProperty>()().get(),
         this)},
     textureRect{textureFillQuad(renderizable_data.prop<TextureProperty>()())},
-    texture{renderizable_data.prop<TextureProperty>()()}
+    texture{renderizable_data.prop<TextureProperty>()()},
+    color_modifier{renderizable_data.prop<ColorModifierProperty>()()}
 {}
 
 Renderizable::~Renderizable() = default;

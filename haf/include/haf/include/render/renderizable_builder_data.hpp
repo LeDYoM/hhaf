@@ -16,7 +16,6 @@ struct RenderizableBuilderData
 {
     htps::rptr<Renderizables> renderizables_;
     RenderizableData builder_data_;
-    function<scene::Color(const RenderizableModifierContext&)> color_modifier_;
 
     RenderizableData&& extract() noexcept { return std::move(builder_data_); }
 };
