@@ -26,8 +26,6 @@ using namespace haf::render;
 namespace zoper
 {
 
-constexpr u32 PointsPerQuad = 6U;
-
 MenuScene::MenuScene() : BaseClass{StaticTypeName}
 {}
 
