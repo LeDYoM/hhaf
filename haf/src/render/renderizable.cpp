@@ -71,12 +71,12 @@ Renderizable::Renderizable(rptr<TransformableSceneNode> parent,
 
 Renderizable::~Renderizable() = default;
 
-htps::rptr<TransformableSceneNode> Renderizable::parent() noexcept
+rptr<TransformableSceneNode> Renderizable::parent() noexcept
 {
     return p_->parent_;
 }
 
-htps::rptr<TransformableSceneNode const> Renderizable::parent() const noexcept
+rptr<TransformableSceneNode const> Renderizable::parent() const noexcept
 {
     return p_->parent_;
 }
