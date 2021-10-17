@@ -48,7 +48,7 @@ public:
     htps::BasicProperty<bool> visible{true};
 
     void setTextureAndTextureRect(htps::sptr<res::ITexture> texture_,
-                                  const htps::Rectf32& textRect);
+                                  const htps::Rectf32& textRect) noexcept;
 
     void setTextureFill(htps::sptr<res::ITexture> texture_);
 
