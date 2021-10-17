@@ -130,11 +130,12 @@ void SceneNodeText::update()
                 {
                     letterNode = createSceneNode<RenderizableSceneNode>(
                         "text_" + str::to_str(counter));
-                    letterNode->buildNode(letterNode->renderizableBuilder()
-                                       .name("text_" + str::to_str(counter))
-                                       .figType(render::FigType_t::Quad)
-                                       .box(letterBox)
-                                       .color(text_color));
+                    letterNode->buildNode(
+                        letterNode->renderizableBuilder()
+                            .name("text_" + str::to_str(counter))
+                            .figType(render::FigType_t::Quad)
+                            .box(letterBox)
+                            .color(text_color));
                 }
 
                 ++counter;
@@ -186,9 +187,10 @@ void SceneNodeText::update()
 
     if (pr.readResetHasChanged<TextColor>())
     {
-        Color const& tc{pr.get<TextColor>()};
-        sceneNodes().for_each([&tc](SceneNodeSPtr const& sNode) {
-            sceneNodeCast<RenderizableSceneNode>(sNode)->node()->color.set(tc);
+        Color const& text_color{pr.get<TextColor>()};
+        sceneNodes().for_each([&text_color](SceneNodeSPtr const& sNode) {
+            sceneNodeCast<RenderizableSceneNode>(sNode)->node()->color =
+                text_color;
         });
     }
 
