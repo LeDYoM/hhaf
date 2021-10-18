@@ -64,7 +64,7 @@ void MenuScene::onCreated()
             MainMenuResources::LogoId))
         .create();
 
-    createSceneNode<MainMenu>(MainMenu::ClassName)
+    createSceneNode<MainMenu>(MainMenu::StaticTypeName)
         ->MenuFinished.connect([this](MenuFinishedStatus const status) {
             if (status == MenuFinishedStatus::Backward)
             {
