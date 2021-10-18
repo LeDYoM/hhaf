@@ -5,6 +5,8 @@
 #include <haf/include/scene_components/visibility_selector_component.hpp>
 #include <haf/include/scene_components/scenemetricsview.hpp>
 #include <haf/include/component/component_container.hpp>
+#include <haf/include/scene_components/scenecontrol.hpp>
+#include <haf/include/system/datawrappercreator.hpp>
 
 using namespace htps;
 
@@ -86,6 +88,11 @@ void MenuPaged::terminate(MenuFinishedStatus const status)
 {
     setMenuPagedStatus(status);
     MenuFinished(status_);
+    
+    if (prop<FinishSceneAtEnd>()())
+    {
+        subsystems().dataWrapper<SceneControl>()->switchToNextScene();
+    }
 }
 
 }  // namespace haf::scene

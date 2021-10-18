@@ -70,8 +70,6 @@ void MenuScene::onCreated()
             {
                 subsystems().dataWrapper<SceneControl>()->requestExit();
             }
-            // status == MenuFinished::Forward
-            subsystems().dataWrapper<SceneControl>()->switchToNextScene();
         });
 
     auto a = createSceneNode<DisplayVarConsole>("a");
