@@ -102,23 +102,23 @@ void MainMenu::onCreated()
 
     // Create and register menu pages
     PageOptions main_page_options{true};
-    auto menuPageMain(createAndConfigureMenuPage(
+    auto menuPageMain{createAndConfigureMenuPage(
         "menuPageMain",
         vector_shared_pointers<MenuPagedOption>{
             make_option("Play Token mode", RangeOption(), 1),
             make_option("Play Time mode", RangeOption(), 2),
             make_option("Options", RangeOption(), 3),
             make_option("Exit", RangeOption(), MenuPagedOption::GoBack)},
-        main_page_options));
+        main_page_options)};
 
     menu_steps.emplace_back(menuPageMain);
 
-    auto menuPageByToken(createAndConfigureMenuPage(
+    auto menuPageByToken{createAndConfigureMenuPage(
         "menuPageByToken",
         vector_shared_pointers<MenuPagedOption>{
             make_option("Start level Token Mode", RangeOption(1U, 10U)),
             make_option("Play", RangeOption(), MenuPagedOption::Accept),
-            make_option("Back", RangeOption(), MenuPagedOption::GoBack)}));
+            make_option("Back", RangeOption(), MenuPagedOption::GoBack)})};
 
     menu_steps.emplace_back(menuPageByToken);
 
@@ -126,12 +126,12 @@ void MainMenu::onCreated()
         goGame(this, GameMode::Token, std::move(menu_data));
     });
 
-    auto menuPageByTime(createAndConfigureMenuPage(
+    auto menuPageByTime{createAndConfigureMenuPage(
         "menuPageByTime",
         vector_shared_pointers<MenuPagedOption>{
             make_option("Start level Time Mode", RangeOption(1U, 10U)),
             make_option("Play", RangeOption(), MenuPagedOption::Accept),
-            make_option("Back", RangeOption(), MenuPagedOption::GoBack)}));
+            make_option("Back", RangeOption(), MenuPagedOption::GoBack)})};
 
     menu_steps.emplace_back(menuPageByTime);
 
@@ -139,7 +139,7 @@ void MainMenu::onCreated()
         goGame(this, GameMode::Time, std::move(menu_data));
     });
 
-    auto menuPageOptions(createAndConfigureMenuPage(
+    auto menuPageOptions{createAndConfigureMenuPage(
         "menuPageOptions",
         vector_shared_pointers<MenuPagedOption>{
             make_option("Antialiasing", RangeOption{Antialiasing{}}),
@@ -150,11 +150,13 @@ void MainMenu::onCreated()
             make_option("VSync", RangeOption(string_vector{"No", "Yes"})),
             make_option("Redefine keyboard", RangeOption()),
             make_option("Accept", RangeOption(), MenuPagedOption::GoBack),
-            make_option("Cancel", RangeOption(), MenuPagedOption::GoBack)}));
+            make_option("Cancel", RangeOption(), MenuPagedOption::GoBack)})};
 
     menu_steps.emplace_back(menuPageOptions);
 
     configure_menu(std::move(menu_steps));
+
+    prop<FinishSceneAtEnd>() = true;
 }
 
 }  // namespace zoper

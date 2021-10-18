@@ -13,7 +13,7 @@ public:
     using BaseClass = haf::scene::MenuPaged;
     using BaseClass::prop;
 
-    static constexpr char ClassName[] = "MainMenu";
+    static constexpr char StaticTypeName[] = "MainMenu";
     using BaseClass::BaseClass;
 
     virtual void onCreated() override;
