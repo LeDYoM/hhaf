@@ -76,7 +76,7 @@ void MenuPaged::configure_menu(
                 static_cast<size_type>(menu_page));
         });
 
-    statesController->AfterFinish.connect([this]() { MenuFinished(status_); });
+    statesController->AfterFinish.connect([this]() { terminate(status_); });
 
     statesController->start(0);
     visibility_selector->visible_index.set(0U);
