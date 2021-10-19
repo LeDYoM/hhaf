@@ -139,18 +139,20 @@ struct Rect
     constexpr Rect moved(const vector2d<T>& offset) const noexcept
     {
         return (Rect(*this) += offset);
-    };
+    }
 
     constexpr Rect resize(const vector2d<T>& sSize) const noexcept
     {
         return Rect{left, top, width + sSize.x, height + sSize.y};
-    };
+    }
+
     constexpr Rect setRadiusFromCenter(const vector2d<T>& radius) const noexcept
     {
         Rect temp{*this};
         temp.setRadiusFromCenter(radius);
         return temp;
     }
+
     constexpr Rect moveResize(const vector2d<T>& offset,
                               const vector2d<T>& sSize) const noexcept
     {
@@ -170,6 +172,62 @@ struct Rect
     constexpr bool inside(const vector2d<T>& v) const noexcept
     {
         return insideX(v) && insideY(v);
+    }
+
+    template <typename U>
+    constexpr void scaleInverseX(U const& scalar)
+    {
+        left /= static_cast<T>(scalar);
+        width /= static_cast<T>(scalar);
+    }
+
+    template <typename U>
+    constexpr void scaleInverseY(U const& scalar)
+    {
+        top /= static_cast<T>(scalar);
+        height /= static_cast<T>(scalar);
+    }
+
+    template <typename U>
+    constexpr void scaleInverse(vector2d<U> const& scalar)
+    {
+        scaleInverseX(scalar.x);
+        scaleInverseY(scalar.y);
+    }
+
+    template <typename U>
+    constexpr void scaleInverse(U const& scalar)
+    {
+        scaleInverseX(scalar);
+        scaleInverseY(scalar);
+    }
+
+    template <typename U>
+    constexpr void scaleX(U const& scalar)
+    {
+        left *= static_cast<T>(scalar);
+        width *= static_cast<T>(scalar);
+    }
+
+    template <typename U>
+    constexpr void scaleY(U const& scalar)
+    {
+        top *= static_cast<T>(scalar);
+        height *= static_cast<T>(scalar);
+    }
+
+    template <typename U>
+    constexpr void scale(U const& scalar)
+    {
+        scaleX(scalar);
+        scaleY(scalar);
+    }
+
+    template <typename U>
+    constexpr void scale(vector2d<U> const& scalar)
+    {
+        scaleX(scalar.x);
+        scaleY(scalar.y);
     }
 };
 
