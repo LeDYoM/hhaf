@@ -29,7 +29,7 @@ public:
     using RenderizableData::put;
 
     Renderizable(htps::rptr<scene::TransformableSceneNode> parent,
-                RenderizableData&& renderizable_data);
+                 RenderizableData&& renderizable_data);
 
     ~Renderizable();
 
@@ -47,8 +47,9 @@ public:
 
     htps::BasicProperty<bool> visible{true};
 
-    void setTextureAndTextureRect(htps::sptr<res::ITexture> texture_,
-                                  const htps::Rectf32& textRect) noexcept;
+    void setTextureAndTextureRectFromTextureSize(
+        htps::sptr<res::ITexture> texture_,
+        const htps::Rectf32& textRect) noexcept;
 
     void setTextureFill(htps::sptr<res::ITexture> texture_);
 

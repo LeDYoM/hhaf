@@ -140,7 +140,7 @@ void SceneNodeText::update()
 
                 ++counter;
                 Rectf32 const textureUV{font->getTextureBounds(curChar)};
-                letterNode->node()->setTextureAndTextureRect(texture,
+                letterNode->node()->setTextureAndTextureRectFromTextureSize(texture,
                                                              textureUV);
 
                 // Update the current bounds

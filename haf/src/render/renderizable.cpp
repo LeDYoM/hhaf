@@ -95,7 +95,7 @@ void Renderizable::render()
     }
 }
 
-void Renderizable::setTextureAndTextureRect(sptr<res::ITexture> texture_,
+void Renderizable::setTextureAndTextureRectFromTextureSize(sptr<res::ITexture> texture_,
                                             const Rectf32& textRect) noexcept
 {
     textureRect = static_cast<Rects32>(textRect);
@@ -104,7 +104,7 @@ void Renderizable::setTextureAndTextureRect(sptr<res::ITexture> texture_,
 
 void Renderizable::setTextureFill(sptr<res::ITexture> texture_)
 {
-    setTextureAndTextureRect(texture_, textureFillQuad(texture_));
+    setTextureAndTextureRectFromTextureSize(texture_, textureFillQuad(texture_));
 }
 
 void Renderizable::update()
