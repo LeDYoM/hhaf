@@ -95,16 +95,18 @@ void Renderizable::render()
     }
 }
 
-void Renderizable::setTextureAndTextureRectFromTextureSize(sptr<res::ITexture> texture_,
-                                            const Rectf32& textRect) noexcept
+void Renderizable::setTextureAndTextureRectFromTextureSize(
+    sptr<res::ITexture> texture_,
+    const Rectf32& textRect) noexcept
 {
     textureRect = static_cast<Rects32>(textRect);
-    texture = std::move(texture_);
+    texture     = std::move(texture_);
 }
 
 void Renderizable::setTextureFill(sptr<res::ITexture> texture_)
 {
-    setTextureAndTextureRectFromTextureSize(texture_, textureFillQuad(texture_));
+    setTextureAndTextureRectFromTextureSize(texture_,
+                                            textureFillQuad(texture_));
 }
 
 void Renderizable::update()
