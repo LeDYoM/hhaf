@@ -49,7 +49,11 @@ public:
 
     void setTextureAndTextureRectFromTextureSize(
         htps::sptr<res::ITexture> texture_,
-        const htps::Rectf32& textRect) noexcept;
+        htps::Rects32 const& textRect) noexcept;
+
+    void setTextureAndTextureRectNormalizedRect(
+        htps::sptr<res::ITexture> texture_,
+        htps::Rectf32 const& textRect) noexcept;
 
     void setTextureFill(htps::sptr<res::ITexture> texture_);
 

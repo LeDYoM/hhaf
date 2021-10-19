@@ -97,9 +97,19 @@ void Renderizable::render()
 
 void Renderizable::setTextureAndTextureRectFromTextureSize(
     sptr<res::ITexture> texture_,
-    const Rectf32& textRect) noexcept
+    Rects32 const& textRect) noexcept
 {
-    textureRect = static_cast<Rects32>(textRect);
+    textureRect = textRect;
+    texture     = std::move(texture_);
+}
+
+void Renderizable::setTextureAndTextureRectNormalizedRect(
+    sptr<res::ITexture> texture_,
+    Rectf32 const& textRect) noexcept
+{
+    Rects32 dest_textureRect{textRect};
+    dest_textureRect.scale(texture_->size());
+    textureRect = dest_textureRect;
     texture     = std::move(texture_);
 }
 
