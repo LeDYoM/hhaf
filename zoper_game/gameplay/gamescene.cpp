@@ -173,6 +173,7 @@ void GameScene::onCreated()
         "keys.txt", *p_->key_mapping_);
 
     scene_states_->start(GameSceneStates::Playing);
+    installDebugUtils();
 }
 
 void GameScene::generateNextToken()

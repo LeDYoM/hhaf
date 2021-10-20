@@ -59,6 +59,7 @@ void HighScoresScene::onCreated()
     highScoreTextController->Finished.connect([this, statesController]() {
         subsystems().dataWrapper<SceneControl>()->switchToNextScene();
     });
+    installDebugUtils();
 
     statesController->start(HighScoresSceneStates::Show);
 }
