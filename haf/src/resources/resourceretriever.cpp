@@ -3,27 +3,28 @@
 #include "system/get_system.hpp"
 
 using namespace htps;
+using namespace haf::sys;
 
 namespace haf::res
 {
 sptr<ITTFont> ResourceRetriever::getTTFont(const htps::str& rid) const
 {
-    return sys::getSystem<sys::ResourceManager>(attachedNode()).getTTFont(rid);
+    return getSystem<ResourceManager>(attachedNode()).getTTFont(rid);
 }
 
 sptr<ITexture> ResourceRetriever::getTexture(const htps::str& rid) const
 {
-    return sys::getSystem<sys::ResourceManager>(attachedNode()).getTexture(rid);
+    return getSystem<ResourceManager>(attachedNode()).getTexture(rid);
 }
 
 sptr<IShader> ResourceRetriever::getShader(const htps::str& rid) const
 {
-    return sys::getSystem<sys::ResourceManager>(attachedNode()).getShader(rid);
+    return getSystem<ResourceManager>(attachedNode()).getShader(rid);
 }
 
 sptr<IFont> ResourceRetriever::getBMPFont(const htps::str& rid) const
 {
-    return sys::getSystem<sys::ResourceManager>(attachedNode()).getBMPFont(rid);
+    return getSystem<ResourceManager>(attachedNode()).getBMPFont(rid);
 }
 
 }  // namespace haf::res
