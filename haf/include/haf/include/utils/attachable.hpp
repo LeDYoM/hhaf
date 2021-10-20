@@ -26,9 +26,10 @@ public:
      */
     virtual void onAttached() {}
 
+protected:
     /**
      * @brief Get the attached node.
-     * @return const htps::rptr<const T> The const attached node.
+     * @return The pointer to const attached node.
      */
     constexpr types::rptr<const T> attachedNode() const noexcept
     {
@@ -37,7 +38,7 @@ public:
 
     /**
      * @brief Get the attached node.
-     * @return const htps::rptr<const T> The attached node.
+     * @return The pointer to the attached node.
      */
     constexpr types::rptr<T> attachedNode() noexcept { return attachedNode_; }
 
