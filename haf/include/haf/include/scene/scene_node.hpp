@@ -9,11 +9,7 @@
 #include <haf/include/scene/hasname.hpp>
 #include <haf/include/system/systemaccess.hpp>
 #include <haf/include/component/component_container.hpp>
-
-namespace haf::sys
-{
-class DataWrapperCreator;
-}
+#include <haf/include/system/datawrappercreator.hpp>
 
 namespace haf::scene
 {
@@ -27,7 +23,8 @@ class HAF_API SceneNode : public sys::HasName,
                           public SceneNodes,
                           public sys::SystemAccess,
                           public SceneNodeProperties,
-                          public component::ComponentContainer
+                          public component::ComponentContainer,
+                          public sys::DataWrapperCreator
 {
 public:
     using SceneNodeProperties::prop;
@@ -81,9 +78,6 @@ public:
      * @brief Clear all elements in this scene node
      */
     void clearAll();
-
-    sys::DataWrapperCreator& subsystems();
-    sys::DataWrapperCreator& subsystems() const;
 
 private:
     struct SceneNodePrivate;

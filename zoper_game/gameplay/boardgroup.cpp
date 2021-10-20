@@ -34,7 +34,7 @@ void BoardGroup::configure(vector2dst size,
     auto const tableSize{prop<TableSize>().get()};
 
     Rectf32 textBox{
-        subsystems().dataWrapper<SceneMetricsView>()->currentView()};
+        dataWrapper<SceneMetricsView>()->currentView()};
     prop<Position>() = textBox.leftTop();
     sceneNodeCast<TableNode<BoardTileSceneNode>>(this)
         ->prop<SceneNodeSize>()
@@ -272,7 +272,7 @@ bool BoardGroup::moveTowardsCenter(Direction const direction,
 
 vector2df BoardGroup::board2SceneFactor() const
 {
-    return subsystems().dataWrapper<SceneMetricsView>()->currentView().size() /
+    return dataWrapper<SceneMetricsView>()->currentView().size() /
         componentOfType<board::BoardManager>()->size();
 }
 

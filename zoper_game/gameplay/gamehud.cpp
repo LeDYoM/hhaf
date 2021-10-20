@@ -22,8 +22,7 @@ GameHudSceneNode::GameHudSceneNode(
     str name) :
     BaseClass{parent, std::move(name)}
 {
-    Font::value_type font{subsystems()
-                              .dataWrapper<res::ResourceRetriever>()
+    Font::value_type font{dataWrapper<res::ResourceRetriever>()
                               ->getTTFont(GameResources::ScoreFontId)
                               ->font(90U)};
     (score_quad_ = parent->createSceneNode<TextQuad>("score"))

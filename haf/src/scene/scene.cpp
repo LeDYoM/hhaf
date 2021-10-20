@@ -26,16 +26,16 @@ void Scene::onFinished()
 void Scene::installDebugUtils()
 {
     component<debug::DebugActions>()->addDebugAction(input::Key::I, [this]() {
-        subsystems().dataWrapper<SceneMetrics>()->move({0.0F, 100.0F});
+        dataWrapper<SceneMetrics>()->move({0.0F, 100.0F});
     });
     component<debug::DebugActions>()->addDebugAction(input::Key::K, [this]() {
-        subsystems().dataWrapper<SceneMetrics>()->move({0.0F, -100.0F});
+        dataWrapper<SceneMetrics>()->move({0.0F, -100.0F});
     });
     component<debug::DebugActions>()->addDebugAction(input::Key::J, [this]() {
-        subsystems().dataWrapper<SceneMetrics>()->move({100.0F, 0.0F});
+        dataWrapper<SceneMetrics>()->move({100.0F, 0.0F});
     });
     component<debug::DebugActions>()->addDebugAction(input::Key::L, [this]() {
-        subsystems().dataWrapper<SceneMetrics>()->move({-100.0F, 0.0F});
+        dataWrapper<SceneMetrics>()->move({-100.0F, 0.0F});
     });
 }
 

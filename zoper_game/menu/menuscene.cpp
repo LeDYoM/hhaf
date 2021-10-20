@@ -41,11 +41,11 @@ void MenuScene::onCreated()
     BaseClass::onCreated();
 
     // Set the default view for this scene
-    subsystems().dataWrapper<SceneMetrics>()->setViewRect(DefaultView);
+    dataWrapper<SceneMetrics>()->setViewRect(DefaultView);
 
     // Load the necessary resources
     auto resources_configurator{
-        subsystems().dataWrapper<res::ResourcesConfigurator>()};
+        dataWrapper<res::ResourcesConfigurator>()};
     resources_configurator->setResourceConfigFile("resources.txt");
     resources_configurator->setResourcesDirectory("resources/");
     resources_configurator->loadSection("menu");
@@ -60,7 +60,7 @@ void MenuScene::onCreated()
         .name("mainLogo")
         .figType(FigType_t::Quad)
         .box(Rectf32{500.f, 150.f, 1000.f, 500.f})
-        .texture(subsystems().dataWrapper<res::ResourceRetriever>()->getTexture(
+        .texture(dataWrapper<res::ResourceRetriever>()->getTexture(
             MainMenuResources::LogoId))
         .create();
 
@@ -68,7 +68,7 @@ void MenuScene::onCreated()
         ->MenuFinished.connect([this](MenuFinishedStatus const status) {
             if (status == MenuFinishedStatus::Backward)
             {
-                subsystems().dataWrapper<SceneControl>()->requestExit();
+                dataWrapper<SceneControl>()->requestExit();
             }
         });
 

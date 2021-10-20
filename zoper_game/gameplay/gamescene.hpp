@@ -30,7 +30,7 @@ class NextToken;
 
 class GameScene final : public haf::scene::Scene
 {
-    using BaseClass = scene::Scene;
+    using BaseClass = haf::scene::Scene;
 
 public:
     GameScene();

@@ -15,7 +15,7 @@ TimerConnectorSPtr TimerComponent::addTimer(TimerType timerType,
                                             timer_callback_t callback)
 {
     auto timerConnector(msptr<TimerConnector>(
-        attachedNode()->subsystems().dataWrapper<Timer>(), timerType,
+        attachedNode()->dataWrapper<Timer>(), timerType,
         std::move(timeOut), std::move(callback)));
     activeTimers_.emplace_back(timerConnector);
     return timerConnector;

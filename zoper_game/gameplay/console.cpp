@@ -24,7 +24,7 @@ void Console::onCreated()
 
     auto a = createSceneNode<SceneNodeText>("scnText");
     a->prop<Font>().set(
-        subsystems().dataWrapper<res::ResourceRetriever>()->getBMPFont(
+        dataWrapper<res::ResourceRetriever>()->getBMPFont(
             "console_font"));
 
     prop<Position>().set(vector2df{100.0F, 0.0F});

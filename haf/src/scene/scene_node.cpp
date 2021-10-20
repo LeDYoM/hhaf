@@ -21,6 +21,7 @@ SceneNode::SceneNode(rptr<SceneNode> parent, str name) :
                           : nullptr},
     SceneNodeProperties(true),
     component::ComponentContainer{this},
+    sys::DataWrapperCreator{this},
     p_{make_pimplp<SceneNodePrivate>()}
 {}
 
@@ -29,21 +30,6 @@ SceneNode::~SceneNode() = default;
 void SceneNode::clearAll()
 {
     clearSceneNodes();
-}
-
-sys::DataWrapperCreator& SceneNode::subsystems()
-{
-    if (p_->subsystems_ == nullptr)
-    {
-        p_->subsystems_ = types::muptr<sys::DataWrapperCreator>(this);
-    }
-
-    return *(p_->subsystems_);
-}
-
-sys::DataWrapperCreator& SceneNode::subsystems() const
-{
-    return *(p_->subsystems_);
 }
 
 }  // namespace haf::scene

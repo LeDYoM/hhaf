@@ -91,7 +91,7 @@ void MenuPaged::terminate(MenuFinishedStatus const status)
     
     if (prop<FinishSceneAtEnd>()())
     {
-        subsystems().dataWrapper<SceneControl>()->switchToNextScene();
+        dataWrapper<SceneControl>()->switchToNextScene();
     }
 }
 

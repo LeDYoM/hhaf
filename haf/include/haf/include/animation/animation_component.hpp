@@ -52,7 +52,7 @@ public:
 
         builder.prop<AnimationProperties>()
             .put<TimerProperty>(
-                attachedNode()->subsystems().dataWrapper<time::Timer>())
+                attachedNode()->dataWrapper<time::Timer>())
             .put<Times>(1);
         return builder;
     }

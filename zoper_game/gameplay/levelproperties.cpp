@@ -22,7 +22,7 @@ void LevelProperties::configure(
 
     if (!level_timer_)
     {
-        level_timer_ = attachedNode()->subsystems().dataWrapper<Timer>();
+        level_timer_ = attachedNode()->dataWrapper<Timer>();
     }
     LogAsserter::log_assert(scene_timer_component != nullptr,
                             "Passed nullptr sceneTimerComponent");
@@ -49,8 +49,8 @@ void LevelProperties::setScore(size_type const new_score)
     {
         auto const game_shared_data_updater =
             attachedNode()
-                ->subsystems()
-                .dataWrapper<shdata::SharedDataUpdater<GameSharedData>>();
+                ->
+                dataWrapper<shdata::SharedDataUpdater<GameSharedData>>();
         auto game_shared_data =
             game_shared_data_updater->update(GameSharedData::address());
 
@@ -80,8 +80,8 @@ void LevelProperties::setLevel(LevelType const currentLevel)
     {
         auto game_shared_data =
             attachedNode()
-                ->subsystems()
-                .dataWrapper<shdata::SharedDataUpdater<GameSharedData>>()
+                ->
+                dataWrapper<shdata::SharedDataUpdater<GameSharedData>>()
                 ->update(GameSharedData::address());
 
         if (game_shared_data == nullptr)

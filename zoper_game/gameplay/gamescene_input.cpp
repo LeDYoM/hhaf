@@ -80,8 +80,7 @@ void GameSceneInput::onKeyPressedPause(haf::input::Key const& key)
 void GameSceneInput::onKeyPressedGameOver(haf::input::Key const&)
 {
     attachedNode()
-        ->subsystems()
-        .dataWrapper<haf::scene::SceneControl>()
+        ->dataWrapper<haf::scene::SceneControl>()
         ->switchToNextScene();
 }
 
