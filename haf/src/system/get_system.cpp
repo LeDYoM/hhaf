@@ -33,7 +33,7 @@ namespace haf::sys
     } \
 \
     template <> \
-    const SystemType& getSystem<SystemType>( \
+    SystemType const& getSystem<SystemType>( \
         rptr<const scene::SceneNode> scene_node) \
     { \
         return getSystem<SystemType>( \

@@ -19,7 +19,7 @@ template <typename SystemType>
 SystemType& getSystem(htps::rptr<SystemAccess>);
 
 template <typename SystemType>
-const SystemType& getSystem(htps::rptr<const scene::SceneNode>);
+SystemType const& getSystem(htps::rptr<const scene::SceneNode>);
 
 template <typename SystemType>
 SystemType& getSystem(htps::rptr<scene::SceneNode>);
