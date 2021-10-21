@@ -1,7 +1,7 @@
 #ifndef HAF_SYSTEM_INTERNAL_GET_INCLUDE_HPP
 #define HAF_SYSTEM_INTERNAL_GET_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
+#include <haf/include/types/basic_types.hpp>
 
 namespace haf::scene
 {
@@ -13,16 +13,16 @@ namespace haf::sys
 class SystemAccess;
 
 template <typename SystemType>
-const SystemType& getSystem(htps::rptr<const SystemAccess>);
+SystemType const& getSystem(types::rptr<SystemAccess const>);
 
 template <typename SystemType>
-SystemType& getSystem(htps::rptr<SystemAccess>);
+SystemType& getSystem(types::rptr<SystemAccess>);
 
 template <typename SystemType>
-const SystemType& getSystem(htps::rptr<const scene::SceneNode>);
+SystemType const& getSystem(types::rptr<scene::SceneNode const>);
 
 template <typename SystemType>
-SystemType& getSystem(htps::rptr<scene::SceneNode>);
+SystemType& getSystem(types::rptr<scene::SceneNode>);
 }  // namespace haf::sys
 
 #endif

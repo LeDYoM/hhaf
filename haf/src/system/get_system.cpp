@@ -12,7 +12,7 @@
 #include "shareddata/shareddatasystem.hpp"
 #include "filesystem/filesystem.hpp"
 
-using namespace htps;
+using namespace haf::types;
 
 namespace haf::sys
 {
@@ -33,7 +33,7 @@ namespace haf::sys
     } \
 \
     template <> \
-    const SystemType& getSystem<SystemType>( \
+    SystemType const& getSystem<SystemType>( \
         rptr<const scene::SceneNode> scene_node) \
     { \
         return getSystem<SystemType>( \
