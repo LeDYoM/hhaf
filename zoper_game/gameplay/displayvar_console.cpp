@@ -6,7 +6,7 @@
 #include <haf/include/scene_nodes/scenenodetext.hpp>
 
 #include <hlog/include/hlog.hpp>
-#include <haf/include/resources/resourceretriever.hpp>
+#include <haf/include/resources/iresource_retriever.hpp>
 #include <haf/include/resources/ittfont.hpp>
 
 using namespace htps;

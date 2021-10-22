@@ -4,7 +4,7 @@
 #include <menu_paged/include/menu_page.hpp>
 #include <haf/include/scene/scene_node.hpp>
 #include <hlog/include/hlog.hpp>
-#include <haf/include/resources/resourceretriever.hpp>
+#include <haf/include/resources/iresource_retriever.hpp>
 #include <haf/include/resources/ittfont.hpp>
 #include <haf/include/shareddata/shareddata.hpp>
 #include <haf/include/scene_components/scenemetricsview.hpp>
@@ -88,7 +88,7 @@ void MainMenu::onCreated()
 #ifdef TEST_BMP_FONT
             getBMPFont(MainMenuResources::TestFontId)
 #else
-            dataWrapper<res::ResourceRetriever>()
+            subSystem<res::IResourceRetriever>()
                 ->getTTFont(MainMenuResources::MenuFontId)
                 ->font(72)
 #endif

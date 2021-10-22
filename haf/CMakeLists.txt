@@ -69,8 +69,6 @@ set(sources
   ${src_dir}/resources/bmpfontfactory.hpp
   ${src_dir}/resources/font_utils.cpp
   ${src_dir}/resources/font_utils.hpp
-  ${src_dir}/resources/resourceconfigurator.cpp
-  ${src_dir}/resources/resourceretriever.cpp
   ${src_dir}/resources/resourcemanager_private.hpp
   ${src_dir}/resources/resourcemanager.cpp
   ${src_dir}/resources/resourcemanager.hpp
@@ -221,8 +219,8 @@ set(headers
 
   # Resources
   ${inc_dir}/resources/ifont.hpp
-  ${inc_dir}/resources/resourceconfigurator.hpp
-  ${inc_dir}/resources/resourceretriever.hpp
+  ${inc_dir}/resources/iresource_configurator.hpp
+  ${inc_dir}/resources/iresource_retriever.hpp
   ${inc_dir}/resources/ishader.hpp
   ${inc_dir}/resources/itexture.hpp
   ${inc_dir}/resources/ittfont.hpp
@@ -285,6 +283,8 @@ set(headers
   ${inc_dir}/system/idatawrapper.hpp
   ${inc_dir}/system/isystemcontroller.hpp
   ${inc_dir}/system/isystemprovider.hpp
+  ${inc_dir}/system/subsystem_view.hpp
+  ${inc_dir}/system/system_interface.hpp
   ${inc_dir}/system/systemaccess.hpp
 
   # Timer

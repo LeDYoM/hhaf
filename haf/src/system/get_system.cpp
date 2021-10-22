@@ -12,6 +12,10 @@
 #include "shareddata/shareddatasystem.hpp"
 #include "filesystem/filesystem.hpp"
 
+#include <haf/include/system/system_interface.hpp>
+#include <haf/include/resources/iresource_configurator.hpp>
+#include <haf/include/resources/iresource_retriever.hpp>
+
 using namespace haf::types;
 
 namespace haf::sys
@@ -55,4 +59,36 @@ DEFINE_GETSYSTEM(sys::TimeSystem, timeSystem)
 DEFINE_GETSYSTEM(sys::SharedDataSystem, sharedDataSystem)
 DEFINE_GETSYSTEM(sys::RandomSystem, randomSystem)
 DEFINE_GETSYSTEM(sys::FileSystem, fileSystem)
+}  // namespace haf::sys
+
+namespace haf::sys
+{
+template <>
+types::rptr<res::IResourceRetriever> subSystemInterface<res::IResourceRetriever>(
+    types::rptr<SystemAccess> const system_access)
+{
+    return &(getSystem<sys::ResourceManager>(system_access));
+}
+
+template <>
+types::rptr<res::IResourceRetriever const> subSystemInterface<res::IResourceRetriever>(
+    types::rptr<SystemAccess const> const system_access)
+{
+    return &(getSystem<sys::ResourceManager>(system_access));
+}
+
+template <>
+types::rptr<res::IResourcesConfigurator> subSystemInterface<res::IResourcesConfigurator>(
+    types::rptr<SystemAccess> const system_access)
+{
+    return &(getSystem<sys::ResourceManager>(system_access));
+}
+
+template <>
+types::rptr<res::IResourcesConfigurator const> subSystemInterface<res::IResourcesConfigurator>(
+    types::rptr<SystemAccess const> const system_access)
+{
+    return &(getSystem<sys::ResourceManager>(system_access));
+}
+
 }  // namespace haf::sys

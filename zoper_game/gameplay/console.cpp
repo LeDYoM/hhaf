@@ -6,7 +6,7 @@
 #include <haf/include/scene_nodes/scenenodetext.hpp>
 
 #include <hlog/include/hlog.hpp>
-#include <haf/include/resources/resourceretriever.hpp>
+#include <haf/include/resources/iresource_retriever.hpp>
 #include <haf/include/resources/ittfont.hpp>
 #include <haf/include/system/datawrappercreator.hpp>
 
@@ -24,7 +24,7 @@ void Console::onCreated()
 
     auto a = createSceneNode<SceneNodeText>("scnText");
     a->prop<Font>().set(
-        dataWrapper<res::ResourceRetriever>()->getBMPFont(
+        subSystem<res::IResourceRetriever>()->getBMPFont(
             "console_font"));
 
     prop<Position>().set(vector2df{100.0F, 0.0F});

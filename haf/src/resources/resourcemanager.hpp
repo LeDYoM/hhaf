@@ -1,11 +1,10 @@
 #ifndef HAF_RESOURCEMANAGER_INCLUDE_HPP
 #define HAF_RESOURCEMANAGER_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
-#include <htypes/include/str.hpp>
+#include <haf/include/types/basic_types.hpp>
 
-#include <haf/include/resources/resourceretriever.hpp>
-#include <haf/include/resources/resourceconfigurator.hpp>
+#include <haf/include/resources/iresource_retriever.hpp>
+#include <haf/include/resources/iresource_configurator.hpp>
 #include "system/systembase.hpp"
 #include "resources_config_data.hpp"
 
@@ -20,29 +19,31 @@ class IShader;
 
 namespace haf::sys
 {
-class ResourceManager final : public SystemBase
+class ResourceManager final : public SystemBase,
+                              public res::IResourceRetriever,
+                              public res::IResourcesConfigurator
 {
 public:
     ResourceManager(sys::SystemProvider& system_provider);
-    ~ResourceManager();
+    ~ResourceManager() override;
 
-    htps::sptr<res::ITTFont> getTTFont(const htps::str& rid) const;
-    htps::sptr<res::ITexture> getTexture(const htps::str& rid) const;
-    htps::sptr<res::IShader> getShader(const htps::str& rid) const;
-    htps::sptr<res::IFont> getBMPFont(const htps::str& rid) const;
+    types::sptr<res::ITTFont> getTTFont(types::str const& rid) const override;
+    types::sptr<res::ITexture> getTexture(types::str const& rid) const override;
+    types::sptr<res::IShader> getShader(types::str const& rid) const override;
+    types::sptr<res::IFont> getBMPFont(types::str const& rid) const override;
 
-    bool loadTTFont(const htps::str& rid, const htps::str& fileName);
-    bool loadTexture(const htps::str& rid, const htps::str& fileName);
-    bool loadShader(const htps::str& rid, const htps::str& fileName);
-    bool loadBMPFont(const htps::str& rid, const htps::str& fileName);
+    bool loadTTFont(htps::str const& rid, htps::str const& fileName);
+    bool loadTexture(htps::str const& rid, htps::str const& fileName);
+    bool loadShader(htps::str const& rid, htps::str const& fileName);
+    bool loadBMPFont(htps::str const& rid, htps::str const& fileName);
     bool loadBmpFontTextures(htps::sptr<res::BMPFont> bmp_font,
-                             const htps::str& rid,
-                             const htps::str& fileName);
+                             htps::str const& rid,
+                             htps::str const& fileName);
 
     res::SetResourceConfigFileResult setResourceConfigFile(
-        htps::str config_file_name);
-    bool loadSection(htps::str const& section_name);
-    void setResourcesDirectory(htps::str directory);
+        types::str const& config_file_name) override;
+    bool loadSection(types::str const& section_name) override;
+    void setResourcesDirectory(types::str const& directory) override;
 
     res::SetResourceConfigFileResult parseResourceConfigFile();
 

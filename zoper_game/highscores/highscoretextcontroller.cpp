@@ -9,7 +9,7 @@
 #include <haf/include/scene_components/scenemetricsview.hpp>
 #include <haf/include/scene_nodes/scenenodetext_properties.hpp>
 #include <haf/include/resources/ittfont.hpp>
-#include <haf/include/resources/resourceretriever.hpp>
+#include <haf/include/resources/iresource_retriever.hpp>
 #include <haf/include/shareddata/shareddata.hpp>
 #include <haf/include/shareddata/shareddataviewer.hpp>
 #include <haf/include/input/input_component.hpp>
@@ -33,7 +33,7 @@ void HighScoreTextController::onCreated()
 {
     BaseClass::onCreated();
 
-    normal_font_ = dataWrapper<res::ResourceRetriever>()
+    normal_font_ = subSystem<res::IResourceRetriever>()
                        ->getTTFont(HighScoresResources::MenuFontId)
                        ->font(72);
     normal_color_        = colors::Blue;

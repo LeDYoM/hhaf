@@ -10,35 +10,37 @@
 #include "bmpfontfactory.hpp"
 #include "system/systemdatawrappercreator.hpp"
 
-using namespace htps;
+#include <haf/include/system/system_interface.hpp>
+
 using namespace haf::res;
+using namespace haf::types;
 
 namespace haf::sys
 {
 ResourceManager::ResourceManager(sys::SystemProvider& system_provider) :
     SystemBase{system_provider},
-    p_{muptr<ResourceManagerPrivate>()},
+    p_{types::muptr<ResourceManagerPrivate>()},
     resources_config_file_name_{}
 {}
 
 ResourceManager::~ResourceManager() noexcept = default;
 
-sptr<ITTFont> ResourceManager::getTTFont(const str& rid) const
+types::sptr<ITTFont> ResourceManager::getTTFont(const str& rid) const
 {
     return get_or_default(p_->ttf_fonts_, rid);
 }
 
-sptr<ITexture> ResourceManager::getTexture(const str& rid) const
+types::sptr<ITexture> ResourceManager::getTexture(const str& rid) const
 {
     return get_or_default(p_->textures_, rid);
 }
 
-sptr<IShader> ResourceManager::getShader(const str& rid) const
+types::sptr<IShader> ResourceManager::getShader(const str& rid) const
 {
     return get_or_default(p_->shaders_, rid);
 }
 
-sptr<IFont> ResourceManager::getBMPFont(const str& rid) const
+types::sptr<IFont> ResourceManager::getBMPFont(const str& rid) const
 {
     return get_or_default(p_->bmp_fonts_, rid);
 }
@@ -65,7 +67,7 @@ bool ResourceManager::loadShader(const str& rid, const str& fileName)
 
 bool ResourceManager::loadBMPFont(const str& rid, const str& fileName)
 {
-    sptr<BMPFont> bmp_font{p_->bmp_font_factory_.loadFromFile(fileName)};
+    types::sptr<BMPFont> bmp_font{p_->bmp_font_factory_.loadFromFile(fileName)};
     return loadBmpFontTextures(bmp_font, rid, fileName);
 }
 
@@ -81,7 +83,7 @@ bool ResourceManager::loadBmpFontTextures(htps::sptr<res::BMPFont> bmp_font,
         const auto& texture_file_names{bmp_font->textureFileNames()};
         DisplayLog::debug("Number of textures to load: ",
                           texture_file_names.size());
-        vector<sptr<ITexture>> textures(texture_file_names.size());
+        vector<types::sptr<ITexture>> textures(texture_file_names.size());
 
         // If no textures in the font, the font is invalid
         if (texture_file_names.empty())
@@ -99,7 +101,7 @@ bool ResourceManager::loadBmpFontTextures(htps::sptr<res::BMPFont> bmp_font,
             DisplayLog::debug_if(!texture_available,
                                  "Texture for font not found: ", file_name);
 
-            sptr<ITexture> texture(getTexture(rid + "_" + file_name));
+            types::sptr<ITexture> texture(getTexture(rid + "_" + file_name));
             textures.emplace_back(std::move(texture));
         }
 
@@ -148,14 +150,14 @@ SetResourceConfigFileResult ResourceManager::parseResourceConfigFile()
     return SetResourceConfigFileResult::Ok;
 }
 
-void ResourceManager::setResourcesDirectory(htps::str directory)
+void ResourceManager::setResourcesDirectory(str const& directory)
 {
     DisplayLog::debug("Set resources directory to: ", directory);
     p_->config_directory_ = std::move(directory);
 }
 
 SetResourceConfigFileResult ResourceManager::setResourceConfigFile(
-    htps::str file_name)
+    str const& file_name)
 {
     LogAsserter::log_assert(
         !file_name.empty(),
@@ -180,7 +182,7 @@ static constexpr char TypeStr[] = "type";
 static constexpr char FileStr[] = "file";
 }  // namespace
 
-bool ResourceManager::loadSection(htps::str const& section_name)
+bool ResourceManager::loadSection(str const& section_name)
 {
     bool global_result{true};
 

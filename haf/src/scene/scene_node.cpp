@@ -1,7 +1,6 @@
 #include <haf/include/scene/scene_node.hpp>
 
 #include <haf/include/scene/scene.hpp>
-#include <haf/include/system/datawrappercreator.hpp>
 
 using namespace haf::types;
 
@@ -22,6 +21,7 @@ SceneNode::SceneNode(rptr<SceneNode> parent, str name) :
     SceneNodeProperties(true),
     component::ComponentContainer{this},
     sys::DataWrapperCreator{this},
+    sys::SubSystemViewer{this},
     p_{make_pimplp<SceneNodePrivate>()}
 {}
 

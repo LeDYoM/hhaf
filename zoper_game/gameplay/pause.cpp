@@ -10,7 +10,7 @@
 
 #include <haf/include/resources/itexture.hpp>
 #include <haf/include/resources/ittfont.hpp>
-#include <haf/include/resources/resourceretriever.hpp>
+#include <haf/include/resources/iresource_retriever.hpp>
 
 using namespace htps;
 
@@ -29,7 +29,7 @@ void PauseSceneNode::onCreated()
     pause_text_->prop<SceneNodeTextProperties>()
         .put<Text>("PAUSE")
         .put<Font>(
-                       dataWrapper<res::ResourceRetriever>()
+                       subSystem<res::IResourceRetriever>()
                        ->getTTFont(GameResources::ScoreFontId)
                        ->font(180U))
         .put<TextColor>(colors::White)

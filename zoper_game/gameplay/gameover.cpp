@@ -8,7 +8,7 @@
 
 #include <hlog/include/hlog.hpp>
 #include <haf/include/resources/ittfont.hpp>
-#include <haf/include/resources/resourceretriever.hpp>
+#include <haf/include/resources/iresource_retriever.hpp>
 #include <haf/include/system/datawrappercreator.hpp>
 
 using namespace htps;
@@ -33,7 +33,7 @@ GameOverSceneNode::GameOverSceneNode(scene::SceneNode* const parent, str name) :
             game_over_rg_->createSceneNode<SceneNodeText>("gameovergame"));
         gameText->prop<SceneNodeTextProperties>()
             .put<Text>("GAME")
-            .put<Font>(dataWrapper<res::ResourceRetriever>()
+            .put<Font>(subSystem<res::IResourceRetriever>()
                            ->getTTFont(GameResources::ScoreFontId)
                            ->font(360))
             .put<TextColor>(colors::White)
@@ -47,7 +47,7 @@ GameOverSceneNode::GameOverSceneNode(scene::SceneNode* const parent, str name) :
             game_over_rg_->createSceneNode<SceneNodeText>("gameoverover"));
         overText->prop<SceneNodeTextProperties>()
             .put<Text>("OVER")
-            .put<Font>(dataWrapper<res::ResourceRetriever>()
+            .put<Font>(subSystem<res::IResourceRetriever>()
                            ->getTTFont(GameResources::ScoreFontId)
                            ->font(360))
             .put<TextColor>(colors::White)

@@ -8,8 +8,8 @@
 
 #include <haf/include/scene_components/states_controller_component.hpp>
 #include <haf/include/input/input_component.hpp>
-#include <haf/include/resources/resourceretriever.hpp>
-#include <haf/include/resources/resourceconfigurator.hpp>
+#include <haf/include/resources/iresource_retriever.hpp>
+#include <haf/include/resources/iresource_configurator.hpp>
 #include <haf/include/scene_components/scenecontrol.hpp>
 #include <haf/include/render/renderizables.hpp>
 #include <haf/include/render/renderizable_builder.hpp>
@@ -36,7 +36,7 @@ void HighScoresScene::onCreated()
     BaseClass::onCreated();
 
     auto resources_configurator{
-        dataWrapper<res::ResourcesConfigurator>()};
+        subSystem<res::IResourcesConfigurator>()};
     resources_configurator->setResourceConfigFile("resources.txt");
     resources_configurator->loadSection("high_scores");
 
@@ -44,7 +44,7 @@ void HighScoresScene::onCreated()
         component<StatesControllerComponent<HighScoresSceneStates>>()};
 
     normal_font_ = 
-                       dataWrapper<res::ResourceRetriever>()
+                       subSystem<res::IResourceRetriever>()
                        ->getTTFont(HighScoresResources::MenuFontId)
                        ->font(72);
     normal_color_   = colors::Blue;

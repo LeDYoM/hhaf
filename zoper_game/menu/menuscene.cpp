@@ -1,5 +1,5 @@
 #include "menuscene.hpp"
-#include <haf/include/resources/resourceretriever.hpp>
+#include <haf/include/resources/iresource_retriever.hpp>
 #include <haf/include/resources/itexture.hpp>
 #include <haf/include/shareddata/shareddata.hpp>
 #include <haf/include/scene_components/scenecontrol.hpp>
@@ -11,7 +11,7 @@
 #include "../static_data.hpp"
 #include "../gameplay/displayvar_console.hpp"
 
-#include <haf/include/resources/resourceconfigurator.hpp>
+#include <haf/include/resources/iresource_configurator.hpp>
 #include <haf/include/scene_components/scenemetrics.hpp>
 #include <haf/include/render/renderizables.hpp>
 #include <haf/include/render/renderizable_builder.hpp>
@@ -45,7 +45,7 @@ void MenuScene::onCreated()
 
     // Load the necessary resources
     auto resources_configurator{
-        dataWrapper<res::ResourcesConfigurator>()};
+        subSystem<res::IResourcesConfigurator>()};
     resources_configurator->setResourceConfigFile("resources.txt");
     resources_configurator->setResourcesDirectory("resources/");
     resources_configurator->loadSection("menu");
@@ -60,7 +60,7 @@ void MenuScene::onCreated()
         .name("mainLogo")
         .figType(FigType_t::Quad)
         .box(Rectf32{500.f, 150.f, 1000.f, 500.f})
-        .texture(dataWrapper<res::ResourceRetriever>()->getTexture(
+        .texture(subSystem<res::IResourceRetriever>()->getTexture(
             MainMenuResources::LogoId))
         .create();
 
