@@ -3,7 +3,7 @@
 
 #include <haf/include/types/basic_types.hpp>
 #include <haf/include/system/systemaccess.hpp>
-#include <haf/include/system/system_interface.hpp>
+#include <haf/include/system/subsystem_interface.hpp>
 
 namespace haf::sys
 {

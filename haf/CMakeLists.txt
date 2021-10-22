@@ -284,7 +284,7 @@ set(headers
   ${inc_dir}/system/isystemcontroller.hpp
   ${inc_dir}/system/isystemprovider.hpp
   ${inc_dir}/system/subsystem_view.hpp
-  ${inc_dir}/system/system_interface.hpp
+  ${inc_dir}/system/subsystem_interface.hpp
   ${inc_dir}/system/systemaccess.hpp
 
   # Timer

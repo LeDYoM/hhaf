@@ -10,8 +10,6 @@
 #include "bmpfontfactory.hpp"
 #include "system/systemdatawrappercreator.hpp"
 
-#include <haf/include/system/system_interface.hpp>
-
 using namespace haf::res;
 using namespace haf::types;
 
