@@ -20,34 +20,34 @@ htps::sptr<Renderizable> RenderizableBuilder::create()
     return data_.renderizables_->createRenderizable(std::move(data_));
 }
 
-RenderizableBuilder& RenderizableBuilder::name(htps::str _name)
+RenderizableBuilder& RenderizableBuilder::name(types::str const& _name)
 {
-    data_.builder_data_.prop<RenderizableName>() = std::move(_name);
+    data_.builder_data_.prop<RenderizableName>() = _name;
     return *this;
 }
 
-RenderizableBuilder& RenderizableBuilder::figType(FigType_t fig_type)
+RenderizableBuilder& RenderizableBuilder::figType(FigType_t const& fig_type)
 {
-    data_.builder_data_.prop<FigureTypeProperty>() = std::move(fig_type);
+    data_.builder_data_.prop<FigureTypeProperty>() = fig_type;
     return *this;
 }
 
-RenderizableBuilder& RenderizableBuilder::box(htps::Rectf32 _box)
+RenderizableBuilder& RenderizableBuilder::box(SceneBox const& _box)
 {
-    data_.builder_data_.prop<RenderizableSceneBoxProperty>() = std::move(_box);
+    data_.builder_data_.prop<RenderizableSceneBoxProperty>() = _box;
     return *this;
 }
 
-RenderizableBuilder& RenderizableBuilder::color(scene::Color _color)
+RenderizableBuilder& RenderizableBuilder::color(scene::Color const& _color)
 {
-    data_.builder_data_.prop<ColorProperty>() = std::move(_color);
+    data_.builder_data_.prop<ColorProperty>() = _color;
     return *this;
 }
 
 RenderizableBuilder& RenderizableBuilder::pointCount(
-    htps::size_type point_count)
+    htps::size_type const& point_count)
 {
-    data_.builder_data_.prop<PointCount>() = std::move(point_count);
+    data_.builder_data_.prop<PointCount>() = point_count;
     return *this;
 }
 
