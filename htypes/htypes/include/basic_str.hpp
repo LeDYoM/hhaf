@@ -339,6 +339,7 @@ public:
         return data_[index];
     }
 
+    constexpr auto capacity() const noexcept { return data_.capacity(); }
     constexpr iterator begin() noexcept { return data_.begin(); }
     constexpr const_iterator begin() const noexcept { return data_.begin(); }
     constexpr const_iterator cbegin() const noexcept { return data_.cbegin(); }

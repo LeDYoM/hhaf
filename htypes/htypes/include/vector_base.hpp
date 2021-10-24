@@ -153,6 +153,7 @@ public:
     {
         return storage_.capacity();
     }
+
     constexpr size_type size() const noexcept { return storage_.size(); }
     constexpr bool empty() const noexcept { return storage_.empty(); }
     constexpr iterator begin() noexcept { return storage_.begin(); }

@@ -52,6 +52,16 @@ TEST_CASE("str::str Copy", "[str]")
     CHECK_FALSE("" == test);
 }
 
+TEST_CASE("str::operator= copy","[str]")
+{
+    str test = "Long enought string";
+    str test2 = "abc";
+    auto const capacity_now_test{test.capacity()};
+
+    test = test2;
+    CHECK(test.capacity() >= capacity_now_test);
+}
+
 TEST_CASE("str::Increment", "[str]")
 {
     str test("This");
