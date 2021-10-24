@@ -1,6 +1,5 @@
-#include "displayvar_console.hpp"
+#include <haf/include/debug_utils/displayvar_console.hpp>
 #include <haf/include/scene_nodes/scenenodetext.hpp>
-#include "../loaders/mainmenuresources.hpp"
 
 #include <haf/include/scene/scene.hpp>
 #include <haf/include/scene_nodes/scenenodetext.hpp>

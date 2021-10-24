@@ -1,6 +1,6 @@
-#include "console.hpp"
+#include <haf/include/debug_utils/console.hpp>
 #include <haf/include/scene_nodes/scenenodetext.hpp>
-#include "../loaders/mainmenuresources.hpp"
+//#include "../loaders/mainmenuresources.hpp"
 
 #include <haf/include/scene/scene.hpp>
 #include <haf/include/scene_nodes/scenenodetext.hpp>

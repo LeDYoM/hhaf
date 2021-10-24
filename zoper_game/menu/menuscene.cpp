@@ -9,7 +9,7 @@
 #include "../zoperprogramcontroller.hpp"
 #include "../common_scene_nodes.hpp"
 #include "../static_data.hpp"
-#include "../gameplay/displayvar_console.hpp"
+#include <haf/include/debug_utils/displayvar_console.hpp>
 
 #include <haf/include/resources/iresource_configurator.hpp>
 #include <haf/include/scene_components/scenemetrics.hpp>
