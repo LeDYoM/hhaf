@@ -23,6 +23,7 @@ set(headers
     ${include_dir}/memory/placement.hpp
     ${include_dir}/algoutils.hpp
     ${include_dir}/array.hpp
+    ${include_dir}/basic_dictionary.hpp
     ${include_dir}/basic_property.hpp
     ${include_dir}/basic_str.hpp
     ${include_dir}/cestr.hpp
