@@ -1,4 +1,6 @@
-#include <haf/include/debug_utils/debug_system.hpp>
+#include "debug_system.hpp"
 
 namespace haf::sys
-{}  // namespace haf::debug
+{
+DebugSystem::~DebugSystem() = default;
+}  // namespace haf::sys

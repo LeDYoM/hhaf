@@ -20,7 +20,7 @@ class SimulationSystem final : public SystemBase
 public:
     using SimulateRandomDataBuffer = htps::vector<htps::size_type>;
 
-    SimulationSystem(sys::SystemProvider& system_provider);
+    SimulationSystem(SystemProvider& system_provider);
     ~SimulationSystem();
 
     void update();

@@ -3,6 +3,7 @@
 
 #include <backend/include/backendfactory.hpp>
 #include <backend/include/backend_creator.hpp>
+#include "debug_utils/debug_system.hpp"
 #include "filesystem/filesystem.hpp"
 #include "input/inputsystem.hpp"
 #include "random/randomsystem.hpp"
@@ -31,6 +32,7 @@ namespace haf::sys
 struct SystemProvider::SystemProviderPrivate final
 {
     rptr<IApp> app_{nullptr};
+    uptr<DebugSystem> debug_system_;
     uptr<SharedDataSystem> shared_data_system_;
     BackendFactoryPtr backend_factory_{nullptr};
     uptr<Window> window_;
@@ -85,6 +87,12 @@ SystemProvider::~SystemProvider() = default;
 
 void SystemProvider::fastInit(InitSystemOptions const& init_system_options)
 {
+    if (init_system_options.init_debug_system)
+    {
+        DisplayLog::debug("Initializing DebugSystem");
+        p_->shared_data_system_ = muptr<SharedDataSystem>(*this);
+    }
+
     if (init_system_options.init_shared_data_system)
     {
         DisplayLog::debug("Initializing SharedDataSystem");
@@ -239,6 +247,7 @@ void SystemProvider::terminate()
     p_->input_system_.reset();
     p_->window_.reset();
     p_->time_system_.reset();
+    p_->debug_system_.reset();
     p_->backend_factory_ = nullptr;
 }
 

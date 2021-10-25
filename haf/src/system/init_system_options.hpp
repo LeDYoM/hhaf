@@ -6,6 +6,7 @@ namespace haf::sys
 
 struct InitSystemOptions
 {
+    bool init_debug_system{false};
     bool init_shared_data_system{false};
     bool init_time_system{false};
     bool init_window_system{false};
@@ -19,6 +20,7 @@ struct InitSystemOptions
 
     void setAllTrue()
     {
+        init_debug_system       = true;
         init_shared_data_system = true;
         init_time_system        = true;
         init_window_system      = true;

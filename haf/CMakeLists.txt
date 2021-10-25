@@ -27,6 +27,7 @@ set(sources
   ${src_dir}/debug_utils/console.cpp
   ${src_dir}/debug_utils/debug_actions.cpp
   ${src_dir}/debug_utils/debug_system.cpp
+  ${src_dir}/debug_utils/debug_system.hpp
   ${src_dir}/debug_utils/displayvar_console.cpp
   ${src_dir}/debug_utils/variable_viewer.cpp
   
@@ -191,7 +192,6 @@ set(headers
   # Debug
   ${inc_dir}/debug_utils/console.hpp
   ${inc_dir}/debug_utils/debug_actions.hpp
-  ${inc_dir}/debug_utils/debug_system.hpp
   ${inc_dir}/debug_utils/displayvar_console.hpp
   ${inc_dir}/debug_utils/variable_viewer.hpp
 
