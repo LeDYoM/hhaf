@@ -8,6 +8,7 @@
 #include "bmpfontfactory.hpp"
 #include "system/systemdatawrappercreator.hpp"
 
+#include <htypes/include/dictionary.hpp>
 #include <hlog/include/hlog.hpp>
 
 #include <haf/include/resources/ittfont.hpp>
@@ -20,7 +21,6 @@
 #include <htypes/include/object.hpp>
 #include <htypes/include/object_utils.hpp>
 #include <algorithm>
-#include <list>
 
 using namespace htps;
 using namespace haf::res;
@@ -28,10 +28,7 @@ using namespace haf::res;
 namespace haf::sys
 {
 template <typename T>
-using NamedIndex = pair<const str, T>;
-
-template <typename T>
-using ResourceList = std::list<NamedIndex<T>>;
+using ResourceList = htps::Dictionary<T>;
 
 namespace
 {
@@ -86,7 +83,7 @@ sptr<T> get_or_add(backend::IResourceFactory<V>& factory,
         DisplayLog::info(rid, " not found on resource list.");
         DisplayLog::info("Going to load file: ", fileName);
         sptr<T> resource(loadResource<T>(factory, fileSystem, fileName));
-        container.emplace_back(rid, resource);
+        container.add(rid, resource);
         return resource;
     }
 }

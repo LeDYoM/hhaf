@@ -104,7 +104,7 @@ bool ResourceManager::loadBmpFontTextures(htps::sptr<res::BMPFont> bmp_font,
         }
 
         bmp_font->setTexturePages(textures);
-        p_->bmp_fonts_.emplace_back(rid, bmp_font);
+        p_->bmp_fonts_.add(rid, bmp_font);
     }
     else
     {
