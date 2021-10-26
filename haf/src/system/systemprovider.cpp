@@ -371,6 +371,16 @@ const SharedDataSystem& SystemProvider::sharedDataSystem() const noexcept
     return *p_->shared_data_system_;
 }
 
+const DebugSystem& SystemProvider::debugSystem() const noexcept
+{
+    return *p_->debug_system_;
+}
+
+DebugSystem& SystemProvider::debugSystem() noexcept
+{
+    return *p_->debug_system_;
+}
+
 template <>
 SharedDataSystem const& SystemProvider::system() const noexcept
 {
@@ -489,6 +499,18 @@ template <>
 SimulationSystem& SystemProvider::system() noexcept
 {
     return simulationSystem();
+}
+
+template <>
+DebugSystem const& SystemProvider::system() const noexcept
+{
+    return debugSystem();
+}
+
+template <>
+DebugSystem& SystemProvider::system() noexcept
+{
+    return debugSystem();
 }
 
 }  // namespace haf::sys

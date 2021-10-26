@@ -30,6 +30,7 @@ class SimulationSystem;
 class TimeSystem;
 class RenderSystem;
 class SharedDataSystem;
+class DebugSystem;
 }  // namespace sys
 }  // namespace haf
 
@@ -89,6 +90,8 @@ public:
     RenderSystem& renderSystem() noexcept;
     const SharedDataSystem& sharedDataSystem() const noexcept;
     SharedDataSystem& sharedDataSystem() noexcept;
+    const DebugSystem& debugSystem() const noexcept;
+    DebugSystem& debugSystem() noexcept;
 
     template <typename T>
     T const& system() const noexcept;

@@ -11,25 +11,26 @@
 #include "time/timesystem.hpp"
 #include "shareddata/shareddatasystem.hpp"
 #include "filesystem/filesystem.hpp"
+#include "debug_utils/debug_system.hpp"
 
-using namespace haf::types;
+using namespace htps;
 
 namespace haf::sys
 {
-#define DEFINE_GETSYSTEM(SystemType, callFunction) \
+#define DEFINE_GETSYSTEM(SystemType) \
     template <> \
     const SystemType& getSystem<SystemType>( \
         rptr<const SystemAccess> system_access) \
     { \
         return getSystemProvider(system_access->isystemProvider()) \
-            .callFunction(); \
+            .system<SystemType>(); \
     } \
 \
     template <> \
     SystemType& getSystem<SystemType>(rptr<SystemAccess> system_access) \
     { \
         return getSystemProvider(system_access->isystemProvider()) \
-            .callFunction(); \
+            .system<SystemType>(); \
     } \
 \
     template <> \
@@ -47,12 +48,13 @@ namespace haf::sys
             static_cast<rptr<SystemAccess>>(scene_node)); \
     }
 
-DEFINE_GETSYSTEM(sys::InputSystem, inputSystem)
-DEFINE_GETSYSTEM(scene::SceneManager, sceneManager)
-DEFINE_GETSYSTEM(sys::RenderSystem, renderSystem)
-DEFINE_GETSYSTEM(sys::ResourceManager, resourceManager)
-DEFINE_GETSYSTEM(sys::TimeSystem, timeSystem)
-DEFINE_GETSYSTEM(sys::SharedDataSystem, sharedDataSystem)
-DEFINE_GETSYSTEM(sys::RandomSystem, randomSystem)
-DEFINE_GETSYSTEM(sys::FileSystem, fileSystem)
+DEFINE_GETSYSTEM(sys::DebugSystem)
+DEFINE_GETSYSTEM(sys::InputSystem)
+DEFINE_GETSYSTEM(scene::SceneManager)
+DEFINE_GETSYSTEM(sys::RenderSystem)
+DEFINE_GETSYSTEM(sys::ResourceManager)
+DEFINE_GETSYSTEM(sys::TimeSystem)
+DEFINE_GETSYSTEM(sys::SharedDataSystem)
+DEFINE_GETSYSTEM(sys::RandomSystem)
+DEFINE_GETSYSTEM(sys::FileSystem)
 }  // namespace haf::sys
