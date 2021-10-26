@@ -11,6 +11,7 @@
 #include <hlog/include/hlog.hpp>
 
 using namespace htps;
+using namespace haf::sys;
 
 namespace haf::scene
 {
@@ -37,22 +38,22 @@ void SceneManager::finish()
 
 Rectf32 SceneManager::currentViewPort() const
 {
-    return systemProvider().window().renderTarget()->viewPort();
+    return systemProvider().system<Window>().renderTarget()->viewPort();
 }
 
 void SceneManager::setViewPort(Rectf32 const& vp)
 {
-    systemProvider().window().renderTarget()->setViewPort(vp);
+    systemProvider().system<Window>().renderTarget()->setViewPort(vp);
 }
 
 Rectf32 SceneManager::currentView() const
 {
-    return systemProvider().window().renderTarget()->viewRect();
+    return systemProvider().system<Window>().renderTarget()->viewRect();
 }
 
 void SceneManager::setViewRect(Rectf32 const& vr)
 {
-    systemProvider().window().renderTarget()->setViewRect(vr);
+    systemProvider().system<Window>().renderTarget()->setViewRect(vr);
 }
 
 sptr<SceneController> const& SceneManager::sceneController() const noexcept

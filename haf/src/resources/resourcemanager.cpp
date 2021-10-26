@@ -46,20 +46,20 @@ types::sptr<IFont> ResourceManager::getBMPFont(const str& rid) const
 bool ResourceManager::loadTTFont(const str& rid, const str& fileName)
 {
     return get_or_add(systemProvider().backendFactory().ttfontFactory(),
-                      p_->ttf_fonts_, systemProvider().fileSystem(), rid,
+                      p_->ttf_fonts_, systemProvider().system<FileSystem>(), rid,
                       fileName) != nullptr;
 }
 bool ResourceManager::loadTexture(const str& rid, const str& fileName)
 {
     return get_or_add(systemProvider().backendFactory().textureFactory(),
-                      p_->textures_, systemProvider().fileSystem(), rid,
+                      p_->textures_, systemProvider().system<FileSystem>(), rid,
                       fileName) != nullptr;
 }
 
 bool ResourceManager::loadShader(const str& rid, const str& fileName)
 {
     return get_or_add(systemProvider().backendFactory().shaderFactory(),
-                      p_->shaders_, systemProvider().fileSystem(), rid,
+                      p_->shaders_, systemProvider().system<FileSystem>(), rid,
                       fileName) != nullptr;
 }
 

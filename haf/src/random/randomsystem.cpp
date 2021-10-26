@@ -44,8 +44,8 @@ size_type RandomSystem::getNext(const str& name,
     size_type filtered_next = (next % (max - min)) + min;
     DisplayLog::info("RandomSystem: Preselecting output: ", filtered_next);
 
-    bool generated{
-        systemProvider().simulationSystem().getNext(name, filtered_next)};
+    bool generated{systemProvider().system<SimulationSystem>().getNext(
+        name, filtered_next)};
     (void)generated;
 
     return filtered_next;

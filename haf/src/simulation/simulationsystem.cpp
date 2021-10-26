@@ -115,7 +115,8 @@ void SimulationSystem::initialize(str const& simulation_input_file,
         }
 
         // Prepare output
-        priv_->next_last_checked_point_ = systemProvider().timeSystem().now();
+        priv_->next_last_checked_point_ =
+            systemProvider().system<TimeSystem>().now();
         priv_->current_simulation_action_iterator_ =
             priv_->current_replay_data_.simulation_actions_.cbegin();
         priv_->current_simulable_data_buffer_iterator =
@@ -138,7 +139,7 @@ void SimulationSystem::setSimulationActions(
 void SimulationSystem::setSimulationActions(
     SimulationActionGroup simulation_action_group)
 {
-    setSimulationActions(systemProvider().timeSystem().now(),
+    setSimulationActions(systemProvider().system<TimeSystem>().now(),
                          simulation_action_group.getContainer());
 }
 
@@ -152,7 +153,7 @@ void SimulationSystem::update()
 {
     // Get the current TimePoint
     const time::TimePoint& current_time_point{
-        systemProvider().timeSystem().now()};
+        systemProvider().system<TimeSystem>().now()};
 
     // Check if we have still actions to trigger.
     if ((!priv_->current_replay_data_.simulation_actions_.empty()) &&
@@ -172,7 +173,7 @@ void SimulationSystem::update()
             {
                 DisplayLog::info("SimulationSystem: Pressing key: ",
                                  keyIndex(simulation_action.key));
-                systemProvider().inputSystem().simulatePressKey(
+                systemProvider().system<InputSystem>().simulatePressKey(
                     simulation_action.key);
             }
             else if (simulation_action.type ==
@@ -180,7 +181,7 @@ void SimulationSystem::update()
             {
                 DisplayLog::info("SimulationSystem: releasing key: ",
                                  keyIndex(simulation_action.key));
-                systemProvider().inputSystem().simulateReleaseKey(
+                systemProvider().system<InputSystem>().simulateReleaseKey(
                     simulation_action.key);
             }
             else
@@ -196,7 +197,7 @@ void SimulationSystem::update()
         // Note: this will catch the simulated keys in the previous loop too,
         // but
         //      that is intended.
-        auto&& input_system{systemProvider().inputSystem()};
+        auto&& input_system{systemProvider().system<InputSystem>()};
 
         // If there are keys pending in the input system, process them.
         if (!input_system.pressedKeys().empty() ||

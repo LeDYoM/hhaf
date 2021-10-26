@@ -65,9 +65,19 @@ public:
         return *(dynamic_cast<T*>(&app()));
     }
 
+    const backend::BackendFactory& backendFactory() const noexcept;
+    backend::BackendFactory& backendFactory() noexcept;
+
     IApp& app();
     const IApp& app() const;
 
+    template <typename T>
+    T const& system() const noexcept;
+
+    template <typename T>
+    T& system() noexcept;
+
+private:
     const Window& window() const noexcept;
     Window& window() noexcept;
     const ResourceManager& resourceManager() const noexcept;
@@ -84,8 +94,6 @@ public:
     SimulationSystem& simulationSystem() noexcept;
     const TimeSystem& timeSystem() const noexcept;
     TimeSystem& timeSystem() noexcept;
-    const backend::BackendFactory& backendFactory() const noexcept;
-    backend::BackendFactory& backendFactory() noexcept;
     const RenderSystem& renderSystem() const noexcept;
     RenderSystem& renderSystem() noexcept;
     const SharedDataSystem& sharedDataSystem() const noexcept;
@@ -93,13 +101,6 @@ public:
     const DebugSystem& debugSystem() const noexcept;
     DebugSystem& debugSystem() noexcept;
 
-    template <typename T>
-    T const& system() const noexcept;
-
-    template <typename T>
-    T& system() noexcept;
-
-private:
     struct SystemProviderPrivate;
     htps::uptr<SystemProviderPrivate> p_;
 };
