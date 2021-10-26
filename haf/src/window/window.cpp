@@ -28,7 +28,7 @@ struct FPSCounter
                    rptr<backend::IWindow> backend_window,
                    str const& base_title)
     {
-        static const TimePoint OneSec = TimePoint_as_seconds(1U);
+        static constexpr TimePoint OneSec{TimePoint_as_seconds(1U)};
         if ((time_since_start - lastTimeFps) > OneSec)
         {
             lastTimeFps = time_since_start;

@@ -3,6 +3,7 @@
 
 #include <htypes/include/str.hpp>
 #include <htypes/include/types.hpp>
+#include <haf/include/haf_export.hpp>
 
 namespace haf::time
 {
@@ -10,51 +11,66 @@ namespace haf::time
  * @brief Type representing a point in time.
  * It includes functions to convert and set different points in time.
  */
-class TimePoint final
+class HAF_API TimePoint final
 {
 public:
     using Rep = htps::u64;  //<! Type to internally represent the data.
 
-    TimePoint() noexcept;
+    constexpr TimePoint() noexcept : nanoseconds_{Rep{0U}} {}
 
     /**
      * @brief Constructor taking one parameter
      * @param nanoseconds Data to initialize the time point
      */
-    explicit TimePoint(Rep nanoseconds) noexcept;
+    constexpr explicit TimePoint(Rep nanoseconds) noexcept :
+        nanoseconds_{std::move(nanoseconds)}
+    {}
 
     /**
      * @brief Return the time point as nanoseconds
      * @return Rep The value
      */
-    Rep nanoseconds() const noexcept;
+    constexpr Rep nanoseconds() const noexcept { return nanoseconds_; }
 
     /**
      * @brief Return the time point as microseconds
      * @note The decimal part, if any, will be discarded
      * @return Rep The value
      */
-    Rep microseconds() const noexcept;
+    constexpr Rep microseconds() const noexcept
+    {
+        return static_cast<Rep>(nanoseconds_ / static_cast<Rep>(1000U));
+    }
 
     /**
      * @brief Return the time point as milliseconds
      * @note The decimal part, if any, will be discarded
      * @return Rep The value
      */
-    Rep milliseconds() const noexcept;
+    constexpr Rep milliseconds() const noexcept
+    {
+        return static_cast<Rep>(nanoseconds_ / static_cast<Rep>(1000000U));
+    }
 
     /**
      * @brief Return the time point as seconds
      * @note The decimal part, if any, will be discarded
      * @return Rep The value
      */
-    Rep seconds() const noexcept;
+    constexpr Rep seconds() const noexcept
+    {
+        return static_cast<Rep>(nanoseconds_ / static_cast<Rep>(1000000000U));
+    }
 
     /**
      * @brief Return the time point as seconds in an htps::f32 value
      * @return The value in htps::32
      */
-    htps::f32 seconds_f32() const noexcept;
+    constexpr htps::f32 seconds_f32() const noexcept
+    {
+        return static_cast<htps::f32>(static_cast<htps::f32>(nanoseconds_) /
+                                      static_cast<htps::f32>(1000000000U));
+    }
 
     /**
      * @brief Increase operator.
@@ -62,7 +78,11 @@ public:
      * @param other Value to increase
      * @return TimePoint& The already increased object
      */
-    TimePoint& operator+=(TimePoint const& other) noexcept;
+    constexpr TimePoint& operator+=(TimePoint const& other) noexcept
+    {
+        this->nanoseconds_ += other.nanoseconds_;
+        return *this;
+    }
 
     /**
      * @brief Decrease operator.
@@ -70,7 +90,11 @@ public:
      * @param other Value to decrease
      * @return TimePoint& The already decreased object
      */
-    TimePoint& operator-=(TimePoint const& other) noexcept;
+    constexpr TimePoint& operator-=(TimePoint const& other) noexcept
+    {
+        this->nanoseconds_ -= other.nanoseconds_;
+        return *this;
+    }
 
     /**
      * @brief Multiplication operator.
@@ -78,7 +102,12 @@ public:
      * @param scalar Value to multiply
      * @return TimePoint& The already multiplied object
      */
-    TimePoint& operator*=(htps::f32 const scalar) noexcept;
+    constexpr TimePoint& operator*=(htps::f32 const scalar) noexcept
+    {
+        nanoseconds_ =
+            static_cast<Rep>(static_cast<htps::f32>(nanoseconds_ * scalar));
+        return *this;
+    }
 
     /**
      * @brief Multiplication operator.
@@ -87,7 +116,12 @@ public:
      * @param scalar Value to divide
      * @return TimePoint& The already divided object
      */
-    TimePoint& operator/=(htps::f32 const scalar) noexcept;
+    constexpr TimePoint& operator/=(htps::f32 const scalar) noexcept
+    {
+        nanoseconds_ =
+            static_cast<Rep>(static_cast<htps::f32>(nanoseconds_ / scalar));
+        return *this;
+    }
 
 private:
     Rep nanoseconds_;  ///< Internal value representation
@@ -99,7 +133,11 @@ private:
  * @param rhs Second value
  * @return Resulting TimePoint
  */
-TimePoint operator+(TimePoint const& lhs, TimePoint const& rhs) noexcept;
+constexpr TimePoint operator+(TimePoint const& lhs,
+                              TimePoint const& rhs) noexcept
+{
+    return TimePoint{lhs.nanoseconds()} += rhs;
+}
 
 /**
  * @brief Substract two time points
@@ -107,7 +145,11 @@ TimePoint operator+(TimePoint const& lhs, TimePoint const& rhs) noexcept;
  * @param rhs Second value
  * @return Resulting TimePoint
  */
-TimePoint operator-(TimePoint const& lhs, TimePoint const& rhs) noexcept;
+constexpr TimePoint operator-(TimePoint const& lhs,
+                              TimePoint const& rhs) noexcept
+{
+    return TimePoint{lhs.nanoseconds()} -= rhs;
+}
 
 /**
  * @brief Multiply one time point with an scalar
@@ -115,7 +157,10 @@ TimePoint operator-(TimePoint const& lhs, TimePoint const& rhs) noexcept;
  * @param scalar Scalar value
  * @return Resulting TimePoint
  */
-TimePoint operator*(TimePoint const& lhs, htps::f32 const scalar) noexcept;
+constexpr TimePoint operator*(TimePoint const& lhs, htps::f32 const scalar) noexcept
+{
+    return TimePoint{lhs.nanoseconds()} *= scalar;
+}
 
 /**
  * @brief Divide one time point with an scalar
@@ -123,7 +168,11 @@ TimePoint operator*(TimePoint const& lhs, htps::f32 const scalar) noexcept;
  * @param scalar Scalar value
  * @return Resulting TimePoint
  */
-TimePoint operator/(TimePoint const& lhs, htps::f32 const scalar) noexcept;
+constexpr TimePoint operator/(TimePoint const& lhs, htps::f32 const scalar) noexcept
+{
+    return TimePoint{lhs.nanoseconds()} /= scalar;
+}
+
 
 /**
  * @brief Create a TimePoint given an initial value in nanoseconds
@@ -131,35 +180,50 @@ TimePoint operator/(TimePoint const& lhs, htps::f32 const scalar) noexcept;
  * @param micros The initial value
  * @return TimePoint initialized to the correct value
  */
-TimePoint TimePoint_as_nanoseconds(TimePoint::Rep const nanos) noexcept;
+constexpr TimePoint TimePoint_as_nanoseconds(TimePoint::Rep const nanos) noexcept
+{
+    return TimePoint{nanos};
+}
 
 /**
  * @brief Create a TimePoint given an initial value in microseconds
  * @param micros The initial value
  * @return TimePoint initialized to the correct value
  */
-TimePoint TimePoint_as_microseconds(TimePoint::Rep const micros) noexcept;
+constexpr TimePoint TimePoint_as_microseconds(TimePoint::Rep const micros) noexcept
+{
+    return TimePoint{micros * 1000U};
+}
 
 /**
  * @brief Create a TimePoint given an initial value in milliseconds
  * @param millis The initial value
  * @return TimePoint initialized to the correct value
  */
-TimePoint TimePoint_as_miliseconds(TimePoint::Rep const millis) noexcept;
+constexpr TimePoint TimePoint_as_miliseconds(TimePoint::Rep const millis) noexcept
+{
+    return TimePoint_as_microseconds(millis * 1000U);
+}
 
 /**
  * @brief Create a TimePoint given an initial value in seconds
  * @param seconds The initial value
  * @return TimePoint initialized to the correct value
  */
-TimePoint TimePoint_as_seconds(TimePoint::Rep const secs) noexcept;
+constexpr TimePoint TimePoint_as_seconds(TimePoint::Rep const secs) noexcept
+{
+    return TimePoint_as_miliseconds(secs * 1000U);
+}
 
 /**
  * @brief Create a TimePoint given an initial value in seconds (f32 overload)
  * @param seconds The initial value
  * @return TimePoint initialized to the correct value
  */
-TimePoint TimePoint_as_seconds_f32(htps::f32 const secs) noexcept;
+constexpr TimePoint TimePoint_as_seconds_f32(htps::f32 const secs) noexcept
+{
+    return TimePoint_as_miliseconds(static_cast<TimePoint::Rep>(secs * 1000U));
+}
 
 /**
  * @brief Lower than operator
@@ -168,7 +232,10 @@ TimePoint TimePoint_as_seconds_f32(htps::f32 const secs) noexcept;
  * @return true lhs is lower than rhs
  * @return false lhs is not lower than rhs
  */
-bool operator<(TimePoint const& lhs, TimePoint const& rhs) noexcept;
+constexpr bool operator<(TimePoint const& lhs, TimePoint const& rhs) noexcept
+{
+    return {lhs.nanoseconds() < rhs.nanoseconds()};
+}
 
 /**
  * @brief Higher than operator
@@ -177,7 +244,10 @@ bool operator<(TimePoint const& lhs, TimePoint const& rhs) noexcept;
  * @return true lhs is higher than rhs
  * @return false lhs is not higher than rhs
  */
-bool operator>(TimePoint const& lhs, TimePoint const& rhs) noexcept;
+constexpr bool operator>(TimePoint const& lhs, TimePoint const& rhs) noexcept
+{
+    return {lhs.nanoseconds() > rhs.nanoseconds()};
+}
 
 /**
  * @brief Lower or equal than operator
@@ -186,7 +256,10 @@ bool operator>(TimePoint const& lhs, TimePoint const& rhs) noexcept;
  * @return true lhs is lower or equal than rhs
  * @return false lhs is not lower or equal than rhs
  */
-bool operator<=(TimePoint const& lhs, TimePoint const& rhs) noexcept;
+constexpr bool operator<=(TimePoint const& lhs, TimePoint const& rhs) noexcept
+{
+    return {lhs.nanoseconds() <= rhs.nanoseconds()};
+}
 
 /**
  * @brief Higher or equal than operator
@@ -195,7 +268,10 @@ bool operator<=(TimePoint const& lhs, TimePoint const& rhs) noexcept;
  * @return true lhs is higher or equal than rhs
  * @return false lhs is not higher or equal than rhs
  */
-bool operator>=(TimePoint const& lhs, TimePoint const& rhs) noexcept;
+constexpr bool operator>=(TimePoint const& lhs, TimePoint const& rhs) noexcept
+{
+    return lhs.nanoseconds() >= rhs.nanoseconds();
+}
 
 /**
  * @brief Equality operator
@@ -204,7 +280,10 @@ bool operator>=(TimePoint const& lhs, TimePoint const& rhs) noexcept;
  * @return true lhs is equal to rhs
  * @return false lhs is not equal to rhs
  */
-bool operator==(TimePoint const& lhs, TimePoint const& rhs) noexcept;
+constexpr bool operator==(TimePoint const& lhs, TimePoint const& rhs) noexcept
+{
+    return lhs.nanoseconds() == rhs.nanoseconds();
+}
 
 /**
  * @brief Inequality operator
@@ -213,7 +292,10 @@ bool operator==(TimePoint const& lhs, TimePoint const& rhs) noexcept;
  * @return true lhs is not equal to rhs
  * @return false lhs is not not equal to rhs
  */
-bool operator!=(TimePoint const& lhs, TimePoint const& rhs) noexcept;
+constexpr bool operator!=(TimePoint const& lhs, TimePoint const& rhs) noexcept
+{
+    return lhs.nanoseconds() != rhs.nanoseconds();
+}
 
 /**
  * @brief Output operator
@@ -221,7 +303,11 @@ bool operator!=(TimePoint const& lhs, TimePoint const& rhs) noexcept;
  * @param tp TimePoint to output
  * @return htps::str& Reference to os with tp already output.
  */
-htps::str& operator<<(htps::str& os, TimePoint const& tp);
+constexpr htps::str& operator<<(htps::str& os, TimePoint const& tp)
+{
+    os << tp.nanoseconds();
+    return os;
+}
 
 }  // namespace haf::time
 
