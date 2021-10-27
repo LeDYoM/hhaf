@@ -151,6 +151,8 @@ set(sources
   ${src_dir}/system/systemprovider.hpp
 
   # Time
+  ${src_dir}/time/time_system_acceleration.cpp
+  ${src_dir}/time/time_system_acceleration.hpp
   ${src_dir}/time/timepoint.cpp
   ${src_dir}/time/timer.cpp
   ${src_dir}/time/timercomponent.cpp
@@ -162,6 +164,7 @@ set(sources
   ${src_dir}/types/str.cpp
 
   # Utils
+  ${src_dir}/utils/compile_time_constants.hpp
   ${src_dir}/utils/type_data.cpp
   
   # Window
@@ -329,8 +332,11 @@ set(HAF_PRIVATE_INCLUDE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/src)
 build_lib_component(EXPORT_ALL HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}/include" 
   SOURCES ${sources} HEADERS ${headers})
 
-# Prepare the haf libray
+#define compile time constants
 target_compile_definitions(${CURRENT_TARGET} PRIVATE HAF_ALLOW_ACCELERATION)
+target_compile_definitions(${CURRENT_TARGET} PRIVATE HAF_SHOW_FPS)
+
+# Prepare the haf libray
 target_compile_definitions(${CURRENT_TARGET} PRIVATE haf_EXPORTS)
 target_link_libraries(${CURRENT_TARGET} PRIVATE hosted_app agloader backend backend_dev)
 

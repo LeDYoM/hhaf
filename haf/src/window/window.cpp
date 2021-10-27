@@ -7,6 +7,7 @@
 #include "render/rendertarget.hpp"
 #include "time/timesystem.hpp"
 #include "system/systemprovider.hpp"
+#include "utils/compile_time_constants.hpp"
 
 #include <haf/include/time/timepoint.hpp>
 #include <haf/include/input/inputdriver_wrapper.hpp>
@@ -136,7 +137,11 @@ bool Window::create(uptr<win::WindowProperties> window_properties)
 
 bool Window::preLoop()
 {
-    priv_->updateFPS(systemProvider().system<TimeSystem>().timeSinceStart());
+    if constexpr (ctc::ShowFPS)
+    {
+        priv_->updateFPS(
+            systemProvider().system<TimeSystem>().timeSinceStart());
+    }
 
     priv_->render_target_->clear();
     return priv_->backend_window_->processEvents();

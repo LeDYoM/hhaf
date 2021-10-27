@@ -1,7 +1,10 @@
 #include "timesystem.hpp"
 
+#include "time_system_acceleration.hpp"
+
 #include <hlog/include/hlog.hpp>
 #include <haf/include/time/timepoint.hpp>
+#include "utils/compile_time_constants.hpp"
 
 #include <chrono>
 
@@ -22,28 +25,24 @@ TimePoint timepoint_global_now()
 }
 }  // namespace
 
-struct TimeSystem::TimeSystemPrivate final
+struct TimeSystem::TimeSystemPrivate final : public TimeSystemAcceleration
 {
-    TimeSystemPrivate() : globalStart_{timepoint_global_now()}
+    TimeSystemPrivate() :
+        TimeSystemAcceleration{}, globalStart_{timepoint_global_now()}
     {
         DisplayLog::info("TimeSystem started at: ", globalStart_.seconds());
     }
 
     TimePoint timeSinceStart() const
     {
-#ifdef HAF_ALLOW_ACCELERATION
-        TimePoint temp{(timepoint_global_now() - globalStart_)};
-        if (!use_acceleration)
+        if constexpr (ctc::AllowAcceleration)
         {
-            return temp;
+            return accelerate(timepoint_global_now() - globalStart_);
         }
         else
         {
-            return temp * acceleration_;
+            return timepoint_global_now() - globalStart_;
         }
-#else
-        return (timepoint_global_now() - globalStart_);
-#endif
     }
 
     void updateStartFrameTime()
@@ -56,22 +55,12 @@ struct TimeSystem::TimeSystemPrivate final
     void updateEndFrameTime() { last_end_frame_ = timepoint_global_now(); }
 
     TimePoint lastFrameTime() const noexcept { return last_frame_time_; }
-#ifdef HAF_ALLOW_ACCELERATION
-    void setAcceleration(f32 const acceleration) noexcept
-    {
-        use_acceleration = true;
-        acceleration_    = acceleration;
-    }
-#endif
+
 private:
     TimePoint globalStart_;
     TimePoint last_frame_time_{0U};
     TimePoint last_start_frame_{0U};
     TimePoint last_end_frame_{0U};
-#ifdef HAF_ALLOW_ACCELERATION
-    f32 acceleration_ = 1.0f;
-    bool use_acceleration{false};
-#endif
 };
 
 TimeSystem::TimeSystem(sys::ISystemProvider& system_provider) :
@@ -92,9 +81,10 @@ TimePoint TimeSystem::now() const
 
 void TimeSystem::setAcceleration(f32 const acceleration)
 {
-#ifdef HAF_ALLOW_ACCELERATION
-    priv_->setAcceleration(acceleration);
-#endif
+    if constexpr (ctc::AllowAcceleration)
+    {
+        priv_->setAcceleration(acceleration);
+    }
 }
 
 void TimeSystem::startFrame()
