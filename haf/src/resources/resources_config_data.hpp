@@ -6,15 +6,22 @@
 #include <htypes/include/str.hpp>
 #include <htypes/include/object.hpp>
 
+#include <haf/include/shareddata/ishareable.hpp>
+
 namespace haf::res
 {
-struct ResourcesConfigDataElement
+struct ResourcesConfigDataElement : public data::IDeserializable
 {
     htps::str type;
     htps::str file_name;
-
     static constexpr char TypeStr[]     = "type";
     static constexpr char FileNameStr[] = "filename";
+
+    bool deserialize(htps::Object const& obj) override
+    {
+        type      = obj[ResourcesConfigDataElement::TypeStr].getValue();
+        file_name = obj[ResourcesConfigDataElement::FileNameStr].getValue();
+    }
 };
 
 inline const htps::Object& operator>>(const htps::Object& obj,

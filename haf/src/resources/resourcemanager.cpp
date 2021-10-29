@@ -187,12 +187,9 @@ bool ResourceManager::loadSection(str const& section_name)
     LogAsserter::log_assert(!resources_config_file_name_.empty(),
                             "The resources file name was not set");
 
-    LogAsserter::log_assert(!resources_config_data_.elements_.empty(),
-                            "No data to load");
-
     // Fetch the section data.
-    Object resources_to_load =
-        resources_config_data_.elements_[section_name].getObject();
+    Object resources_to_load{
+        resources_config_data_.elements_[section_name].getObject()};
 
     // Load the section.
     for (auto const& obj : resources_to_load.objects())
