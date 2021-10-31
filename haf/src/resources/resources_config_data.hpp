@@ -12,15 +12,17 @@ namespace haf::res
 {
 struct ResourcesConfigDataElement : public data::IDeserializable
 {
+    htps::str name;
     htps::str type;
     htps::str file_name;
     static constexpr char TypeStr[]     = "type";
-    static constexpr char FileNameStr[] = "filename";
+    static constexpr char FileNameStr[] = "file";
 
     bool deserialize(htps::Object const& obj) override
     {
         type      = obj[ResourcesConfigDataElement::TypeStr].getValue();
         file_name = obj[ResourcesConfigDataElement::FileNameStr].getValue();
+        return true;
     }
 };
 
@@ -35,13 +37,24 @@ inline const htps::Object& operator>>(const htps::Object& obj,
 
 struct ResourcesConfigData
 {
-    htps::Object elements_;
+    htps::Dictionary<htps::vector<ResourcesConfigDataElement>> elements;
 };
 
 inline const htps::Object& operator>>(const htps::Object& obj,
-                                      ResourcesConfigData& element)
+                                      ResourcesConfigData& elements)
 {
-    element.elements_ = obj;
+    for (auto const& section : obj.objects())
+    {
+        htps::vector<ResourcesConfigDataElement> temp_section;
+        for (auto const& element : section.second.objects())
+        {
+            ResourcesConfigDataElement temp;
+            temp.name = element.first;
+            temp.deserialize(element.second);
+            temp_section.push_back(std::move(temp));
+        }
+        elements.elements.add(section.first, std::move(temp_section));
+    }
     return obj;
 }
 

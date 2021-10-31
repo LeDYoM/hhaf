@@ -36,9 +36,9 @@ public:
 
     constexpr iterator begin() noexcept { return data_.begin(); }
     constexpr const_iterator begin() const noexcept { return data_.begin(); }
+    constexpr const_iterator cbegin() const noexcept { return data_.begin(); }
     constexpr iterator end() noexcept { return data_.end(); }
     constexpr const_iterator end() const noexcept { return data_.end(); }
-    constexpr const_iterator cbegin() const noexcept { return data_.begin(); }
     constexpr const_iterator cend() const noexcept { return data_.end(); }
 
     constexpr bool add(content const& eList, bool const overwrite = true)

@@ -46,8 +46,8 @@ types::sptr<IFont> ResourceManager::getBMPFont(const str& rid) const
 bool ResourceManager::loadTTFont(const str& rid, const str& fileName)
 {
     return get_or_add(systemProvider().backendFactory().ttfontFactory(),
-                      p_->ttf_fonts_, systemProvider().system<FileSystem>(), rid,
-                      fileName) != nullptr;
+                      p_->ttf_fonts_, systemProvider().system<FileSystem>(),
+                      rid, fileName) != nullptr;
 }
 bool ResourceManager::loadTexture(const str& rid, const str& fileName)
 {
@@ -188,54 +188,59 @@ bool ResourceManager::loadSection(str const& section_name)
                             "The resources file name was not set");
 
     // Fetch the section data.
-    Object resources_to_load{
-        resources_config_data_.elements_[section_name].getObject()};
+    auto const resources_to_load_iterator{
+        resources_config_data_.elements.cfind_checked(section_name)};
 
-    // Load the section.
-    for (auto const& obj : resources_to_load.objects())
+    if (resources_to_load_iterator.first)
     {
-        auto const& element_name = obj.first;
-        auto const& element_type = obj.second[TypeStr].getValue();
-        auto element_file        = obj.second[FileStr].getValue();
-        DisplayLog::debug("Going to load element: ", element_name, " of type ",
-                          element_type, " with file name: ", element_file);
+        // Load the section.
+        for (auto const& resource_to_load :
+             resources_to_load_iterator.second->second)
+        {
+            DisplayLog::debug("Going to load element: ", resource_to_load.name,
+                              " of type ", resource_to_load.type,
+                              " with file name: ", resource_to_load.file_name);
 
-        if (!p_->config_directory_.empty())
-        {
-            element_file = p_->config_directory_ + element_file;
-            DisplayLog::debug("Element file with directory: ", element_file);
-        }
+            str element_file{resource_to_load.file_name};
+            if (!p_->config_directory_.empty())
+            {
+                element_file = p_->config_directory_ + element_file;
+                DisplayLog::debug("Element file with directory: ",
+                                  element_file);
+            }
 
-        bool local_result{false};
+            bool local_result{false};
 
-        if (element_type == "ttf")
-        {
-            local_result = loadTTFont(element_name, element_file);
-        }
-        else if (element_type == "texture")
-        {
-            local_result = loadTexture(element_name, element_file);
-        }
-        else if (element_type.starts_with("bmp_font"))
-        {
-            local_result = loadBMPFont(element_name, element_file);
-        }
-        else
-        {
-            LogAsserter::log_assert(local_result, "Invalid type of element");
-        }
+            if (resource_to_load.type == "ttf")
+            {
+                local_result = loadTTFont(resource_to_load.name, element_file);
+            }
+            else if (resource_to_load.type == "texture")
+            {
+                local_result = loadTexture(resource_to_load.name, element_file);
+            }
+            else if (resource_to_load.type.starts_with("bmp_font"))
+            {
+                local_result = loadBMPFont(resource_to_load.name, element_file);
+            }
+            else
+            {
+                LogAsserter::log_assert(local_result,
+                                        "Invalid type of element");
+            }
 
-        if (local_result)
-        {
-            DisplayLog::info("File ", element_file, " loaded as ",
-                             element_name);
-        }
-        else
-        {
-            DisplayLog::error("File ", element_file, " cannot be loaded");
-        }
+            if (local_result)
+            {
+                DisplayLog::info("File ", element_file, " loaded as ",
+                                 resource_to_load.name);
+            }
+            else
+            {
+                DisplayLog::error("File ", element_file, " cannot be loaded");
+            }
 
-        global_result &= local_result;
+            global_result &= local_result;
+        }
     }
 
     return global_result;
