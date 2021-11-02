@@ -26,35 +26,32 @@ struct ResourcesConfigDataElement : public data::IDeserializable
     }
 };
 
-inline const htps::Object& operator>>(const htps::Object& obj,
-                                      ResourcesConfigDataElement& element)
-{
-    element.type      = obj[ResourcesConfigDataElement::TypeStr].getValue();
-    element.file_name = obj[ResourcesConfigDataElement::FileNameStr].getValue();
-
-    return obj;
-}
-
-struct ResourcesConfigData
+struct ResourcesConfigData : public data::IDeserializable
 {
     htps::Dictionary<htps::vector<ResourcesConfigDataElement>> elements;
+
+    bool deserialize(htps::Object const& obj) override
+    {
+        for (auto const& section : obj.objects())
+        {
+            htps::vector<ResourcesConfigDataElement> temp_section;
+            for (auto const& element : section.second.objects())
+            {
+                ResourcesConfigDataElement temp;
+                temp.name = element.first;
+                temp.deserialize(element.second);
+                temp_section.push_back(std::move(temp));
+            }
+            elements.add(section.first, std::move(temp_section));
+        }
+        return true;
+    }
 };
 
 inline const htps::Object& operator>>(const htps::Object& obj,
                                       ResourcesConfigData& elements)
 {
-    for (auto const& section : obj.objects())
-    {
-        htps::vector<ResourcesConfigDataElement> temp_section;
-        for (auto const& element : section.second.objects())
-        {
-            ResourcesConfigDataElement temp;
-            temp.name = element.first;
-            temp.deserialize(element.second);
-            temp_section.push_back(std::move(temp));
-        }
-        elements.elements.add(section.first, std::move(temp_section));
-    }
+    elements.deserialize(obj);
     return obj;
 }
 
