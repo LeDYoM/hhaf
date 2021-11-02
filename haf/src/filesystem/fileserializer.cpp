@@ -21,7 +21,7 @@ bool FileSerializer::saveFile(const Path& file_name, const str& data)
 
 FileSerializer::Result FileSerializer::deserializeFromFile(
     const Path& file_name,
-    shdata::IShareable& data)
+    data::IDeserializable& data)
 {
     const htps::str text_data{loadTextFile(file_name)};
     if (!text_data.empty())
@@ -48,7 +48,7 @@ FileSerializer::Result FileSerializer::deserializeFromFile(
 
 FileSerializer::Result FileSerializer::serializeToFile(
     const Path& file_name,
-    const shdata::IShareable& data)
+    const data::ISerializable& data)
 {
     //        auto temp{htps::Serializer<T>::serialize(data)};
     htps::Object obj;

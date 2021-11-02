@@ -19,7 +19,7 @@
 namespace haf::sys
 {
 
-struct ReplayData : public shdata::IShareable
+struct ReplayData : public data::IFullSerializable
 {
     SimulationSystem::SimulateRandomDataBuffer data_buffer_;
     SimulationActionContainer simulation_actions_;

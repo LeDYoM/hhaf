@@ -42,7 +42,8 @@ public:
         return Result::FileIOError;
     }
 
-    Result deserializeFromFile(const Path& file_name, shdata::IShareable& data);
+    Result deserializeFromFile(const Path& file_name,
+                               data::IDeserializable& data);
 
     template <typename T>
     Result serializeToFileTemplate(const Path& file_name, const T& data)
@@ -58,7 +59,7 @@ public:
     }
 
     Result serializeToFile(const Path& file_name,
-                           const shdata::IShareable& data);
+                           const data::ISerializable& data);
 };
 
 }  // namespace haf::sys
