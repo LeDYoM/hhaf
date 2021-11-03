@@ -75,6 +75,8 @@ set(sources
   ${src_dir}/resources/bmpfontfactory.hpp
   ${src_dir}/resources/font_utils.cpp
   ${src_dir}/resources/font_utils.hpp
+  ${src_dir}/resources/resource_manager_config_loader.cpp
+  ${src_dir}/resources/resource_manager_config_loader.hpp
   ${src_dir}/resources/resourcemanager_private.hpp
   ${src_dir}/resources/resourcemanager.cpp
   ${src_dir}/resources/resourcemanager.hpp
