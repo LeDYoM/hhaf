@@ -48,13 +48,6 @@ struct ResourcesConfigData : public data::IDeserializable
     }
 };
 
-inline const htps::Object& operator>>(const htps::Object& obj,
-                                      ResourcesConfigData& elements)
-{
-    elements.deserialize(obj);
-    return obj;
-}
-
 }  // namespace haf::res
 
 #endif

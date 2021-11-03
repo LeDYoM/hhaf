@@ -120,14 +120,14 @@ SetResourceConfigFileResult ResourceManager::parseResourceConfigFile()
 
     SystemDataWrapperCreator dwc{*this};
     auto file_serializer = dwc.dataWrapper<FileSerializer>();
-    auto const result    = file_serializer->deserializeFromFileTemplate(
+    auto const result    = file_serializer->deserializeFromFile(
         resources_config_file_name_, resources_config_data_);
 
     if (result != FileSerializer::Result::Success)
     {
         if (result == FileSerializer::Result::FileIOError)
         {
-            DisplayLog::debug("Simulation file ", resources_config_file_name_,
+            DisplayLog::debug("Resources file ", resources_config_file_name_,
                               " not found");
             return SetResourceConfigFileResult::FileNotFound;
         }
