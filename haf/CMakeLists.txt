@@ -13,6 +13,7 @@ set(src_dir src)
 
 set(sources
   # Global
+  ${src_dir}/haf_private.hpp
   ${src_dir}/main.cpp 
   ${src_dir}/systemprovider_init.cpp
 
@@ -77,6 +78,9 @@ set(sources
   ${src_dir}/resources/resourcemanager_private.hpp
   ${src_dir}/resources/resourcemanager.cpp
   ${src_dir}/resources/resourcemanager.hpp
+  ${src_dir}/resources/resources_config_data_element.cpp
+  ${src_dir}/resources/resources_config_data_element.hpp
+  ${src_dir}/resources/resources_config_data.cpp
   ${src_dir}/resources/resources_config_data.hpp
   ${src_dir}/resources/shader.cpp
   ${src_dir}/resources/shader.hpp
