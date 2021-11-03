@@ -24,7 +24,7 @@ class ResourceManager final : public SystemBase,
                               public res::IResourcesConfigurator
 {
 public:
-    ResourceManager(sys::SystemProvider& system_provider);
+    explicit ResourceManager(sys::SystemProvider& system_provider);
     ~ResourceManager() override;
 
     types::sptr<res::ITTFont> getTTFont(types::str const& rid) const override;
