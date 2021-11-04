@@ -1,29 +1,38 @@
-#include "resourcemanager.hpp"
+#include "resource_manager_config_loader.hpp"
+
+#include "resources/resourcemanager.hpp"
+
+#include <haf/include/filesystem/fileserializer.hpp>
+#include <hlog/include/hlog.hpp>
+
+#include "system/systemdatawrappercreator.hpp"
 
 using namespace haf::types;
 
 namespace haf::res
 {
 
-SetResourceConfigFileResult ResourceManager::parseResourceConfigFile()
+SetResourceConfigFileResult
+ResourceManagerConfigLoader::parseResourceConfigFile(
+    sys::DataWrapperCreator& data_wrapper_creator)
 {
     LogAsserter::log_assert(!resources_config_file_name_.empty(),
                             "The resources file name was not set");
 
-    SystemDataWrapperCreator dwc{*this};
-    auto file_serializer = dwc.dataWrapper<FileSerializer>();
-    auto const result    = file_serializer->deserializeFromFile(
-        resources_config_file_name_, resources_config_data_);
+    auto file_serializer{
+        data_wrapper_creator.dataWrapper<sys::FileSerializer>()};
+    auto const result{file_serializer->deserializeFromFile(
+        resources_config_file_name_, resources_config_data_)};
 
-    if (result != FileSerializer::Result::Success)
+    if (result != sys::FileSerializer::Result::Success)
     {
-        if (result == FileSerializer::Result::FileIOError)
+        if (result == sys::FileSerializer::Result::FileIOError)
         {
             DisplayLog::debug("Resources file ", resources_config_file_name_,
                               " not found");
             return SetResourceConfigFileResult::FileNotFound;
         }
-        else if (result == FileSerializer::Result::ParsingError)
+        else if (result == sys::FileSerializer::Result::ParsingError)
         {
             DisplayLog::error("File ", resources_config_file_name_,
                               " found but contains invalid format.");
@@ -40,14 +49,15 @@ SetResourceConfigFileResult ResourceManager::parseResourceConfigFile()
     return SetResourceConfigFileResult::Ok;
 }
 
-void ResourceManager::setResourcesDirectory(str const& directory)
+void ResourceManagerConfigLoader::setResourcesDirectory(str const& directory)
 {
     DisplayLog::debug("Set resources directory to: ", directory);
-    p_->config_directory_ = std::move(directory);
+    config_directory_ = std::move(directory);
 }
 
-SetResourceConfigFileResult ResourceManager::setResourceConfigFile(
-    str const& file_name)
+SetResourceConfigFileResult ResourceManagerConfigLoader::setResourceConfigFile(
+    str const& file_name,
+    sys::DataWrapperCreator& data_wrapper_creator)
 {
     LogAsserter::log_assert(
         !file_name.empty(),
@@ -63,7 +73,7 @@ SetResourceConfigFileResult ResourceManager::setResourceConfigFile(
                             "The resources file name was already set");
 
     resources_config_file_name_ = std::move(file_name);
-    return parseResourceConfigFile();
+    return parseResourceConfigFile(data_wrapper_creator);
 }
 
 namespace
@@ -72,7 +82,9 @@ static constexpr char TypeStr[] = "type";
 static constexpr char FileStr[] = "file";
 }  // namespace
 
-bool ResourceManager::loadSection(str const& section_name)
+bool ResourceManagerConfigLoader::loadSection(
+    str const& section_name,
+    sys::ResourceManager& resource_manager)
 {
     bool global_result{true};
 
@@ -94,9 +106,9 @@ bool ResourceManager::loadSection(str const& section_name)
                               " with file name: ", resource_to_load.file_name);
 
             str element_file{resource_to_load.file_name};
-            if (!p_->config_directory_.empty())
+            if (!config_directory_.empty())
             {
-                element_file = p_->config_directory_ + element_file;
+                element_file = config_directory_ + element_file;
                 DisplayLog::debug("Element file with directory: ",
                                   element_file);
             }
@@ -105,15 +117,18 @@ bool ResourceManager::loadSection(str const& section_name)
 
             if (resource_to_load.type == "ttf")
             {
-                local_result = loadTTFont(resource_to_load.name, element_file);
+                local_result = resource_manager.loadTTFont(
+                    resource_to_load.name, element_file);
             }
             else if (resource_to_load.type == "texture")
             {
-                local_result = loadTexture(resource_to_load.name, element_file);
+                local_result = resource_manager.loadTexture(
+                    resource_to_load.name, element_file);
             }
             else if (resource_to_load.type.starts_with("bmp_font"))
             {
-                local_result = loadBMPFont(resource_to_load.name, element_file);
+                local_result = resource_manager.loadBMPFont(
+                    resource_to_load.name, element_file);
             }
             else
             {
@@ -138,4 +153,4 @@ bool ResourceManager::loadSection(str const& section_name)
     return global_result;
 }
 
-}  // namespace haf::sys
+}  // namespace haf::res

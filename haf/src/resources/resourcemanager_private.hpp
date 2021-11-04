@@ -97,8 +97,6 @@ struct ResourceManager::ResourceManagerPrivate
     ResourceList<sptr<BMPFont>> bmp_fonts_;
 
     BMPFontFactory bmp_font_factory_;
-
-    str config_directory_{};
 };
 
 }  // namespace haf::sys

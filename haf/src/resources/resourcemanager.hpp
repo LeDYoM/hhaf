@@ -7,6 +7,7 @@
 #include <haf/include/resources/iresource_configurator.hpp>
 #include "system/systembase.hpp"
 #include "resources_config_data.hpp"
+#include "resource_manager_config_loader.hpp"
 
 namespace haf::res
 {
@@ -50,7 +51,7 @@ public:
 private:
     struct ResourceManagerPrivate;
     htps::uptr<ResourceManagerPrivate> p_;
-    htps::str resources_config_file_name_;
+    res::ResourceManagerConfigLoader config_loader_;
     res::ResourcesConfigData resources_config_data_;
 };
 
