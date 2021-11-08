@@ -112,11 +112,6 @@ bool ResourceManager::loadBmpFontTextures(htps::sptr<res::BMPFont> bmp_font,
     return bmp_font != nullptr;
 }
 
-SetResourceConfigFileResult ResourceManager::parseResourceConfigFile()
-{
-    return SetResourceConfigFileResult::Ok;
-}
-
 void ResourceManager::setResourcesDirectory(str const& directory)
 {
     DisplayLog::debug("Set resources directory to: ", directory);

@@ -46,8 +46,6 @@ public:
     bool loadSection(types::str const& section_name) override;
     void setResourcesDirectory(types::str const& directory) override;
 
-    res::SetResourceConfigFileResult parseResourceConfigFile();
-
 private:
     struct ResourceManagerPrivate;
     htps::uptr<ResourceManagerPrivate> p_;
