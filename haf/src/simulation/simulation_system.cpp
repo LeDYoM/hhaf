@@ -60,8 +60,7 @@ SimulationSystem::~SimulationSystem()
     }
 }
 
-void SimulationSystem::initialize(bool const ,
-                                  htps::str const&)
+void SimulationSystem::initialize(str const&)
 {
 //    priv_->simulation_input_file_  = simulation_input_file;
 //    priv_->simulation_output_file_ = simulation_output_file;

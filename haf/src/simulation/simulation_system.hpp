@@ -23,7 +23,13 @@ public:
     SimulationSystem(SystemProvider& system_provider);
     ~SimulationSystem();
 
-    void initialize(bool const use, htps::str const& simulation_config_file);
+    /**
+     * @brief Initialize the Simulation system. It should not be used before
+     * calling this function
+     * @param simulation_config_file Name of the configuration file to use. If
+     * you do not want the simulation system to do anything, pass an empty str
+     */
+    void initialize(htps::str const& simulation_config_file);
 
     void update();
     bool getNext(htps::str const& name, htps::size_type& pre_selected);
