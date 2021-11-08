@@ -13,7 +13,7 @@
 #include "time/timesystem.hpp"
 #include "shareddata/shareddatasystem.hpp"
 #include "resources/resourcemanager.hpp"
-#include "simulation/simulationsystem.hpp"
+#include "simulation/simulation_system.hpp"
 
 #include <hlog/include/hlog.hpp>
 #include <hosted_app/include/iapp.hpp>
@@ -51,7 +51,7 @@ struct SystemProvider::SystemProviderPrivate final
     {
         if (parameter_parser.hasParameters())
         {
-            static constexpr char kSimulationConfigFile[]  = "sim_cfg";
+            static constexpr char kSimulationConfigFile[] = "sim_cfg";
 
             auto const simulation_config{
                 parameter_parser.optionValue(kSimulationConfigFile)};
@@ -145,7 +145,9 @@ void SystemProvider::fastInit(InitSystemOptions const& init_system_options)
                 p_->simulation_config_file_);
         }
 
-        p_->simulation_system_->initialize(false, p_->simulation_config_file_);
+        p_->simulation_system_->initialize(
+            !(p_->simulation_config_file_.empty()),
+            p_->simulation_config_file_);
     }
 
     if (init_system_options.init_window_system)
