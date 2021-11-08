@@ -60,11 +60,11 @@ SimulationSystem::~SimulationSystem()
     }
 }
 
-void SimulationSystem::initialize(str const& simulation_input_file,
-                                  str const& simulation_output_file)
+void SimulationSystem::initialize(bool const ,
+                                  htps::str const&)
 {
-    priv_->simulation_input_file_  = simulation_input_file;
-    priv_->simulation_output_file_ = simulation_output_file;
+//    priv_->simulation_input_file_  = simulation_input_file;
+//    priv_->simulation_output_file_ = simulation_output_file;
 
     if (!priv_->simulation_input_file_.empty())
     {
@@ -227,7 +227,7 @@ void SimulationSystem::update()
     }
 }
 
-bool SimulationSystem::getNext(const str& name, size_type& pre_selected)
+bool SimulationSystem::getNext(str const& name, size_type& pre_selected)
 {
     bool generated{false};
 

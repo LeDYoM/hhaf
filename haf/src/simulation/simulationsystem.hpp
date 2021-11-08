@@ -23,16 +23,16 @@ public:
     SimulationSystem(SystemProvider& system_provider);
     ~SimulationSystem();
 
+    void initialize(bool const use, htps::str const& simulation_config_file);
+
     void update();
-    bool getNext(const htps::str& name, htps::size_type& pre_selected);
+    bool getNext(htps::str const& name, htps::size_type& pre_selected);
 
     void setSimulationActions(const time::TimePoint& current,
                               SimulationActionGroup simulation_action_group);
     void setSimulationActions(SimulationActionGroup simulation_action_group);
     void setSimulateRandomDataBuffer(
         SimulateRandomDataBuffer simulated_data_buffer);
-    void initialize(htps::str const& simulation_input_file,
-                    htps::str const& simulation_output_file);
 
 private:
     struct SimulationSystemPrivate;

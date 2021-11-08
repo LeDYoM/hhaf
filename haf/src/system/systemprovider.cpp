@@ -45,36 +45,23 @@ struct SystemProvider::SystemProviderPrivate final
     uptr<RenderSystem> render_system_;
     uptr<SimulationSystem> simulation_system_;
 
-    str simulation_input_file_;
-    str simulation_output_file_;
+    str simulation_config_file_;
 
     void setArgumments(parpar::ParametersParser parameter_parser)
     {
         if (parameter_parser.hasParameters())
         {
-            static constexpr char kSimulationInputFile[]  = "sim_in";
-            static constexpr char kSimulationOutputFile[] = "sim_out";
+            static constexpr char kSimulationConfigFile[]  = "sim_cfg";
 
-            auto const simulation_input =
-                parameter_parser.optionValue(kSimulationInputFile);
+            auto const simulation_config{
+                parameter_parser.optionValue(kSimulationConfigFile)};
 
-            auto const simulation_output =
-                parameter_parser.optionValue(kSimulationOutputFile);
-
-            if (simulation_input.first)
+            if (simulation_config.first)
             {
-                simulation_input_file_ = simulation_input.second;
+                simulation_config_file_ = simulation_config.second;
                 DisplayLog::debug(
-                    "Parameter ", kSimulationInputFile,
-                    " found with value: ", simulation_input_file_);
-            }
-
-            if (simulation_output.first)
-            {
-                simulation_output_file_ = simulation_output.second;
-                DisplayLog::debug(
-                    "Parameter ", kSimulationOutputFile,
-                    " found with value: ", simulation_output_file_);
+                    "Parameter ", kSimulationConfigFile,
+                    " found with value: ", simulation_config_file_);
             }
         }
     }
@@ -151,22 +138,14 @@ void SystemProvider::fastInit(InitSystemOptions const& init_system_options)
     {
         DisplayLog::debug("Initializing Simulation System");
         p_->simulation_system_ = muptr<SimulationSystem>(*this);
-        if (!p_->simulation_input_file_.empty())
+        if (!p_->simulation_config_file_.empty())
         {
             DisplayLog::debug(
-                "Passing simulation input file to simulation system: ",
-                p_->simulation_input_file_);
+                "Passing simulation config file to simulation system: ",
+                p_->simulation_config_file_);
         }
 
-        if (!p_->simulation_output_file_.empty())
-        {
-            DisplayLog::debug(
-                "Passing simulation output file to simulation system: ",
-                p_->simulation_output_file_);
-        }
-
-        p_->simulation_system_->initialize(p_->simulation_input_file_,
-                                           p_->simulation_output_file_);
+        p_->simulation_system_->initialize(false, p_->simulation_config_file_);
     }
 
     if (init_system_options.init_window_system)
