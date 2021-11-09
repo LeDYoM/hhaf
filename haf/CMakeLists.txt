@@ -205,6 +205,12 @@ set(headers
   ${inc_dir}/debug_utils/displayvar_console.hpp
   ${inc_dir}/debug_utils/variable_viewer.hpp
 
+  # Data
+  ${inc_dir}/data/ideserializable.hpp
+  ${inc_dir}/data/ifullserializable.hpp
+  ${inc_dir}/data/iserializable.hpp
+
+  
   # File system
   ${inc_dir}/filesystem/fileserializer.hpp
   ${inc_dir}/filesystem/path.hpp

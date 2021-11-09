@@ -3,10 +3,9 @@
 
 #include "haf_private.hpp"
 #include <htypes/include/types.hpp>
-#include <htypes/include/object.hpp>
 #include <htypes/include/vector.hpp>
 
-#include <haf/include/shareddata/ishareable.hpp>
+#include <haf/include/data/ideserializable.hpp>
 
 #include "resources/resources_config_data_element.hpp"
 
