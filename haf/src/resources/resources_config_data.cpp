@@ -1,14 +1,15 @@
 #include "resources/resources_config_data.hpp"
 #include <htypes/include/str.hpp>
 
+using namespace htps;
+
 namespace haf::res
 {
-
 bool ResourcesConfigData::deserialize(htps::Object const& obj)
 {
     for (auto const& section : obj.objects())
     {
-        htps::vector<ResourcesConfigDataElement> temp_section;
+        vector<ResourcesConfigDataElement> temp_section;
         for (auto const& element : section.second.objects())
         {
             ResourcesConfigDataElement temp;
