@@ -13,7 +13,6 @@ namespace haf::res
 {
 struct HAF_PRIVATE ResourcesConfigDataElement : public data::IDeserializable
 {
-    htps::str name;
     htps::str type;
     htps::str file_name;
     static constexpr char TypeStr[]     = "type";

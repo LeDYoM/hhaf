@@ -5,6 +5,7 @@ using namespace htps;
 
 namespace haf::res
 {
+/*
 bool ResourcesConfigData::deserialize(htps::Object const& obj)
 {
     for (auto const& section : obj.objects())
@@ -21,5 +22,5 @@ bool ResourcesConfigData::deserialize(htps::Object const& obj)
     }
     return true;
 }
-
+*/
 }  // namespace haf::res

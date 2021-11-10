@@ -93,19 +93,22 @@ bool ResourceManagerConfigLoader::loadSection(
 
     // Fetch the section data.
     auto const resources_to_load_iterator{
-        resources_config_data_.elements.cfind_checked(section_name)};
+        resources_config_data_.elements_.cfind_checked(section_name)};
 
     if (resources_to_load_iterator.first)
     {
         // Load the section.
         for (auto const& resource_to_load :
-             resources_to_load_iterator.second->second)
+             resources_to_load_iterator.second->second.elements_)
         {
-            DisplayLog::debug("Going to load element: ", resource_to_load.name,
-                              " of type ", resource_to_load.type,
-                              " with file name: ", resource_to_load.file_name);
+            auto const& name{resource_to_load.first};
+            auto const& type{resource_to_load.second.type};
+            auto element_file{resource_to_load.second.file_name};
 
-            str element_file{resource_to_load.file_name};
+            DisplayLog::debug("Going to load element: ", name,
+                              " of type ", type,
+                              " with file name: ", element_file);
+
             if (!config_directory_.empty())
             {
                 element_file = config_directory_ + element_file;
@@ -115,20 +118,20 @@ bool ResourceManagerConfigLoader::loadSection(
 
             bool local_result{false};
 
-            if (resource_to_load.type == "ttf")
+            if (type == "ttf")
             {
                 local_result = resource_manager.loadTTFont(
-                    resource_to_load.name, element_file);
+                    name, element_file);
             }
-            else if (resource_to_load.type == "texture")
+            else if (type == "texture")
             {
                 local_result = resource_manager.loadTexture(
-                    resource_to_load.name, element_file);
+                    name, element_file);
             }
-            else if (resource_to_load.type.starts_with("bmp_font"))
+            else if (type.starts_with("bmp_font"))
             {
                 local_result = resource_manager.loadBMPFont(
-                    resource_to_load.name, element_file);
+                    name, element_file);
             }
             else
             {
@@ -139,7 +142,7 @@ bool ResourceManagerConfigLoader::loadSection(
             if (local_result)
             {
                 DisplayLog::info("File ", element_file, " loaded as ",
-                                 resource_to_load.name);
+                                 name);
             }
             else
             {

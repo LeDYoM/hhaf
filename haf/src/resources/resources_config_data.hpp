@@ -11,10 +11,9 @@
 
 namespace haf::res
 {
-struct HAF_PRIVATE ResourcesConfigData : public data::IDeserializable
+struct HAF_PRIVATE ResourcesConfigData : public data::DeserializableDictionary<
+        data::DeserializableDictionary<ResourcesConfigDataElement>>
 {
-    htps::Dictionary<htps::vector<ResourcesConfigDataElement>> elements;
-    bool deserialize(htps::Object const& obj) override;
 };
 
 }  // namespace haf::res
