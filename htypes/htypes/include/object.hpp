@@ -136,14 +136,14 @@ public:
 
         /// Get a @Value in the array form. That is the
         /// method is equivaled to obj(key){index].
-        [[nodiscard]] Value operator[](const size_t index) const
+        [[nodiscard]] Value operator[](size_t const index) const
         {
             return (isObject() ? getObject()[index] : Value{});
         }
 
-        const Object& getObject() const noexcept { return (*object_); }
+        [[nodiscard]] Object const& getObject() const noexcept { return (*object_); }
 
-        const str& getValue() const noexcept { return (*value_); }
+        [[nodiscard]] str const& getValue() const noexcept { return (*value_); }
 
         template <typename T>
         [[nodiscard]] T as() const
@@ -176,7 +176,7 @@ public:
         }
 
         template <typename T>
-        [[nodiscard]] bool as(T& value) const
+        bool as(T& value) const
         {
             if constexpr (std::is_enum_v<T>)
             {

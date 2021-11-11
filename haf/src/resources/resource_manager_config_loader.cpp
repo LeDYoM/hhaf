@@ -3,9 +3,9 @@
 #include "resources/resourcemanager.hpp"
 
 #include <haf/include/filesystem/fileserializer.hpp>
-#include <hlog/include/hlog.hpp>
+#include <haf/include/system/datawrappercreator.hpp>
 
-#include "system/systemdatawrappercreator.hpp"
+#include <hlog/include/hlog.hpp>
 
 using namespace haf::types;
 

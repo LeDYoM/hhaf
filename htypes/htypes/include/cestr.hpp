@@ -7,9 +7,9 @@ namespace htps
 {
 
 template <size_type N>
-struct cestr
+struct str_literal
 {
-    constexpr cestr(char const (&str)[N]) { std::copy_n(str, N, value); }
+    constexpr str_literal(char const (&str)[N]) { std::copy_n(str, N, value); }
 
     constexpr size_type size() const noexcept { return N - 1U; }
 

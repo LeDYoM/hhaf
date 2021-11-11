@@ -4,9 +4,10 @@ namespace haf::res
 {
 bool ResourcesConfigDataElement::deserialize(htps::Object const& obj)
 {
-    type      = obj[ResourcesConfigDataElement::TypeStr].getValue();
-    file_name = obj[ResourcesConfigDataElement::FileNameStr].getValue();
-    return true;
+    bool result{true};
+    result &= obj[ResourcesConfigDataElement::TypeStr].as(type);
+    result &= obj[ResourcesConfigDataElement::FileNameStr].as(file_name);
+    return result;
 }
 
 }  // namespace haf::res
