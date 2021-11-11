@@ -93,13 +93,13 @@ bool ResourceManagerConfigLoader::loadSection(
 
     // Fetch the section data.
     auto const resources_to_load_iterator{
-        resources_config_data_.elements_.cfind_checked(section_name)};
+        resources_config_data_.elements().cfind_checked(section_name)};
 
     if (resources_to_load_iterator.first)
     {
         // Load the section.
         for (auto const& resource_to_load :
-             resources_to_load_iterator.second->second.elements_)
+             resources_to_load_iterator.second->second.elements())
         {
             auto const& name{resource_to_load.first};
             auto const& type{resource_to_load.second.type};

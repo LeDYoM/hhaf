@@ -30,6 +30,11 @@ public:
         }
         return true;
     }
+
+    htps::Dictionary<T>& elements() noexcept { return elements_; }
+    htps::Dictionary<T> const& elements() const noexcept { return elements_; }
+
+private:
     htps::Dictionary<T> elements_;
 };
 
@@ -49,6 +54,11 @@ public:
         }
         return true;
     }
+
+    htps::vector<T>& elements() noexcept { return elements_; }
+    htps::vector<T> const& elements() const noexcept { return elements_; }
+
+private:
     htps::vector<T> elements_;
 };
 
