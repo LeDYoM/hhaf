@@ -26,7 +26,6 @@ set(headers
     ${include_dir}/basic_dictionary.hpp
     ${include_dir}/basic_property.hpp
     ${include_dir}/basic_str.hpp
-    ${include_dir}/cestr.hpp
     ${include_dir}/connection.hpp
     ${include_dir}/debug_internal.hpp
     ${include_dir}/dictionary.hpp
@@ -46,6 +45,7 @@ set(headers
     ${include_dir}/rect.hpp
     ${include_dir}/serializer.hpp
     ${include_dir}/stack.hpp
+    ${include_dir}/str_literal.hpp
     ${include_dir}/str_view.hpp
     ${include_dir}/str.hpp
     ${include_dir}/types.hpp

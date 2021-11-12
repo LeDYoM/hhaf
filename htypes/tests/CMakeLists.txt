@@ -5,7 +5,6 @@ set(CURRENT_TARGET ${PROJECT_NAME})
 
 set(SOURCE_TESTS
     array
-    cestr
     connection
     dictionary
     function
@@ -20,6 +19,7 @@ set(SOURCE_TESTS
     propertystate
     rect
     str
+    str_literal
     vector
     vector_view
 )
