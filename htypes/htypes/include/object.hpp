@@ -328,8 +328,7 @@ public:
         bool ok{true};
         for (auto&& element : iListValues)
         {
-            ok &= values_.add(std::move(element.first),
-                               std::move(element.second));
+            ok &= values_.add(element.first, element.second);
         }
         return ok;
     }

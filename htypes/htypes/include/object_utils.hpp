@@ -22,7 +22,7 @@ enum class TokenType : u8
     Float
 };
 
-enum ErrorType : u8
+enum class ErrorType : u8
 {
     NoError = 0U,
     InvalidCharacter,

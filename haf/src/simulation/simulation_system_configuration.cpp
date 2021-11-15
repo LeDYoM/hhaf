@@ -25,13 +25,13 @@ struct HAF_PRIVATE DeserializableSimulationData : public data::IDeserializable
 
 void SimulationSystemConfiguration::loadConfiguration(
     DataWrapperCreator& data_wrapper_creator,
-    str const& configuration_file_name)
+    str const&)
 {
     DeserializableSimulationData current;
     auto file_serializer{
         data_wrapper_creator.dataWrapper<sys::FileSerializer>()};
-    auto const result{
-        file_serializer->deserializeFromFile(configuration_file_name, current)};
+    /* auto const result{
+        file_serializer->deserializeFromFile(configuration_file_name, current)};*/
 }
 
 }  // namespace haf::sys
