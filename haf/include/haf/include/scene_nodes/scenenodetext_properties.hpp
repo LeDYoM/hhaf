@@ -26,35 +26,23 @@ enum class AlignmentYModes : htps::u8
     Bottom
 };
 
-struct Text
-{
-    using value_type = htps::str;
-};
+struct Text : PropertyStateBase<htps::str>
+{};
 
-struct Font
-{
-    using value_type = htps::sptr<res::IFont>;
-};
+struct Font : PropertyStateBase<htps::sptr<res::IFont>>
+{};
 
-struct TextColor
-{
-    using value_type = Color;
-};
+struct TextColor : PropertyStateBase<Color>
+{};
 
-struct AlignmentX
-{
-    using value_type = AlignmentXModes;
-};
+struct AlignmentX : PropertyStateBase<AlignmentXModes>
+{};
 
-struct AlignmentY
-{
-    using value_type = AlignmentYModes;
-};
+struct AlignmentY : PropertyStateBase<AlignmentYModes>
+{};
 
-struct AlignmentSize
-{
-    using value_type = htps::vector2df;
-};
+struct AlignmentSize : PropertyStateBase<htps::vector2df>
+{};
 
 using SceneNodeTextProperties = types::
     PropertyGroup<Text, Font, TextColor, AlignmentX, AlignmentY, AlignmentSize>;
