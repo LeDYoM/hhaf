@@ -47,10 +47,10 @@ public:
 
 }  // namespace htps
 
-namespace test_prop
+namespace htps
 {
-template <str_literal_hash, typename T>
-struct PropertyDataRead
+template <str_literal lit, typename T>
+struct IPropertyDataRead
 {
     /**
      * @brief Get value of the property.
@@ -58,11 +58,11 @@ struct PropertyDataRead
      */
     virtual const T& get() const noexcept = 0;
 
-    virtual ~PropertyDataRead() = default;
+    virtual ~IPropertyDataRead() = default;
 };
 
-template <str_literal_hash, typename T>
-struct PropertyDataWrite
+template <str_literal lit, typename T>
+struct IPropertyDataWrite
 {
     /**
      * @brief Sets the vañue of the inner type of the property.
@@ -75,9 +75,36 @@ struct PropertyDataWrite
         std::is_nothrow_copy_assignable_v<T>)                              = 0;
     virtual bool set(T&& v) noexcept(std::is_nothrow_move_assignable_v<T>) = 0;
 
-    virtual ~PropertyDataWrite() = default;
+    virtual ~IPropertyDataWrite() = default;
 };
 
-}  // namespace test_prop
+template <str_literal lit, typename T>
+struct IPropertyData : public IPropertyDataRead<lit, T>,
+                       public IPropertyDataWrite<lit, T>
+{};
+
+template <str_literal lit, typename T>
+class PropertyData : public IPropertyData<lit, T>
+{
+public:
+    const T& get() const noexcept { return value_; }
+
+    bool set(const T& v) noexcept(std::is_nothrow_copy_assignable_v<T>) override
+    {
+        value_ = v;
+        return true;
+    }
+
+    bool set(T&& v) noexcept(std::is_nothrow_move_assignable_v<T>) override
+    {
+        value_ = std::move(v);
+        return true;
+    }
+
+private:
+    T value_;
+};
+
+}  // namespace htps
 
 #endif

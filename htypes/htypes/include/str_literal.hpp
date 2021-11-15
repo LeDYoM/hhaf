@@ -21,53 +21,49 @@ struct basic_str_literal
 
     constexpr bool empty() const noexcept { return N == 1U; }
 
-    template <size_type N2>
-    constexpr bool operator==(char_type const (&rhs)[N2]) const
+    constexpr char_type const * const cbegin() const noexcept { return value; }
+    constexpr char_type const * const cend() const noexcept { return &(value[N]); }
+
+    constexpr bool operator==(char_type const (&rhs)[N]) const
     {
-        if constexpr (N != N2)
-        {
-            return false;
-        }
-        else
-        {
-            return std::equal(std::cbegin(value), std::cend(value),
-                              std::cbegin(rhs), std::cend(rhs));
-        }
+        return std::equal(cbegin(), cend(), rhs, (rhs + N));
     }
 
     template <size_type N2>
-    constexpr bool operator==(basic_str_literal<char_type, N2> const& rhs) const
+    constexpr bool operator==(char_type const (&)[N2]) const
     {
-        if constexpr (N != N2)
-        {
-            return false;
-        }
-        else
-        {
-            return std::equal(std::cbegin(value), std::cend(value),
-                              std::cbegin(rhs), std::cend(rhs));
-        }
+        return false;
+    }
+
+    constexpr bool operator==(basic_str_literal const& rhs) const
+    {
+        return std::equal(cbegin(), cend(), rhs.cbegin(), rhs.cend());
     }
 
     template <size_type N2>
-    constexpr bool operator==(basic_str_literal<char_type, N2>&& rhs) const
+    constexpr bool operator==(basic_str_literal<char_type, N2> const&) const
     {
-        if constexpr (N != N2)
-        {
-            return false;
-        }
-        else
-        {
-            return std::equal(std::cbegin(value), std::cend(value),
-                              std::cbegin(rhs), std::cend(rhs));
-        }
+        return false;
+    }
+
+    constexpr bool operator==(basic_str_literal&& rhs) const
+    {
+        return std::equal(cbegin(), cend(), rhs.cbegin(), rhs.cend());
+    }
+
+    template <size_type N2>
+    constexpr bool operator==(basic_str_literal<char_type, N2>&&) const
+    {
+        return false;
     }
 
     constexpr size_type hash() const noexcept
     {
         return value[0];
     }
+
     char_type value[N];
+
 };
 
 template <size_type N>
