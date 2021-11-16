@@ -5,6 +5,7 @@
 #include <htypes/include/str.hpp>
 #include "system/systembase.hpp"
 #include <haf/include/simulation/simulationactiongroup.hpp>
+#include "simulation/simulation_system_configuration.hpp"
 
 namespace haf::sys
 {
@@ -41,6 +42,7 @@ public:
         SimulateRandomDataBuffer simulated_data_buffer);
 
 private:
+    SimulationSystemConfiguration simulation_system_configuration_;
     struct SimulationSystemPrivate;
     htps::uptr<SimulationSystemPrivate> priv_;
 };

@@ -25,6 +25,11 @@ public:
         ParsingError = 2U
     };
 
+    bool processResult(Result const result,
+                       htps::str const& pre_message,
+                       Path const& file,
+                       bool const assert_on_error);
+
     htps::str loadTextFile(const Path& file_name);
 
     bool saveFile(const Path& file_name, const htps::str& data);

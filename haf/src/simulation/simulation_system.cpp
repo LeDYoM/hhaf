@@ -60,12 +60,17 @@ SimulationSystem::~SimulationSystem()
     }
 }
 
-void SimulationSystem::initialize(str const&)
+void SimulationSystem::initialize(str const& simulation_config_file_name)
 {
-//    priv_->simulation_input_file_  = simulation_input_file;
+    SystemDataWrapperCreator _this{*this};
+
+    simulation_system_configuration_.loadConfiguration(
+        _this, simulation_config_file_name);
+
+        //    priv_->simulation_input_file_  = simulation_input_file;
 //    priv_->simulation_output_file_ = simulation_output_file;
 
-    if (!priv_->simulation_input_file_.empty())
+    if (!simulation_system_configuration_.simulationInputFileName().empty())
     {
         // Just test.
         SimulationActionGroup simulation_action_group;
@@ -87,31 +92,15 @@ void SimulationSystem::initialize(str const&)
                          " to read simulation data");
         SystemDataWrapperCreator dwc{*this};
         auto file_serializer = dwc.dataWrapper<FileSerializer>();
-        auto const result    = file_serializer->deserializeFromFile(
-            priv_->simulation_input_file_, priv_->current_replay_data_);
 
-        if (result != FileSerializer::Result::Success)
-        {
-            if (result == FileSerializer::Result::FileIOError)
-            {
-                DisplayLog::debug("Simulation file ",
-                                  priv_->simulation_input_file_, " not found");
-                LogAsserter::log_assert(
-                    false,
-                    "If simulation file is set and not found is an error");
-            }
-            else if (result == FileSerializer::Result::ParsingError)
-            {
-                DisplayLog::error("File ", priv_->simulation_input_file_,
-                                  " found but contains invalid format.");
-            }
-            else
-            {
-                DisplayLog::error(
-                    "Unknow error reading and parsing simulation file: ",
-                    priv_->simulation_input_file_);
-            }
-        }
+        auto const result{file_serializer->deserializeFromFile(
+            simulation_system_configuration_.simulationInputFileName(),
+            priv_->current_replay_data_)};
+
+        file_serializer->processResult(
+                result, "Simulation input file",
+                simulation_system_configuration_.simulationInputFileName(),
+                true);
 
         // Prepare output
         priv_->next_last_checked_point_ =
@@ -123,7 +112,7 @@ void SimulationSystem::initialize(str const&)
     }
     else
     {
-        DisplayLog::debug("No simulation input file loaded");
+        DisplayLog::debug("No simulation input file configured");
     }
 }
 

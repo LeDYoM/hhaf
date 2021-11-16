@@ -22,12 +22,24 @@ struct HAF_PRIVATE SimulationData
 class HAF_PRIVATE SimulationSystemConfiguration
 {
 public:
-    void loadConfiguration(DataWrapperCreator& data_wrapper_creator,
+    bool loadConfiguration(DataWrapperCreator& data_wrapper_creator,
                            htps::str const& simulation_config_file);
 
     SimulationData const& simulationData() const noexcept
     {
         return simulation_data_;
+    }
+
+    bool globalUse() const noexcept { return simulation_data_.global_use; }
+
+    htps::str const& simulationInputFileName() const noexcept
+    {
+        return simulation_data_.simulation_input_file;
+    }
+
+    htps::str const& simulationOutputFileName() const noexcept
+    {
+        return simulation_data_.simulation_output_file;
     }
 
 private:

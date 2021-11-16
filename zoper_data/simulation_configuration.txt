@@ -1,0 +1,4 @@
+{
+    read_input: "simulation_input.txt",
+    write_output: "simulation_output.txt"
+}

@@ -52,7 +52,7 @@ ResourceManagerConfigLoader::parseResourceConfigFile(
 void ResourceManagerConfigLoader::setResourcesDirectory(str const& directory)
 {
     DisplayLog::debug("Set resources directory to: ", directory);
-    config_directory_ = std::move(directory);
+    config_directory_ = directory;
 }
 
 SetResourceConfigFileResult ResourceManagerConfigLoader::setResourceConfigFile(

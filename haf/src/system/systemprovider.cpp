@@ -145,7 +145,8 @@ void SystemProvider::fastInit(InitSystemOptions const& init_system_options)
                 p_->simulation_config_file_);
         }
 
-        p_->simulation_system_->initialize(p_->simulation_config_file_);
+//        p_->simulation_system_->initialize(p_->simulation_config_file_);
+        p_->simulation_system_->initialize("simulation_configuration.txt");
     }
 
     if (init_system_options.init_window_system)

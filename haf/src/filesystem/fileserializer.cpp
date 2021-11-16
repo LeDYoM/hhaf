@@ -2,11 +2,45 @@
 #include <filesystem/filesystem.hpp>
 #include <system/systemprovider.hpp>
 #include <system/get_system.hpp>
+#include <hlog/include/hlog.hpp>
 
 using namespace htps;
 
 namespace haf::sys
 {
+bool FileSerializer::processResult(Result const result,
+                                   str const& pre_message,
+                                   Path const& file,
+                                   bool const assert_on_error)
+{
+    if (result != FileSerializer::Result::Success)
+    {
+        if (result == FileSerializer::Result::FileIOError)
+        {
+            DisplayLog::debug(pre_message, file, " not found");
+            LogAsserter::log_assert(!assert_on_error, pre_message, file,
+                                    " no found");
+        }
+        else if (result == FileSerializer::Result::ParsingError)
+        {
+            DisplayLog::debug(pre_message, file,
+                              " found, but contains invalid format");
+            LogAsserter::log_assert(!assert_on_error, pre_message, file,
+                                    " found, but contains invalid format");
+        }
+        else
+        {
+            DisplayLog::debug(pre_message, file,
+                              " : Unknown error trying to read file");
+            LogAsserter::log_assert(!assert_on_error, pre_message, file,
+                                    " : Unknown error trying to read file");
+        }
+        return false;
+    }
+
+    return true;
+}
+
 str FileSerializer::loadTextFile(const Path& file_name)
 {
     return sys::getSystem<sys::FileSystem>(attachedNode())

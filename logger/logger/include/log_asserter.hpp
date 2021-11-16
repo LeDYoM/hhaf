@@ -17,7 +17,7 @@ struct LogAsserter
 {
     template <typename... Args>
     static constexpr void log_assert(const bool condition,
-                                     Args&&... args) noexcept
+                                     Args&&... args)
     {
         // Store the condition in a variable to execute it only once.
         const bool cond{condition};
