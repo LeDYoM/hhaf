@@ -83,9 +83,6 @@ struct SimulationSystem::SimulationSystemPrivate final
     time::TimePoint current_last_checked_point_;
     time::TimePoint next_last_checked_point_;
 
-    htps::str simulation_input_file_;
-    htps::str simulation_output_file_;
-
     void setSimulationActions(const time::TimePoint& current,
                               SimulationActionContainer sim_act_container)
     {

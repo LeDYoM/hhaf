@@ -43,8 +43,8 @@ bool SystemController::preUpdate()
 
 bool SystemController::update()
 {
-    system<InputSystem>().update();
     system<SimulationSystem>().update();
+    system<InputSystem>().update();
     system<scene::SceneManager>().update();
     system<RenderSystem>().update();
 

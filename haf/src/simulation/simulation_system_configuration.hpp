@@ -42,6 +42,18 @@ public:
         return simulation_data_.simulation_output_file;
     }
 
+    bool useInputSimulation() const noexcept
+    {
+        return !simulation_data_.simulation_input_file.empty() &&
+            simulation_data_.global_use;
+    }
+
+    bool useOutputSimulation() const noexcept
+    {
+        return !simulation_data_.simulation_output_file.empty() &&
+            simulation_data_.global_use;
+    }
+
 private:
     SimulationData simulation_data_;
 };

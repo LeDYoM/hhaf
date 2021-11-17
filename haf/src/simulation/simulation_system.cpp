@@ -29,34 +29,50 @@ SimulationSystem::SimulationSystem(SystemProvider& system_provider) :
 
 SimulationSystem::~SimulationSystem()
 {
-    constexpr char SaveFileName[] = "simulation_output.txt";
-
-    DisplayLog::info("Serializing play data...");
-    DisplayLog::info("Going to write play data into file ", SaveFileName);
-
-    SystemDataWrapperCreator dwc{*this};
-    auto file_serializer = dwc.dataWrapper<FileSerializer>();
-    auto const result    = file_serializer->serializeToFile(
-        SaveFileName, priv_->next_replay_data_);
-
-    if (result != FileSerializer::Result::Success)
+    if (simulation_system_configuration_.useOutputSimulation())
     {
-        if (result == FileSerializer::Result::FileIOError)
+        DisplayLog::info("Serializing play data...");
+        DisplayLog::info(
+            "Going to write play data into file ",
+            simulation_system_configuration_.simulationOutputFileName());
+
+        SystemDataWrapperCreator dwc{*this};
+        auto file_serializer = dwc.dataWrapper<FileSerializer>();
+        auto const result    = file_serializer->serializeToFile(
+            simulation_system_configuration_.simulationOutputFileName(),
+            priv_->next_replay_data_);
+
+        if (result != FileSerializer::Result::Success)
         {
-            DisplayLog::debug("Cannot write ", SaveFileName);
-        }
-        else if (result == FileSerializer::Result::ParsingError)
-        {
-            DisplayLog::error("Error parsing oputput for ", SaveFileName);
+            if (result == FileSerializer::Result::FileIOError)
+            {
+                DisplayLog::debug("Cannot write ",
+                                  simulation_system_configuration_
+                                      .simulationOutputFileName());
+            }
+            else if (result == FileSerializer::Result::ParsingError)
+            {
+                DisplayLog::error("Error parsing oputput for ",
+                                  simulation_system_configuration_
+                                      .simulationOutputFileName());
+            }
+            else
+            {
+                DisplayLog::error("Unknow error outputting file: ",
+                                  simulation_system_configuration_
+                                      .simulationOutputFileName());
+            }
         }
         else
         {
-            DisplayLog::error("Unknow error outputting file: ", SaveFileName);
+            DisplayLog::info(
+                "Play data written correctly to ",
+                simulation_system_configuration_.simulationOutputFileName());
         }
     }
     else
     {
-        DisplayLog::info("Play data written correctly to ", SaveFileName);
+        DisplayLog::debug("Not writing output simulation. Filename not set");
     }
 }
 
@@ -67,10 +83,7 @@ void SimulationSystem::initialize(str const& simulation_config_file_name)
     simulation_system_configuration_.loadConfiguration(
         _this, simulation_config_file_name);
 
-        //    priv_->simulation_input_file_  = simulation_input_file;
-//    priv_->simulation_output_file_ = simulation_output_file;
-
-    if (!simulation_system_configuration_.simulationInputFileName().empty())
+    if (simulation_system_configuration_.useInputSimulation())
     {
         // Just test.
         SimulationActionGroup simulation_action_group;
@@ -88,8 +101,10 @@ void SimulationSystem::initialize(str const& simulation_config_file_name)
         }
 #endif
 
-        DisplayLog::info("Trying to load ", priv_->simulation_input_file_,
-                         " to read simulation data");
+        DisplayLog::info(
+            "Trying to load ",
+            simulation_system_configuration_.simulationInputFileName(),
+            " to read simulation data");
         SystemDataWrapperCreator dwc{*this};
         auto file_serializer = dwc.dataWrapper<FileSerializer>();
 
@@ -98,11 +113,11 @@ void SimulationSystem::initialize(str const& simulation_config_file_name)
             priv_->current_replay_data_)};
 
         file_serializer->processResult(
-                result, "Simulation input file",
-                simulation_system_configuration_.simulationInputFileName(),
-                true);
+            result, "Simulation input file",
+            simulation_system_configuration_.simulationInputFileName(), false);
 
-        // Prepare output
+        // This part prepares the output part. So, a file will be used to write
+        // the output if the simulation system runs.
         priv_->next_last_checked_point_ =
             systemProvider().system<TimeSystem>().now();
         priv_->current_simulation_action_iterator_ =
@@ -140,9 +155,16 @@ void SimulationSystem::setSimulateRandomDataBuffer(
 void SimulationSystem::update()
 {
     // Get the current TimePoint
-    const time::TimePoint& current_time_point{
+    time::TimePoint const& current_time_point{
         systemProvider().system<TimeSystem>().now()};
 
+    updateSimulationInput(current_time_point);
+    updateSimulationOutput(current_time_point);
+}
+
+void SimulationSystem::updateSimulationInput(
+    time::TimePoint const& current_time_point)
+{
     // Check if we have still actions to trigger.
     if ((!priv_->current_replay_data_.simulation_actions_.empty()) &&
         (priv_->current_simulation_action_iterator_ !=
@@ -179,39 +201,41 @@ void SimulationSystem::update()
             }
         }
     }
+}
 
+void SimulationSystem::updateSimulationOutput(
+    time::TimePoint const& current_time_point)
+{
+    // Check if some new input is there.
+    // Note: this will catch the simulated keys in the previous loop too,
+    // but
+    //      that is intended.
+    auto&& input_system{systemProvider().system<InputSystem>()};
+
+    // If there are keys pending in the input system, process them.
+    if (!input_system.pressedKeys().empty() ||
+        !input_system.releasedKeys().empty())
     {
-        // Check if some new input is there.
-        // Note: this will catch the simulated keys in the previous loop too,
-        // but
-        //      that is intended.
-        auto&& input_system{systemProvider().system<InputSystem>()};
-
-        // If there are keys pending in the input system, process them.
-        if (!input_system.pressedKeys().empty() ||
-            !input_system.releasedKeys().empty())
+        for (const auto& pressedKey : input_system.pressedKeys())
         {
-            for (const auto& pressedKey : input_system.pressedKeys())
-            {
-                SimulationAction simulation_action{
-                    SimulationActionType::KeyPressed,
-                    (current_time_point - priv_->next_last_checked_point_),
-                    pressedKey};
-                priv_->addSimulationAction(std::move(simulation_action));
-            }
-
-            for (const auto& releasedKey : input_system.releasedKeys())
-            {
-                SimulationAction simulation_action{
-                    SimulationActionType::KeyReleased,
-                    (current_time_point - priv_->next_last_checked_point_),
-                    releasedKey};
-                priv_->addSimulationAction(std::move(simulation_action));
-            }
-
-            // Update the time of the last update.
-            priv_->next_last_checked_point_ = current_time_point;
+            SimulationAction simulation_action{
+                SimulationActionType::KeyPressed,
+                (current_time_point - priv_->next_last_checked_point_),
+                pressedKey};
+            priv_->addSimulationAction(std::move(simulation_action));
         }
+
+        for (const auto& releasedKey : input_system.releasedKeys())
+        {
+            SimulationAction simulation_action{
+                SimulationActionType::KeyReleased,
+                (current_time_point - priv_->next_last_checked_point_),
+                releasedKey};
+            priv_->addSimulationAction(std::move(simulation_action));
+        }
+
+        // Update the time of the last update.
+        priv_->next_last_checked_point_ = current_time_point;
     }
 }
 
