@@ -32,9 +32,8 @@ public:
      */
     void initialize(htps::str const& simulation_config_file);
 
-    void update();
-    void updateSimulationInput(time::TimePoint const& current_time_point);
-    void updateSimulationOutput(time::TimePoint const& current_time_point);
+    void updateSimulationInput();
+    void updateSimulationOutput();
 
     bool getNext(htps::str const& name, htps::size_type& pre_selected);
 

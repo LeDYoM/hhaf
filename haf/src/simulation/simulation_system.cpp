@@ -152,19 +152,12 @@ void SimulationSystem::setSimulateRandomDataBuffer(
     priv_->setSimulateRandomDataBuffer(std::move(simulated_data_buffer));
 }
 
-void SimulationSystem::update()
+void SimulationSystem::updateSimulationInput()
 {
     // Get the current TimePoint
     time::TimePoint const& current_time_point{
         systemProvider().system<TimeSystem>().now()};
 
-    updateSimulationInput(current_time_point);
-    updateSimulationOutput(current_time_point);
-}
-
-void SimulationSystem::updateSimulationInput(
-    time::TimePoint const& current_time_point)
-{
     // Check if we have still actions to trigger.
     if ((!priv_->current_replay_data_.simulation_actions_.empty()) &&
         (priv_->current_simulation_action_iterator_ !=
@@ -203,13 +196,15 @@ void SimulationSystem::updateSimulationInput(
     }
 }
 
-void SimulationSystem::updateSimulationOutput(
-    time::TimePoint const& current_time_point)
+void SimulationSystem::updateSimulationOutput()
 {
+    // Get the current TimePoint
+    time::TimePoint const& current_time_point{
+        systemProvider().system<TimeSystem>().now()};
+
     // Check if some new input is there.
     // Note: this will catch the simulated keys in the previous loop too,
-    // but
-    //      that is intended.
+    // but that is intended.
     auto&& input_system{systemProvider().system<InputSystem>()};
 
     // If there are keys pending in the input system, process them.
