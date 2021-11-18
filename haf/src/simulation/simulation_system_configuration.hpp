@@ -6,11 +6,10 @@
 #include <htypes/include/str.hpp>
 
 #include <haf/include/data/ideserializable.hpp>
+#include "system/system_configuration.hpp"
 
 namespace haf::sys
 {
-class DataWrapperCreator;
-
 struct HAF_PRIVATE SimulationData
 {
     bool global_use;
@@ -19,43 +18,51 @@ struct HAF_PRIVATE SimulationData
     htps::f32 speed;
 };
 
-class HAF_PRIVATE SimulationSystemConfiguration
+struct HAF_PRIVATE DeserializableSimulationData : public data::IDeserializable
 {
-public:
-    bool loadConfiguration(DataWrapperCreator& data_wrapper_creator,
-                           htps::str const& simulation_config_file);
+    static constexpr char SimulationInputFileStr[] = "read_input";
+    static constexpr char SimulationOutputFile[]   = "write_output";
 
-    SimulationData const& simulationData() const noexcept
+    bool deserialize(htps::Object const& obj)
     {
-        return simulation_data_;
+        data.global_use |=
+            obj[SimulationInputFileStr].as(data.simulation_input_file);
+        data.global_use |=
+            obj[SimulationOutputFile].as(data.simulation_output_file);
+
+        return true;
     }
 
-    bool globalUse() const noexcept { return simulation_data_.global_use; }
+    SimulationData data;
+};
+
+class HAF_PRIVATE SimulationSystemConfiguration
+    : public SystemConfiguration<DeserializableSimulationData, SimulationData>
+{
+public:
+    SimulationData const& simulationData() const noexcept { return data(); }
+
+    bool globalUse() const noexcept { return data().global_use; }
 
     htps::str const& simulationInputFileName() const noexcept
     {
-        return simulation_data_.simulation_input_file;
+        return data().simulation_input_file;
     }
 
     htps::str const& simulationOutputFileName() const noexcept
     {
-        return simulation_data_.simulation_output_file;
+        return data().simulation_output_file;
     }
 
     bool useInputSimulation() const noexcept
     {
-        return !simulation_data_.simulation_input_file.empty() &&
-            simulation_data_.global_use;
+        return !data().simulation_input_file.empty() && data().global_use;
     }
 
     bool useOutputSimulation() const noexcept
     {
-        return !simulation_data_.simulation_output_file.empty() &&
-            simulation_data_.global_use;
+        return !data().simulation_output_file.empty() && data().global_use;
     }
-
-private:
-    SimulationData simulation_data_;
 };
 }  // namespace haf::sys
 
