@@ -149,6 +149,8 @@ set(sources
   ${src_dir}/system/subsystem_interface.cpp
   ${src_dir}/system/system_configuration.hpp
   ${src_dir}/system/system_options_init.hpp
+  ${src_dir}/system/system_provider_configuration.cpp
+  ${src_dir}/system/system_provider_configuration.hpp
   ${src_dir}/system/systemaccess.cpp
   ${src_dir}/system/systembase.cpp
   ${src_dir}/system/systembase.hpp

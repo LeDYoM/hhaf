@@ -45,23 +45,24 @@ struct SystemProvider::SystemProviderPrivate final
     uptr<RenderSystem> render_system_;
     uptr<SimulationSystem> simulation_system_;
 
+    str haf_configuration_file_;
     str simulation_config_file_;
 
     void setArgumments(parpar::ParametersParser parameter_parser)
     {
         if (parameter_parser.hasParameters())
         {
-            static constexpr char kSimulationConfigFile[] = "sim_cfg";
+            static constexpr char kHafConfigurationFileParameter[] = "haf_config";
 
-            auto const simulation_config{
-                parameter_parser.optionValue(kSimulationConfigFile)};
+            auto const haf_configuration_file_value{
+                parameter_parser.optionValue(kHafConfigurationFileParameter)};
 
-            if (simulation_config.first)
+            if (haf_configuration_file_value.first)
             {
-                simulation_config_file_ = simulation_config.second;
+                haf_configuration_file_ = haf_configuration_file_value.second;
                 DisplayLog::debug(
-                    "Parameter ", kSimulationConfigFile,
-                    " found with value: ", simulation_config_file_);
+                    "Parameter ", kHafConfigurationFileParameter,
+                    " found with value: ", haf_configuration_file_);
             }
         }
     }
