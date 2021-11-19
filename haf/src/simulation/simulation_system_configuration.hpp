@@ -40,8 +40,6 @@ class HAF_PRIVATE SimulationSystemConfiguration
     : public SystemConfiguration<DeserializableSimulationData, SimulationData>
 {
 public:
-    SimulationData const& simulationData() const noexcept { return data(); }
-
     bool globalUse() const noexcept { return data().global_use; }
 
     htps::str const& simulationInputFileName() const noexcept

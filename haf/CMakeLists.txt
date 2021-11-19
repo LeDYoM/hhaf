@@ -135,7 +135,6 @@ set(sources
   ${src_dir}/shareddata/shareddatasystem.hpp
 
   # Simulation
-  ${src_dir}/simulation/simulation_system_configuration.cpp
   ${src_dir}/simulation/simulation_system_configuration.hpp
   ${src_dir}/simulation/simulation_system_private.hpp
   ${src_dir}/simulation/simulation_system.cpp
