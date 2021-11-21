@@ -69,12 +69,12 @@ struct SystemProvider::SystemProviderPrivate final
         }
     }
 
-    void loadConfiguration(SystemProvider&)
+    void loadConfiguration(SystemProvider& system_provider)
     {
         if (!haf_configuration_file_.empty())
         {
-//            system_provdier_configuration_.loadConfiguration(
-//                haf_configuration_file_);
+            system_provdier_configuration_.loadConfiguration(system_provider, 
+                haf_configuration_file_);
         }
     }
 };

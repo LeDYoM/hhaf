@@ -13,10 +13,11 @@ template <typename DeserializableDataType, typename InnerDataType>
 class SystemConfiguration
 {
 public:
-    bool loadConfiguration(SystemBase& system_instance,
+    template <typename SystemProviderProvider>
+    bool loadConfiguration(SystemProviderProvider& system_provider_provider,
                            htps::str const& configuration_file)
     {
-        SystemDataWrapperCreator data_wrapper_creator{system_instance};
+        SystemDataWrapperCreator data_wrapper_creator{system_provider_provider};
         DeserializableDataType current;
         auto file_serializer{
             data_wrapper_creator.dataWrapper<sys::FileSerializer>()};
