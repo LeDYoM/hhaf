@@ -1,4 +1,5 @@
 #include "systemprovider.hpp"
+#include "system_provider_configuration.hpp"
 #include "init_system_options.hpp"
 
 #include <backend/include/backendfactory.hpp>
@@ -47,6 +48,7 @@ struct SystemProvider::SystemProviderPrivate final
 
     str haf_configuration_file_;
     str simulation_config_file_;
+    SystemProviderConfiguration system_provdier_configuration_;
 
     void setArgumments(parpar::ParametersParser parameter_parser)
     {
@@ -64,6 +66,15 @@ struct SystemProvider::SystemProviderPrivate final
                     "Parameter ", kHafConfigurationFileParameter,
                     " found with value: ", haf_configuration_file_);
             }
+        }
+    }
+
+    void loadConfiguration(SystemProvider&)
+    {
+        if (!haf_configuration_file_.empty())
+        {
+//            system_provdier_configuration_.loadConfiguration(
+//                haf_configuration_file_);
         }
     }
 };

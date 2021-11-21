@@ -13,8 +13,7 @@ template <typename DeserializableDataType, typename InnerDataType>
 class SystemConfiguration
 {
 public:
-    template <typename SystemType_t>
-    bool loadConfiguration(SystemType_t& system_instance,
+    bool loadConfiguration(SystemBase& system_instance,
                            htps::str const& configuration_file)
     {
         SystemDataWrapperCreator data_wrapper_creator{system_instance};

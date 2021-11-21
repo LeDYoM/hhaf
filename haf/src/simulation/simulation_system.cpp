@@ -78,10 +78,8 @@ SimulationSystem::~SimulationSystem()
 
 void SimulationSystem::initialize(str const& simulation_config_file_name)
 {
-    SystemDataWrapperCreator _this{*this};
-
     simulation_system_configuration_.loadConfiguration(
-        _this, simulation_config_file_name);
+        *this, simulation_config_file_name);
 
     if (simulation_system_configuration_.useInputSimulation())
     {

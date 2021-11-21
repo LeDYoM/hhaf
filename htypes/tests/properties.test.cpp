@@ -61,6 +61,6 @@ TEST_CASE("BasicProperty::toIProperty", "[htypes][property][BasicProperty]")
 ////////////////////////////////////////////////
 TEST_CASE("PropertyData::PropertyData")
 {
-    PropertyData<"this", s32> a;
-    a.set(4);
+//    PropertyData<"this", s32> a;
+//    a.set(4);
 }

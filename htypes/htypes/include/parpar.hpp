@@ -291,8 +291,8 @@ private:
 
         if (equalSign != str_t::npos)
         {
-            const str_t name(param.substr(1, equalSign - 1));
-            const str_t value(param.substr(equalSign + 1));
+            str_t name{param.substr(1, equalSign - 1)};
+            str_t value{param.substr(equalSign + 1)};
 
             if (name.empty())
             {

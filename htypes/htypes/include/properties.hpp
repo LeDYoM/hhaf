@@ -49,7 +49,7 @@ public:
 
 namespace htps
 {
-template <str_literal lit, typename T>
+template <size_type N, str_literal<N> lit, typename T>
 struct IPropertyDataRead
 {
     /**
@@ -61,7 +61,7 @@ struct IPropertyDataRead
     virtual ~IPropertyDataRead() = default;
 };
 
-template <str_literal lit, typename T>
+template <size_type N, str_literal<N> lit, typename T>
 struct IPropertyDataWrite
 {
     /**
@@ -78,13 +78,13 @@ struct IPropertyDataWrite
     virtual ~IPropertyDataWrite() = default;
 };
 
-template <str_literal lit, typename T>
-struct IPropertyData : public IPropertyDataRead<lit, T>,
-                       public IPropertyDataWrite<lit, T>
+template <size_type N, str_literal<N> lit, typename T>
+struct IPropertyData : public IPropertyDataRead<N, lit, T>,
+                       public IPropertyDataWrite<N, lit, T>
 {};
 
-template <str_literal lit, typename T>
-class PropertyData : public IPropertyData<lit, T>
+template <size_type N, str_literal<N> lit, typename T>
+class PropertyData : public IPropertyData<N, lit, T>
 {
 public:
     const T& get() const noexcept { return value_; }

@@ -76,9 +76,9 @@ struct SimulationSystem::SimulationSystemPrivate final
     ReplayData current_replay_data_;
     ReplayData next_replay_data_;
 
-    CurrentSimulationActionIterator current_simulation_action_iterator_;
+    CurrentSimulationActionIterator current_simulation_action_iterator_{};
     SimulateRandomDataBuffer::const_iterator
-        current_simulable_data_buffer_iterator;
+        current_simulable_data_buffer_iterator{};
 
     time::TimePoint current_last_checked_point_;
     time::TimePoint next_last_checked_point_;
