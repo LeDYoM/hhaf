@@ -52,7 +52,7 @@ public:
     constexpr basic_str(basic_str const& n) = default;
     constexpr basic_str& operator=(basic_str const& rhs) = default;
 
-    basic_str& operator=(const char_type* n)
+    basic_str& operator=(char_type const* const n)
     {
         *this = basic_str(n, detail::_str_len(n));
         return *this;
