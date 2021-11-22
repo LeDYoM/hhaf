@@ -1,0 +1,3 @@
+{
+    simulation_configuration_file_fake: "simulation_configuration.txt"
+}

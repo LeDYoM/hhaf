@@ -46,8 +46,7 @@ struct SystemProvider::SystemProviderPrivate final
     uptr<RenderSystem> render_system_;
     uptr<SimulationSystem> simulation_system_;
 
-    str haf_configuration_file_;
-    str simulation_config_file_;
+    str haf_configuration_file_ = "haf_configuration.txt";
     SystemProviderConfiguration system_provdier_configuration_;
 
     void setArgumments(parpar::ParametersParser parameter_parser)
@@ -150,15 +149,18 @@ void SystemProvider::fastInit(InitSystemOptions const& init_system_options)
     {
         DisplayLog::debug("Initializing Simulation System");
         p_->simulation_system_ = muptr<SimulationSystem>(*this);
-        if (!p_->simulation_config_file_.empty())
+        const auto& simulation_configuration_file{
+            p_->system_provdier_configuration_
+                .simulationSystemConfigurationFile()};
+
+        if (!simulation_configuration_file.empty())
         {
             DisplayLog::debug(
                 "Passing simulation config file to simulation system: ",
-                p_->simulation_config_file_);
+                simulation_configuration_file);
         }
 
-//        p_->simulation_system_->initialize(p_->simulation_config_file_);
-        p_->simulation_system_->initialize("simulation_configuration.txt");
+        p_->simulation_system_->initialize(simulation_configuration_file);
     }
 
     if (init_system_options.init_window_system)
@@ -202,6 +204,7 @@ void SystemProvider::init(rptr<IApp> iapp,
 {
     parpar::ParametersParser parameter_parser{parpar::create(argc, argv)};
     p_->setArgumments(parameter_parser);
+    p_->loadConfiguration(*this);
 
     LogAsserter::log_assert(
         backend_factory != nullptr,

@@ -19,7 +19,7 @@ struct HAF_PRIVATE DeserializableSystemConfigurationData
     : public data::IDeserializable
 {
     static constexpr char kSimulationSystemFile[] =
-        "simulation_configuration.txt";
+        "simulation_configuration_file";
 
     bool deserialize(htps::Object const& obj)
     {
