@@ -204,13 +204,21 @@ public:
             }
             else if constexpr (std::is_same_v<T, str>)
             {
-                value = (*value_);
-                return true;
+                if (value_ != nullptr)
+                {
+                    value = (*value_);
+                    return true;
+                }
+                return false;
             }
             else if constexpr (std::is_same_v<T, Object>)
             {
-                value = (*object_);
-                return true;
+                if (object_ != nullptr)
+                {
+                    value = (*object_);
+                    return true;
+                }
+                return false;
             }
             else
             {
