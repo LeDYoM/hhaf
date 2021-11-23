@@ -84,11 +84,7 @@ void SceneNodeText::update()
 
     if (pr.hasChanged<Font>() || pr.hasChanged<Text>())
     {
-        // Force reposition if font changed.
-        if (pr.hasChanged<Font>())
-        {
-            pr.setChanged<AlignmentSize>();
-        }
+        pr.setChanged<AlignmentSize>();
         pr.readResetHasChanged<Font>();
         pr.readResetHasChanged<Text>();
 
@@ -140,8 +136,8 @@ void SceneNodeText::update()
 
                 ++counter;
                 Rectf32 const textureUV{font->getTextureBounds(curChar)};
-                letterNode->node()->setTextureAndTextureRectFromTextureSize(texture,
-                                                             textureUV);
+                letterNode->node()->setTextureAndTextureRectFromTextureSize(
+                    texture, textureUV);
 
                 // Update the current bounds
                 {
@@ -188,10 +184,11 @@ void SceneNodeText::update()
     if (pr.readResetHasChanged<TextColor>())
     {
         Color const& text_color{pr.get<TextColor>()};
-        sceneNodes().for_each([&text_color](SceneNodeSPtr const& sNode) {
-            sceneNodeCast<RenderizableSceneNode>(sNode)->node()->color =
-                text_color;
-        });
+
+        for_each_sceneNode_as<RenderizableSceneNode>(
+            [&text_color](sptr<RenderizableSceneNode> const& sNode) {
+                sNode->node()->color = text_color;
+            });
     }
 
     if (pr.get<Font>() != nullptr)
