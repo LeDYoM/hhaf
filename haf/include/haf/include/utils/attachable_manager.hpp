@@ -44,8 +44,7 @@ protected:
 private:
     void initialize(AttachedBase& dw) const
     {
-        dw.attachedNode_ = attachable_;
-        dw.onAttached();
+        dw.setAttachedNode(attachable_);
     }
 
     const htps::rptr<AttachableType> attachable_;

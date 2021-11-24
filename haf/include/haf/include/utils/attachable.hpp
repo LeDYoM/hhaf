@@ -2,7 +2,7 @@
 #define HAF_SYS_ATTACHABLE_INCLUDE_HPP
 
 #include <haf/include/haf_export.hpp>
-#include <haf/include/types/basic_types.hpp>
+#include <htypes/include/types.hpp>
 
 namespace haf::utils
 {
@@ -18,7 +18,7 @@ public:
     /**
      * @brief Destroy the Attachable object
      */
-    virtual ~Attachable() {}
+    virtual ~Attachable() = default;
 
     /**
      * @brief Method called after the component is attached to a node.
@@ -31,7 +31,7 @@ protected:
      * @brief Get the attached node.
      * @return The pointer to const attached node.
      */
-    constexpr types::rptr<const T> attachedNode() const noexcept
+    constexpr htps::rptr<const T> attachedNode() const noexcept
     {
         return attachedNode_;
     }
@@ -40,7 +40,7 @@ protected:
      * @brief Get the attached node.
      * @return The pointer to the attached node.
      */
-    constexpr types::rptr<T> attachedNode() noexcept { return attachedNode_; }
+    constexpr htps::rptr<T> attachedNode() noexcept { return attachedNode_; }
 
     /**
      * @brief Shortcut method to get the attached node converted to a type.
@@ -50,7 +50,7 @@ protected:
      * conversion was possible.
      */
     template <typename Y>
-    types::rptr<Y> attachedNodeAs() noexcept
+    htps::rptr<Y> attachedNodeAs() noexcept
     {
         return dynamic_cast<Y*>(attachedNode());
     }
@@ -64,13 +64,19 @@ protected:
      * conversion was possible.
      */
     template <typename Y>
-    types::rptr<Y const> attachedNodeAs() const noexcept
+    htps::rptr<Y const> attachedNodeAs() const noexcept
     {
         return dynamic_cast<Y const*>(attachedNode());
     }
 
 public:
-    types::rptr<T> attachedNode_{nullptr};
+    void setAttachedNode(htps::rptr<T> attachedNode) noexcept
+    {
+        attachedNode_ = std::move(attachedNode);
+        onAttached();
+    }
+private:
+    htps::rptr<T> attachedNode_{nullptr};
 };
 
 }  // namespace haf::utils

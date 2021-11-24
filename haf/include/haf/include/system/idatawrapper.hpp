@@ -24,7 +24,7 @@ class IDataWrapper : public utils::Attachable<sys::SystemAccess>
 {
 public:
     /**
-     * @brief Public type alias template with the acched node type of this
+     * @brief Public type alias template with the attached node type of this
      * attachable. Required from @b sys::Atachable
      */
     using AttachedNodeType =
