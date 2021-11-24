@@ -10,7 +10,7 @@ class SceneNode;
 template <typename T>
 htps::rptr<T> sceneNodeCast(htps::rptr<SceneNode> const scene_node) noexcept
 {
-    return dynamic_cast<T*>(scene_node);
+    return dynamic_cast<htps::rptr<T>>(scene_node);
 }
 
 template <typename T>
