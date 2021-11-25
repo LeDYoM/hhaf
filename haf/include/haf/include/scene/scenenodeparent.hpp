@@ -2,6 +2,7 @@
 #define HAF_SCENE_SCENENODEPARENT_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
+#include <htypes/include/cast.hpp>
 
 namespace haf::scene
 {
@@ -37,6 +38,11 @@ public:
         return parent_;
     }
 
+    constexpr htps::rptr<const SceneNodeParent> cparent() const noexcept
+    {
+        return parent();
+    }
+
     /**
      * @brief Get the pointer to the parent converted to another type
      * @tparam SceneNodeType Type to what te parent will be converted
@@ -46,7 +52,7 @@ public:
     template <typename SceneNodeType>
     htps::rptr<SceneNodeType> parentAs() noexcept
     {
-        return dynamic_cast<htps::rptr<SceneNodeType>>(parent());
+        return htps::d_cast<htps::rptr<SceneNodeType>>(parent());
     }
 
     /**
@@ -58,7 +64,13 @@ public:
     template <typename SceneNodeType>
     htps::rptr<SceneNodeType const> parentAs() const noexcept
     {
-        return dynamic_cast<htps::rptr<SceneNodeType const>>(parent());
+        return htps::d_cast<htps::rptr<SceneNodeType const>>(parent());
+    }
+
+    template <typename SceneNodeType>
+    htps::rptr<SceneNodeType const> cparentAs() const noexcept
+    {
+        return parentAs<SceneNodeType>();
     }
 
     /**
@@ -103,6 +115,12 @@ public:
             return parent_as_type == nullptr ? _parent->ancestor<T>()
                                              : parent_as_type;
         }
+    }
+
+    template <typename T>
+    constexpr htps::rptr<T const> const cancestor() const noexcept
+    {
+        return ancestor<T>();
     }
 
     /**

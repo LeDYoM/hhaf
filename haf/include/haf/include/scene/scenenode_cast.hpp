@@ -2,6 +2,7 @@
 #define HAF_SCENE_SCENENODE_CAST_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
+#include <htypes/include/cast.hpp>
 
 namespace haf::scene
 {
@@ -10,14 +11,14 @@ class SceneNode;
 template <typename T>
 htps::rptr<T> sceneNodeCast(htps::rptr<SceneNode> const scene_node) noexcept
 {
-    return dynamic_cast<htps::rptr<T>>(scene_node);
+    return htps::d_cast<htps::rptr<T>>(scene_node);
 }
 
 template <typename T>
-const htps::rptr<const T> sceneNodeCast(
+htps::rptr<const T> sceneNodeCast(
     htps::rptr<SceneNode const> const scene_node) noexcept
 {
-    return dynamic_cast<const T* const>(scene_node);
+    return htps::d_cast<T const*>(scene_node);
 }
 
 template <typename T>
