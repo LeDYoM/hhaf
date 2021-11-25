@@ -20,7 +20,7 @@ namespace haf::scene
  * To create new SceneNode types, inherit from this class.
  */
 class HAF_API SceneNode : public sys::HasName,
-                          public SceneNodeParent,
+                          public SceneNodeParent<SceneNode>,
                           public SceneNodes,
                           public sys::SystemAccess,
                           public SceneNodeProperties,
