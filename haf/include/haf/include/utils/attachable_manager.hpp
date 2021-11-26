@@ -25,11 +25,11 @@ public:
         attachable_{std::move(attachable)}
     {}
 
-    virtual ~AttachableManager() {}
+    virtual ~AttachableManager() = default;
 
 protected:
     template <typename T>
-    htps::uptr<T> create() const
+    auto create() const
     {
         // Static check that T is a valid type for this class.
         static_assert(std::is_base_of_v<Attachable<AttachableType>, T>,

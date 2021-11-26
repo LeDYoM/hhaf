@@ -20,7 +20,8 @@ public:
     using pointer = T*;
 
     template <typename... Args>
-    static void construct(pointer where, Args&&... args)
+    static void construct(pointer where, Args&&... args) noexcept(
+        noexcept(T(std::forward<Args>(args)...)))
     {
         assert(where != nullptr);
 

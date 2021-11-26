@@ -19,8 +19,7 @@ class HAF_API ComponentContainer : private utils::AttachableManager<IComponent>
     using AttachableType = typename BaseClass::AttachableType;
 
 public:
-    explicit ComponentContainer(
-        htps::rptr<BaseClass::AttachableType> attachable);
+    explicit ComponentContainer(htps::rptr<AttachableType> attachable);
 
     /**
      * @brief Destroy the Component Container object

@@ -15,9 +15,10 @@ namespace haf::component
 
 class IComponent : public utils::Attachable<scene::SceneNode>
 {
+    using BaseClass = utils::Attachable<scene::SceneNode>;
+
 public:
-    using AttachedNodeType =
-        utils::Attachable<scene::SceneNode>::AttachedNodeType;
+    using AttachedNodeType = BaseClass::AttachedNodeType;
 
     /**
      * @brief Interface to be implemented to update the component

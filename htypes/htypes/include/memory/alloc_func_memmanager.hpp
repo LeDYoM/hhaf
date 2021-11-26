@@ -8,7 +8,7 @@ namespace htps
 {
 
 template <typename T>
-using AllocatorMemManagerRaw = htps::AllocatorFunc<T, mmalloc, mfree>;
+using AllocatorMemManagerRaw = htps::AllocatorFunc<T, mmalloc, mfree, mfree>;
 
 }  // namespace htps
 
