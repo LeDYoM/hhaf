@@ -10,6 +10,7 @@ namespace haf::scene
  * @brief Class encapsulating the functionallity related to the parent and
  * ancestors management.
  */
+template <typename CRTP>
 class SceneNodeParent
 {
 public:
@@ -17,28 +18,28 @@ public:
      * @brief Constructor.
      * @param[in] parent       The parent of this node.
      */
-    constexpr SceneNodeParent(htps::rptr<SceneNodeParent> parent) noexcept :
+    constexpr SceneNodeParent(htps::rptr<CRTP> parent) noexcept :
         parent_{std::move(parent)}
     {}
 
     /**
-     * @brief Get the parent of this @b SceneNode
+     * @brief Get the parent of this node
      * @see SceneNode
-     * @return constexpr htps::rptr<SceneNode> Parent or nullptr if no parent
+     * @return Parent or nullptr if no parent
      */
-    constexpr htps::rptr<SceneNodeParent> parent() noexcept { return parent_; }
+    constexpr htps::rptr<CRTP> parent() noexcept { return parent_; }
 
     /**
-     * @brief Get the constant parent of this @b SceneNode
+     * @brief Get the constant parent of this node
      * @see SceneNode
-     * @return constexpr htps::rptr<SceneNode> Parent or nullptr if no parent
+     * @return Parent or nullptr if no parent
      */
-    constexpr htps::rptr<const SceneNodeParent> parent() const noexcept
+    constexpr htps::rptr<CRTP const> parent() const noexcept
     {
         return parent_;
     }
 
-    constexpr htps::rptr<const SceneNodeParent> cparent() const noexcept
+    constexpr htps::rptr<CRTP const> cparent() const noexcept
     {
         return parent();
     }
@@ -130,7 +131,7 @@ public:
     virtual ~SceneNodeParent() {}
 
 private:
-    htps::rptr<SceneNodeParent> const parent_;
+    htps::rptr<CRTP> const parent_;
 };
 
 }  // namespace haf::scene
