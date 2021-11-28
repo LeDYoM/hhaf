@@ -58,6 +58,7 @@ set(sources
   ${src_dir}/render/renderizable_internal_data.hpp
   ${src_dir}/render/renderizable_internal_functions.cpp
   ${src_dir}/render/renderizable_internal_functions.hpp
+  ${src_dir}/render/renderizable_private.hpp
   ${src_dir}/render/renderizable.cpp
   ${src_dir}/render/renderizables.cpp
   ${src_dir}/render/rendersystem.cpp
