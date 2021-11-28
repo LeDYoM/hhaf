@@ -76,15 +76,18 @@ void Renderizable::setTextureAndTextureRectNormalizedRect(
     sptr<res::ITexture> texture_,
     Rectf32 const& textRect) noexcept
 {
-    Rects32 dest_textureRect{textRect};
+    // Generate a copy of the texture rect
+    auto dest_textureRect{textRect};
+    // Scale it according to the size of the current texture
     dest_textureRect.scale(texture_->size());
-    textureRect = dest_textureRect;
+    // Use it as a new texture rect
+    textureRect = std::move(dest_textureRect);
     texture     = std::move(texture_);
 }
 
 void Renderizable::setTextureFill(sptr<res::ITexture> texture_)
 {
-    setTextureAndTextureRectFromTextureSize(texture_,
+    setTextureAndTextureRectFromTextureSize(std::move(texture_),
                                             textureFillQuad(texture_));
 }
 
@@ -99,15 +102,13 @@ void Renderizable::update()
         color.resetHasChanged();
         color_modifier.resetHasChanged();
     }
-
-    if (textureRect.readResetHasChanged())
+    else if (textureRect.readResetHasChanged())
     {
         updateTextureCoordsAndColor(p_->vertices_.verticesArray(), mi_data);
         color.resetHasChanged();
         color_modifier.resetHasChanged();
     }
-
-    if (ps_readResetHasAnyChanged(color, color_modifier))
+    else if (ps_readResetHasAnyChanged(color, color_modifier))
     {
         updateColors(p_->vertices_.verticesArray(), mi_data);
     }
