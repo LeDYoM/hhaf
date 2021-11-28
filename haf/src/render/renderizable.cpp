@@ -100,7 +100,7 @@ void Renderizable::update()
         color_modifier.resetHasChanged();
     }
 
-    if (ps_readResetHasAnyChanged(textureRect))
+    if (textureRect.readResetHasChanged())
     {
         updateTextureCoordsAndColor(p_->vertices_.verticesArray(), mi_data);
         color.resetHasChanged();
@@ -112,12 +112,12 @@ void Renderizable::update()
         updateColors(p_->vertices_.verticesArray(), mi_data);
     }
 
-    if (ps_readResetHasChanged(texture))
+    if (texture.readResetHasChanged())
     {
         p_->render_data_.texture = texture().get();
     }
 
-    if (ps_readResetHasChanged(shader))
+    if (shader.readResetHasChanged())
     {
         p_->render_data_.shader = shader().get();
     }
