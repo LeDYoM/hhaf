@@ -178,11 +178,11 @@ public:
         if (capacity_ < capacity)
         {
             vector_storage new_vector{
-                vector_storage(static_cast<size_type>(capacity))};
+                vector_storage{static_cast<size_type>(capacity)}};
 
-            for (auto iterator{begin()}; iterator != end(); ++iterator)
+            for (auto&& iterator : *this)
             {
-                new_vector.push_back(std::move(*iterator));
+                new_vector.push_back(std::move(iterator));
             }
 
             *this = std::move(new_vector);

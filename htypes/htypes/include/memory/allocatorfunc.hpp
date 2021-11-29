@@ -28,7 +28,7 @@ public:
     static void deallocate(pointer element, size_type const size)
     {
         assert(element != nullptr);
-        DeallocateWithSize(element, size);
+        DeallocateWithSize(element, sizeof(T) * size);
     }
 };
 
