@@ -131,7 +131,7 @@ public:
             capacity_ = size_;
 
             buffer_ = size_ > 0U ? Allocator::allocate(size_) : nullptr;
-            auto buffer_iterator = buffer_;
+            auto buffer_iterator{buffer_};
             auto const tmp_end{tmp_buffer + size_};
 
             for (auto it{tmp_buffer}; it != tmp_end; ++it)
