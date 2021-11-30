@@ -1,12 +1,65 @@
 #include "memory_statistics.hpp"
+#include <cstdint>
 
 namespace memm
 {
+namespace
+{
 MemoryStatistics* memory_statistics{nullptr};
+constexpr std::uint_fast32_t kMaxMemoryStatisticsSubBuffer{3U};
+MemoryStatistics* memory_statics_subbuffer{nullptr};
+std::uint_fast32_t current{0U};
+MemoryStatistics* currentNode{nullptr};
+
+void updateCurrentNode()
+{
+    currentNode = (memory_statics_subbuffer + current);
+}
+
+}  // namespace
 
 void initMemoryStatistics()
 {
     memory_statistics = new MemoryStatistics();
+    memory_statics_subbuffer =
+        new MemoryStatistics[kMaxMemoryStatisticsSubBuffer];
+}
+
+void resetMemoryStatisticsData(MemoryStatistics* const ms_data)
+{
+    (*ms_data).bytes_alloc_   = 0U;
+    (*ms_data).bytes_dealloc_ = 0U;
+    (*ms_data).num_alloc_     = 0U;
+    (*ms_data).num_dealloc_   = 0U;
+}
+
+bool canAddNode()
+{
+    return current < kMaxMemoryStatisticsSubBuffer;
+}
+
+void pushMemoryStatisticsQueue()
+{
+    if (current < kMaxMemoryStatisticsSubBuffer)
+    {
+        updateCurrentNode();
+        ++current;
+        resetMemoryStatisticsData(currentNode);
+    }
+}
+
+void popMemoryStatisticsQueue()
+{
+    if (current > 0U)
+    {
+        --current;
+        updateCurrentNode();
+    }
+}
+
+MemoryStatistics* getHeadMemoryStatistics()
+{
+    return currentNode;
 }
 
 void displayMemoryStatistics()
@@ -14,6 +67,11 @@ void displayMemoryStatistics()
 
 void destroyMemoryStatistics() noexcept
 {
+    if (memory_statics_subbuffer != nullptr)
+    {
+        delete[] memory_statics_subbuffer;
+    }
+
     if (memory_statistics != nullptr)
     {
         delete memory_statistics;
