@@ -498,9 +498,9 @@ public:
         if (!other.empty())
         {
             reserve(size() + other.size());
-            for (const auto& element : other)
+            for (auto&& element : other)
             {
-                emplace_back(element);
+                push_back(std::forward<decltype(element)>(element));
             }
         }
     }

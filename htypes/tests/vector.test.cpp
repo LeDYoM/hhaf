@@ -336,6 +336,16 @@ TEST_CASE("vector of shared pointers", "[vector]")
         test_vector1.shrink_to_fit();
         CHECK(test_vector1.size() == 0U);
         CHECK(test_vector1.capacity() == 0U);
+
+        vector<int> another;
+        CHECK(another.empty());
+        CHECK(another.capacity() == 0U);
+        another.reserve(10U);
+        CHECK(another.empty());
+        CHECK(another.capacity() == 10U);
+        another.shrink_to_fit();
+        CHECK(another.empty());
+        CHECK(another.capacity() == 0U);
     }
 }
 

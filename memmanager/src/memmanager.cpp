@@ -65,7 +65,7 @@ void mfree(void* block)
     std::free(block);
 }
 
-void mfree(void* block, std::size_t const size)
+void mfree_with_size(void* block, std::size_t const size)
 {
     memm::onDeallocate(size);
     std::free(block);
@@ -103,14 +103,14 @@ void operator delete(void* data, const std::nothrow_t&) noexcept
 
 void operator delete(void* data, std::size_t size)
 {
-    return mfree(data, size);
+    return mfree_with_size(data, size);
 }
 
 void operator delete(void* data,
                      std::size_t size,
                      const std::nothrow_t&) noexcept
 {
-    return mfree(data, size);
+    return mfree_with_size(data, size);
 }
 
 void operator delete[](void* data)
@@ -120,7 +120,7 @@ void operator delete[](void* data)
 
 void operator delete[](void* data, std::size_t size)
 {
-    return mfree(data, size);
+    return mfree_with_size(data, size);
 }
 
 void operator delete[](void* data, const std::nothrow_t&) noexcept
@@ -132,5 +132,5 @@ void operator delete[](void* data,
                        std::size_t size,
                        const std::nothrow_t&) noexcept
 {
-    return mfree(data, size);
+    return mfree_with_size(data, size);
 }

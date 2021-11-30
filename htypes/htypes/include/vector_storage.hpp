@@ -84,7 +84,7 @@ public:
     {
         if (buffer_ != nullptr)
         {
-            Allocator::deallocate(buffer_);
+            Allocator::deallocate_with_size(buffer_, capacity_);
             buffer_   = nullptr;
             size_     = 0U;
             capacity_ = 0U;
@@ -127,19 +127,20 @@ public:
     {
         if (size_ < capacity_)
         {
-            auto tmp_buffer{buffer_};
+            auto old_buffer{buffer_};
+            auto old_capacity{capacity_};
             capacity_ = size_;
 
             buffer_ = size_ > 0U ? Allocator::allocate(size_) : nullptr;
             auto buffer_iterator{buffer_};
-            auto const tmp_end{tmp_buffer + size_};
+            auto const old_end{old_buffer + size_};
 
-            for (auto it{tmp_buffer}; it != tmp_end; ++it)
+            for (auto it{old_buffer}; it != old_end; ++it)
             {
                 Allocator::construct(buffer_iterator++, std::move(*it));
                 Allocator::destruct(it);
             }
-            Allocator::deallocate(tmp_buffer);
+            Allocator::deallocate_with_size(old_buffer, old_capacity);
         }
     }
 

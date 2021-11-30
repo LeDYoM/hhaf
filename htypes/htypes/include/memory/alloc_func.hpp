@@ -7,7 +7,7 @@
 namespace htps
 {
 
-constexpr void free_with_size(void* block, auto const)
+void free_with_size(void* block, auto const)
 {
     std::free(block);
 }
