@@ -9,12 +9,12 @@ namespace haf::sys
 class DebugSystem final : public SystemBase
 {
     using BaseClass = SystemBase;
+
 public:
     using BaseClass::BaseClass;
     ~DebugSystem();
-
 };
 
-}  // namespace haf
+}  // namespace haf::sys
 
 #endif

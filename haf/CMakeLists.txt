@@ -27,6 +27,7 @@ set(sources
   # Debug
   ${src_dir}/debug_utils/console.cpp
   ${src_dir}/debug_utils/debug_actions.cpp
+  ${src_dir}/debug_utils/debug_system_subsystems_view.cpp
   ${src_dir}/debug_utils/debug_system.cpp
   ${src_dir}/debug_utils/debug_system.hpp
   ${src_dir}/debug_utils/displayvar_console.cpp
@@ -78,6 +79,7 @@ set(sources
   ${src_dir}/resources/font_utils.hpp
   ${src_dir}/resources/resource_manager_config_loader.cpp
   ${src_dir}/resources/resource_manager_config_loader.hpp
+  ${src_dir}/resources/resource_manager_subsystems_view.cpp
   ${src_dir}/resources/resourcemanager_private.hpp
   ${src_dir}/resources/resourcemanager.cpp
   ${src_dir}/resources/resourcemanager.hpp
@@ -147,7 +149,7 @@ set(sources
   ${src_dir}/system/get_systemprovider.cpp
   ${src_dir}/system/get_systemprovider.hpp
   ${src_dir}/system/init_system_options.hpp
-  ${src_dir}/system/subsystem_interface.cpp
+  ${src_dir}/system/subsystem_interface_definitions.hpp
   ${src_dir}/system/system_configuration.hpp
   ${src_dir}/system/system_options_init.hpp
   ${src_dir}/system/system_provider_configuration.hpp
