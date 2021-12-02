@@ -4,8 +4,6 @@
 #include <haf/include/resources/iresource_configurator.hpp>
 #include <haf/include/resources/iresource_retriever.hpp>
 
-using namespace haf::res;
-
 namespace haf::sys
 {
 DEFINE_SUBSYSTEM_INTERFACE(res::IResourceRetriever, sys::ResourceManager)

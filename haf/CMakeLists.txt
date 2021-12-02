@@ -31,6 +31,7 @@ set(sources
   ${src_dir}/debug_utils/debug_system.cpp
   ${src_dir}/debug_utils/debug_system.hpp
   ${src_dir}/debug_utils/displayvar_console.cpp
+  ${src_dir}/debug_utils/memory_data_initializer.cpp
   ${src_dir}/debug_utils/variable_viewer.cpp
   
   # FileSystem
@@ -209,13 +210,14 @@ set(headers
   ${inc_dir}/debug_utils/console.hpp
   ${inc_dir}/debug_utils/debug_actions.hpp
   ${inc_dir}/debug_utils/displayvar_console.hpp
+  ${inc_dir}/debug_utils/imemory_data_viewer.hpp
+  ${inc_dir}/debug_utils/memory_data_initializer.hpp
   ${inc_dir}/debug_utils/variable_viewer.hpp
 
   # Data
   ${inc_dir}/data/ideserializable.hpp
   ${inc_dir}/data/ifullserializable.hpp
   ${inc_dir}/data/iserializable.hpp
-
   
   # File system
   ${inc_dir}/filesystem/fileserializer.hpp

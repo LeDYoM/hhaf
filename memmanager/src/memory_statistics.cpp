@@ -16,6 +16,14 @@ void updateCurrentNode()
     currentNode = (memory_statics_subbuffer + current);
 }
 
+void resetMemoryStatisticsData(MemoryStatistics* const ms_data)
+{
+    (*ms_data).bytes_alloc_   = 0U;
+    (*ms_data).bytes_dealloc_ = 0U;
+    (*ms_data).num_alloc_     = 0U;
+    (*ms_data).num_dealloc_   = 0U;
+}
+
 }  // namespace
 
 void initMemoryStatistics()
@@ -25,45 +33,38 @@ void initMemoryStatistics()
         new MemoryStatistics[kMaxMemoryStatisticsSubBuffer];
 }
 
-void resetMemoryStatisticsData(MemoryStatistics* const ms_data)
-{
-    (*ms_data).bytes_alloc_   = 0U;
-    (*ms_data).bytes_dealloc_ = 0U;
-    (*ms_data).num_alloc_     = 0U;
-    (*ms_data).num_dealloc_   = 0U;
-}
-
-bool canAddNode()
+bool canAddNode() noexcept
 {
     return current < kMaxMemoryStatisticsSubBuffer;
 }
 
-void pushMemoryStatisticsQueue()
+bool pushMemoryStatisticsQueue()
 {
     if (current < kMaxMemoryStatisticsSubBuffer)
     {
         updateCurrentNode();
         ++current;
         resetMemoryStatisticsData(currentNode);
+        return true;
     }
+    return false;
 }
 
-void popMemoryStatisticsQueue()
+bool popMemoryStatisticsQueue()
 {
     if (current > 0U)
     {
         --current;
         updateCurrentNode();
+        return true;
     }
+    return false;
 }
 
 MemoryStatistics* getHeadMemoryStatistics()
 {
     return currentNode;
 }
-
-void displayMemoryStatistics()
-{}
 
 void destroyMemoryStatistics() noexcept
 {

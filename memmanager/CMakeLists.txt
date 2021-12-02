@@ -13,7 +13,10 @@ set(sources
     src/memory_statistics.hpp
 )
 
-set(headers memmanager/include/memmanager.hpp)
+set(headers 
+    memmanager/include/memmanager.hpp
+    memmanager/include/memory_view.hpp
+)
 
 build_lib_component(EXPORT_ALL HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}" SOURCES
                     "${sources}" HEADERS "${headers}" )

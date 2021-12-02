@@ -88,7 +88,7 @@ void SystemProvider::fastInit(InitSystemOptions const& init_system_options)
     if (init_system_options.init_debug_system)
     {
         DisplayLog::debug("Initializing DebugSystem");
-        p_->shared_data_system_ = muptr<SharedDataSystem>(*this);
+        p_->debug_system_ = muptr<DebugSystem>(*this);
     }
 
     if (init_system_options.init_shared_data_system)

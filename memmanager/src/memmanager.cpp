@@ -1,5 +1,4 @@
 #include <memmanager/include/memmanager.hpp>
-
 #include "memory_statistics.hpp"
 
 #include <cstdlib>

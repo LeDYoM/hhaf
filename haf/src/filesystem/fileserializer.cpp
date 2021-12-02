@@ -1,7 +1,10 @@
 #include <haf/include/filesystem/fileserializer.hpp>
+#include <haf/include/debug_utils/memory_data_initializer.hpp>
 #include <filesystem/filesystem.hpp>
 #include <system/systemprovider.hpp>
 #include <system/get_system.hpp>
+#include <haf/include/system/systemaccess.hpp>
+#include <debug_utils/debug_system.hpp>
 #include <hlog/include/hlog.hpp>
 
 using namespace htps;
@@ -57,6 +60,7 @@ FileSerializer::Result FileSerializer::deserializeFromFile(
     const Path& file_name,
     data::IDeserializable& data)
 {
+    debug::MemoryDataInitializer mdi(&getSystem<DebugSystem>(attachedNode()));
     const htps::str text_data{loadTextFile(file_name)};
     if (!text_data.empty())
     {
