@@ -1,6 +1,6 @@
 #include <haf/include/filesystem/fileserializer.hpp>
 #include <haf/include/debug_utils/memory_data_initializer.hpp>
-#include <filesystem/filesystem.hpp>
+#include <filesystem/file_system.hpp>
 #include <system/systemprovider.hpp>
 #include <system/get_system.hpp>
 #include <haf/include/system/systemaccess.hpp>
@@ -50,10 +50,10 @@ str FileSerializer::loadTextFile(const Path& file_name)
         .loadTextFile(file_name);
 }
 
-bool FileSerializer::saveFile(const Path& file_name, const str& data)
+bool FileSerializer::saveTextFile(const Path& file_name, const str& data)
 {
     return sys::getSystem<sys::FileSystem>(attachedNode())
-        .saveFile(file_name, data);
+        .saveTextFile(file_name, data);
 }
 
 FileSerializer::Result FileSerializer::deserializeFromFile(
@@ -97,7 +97,7 @@ FileSerializer::Result FileSerializer::serializeToFile(
         htps::str data_str;
         data_str << obj;
 
-        return ((saveFile(file_name, std::move(data_str)))
+        return ((saveTextFile(file_name, std::move(data_str)))
                     ? Result::Success
                     : Result::FileIOError);
     }

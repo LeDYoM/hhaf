@@ -10,7 +10,7 @@
 #include "input/inputsystem.hpp"
 #include "time/timesystem.hpp"
 #include "shareddata/shareddatasystem.hpp"
-#include "filesystem/filesystem.hpp"
+#include "filesystem/file_system.hpp"
 #include "debug_utils/debug_system.hpp"
 
 using namespace htps;

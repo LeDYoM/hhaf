@@ -7,10 +7,11 @@
 
 #include <haf/include/filesystem/path.hpp>
 #include "system/systembase.hpp"
+#include "haf_private.hpp"
 
 namespace haf::sys
 {
-class FileSystem final : public SystemBase
+class HAF_PRIVATE FileSystem final : public SystemBase
 {
 public:
     using SystemBase::SystemBase;
@@ -18,8 +19,7 @@ public:
 
     htps::RawMemory loadBinaryFile(const htps::str& file_name);
     htps::str loadTextFile(const Path& file_name);
-
-    bool saveFile(const Path& file_name, const htps::str& data);
+    bool saveTextFile(const Path& file_name, const htps::str& data);
 };
 }  // namespace haf::sys
 

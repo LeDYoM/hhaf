@@ -35,9 +35,9 @@ set(sources
   ${src_dir}/debug_utils/variable_viewer.cpp
   
   # FileSystem
+  ${src_dir}/filesystem/file_system.cpp
+  ${src_dir}/filesystem/file_system.hpp
   ${src_dir}/filesystem/fileserializer.cpp
-  ${src_dir}/filesystem/filesystem.cpp
-  ${src_dir}/filesystem/filesystem.hpp
 
   # Input
   ${src_dir}/input/input_component_base.cpp

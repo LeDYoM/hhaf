@@ -1,4 +1,4 @@
-#include "filesystem.hpp"
+#include "file_system.hpp"
 
 #include <hlog/include/hlog.hpp>
 
@@ -76,7 +76,7 @@ str FileSystem::loadTextFile(const Path& file_name)
     return str{};
 }
 
-bool FileSystem::saveFile(const Path& file_name, const str& data)
+bool FileSystem::saveTextFile(const Path& file_name, const str& data)
 {
     // Open a file
     std::ofstream file(file_name.c_str());
