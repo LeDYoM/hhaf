@@ -20,6 +20,21 @@ MemoryStatistics* getHeadMemoryStatistics();
 bool canAddNode() noexcept;
 MemoryStatistics* getMemoryStatistics() noexcept;
 
+class MemoryView
+{
+public:
+    MemoryView() { pushMemoryStatisticsQueue(); }
+
+    MemoryView(MemoryView const&) = delete;
+    MemoryView& operator=(MemoryView const&) = delete;
+
+    MemoryStatistics* getCurrentMemoryStatistics() const
+    {
+        return getHeadMemoryStatistics();
+    }
+    ~MemoryView() { popMemoryStatisticsQueue(); }
+};
+
 }  // namespace memm
 
 #endif

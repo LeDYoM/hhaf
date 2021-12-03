@@ -85,21 +85,33 @@ MemoryStatistics* getMemoryStatistics() noexcept
     return memory_statistics;
 }
 
-void onAllocated(std::size_t size) noexcept
+void onAllocated(std::size_t const size) noexcept
 {
     if (memory_statistics != nullptr)
     {
         memory_statistics->num_alloc_++;
         memory_statistics->bytes_alloc_ += size;
     }
+
+    if (currentNode != nullptr)
+    {
+        currentNode->num_alloc_++;
+        currentNode->bytes_alloc_ += size;
+    }
 }
 
-void onDeallocate(std::size_t size) noexcept
+void onDeallocate(std::size_t const size) noexcept
 {
     if (memory_statistics != nullptr)
     {
         memory_statistics->num_dealloc_++;
         memory_statistics->bytes_dealloc_ += size;
+    }
+
+    if (currentNode != nullptr)
+    {
+        currentNode->num_dealloc_++;
+        currentNode->bytes_dealloc_ += size;
     }
 }
 

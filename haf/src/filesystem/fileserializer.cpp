@@ -60,11 +60,11 @@ FileSerializer::Result FileSerializer::deserializeFromFile(
     const Path& file_name,
     data::IDeserializable& data)
 {
-    debug::MemoryDataInitializer mdi(&getSystem<DebugSystem>(attachedNode()));
-    const htps::str text_data{loadTextFile(file_name)};
+    debug::MemoryDataInitializer mdi{&getSystem<DebugSystem>(attachedNode())};
+    str const text_data{loadTextFile(file_name)};
     if (!text_data.empty())
     {
-        htps::ObjectCompiler obj_compiler(text_data);
+        ObjectCompiler obj_compiler(text_data);
         if (obj_compiler.compile())
         {
             // The compilation was correct so, at least we

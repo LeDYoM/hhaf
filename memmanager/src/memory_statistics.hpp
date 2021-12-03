@@ -8,8 +8,8 @@ namespace memm
 {
 void initMemoryStatistics();
 void destroyMemoryStatistics() noexcept;
-void onAllocated(std::size_t size) noexcept;
-void onDeallocate(std::size_t size) noexcept;
+void onAllocated(std::size_t const size) noexcept;
+void onDeallocate(std::size_t const size) noexcept;
 
 }  // namespace memm
 

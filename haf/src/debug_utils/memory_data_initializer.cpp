@@ -24,7 +24,17 @@ MemoryDataInitializer::~MemoryDataInitializer()
 {
     if (is_valid_)
     {
+        auto const allocations_value{allocations()};
+        auto const deallocations_value{deallocations()};
+        auto const allocatedBytes_value{allocatedBytes()};
+        auto const deallocatedBytes_value{deallocatedBytes()};
+
         is_valid_ = memory_data_viewer_->popMemoryDataStatistics();
+        DisplayLog::debug("Allocations: ", allocations_value,
+                          "\nDeallocations: ", deallocations_value,
+                          "\nBytes allocated: ", allocatedBytes_value,
+                          "\nBytes deallocated: ", deallocatedBytes_value);
+
         LogAsserter::log_assert(is_valid_,
                                 "Error destroying MemoryDataInitializer");
     }
@@ -32,7 +42,7 @@ MemoryDataInitializer::~MemoryDataInitializer()
 
 size_type MemoryDataInitializer::allocations() const
 {
-    return is_valid_ ? memory_data_viewer_->getHeadAllocations() : 0U;    
+    return is_valid_ ? memory_data_viewer_->getHeadAllocations() : 0U;
 }
 
 size_type MemoryDataInitializer::deallocations() const
