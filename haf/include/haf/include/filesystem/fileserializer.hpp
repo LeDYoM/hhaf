@@ -34,19 +34,6 @@ public:
 
     bool saveFile(const Path& file_name, const htps::str& data);
 
-    template <typename T>
-    Result deserializeFromFileTemplate(const Path& file_name, T& data)
-    {
-        const htps::str text_data{loadTextFile(file_name)};
-        if (!text_data.empty())
-        {
-            return ((htps::Serializer<T>::deserialize(text_data, data))
-                        ? Result::Success
-                        : Result::ParsingError);
-        }
-        return Result::FileIOError;
-    }
-
     Result deserializeFromFile(const Path& file_name,
                                data::IDeserializable& data);
 
