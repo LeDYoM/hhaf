@@ -37,19 +37,6 @@ public:
     Result deserializeFromFile(const Path& file_name,
                                data::IDeserializable& data);
 
-    template <typename T>
-    Result serializeToFileTemplate(const Path& file_name, const T& data)
-    {
-        auto temp{htps::Serializer<T>::serialize(data)};
-        if (!temp.empty())
-        {
-            return ((saveFile(file_name, std::move(temp)))
-                        ? Result::Success
-                        : Result::FileIOError);
-        }
-        return Result::ParsingError;
-    }
-
     Result serializeToFile(const Path& file_name,
                            const data::ISerializable& data);
 };

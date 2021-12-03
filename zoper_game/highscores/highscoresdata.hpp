@@ -4,7 +4,7 @@
 #include <htypes/include/types.hpp>
 #include <htypes/include/array.hpp>
 #include <htypes/include/object.hpp>
-#include <haf/include/shareddata/ishareable.hpp>
+#include <haf/include/data/ifullserializable.hpp>
 
 namespace zoper
 {
@@ -35,7 +35,7 @@ inline htps::Object& operator<<(htps::Object& obj,
     return obj;
 }
 
-class HighScoresData : public haf::shdata::IShareable
+class HighScoresData : public haf::data::IFullSerializable
 {
 public:
     using HighScoresList = htps::array<HighScore, NumHighScore>;

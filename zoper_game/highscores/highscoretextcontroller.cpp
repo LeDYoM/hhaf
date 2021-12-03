@@ -158,7 +158,7 @@ void HighScoreTextController::saveHighScores()
 {
     DisplayLog::info("Saving highscores...");
 
-    dataWrapper<sys::FileSerializer>()->serializeToFileTemplate(
+    dataWrapper<sys::FileSerializer>()->serializeToFile(
         HighScoresFileName, high_scores_data_);
     DisplayLog::info("High Scores saved");
 }
