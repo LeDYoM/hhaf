@@ -221,6 +221,7 @@ set(headers
   
   # File system
   ${inc_dir}/filesystem/fileserializer.hpp
+  ${inc_dir}/filesystem/ifile_serializer.hpp
   ${inc_dir}/filesystem/path.hpp
 
   # Input

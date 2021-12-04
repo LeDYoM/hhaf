@@ -6,6 +6,12 @@
 #include <string>
 #include <fstream>
 
+#include <htypes/include/object_utils.hpp>
+#include <debug_utils/debug_system.hpp>
+#include <system/get_system.hpp>
+#include <haf/include/system/systemaccess.hpp>
+#include <system/systemprovider.hpp>
+
 using namespace htps;
 
 namespace haf::sys
@@ -38,6 +44,39 @@ uptr<InnerType[]> readBuffer(uptr<InnerType[]> buffer,
     return buffer;
 }
 }  // namespace
+
+bool FileSystem::processResult(IFileSerializer::Result const result,
+                                   str const& pre_message,
+                                   Path const& file,
+                                   bool const assert_on_error)
+{
+    if (result != IFileSerializer::Result::Success)
+    {
+        if (result == IFileSerializer::Result::FileIOError)
+        {
+            DisplayLog::debug(pre_message, file, " not found");
+            LogAsserter::log_assert(!assert_on_error, pre_message, file,
+                                    " no found");
+        }
+        else if (result == IFileSerializer::Result::ParsingError)
+        {
+            DisplayLog::debug(pre_message, file,
+                              " found, but contains invalid format");
+            LogAsserter::log_assert(!assert_on_error, pre_message, file,
+                                    " found, but contains invalid format");
+        }
+        else
+        {
+            DisplayLog::debug(pre_message, file,
+                              " : Unknown error trying to read file");
+            LogAsserter::log_assert(!assert_on_error, pre_message, file,
+                                    " : Unknown error trying to read file");
+        }
+        return false;
+    }
+
+    return true;
+}
 
 RawMemory FileSystem::loadBinaryFile(const Path& file_name)
 {
@@ -99,6 +138,56 @@ bool FileSystem::saveTextFile(const Path& file_name, const str& data)
     }
 
     return (file && correct);
+}
+
+IFileSerializer::Result FileSystem::deserializeFromFile(
+    const Path& file_name,
+    data::IDeserializable& data)
+{
+    auto& sp = systemProvider();
+    SystemAccess ac(static_cast<ISystemProvider*>(&sp));
+    debug::MemoryDataInitializer mdi{&getSystem<DebugSystem>(&ac)};
+    str const text_data{loadTextFile(file_name)};
+    if (!text_data.empty())
+    {
+        ObjectCompiler obj_compiler(text_data);
+        if (obj_compiler.compile())
+        {
+            // The compilation was correct so, at least we
+            // have a valid Object.
+            return ((data.deserialize(obj_compiler.result()))
+                        ? Result::Success
+                        : Result::ParsingError);
+        }
+        else
+        {
+            return Result::ParsingError;
+        }
+    }
+    else
+    {
+        return Result::FileIOError;
+    }
+}
+
+IFileSerializer::Result FileSystem::serializeToFile(
+    const Path& file_name,
+    const data::ISerializable& data)
+{
+    //        auto temp{htps::Serializer<T>::serialize(data)};
+    htps::Object obj;
+    auto temp(data.serialize(obj));
+
+    if (temp)
+    {
+        htps::str data_str;
+        data_str << obj;
+
+        return ((saveTextFile(file_name, std::move(data_str)))
+                    ? Result::Success
+                    : Result::FileIOError);
+    }
+    return Result::ParsingError;
 }
 
 }  // namespace haf::sys
