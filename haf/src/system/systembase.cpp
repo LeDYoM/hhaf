@@ -2,6 +2,10 @@
 #include "systemprovider.hpp"
 
 #include <haf/include/system/isystemprovider.hpp>
+#include <haf/include/system/systemaccess.hpp>
+#include <haf/include/system/subsystem_view.hpp>
+
+using namespace htps;
 
 namespace haf::sys
 {
@@ -29,6 +33,18 @@ ISystemProvider& SystemBase::isystemProvider() noexcept
 ISystemProvider const& SystemBase::isystemProvider() const noexcept
 {
     return system_provider_;
+}
+
+SystemAccess SystemBase::systemAccess() noexcept
+{
+    system_access_ = muptr<SystemAccess>(&(isystemProvider()));
+    return *system_access_;
+}
+
+SubSystemViewer SystemBase::subSystemViewer() noexcept
+{
+    (void)(systemAccess());
+    return SubSystemViewer{system_access_.get()};
 }
 
 }  // namespace haf::sys

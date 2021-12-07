@@ -11,6 +11,7 @@ class SceneController;
 namespace haf::sys
 {
 class ISystemProvider;
+class SubSystemViewer;
 
 /**
  * @brief This class implements basic functionality to passing around copies
@@ -46,6 +47,8 @@ public:
      */
     ISystemProvider& isystemProvider() noexcept;
 
+    SubSystemViewer subSystemViewer() noexcept;
+    
 private:
     htps::rptr<ISystemProvider> isystem_provider_;
     friend class scene::SceneController;

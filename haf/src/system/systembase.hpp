@@ -1,10 +1,14 @@
 #ifndef HAF_SYSTEM_SYSTEM_BASE_INCLUDE_HPP
 #define HAF_SYSTEM_SYSTEM_BASE_INCLUDE_HPP
 
+#include <htypes/include/types.hpp>
+
 namespace haf::sys
 {
 class SystemProvider;
 class ISystemProvider;
+class SystemAccess;
+class SubSystemViewer;
 
 /**
  * @brief Class to serve as a base for all App Services.
@@ -61,6 +65,9 @@ public:
      */
     ISystemProvider const& isystemProvider() const noexcept;
 
+    SystemAccess systemAccess() noexcept;
+
+    SubSystemViewer subSystemViewer() noexcept;
 protected:
     /**
      * @brief Destroy the System Base object
@@ -71,6 +78,7 @@ protected:
 
 private:
     ISystemProvider& system_provider_;
+    htps::uptr<SystemAccess> system_access_{nullptr};
 };
 }  // namespace haf::sys
 

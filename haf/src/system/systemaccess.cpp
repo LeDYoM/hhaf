@@ -1,5 +1,6 @@
 #include <haf/include/system/systemaccess.hpp>
 #include <haf/include/system/isystemprovider.hpp>
+#include <haf/include/system/subsystem_view.hpp>
 
 #include "scene/scenemanager.hpp"
 
@@ -13,8 +14,7 @@ SystemAccess::SystemAccess(rptr<ISystemProvider> isystem_provider) noexcept :
     isystem_provider_{std::move(isystem_provider)}
 {}
 
-SystemAccess::~SystemAccess()
-{}
+SystemAccess::~SystemAccess() = default;
 
 ISystemProvider const& SystemAccess::isystemProvider() const noexcept
 {
@@ -24,6 +24,11 @@ ISystemProvider const& SystemAccess::isystemProvider() const noexcept
 ISystemProvider& SystemAccess::isystemProvider() noexcept
 {
     return *isystem_provider_;
+}
+
+SubSystemViewer SystemAccess::subSystemViewer() noexcept
+{
+    return SubSystemViewer{this};
 }
 
 }  // namespace haf::sys
