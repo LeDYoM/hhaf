@@ -53,7 +53,8 @@ struct SystemProvider::SystemProviderPrivate final
     {
         if (parameter_parser.hasParameters())
         {
-            static constexpr char kHafConfigurationFileParameter[] = "haf_config";
+            static constexpr char kHafConfigurationFileParameter[] =
+                "haf_config";
 
             auto const haf_configuration_file_value{
                 parameter_parser.optionValue(kHafConfigurationFileParameter)};
@@ -68,12 +69,12 @@ struct SystemProvider::SystemProviderPrivate final
         }
     }
 
-    void loadConfiguration(SystemProvider& system_provider)
+    void loadConfiguration(SubSystemViewer sub_system_viewer)
     {
         if (!haf_configuration_file_.empty())
         {
-            system_provdier_configuration_.loadConfiguration(system_provider, 
-                haf_configuration_file_);
+            system_provdier_configuration_.loadConfiguration(
+                std::move(sub_system_viewer), haf_configuration_file_);
         }
     }
 };
@@ -204,7 +205,10 @@ void SystemProvider::init(rptr<IApp> iapp,
 {
     parpar::ParametersParser parameter_parser{parpar::create(argc, argv)};
     p_->setArgumments(parameter_parser);
-    p_->loadConfiguration(*this);
+    ISystemProvider* _this = this;
+    SystemAccess acc = SystemAccess{_this};
+    SubSystemViewer viewer{&acc};
+    p_->loadConfiguration(acc.subSystemViewer());
 
     LogAsserter::log_assert(
         backend_factory != nullptr,

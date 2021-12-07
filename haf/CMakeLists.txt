@@ -40,7 +40,6 @@ set(sources
   ${src_dir}/filesystem/file_system_subsystems_view.cpp
   ${src_dir}/filesystem/file_system.cpp
   ${src_dir}/filesystem/file_system.hpp
-  ${src_dir}/filesystem/fileserializer.cpp
 
   # Input
   ${src_dir}/input/input_component_base.cpp
@@ -223,7 +222,6 @@ set(headers
   ${inc_dir}/data/iserializable.hpp
   
   # File system
-  ${inc_dir}/filesystem/fileserializer.hpp
   ${inc_dir}/filesystem/ifile_serializer.hpp
   ${inc_dir}/filesystem/path.hpp
 

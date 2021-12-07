@@ -4,8 +4,9 @@
 #include <htypes/include/types.hpp>
 #include <htypes/include/str.hpp>
 
-#include "system/systemdatawrappercreator.hpp"
-#include <haf/include/filesystem/fileserializer.hpp>
+#include <haf/include/system/subsystem_view.hpp>
+#include <haf/include/filesystem/ifile_serializer.hpp>
+#include <hlog/include/hlog.hpp>
 
 namespace haf::sys
 {
@@ -13,26 +14,24 @@ template <typename DeserializableDataType, typename InnerDataType>
 class SystemConfiguration
 {
 public:
-    template <typename SystemProviderProvider>
-    bool loadConfiguration(SystemProviderProvider& system_provider_provider,
+    bool loadConfiguration(SubSystemViewer sub_system_viewer,
                            htps::str const& configuration_file)
     {
-        SystemDataWrapperCreator data_wrapper_creator{system_provider_provider};
         DeserializableDataType current;
         auto file_serializer{
-            data_wrapper_creator.dataWrapper<sys::FileSerializer>()};
+            sub_system_viewer.subSystem<sys::IFileSerializer>()};
         auto const result{
             file_serializer->deserializeFromFile(configuration_file, current)};
 
-        DisplayLog::debug_if(result != FileSerializer::Result::Success,
+        DisplayLog::debug_if(result != IFileSerializer::Result::Success,
                              "Cannot parse ", configuration_file);
 
-        if (result == FileSerializer::Result::Success)
+        if (result == IFileSerializer::Result::Success)
         {
             data_ = std::move(current.data);
         }
 
-        return result == FileSerializer::Result::Success;
+        return result == IFileSerializer::Result::Success;
     }
 
     InnerDataType const& data() const noexcept { return data_; }

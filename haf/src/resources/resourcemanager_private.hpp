@@ -15,7 +15,6 @@
 #include <haf/include/resources/itexture.hpp>
 #include <haf/include/resources/ishader.hpp>
 
-#include <haf/include/filesystem/fileserializer.hpp>
 #include <backend/include/backendfactory.hpp>
 
 #include <htypes/include/object.hpp>

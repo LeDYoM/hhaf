@@ -4,7 +4,7 @@
 #include "../loaders/highscoresresources.hpp"
 #include "../gameshareddata.hpp"
 
-#include <haf/include/filesystem/fileserializer.hpp>
+#include <haf/include/filesystem/ifile_serializer.hpp>
 #include <haf/include/scene_components/texteditorcomponent.hpp>
 #include <haf/include/scene_components/scenemetricsview.hpp>
 #include <haf/include/scene_nodes/scenenodetext_properties.hpp>
@@ -41,17 +41,15 @@ void HighScoreTextController::onCreated()
     animation_component_ = component<anim::AnimationComponent>();
 
     // Request the high scores.
-    dataWrapper<sys::FileSerializer>()->deserializeFromFile(
-        HighScoresFileName, high_scores_data_);
+    subSystem<sys::IFileSerializer>()->deserializeFromFile(HighScoresFileName,
+                                                           high_scores_data_);
 
     // Request game score
-    Score gameScore =
-        dataWrapper<shdata::SharedDataViewer<GameSharedData>>()
-            ->view(GameSharedData::address())
-            ->score;
+    Score gameScore = dataWrapper<shdata::SharedDataViewer<GameSharedData>>()
+                          ->view(GameSharedData::address())
+                          ->score;
     Rectf32 textBox{
-        rectFromSize(
-            dataWrapper<SceneMetricsView>()->currentView().size())
+        rectFromSize(dataWrapper<SceneMetricsView>()->currentView().size())
             .setLeftTop({0, 250})
             .setSize({2000, 1500})};
     prop<haf::scene::Position>().set(textBox.leftTop());
@@ -158,8 +156,8 @@ void HighScoreTextController::saveHighScores()
 {
     DisplayLog::info("Saving highscores...");
 
-    dataWrapper<sys::FileSerializer>()->serializeToFile(
-        HighScoresFileName, high_scores_data_);
+    subSystem<sys::IFileSerializer>()->serializeToFile(HighScoresFileName,
+                                                       high_scores_data_);
     DisplayLog::info("High Scores saved");
 }
 }  // namespace zoper

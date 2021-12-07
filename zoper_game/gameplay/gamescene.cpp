@@ -33,7 +33,7 @@
 #include <haf/include/shareddata/shareddataviewer.hpp>
 #include <haf/include/resources/iresource_configurator.hpp>
 #include <htypes/include/serializer.hpp>
-#include <haf/include/filesystem/fileserializer.hpp>
+#include <haf/include/filesystem/ifile_serializer.hpp>
 #include <haf/include/render/renderizables.hpp>
 #include <haf/include/render/renderizable_builder.hpp>
 
@@ -166,9 +166,9 @@ void GameScene::onCreated()
     p_->key_mapping_ = muptr<KeyMapping>();
     p_->key_mapping_->reset();
 
-    dataWrapper<sys::FileSerializer>()->deserializeFromFile(
+    subSystem<sys::IFileSerializer>()->deserializeFromFile(
         "keys.txt", *p_->key_mapping_);
-    dataWrapper<sys::FileSerializer>()->serializeToFile(
+    subSystem<sys::IFileSerializer>()->serializeToFile(
         "keys.txt", *p_->key_mapping_);
 
     scene_states_->start(GameSceneStates::Playing);

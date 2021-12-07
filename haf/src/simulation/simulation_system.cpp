@@ -5,15 +5,13 @@
 #include <haf/include/input/key.hpp>
 #include <hlog/include/hlog.hpp>
 #include <haf/include/time/timepoint.hpp>
-#include <haf/include/filesystem/fileserializer.hpp>
+#include <haf/include/filesystem/ifile_serializer.hpp>
 
 #include <htypes/include/serializer.hpp>
 #include <htypes/include/types.hpp>
 #include <htypes/include/object.hpp>
 #include <htypes/include/object_utils.hpp>
 
-#include "system/systemprovider.hpp"
-#include "system/systemdatawrappercreator.hpp"
 #include "random/randomsystem.hpp"
 #include "time/timesystem.hpp"
 #include "filesystem/file_system.hpp"
@@ -36,21 +34,21 @@ SimulationSystem::~SimulationSystem()
             "Going to write play data into file ",
             simulation_system_configuration_.simulationOutputFileName());
 
-        SystemDataWrapperCreator dwc{*this};
-        auto file_serializer = dwc.dataWrapper<FileSerializer>();
-        auto const result    = file_serializer->serializeToFile(
+        auto file_serializer{
+            subSystemViewer().subSystem<sys::IFileSerializer>()};
+        auto const result = file_serializer->serializeToFile(
             simulation_system_configuration_.simulationOutputFileName(),
             priv_->next_replay_data_);
 
-        if (result != FileSerializer::Result::Success)
+        if (result != IFileSerializer::Result::Success)
         {
-            if (result == FileSerializer::Result::FileIOError)
+            if (result == IFileSerializer::Result::FileIOError)
             {
                 DisplayLog::debug("Cannot write ",
                                   simulation_system_configuration_
                                       .simulationOutputFileName());
             }
-            else if (result == FileSerializer::Result::ParsingError)
+            else if (result == IFileSerializer::Result::ParsingError)
             {
                 DisplayLog::error("Error parsing oputput for ",
                                   simulation_system_configuration_
@@ -79,7 +77,7 @@ SimulationSystem::~SimulationSystem()
 void SimulationSystem::initialize(str const& simulation_config_file_name)
 {
     simulation_system_configuration_.loadConfiguration(
-        *this, simulation_config_file_name);
+        subSystemViewer(), simulation_config_file_name);
 
     if (simulation_system_configuration_.useInputSimulation())
     {
@@ -103,8 +101,8 @@ void SimulationSystem::initialize(str const& simulation_config_file_name)
             "Trying to load ",
             simulation_system_configuration_.simulationInputFileName(),
             " to read simulation data");
-        SystemDataWrapperCreator dwc{*this};
-        auto file_serializer = dwc.dataWrapper<FileSerializer>();
+        auto file_serializer =
+            subSystemViewer().subSystem<sys::IFileSerializer>();
 
         auto const result{file_serializer->deserializeFromFile(
             simulation_system_configuration_.simulationInputFileName(),
