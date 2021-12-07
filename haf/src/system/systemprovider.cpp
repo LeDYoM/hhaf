@@ -205,10 +205,10 @@ void SystemProvider::init(rptr<IApp> iapp,
 {
     parpar::ParametersParser parameter_parser{parpar::create(argc, argv)};
     p_->setArgumments(parameter_parser);
-    ISystemProvider* _this = this;
-    SystemAccess acc = SystemAccess{_this};
-    SubSystemViewer viewer{&acc};
-    p_->loadConfiguration(acc.subSystemViewer());
+//    ISystemProvider* _this = this;
+//    SystemAccess acc = SystemAccess{_this};
+//    SubSystemViewer viewer{&acc};
+//    p_->loadConfiguration(acc.subSystemViewer());
 
     LogAsserter::log_assert(
         backend_factory != nullptr,
