@@ -50,7 +50,7 @@ public:
     SubSystemViewer subSystemViewer() noexcept;
     
 private:
-    htps::rptr<ISystemProvider> const isystem_provider_;
+    htps::rptr<ISystemProvider> isystem_provider_;
     friend class scene::SceneController;
 };
 }  // namespace haf::sys

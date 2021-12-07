@@ -19,13 +19,13 @@ public:
     template <typename SystemInterface_t>
     types::rptr<SystemInterface_t> subSystem()
     {
-        return subSystemInterface<SystemInterface_t>(system_access_);
+        return subSystemInterface<SystemInterface_t>(&system_access_->isystemProvider());
     }
 
     template <typename SystemInterface_t>
     types::rptr<SystemInterface_t const> subSystem() const
     {
-        return subSystemInterface<SystemInterface_t>(system_access_);
+        return subSystemInterface<SystemInterface_t>(&system_access_->isystemProvider());
     }
 
 private:

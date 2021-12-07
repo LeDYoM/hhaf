@@ -6,7 +6,7 @@ namespace haf::sys
 class ISystemProvider
 {
 public:
-    virtual ~ISystemProvider() {}
+    virtual ~ISystemProvider() = default;
 };
 }  // namespace haf::sys
 

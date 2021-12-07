@@ -3,6 +3,7 @@
 
 #include <haf/include/types/basic_types.hpp>
 #include <haf/include/system/systemaccess.hpp>
+#include <haf/include/system/isystemprovider.hpp>
 
 namespace haf::sys
 {
@@ -13,6 +14,15 @@ types::rptr<SystemInterface_t> subSystemInterface(
 template <typename SystemInterface_t>
 types::rptr<SystemInterface_t const> subSystemInterface(
     types::rptr<SystemAccess const> const system_access);
+
+template <typename SystemInterface_t>
+types::rptr<SystemInterface_t> subSystemInterface(
+    types::rptr<ISystemProvider> const system_provider);
+
+template <typename SystemInterface_t>
+types::rptr<SystemInterface_t const> subSystemInterface(
+    types::rptr<ISystemProvider const> const system_provider);
+
 }  // namespace haf::sys
 
 #endif

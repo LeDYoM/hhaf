@@ -34,6 +34,21 @@ namespace haf::sys
     } \
 \
     template <> \
+    const SystemType& getSystem<SystemType>( \
+        rptr<ISystemProvider const> isystem_provider) \
+    { \
+        return getSystemProvider(*isystem_provider) \
+            .system<SystemType>(); \
+    } \
+\
+    template <> \
+    SystemType& getSystem<SystemType>(rptr<ISystemProvider> isystem_provider) \
+    { \
+        return getSystemProvider(*isystem_provider) \
+            .system<SystemType>(); \
+    } \
+\
+    template <> \
     SystemType const& getSystem<SystemType>( \
         rptr<const scene::SceneNode> scene_node) \
     { \

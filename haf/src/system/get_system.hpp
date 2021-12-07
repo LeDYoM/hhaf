@@ -19,6 +19,12 @@ template <typename SystemType>
 SystemType& getSystem(types::rptr<SystemAccess>);
 
 template <typename SystemType>
+SystemType const& getSystem(types::rptr<ISystemProvider const>);
+
+template <typename SystemType>
+SystemType& getSystem(types::rptr<ISystemProvider>);
+
+template <typename SystemType>
 SystemType const& getSystem(types::rptr<scene::SceneNode const>);
 
 template <typename SystemType>

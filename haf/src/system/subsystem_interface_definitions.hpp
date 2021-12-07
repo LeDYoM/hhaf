@@ -19,5 +19,18 @@ htps::rptr<InterfaceType const> subSystemInterface<InterfaceType>(    \
 {   \
     return &(getSystem<SystemType>(system_access));   \
 }   \
+template <> \
+htps::rptr<InterfaceType> subSystemInterface<InterfaceType>(  \
+    htps::rptr<ISystemProvider> const isystem_provider) \
+{   \
+    return &(getSystem<SystemType>(isystem_provider));   \
+}   \
+    \
+template <> \
+htps::rptr<InterfaceType const> subSystemInterface<InterfaceType>(    \
+    htps::rptr<ISystemProvider const> const isystem_provider)   \
+{   \
+    return &(getSystem<SystemType>(isystem_provider));   \
+}   \
 
 }  // namespace haf::sys
