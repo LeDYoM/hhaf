@@ -1,10 +1,6 @@
 #include "file_system.hpp"
-
+#include "file_system_private_funcs.hpp"
 #include <hlog/include/hlog.hpp>
-
-#include <filesystem>
-#include <string>
-#include <fstream>
 
 #include <htypes/include/object_utils.hpp>
 #include <debug_utils/debug_system.hpp>
@@ -16,39 +12,10 @@ using namespace htps;
 
 namespace haf::sys
 {
-namespace
-{
-template <typename InnerType>
-uptr<InnerType[]> readBuffer(uptr<InnerType[]> buffer,
-                             const Path& file_name,
-                             const size_type file_size)
-{
-    // Alias for the char type we are going to use to read the file
-    using char_type = typename std::ifstream::char_type;
-
-    // Check that the passed InnerType has the same size
-    static_assert(sizeof(InnerType) == sizeof(char_type));
-
-    {
-        // Open the file to read in binary mode
-        std::ifstream ifs(file_name.c_str(), std::ios::binary);
-        // Get a pointer to the buffer but transforming the type to
-        // the one we are going to read
-        char_type* buffer_char = reinterpret_cast<char_type*>(buffer.get());
-
-        // Read the buffer.
-        ifs.read(buffer_char, file_size);
-        ifs.close();
-    }
-
-    return buffer;
-}
-}  // namespace
-
 bool FileSystem::processResult(IFileSerializer::Result const result,
-                                   str const& pre_message,
-                                   Path const& file,
-                                   bool const assert_on_error)
+                               str const& pre_message,
+                               Path const& file,
+                               bool const assert_on_error)
 {
     if (result != IFileSerializer::Result::Success)
     {
@@ -83,19 +50,18 @@ RawMemory FileSystem::loadBinaryFile(const Path& file_name)
     if (fileExists(file_name))
     {
         // Note function returns size_max. size_type is maximum 4GB for a file.
-        size_type file_size = static_cast<size_type>(
-            std::filesystem::file_size(file_name.c_str()));
+        auto const file_size{detail::fileSize(file_name)};
 
         uptr<std::byte[]> buf{muptr<std::byte[]>(file_size)};
-        buf = readBuffer(std::move(buf), file_name, file_size);
+        buf = detail::readBuffer(std::move(buf), file_name, file_size);
         return RawMemory{std::move(buf), file_size};
     }
     return RawMemory{};
 }
 
-bool FileSystem::fileExists(const Path& path)
+bool FileSystem::fileExists(Path const& path)
 {
-    return std::filesystem::exists(std::filesystem::path(path.c_str()));
+    return detail::fileExists(path);
 }
 
 str FileSystem::loadTextFile(const Path& file_name)
@@ -103,11 +69,10 @@ str FileSystem::loadTextFile(const Path& file_name)
     if (fileExists(file_name))
     {
         // Note: function returns size_max. size_type is maximum 4GB for a file.
-        size_type file_size = static_cast<size_type>(
-            std::filesystem::file_size(file_name.c_str()));
+        auto const file_size{detail::fileSize(file_name)};
 
         uptr<str::value_type[]> buf{muptr<str::value_type[]>(file_size + 1U)};
-        buf = readBuffer(std::move(buf), file_name, file_size);
+        buf = detail::readBuffer(std::move(buf), file_name, file_size);
 
         buf[file_size] = static_cast<str::value_type>(0);
         return str(buf.get());

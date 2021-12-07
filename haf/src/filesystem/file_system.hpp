@@ -18,13 +18,12 @@ public:
     using SystemBase::SystemBase;
     bool fileExists(const Path& path);
 
-    htps::RawMemory loadBinaryFile(const htps::str& file_name);
-
     bool processResult(IFileSerializer::Result const result,
                        htps::str const& pre_message,
                        Path const& file,
                        bool const assert_on_error) override;
 
+    htps::RawMemory loadBinaryFile(const htps::str& file_name);
     htps::str loadTextFile(const Path& file_name) override;
 
     bool saveTextFile(const Path& file_name, const htps::str& data) override;

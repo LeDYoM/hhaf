@@ -35,6 +35,8 @@ set(sources
   ${src_dir}/debug_utils/variable_viewer.cpp
   
   # FileSystem
+  ${src_dir}/filesystem/file_system_private_funcs.cpp
+  ${src_dir}/filesystem/file_system_private_funcs.hpp
   ${src_dir}/filesystem/file_system.cpp
   ${src_dir}/filesystem/file_system.hpp
   ${src_dir}/filesystem/fileserializer.cpp
