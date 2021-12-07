@@ -66,6 +66,7 @@ public:
     ISystemProvider const& isystemProvider() const noexcept;
 
     SystemAccess systemAccess() noexcept;
+    htps::rptr<SystemAccess> systemAccessPtr() noexcept;
 
     SubSystemViewer subSystemViewer() noexcept;
 protected:

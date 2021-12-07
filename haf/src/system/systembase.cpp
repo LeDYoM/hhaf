@@ -37,8 +37,13 @@ ISystemProvider const& SystemBase::isystemProvider() const noexcept
 
 SystemAccess SystemBase::systemAccess() noexcept
 {
+    return *systemAccessPtr();
+}
+
+rptr<SystemAccess> SystemBase::systemAccessPtr() noexcept
+{
     system_access_ = muptr<SystemAccess>(&(isystemProvider()));
-    return *system_access_;
+    return system_access_.get();
 }
 
 SubSystemViewer SystemBase::subSystemViewer() noexcept

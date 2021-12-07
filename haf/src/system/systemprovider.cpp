@@ -86,6 +86,12 @@ SystemProvider::~SystemProvider() = default;
 
 void SystemProvider::fastInit(InitSystemOptions const& init_system_options)
 {
+    if (init_system_options.init_file_system)
+    {
+        DisplayLog::debug("Initializing File System");
+        p_->file_system_ = muptr<FileSystem>(*this);
+    }
+
     if (init_system_options.init_debug_system)
     {
         DisplayLog::debug("Initializing DebugSystem");
@@ -138,12 +144,6 @@ void SystemProvider::fastInit(InitSystemOptions const& init_system_options)
     {
         DisplayLog::debug("Initializing Random System");
         p_->random_system_ = muptr<RandomSystem>(*this);
-    }
-
-    if (init_system_options.init_file_system)
-    {
-        DisplayLog::debug("Initializing File System");
-        p_->file_system_ = muptr<FileSystem>(*this);
     }
 
     if (init_system_options.init_simulation_system)
@@ -238,7 +238,6 @@ void SystemProvider::terminate()
     p_->scene_manager_->finish();
     p_->scene_manager_.reset();
     p_->simulation_system_.reset();
-    p_->file_system_.reset();
     p_->random_system_.reset();
     p_->render_system_.reset();
     p_->resource_manager_.reset();
@@ -247,6 +246,7 @@ void SystemProvider::terminate()
     p_->window_.reset();
     p_->time_system_.reset();
     p_->debug_system_.reset();
+    p_->file_system_.reset();
     p_->backend_factory_ = nullptr;
 }
 

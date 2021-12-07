@@ -61,11 +61,11 @@ public:
      * @param count Number of elements to copy.
      */
     constexpr vector_base(const_iterator const source, size_type const count) :
-        storage_(count)
+        storage_{count}
     {
         reserve(count);
-        auto const end{source + count};
         auto iterator{source};
+        auto const end{source + count};
         while (iterator != end)
         {
             // Construct by copy.
@@ -485,8 +485,6 @@ public:
         storage_.push_back(std::move(value));
     }
 
-    constexpr void emplace_back() { storage_.emplace_back(); }
-
     template <typename... Args>
     constexpr void emplace_back(Args&&... args)
     {
@@ -528,19 +526,14 @@ public:
 
     constexpr bool operator==(vector_base const& rhs) const noexcept
     {
-        // Comparing with yourself returns true.
-        if (this == &rhs)
-        {
-            return true;
-        }
         // If the vectors have different sizes, they are different
-        else if (size() != rhs.size())
+        if (size() != rhs.size())
         {
             return false;
         }
         else
         {
-            for (auto lhs_iterator = cbegin(), rhs_iterator = rhs.cbegin();
+            for (auto lhs_iterator{cbegin()}, rhs_iterator{rhs.cbegin()};
                  lhs_iterator != cend(); ++lhs_iterator, ++rhs_iterator)
             {
                 if (!(*lhs_iterator == *rhs_iterator))

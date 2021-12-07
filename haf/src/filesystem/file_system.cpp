@@ -7,6 +7,7 @@
 #include <system/get_system.hpp>
 #include <haf/include/system/systemaccess.hpp>
 #include <system/systemprovider.hpp>
+#include <haf/include/system/subsystem_view.hpp>
 
 using namespace htps;
 
@@ -70,12 +71,14 @@ str FileSystem::loadTextFile(const Path& file_name)
     {
         // Note: function returns size_max. size_type is maximum 4GB for a file.
         auto const file_size{detail::fileSize(file_name)};
+        debug::MemoryDataInitializer mdi{
+            subSystemViewer().subSystem<debug::IMemoryDataViewer>()};
 
-        uptr<str::value_type[]> buf{muptr<str::value_type[]>(file_size + 1U)};
+        auto buf{muptr<str::value_type[]>(file_size + 1U)};
         buf = detail::readBuffer(std::move(buf), file_name, file_size);
 
         buf[file_size] = static_cast<str::value_type>(0);
-        return str(buf.get());
+        return {buf.get()};
     }
     return str{};
 }
@@ -109,9 +112,6 @@ IFileSerializer::Result FileSystem::deserializeFromFile(
     const Path& file_name,
     data::IDeserializable& data)
 {
-    auto& sp = systemProvider();
-    SystemAccess ac(static_cast<ISystemProvider*>(&sp));
-    debug::MemoryDataInitializer mdi{&getSystem<DebugSystem>(&ac)};
     str const text_data{loadTextFile(file_name)};
     if (!text_data.empty())
     {
@@ -139,9 +139,8 @@ IFileSerializer::Result FileSystem::serializeToFile(
     const Path& file_name,
     const data::ISerializable& data)
 {
-    //        auto temp{htps::Serializer<T>::serialize(data)};
     htps::Object obj;
-    auto temp(data.serialize(obj));
+    auto const temp{data.serialize(obj)};
 
     if (temp)
     {
