@@ -2,8 +2,8 @@
 
 #include "resources/resourcemanager.hpp"
 
-#include <haf/include/filesystem/fileserializer.hpp>
-#include <haf/include/system/datawrappercreator.hpp>
+#include <haf/include/filesystem/ifile_serializer.hpp>
+#include <haf/include/system/subsystem_view.hpp>
 
 #include <hlog/include/hlog.hpp>
 
@@ -14,25 +14,25 @@ namespace haf::res
 
 SetResourceConfigFileResult
 ResourceManagerConfigLoader::parseResourceConfigFile(
-    sys::DataWrapperCreator& data_wrapper_creator)
+    sys::SubSystemViewer sub_system_viewer)
 {
     LogAsserter::log_assert(!resources_config_file_name_.empty(),
                             "The resources file name was not set");
 
     auto file_serializer{
-        data_wrapper_creator.dataWrapper<sys::FileSerializer>()};
+        sub_system_viewer.subSystem<sys::IFileSerializer>()};
     auto const result{file_serializer->deserializeFromFile(
         resources_config_file_name_, resources_config_data_)};
 
-    if (result != sys::FileSerializer::Result::Success)
+    if (result != sys::IFileSerializer::Result::Success)
     {
-        if (result == sys::FileSerializer::Result::FileIOError)
+        if (result == sys::IFileSerializer::Result::FileIOError)
         {
             DisplayLog::debug("Resources file ", resources_config_file_name_,
                               " not found");
             return SetResourceConfigFileResult::FileNotFound;
         }
-        else if (result == sys::FileSerializer::Result::ParsingError)
+        else if (result == sys::IFileSerializer::Result::ParsingError)
         {
             DisplayLog::error("File ", resources_config_file_name_,
                               " found but contains invalid format.");
@@ -57,7 +57,7 @@ void ResourceManagerConfigLoader::setResourcesDirectory(str const& directory)
 
 SetResourceConfigFileResult ResourceManagerConfigLoader::setResourceConfigFile(
     str const& file_name,
-    sys::DataWrapperCreator& data_wrapper_creator)
+    sys::SubSystemViewer sub_system_viewer)
 {
     LogAsserter::log_assert(
         !file_name.empty(),
@@ -73,7 +73,7 @@ SetResourceConfigFileResult ResourceManagerConfigLoader::setResourceConfigFile(
                             "The resources file name was already set");
 
     resources_config_file_name_ = std::move(file_name);
-    return parseResourceConfigFile(data_wrapper_creator);
+    return parseResourceConfigFile(std::move(sub_system_viewer));
 }
 
 namespace
@@ -105,9 +105,8 @@ bool ResourceManagerConfigLoader::loadSection(
             auto const& type{resource_to_load.second.type};
             auto element_file{resource_to_load.second.file_name};
 
-            DisplayLog::debug("Going to load element: ", name,
-                              " of type ", type,
-                              " with file name: ", element_file);
+            DisplayLog::debug("Going to load element: ", name, " of type ",
+                              type, " with file name: ", element_file);
 
             if (!config_directory_.empty())
             {
@@ -120,18 +119,15 @@ bool ResourceManagerConfigLoader::loadSection(
 
             if (type == "ttf")
             {
-                local_result = resource_manager.loadTTFont(
-                    name, element_file);
+                local_result = resource_manager.loadTTFont(name, element_file);
             }
             else if (type == "texture")
             {
-                local_result = resource_manager.loadTexture(
-                    name, element_file);
+                local_result = resource_manager.loadTexture(name, element_file);
             }
             else if (type.starts_with("bmp_font"))
             {
-                local_result = resource_manager.loadBMPFont(
-                    name, element_file);
+                local_result = resource_manager.loadBMPFont(name, element_file);
             }
             else
             {
@@ -141,8 +137,7 @@ bool ResourceManagerConfigLoader::loadSection(
 
             if (local_result)
             {
-                DisplayLog::info("File ", element_file, " loaded as ",
-                                 name);
+                DisplayLog::info("File ", element_file, " loaded as ", name);
             }
             else
             {

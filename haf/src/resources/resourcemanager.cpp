@@ -1,7 +1,6 @@
 #include "resourcemanager.hpp"
 #include "resourcemanager_private.hpp"
-#include "system/systemprovider.hpp"
-
+#include <haf/include/system/subsystem_view.hpp>
 #include <hlog/include/hlog.hpp>
 
 #include <haf/include/resources/ittfont.hpp>
@@ -91,8 +90,9 @@ bool ResourceManager::loadBmpFontTextures(htps::sptr<res::BMPFont> bmp_font,
 
         for (const auto& file_name : texture_file_names)
         {
-            const bool texture_available = loadTexture(
-                rid + "_" + file_name, config_loader_.config_directory_ + file_name);
+            const bool texture_available =
+                loadTexture(rid + "_" + file_name,
+                            config_loader_.configDirectory() + file_name);
 
             (void)(texture_available);
             DisplayLog::debug_if(!texture_available,
@@ -115,14 +115,13 @@ bool ResourceManager::loadBmpFontTextures(htps::sptr<res::BMPFont> bmp_font,
 void ResourceManager::setResourcesDirectory(str const& directory)
 {
     DisplayLog::debug("Set resources directory to: ", directory);
-    config_loader_.config_directory_ = directory;
+    config_loader_.setConfigDirectory(directory);
 }
 
 SetResourceConfigFileResult ResourceManager::setResourceConfigFile(
     str const& file_name)
 {
-    SystemDataWrapperCreator _this{*this};
-    return config_loader_.setResourceConfigFile(file_name, _this);
+    return config_loader_.setResourceConfigFile(file_name, subSystemViewer());
 }
 
 bool ResourceManager::loadSection(str const& section_name)
