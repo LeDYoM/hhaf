@@ -16,6 +16,7 @@ class SystemAccess;
 namespace haf::scene
 {
 class SceneManager;
+class Scene::ScenePrivate;
 
 /**
  * @brief Class to control which @b Scene is active and which are not.
@@ -27,7 +28,7 @@ class SceneController final
 public:
     void setSceneManager(htps::rptr<SceneManager> scene_manager);
     bool setSystemProviderInScene(
-        htps::sptr<sys::SystemAccess> scene,
+        htps::rptr<Scene::ScenePrivate> const scene_private,
         htps::rptr<sys::ISystemProvider> const isystem_provider);
 
     /**

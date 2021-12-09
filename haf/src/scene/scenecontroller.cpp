@@ -1,7 +1,7 @@
 #include "scenecontroller.hpp"
 #include "scenemanager.hpp"
 #include "scene_render.hpp"
-
+#include "scene_private.hpp"
 #include "system/systemprovider.hpp"
 
 #include <haf/include/scene/scene.hpp>
@@ -94,10 +94,10 @@ const sptr<Scene>& SceneController::currentScene() const noexcept
 }
 
 bool SceneController::setSystemProviderInScene(
-    htps::sptr<sys::SystemAccess> scene,
+    rptr<Scene::ScenePrivate> const scene_private,
     rptr<sys::ISystemProvider> const isystem_provider)
 {
-    LogAsserter::log_assert(scene->isystem_provider_ == nullptr,
+    LogAsserter::log_assert(scene_private->iSystemProvider() == nullptr,
                             "You should not use this function"
                             " if isystemProvider is already set");
 
@@ -105,13 +105,14 @@ bool SceneController::setSystemProviderInScene(
                             "Parameter is nullptr");
 
     // Invalid data. Exit performing no action.
-    if (scene->isystem_provider_ != nullptr || isystem_provider == nullptr)
+    if (scene_private->iSystemProvider() != nullptr ||
+        isystem_provider == nullptr)
     {
         return false;
     }
 
     // Valid data. Perform action and return true.
-    scene->isystem_provider_ = isystem_provider;
+    scene_private->setSystemProvider(isystem_provider);
     return true;
 }
 
@@ -122,9 +123,10 @@ void SceneController::startScene(sptr<Scene> scene)
     {
         if (scene_manager_ != nullptr)
         {
-            current_scene_->scene_manager_ = scene_manager_;
+            current_scene_->scenePrivate()->setSceneManager(scene_manager_);
             if (!(setSystemProviderInScene(
-                    current_scene_, &(scene_manager_->isystemProvider()))))
+                    current_scene_->scenePrivate(),
+                    &(scene_manager_->isystemProvider()))))
             {
                 DisplayLog::debug(
                     "Internal error: iSystemProvider was already set");

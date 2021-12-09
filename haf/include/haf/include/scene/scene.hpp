@@ -1,8 +1,9 @@
 #ifndef HAF_SCENE_SCENE_INCLUDE_HPP
 #define HAF_SCENE_SCENE_INCLUDE_HPP
 
+#include <htypes/include/types.hpp>
+#include <htypes/include/p_impl_pointer.hpp>
 #include <haf/include/haf_export.hpp>
-#include <haf/include/types/basic_types.hpp>
 #include <haf/include/scene/scene_node.hpp>
 
 namespace haf::scene
@@ -13,7 +14,7 @@ class HAF_API Scene : public SceneNode
 {
 public:
     explicit Scene(htps::str name);
-
+    ~Scene() override;
     void onCreated();
     virtual htps::str nextSceneName();
     virtual void onFinished();
@@ -21,7 +22,9 @@ public:
     void installDebugUtils();
 
 private:
-    types::rptr<SceneManager> scene_manager_;
+    class ScenePrivate;
+    htps::PImplPointer<ScenePrivate> p_;    
+    htps::rptr<ScenePrivate> scenePrivate();
     friend class SceneController;
 };
 }  // namespace haf::scene

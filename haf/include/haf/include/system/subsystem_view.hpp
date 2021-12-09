@@ -3,6 +3,8 @@
 
 #include <haf/include/types/basic_types.hpp>
 #include <haf/include/system/subsystem_interface.hpp>
+#include <haf/include/system/systemaccess.hpp>
+#include <hlog/include/hlog.hpp>
 
 namespace haf::sys
 {
@@ -11,25 +13,27 @@ class SystemAccess;
 class SubSystemViewer
 {
 public:
-    explicit SubSystemViewer(types::rptr<SystemAccess> system_access)
-        : system_access_{system_access} {}
+    explicit SubSystemViewer(htps::rptr<ISystemProvider> isystem_provider)
+        : isystem_provider_{isystem_provider}
+        {
+        }
 
     virtual ~SubSystemViewer() = default;
 
     template <typename SystemInterface_t>
     types::rptr<SystemInterface_t> subSystem()
     {
-        return subSystemInterface<SystemInterface_t>(&system_access_->isystemProvider());
+        return subSystemInterface<SystemInterface_t>(isystem_provider_);
     }
 
     template <typename SystemInterface_t>
     types::rptr<SystemInterface_t const> subSystem() const
     {
-        return subSystemInterface<SystemInterface_t>(&system_access_->isystemProvider());
+        return subSystemInterface<SystemInterface_t>(isystem_provider_);
     }
 
 private:
-    types::rptr<SystemAccess> system_access_;
+    types::rptr<ISystemProvider> isystem_provider_;
 };
 }  // namespace haf::sys
 

@@ -1,4 +1,5 @@
 #include <haf/include/scene/scene.hpp>
+#include "scene_private.hpp"
 #include <haf/include/debug_utils/debug_actions.hpp>
 #include <haf/include/component/component_container.hpp>
 
@@ -9,8 +10,11 @@ using namespace htps;
 
 namespace haf::scene
 {
-Scene::Scene(htps::str name) : SceneNode{nullptr, std::move(name)}
+Scene::Scene(htps::str name) :
+    SceneNode{nullptr, std::move(name)}, p_{make_pimplp<ScenePrivate>()}
 {}
+
+Scene::~Scene() = default;
 
 str Scene::nextSceneName()
 {
@@ -22,6 +26,11 @@ void Scene::onCreated()
 
 void Scene::onFinished()
 {}
+
+rptr<Scene::ScenePrivate> Scene::scenePrivate()
+{
+    return p_.get();
+}
 
 void Scene::installDebugUtils()
 {

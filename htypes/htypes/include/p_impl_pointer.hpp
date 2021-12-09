@@ -29,11 +29,12 @@ public:
     }
 
     constexpr T* operator->() noexcept { return pointer_; }
-
     constexpr T const* operator->() const noexcept { return pointer_; }
 
-    constexpr T& operator*() noexcept { return *pointer_; }
+    constexpr T* get() noexcept { return pointer_; }
+    constexpr T const* get() const noexcept { return pointer_; }
 
+    constexpr T& operator*() noexcept { return *pointer_; }
     constexpr T const& operator*() const noexcept { return *pointer_; }
 
     ~PImplPointer() noexcept

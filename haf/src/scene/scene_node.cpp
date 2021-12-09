@@ -21,7 +21,9 @@ SceneNode::SceneNode(rptr<SceneNode> parent, str name) :
     SceneNodeProperties(true),
     component::ComponentContainer{this},
     sys::DataWrapperCreator{this},
-    sys::SubSystemViewer{this},
+    sys::SubSystemViewer{ancestor<Scene>() != nullptr
+                          ? &(ancestor<Scene>()->isystemProvider())
+                          : nullptr},
     p_{make_pimplp<SceneNodePrivate>()}
 {}
 

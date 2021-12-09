@@ -49,7 +49,7 @@ rptr<SystemAccess> SystemBase::systemAccessPtr() noexcept
 SubSystemViewer SystemBase::subSystemViewer() noexcept
 {
     (void)(systemAccess());
-    return SubSystemViewer{system_access_.get()};
+    return SubSystemViewer{&system_provider_};
 }
 
 }  // namespace haf::sys
