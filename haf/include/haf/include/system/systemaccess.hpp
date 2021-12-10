@@ -48,9 +48,10 @@ public:
     ISystemProvider& isystemProvider() noexcept;
 
     SubSystemViewer subSystemViewer() noexcept;
-    
-private:
+
     htps::rptr<ISystemProvider> isystem_provider_;
+
+private:
     friend class scene::SceneController;
 };
 }  // namespace haf::sys

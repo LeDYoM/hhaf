@@ -11,21 +11,22 @@ class ISystemProvider;
 namespace haf::scene
 {
 class SceneManager;
+class Scene;
 
 class Scene::ScenePrivate final
 {
 public:
-    void setSystemProvider(htps::rptr<sys::ISystemProvider> isystem_provider);
-    void setSceneManager(htps::rptr<SceneManager> scene_manager);
+    explicit ScenePrivate(htps::rptr<Scene> _this) noexcept;
+    void setSystemProvider(
+        htps::rptr<sys::ISystemProvider> isystem_provider) noexcept;
 
-    htps::rptr<SceneManager> sceneManager() const { return scene_manager_; }
-    htps::rptr<sys::ISystemProvider> iSystemProvider() const
+    htps::rptr<sys::ISystemProvider> iSystemProvider() const noexcept
     {
         return isystem_provider_;
     }
 
 private:
-    htps::rptr<SceneManager> scene_manager_{nullptr};
+    htps::rptr<Scene> scene_;
     htps::rptr<sys::ISystemProvider> isystem_provider_{nullptr};
 };
 }  // namespace haf::scene

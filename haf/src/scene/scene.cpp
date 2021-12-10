@@ -11,7 +11,7 @@ using namespace htps;
 namespace haf::scene
 {
 Scene::Scene(htps::str name) :
-    SceneNode{nullptr, std::move(name)}, p_{make_pimplp<ScenePrivate>()}
+    SceneNode{nullptr, std::move(name)}, p_{make_pimplp<ScenePrivate>(this)}
 {}
 
 Scene::~Scene() = default;

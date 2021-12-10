@@ -32,8 +32,9 @@ public:
         return subSystemInterface<SystemInterface_t>(isystem_provider_);
     }
 
-private:
     types::rptr<ISystemProvider> isystem_provider_;
+
+private:
 };
 }  // namespace haf::sys
 

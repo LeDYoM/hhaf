@@ -1,8 +1,8 @@
 #ifndef HAF_SCENE_SCENENODE_INCLUDE_HPP
 #define HAF_SCENE_SCENENODE_INCLUDE_HPP
 
+#include <htypes/include/types.hpp>
 #include <haf/include/haf_export.hpp>
-#include <haf/include/types/basic_types.hpp>
 #include <haf/include/scene/scenenodeparent.hpp>
 #include <haf/include/scene/scenenode_properties.hpp>
 #include <haf/include/scene/scenenodes.hpp>
@@ -80,13 +80,9 @@ public:
      * @brief Clear all elements in this scene node
      */
     void clearAll();
-
-private:
-    struct SceneNodePrivate;
-    types::PImplPointer<SceneNodePrivate> p_;
 };
 
-using SceneNodeSPtr = types::sptr<SceneNode>;
+using SceneNodeSPtr = htps::sptr<SceneNode>;
 }  // namespace haf::scene
 
 #endif

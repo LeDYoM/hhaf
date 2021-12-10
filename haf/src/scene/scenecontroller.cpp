@@ -123,7 +123,6 @@ void SceneController::startScene(sptr<Scene> scene)
     {
         if (scene_manager_ != nullptr)
         {
-            current_scene_->scenePrivate()->setSceneManager(scene_manager_);
             if (!(setSystemProviderInScene(
                     current_scene_->scenePrivate(),
                     &(scene_manager_->isystemProvider()))))

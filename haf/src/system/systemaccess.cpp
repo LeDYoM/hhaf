@@ -28,7 +28,7 @@ ISystemProvider& SystemAccess::isystemProvider() noexcept
 
 SubSystemViewer SystemAccess::subSystemViewer() noexcept
 {
-    return SubSystemViewer{this};
+    return SubSystemViewer{isystem_provider_};
 }
 
 }  // namespace haf::sys
