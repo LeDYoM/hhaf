@@ -41,7 +41,7 @@ void MenuScene::onCreated()
     BaseClass::onCreated();
 
     // Set the default view for this scene
-    dataWrapper<SceneMetrics>()->setViewRect(DefaultView);
+    subSystem<ISceneMetrics>()->setViewRect(DefaultView);
 
     // Load the necessary resources
     auto resources_configurator{

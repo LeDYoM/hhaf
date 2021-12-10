@@ -46,14 +46,19 @@ SceneBox SceneManager::currentView() const
     return systemProvider().system<Window>().renderTarget()->viewRect();
 }
 
-void SceneManager::setViewPort(Rectf32 const& vp)
+void SceneManager::setViewPort(SceneBox const& vp)
 {
     systemProvider().system<Window>().renderTarget()->setViewPort(vp);
 }
 
-void SceneManager::setViewRect(Rectf32 const& vr)
+void SceneManager::setViewRect(SceneBox const& vr)
 {
     systemProvider().system<Window>().renderTarget()->setViewRect(vr);
+}
+
+void SceneManager::move(SceneCoordinates const& delta)
+{
+    setViewRect(currentView() + delta);
 }
 
 sptr<SceneController> const& SceneManager::sceneController() const noexcept

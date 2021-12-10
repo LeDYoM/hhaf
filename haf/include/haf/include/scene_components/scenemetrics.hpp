@@ -9,17 +9,18 @@
 
 namespace haf::scene
 {
-class HAF_API SceneMetrics : public SceneMetricsView
+class ISceneMetrics : public ISceneMetricsView
 {
-    using BaseClass                              = SceneMetricsView;
-    static constexpr char const StaticTypeName[] = "SceneMetrics";
-
+    static constexpr char const StaticTypeName[] = "ISceneMetrics";
+protected:
+    ~ISceneMetrics() override = default;
 public:
-    void setViewRect(SceneBox const& new_view);
-    void setViewPort(SceneBox const& new_view_port);
+    virtual void setViewRect(SceneBox const& new_view) = 0;
+    virtual void setViewPort(SceneBox const& new_view_port) = 0;
 
-    void move(SceneCoordinates const& delta);
+    virtual void move(SceneCoordinates const& delta) = 0;
 };
+
 }  // namespace haf::scene
 
 #endif

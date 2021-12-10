@@ -15,7 +15,7 @@ class SceneNode;
 
 namespace haf::scene
 {
-class SceneManager final : public sys::SystemBase, public ISceneMetricsView
+class SceneManager final : public sys::SystemBase, public ISceneMetrics
 {
 public:
     explicit SceneManager(sys::SystemProvider& system_provider);
@@ -27,8 +27,9 @@ public:
 
     SceneBox currentView() const override;
     SceneBox currentViewPort() const override;
-    void setViewPort(htps::Rectf32 const& vp);
-    void setViewRect(htps::Rectf32 const& vr);
+    void setViewPort(SceneBox const& vp) override;
+    void setViewRect(SceneBox const& vr) override;
+    void move(SceneCoordinates const& delta) override;
 
     htps::sptr<SceneController> const& sceneController() const noexcept;
     htps::sptr<SceneController>& sceneController() noexcept;

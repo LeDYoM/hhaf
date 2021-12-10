@@ -5,15 +5,4 @@
 
 namespace haf::scene
 {
-SceneBox SceneMetricsView::currentView() const
-{
-    return sys::getSystem<scene::SceneManager>(attachedNode()).currentView();
-}
-
-SceneBox SceneMetricsView::currentViewPort() const
-{
-    return sys::getSystem<scene::SceneManager>(attachedNode())
-        .currentViewPort();
-}
-
 }  // namespace haf::scene
