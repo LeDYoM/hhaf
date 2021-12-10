@@ -66,9 +66,4 @@ sptr<SceneController>& SceneManager::sceneController() noexcept
     return scene_controller_;
 }
 
-htps::uptr<SceneNode> const& SceneManager::rootNode() noexcept
-{
-    return rootNode_;
-}
-
 }  // namespace haf::scene

@@ -26,7 +26,6 @@ private:
     htps::PImplPointer<ScenePrivate> p_;    
     htps::rptr<ScenePrivate> scenePrivate();
     friend class SceneController;
-    friend class Scene;
 };
 }  // namespace haf::scene
 

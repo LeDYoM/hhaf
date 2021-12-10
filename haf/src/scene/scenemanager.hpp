@@ -31,12 +31,8 @@ public:
 
     htps::sptr<SceneController> const& sceneController() const noexcept;
     htps::sptr<SceneController>& sceneController() noexcept;
-
-    htps::uptr<SceneNode> const& rootNode() noexcept;
 private:
     htps::sptr<SceneController> scene_controller_;
-    htps::uptr<SceneNode> rootNode_{nullptr};
-
 };
 }  // namespace haf::scene
 
