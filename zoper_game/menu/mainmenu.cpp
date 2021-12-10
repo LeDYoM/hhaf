@@ -78,7 +78,7 @@ void MainMenu::onCreated()
 
     Rectf32 textBox{
         rectFromSize(
-            dataWrapper<SceneMetricsView>()->currentView().size())
+            subSystem<ISceneMetricsView>()->currentView().size())
             .setLeftTop({0, 750})
             .setSize({2000, 4 * 150})};
     prop<Position>() = textBox.leftTop();

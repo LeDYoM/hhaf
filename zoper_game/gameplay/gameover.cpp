@@ -25,7 +25,7 @@ GameOverSceneNode::GameOverSceneNode(scene::SceneNode* const parent, str name) :
     game_over_rg_ = createSceneNode<TransformableSceneNode>("gameOverScreen");
 
     vector2df gosize{
-        dataWrapper<SceneMetricsView>()->currentView().width, 715};
+        subSystem<ISceneMetricsView>()->currentView().width, 715};
     game_over_rg_->prop<Position>() = Position::value_type{0, 575};
 
     {

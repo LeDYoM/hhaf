@@ -269,7 +269,7 @@ bool BoardGroup::moveTowardsCenter(Direction const direction,
 
 vector2df BoardGroup::board2SceneFactor() const
 {
-    return dataWrapper<SceneMetricsView>()->currentView().size() /
+    return subSystem<ISceneMetricsView>()->currentView().size() /
         componentOfType<board::BoardManager>()->size();
 }
 
