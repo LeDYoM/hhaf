@@ -4,7 +4,7 @@
 #include "get_systemprovider.hpp"
 #include "systemprovider.hpp"
 #include "get_system.hpp"
-#include "scene/scenemanager.hpp"
+#include "scene/scene_manager.hpp"
 #include "render/rendersystem.hpp"
 #include "resources/resourcemanager.hpp"
 #include "input/inputsystem.hpp"

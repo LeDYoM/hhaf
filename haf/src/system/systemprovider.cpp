@@ -9,7 +9,7 @@
 #include "input/inputsystem.hpp"
 #include "random/randomsystem.hpp"
 #include "render/rendersystem.hpp"
-#include "scene/scenemanager.hpp"
+#include "scene/scene_manager.hpp"
 #include "window/window.hpp"
 #include "time/timesystem.hpp"
 #include "shareddata/shareddatasystem.hpp"

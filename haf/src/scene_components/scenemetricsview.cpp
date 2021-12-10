@@ -1,5 +1,5 @@
 #include <haf/include/scene_components/scenemetricsview.hpp>
-#include "scene/scenemanager.hpp"
+#include "scene/scene_manager.hpp"
 
 #include "system/get_system.hpp"
 

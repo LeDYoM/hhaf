@@ -1,5 +1,5 @@
 #include <haf/include/scene/renderizables_scene_node.hpp>
-#include "scenemanager.hpp"
+#include "scene_manager.hpp"
 #include "system/get_system.hpp"
 
 using namespace htps;

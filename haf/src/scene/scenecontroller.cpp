@@ -1,5 +1,5 @@
 #include "scenecontroller.hpp"
-#include "scenemanager.hpp"
+#include "scene_manager.hpp"
 #include "scene_render.hpp"
 #include "scene_private.hpp"
 #include "system/systemprovider.hpp"

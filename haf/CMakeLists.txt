@@ -110,8 +110,8 @@ set(sources
   ${src_dir}/scene/scene.cpp
   ${src_dir}/scene/scenecontroller.cpp
   ${src_dir}/scene/scenecontroller.hpp
-  ${src_dir}/scene/scenemanager.cpp
-  ${src_dir}/scene/scenemanager.hpp
+  ${src_dir}/scene/scene_manager.cpp
+  ${src_dir}/scene/scene_manager.hpp
   ${src_dir}/scene/scene_node.cpp
   ${src_dir}/scene/scenenodefactory.cpp
   ${src_dir}/scene/scenenodes.cpp

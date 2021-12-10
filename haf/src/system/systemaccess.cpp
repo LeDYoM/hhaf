@@ -2,7 +2,7 @@
 #include <haf/include/system/isystemprovider.hpp>
 #include <haf/include/system/subsystem_view.hpp>
 
-#include "scene/scenemanager.hpp"
+#include "scene/scene_manager.hpp"
 
 #include <hlog/include/hlog.hpp>
 

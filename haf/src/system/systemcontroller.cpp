@@ -2,7 +2,7 @@
 #include "window/window.hpp"
 #include "simulation/simulation_system.hpp"
 #include "input/inputsystem.hpp"
-#include "scene/scenemanager.hpp"
+#include "scene/scene_manager.hpp"
 #include "render/rendersystem.hpp"
 
 #include <hlog/include/hlog.hpp>

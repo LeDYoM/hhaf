@@ -1,4 +1,4 @@
-#include "scenemanager.hpp"
+#include "scene_manager.hpp"
 #include "scenecontroller.hpp"
 
 #include <haf/include/scene/scene.hpp>
