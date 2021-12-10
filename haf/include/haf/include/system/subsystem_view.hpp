@@ -13,10 +13,9 @@ class SystemAccess;
 class SubSystemViewer
 {
 public:
-    explicit SubSystemViewer(htps::rptr<ISystemProvider> isystem_provider)
-        : isystem_provider_{isystem_provider}
-        {
-        }
+    explicit SubSystemViewer(htps::rptr<ISystemProvider> isystem_provider) :
+        isystem_provider_{isystem_provider}
+    {}
 
     virtual ~SubSystemViewer() = default;
 
