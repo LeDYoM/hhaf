@@ -4,7 +4,7 @@
 
 #include <haf/include/scene/scene.hpp>
 #include <haf/include/scene_nodes/scenenodetext.hpp>
-#include <haf/include/scene_components/scenemetricsview.hpp>
+#include <haf/include/scene_components/iscene_metrics_view.hpp>
 
 #include <hlog/include/hlog.hpp>
 #include <haf/include/resources/ittfont.hpp>

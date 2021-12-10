@@ -6,7 +6,7 @@
 
 #include <haf/include/filesystem/ifile_serializer.hpp>
 #include <haf/include/scene_components/texteditorcomponent.hpp>
-#include <haf/include/scene_components/scenemetricsview.hpp>
+#include <haf/include/scene_components/iscene_metrics_view.hpp>
 #include <haf/include/scene_nodes/scenenodetext_properties.hpp>
 #include <haf/include/resources/ittfont.hpp>
 #include <haf/include/resources/iresource_retriever.hpp>

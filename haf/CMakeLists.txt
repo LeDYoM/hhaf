@@ -125,8 +125,6 @@ set(sources
   ${src_dir}/scene_components/discretetextcomponent.cpp
   ${src_dir}/scene_components/scenecontrol.cpp
   ${src_dir}/scene_components/scenefactory.cpp
-  ${src_dir}/scene_components/scenemetrics.cpp
-  ${src_dir}/scene_components/scenemetricsview.cpp
   ${src_dir}/scene_components/texteditorcomponent.cpp
   ${src_dir}/scene_components/visibility_selector_component.cpp
 
@@ -283,10 +281,10 @@ set(headers
   ${inc_dir}/scene_components/app_finisher.hpp
   ${inc_dir}/scene_components/app_initializer.hpp
   ${inc_dir}/scene_components/discretetextcomponent.hpp
+  ${inc_dir}/scene_components/iscene_metrics_view.hpp
+  ${inc_dir}/scene_components/iscene_metrics.hpp
   ${inc_dir}/scene_components/scenecontrol.hpp
   ${inc_dir}/scene_components/scenefactory.hpp
-  ${inc_dir}/scene_components/scenemetrics.hpp
-  ${inc_dir}/scene_components/scenemetricsview.hpp
   ${inc_dir}/scene_components/states_controller_component.hpp
   ${inc_dir}/scene_components/statescontrolleractuator_register.hpp
   ${inc_dir}/scene_components/statescontrolleractuator.hpp

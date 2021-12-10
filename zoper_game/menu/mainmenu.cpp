@@ -7,7 +7,7 @@
 #include <haf/include/resources/iresource_retriever.hpp>
 #include <haf/include/resources/ittfont.hpp>
 #include <haf/include/shareddata/shareddata.hpp>
-#include <haf/include/scene_components/scenemetricsview.hpp>
+#include <haf/include/scene_components/iscene_metrics_view.hpp>
 #include <htypes/include/function.hpp>
 #include <htypes/include/types.hpp>
 #include <haf/include/system/datawrappercreator.hpp>

@@ -1,8 +1,8 @@
 #include "system/subsystem_interface_definitions.hpp"
 #include "scene/scene_manager.hpp"
 
-#include <haf/include/scene_components/scenemetricsview.hpp>
-#include <haf/include/scene_components/scenemetrics.hpp>
+#include <haf/include/scene_components/iscene_metrics_view.hpp>
+#include <haf/include/scene_components/iscene_metrics.hpp>
 
 namespace haf::sys
 {

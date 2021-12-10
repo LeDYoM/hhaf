@@ -1,11 +1,8 @@
-#ifndef HAF_SCENE_SCENEMETRICS_INCLUDE_HPP
-#define HAF_SCENE_SCENEMETRICS_INCLUDE_HPP
+#ifndef HAF_SCENE_ISCENEMETRICS_INCLUDE_HPP
+#define HAF_SCENE_ISCENEMETRICS_INCLUDE_HPP
 
-#include <haf/include/haf_export.hpp>
 #include <haf/include/types/basic_types.hpp>
-#include <haf/include/system/idatawrapper.hpp>
-
-#include <haf/include/scene_components/scenemetricsview.hpp>
+#include <haf/include/scene_components/iscene_metrics_view.hpp>
 
 namespace haf::scene
 {

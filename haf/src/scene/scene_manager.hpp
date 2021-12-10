@@ -3,8 +3,8 @@
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/rect.hpp>
-#include <haf/include/scene_components/scenemetrics.hpp>
-#include <haf/include/scene_components/scenemetricsview.hpp>
+#include <haf/include/scene_components/iscene_metrics.hpp>
+#include <haf/include/scene_components/iscene_metrics_view.hpp>
 #include "system/systembase.hpp"
 
 namespace haf::scene
