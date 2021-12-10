@@ -36,19 +36,19 @@ void SceneManager::finish()
     scene_controller_->finish();
 }
 
-Rectf32 SceneManager::currentViewPort() const
+SceneBox SceneManager::currentViewPort() const
 {
     return systemProvider().system<Window>().renderTarget()->viewPort();
+}
+
+SceneBox SceneManager::currentView() const
+{
+    return systemProvider().system<Window>().renderTarget()->viewRect();
 }
 
 void SceneManager::setViewPort(Rectf32 const& vp)
 {
     systemProvider().system<Window>().renderTarget()->setViewPort(vp);
-}
-
-Rectf32 SceneManager::currentView() const
-{
-    return systemProvider().system<Window>().renderTarget()->viewRect();
 }
 
 void SceneManager::setViewRect(Rectf32 const& vr)

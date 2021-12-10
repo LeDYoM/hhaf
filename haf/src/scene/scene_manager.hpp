@@ -4,6 +4,7 @@
 #include <htypes/include/types.hpp>
 #include <htypes/include/rect.hpp>
 #include <haf/include/scene_components/scenemetrics.hpp>
+#include <haf/include/scene_components/scenemetricsview.hpp>
 #include "system/systembase.hpp"
 
 namespace haf::scene
@@ -14,7 +15,7 @@ class SceneNode;
 
 namespace haf::scene
 {
-class SceneManager final : public sys::SystemBase
+class SceneManager final : public sys::SystemBase, public ISceneMetricsView
 {
 public:
     explicit SceneManager(sys::SystemProvider& system_provider);
@@ -24,13 +25,14 @@ public:
     void update();
     void finish();
 
-    htps::Rectf32 currentViewPort() const;
-    htps::Rectf32 currentView() const;
+    SceneBox currentView() const override;
+    SceneBox currentViewPort() const override;
     void setViewPort(htps::Rectf32 const& vp);
     void setViewRect(htps::Rectf32 const& vr);
 
     htps::sptr<SceneController> const& sceneController() const noexcept;
     htps::sptr<SceneController>& sceneController() noexcept;
+
 private:
     htps::sptr<SceneController> scene_controller_;
 };

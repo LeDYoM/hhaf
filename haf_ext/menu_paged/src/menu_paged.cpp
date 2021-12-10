@@ -3,7 +3,6 @@
 
 #include <haf/include/scene_components/states_controller_component.hpp>
 #include <haf/include/scene_components/visibility_selector_component.hpp>
-#include <haf/include/scene_components/scenemetricsview.hpp>
 #include <haf/include/component/component_container.hpp>
 #include <haf/include/scene_components/scenecontrol.hpp>
 #include <haf/include/system/datawrappercreator.hpp>
