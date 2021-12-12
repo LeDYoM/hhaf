@@ -1,5 +1,5 @@
 #include "window.hpp"
-
+#include "window_private.hpp"
 #include <backend_dev/include/iwindow.hpp>
 #include <backend/include/backendfactory.hpp>
 
@@ -19,43 +19,6 @@ using namespace haf::time;
 
 namespace haf::sys
 {
-struct FPSCounter
-{
-    TimePoint lastTimeFps{0U};
-    fast_u16 lastFps{0U};
-    fast_u16 currentFps{0U};
-
-    void updateFPS(TimePoint const& time_since_start,
-                   rptr<backend::IWindow> backend_window,
-                   str const& base_title)
-    {
-        static constexpr TimePoint OneSec{TimePoint_as_seconds(1U)};
-        if ((time_since_start - lastTimeFps) > OneSec)
-        {
-            lastTimeFps = time_since_start;
-            lastFps     = currentFps;
-            currentFps  = 0U;
-            backend_window->setWindowTitle(
-                make_str(base_title, " FPS:", lastFps));
-        }
-        ++(currentFps);
-    }
-};
-
-struct Window::WindowPrivate final
-{
-    FPSCounter fps_counter;
-    rptr<backend::IWindow> backend_window_{nullptr};
-    sptr<input::InputDriverWrapper> input_driver_wrapper_;
-    sptr<RenderTarget> render_target_;
-    str title_;
-
-    void updateFPS(TimePoint const& time_point)
-    {
-        fps_counter.updateFPS(time_point, backend_window_, title_);
-    }
-};
-
 Window::Window(sys::SystemProvider& system_provider) :
     SystemBase{system_provider}, priv_{muptr<WindowPrivate>()}
 {}

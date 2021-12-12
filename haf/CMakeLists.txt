@@ -184,6 +184,10 @@ set(sources
   ${src_dir}/utils/type_data.cpp
   
   # Window
+  ${src_dir}/window/fps_counter.cpp
+  ${src_dir}/window/fps_counter.hpp
+  ${src_dir}/window/window_private.cpp
+  ${src_dir}/window/window_private.hpp
   ${src_dir}/window/window_properties.cpp
   ${src_dir}/window/window.cpp
   ${src_dir}/window/window.hpp
