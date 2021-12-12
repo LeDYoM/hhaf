@@ -1,4 +1,4 @@
-#include "resourcemanager.hpp"
+#include "resource_manager.hpp"
 #include "system/systemprovider.hpp"
 #include "filesystem/file_system.hpp"
 #include "texture.hpp"

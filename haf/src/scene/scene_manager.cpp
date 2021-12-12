@@ -5,7 +5,7 @@
 
 #include "system/systemprovider.hpp"
 #include "window/window.hpp"
-#include "resources/resourcemanager.hpp"
+#include "resources/resource_manager.hpp"
 #include "render/rendertarget.hpp"
 
 #include <hlog/include/hlog.hpp>

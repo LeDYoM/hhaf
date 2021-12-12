@@ -1,5 +1,5 @@
 #include "system/subsystem_interface_definitions.hpp"
-#include "resourcemanager.hpp"
+#include "resource_manager.hpp"
 
 #include <haf/include/resources/iresource_configurator.hpp>
 #include <haf/include/resources/iresource_retriever.hpp>

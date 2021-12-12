@@ -1,4 +1,4 @@
-#include "resourcemanager.hpp"
+#include "resource_manager.hpp"
 #include "resourcemanager_private.hpp"
 #include <haf/include/system/subsystem_view.hpp>
 #include <hlog/include/hlog.hpp>

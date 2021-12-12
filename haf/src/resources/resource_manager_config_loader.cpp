@@ -1,6 +1,6 @@
 #include "resource_manager_config_loader.hpp"
 
-#include "resources/resourcemanager.hpp"
+#include "resources/resource_manager.hpp"
 
 #include <haf/include/filesystem/ifile_serializer.hpp>
 #include <haf/include/system/subsystem_view.hpp>

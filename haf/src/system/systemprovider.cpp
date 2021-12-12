@@ -13,7 +13,7 @@
 #include "window/window.hpp"
 #include "time/timesystem.hpp"
 #include "shareddata/shareddatasystem.hpp"
-#include "resources/resourcemanager.hpp"
+#include "resources/resource_manager.hpp"
 #include "simulation/simulation_system.hpp"
 
 #include <hlog/include/hlog.hpp>
