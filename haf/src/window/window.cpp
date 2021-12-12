@@ -87,7 +87,6 @@ bool Window::create(uptr<win::WindowProperties> window_properties)
     if (window_properties == nullptr)
     {
         window_properties = muptr<win::WindowProperties>();
-        window_properties->onAttached();
     }
 
     DisplayLog::info("Going to create Window");

@@ -5,7 +5,8 @@ using namespace htps;
 namespace haf::win
 {
 
-void WindowProperties::onAttached()
+
+WindowProperties::WindowProperties()
 {
     // Set some defaults
     width          = 800U;

@@ -3,14 +3,15 @@
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/basic_property.hpp>
-#include <haf/include/system/idatawrapper.hpp>
 
 namespace haf::win
 {
 
-class WindowProperties : public sys::IDataWrapper
+class WindowProperties
 {
 public:
+    WindowProperties();
+
     htps::BasicProperty<htps::u32> width;
     htps::BasicProperty<htps::u32> height;
     htps::BasicProperty<htps::u8> bits_per_red;
@@ -19,8 +20,6 @@ public:
     htps::BasicProperty<htps::u8> bits_per_alpha;
 
     htps::u32 bitsPerPixel() const;
-
-    void onAttached() override;
 };
 
 }  // namespace haf::win
