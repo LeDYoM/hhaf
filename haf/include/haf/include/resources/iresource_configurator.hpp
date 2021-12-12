@@ -35,7 +35,8 @@ public:
      * @return Result status of the function
      * @see SetResourceConfigFileResult
      */
-    virtual SetResourceConfigFileResult setResourceConfigFile(types::str const& fileName) = 0;
+    virtual SetResourceConfigFileResult setResourceConfigFile(
+        types::str const& fileName) = 0;
 
     /**
      * @brief Load a section from the previously set config file for resource
