@@ -30,7 +30,7 @@ sptr<RenderTarget> Window::renderTarget()
     return priv_->render_target_;
 }
 
-const sptr<RenderTarget> Window::renderTarget() const
+sptr<RenderTarget const> Window::renderTarget() const
 {
     return priv_->render_target_;
 }
@@ -40,7 +40,7 @@ sptr<input::InputDriverWrapper> Window::inputDriverWrapper()
     return priv_->input_driver_wrapper_;
 }
 
-const sptr<input::InputDriverWrapper> Window::inputDriverWrapper() const
+sptr<input::InputDriverWrapper const> Window::inputDriverWrapper() const
 {
     return priv_->input_driver_wrapper_;
 }

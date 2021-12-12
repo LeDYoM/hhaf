@@ -61,10 +61,10 @@ public:
     void postLoop();
 
     htps::sptr<RenderTarget> renderTarget();
-    const htps::sptr<RenderTarget> renderTarget() const;
+    htps::sptr<RenderTarget const> renderTarget() const;
 
     htps::sptr<input::InputDriverWrapper> inputDriverWrapper();
-    const htps::sptr<input::InputDriverWrapper> inputDriverWrapper() const;
+    htps::sptr<input::InputDriverWrapper const> inputDriverWrapper() const;
 
 private:
     struct WindowPrivate;
