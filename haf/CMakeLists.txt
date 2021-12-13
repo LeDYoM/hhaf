@@ -325,6 +325,7 @@ set(headers
   # Timer
   ${inc_dir}/time/time_view.hpp
   ${inc_dir}/time/timepoint.hpp
+  ${inc_dir}/time/timer_data.hpp
   ${inc_dir}/time/timer.hpp
   ${inc_dir}/time/timercomponent.hpp
   ${inc_dir}/time/timerconnector.hpp

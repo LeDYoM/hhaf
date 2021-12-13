@@ -15,20 +15,20 @@ namespace haf::time
 {
 void Timer::restart()
 {
-    started_at_ = now(attachedNode());
+    data_.started_at_ = now(attachedNode());
 }
 
 TimePoint Timer::ellapsed() const
 {
-    return ((isPaused() ? time_paused_ : now(attachedNode())) - started_at_);
+    return ((isPaused() ? data_.time_paused_ : now(attachedNode())) - data_.started_at_);
 }
 
 void Timer::pause()
 {
     if (!isPaused())
     {
-        is_paused_   = true;
-        time_paused_ = now(attachedNode());
+        data_.is_paused_   = true;
+        data_.time_paused_ = now(attachedNode());
     }
 }
 
@@ -36,8 +36,8 @@ void Timer::resume()
 {
     if (isPaused())
     {
-        is_paused_ = false;
-        started_at_ += (now(attachedNode()) - time_paused_);
+        data_.is_paused_ = false;
+        data_.started_at_ += (now(attachedNode()) - data_.time_paused_);
     }
 }
 
@@ -48,13 +48,13 @@ void Timer::switchPause()
 
 bool Timer::isPaused() const noexcept
 {
-    return is_paused_;
+    return data_.is_paused_;
 }
 
 void Timer::onAttached()
 {
     restart();
-    is_paused_   = false;
-    time_paused_ = TimePoint{};
+    data_.is_paused_   = false;
+    data_.time_paused_ = TimePoint{};
 }
 }  // namespace haf::time

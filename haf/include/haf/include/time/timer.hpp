@@ -3,6 +3,7 @@
 
 #include <htypes/include/types.hpp>
 #include <haf/include/time/timepoint.hpp>
+#include <haf/include/time/timer_data.hpp>
 #include <haf/include/system/idatawrapper.hpp>
 
 namespace haf::time
@@ -20,9 +21,7 @@ public:
     void onAttached() override;
 
 private:
-    TimePoint started_at_;
-    TimePoint time_paused_;
-    bool is_paused_;
+    TimerData data_;
 };
 }  // namespace haf::time
 
