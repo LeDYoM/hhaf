@@ -74,9 +74,9 @@ void SceneController::update()
         switch_scene_ = false;
     }
 
-    if (auto current_scene = currentScene(); current_scene != nullptr)
+    if (current_scene_ != nullptr)
     {
-        render(*current_scene, false);
+        render(*current_scene_, false);
     }
 }
 
@@ -88,7 +88,7 @@ void SceneController::finish()
     }
 }
 
-const sptr<Scene>& SceneController::currentScene() const noexcept
+sptr<Scene> const& SceneController::currentScene() const noexcept
 {
     return current_scene_;
 }
@@ -150,7 +150,7 @@ SceneNodeFactory& SceneController::sceneNodeFactory() noexcept
     return scene_factory_;
 }
 
-const SceneNodeFactory& SceneController::sceneNodeFactory() const noexcept
+SceneNodeFactory const& SceneController::sceneNodeFactory() const noexcept
 {
     return scene_factory_;
 }

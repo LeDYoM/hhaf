@@ -82,8 +82,9 @@ public:
     }
 
     SceneNodeFactory& sceneNodeFactory() noexcept;
-    const SceneNodeFactory& sceneNodeFactory() const noexcept;
-    const htps::sptr<Scene>& currentScene() const noexcept;
+    SceneNodeFactory const& sceneNodeFactory() const noexcept;
+
+    htps::sptr<Scene> const& currentScene() const noexcept;
     bool currentSceneIsNull();
 
     void requestExit();

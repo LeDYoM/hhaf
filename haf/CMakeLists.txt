@@ -47,7 +47,6 @@ set(sources
   ${src_dir}/input/inputdriver_wrapper.cpp
   ${src_dir}/input/inputsystem.cpp
   ${src_dir}/input/inputsystem.hpp
-  ${src_dir}/input/key_manager.cpp
   ${src_dir}/input/stated_input_component_base.cpp
   ${src_dir}/input/virtual_input_component.cpp
 
@@ -123,7 +122,6 @@ set(sources
   ${src_dir}/scene_components/app_finisher.cpp
   ${src_dir}/scene_components/app_initializer.cpp
   ${src_dir}/scene_components/discretetextcomponent.cpp
-  ${src_dir}/scene_components/scenefactory.cpp
   ${src_dir}/scene_components/texteditorcomponent.cpp
   ${src_dir}/scene_components/visibility_selector_component.cpp
 
@@ -234,7 +232,6 @@ set(headers
   ${inc_dir}/input/input_component_base.hpp
   ${inc_dir}/input/input_component.hpp
   ${inc_dir}/input/inputdriver_wrapper.hpp
-  ${inc_dir}/input/key_manager.hpp
   ${inc_dir}/input/key.hpp
   ${inc_dir}/input/stated_input_component_base.hpp
   ${inc_dir}/input/stated_input_component.hpp
@@ -288,7 +285,6 @@ set(headers
   ${inc_dir}/scene_components/iscene_control.hpp
   ${inc_dir}/scene_components/iscene_metrics_view.hpp
   ${inc_dir}/scene_components/iscene_metrics.hpp
-  ${inc_dir}/scene_components/scenefactory.hpp
   ${inc_dir}/scene_components/states_controller_component.hpp
   ${inc_dir}/scene_components/statescontrolleractuator_register.hpp
   ${inc_dir}/scene_components/statescontrolleractuator.hpp
