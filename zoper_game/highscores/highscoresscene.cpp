@@ -10,7 +10,7 @@
 #include <haf/include/input/input_component.hpp>
 #include <haf/include/resources/iresource_retriever.hpp>
 #include <haf/include/resources/iresource_configurator.hpp>
-#include <haf/include/scene_components/scenecontrol.hpp>
+#include <haf/include/scene_components/iscene_control.hpp>
 #include <haf/include/render/renderizables.hpp>
 #include <haf/include/render/renderizable_builder.hpp>
 #include <haf/include/component/component_container.hpp>
@@ -57,7 +57,7 @@ void HighScoresScene::onCreated()
     auto highScoreTextController{
         createSceneNode<HighScoreTextController>("HighScoreTextController")};
     highScoreTextController->Finished.connect([this, statesController]() {
-        dataWrapper<SceneControl>()->switchToNextScene();
+        subSystem<ISceneControl>()->switchToNextScene();
     });
     installDebugUtils();
 

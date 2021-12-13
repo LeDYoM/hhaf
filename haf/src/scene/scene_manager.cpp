@@ -61,14 +61,34 @@ void SceneManager::move(SceneCoordinates const& delta)
     setViewRect(currentView() + delta);
 }
 
-sptr<SceneController> const& SceneManager::sceneController() const noexcept
+sptr<SceneController const> SceneManager::sceneController() const noexcept
 {
     return scene_controller_;
 }
 
-sptr<SceneController>& SceneManager::sceneController() noexcept
+sptr<SceneController> SceneManager::sceneController() noexcept
 {
     return scene_controller_;
+}
+
+void SceneManager::switchToNextScene()
+{
+    scene_controller_->switchToNextScene();
+}
+
+bool SceneManager::startScene(const htps::str& scene_name)
+{
+    return scene_controller_->startScene(scene_name);
+}
+
+void SceneManager::requestExit()
+{
+    return scene_controller_->requestExit();
+}
+
+bool SceneManager::exitRequested() const
+{
+    return scene_controller_->exitRequested();
 }
 
 }  // namespace haf::scene

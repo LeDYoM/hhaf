@@ -4,7 +4,7 @@
 #include "player.hpp"
 
 #include <haf/include/component/component_container.hpp>
-#include <haf/include/scene_components/scenecontrol.hpp>
+#include <haf/include/scene_components/iscene_control.hpp>
 #include <hlog/include/hlog.hpp>
 
 using namespace haf;
@@ -80,7 +80,7 @@ void GameSceneInput::onKeyPressedPause(haf::input::Key const& key)
 void GameSceneInput::onKeyPressedGameOver(haf::input::Key const&)
 {
     attachedNode()
-        ->dataWrapper<haf::scene::SceneControl>()
+        ->subSystem<haf::scene::ISceneControl>()
         ->switchToNextScene();
 }
 

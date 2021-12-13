@@ -2,7 +2,7 @@
 #include <haf/include/resources/iresource_retriever.hpp>
 #include <haf/include/resources/itexture.hpp>
 #include <haf/include/shareddata/shareddata.hpp>
-#include <haf/include/scene_components/scenecontrol.hpp>
+#include <haf/include/scene_components/iscene_control.hpp>
 
 #include "mainmenu.hpp"
 #include "../loaders/mainmenuresources.hpp"
@@ -68,7 +68,7 @@ void MenuScene::onCreated()
         ->MenuFinished.connect([this](MenuFinishedStatus const status) {
             if (status == MenuFinishedStatus::Backward)
             {
-                dataWrapper<SceneControl>()->requestExit();
+                subSystem<ISceneControl>()->requestExit();
             }
         });
 

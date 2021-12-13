@@ -5,6 +5,7 @@
 #include <htypes/include/rect.hpp>
 #include <haf/include/scene_components/iscene_metrics.hpp>
 #include <haf/include/scene_components/iscene_metrics_view.hpp>
+#include <haf/include/scene_components/iscene_control.hpp>
 #include "system/systembase.hpp"
 
 namespace haf::scene
@@ -15,7 +16,9 @@ class SceneNode;
 
 namespace haf::scene
 {
-class SceneManager final : public sys::SystemBase, public ISceneMetrics
+class SceneManager final : public sys::SystemBase,
+                           public ISceneMetrics,
+                           public ISceneControl
 {
 public:
     explicit SceneManager(sys::SystemProvider& system_provider);
@@ -31,8 +34,38 @@ public:
     void setViewRect(SceneBox const& vr) override;
     void move(SceneCoordinates const& delta) override;
 
-    htps::sptr<SceneController> const& sceneController() const noexcept;
-    htps::sptr<SceneController>& sceneController() noexcept;
+    htps::sptr<SceneController const> sceneController() const noexcept;
+    htps::sptr<SceneController> sceneController() noexcept;
+
+    /**
+     * @brief Method to change to the next scene.
+     */
+    void switchToNextScene() override;
+
+    /**
+     * @brief Gives the control to the @b SceneController and
+     * @b SceneManager to perform the main loop updating the scene.
+     *
+     * @param scene_name Registered name of the scene to start
+     * @return true  Everything went correct
+     * @return false A problem happened.
+     */
+    bool startScene(const htps::str& scene_name) override;
+
+    /**
+     * @brief Tell the system to stop the current aplication.
+     */
+    void requestExit() override;
+
+    /**
+     * @brief Ask the system about the status of the request to finish the
+     *  current aplication.
+     *
+     * @return true The system will terminate at the next opportunity.
+     * @return false The system has no intention of terminating the current
+     *  application.
+     */
+    bool exitRequested() const override;
 
 private:
     htps::sptr<SceneController> scene_controller_;

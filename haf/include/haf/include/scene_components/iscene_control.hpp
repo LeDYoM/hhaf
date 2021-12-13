@@ -1,9 +1,8 @@
-#ifndef HAF_SCENE_SCENE_CONTROL_INCLUDE_HPP
-#define HAF_SCENE_SCENE_CONTROL_INCLUDE_HPP
+#ifndef HAF_SCENE_ISCENE_CONTROL_INCLUDE_HPP
+#define HAF_SCENE_ISCENE_CONTROL_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/str.hpp>
-#include <haf/include/system/idatawrapper.hpp>
 
 namespace haf::scene
 {
@@ -13,13 +12,16 @@ namespace haf::scene
  * to a new one, overload the appropiate function in @b Scene
  * the scene management.
  */
-class SceneControl : public sys::IDataWrapper
+class ISceneControl
 {
+protected:
+    virtual ~ISceneControl() = default;
+
 public:
     /**
      * @brief Method to change to the next scene.
      */
-    void switchToNextScene();
+    virtual void switchToNextScene() = 0;
 
     /**
      * @brief Gives the control to the @b SceneController and
@@ -29,7 +31,7 @@ public:
      * @return true  Everything went correct
      * @return false A problem happened.
      */
-    bool startScene(const htps::str& scene_name);
+    virtual bool startScene(const htps::str& scene_name) = 0;
 
     /**
      * @brief Gives the control to the @b SceneController and
@@ -48,7 +50,7 @@ public:
     /**
      * @brief Tell the system to stop the current aplication.
      */
-    void requestExit();
+    virtual void requestExit() = 0;
 
     /**
      * @brief Ask the system about the status of the request to finish the
@@ -58,8 +60,9 @@ public:
      * @return false The system has no intention of terminating the current
      *  application.
      */
-    bool exitRequested() const;
+    virtual bool exitRequested() const = 0;
 };
+
 }  // namespace haf::scene
 
 #endif

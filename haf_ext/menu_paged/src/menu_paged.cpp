@@ -4,7 +4,7 @@
 #include <haf/include/scene_components/states_controller_component.hpp>
 #include <haf/include/scene_components/visibility_selector_component.hpp>
 #include <haf/include/component/component_container.hpp>
-#include <haf/include/scene_components/scenecontrol.hpp>
+#include <haf/include/scene_components/iscene_control.hpp>
 #include <haf/include/system/datawrappercreator.hpp>
 
 using namespace htps;
@@ -90,7 +90,7 @@ void MenuPaged::terminate(MenuFinishedStatus const status)
     
     if (prop<FinishSceneAtEnd>()())
     {
-        dataWrapper<SceneControl>()->switchToNextScene();
+        subSystem<ISceneControl>()->switchToNextScene();
     }
 }
 
