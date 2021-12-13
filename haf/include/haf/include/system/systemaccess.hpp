@@ -47,7 +47,7 @@ public:
      */
     ISystemProvider& isystemProvider() noexcept;
 
-    SubSystemViewer subSystemViewer() noexcept;
+    SubSystemViewer subSystemViewer() const noexcept;
 
     htps::rptr<ISystemProvider> isystem_provider_;
 

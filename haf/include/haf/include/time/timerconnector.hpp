@@ -5,7 +5,7 @@
 #include <htypes/include/function.hpp>
 #include <htypes/include/connection.hpp>
 #include <haf/include/time/timepoint.hpp>
-#include <haf/include/time/timeview.hpp>
+#include <haf/include/time/time_view.hpp>
 #include <haf/include/time/timer.hpp>
 #include <haf/include/time/timertype.hpp>
 

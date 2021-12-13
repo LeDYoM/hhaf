@@ -6,7 +6,7 @@
 #include "system/systemdatawrappercreator.hpp"
 #include <haf/include/system/datawrappercreator.hpp>
 #include "shareddata/shareddatasystem.hpp"
-#include "time/timesystem.hpp"
+#include "time/time_system.hpp"
 #include "scene/scene_manager.hpp"
 #include "system/system_options_init.hpp"
 

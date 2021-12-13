@@ -5,13 +5,14 @@
 
 #include <htypes/include/types.hpp>
 #include <haf/include/time/timepoint.hpp>
+#include <haf/include/time/time_view.hpp>
 
 namespace haf::sys
 {
 /**
  * @brief System class to manage everything related to time.
  */
-class TimeSystem final : public SystemBase
+class TimeSystem final : public SystemBase, public time::ITimeView
 {
 public:
     /**
@@ -25,8 +26,9 @@ public:
      */
     ~TimeSystem();
 
+    time::TimePoint now() const override;
+
     time::TimePoint timeSinceStart() const;
-    time::TimePoint now() const;
     time::TimePoint lastFrameTime() const;
     void startFrame();
     void endFrame();

@@ -11,7 +11,7 @@
 #include "render/rendersystem.hpp"
 #include "scene/scene_manager.hpp"
 #include "window/window.hpp"
-#include "time/timesystem.hpp"
+#include "time/time_system.hpp"
 #include "shareddata/shareddatasystem.hpp"
 #include "resources/resource_manager.hpp"
 #include "simulation/simulation_system.hpp"

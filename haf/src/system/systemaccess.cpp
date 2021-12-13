@@ -26,7 +26,7 @@ ISystemProvider& SystemAccess::isystemProvider() noexcept
     return *isystem_provider_;
 }
 
-SubSystemViewer SystemAccess::subSystemViewer() noexcept
+SubSystemViewer SystemAccess::subSystemViewer() const noexcept
 {
     return SubSystemViewer{isystem_provider_};
 }

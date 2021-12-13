@@ -3,11 +3,11 @@
 
 #include <htypes/include/types.hpp>
 #include <haf/include/time/timepoint.hpp>
-#include <haf/include/time/timeview.hpp>
+#include <haf/include/system/idatawrapper.hpp>
 
 namespace haf::time
 {
-class Timer final : public TimeView
+class Timer final : public sys::IDataWrapper
 {
 public:
     TimePoint ellapsed() const;
@@ -16,7 +16,7 @@ public:
     void switchPause();
     void restart();
 
-    constexpr bool isPaused() const noexcept { return is_paused_; }
+    bool isPaused() const noexcept;
     void onAttached() override;
 
 private:

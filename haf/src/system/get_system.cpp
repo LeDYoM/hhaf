@@ -8,7 +8,7 @@
 #include "render/rendersystem.hpp"
 #include "resources/resource_manager.hpp"
 #include "input/inputsystem.hpp"
-#include "time/timesystem.hpp"
+#include "time/time_system.hpp"
 #include "shareddata/shareddatasystem.hpp"
 #include "filesystem/file_system.hpp"
 #include "debug_utils/debug_system.hpp"

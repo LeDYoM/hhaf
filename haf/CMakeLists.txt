@@ -166,12 +166,12 @@ set(sources
   # Time
   ${src_dir}/time/time_system_acceleration.cpp
   ${src_dir}/time/time_system_acceleration.hpp
+  ${src_dir}/time/time_system_subsystems_view.cpp
+  ${src_dir}/time/time_system.cpp
+  ${src_dir}/time/time_system.hpp 
   ${src_dir}/time/timepoint.cpp
   ${src_dir}/time/timer.cpp
   ${src_dir}/time/timercomponent.cpp
-  ${src_dir}/time/timesystem.cpp
-  ${src_dir}/time/timesystem.hpp
-  ${src_dir}/time/timeview.cpp
 
   # Types
   ${src_dir}/types/str.cpp
@@ -323,12 +323,12 @@ set(headers
   ${inc_dir}/system/systemaccess.hpp
 
   # Timer
+  ${inc_dir}/time/time_view.hpp
   ${inc_dir}/time/timepoint.hpp
   ${inc_dir}/time/timer.hpp
   ${inc_dir}/time/timercomponent.hpp
   ${inc_dir}/time/timerconnector.hpp
   ${inc_dir}/time/timertype.hpp
-  ${inc_dir}/time/timeview.hpp
 
   # Types
   ${inc_dir}/types/basic_types.hpp
