@@ -36,9 +36,14 @@ public:
     bool timeOut() const { return timer_->ellapsed() >= time_out_; }
     void pause() { timer_->pause(); }
     void resume() { timer_->resume(); }
+    void restart() { timer_->restart(); }
     void switchPause() { timer_->switchPause(); }
+    void markToDelete()
+    {
+        timer_type_ = TimerType::OneShot;
+        emitter_.clear();
+    }
     TimePoint ellapsed() const { return timer_->ellapsed(); }
-    Timer& timer() { return *timer_; }
 
 private:
     htps::uptr<Timer> timer_;

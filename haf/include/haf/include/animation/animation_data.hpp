@@ -2,7 +2,6 @@
 #define HAF_ANIMATION_ANIMATION_DATA_INCLUDE_HPP
 
 #include <haf/include/time/timepoint.hpp>
-#include <haf/include/time/timer.hpp>
 #include <haf/include/time/timerconnector.hpp>
 #include <haf/include/types/basic_types.hpp>
 #include <haf/include/types/property_group.hpp>

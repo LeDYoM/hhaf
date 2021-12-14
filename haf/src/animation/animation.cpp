@@ -50,7 +50,7 @@ bool Animation::animate()
                          ? AnimationDirection::Backward
                          : AnimationDirection::Forward);
             }
-            animation_data_.prop<TimerProperty>()()->timer().restart();
+            animation_data_.prop<TimerProperty>()()->restart();
         }
     }
     return continue_animation;
@@ -58,6 +58,7 @@ bool Animation::animate()
 
 void Animation::executeEndAction()
 {
+    animation_data_.prop<TimerProperty>()()->markToDelete();
     // If property containing the function wrapper contains a function, call it
     if (animation_data_.prop<ActionWhenFinished>()())
     {

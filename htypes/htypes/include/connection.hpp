@@ -78,6 +78,7 @@ public:
     constexpr auto size() const noexcept { return receivers_.size(); }
     constexpr bool empty() const noexcept { return receivers_.empty(); }
 
+    constexpr void clear() noexcept { receivers_.clear(); }
 private:
     vector_type<emitter_callback_t> receivers_;
 };
