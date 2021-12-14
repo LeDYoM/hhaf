@@ -4,7 +4,7 @@
 #include <htypes/include/types.hpp>
 #include <htypes/include/vector2d.hpp>
 
-#include <haf/include/time/timercomponent.hpp>
+#include <haf/include/time/timerconnector.hpp>
 #include <haf/include/component/icomponent.hpp>
 #include <haf/include/scene/color.hpp>
 
@@ -41,7 +41,7 @@ private:
     void setLevel(LevelType const currentLevel);
     void setScore(htps::size_type const new_score);
 
-    htps::uptr<time::Timer> level_timer_;
+    time::TimerConnectorSPtr level_timer_;
     time::TimerConnectorSPtr update_level_data_timer_;
     htps::sptr<time::TimerComponent> scene_timer_component_;
 

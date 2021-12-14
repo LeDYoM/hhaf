@@ -52,11 +52,10 @@ public:
                                                     PropertyContainer>>()
             .put<SceneNodeType<PropertyContainer>>(scene_node);
 
-        auto timer_component{attachedNode()->component<time::TimerComponent>()};
-        auto timer_ptr{timer_component->addTimer(time::TimerType::Free, time::TimePoint{0U},
-                                  time::timer_callback_t{})};
         builder.prop<AnimationProperties>()
-            .put<TimerProperty>(std::move(timer_ptr))
+            .put<TimerProperty>(attachedNode()
+                                    ->component<time::TimerComponent>()
+                                    ->addFreeTimer())
             .put<Times>(1);
         return builder;
     }

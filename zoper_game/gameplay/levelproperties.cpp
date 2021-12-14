@@ -4,6 +4,7 @@
 #include <hlog/include/hlog.hpp>
 #include <haf/include/shareddata/shareddataupdater.hpp>
 #include <haf/include/system/datawrappercreator.hpp>
+#include <haf/include/time/timercomponent.hpp>
 
 using namespace htps;
 
@@ -20,20 +21,20 @@ void LevelProperties::configure(
 {
     using namespace time;
 
-    if (!level_timer_)
-    {
-        level_timer_ = attachedNode()->dataWrapper<Timer>();
-    }
     LogAsserter::log_assert(scene_timer_component != nullptr,
                             "Passed nullptr sceneTimerComponent");
     LogAsserter::log_assert(scene_timer_component_ == nullptr,
                             "m_sceneNodeComponent already contains a value");
 
-    game_mode_ = gameMode;
-    scene_timer_component_.swap(scene_timer_component);
+    game_mode_             = gameMode;
+    scene_timer_component_ = std::move(scene_timer_component);
+
+    LogAsserter::log_assert(level_timer_ == nullptr,
+                            "LevelProperties already has a timer!");
+    level_timer_ = scene_timer_component_->addFreeTimer();
 
     update_level_data_timer_ = scene_timer_component_->addTimer(
-        TimerType::Continuous, TimePoint_as_miliseconds(120),
+        TimerType::Continuous, TimePoint_as_miliseconds(120U),
         [this](TimePoint /*realEllapsed*/) { updateLevelData(); });
 
     game_hud_ = attachedNode()->createSceneNode<GameHudSceneNode>("hud");
@@ -49,8 +50,7 @@ void LevelProperties::setScore(size_type const new_score)
     {
         auto const game_shared_data_updater =
             attachedNode()
-                ->
-                dataWrapper<shdata::SharedDataUpdater<GameSharedData>>();
+                ->dataWrapper<shdata::SharedDataUpdater<GameSharedData>>();
         auto game_shared_data =
             game_shared_data_updater->update(GameSharedData::address());
 
@@ -80,8 +80,7 @@ void LevelProperties::setLevel(LevelType const currentLevel)
     {
         auto game_shared_data =
             attachedNode()
-                ->
-                dataWrapper<shdata::SharedDataUpdater<GameSharedData>>()
+                ->dataWrapper<shdata::SharedDataUpdater<GameSharedData>>()
                 ->update(GameSharedData::address());
 
         if (game_shared_data == nullptr)

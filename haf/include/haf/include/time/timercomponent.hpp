@@ -30,6 +30,8 @@ public:
                                 TimePoint timeOut,
                                 timer_callback_t callback);
 
+    TimerConnectorSPtr addFreeTimer();
+
     void removeTimer(TimerConnectorSPtr timer_to_remove);
 
     void update() override;

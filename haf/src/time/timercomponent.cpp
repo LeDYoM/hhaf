@@ -21,6 +21,11 @@ TimerConnectorSPtr TimerComponent::addTimer(TimerType timerType,
     return timerConnector;
 }
 
+TimerConnectorSPtr TimerComponent::addFreeTimer()
+{
+    return addTimer(TimerType::Free, TimePoint{}, timer_callback_t{});
+}
+
 void TimerComponent::update()
 {
     activeTimers_.performUpdate([this](auto& timerConnector) {
