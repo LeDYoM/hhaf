@@ -6,12 +6,14 @@
 
 namespace haf::time
 {
+class ITimeView;
 class TimerData final
 {
 public:
-    TimePoint started_at_;
-    TimePoint time_paused_;
-    bool is_paused_;
+    htps::rptr<ITimeView> itime_view_{nullptr};
+    TimePoint started_at_{};
+    TimePoint time_paused_{};
+    bool is_paused_{false};
 };
 }  // namespace haf::time
 

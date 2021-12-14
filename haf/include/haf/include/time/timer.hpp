@@ -8,9 +8,11 @@
 
 namespace haf::time
 {
+class ITimeView;
 class Timer final : public sys::IDataWrapper
 {
 public:
+    explicit Timer(htps::rptr<ITimeView> time_view) noexcept;
     TimePoint ellapsed() const;
     void pause();
     void resume();

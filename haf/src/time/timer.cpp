@@ -13,6 +13,11 @@ auto now(auto const node)
 
 namespace haf::time
 {
+Timer::Timer(htps::rptr<ITimeView> time_view) noexcept
+{
+    data_.itime_view_ = time_view;
+}
+
 void Timer::restart()
 {
     data_.started_at_ = now(attachedNode());
@@ -20,7 +25,8 @@ void Timer::restart()
 
 TimePoint Timer::ellapsed() const
 {
-    return ((isPaused() ? data_.time_paused_ : now(attachedNode())) - data_.started_at_);
+    return ((isPaused() ? data_.time_paused_ : now(attachedNode())) -
+            data_.started_at_);
 }
 
 void Timer::pause()
