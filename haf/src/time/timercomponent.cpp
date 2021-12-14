@@ -17,7 +17,7 @@ TimerConnectorSPtr TimerComponent::addTimer(TimerType timerType,
     auto timerConnector(msptr<TimerConnector>(
         attachedNode()->dataWrapper<Timer>(), timerType,
         std::move(timeOut), std::move(callback)));
-    activeTimers_.emplace_back(timerConnector);
+    activeTimers_.push_back(timerConnector);
     return timerConnector;
 }
 
@@ -64,4 +64,10 @@ void TimerComponent::switchPause()
                      timerConnector->timer_->switchPause();
                  });
 }
+
+void TimerComponent::removeTimer(TimerConnectorSPtr timer_to_remove)
+{
+    activeTimers_.erase_value(timer_to_remove);    
+}
+
 }  // namespace haf::time

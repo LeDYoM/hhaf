@@ -24,11 +24,13 @@ public:
      * @param timerType Type of the timer created.
      * @param timeOut  Time for when the timer will trigger.
      * @param callback Function to be triggered.
-     * @return TimerConnectorSPtr  htps::Objectto control the timer created.
+     * @return TimerConnectorSPtr  Object to control the timer created.
      */
     TimerConnectorSPtr addTimer(TimerType timerType,
                                 TimePoint timeOut,
                                 timer_callback_t callback);
+
+    void removeTimer(TimerConnectorSPtr timer_to_remove);
 
     void update() override;
     void pause();
@@ -36,7 +38,7 @@ public:
     void switchPause();
 
 private:
-    htps::LockableVector<htps::sptr<TimerConnector>> activeTimers_;
+    htps::LockableVector<TimerConnectorSPtr> activeTimers_;
 };
 }  // namespace haf::time
 

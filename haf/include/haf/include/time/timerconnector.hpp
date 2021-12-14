@@ -37,6 +37,7 @@ public:
     void pause() { timer_->pause(); }
     void resume() { timer_->resume(); }
     void switchPause() { timer_->switchPause(); }
+    Timer& timer() { return *timer_; }
 
 private:
     htps::uptr<Timer> timer_;
