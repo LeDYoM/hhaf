@@ -37,6 +37,7 @@ public:
     void pause() { timer_->pause(); }
     void resume() { timer_->resume(); }
     void switchPause() { timer_->switchPause(); }
+    TimePoint ellapsed() const { return timer_->ellapsed(); }
     Timer& timer() { return *timer_; }
 
 private:

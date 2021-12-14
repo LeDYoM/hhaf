@@ -50,7 +50,7 @@ bool Animation::animate()
                          ? AnimationDirection::Backward
                          : AnimationDirection::Forward);
             }
-            animation_data_.prop<TimerProperty>()()->restart();
+            animation_data_.prop<TimerProperty>()()->timer().restart();
         }
     }
     return continue_animation;

@@ -14,9 +14,9 @@ TimerConnectorSPtr TimerComponent::addTimer(TimerType timerType,
                                             TimePoint timeOut,
                                             timer_callback_t callback)
 {
-    auto timerConnector(msptr<TimerConnector>(
-        attachedNode()->dataWrapper<Timer>(), timerType,
-        std::move(timeOut), std::move(callback)));
+    auto timerConnector(
+        msptr<TimerConnector>(attachedNode()->dataWrapper<Timer>(), timerType,
+                              std::move(timeOut), std::move(callback)));
     activeTimers_.push_back(timerConnector);
     return timerConnector;
 }
@@ -24,7 +24,8 @@ TimerConnectorSPtr TimerComponent::addTimer(TimerType timerType,
 void TimerComponent::update()
 {
     activeTimers_.performUpdate([this](auto& timerConnector) {
-        if (timerConnector->timeOut())
+        if (timerConnector->timeOut() &&
+            timerConnector->timer_type_ != TimerType::Free)
         {
             // Delta time has passed, so trigger
             // the callback and update the timer
@@ -67,7 +68,7 @@ void TimerComponent::switchPause()
 
 void TimerComponent::removeTimer(TimerConnectorSPtr timer_to_remove)
 {
-    activeTimers_.erase_value(timer_to_remove);    
+    activeTimers_.erase_value(timer_to_remove);
 }
 
 }  // namespace haf::time

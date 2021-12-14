@@ -8,6 +8,8 @@
 #include <haf/include/animation/property_animation_builder.hpp>
 #include <haf/include/scene/scene_node.hpp>
 #include <haf/include/system/datawrappercreator.hpp>
+#include <haf/include/time/timercomponent.hpp>
+#include <haf/include/time/timerconnector.hpp>
 #include <htypes/include/properties.hpp>
 
 namespace haf::anim
@@ -50,9 +52,11 @@ public:
                                                     PropertyContainer>>()
             .put<SceneNodeType<PropertyContainer>>(scene_node);
 
+        auto timer_component{attachedNode()->component<time::TimerComponent>()};
+        auto timer_ptr{timer_component->addTimer(time::TimerType::Free, time::TimePoint{0U},
+                                  time::timer_callback_t{})};
         builder.prop<AnimationProperties>()
-            .put<TimerProperty>(
-                attachedNode()->dataWrapper<time::Timer>())
+            .put<TimerProperty>(std::move(timer_ptr))
             .put<Times>(1);
         return builder;
     }

@@ -3,6 +3,7 @@
 
 #include <haf/include/time/timepoint.hpp>
 #include <haf/include/time/timer.hpp>
+#include <haf/include/time/timerconnector.hpp>
 #include <haf/include/types/basic_types.hpp>
 #include <haf/include/types/property_group.hpp>
 
@@ -29,7 +30,7 @@ struct AnimationDirectionProperty : BasicPropertyBase<AnimationDirection>
 /**
  * @brief Timer to use in the animation
  */
-struct TimerProperty : BasicPropertyBase<types::sptr<time::Timer>>
+struct TimerProperty : BasicPropertyBase<time::TimerConnectorSPtr>
 {};
 
 /**
