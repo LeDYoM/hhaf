@@ -3,8 +3,8 @@
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/lockablevector.hpp>
-#include <haf/include/time/timerconnector.hpp>
-#include <haf/include/time/timertype.hpp>
+#include <haf/include/time/timer_connector.hpp>
+#include <haf/include/time/timer_type.hpp>
 #include <haf/include/component/icomponent.hpp>
 
 namespace haf::time

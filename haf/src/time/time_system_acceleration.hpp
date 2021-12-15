@@ -2,7 +2,7 @@
 #define HAF_SYSTEM_TIMESYSTEM_ACCELERATION_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
-#include <haf/include/time/timepoint.hpp>
+#include <haf/include/time/time_point.hpp>
 
 namespace haf::sys
 {

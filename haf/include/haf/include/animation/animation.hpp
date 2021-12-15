@@ -4,7 +4,7 @@
 #include <haf/include/animation/animation_data.hpp>
 #include <haf/include/animation/property_animation_data.hpp>
 
-#include <haf/include/time/timepoint.hpp>
+#include <haf/include/time/time_point.hpp>
 #include <haf/include/time/time_view.hpp>
 #include <haf/include/time/timer.hpp>
 

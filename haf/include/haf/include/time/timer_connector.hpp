@@ -4,10 +4,10 @@
 #include <htypes/include/types.hpp>
 #include <htypes/include/function.hpp>
 #include <htypes/include/connection.hpp>
-#include <haf/include/time/timepoint.hpp>
+#include <haf/include/time/time_point.hpp>
 #include <haf/include/time/time_view.hpp>
 #include <haf/include/time/timer.hpp>
-#include <haf/include/time/timertype.hpp>
+#include <haf/include/time/timer_type.hpp>
 
 namespace haf::time
 {
@@ -20,30 +20,21 @@ using timer_callback_t = timer_emitter_t::emitter_callback_t;
  * A @b TimerComponent can control all the attached instances to it, this way
  * one can perform pauses and time outs to a group of timers.
  */
-class TimerConnector
+class TimerConnector final
 {
 public:
     TimerConnector(htps::uptr<Timer> timer,
                    TimerType timerType,
                    TimePoint timeOut,
-                   timer_callback_t emitter) :
-        timer_{std::move(timer)},
-        time_out_{std::move(timeOut)},
-        emitter_{std::move(emitter)},
-        timer_type_{timerType}
-    {}
+                   timer_callback_t emitter);
 
-    bool timeOut() const { return timer_->ellapsed() >= time_out_; }
-    void pause() { timer_->pause(); }
-    void resume() { timer_->resume(); }
-    void restart() { timer_->restart(); }
-    void switchPause() { timer_->switchPause(); }
-    void markToDelete()
-    {
-        timer_type_ = TimerType::OneShot;
-        emitter_.clear();
-    }
-    TimePoint ellapsed() const { return timer_->ellapsed(); }
+    bool timeOut() const;
+    void pause();
+    void resume();
+    void restart();
+    void switchPause();
+    void markToDelete();
+    TimePoint ellapsed() const;
 
 private:
     htps::uptr<Timer> timer_;

@@ -1,8 +1,8 @@
 #ifndef HAF_ANIMATION_ANIMATION_DATA_INCLUDE_HPP
 #define HAF_ANIMATION_ANIMATION_DATA_INCLUDE_HPP
 
-#include <haf/include/time/timepoint.hpp>
-#include <haf/include/time/timerconnector.hpp>
+#include <haf/include/time/time_point.hpp>
+#include <haf/include/time/timer_connector.hpp>
 #include <haf/include/types/basic_types.hpp>
 #include <haf/include/types/property_group.hpp>
 

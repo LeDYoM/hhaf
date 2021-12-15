@@ -3,7 +3,7 @@
 
 #include <haf/include/input/key.hpp>
 #include <hlog/include/hlog.hpp>
-#include <haf/include/time/timepoint.hpp>
+#include <haf/include/time/time_point.hpp>
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/object.hpp>

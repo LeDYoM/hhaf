@@ -1,7 +1,7 @@
 #ifndef HAF_TIME_VIEW_DATA_WRAPPER_INCLUDE_HPP
 #define HAF_TIME_VIEW_DATA_WRAPPER_INCLUDE_HPP
 
-#include <haf/include/time/timepoint.hpp>
+#include <haf/include/time/time_point.hpp>
 
 namespace haf::time
 {

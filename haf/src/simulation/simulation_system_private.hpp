@@ -5,7 +5,7 @@
 #include <haf/include/simulation/simulationaction.hpp>
 
 #include <haf/include/input/key.hpp>
-#include <haf/include/time/timepoint.hpp>
+#include <haf/include/time/time_point.hpp>
 #include <haf/include/shareddata/ishareable.hpp>
 #include <hlog/include/hlog.hpp>
 #include "system/systemprovider.hpp"

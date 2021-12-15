@@ -9,7 +9,7 @@
 #include "system/systemprovider.hpp"
 #include "utils/compile_time_constants.hpp"
 
-#include <haf/include/time/timepoint.hpp>
+#include <haf/include/time/time_point.hpp>
 #include <haf/include/input/inputdriver_wrapper.hpp>
 
 #include <hlog/include/hlog.hpp>

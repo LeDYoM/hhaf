@@ -4,7 +4,7 @@
 #include "system/systembase.hpp"
 
 #include <htypes/include/types.hpp>
-#include <haf/include/time/timepoint.hpp>
+#include <haf/include/time/time_point.hpp>
 #include <haf/include/time/time_view.hpp>
 
 namespace haf::sys

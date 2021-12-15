@@ -5,7 +5,7 @@
 
 #include <haf/include/scene_components/states_controller_component.hpp>
 #include <haf/include/scene_components/statescontrolleractuator.hpp>
-#include <haf/include/time/timercomponent.hpp>
+#include <haf/include/time/timer_component.hpp>
 
 #include "gamescene_states.hpp"
 

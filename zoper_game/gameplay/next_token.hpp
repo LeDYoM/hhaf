@@ -2,8 +2,8 @@
 #define ZOOPER_NEXT_TOKEN_INCLUDE_HPP
 
 #include <haf/include/types/basic_types.hpp>
-#include <haf/include/time/timercomponent.hpp>
-#include <haf/include/time/timerconnector.hpp>
+#include <haf/include/time/timer_component.hpp>
+#include <haf/include/time/timer_connector.hpp>
 
 namespace zoper
 {

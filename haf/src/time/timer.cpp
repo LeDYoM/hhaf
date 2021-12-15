@@ -3,14 +3,6 @@
 #include <haf/include/system/subsystem_view.hpp>
 #include <haf/include/system/systemaccess.hpp>
 
-namespace
-{
-auto now(auto const node)
-{
-    return node->subSystemViewer().subSystem<haf::time::ITimeView>()->now();
-}
-}  // namespace
-
 namespace haf::time
 {
 Timer::Timer(htps::rptr<ITimeView> time_view) noexcept

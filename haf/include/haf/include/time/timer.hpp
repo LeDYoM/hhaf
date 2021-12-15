@@ -2,7 +2,7 @@
 #define HAF_TIME_TIMER_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
-#include <haf/include/time/timepoint.hpp>
+#include <haf/include/time/time_point.hpp>
 #include <haf/include/time/timer_data.hpp>
 
 namespace haf::time

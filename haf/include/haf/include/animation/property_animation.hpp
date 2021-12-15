@@ -1,7 +1,7 @@
 #ifndef HAF_ANIM_IPROPERTY_ANIMATION_INCLUDE_HPP
 #define HAF_ANIM_IPROPERTY_ANIMATION_INCLUDE_HPP
 
-#include <haf/include/time/timepoint.hpp>
+#include <haf/include/time/time_point.hpp>
 #include <haf/include/time/timer.hpp>
 
 #include <htypes/include/types.hpp>

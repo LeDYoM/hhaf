@@ -4,7 +4,7 @@
 #include <htypes/include/types.hpp>
 #include <htypes/include/vector2d.hpp>
 
-#include <haf/include/time/timerconnector.hpp>
+#include <haf/include/time/timer_connector.hpp>
 #include <haf/include/component/icomponent.hpp>
 #include <haf/include/scene/color.hpp>
 
