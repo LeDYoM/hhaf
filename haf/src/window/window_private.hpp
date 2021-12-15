@@ -5,7 +5,7 @@
 #include <htypes/include/types.hpp>
 #include <haf/include/window/window_properties.hpp>
 #include "fps_counter.hpp"
-#include "window.hpp"
+#include "window_configuration.hpp"
 
 namespace haf::backend
 {
@@ -31,6 +31,7 @@ struct HAF_PRIVATE Window::WindowPrivate final
     htps::sptr<input::InputDriverWrapper> input_driver_wrapper_;
     htps::sptr<RenderTarget> render_target_;
     htps::str title_;
+    WindowConfiguration window_configuration_;
 
     void updateFPS(time::TimePoint const& time_point);
 };

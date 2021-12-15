@@ -2,10 +2,8 @@
 #define HAF_WINDOW_WINDOW_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
-
+#include <htypes/include/str.hpp>
 #include "system/systembase.hpp"
-
-#include <haf/include/window/window_properties.hpp>
 
 namespace haf::input
 {
@@ -39,13 +37,14 @@ public:
     ~Window();
 
     /**
-     * @brief Creates (or tryes to create) an operating system window
+     * @brief Initializes the window system.
+     * Also Creates (or tryes to create) an operating system window
      *
-     * @param window_properties Desired properties for the window
+     * @param window_config_file Configuration file for the window system
      * @return true If window creation was successful
      * @return false Failed trying to create the window
      */
-    bool create(htps::uptr<win::WindowProperties> window_properties);
+    bool initialize(htps::str const& window_config_file);
 
     /**
      * @brief Method to be executed before starting a cycle of the system

@@ -45,12 +45,10 @@ sptr<input::InputDriverWrapper const> Window::inputDriverWrapper() const
     return priv_->input_driver_wrapper_;
 }
 
-bool Window::create(uptr<win::WindowProperties> window_properties)
+bool Window::initialize(str const& window_config_file)
 {
-    if (window_properties == nullptr)
-    {
-        window_properties = muptr<win::WindowProperties>();
-    }
+    priv_->window_configuration_.loadConfiguration(
+        subSystemViewer(), window_config_file);
 
     DisplayLog::info("Going to create Window");
 
@@ -68,12 +66,13 @@ bool Window::create(uptr<win::WindowProperties> window_properties)
     // Create physical window if not already done
     if (!bw.isAlreadyCreated())
     {
-        if (bw.createWindow(window_properties->width(),
-                            window_properties->height(),
-                            window_properties->bits_per_red(),
-                            window_properties->bits_per_green(),
-                            window_properties->bits_per_blue(),
-                            window_properties->bits_per_alpha(), 0U, nullptr))
+        auto const& config{priv_->window_configuration_};
+        if (bw.createWindow(config.configuredWindowWidth(),
+                            config.configuredWindowHeight(),
+                            config.configuredBitsPerRed(),
+                            config.configuredBitsPerGreen(),
+                            config.configuredBitsPerBlue(),
+                            config.configuredBitsPerAlpha(), 0U, nullptr))
         {
             DisplayLog::info("Window creation completed");
         }

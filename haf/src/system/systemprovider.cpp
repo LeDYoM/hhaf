@@ -84,6 +84,23 @@ SystemProvider::SystemProvider() : p_{muptr<SystemProviderPrivate>()}
 
 SystemProvider::~SystemProvider() = default;
 
+namespace
+{
+template <typename T>
+void configureSystem(T& system, str const& file_name)
+{
+    const auto& configuration_file{file_name};
+
+    if (!configuration_file.empty())
+    {
+        DisplayLog::debug("Using configuration file: ", configuration_file);
+    }
+
+    system->initialize(configuration_file);
+}
+
+}  // namespace
+
 void SystemProvider::fastInit(InitSystemOptions const& init_system_options)
 {
     if (init_system_options.init_file_system)
@@ -150,23 +167,19 @@ void SystemProvider::fastInit(InitSystemOptions const& init_system_options)
     {
         DisplayLog::debug("Initializing Simulation System");
         p_->simulation_system_ = muptr<SimulationSystem>(*this);
-        const auto& simulation_configuration_file{
-            p_->system_provdier_configuration_
-                .simulationSystemConfigurationFile()};
-
-        if (!simulation_configuration_file.empty())
-        {
-            DisplayLog::debug(
-                "Passing simulation config file to simulation system: ",
-                simulation_configuration_file);
-        }
-
-        p_->simulation_system_->initialize(simulation_configuration_file);
+        configureSystem(p_->simulation_system_,
+                        p_->system_provdier_configuration_
+                            .simulationSystemConfigurationFile());
     }
 
     if (init_system_options.init_window_system)
     {
-        p_->window_->create(nullptr);
+        DisplayLog::debug("Initializing Window");
+
+        configureSystem(p_->window_,
+                        p_->system_provdier_configuration_
+                            .windowSystemConfigurationFile());
+
         if (init_system_options.init_render_system)
         {
             p_->render_system_->setRenderTarget(p_->window_->renderTarget());
@@ -205,10 +218,10 @@ void SystemProvider::init(rptr<IApp> iapp,
 {
     parpar::ParametersParser parameter_parser{parpar::create(argc, argv)};
     p_->setArgumments(parameter_parser);
-//    ISystemProvider* _this = this;
-//    SystemAccess acc = SystemAccess{_this};
-//    SubSystemViewer viewer{&acc};
-//    p_->loadConfiguration(acc.subSystemViewer());
+    //    ISystemProvider* _this = this;
+    //    SystemAccess acc = SystemAccess{_this};
+    //    SubSystemViewer viewer{&acc};
+    //    p_->loadConfiguration(acc.subSystemViewer());
 
     LogAsserter::log_assert(
         backend_factory != nullptr,
