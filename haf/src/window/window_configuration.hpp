@@ -54,7 +54,6 @@ class HAF_PRIVATE WindowConfiguration
 {
 public:
     htps::u32 configuredWindowWidth() const noexcept { return data().width; }
-
     htps::u32 configuredWindowHeight() const noexcept { return data().height; }
 
     htps::vector2du32 configuredWindowSize() const noexcept
