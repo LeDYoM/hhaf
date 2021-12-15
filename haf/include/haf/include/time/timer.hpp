@@ -4,12 +4,11 @@
 #include <htypes/include/types.hpp>
 #include <haf/include/time/timepoint.hpp>
 #include <haf/include/time/timer_data.hpp>
-#include <haf/include/system/idatawrapper.hpp>
 
 namespace haf::time
 {
 class ITimeView;
-class Timer final : public sys::IDataWrapper
+class Timer final
 {
 public:
     explicit Timer(htps::rptr<ITimeView> time_view) noexcept;
@@ -20,7 +19,6 @@ public:
     void restart();
 
     bool isPaused() const noexcept;
-    void onAttached() override;
 
 private:
     TimerData data_;

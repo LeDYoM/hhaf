@@ -4,7 +4,9 @@
 #include <htypes/include/algoutils.hpp>
 #include <hlog/include/hlog.hpp>
 #include <haf/include/scene/scene_node.hpp>
-#include <haf/include/system/datawrappercreator.hpp>
+#include <haf/include/time/timer.hpp>
+#include <haf/include/time/time_view.hpp>
+#include <haf/include/system/subsystem_view.hpp>
 
 using namespace htps;
 
@@ -14,9 +16,9 @@ TimerConnectorSPtr TimerComponent::addTimer(TimerType timerType,
                                             TimePoint timeOut,
                                             timer_callback_t callback)
 {
-    auto timerConnector(
-        msptr<TimerConnector>(attachedNode()->dataWrapper<Timer>(), timerType,
-                              std::move(timeOut), std::move(callback)));
+    auto timerConnector{msptr<TimerConnector>(
+        muptr<Timer>(attachedNode()->subSystem<ITimeView>()), timerType,
+        std::move(timeOut), std::move(callback))};
     activeTimers_.push_back(timerConnector);
     return timerConnector;
 }
