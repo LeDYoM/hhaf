@@ -46,7 +46,7 @@ struct SystemProvider::SystemProviderPrivate final
     uptr<RenderSystem> render_system_;
     uptr<SimulationSystem> simulation_system_;
 
-    str haf_configuration_file_ = "haf_configuration.txt";
+    str haf_configuration_file_;
     SystemProviderConfiguration system_provdier_configuration_;
 
     void setArgumments(parpar::ParametersParser parameter_parser)
@@ -101,7 +101,15 @@ void configureSystem(T& system, str const& file_name)
 
 }  // namespace
 
-void SystemProvider::fastInit(InitSystemOptions const& init_system_options)
+void SystemProvider::createSystems(InitSystemOptions const& init_system_options)
+{
+    instanciateSystems(init_system_options);
+    p_->loadConfiguration(SubSystemViewer(this));
+    initializeSystems(init_system_options);
+}
+
+void SystemProvider::instanciateSystems(
+    InitSystemOptions const& init_system_options)
 {
     if (init_system_options.init_file_system)
     {
@@ -167,6 +175,14 @@ void SystemProvider::fastInit(InitSystemOptions const& init_system_options)
     {
         DisplayLog::debug("Initializing Simulation System");
         p_->simulation_system_ = muptr<SimulationSystem>(*this);
+    }
+}
+
+void SystemProvider::initializeSystems(
+    InitSystemOptions const& init_system_options)
+{
+    if (init_system_options.init_simulation_system)
+    {
         configureSystem(p_->simulation_system_,
                         p_->system_provdier_configuration_
                             .simulationSystemConfigurationFile());
@@ -176,9 +192,9 @@ void SystemProvider::fastInit(InitSystemOptions const& init_system_options)
     {
         DisplayLog::debug("Initializing Window");
 
-        configureSystem(p_->window_,
-                        p_->system_provdier_configuration_
-                            .windowSystemConfigurationFile());
+        configureSystem(
+            p_->window_,
+            p_->system_provdier_configuration_.windowSystemConfigurationFile());
 
         if (init_system_options.init_render_system)
         {
@@ -218,10 +234,6 @@ void SystemProvider::init(rptr<IApp> iapp,
 {
     parpar::ParametersParser parameter_parser{parpar::create(argc, argv)};
     p_->setArgumments(parameter_parser);
-    //    ISystemProvider* _this = this;
-    //    SystemAccess acc = SystemAccess{_this};
-    //    SubSystemViewer viewer{&acc};
-    //    p_->loadConfiguration(acc.subSystemViewer());
 
     LogAsserter::log_assert(
         backend_factory != nullptr,
@@ -235,7 +247,7 @@ void SystemProvider::init(rptr<IApp> iapp,
     InitSystemOptions init_system_options;
     init_system_options.setAllTrue();
 
-    fastInit(init_system_options);
+    createSystems(init_system_options);
 
     SystemAccess system_access(this);
     DataWrapperCreator dwc(&system_access);

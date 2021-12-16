@@ -25,7 +25,7 @@ public:
     void init()
     {
         setInitSystemOptions(init_system_options_);
-        system_provider_.fastInit(init_system_options_);
+        system_provider_.createSystems(init_system_options_);
     }
 
     virtual ~TestSystem() = default;

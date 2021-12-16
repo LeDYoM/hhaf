@@ -26,14 +26,13 @@ struct HAF_PRIVATE DeserializableSystemConfigurationData
 
     bool deserialize(htps::Object const& obj)
     {
-        bool result{true};
-        result &= obj[kSimulationSystemConfigurationFile].as(
+        obj[kSimulationSystemConfigurationFile].as(
             data.simulation_system_configuration_file_);
 
-        result &= obj[kWindowSystemConfigurationFile].as(
+        obj[kWindowSystemConfigurationFile].as(
             data.window_system_configuration_file_);
 
-        return result;
+        return true;
     }
 
     SystemConfigurationData data;

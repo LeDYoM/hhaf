@@ -32,6 +32,16 @@
             "stopAtEntry": false,
             "cwd": "${command:cmake.launchTargetDirectory}",
             "environment": []
+        },
+        {
+            "name": "(Windows) Launch with config",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${command:cmake.launchTargetPath}",
+            "args": ["-haf_config=haf_configuration.txt"],
+            "stopAtEntry": false,
+            "cwd": "${command:cmake.launchTargetDirectory}",
+            "environment": []
         }
     ]
 }

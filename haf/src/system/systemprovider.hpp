@@ -46,7 +46,7 @@ public:
 
     void createBackend();
     void setBackend(htps::rptr<backend::BackendFactory> backend_factory);
-    void fastInit(InitSystemOptions const& init_system_options);
+    void createSystems(InitSystemOptions const& init_system_options);
     void init(htps::rptr<IApp> iapp,
               htps::rptr<backend::BackendFactory> backend_factory,
               int const argc,
@@ -78,6 +78,9 @@ public:
     T& system() noexcept;
 
 private:
+    void instanciateSystems(InitSystemOptions const& init_system_options);
+    void initializeSystems(InitSystemOptions const& init_system_options);
+
     const Window& window() const noexcept;
     Window& window() noexcept;
     const ResourceManager& resourceManager() const noexcept;

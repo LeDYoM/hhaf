@@ -141,7 +141,10 @@ public:
             return (isObject() ? getObject()[index] : Value{});
         }
 
-        [[nodiscard]] Object const& getObject() const noexcept { return (*object_); }
+        [[nodiscard]] Object const& getObject() const noexcept
+        {
+            return (*object_);
+        }
 
         [[nodiscard]] str const& getValue() const noexcept { return (*value_); }
 
@@ -222,11 +225,14 @@ public:
             }
             else
             {
-                auto [result, nval] = (*value_).convert<T>();
-                if (result)
+                if (value_ != nullptr)
                 {
-                    std::swap(value, nval);
-                    return true;
+                    auto [result, nval] = (*value_).convert<T>();
+                    if (result)
+                    {
+                        std::swap(value, nval);
+                        return true;
+                    }
                 }
                 return false;
             }
@@ -504,10 +510,7 @@ public:
         return objects_;
     }
 
-    constexpr ValueDictionary const& values() const noexcept
-    {
-        return values_;
-    }
+    constexpr ValueDictionary const& values() const noexcept { return values_; }
 
     template <typename T>
     constexpr static bool isArrayElement(const pair<str, T>& it)
