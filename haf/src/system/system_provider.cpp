@@ -79,7 +79,7 @@ struct SystemProvider::SystemProviderPrivate final
     }
 };
 
-SystemProvider::SystemProvider() : p_{muptr<SystemProviderPrivate>()}
+SystemProvider::SystemProvider() : p_{make_pimplp<SystemProviderPrivate>()}
 {}
 
 SystemProvider::~SystemProvider() = default;
