@@ -145,23 +145,23 @@ set(sources
   ${src_dir}/simulation/simulation_system.hpp
 
   # System
+  ${src_dir}/system/get_system_provider.cpp
+  ${src_dir}/system/get_system_provider.hpp
   ${src_dir}/system/get_system.cpp
   ${src_dir}/system/get_system.hpp
-  ${src_dir}/system/get_systemprovider.cpp
-  ${src_dir}/system/get_systemprovider.hpp
   ${src_dir}/system/init_system_options.hpp
   ${src_dir}/system/subsystem_interface_definitions.hpp
-  ${src_dir}/system/system_configuration.hpp
+  ${src_dir}/system/system_access.cpp
+  ${src_dir}/system/system_base.cpp
+  ${src_dir}/system/system_base.hpp
+  ${src_dir}/system/system_controller.cpp
+  ${src_dir}/system/system_controller.hpp
   ${src_dir}/system/system_options_init.hpp
   ${src_dir}/system/system_provider_configuration.hpp
-  ${src_dir}/system/systemaccess.cpp
-  ${src_dir}/system/systembase.cpp
-  ${src_dir}/system/systembase.hpp
-  ${src_dir}/system/systemcontroller.cpp
-  ${src_dir}/system/systemcontroller.hpp
+  ${src_dir}/system/system_provider.cpp
+  ${src_dir}/system/system_provider.hpp
+  ${src_dir}/system/system_configuration.hpp
   ${src_dir}/system/systemdatawrappercreator.hpp
-  ${src_dir}/system/systemprovider.cpp
-  ${src_dir}/system/systemprovider.hpp
 
   # Time
   ${src_dir}/time/time_point.cpp
@@ -187,7 +187,6 @@ set(sources
   ${src_dir}/window/window_configuration.hpp
   ${src_dir}/window/window_private.cpp
   ${src_dir}/window/window_private.hpp
-  ${src_dir}/window/window_properties.cpp
   ${src_dir}/window/window.cpp
   ${src_dir}/window/window.hpp
   )
@@ -317,11 +316,11 @@ set(headers
   # System
   ${inc_dir}/system/datawrappercreator.hpp
   ${inc_dir}/system/idatawrapper.hpp
-  ${inc_dir}/system/isystemcontroller.hpp
-  ${inc_dir}/system/isystemprovider.hpp
+  ${inc_dir}/system/isystem_controller.hpp
+  ${inc_dir}/system/isystem_provider.hpp
   ${inc_dir}/system/subsystem_view.hpp
   ${inc_dir}/system/subsystem_interface.hpp
-  ${inc_dir}/system/systemaccess.hpp
+  ${inc_dir}/system/system_access.hpp
 
   # Timer
   ${inc_dir}/time/time_point.hpp
@@ -345,7 +344,6 @@ set(headers
   ${inc_dir}/utils/type_data.hpp
 
   # Window
-  ${inc_dir}/window/window_properties.hpp
   )
 
 # Set the public directory for includes in this library. It will be

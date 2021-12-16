@@ -2,7 +2,7 @@
 #define HAF_SYSTEM_SYSTEM_INTERFACE_INCLUDE_HPP
 
 #include <haf/include/types/basic_types.hpp>
-#include <haf/include/system/isystemprovider.hpp>
+#include <haf/include/system/isystem_provider.hpp>
 
 namespace haf::sys
 {

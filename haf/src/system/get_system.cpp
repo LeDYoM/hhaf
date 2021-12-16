@@ -1,8 +1,8 @@
-#include <haf/include/system/isystemprovider.hpp>
+#include <haf/include/system/isystem_provider.hpp>
 #include <haf/include/scene/scene_node.hpp>
-#include <haf/include/system/systemaccess.hpp>
-#include "get_systemprovider.hpp"
-#include "systemprovider.hpp"
+#include <haf/include/system/system_access.hpp>
+#include "get_system_provider.hpp"
+#include "system_provider.hpp"
 #include "get_system.hpp"
 #include "scene/scene_manager.hpp"
 #include "render/rendersystem.hpp"

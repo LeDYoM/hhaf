@@ -1,7 +1,7 @@
 #ifndef HAF_DEBUG_DEBUG_SYSTEM_INCLUDE_HPP
 #define HAF_DEBUG_DEBUG_SYSTEM_INCLUDE_HPP
 
-#include "system/systembase.hpp"
+#include "system/system_base.hpp"
 #include <haf/include/debug_utils/imemory_data_viewer.hpp>
 
 namespace haf::sys

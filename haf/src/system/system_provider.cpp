@@ -1,4 +1,4 @@
-#include "systemprovider.hpp"
+#include "system_provider.hpp"
 #include "system_provider_configuration.hpp"
 #include "init_system_options.hpp"
 
@@ -20,7 +20,7 @@
 #include <hosted_app/include/iapp.hpp>
 
 #include <haf/include/system/datawrappercreator.hpp>
-#include <haf/include/system/systemaccess.hpp>
+#include <haf/include/system/system_access.hpp>
 #include <haf/include/scene_components/app_initializer.hpp>
 #include <haf/include/scene_components/app_finisher.hpp>
 

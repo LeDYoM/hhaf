@@ -5,8 +5,8 @@
 #include <htypes/include/object_utils.hpp>
 #include <debug_utils/debug_system.hpp>
 #include <system/get_system.hpp>
-#include <haf/include/system/systemaccess.hpp>
-#include <system/systemprovider.hpp>
+#include <haf/include/system/system_access.hpp>
+#include <system/system_provider.hpp>
 #include <haf/include/system/subsystem_view.hpp>
 
 using namespace htps;

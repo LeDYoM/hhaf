@@ -1,7 +1,7 @@
 #include <haf/include/shareddata/shareddata.hpp>
 
 #include "shareddata/shareddatasystem.hpp"
-#include "system/systemprovider.hpp"
+#include "system/system_provider.hpp"
 #include "system/get_system.hpp"
 
 #include <hlog/include/hlog.hpp>

@@ -3,7 +3,7 @@
 
 #include <haf/include/scene/scene.hpp>
 
-#include "system/systemprovider.hpp"
+#include "system/system_provider.hpp"
 #include "window/window.hpp"
 #include "resources/resource_manager.hpp"
 #include "render/rendertarget.hpp"

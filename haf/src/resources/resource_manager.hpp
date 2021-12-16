@@ -5,7 +5,7 @@
 
 #include <haf/include/resources/iresource_retriever.hpp>
 #include <haf/include/resources/iresource_configurator.hpp>
-#include "system/systembase.hpp"
+#include "system/system_base.hpp"
 #include "resources_config_data.hpp"
 #include "resource_manager_config_loader.hpp"
 

@@ -1,4 +1,4 @@
-#include "systemcontroller.hpp"
+#include "system_controller.hpp"
 #include "window/window.hpp"
 #include "simulation/simulation_system.hpp"
 #include "input/inputsystem.hpp"

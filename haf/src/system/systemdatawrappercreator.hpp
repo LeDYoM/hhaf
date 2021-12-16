@@ -3,10 +3,10 @@
 
 #include <htypes/include/types.hpp>
 #include <haf/include/system/datawrappercreator.hpp>
-#include <haf/include/system/systemaccess.hpp>
-#include <haf/include/system/isystemprovider.hpp>
-#include "systembase.hpp"
-#include "system/systemprovider.hpp"
+#include <haf/include/system/system_access.hpp>
+#include <haf/include/system/isystem_provider.hpp>
+#include "system_base.hpp"
+#include "system/system_provider.hpp"
 
 namespace haf::sys
 {

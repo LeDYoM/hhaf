@@ -1,8 +1,8 @@
 #include "scene_private.hpp"
 #include "scenecontroller.hpp"
 
-#include <haf/include/system/isystemprovider.hpp>
-#include <haf/include/system/systemaccess.hpp>
+#include <haf/include/system/isystem_provider.hpp>
+#include <haf/include/system/system_access.hpp>
 #include <haf/include/system/subsystem_view.hpp>
 #include <haf/include/scene/scene.hpp>
 

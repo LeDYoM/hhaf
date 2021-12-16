@@ -7,7 +7,7 @@
 #include "app_state.hpp"
 #include <hosted_app/include/iapp.hpp>
 #include <host_connector/include/ihost_connector.hpp>
-#include <haf/include/system/isystemcontroller.hpp>
+#include <haf/include/system/isystem_controller.hpp>
 
 namespace haf::host
 {

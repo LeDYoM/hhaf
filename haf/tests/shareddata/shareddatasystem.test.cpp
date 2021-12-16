@@ -3,8 +3,8 @@
 #include <htypes/include/types.hpp>
 #include <haf/include/shareddata/address.hpp>
 
-#include "system/systembase.hpp"
-#include "system/systemprovider.hpp"
+#include "system/system_base.hpp"
+#include "system/system_provider.hpp"
 #include "shareddata/shareddatasystem.hpp"
 
 #include "include/shareable_test_data.hpp"

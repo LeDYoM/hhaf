@@ -2,8 +2,8 @@
 #define HAF_SYSTEM_CONTROLLER_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
-#include "systemprovider.hpp"
-#include <haf/include/system/isystemcontroller.hpp>
+#include "system_provider.hpp"
+#include <haf/include/system/isystem_controller.hpp>
 
 namespace haf::backend
 {

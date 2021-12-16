@@ -3,7 +3,6 @@
 
 #include "haf_private.hpp"
 #include <htypes/include/types.hpp>
-#include <haf/include/window/window_properties.hpp>
 #include "fps_counter.hpp"
 #include "window_configuration.hpp"
 

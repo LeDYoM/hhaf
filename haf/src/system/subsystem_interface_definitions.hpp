@@ -1,8 +1,8 @@
-#include <haf/include/system/systemaccess.hpp>
+#include <haf/include/system/system_access.hpp>
 #include "get_system.hpp"
 
 #include <haf/include/system/subsystem_interface.hpp>
-#include <haf/include/system/isystemprovider.hpp>
+#include <haf/include/system/isystem_provider.hpp>
 
 namespace haf::sys
 {

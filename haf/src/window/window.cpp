@@ -6,7 +6,7 @@
 #include "input/inputsystem.hpp"
 #include "render/rendertarget.hpp"
 #include "time/time_system.hpp"
-#include "system/systemprovider.hpp"
+#include "system/system_provider.hpp"
 #include "utils/compile_time_constants.hpp"
 
 #include <haf/include/time/time_point.hpp>

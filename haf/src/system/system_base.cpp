@@ -1,8 +1,8 @@
-#include "systembase.hpp"
-#include "systemprovider.hpp"
+#include "system_base.hpp"
+#include "system_provider.hpp"
 
-#include <haf/include/system/isystemprovider.hpp>
-#include <haf/include/system/systemaccess.hpp>
+#include <haf/include/system/isystem_provider.hpp>
+#include <haf/include/system/system_access.hpp>
 #include <haf/include/system/subsystem_view.hpp>
 
 using namespace htps;

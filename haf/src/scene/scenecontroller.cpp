@@ -2,10 +2,10 @@
 #include "scene_manager.hpp"
 #include "scene_render.hpp"
 #include "scene_private.hpp"
-#include "system/systemprovider.hpp"
+#include "system/system_provider.hpp"
 
 #include <haf/include/scene/scene.hpp>
-#include <haf/include/system/isystemprovider.hpp>
+#include <haf/include/system/isystem_provider.hpp>
 
 #include <hlog/include/hlog.hpp>
 

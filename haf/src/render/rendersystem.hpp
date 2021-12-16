@@ -6,7 +6,7 @@
 #include "rendertarget.hpp"
 #include <haf/include/render/renderdata.hpp>
 
-#include "system/systembase.hpp"
+#include "system/system_base.hpp"
 
 namespace haf::scene
 {
