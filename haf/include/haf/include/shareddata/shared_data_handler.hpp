@@ -19,15 +19,9 @@ protected:
         shared_data_{shared_data}
     {}
 
-    htps::sptr<T> create()
-    {
-        return htps::mptr<T>();
-    }
+    htps::sptr<T> create() { return htps::mptr<T>(); }
 
-    void createInternalData()
-    {
-        internal_data_ = create();
-    }
+    void createInternalData() { internal_data_ = create(); }
 
     void createInternalDataIfEmpty()
     {
@@ -35,6 +29,13 @@ protected:
         {
             createInternalData();
         }
+    }
+
+    void reset()
+    {
+        DisplayLog::error("Invalid address");
+        address_ = Address{""};
+        internal_data_.reset();
     }
 
     htps::sptr<T> update(Address const& address)
@@ -49,9 +50,7 @@ protected:
         }
         else
         {
-            DisplayLog::error("Invalid address");
-            address_ = Address{""};
-            internal_data_.reset();
+            reset();
         }
 
         return internal_data_;
