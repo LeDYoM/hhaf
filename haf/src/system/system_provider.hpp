@@ -45,7 +45,6 @@ public:
     SystemProvider();
     ~SystemProvider() override;
 
-    void createBackend();
     void setBackend(htps::rptr<backend::BackendFactory> backend_factory);
     void createSystems(InitSystemOptions const& init_system_options);
     void init(htps::rptr<IApp> iapp,
@@ -54,23 +53,11 @@ public:
               char const* const argv[]);
     void terminate();
 
-    template <typename T>
-    T& app()
-    {
-        return *(dynamic_cast<T*>(&app()));
-    }
-
-    template <typename T>
-    const T& app() const
-    {
-        return *(dynamic_cast<T*>(&app()));
-    }
-
-    const backend::BackendFactory& backendFactory() const noexcept;
+    backend::BackendFactory const& backendFactory() const noexcept;
     backend::BackendFactory& backendFactory() noexcept;
 
     IApp& app();
-    const IApp& app() const;
+    IApp const& app() const;
 
     template <typename T>
     T const& system() const noexcept;
@@ -82,27 +69,27 @@ private:
     void instanciateSystems(InitSystemOptions const& init_system_options);
     void initializeSystems(InitSystemOptions const& init_system_options);
 
-    const Window& window() const noexcept;
+    Window const& window() const noexcept;
     Window& window() noexcept;
-    const ResourceManager& resourceManager() const noexcept;
+    ResourceManager const& resourceManager() const noexcept;
     ResourceManager& resourceManager() noexcept;
-    const sys::InputSystem& inputSystem() const noexcept;
-    sys::InputSystem& inputSystem() noexcept;
-    const RandomSystem& randomSystem() const noexcept;
+    InputSystem const& inputSystem() const noexcept;
+    InputSystem& inputSystem() noexcept;
+    RandomSystem const& randomSystem() const noexcept;
     RandomSystem& randomSystem() noexcept;
-    const scene::SceneManager& sceneManager() const noexcept;
+    scene::SceneManager const& sceneManager() const noexcept;
     scene::SceneManager& sceneManager() noexcept;
-    const FileSystem& fileSystem() const noexcept;
+    FileSystem const& fileSystem() const noexcept;
     FileSystem& fileSystem() noexcept;
-    const SimulationSystem& simulationSystem() const noexcept;
+    SimulationSystem const& simulationSystem() const noexcept;
     SimulationSystem& simulationSystem() noexcept;
-    const TimeSystem& timeSystem() const noexcept;
+    TimeSystem const& timeSystem() const noexcept;
     TimeSystem& timeSystem() noexcept;
-    const RenderSystem& renderSystem() const noexcept;
+    RenderSystem const& renderSystem() const noexcept;
     RenderSystem& renderSystem() noexcept;
-    const SharedDataSystem& sharedDataSystem() const noexcept;
+    SharedDataSystem const& sharedDataSystem() const noexcept;
     SharedDataSystem& sharedDataSystem() noexcept;
-    const DebugSystem& debugSystem() const noexcept;
+    DebugSystem const& debugSystem() const noexcept;
     DebugSystem& debugSystem() noexcept;
 
     struct SystemProviderPrivate;

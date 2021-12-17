@@ -209,14 +209,6 @@ void SystemProvider::initializeSystems(
     }
 }
 
-void SystemProvider::createBackend()
-{
-    //    p_->backend_factory_ =
-    //        uptr<backend::BackendFactory, void
-    //        (*)(haf::backend::BackendFactory*)>(
-    //            createBackendFactory(), destroyBackendFactory);
-}
-
 void SystemProvider::setBackend(
     htps::rptr<backend::BackendFactory> backend_factory)
 {
@@ -280,12 +272,12 @@ IApp& SystemProvider::app()
     return *p_->app_;
 }
 
-const IApp& SystemProvider::app() const
+IApp const& SystemProvider::app() const
 {
     return *p_->app_;
 }
 
-const Window& SystemProvider::window() const noexcept
+Window const& SystemProvider::window() const noexcept
 {
     return *p_->window_;
 }
@@ -295,7 +287,7 @@ Window& SystemProvider::window() noexcept
     return *p_->window_;
 }
 
-const ResourceManager& SystemProvider::resourceManager() const noexcept
+ResourceManager const& SystemProvider::resourceManager() const noexcept
 {
     return *p_->resource_manager_;
 }
@@ -305,17 +297,17 @@ ResourceManager& SystemProvider::resourceManager() noexcept
     return *p_->resource_manager_;
 }
 
-const sys::InputSystem& SystemProvider::inputSystem() const noexcept
+InputSystem const& SystemProvider::inputSystem() const noexcept
 {
     return *p_->input_system_;
 }
 
-sys::InputSystem& SystemProvider::inputSystem() noexcept
+InputSystem& SystemProvider::inputSystem() noexcept
 {
     return *p_->input_system_;
 }
 
-const RandomSystem& SystemProvider::randomSystem() const noexcept
+RandomSystem const& SystemProvider::randomSystem() const noexcept
 {
     return *p_->random_system_;
 }
@@ -325,7 +317,7 @@ RandomSystem& SystemProvider::randomSystem() noexcept
     return *p_->random_system_;
 }
 
-const FileSystem& SystemProvider::fileSystem() const noexcept
+FileSystem const& SystemProvider::fileSystem() const noexcept
 {
     return *p_->file_system_;
 }
@@ -335,7 +327,7 @@ FileSystem& SystemProvider::fileSystem() noexcept
     return *p_->file_system_;
 }
 
-const scene::SceneManager& SystemProvider::sceneManager() const noexcept
+scene::SceneManager const& SystemProvider::sceneManager() const noexcept
 {
     return *p_->scene_manager_;
 }
@@ -345,7 +337,7 @@ scene::SceneManager& SystemProvider::sceneManager() noexcept
     return *p_->scene_manager_;
 }
 
-const SimulationSystem& SystemProvider::simulationSystem() const noexcept
+SimulationSystem const& SystemProvider::simulationSystem() const noexcept
 {
     return *p_->simulation_system_;
 }
@@ -355,7 +347,7 @@ SimulationSystem& SystemProvider::simulationSystem() noexcept
     return *p_->simulation_system_;
 }
 
-const TimeSystem& SystemProvider::timeSystem() const noexcept
+TimeSystem const& SystemProvider::timeSystem() const noexcept
 {
     return *p_->time_system_;
 }
@@ -365,7 +357,7 @@ TimeSystem& SystemProvider::timeSystem() noexcept
     return *p_->time_system_;
 }
 
-const backend::BackendFactory& SystemProvider::backendFactory() const noexcept
+backend::BackendFactory const& SystemProvider::backendFactory() const noexcept
 {
     return *p_->backend_factory_;
 }
@@ -375,7 +367,7 @@ backend::BackendFactory& SystemProvider::backendFactory() noexcept
     return *p_->backend_factory_;
 }
 
-const RenderSystem& SystemProvider::renderSystem() const noexcept
+RenderSystem const& SystemProvider::renderSystem() const noexcept
 {
     return *p_->render_system_;
 }
@@ -390,12 +382,12 @@ SharedDataSystem& SystemProvider::sharedDataSystem() noexcept
     return *p_->shared_data_system_;
 }
 
-const SharedDataSystem& SystemProvider::sharedDataSystem() const noexcept
+SharedDataSystem const& SystemProvider::sharedDataSystem() const noexcept
 {
     return *p_->shared_data_system_;
 }
 
-const DebugSystem& SystemProvider::debugSystem() const noexcept
+DebugSystem const& SystemProvider::debugSystem() const noexcept
 {
     return *p_->debug_system_;
 }
