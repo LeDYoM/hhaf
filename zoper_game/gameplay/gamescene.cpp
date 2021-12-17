@@ -14,7 +14,7 @@
 #include "gamescene_input.hpp"
 
 #ifdef USE_DEBUG_ACTIONS
-#include <haf/include/debug_utils/debug_actions.hpp> 
+#include <haf/include/debug_utils/debug_actions.hpp>
 #endif
 
 #include "../zoperprogramcontroller.hpp"
@@ -29,7 +29,6 @@
 #include <haf/include/render/renderizable.hpp>
 #include <haf/include/scene_components/iscene_control.hpp>
 #include <haf/include/scene_components/statescontrolleractuator_register.hpp>
-#include <haf/include/shareddata/shareddataupdater.hpp>
 #include <haf/include/shareddata/shareddataviewer.hpp>
 #include <haf/include/resources/iresource_configurator.hpp>
 #include <htypes/include/serializer.hpp>
@@ -67,8 +66,7 @@ void GameScene::onCreated()
                             "Private data pointer is not nullptr!");
     p_ = muptr<GameScenePrivate>();
 
-    auto resources_configurator{
-        subSystem<res::IResourcesConfigurator>()};
+    auto resources_configurator{subSystem<res::IResourcesConfigurator>()};
     resources_configurator->setResourceConfigFile("resources.txt");
     resources_configurator->loadSection("game");
 
@@ -82,8 +80,7 @@ void GameScene::onCreated()
     // Create the general timer component for the scene.
     scene_timer_component_ = component<time::TimerComponent>();
 
-    p_->scene_animation_component_ =
-        component<AnimationComponent>();
+    p_->scene_animation_component_ = component<AnimationComponent>();
 
     // At this point, we setup level properties.
     // level_properties_ should not be used before this point.
@@ -93,9 +90,9 @@ void GameScene::onCreated()
     GameMode game_mode;
 
     {
-        auto game_shared_data =
-            dataWrapper<shdata::SharedDataViewer<GameSharedData>>()
-                ->view(GameSharedData::address());
+        auto game_shared_data = shdata::SharedDataViewer<GameSharedData>(
+                                    subSystem<shdata::ISharedData>())
+                                    .view(GameSharedData::address());
 
         start_level = game_shared_data->startLevel;
         game_mode   = game_shared_data->gameMode;
@@ -108,17 +105,11 @@ void GameScene::onCreated()
 
 #ifdef USE_DEBUG_ACTIONS
     component<debug::DebugActions>()->addDebugAction(
-        input::Key::Num1, [this]() {
-            levelProperties()->increaseScore(100U);
-        });
+        input::Key::Num1, [this]() { levelProperties()->increaseScore(100U); });
     component<debug::DebugActions>()->addDebugAction(
-        input::Key::Q, [this]() {
-           goGameOver();
-         });
+        input::Key::Q, [this]() { goGameOver(); });
     component<debug::DebugActions>()->addDebugAction(
-        input::Key::A, [this]() {
-            levelProperties()->nextLevel();
-        });
+        input::Key::A, [this]() { levelProperties()->nextLevel(); });
 
 #endif
 
@@ -152,8 +143,7 @@ void GameScene::onCreated()
             *scene_states_, *(p_->states_manager_));
     }
 
-    p_->token_type_generator_ =
-        component<rnd::RandomNumbersComponent>();
+    p_->token_type_generator_ = component<rnd::RandomNumbersComponent>();
     LogAsserter::log_assert(p_->token_type_generator_ != nullptr,
                             "Cannot create RandomNumbersComponent");
 
@@ -166,10 +156,10 @@ void GameScene::onCreated()
     p_->key_mapping_ = muptr<KeyMapping>();
     p_->key_mapping_->reset();
 
-    subSystem<sys::IFileSerializer>()->deserializeFromFile(
-        "keys.txt", *p_->key_mapping_);
-    subSystem<sys::IFileSerializer>()->serializeToFile(
-        "keys.txt", *p_->key_mapping_);
+    subSystem<sys::IFileSerializer>()->deserializeFromFile("keys.txt",
+                                                           *p_->key_mapping_);
+    subSystem<sys::IFileSerializer>()->serializeToFile("keys.txt",
+                                                       *p_->key_mapping_);
 
     scene_states_->start(GameSceneStates::Playing);
     installDebugUtils();

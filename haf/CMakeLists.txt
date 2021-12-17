@@ -134,9 +134,9 @@ set(sources
 
   # Shared data
   ${src_dir}/shareddata/address.cpp
+  ${src_dir}/shareddata/shared_data_subsystems_view.cpp
   ${src_dir}/shareddata/shared_data_system.cpp
   ${src_dir}/shareddata/shared_data_system.hpp
-  ${src_dir}/shareddata/shared_data.cpp
 
   # Simulation
   ${src_dir}/simulation/simulation_system_configuration.hpp
@@ -305,7 +305,7 @@ set(headers
   # Shared data
   ${inc_dir}/shareddata/address.hpp
   ${inc_dir}/shareddata/ishareable.hpp
-  ${inc_dir}/shareddata/shared_data.hpp
+  ${inc_dir}/shareddata/ishared_data.hpp
   ${inc_dir}/shareddata/shareddataupdater.hpp
   ${inc_dir}/shareddata/shareddataviewer.hpp
 

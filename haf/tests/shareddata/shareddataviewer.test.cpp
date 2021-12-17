@@ -8,7 +8,7 @@
 
 using namespace htps;
 using namespace haf::shdata;
-
+/*
 TEST_CASE("SharedDataSystemViewer::SharedDataSystemViewer",
           "[haf][shareddatasystem]")
 {
@@ -49,3 +49,4 @@ TEST_CASE("SharedDataSystemViewer::SharedDataSystemViewer",
         CHECK(view_result->c == "hello test");
     }
 }
+*/

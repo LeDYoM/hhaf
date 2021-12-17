@@ -2,11 +2,8 @@
 #define HAF_SHAREDDATA_DATA_WRAPPER_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
-#include <haf/include/system/idatawrapper.hpp>
 #include <haf/include/shareddata/ishareable.hpp>
 #include <haf/include/shareddata/address.hpp>
-
-#include <hlog/include/hlog.hpp>
 
 namespace haf::shdata
 {
@@ -14,16 +11,12 @@ namespace haf::shdata
  * @brief DataWrapper to provide access to data resources.
  * This wrapper can be used standalone or as a base class of other wrappers.
  */
-class SharedData : public sys::IDataWrapper
+class ISharedData
 {
+protected:
+    virtual ~ISharedData() = default;
+
 public:
-    using BaseClass = sys::IDataWrapper;
-
-    /**
-     * @brief Use base class constructors.
-     */
-    using BaseClass::BaseClass;
-
     /**
      * @brief Store an IShareable data element in the system. If the address
      * does not exist, it will be created.
@@ -32,7 +25,7 @@ public:
      * @return true Successfully stored.
      * @return false Not stored.
      */
-    bool store(Address const& address, IShareable const& data);
+    virtual bool store(Address const& address, IShareable const& data) = 0;
 
     /**
      * @brief Retrieve an element from the system.
@@ -41,7 +34,8 @@ public:
      * @return true Successfully retrieved.
      * @return false Error retrieving the element.
      */
-    [[nodiscard]] bool retrieve(Address const& address, IShareable& data);
+    [[nodiscard]] virtual bool retrieve(Address const& address,
+                                        IShareable& data) const = 0;
 
     /**
      * @brief Ask if the system contains any data.
@@ -49,8 +43,8 @@ public:
      * @return true
      * @return false
      */
-    [[nodiscard]] bool isEmpty();
-    bool makeEmpty();
+    [[nodiscard]] virtual bool isEmpty() const noexcept = 0;
+    virtual bool makeEmpty() = 0;
 };
 
 }  // namespace haf::shdata

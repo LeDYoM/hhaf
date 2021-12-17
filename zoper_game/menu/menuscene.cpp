@@ -1,7 +1,7 @@
 #include "menuscene.hpp"
 #include <haf/include/resources/iresource_retriever.hpp>
 #include <haf/include/resources/itexture.hpp>
-#include <haf/include/shareddata/shared_data.hpp>
+#include <haf/include/shareddata/ishared_data.hpp>
 #include <haf/include/scene_components/iscene_control.hpp>
 
 #include "mainmenu.hpp"

@@ -48,11 +48,11 @@ void LevelProperties::setScore(size_type const new_score)
     current_score_ = new_score;
 
     {
-        auto const game_shared_data_updater =
-            attachedNode()
-                ->dataWrapper<shdata::SharedDataUpdater<GameSharedData>>();
+        auto game_shared_data_updater =
+            shdata::SharedDataUpdater<GameSharedData>(
+                attachedNode()->subSystem<shdata::ISharedData>());
         auto game_shared_data =
-            game_shared_data_updater->update(GameSharedData::address());
+            game_shared_data_updater.update(GameSharedData::address());
 
         if (!game_shared_data)
         {
@@ -78,10 +78,11 @@ void LevelProperties::setLevel(LevelType const currentLevel)
     current_level_ = currentLevel;
 
     {
+        auto game_shared_data_updater =
+            shdata::SharedDataUpdater<GameSharedData>(
+                attachedNode()->subSystem<shdata::ISharedData>());
         auto game_shared_data =
-            attachedNode()
-                ->dataWrapper<shdata::SharedDataUpdater<GameSharedData>>()
-                ->update(GameSharedData::address());
+            game_shared_data_updater.update(GameSharedData::address());
 
         if (game_shared_data == nullptr)
         {

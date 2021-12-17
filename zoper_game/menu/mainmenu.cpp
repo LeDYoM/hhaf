@@ -6,7 +6,7 @@
 #include <hlog/include/hlog.hpp>
 #include <haf/include/resources/iresource_retriever.hpp>
 #include <haf/include/resources/ittfont.hpp>
-#include <haf/include/shareddata/shared_data.hpp>
+#include <haf/include/shareddata/ishared_data.hpp>
 #include <haf/include/scene_components/iscene_metrics_view.hpp>
 #include <htypes/include/function.hpp>
 #include <htypes/include/types.hpp>
@@ -65,7 +65,7 @@ void goGame(rptr<MenuPaged> scene_node,
         game_shared_data.startLevel = menu_data[0U];
         game_shared_data.gameMode   = game_mode;
         DisplayLog::info(game_shared_data.to_str());
-        scene_node->dataWrapper<shdata::SharedData>()->store(
+        scene_node->subSystem<shdata::ISharedData>()->store(
             GameSharedData::address(), game_shared_data);
     }
 

@@ -50,7 +50,7 @@ bool SharedDataSystem::store(Address const& address, IShareable const& data)
 }
 
 bool SharedDataSystem::retrieve(shdata::Address const& address,
-                                shdata::IShareable& data)
+                                shdata::IShareable& data) const
 {
     auto result_apply_address =
         shdata::objectFromAddress(address, data_object_);

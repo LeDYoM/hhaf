@@ -10,7 +10,7 @@
 #include <haf/include/scene_nodes/scenenodetext_properties.hpp>
 #include <haf/include/resources/ittfont.hpp>
 #include <haf/include/resources/iresource_retriever.hpp>
-#include <haf/include/shareddata/shared_data.hpp>
+#include <haf/include/shareddata/ishared_data.hpp>
 #include <haf/include/shareddata/shareddataviewer.hpp>
 #include <haf/include/input/input_component.hpp>
 #include <haf/include/component/component_container.hpp>
@@ -45,8 +45,9 @@ void HighScoreTextController::onCreated()
                                                            high_scores_data_);
 
     // Request game score
-    Score gameScore = dataWrapper<shdata::SharedDataViewer<GameSharedData>>()
-                          ->view(GameSharedData::address())
+    Score gameScore = shdata::SharedDataViewer<GameSharedData>(
+                          subSystem<shdata::ISharedData>())
+                          .view(GameSharedData::address())
                           ->score;
     Rectf32 textBox{
         rectFromSize(subSystem<ISceneMetricsView>()->currentView().size())

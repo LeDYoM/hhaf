@@ -9,7 +9,7 @@
 
 using namespace htps;
 using namespace haf::shdata;
-
+/*
 TEST_CASE("SharedDataSystemUpdater::SharedDataSystemUpdater",
           "[haf][shareddatasystem]")
 {
@@ -167,3 +167,4 @@ TEST_CASE("SharedDataSystemUpdater::SharedDataSystemUpdater",
         }
     }
 }
+*/
