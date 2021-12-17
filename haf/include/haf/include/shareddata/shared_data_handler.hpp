@@ -1,5 +1,5 @@
-#ifndef HAF_SHAREDDATA_SHAREDDATA_UPDATER_INCLUDE_HPP
-#define HAF_SHAREDDATA_SHAREDDATA_UPDATER_INCLUDE_HPP
+#ifndef HAF_SHAREDDATA_SHAREDDATA_HANDLER_INCLUDE_HPP
+#define HAF_SHAREDDATA_SHAREDDATA_HANDLER_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
 #include <haf/include/shareddata/ishareable.hpp>
@@ -12,19 +12,34 @@ namespace haf::shdata
 {
 
 template <typename T>
-class SharedDataUpdater
+class SharedDataHandler
 {
-public:
+protected:
     explicit SharedDataUpdater(htps::rptr<ISharedData> shared_data) noexcept :
         shared_data_{shared_data}
     {}
 
-    htps::sptr<T> update(Address const& address)
+    htps::sptr<T> create()
+    {
+        return htps::mptr<T>();
+    }
+
+    void createInternalData()
+    {
+        internal_data_ = create();
+    }
+
+    void createInternalDataIfEmpty()
     {
         if (!internal_data_)
         {
-            internal_data_ = htps::msptr<T>();
+            createInternalData();
         }
+    }
+
+    htps::sptr<T> update(Address const& address)
+    {
+        createInternalDataIfEmpty();
 
         auto const result{shared_data_->retrieve(address, *internal_data_)};
 

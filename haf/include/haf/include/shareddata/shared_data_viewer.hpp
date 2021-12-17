@@ -26,7 +26,7 @@ public:
             internal_data_ = htps::msptr<T>();
         }
 
-        bool const result = shared_data_->retrieve(address, *internal_data_);
+        auto const result{shared_data_->retrieve(address, *internal_data_)};
         if (result)
         {
             address_ = address;
