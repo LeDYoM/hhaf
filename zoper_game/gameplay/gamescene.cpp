@@ -29,7 +29,7 @@
 #include <haf/include/render/renderizable.hpp>
 #include <haf/include/scene_components/iscene_control.hpp>
 #include <haf/include/scene_components/statescontrolleractuator_register.hpp>
-#include <haf/include/shareddata/shareddataviewer.hpp>
+#include <haf/include/shareddata/shared_data_viewer.hpp>
 #include <haf/include/resources/iresource_configurator.hpp>
 #include <htypes/include/serializer.hpp>
 #include <haf/include/filesystem/ifile_serializer.hpp>

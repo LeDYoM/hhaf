@@ -11,7 +11,7 @@
 #include <haf/include/resources/ittfont.hpp>
 #include <haf/include/resources/iresource_retriever.hpp>
 #include <haf/include/shareddata/ishared_data.hpp>
-#include <haf/include/shareddata/shareddataviewer.hpp>
+#include <haf/include/shareddata/shared_data_viewer.hpp>
 #include <haf/include/input/input_component.hpp>
 #include <haf/include/component/component_container.hpp>
 

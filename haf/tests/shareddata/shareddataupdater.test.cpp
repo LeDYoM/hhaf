@@ -2,8 +2,8 @@
 
 #include <htypes/include/types.hpp>
 #include "shareddata/shared_data_system.hpp"
-#include <haf/include/shareddata/shareddataupdater.hpp>
-#include <haf/include/shareddata/shareddataviewer.hpp>
+#include <haf/include/shareddata/shared_data_updater.hpp>
+#include <haf/include/shareddata/shared_data_viewer.hpp>
 #include "include/shareable_test_data.hpp"
 #include "system_test_utils.hpp"
 
