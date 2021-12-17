@@ -1,6 +1,6 @@
-#include <haf/include/shareddata/shareddata.hpp>
+#include <haf/include/shareddata/shared_data.hpp>
 
-#include "shareddata/shareddatasystem.hpp"
+#include "shareddata/shared_data_system.hpp"
 #include "system/system_provider.hpp"
 #include "system/get_system.hpp"
 

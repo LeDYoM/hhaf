@@ -9,7 +9,7 @@
 #include "resources/resource_manager.hpp"
 #include "input/inputsystem.hpp"
 #include "time/time_system.hpp"
-#include "shareddata/shareddatasystem.hpp"
+#include "shareddata/shared_data_system.hpp"
 #include "filesystem/file_system.hpp"
 #include "debug_utils/debug_system.hpp"
 

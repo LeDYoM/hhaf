@@ -10,7 +10,7 @@
 #include <haf/include/scene_nodes/scenenodetext_properties.hpp>
 #include <haf/include/resources/ittfont.hpp>
 #include <haf/include/resources/iresource_retriever.hpp>
-#include <haf/include/shareddata/shareddata.hpp>
+#include <haf/include/shareddata/shared_data.hpp>
 #include <haf/include/shareddata/shareddataviewer.hpp>
 #include <haf/include/input/input_component.hpp>
 #include <haf/include/component/component_container.hpp>

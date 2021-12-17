@@ -5,7 +5,7 @@
 #include <haf/include/system/idatawrapper.hpp>
 #include <haf/include/shareddata/ishareable.hpp>
 #include <haf/include/shareddata/address.hpp>
-#include <haf/include/shareddata/shareddata.hpp>
+#include <haf/include/shareddata/shared_data.hpp>
 
 #include <hlog/include/hlog.hpp>
 

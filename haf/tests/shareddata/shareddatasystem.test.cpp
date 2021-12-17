@@ -5,7 +5,7 @@
 
 #include "system/system_base.hpp"
 #include "system/system_provider.hpp"
-#include "shareddata/shareddatasystem.hpp"
+#include "shareddata/shared_data_system.hpp"
 
 #include "include/shareable_test_data.hpp"
 #include "system_test_utils.hpp"
