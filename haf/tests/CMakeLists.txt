@@ -37,7 +37,7 @@ set(BENCHMARK_SOURCES
     scene/matrix4x4.benchmark
 )
 
-#set(no_benchmark 1)
+set(no_benchmark 1)
 
 add_haf_test_executable(SOURCE_TESTS ${SOURCE_TESTS})
 target_include_directories(${CURRENT_TARGET} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
