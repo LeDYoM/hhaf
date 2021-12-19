@@ -15,27 +15,21 @@ template <typename T>
 class SharedDataUpdater : public SharedDataHandler<T, ISharedData>
 {
     using BaseClass = SharedDataHandler<T, ISharedData>;
-
+    
 public:
-    explicit SharedDataUpdater(htps::rptr<ISharedData> shared_data) noexcept :
+    explicit SharedDataUpdater(
+        htps::rptr<ISharedData> shared_data) noexcept :
         BaseClass{shared_data}
     {}
 
-    htps::sptr<T> update(Address const& address)
-    {
-        BaseClass::createInternalDataIfEmpty();
-
-        auto const result{BaseClass::retrieve(address)};
-        BaseClass::storeAddressOrReset(result, address);
-        return BaseClass::internal_data_;
-    }
-
+    using BaseClass::update;
+    
     bool commit()
     {
         if (BaseClass::internal_data_ != nullptr)
         {
-            bool const result = BaseClass::store();
-            BaseClass::internal_data_.reset();
+            bool const result{BaseClass::store()};
+            BaseClass::resetInternalData();
             return result;
         }
         return false;
@@ -45,7 +39,7 @@ public:
     {
         if (BaseClass::internal_data_ != nullptr)
         {
-            BaseClass::internal_data_.reset();
+            BaseClass::resetInternalData();
             return true;
         }
         return false;

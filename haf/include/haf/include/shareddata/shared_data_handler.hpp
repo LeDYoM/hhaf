@@ -32,32 +32,27 @@ protected:
         }
     }
 
+    void resetInternalData() { internal_data_.reset(); }
+
     void reset()
     {
         DisplayLog::error("Invalid address");
         address_ = Address{""};
-        internal_data_.reset();
+        resetInternalData();
+    }
+
+    htps::sptr<T> update(Address const& address)
+    {
+        createInternalDataIfEmpty();
+
+        storeAddressOrReset(store(), address);
+        return internalData();
     }
 
     htps::sptr<T const> view(Address const& address)
     {
-        if (internal_data_ == nullptr)
-        {
-            internal_data_ = htps::msptr<T>();
-        }
-
-        auto const result{shared_data_->retrieve(address, *internal_data_)};
-
-        if (result)
-        {
-            address_ = address;
-        }
-        else
-        {
-            DisplayLog::error("Invalid address");
-            address_ = Address{""};
-            internal_data_.reset();
-        }
+        createInternalDataIfEmpty();
+        storeAddressOrReset(retrieve(address), address);
 
         return internal_data_;
     }
@@ -88,6 +83,8 @@ protected:
         }
         return result;
     }
+
+    htps::sptr<T> internalData() { return internal_data_; }
 
     Address address_{""};
     htps::sptr<T> internal_data_{nullptr};

@@ -15,16 +15,14 @@ template <typename T>
 class SharedDataViewer : public SharedDataHandler<T, ISharedData const>
 {
     using BaseClass = SharedDataHandler<T, ISharedData const>;
+
 public:
     explicit SharedDataViewer(
         htps::rptr<ISharedData const> shared_data) noexcept :
         BaseClass{shared_data}
     {}
 
-    htps::sptr<T const> view(Address const& address)
-    {
-        return BaseClass::view(address);
-    }
+    using BaseClass::view;
 };
 
 }  // namespace haf::shdata
