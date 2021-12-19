@@ -306,6 +306,7 @@ set(headers
   ${inc_dir}/shareddata/address.hpp
   ${inc_dir}/shareddata/ishareable.hpp
   ${inc_dir}/shareddata/ishared_data.hpp
+  ${inc_dir}/shareddata/shared_data_handler.hpp
   ${inc_dir}/shareddata/shared_data_updater.hpp
   ${inc_dir}/shareddata/shared_data_viewer.hpp
 

@@ -5,54 +5,37 @@
 #include <haf/include/shareddata/ishareable.hpp>
 #include <haf/include/shareddata/address.hpp>
 #include <haf/include/shareddata/ishared_data.hpp>
-
+#include <haf/include/shareddata/shared_data_handler.hpp>
 #include <hlog/include/hlog.hpp>
 
 namespace haf::shdata
 {
 
 template <typename T>
-class SharedDataUpdater
+class SharedDataUpdater : public SharedDataHandler<T, ISharedData>
 {
+    using BaseClass = SharedDataHandler<T, ISharedData>;
+
 public:
     explicit SharedDataUpdater(htps::rptr<ISharedData> shared_data) noexcept :
-        shared_data_{shared_data}
+        BaseClass{shared_data}
     {}
 
     htps::sptr<T> update(Address const& address)
     {
-        if (!internal_data_)
-        {
-            internal_data_ = htps::msptr<T>();
-        }
+        BaseClass::createInternalDataIfEmpty();
 
-        auto const result{shared_data_->retrieve(address, *internal_data_)};
-
-        if (result)
-        {
-            address_ = address;
-        }
-        else
-        {
-            DisplayLog::error("Invalid address");
-            address_ = Address{""};
-            internal_data_.reset();
-        }
-
-        return internal_data_;
+        auto const result{BaseClass::retrieve(address)};
+        BaseClass::storeAddressOrReset(result, address);
+        return BaseClass::internal_data_;
     }
 
     bool commit()
     {
-        if (internal_data_ != nullptr)
+        if (BaseClass::internal_data_ != nullptr)
         {
-            bool const result = shared_data_->store(address_, *internal_data_);
-            internal_data_.reset();
-
-            if (!result)
-            {
-                DisplayLog::debug("Cannot store!");
-            }
+            bool const result = BaseClass::store();
+            BaseClass::internal_data_.reset();
             return result;
         }
         return false;
@@ -60,20 +43,15 @@ public:
 
     bool rollback()
     {
-        if (internal_data_ != nullptr)
+        if (BaseClass::internal_data_ != nullptr)
         {
-            internal_data_.reset();
+            BaseClass::internal_data_.reset();
             return true;
         }
         return false;
     }
 
     ~SharedDataUpdater() { (void)commit(); }
-
-private:
-    Address address_{""};
-    htps::sptr<T> internal_data_{nullptr};
-    htps::rptr<ISharedData> shared_data_{nullptr};
 };
 
 }  // namespace haf::shdata

@@ -11,15 +11,16 @@
 namespace haf::shdata
 {
 
-template <typename T>
+template <typename T, typename SharedDataRptr>
 class SharedDataHandler
 {
 protected:
-    explicit SharedDataUpdater(htps::rptr<ISharedData> shared_data) noexcept :
+    explicit SharedDataHandler(htps::rptr<SharedDataRptr> shared_data) noexcept
+        :
         shared_data_{shared_data}
     {}
 
-    htps::sptr<T> create() { return htps::mptr<T>(); }
+    htps::sptr<T> create() { return htps::msptr<T>(); }
 
     void createInternalData() { internal_data_ = create(); }
 
@@ -38,9 +39,12 @@ protected:
         internal_data_.reset();
     }
 
-    htps::sptr<T> update(Address const& address)
+    htps::sptr<T const> view(Address const& address)
     {
-        createInternalDataIfEmpty();
+        if (internal_data_ == nullptr)
+        {
+            internal_data_ = htps::msptr<T>();
+        }
 
         auto const result{shared_data_->retrieve(address, *internal_data_)};
 
@@ -50,44 +54,44 @@ protected:
         }
         else
         {
-            reset();
+            DisplayLog::error("Invalid address");
+            address_ = Address{""};
+            internal_data_.reset();
         }
 
         return internal_data_;
     }
 
-    bool commit()
+    void storeAddressOrReset(bool const result, Address const& address)
     {
-        if (internal_data_ != nullptr)
+        if (result)
         {
-            bool const result = shared_data_->store(address_, *internal_data_);
-            internal_data_.reset();
-
-            if (!result)
-            {
-                DisplayLog::debug("Cannot store!");
-            }
-            return result;
+            address_ = address;
         }
-        return false;
+        else
+        {
+            reset();
+        }
     }
 
-    bool rollback()
+    bool retrieve(Address const& address) const
     {
-        if (internal_data_ != nullptr)
-        {
-            internal_data_.reset();
-            return true;
-        }
-        return false;
+        return shared_data_->retrieve(address, *internal_data_);
     }
 
-    ~SharedDataUpdater() { (void)commit(); }
+    bool store()
+    {
+        auto const result{shared_data_->store(address_, *internal_data_)};
+        if (!result)
+        {
+            DisplayLog::debug("Cannot store!");
+        }
+        return result;
+    }
 
-private:
     Address address_{""};
     htps::sptr<T> internal_data_{nullptr};
-    htps::rptr<ISharedData> shared_data_{nullptr};
+    htps::rptr<SharedDataRptr> shared_data_{nullptr};
 };
 
 }  // namespace haf::shdata
