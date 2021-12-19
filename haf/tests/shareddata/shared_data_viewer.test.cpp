@@ -8,25 +8,24 @@
 
 using namespace htps;
 using namespace haf::shdata;
-/*
+
 TEST_CASE("SharedDataSystemViewer::SharedDataSystemViewer",
           "[haf][shareddatasystem]")
 {
     auto test_shared_data = makeTestSystem<TestSharedDataSystem>();
     ShareableTestData shareable_test_data;
 
-    auto dwc{test_shared_data->get()};
+    auto ssv{test_shared_data->getSubSystemViewer()};
 
     SECTION("View from empty")
     {
-        auto shared_data_wrapper{
-            dwc.dataWrapper<SharedDataViewer<ShareableTestData>>()};
-        auto const retrieve_result =
-            shared_data_wrapper->view(ShareableTestData::address());
+        auto shared_data_viewer{SharedDataViewer<ShareableTestData>{ssv.subSystem<ISharedData>()}};
+        auto const retrieve_result{
+            shared_data_viewer.view(ShareableTestData::address())};
 
         CHECK(retrieve_result == nullptr);
     }
-
+/*
     SECTION("Store and view")
     {
         shareable_test_data.a = 42;
@@ -48,5 +47,5 @@ TEST_CASE("SharedDataSystemViewer::SharedDataSystemViewer",
         CHECK(view_result->b == 123.33F);
         CHECK(view_result->c == "hello test");
     }
+    */
 }
-*/

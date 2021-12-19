@@ -22,10 +22,10 @@ set(SOURCE_TESTS
     scene_components/states_controller_component
 
     shareddata/address
-    shareddata/shareddata
-    shareddata/shareddatasystem
-    shareddata/shareddataupdater
-    shareddata/shareddataviewer
+    shareddata/shared_data_system
+    shareddata/shared_data_updater
+    shareddata/shared_data_viewer
+    shareddata/shared_data
 
     time/timepoint
     time/timesystem
