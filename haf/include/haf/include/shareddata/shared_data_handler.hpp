@@ -45,7 +45,7 @@ protected:
     {
         createInternalDataIfEmpty();
 
-        storeAddressOrReset(store(), address);
+        storeAddressOrReset(retrieve(address), address);
         return internalData();
     }
 
@@ -53,8 +53,7 @@ protected:
     {
         createInternalDataIfEmpty();
         storeAddressOrReset(retrieve(address), address);
-
-        return internal_data_;
+        return internalData();
     }
 
     void storeAddressOrReset(bool const result, Address const& address)

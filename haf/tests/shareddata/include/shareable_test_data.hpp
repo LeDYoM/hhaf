@@ -13,6 +13,11 @@ public:
     htps::f32 b;
     htps::str c;
 
+    bool operator==(ShareableTestData const& rhs) const
+    {
+        return a == rhs.a && b == rhs.b && c == rhs.c;
+    }
+
     ~ShareableTestData() override = default;
 
     static haf::shdata::Address address()

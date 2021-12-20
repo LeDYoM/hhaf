@@ -12,7 +12,7 @@ using namespace haf::shdata;
 TEST_CASE("SharedDataSystemViewer::SharedDataSystemViewer",
           "[haf][shareddatasystem]")
 {
-    auto test_shared_data = makeTestSystem<TestSharedDataSystem>();
+    auto test_shared_data{makeTestSystem<TestSharedDataSystem>()};
     ShareableTestData shareable_test_data;
 
     auto ssv{test_shared_data->getSubSystemViewer()};
