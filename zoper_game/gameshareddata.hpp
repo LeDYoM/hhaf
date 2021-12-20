@@ -8,6 +8,8 @@
 #include <htypes/include/str.hpp>
 #include <haf/include/shareddata/ishareable.hpp>
 #include <haf/include/shareddata/address.hpp>
+#include <haf/include/shareddata/shared_data_updater.hpp>
+#include <haf/include/shareddata/shared_data_viewer.hpp>
 
 namespace zoper
 {
@@ -29,48 +31,16 @@ struct GameSharedData : public haf::shdata::IShareable
     htps::size_type endLevel{0U};
     htps::size_type score{0U};
 
-    static haf::shdata::Address address()
-    {
-        haf::shdata::Address addr{address_str};
-        return addr;
-    }
-
-    htps::str to_str() const
-    {
-        htps::str temp;
-        temp << "Selected level " << startLevel << "\n"
-             << " GameMode: " << static_cast<htps::u32>(gameMode);
-        return temp;
-    }
+    static haf::shdata::Address address();
+    htps::str to_str() const;
 
     static constexpr char StartLevel[]   = "StartLevel";
     static constexpr char GameModeGame[] = "GameMode";
     static constexpr char EndLevel[]     = "EndLevel";
     static constexpr char GameScore[]    = "GameScore";
 
-    bool serialize(htps::Object& obj) const override
-    {
-        bool result{true};
-        result &= obj.set(StartLevel, startLevel);
-        result &= obj.set(GameModeGame, gameMode);
-
-        result &= obj.set(EndLevel, endLevel);
-        result &= obj.set(GameScore, score);
-
-        return result;
-    }
-
-    bool deserialize(htps::Object const& obj) override
-    {
-        bool result{true};
-        result &= obj.getValue(StartLevel).as(startLevel);
-        result &= obj.getValue(GameModeGame).as(gameMode);
-
-        result &= obj.getValue(EndLevel).as(endLevel);
-        result &= obj.getValue(GameScore).as(score);
-
-        return result;
-    }
+    bool serialize(htps::Object& obj) const override;
+    bool deserialize(htps::Object const& obj) override;
 };
 
 }  // namespace zoper
