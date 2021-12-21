@@ -90,9 +90,9 @@ void GameScene::onCreated()
     GameMode game_mode;
 
     {
-        auto game_shared_data = shdata::SharedDataViewer<GameSharedData>(
+        auto game_shared_data{shdata::SharedDataViewer<GameSharedData>(
                                     subSystem<shdata::ISharedData>())
-                                    .view(GameSharedData::address());
+                                    .view(GameSharedData::address())};
 
         start_level = game_shared_data->startLevel;
         game_mode   = game_shared_data->gameMode;

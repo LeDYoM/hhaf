@@ -2,11 +2,8 @@
 #define HAF_SHAREDDATA_SHAREDDATA_HANDLER_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
-#include <haf/include/shareddata/ishareable.hpp>
 #include <haf/include/shareddata/address.hpp>
 #include <haf/include/shareddata/ishared_data.hpp>
-
-#include <hlog/include/hlog.hpp>
 
 namespace haf::shdata
 {
@@ -20,42 +17,49 @@ protected:
         shared_data_{shared_data}
     {}
 
-    htps::sptr<T> create() { return htps::msptr<T>(); }
-
-    void createInternalData() { internal_data_ = create(); }
-
-    void createInternalDataIfEmpty()
-    {
-        if (!internal_data_)
-        {
-            createInternalData();
-        }
-    }
-
-    void resetInternalData() { internal_data_.reset(); }
-
     void reset()
     {
-        DisplayLog::error("Invalid address");
         address_ = Address{""};
         resetInternalData();
     }
 
-    htps::sptr<T> update(Address const& address)
-    {
-        createInternalDataIfEmpty();
-
-        storeAddressOrReset(retrieve(address), address);
-        return internalData();
-    }
-
-    htps::sptr<T const> view(Address const& address)
+    auto get(Address const& address)
     {
         createInternalDataIfEmpty();
         storeAddressOrReset(retrieve(address), address);
         return internalData();
     }
 
+    htps::sptr<T> updateOrCreate(Address const& address) 
+    { 
+        createInternalDataIfEmpty();
+        (void)(retrieve(address));
+        address_ = address;
+        createInternalDataIfEmpty();
+        return internalData();
+    }
+
+    htps::sptr<T> update(Address const& address) { return get(address); }
+
+    htps::sptr<T const> view(Address const& address) { return get(address); }
+
+    bool retrieve(Address const& address) const
+    {
+        return shared_data_->retrieve(address, *internal_data_);
+    }
+
+    bool store()
+    {
+        auto const result{shared_data_->store(address_, *internal_data_)};
+        return result;
+    }
+
+    htps::sptr<T const> internalData() const noexcept { return internal_data_; }
+    htps::sptr<T> internalData() noexcept { return internal_data_; }
+
+    void resetInternalData() { internal_data_.reset(); }
+
+private:
     void storeAddressOrReset(bool const result, Address const& address)
     {
         if (result)
@@ -68,22 +72,17 @@ protected:
         }
     }
 
-    bool retrieve(Address const& address) const
-    {
-        return shared_data_->retrieve(address, *internal_data_);
-    }
+    htps::sptr<T> create() { return htps::msptr<T>(); }
 
-    bool store()
+    void createInternalData() { internal_data_ = create(); }
+
+    void createInternalDataIfEmpty()
     {
-        auto const result{shared_data_->store(address_, *internal_data_)};
-        if (!result)
+        if (!internal_data_)
         {
-            DisplayLog::debug("Cannot store!");
+            createInternalData();
         }
-        return result;
     }
-
-    htps::sptr<T> internalData() { return internal_data_; }
 
     Address address_{""};
     htps::sptr<T> internal_data_{nullptr};

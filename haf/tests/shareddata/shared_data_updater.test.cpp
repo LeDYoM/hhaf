@@ -38,6 +38,55 @@ TEST_CASE("SharedDataSystemUpdater::SharedDataSystemUpdater",
         CHECK_FALSE(update_result);
     }
 
+    SECTION("Update or create")
+    {
+        {
+            auto shared_data_viewer{SharedDataViewer<ShareableTestData>{
+                ssv.subSystem<ISharedData>()}};
+
+            auto const retrieve_result{
+                shared_data_viewer.view(ShareableTestData::address())};
+            CHECK_FALSE(retrieve_result);
+        }
+
+        {
+            auto shared_data_updater{SharedDataUpdater<ShareableTestData>{
+                ssv.subSystem<ISharedData>()}};
+
+            auto update_or_default_result{shared_data_updater.updateOrCreate(
+                ShareableTestData::address())};
+
+            CHECK(update_or_default_result);
+            update_or_default_result->a = 66;
+            update_or_default_result->b = 342.56F;
+            update_or_default_result->c = "abcdefg";
+        }
+
+        {
+            auto shared_data_viewer{SharedDataViewer<ShareableTestData>{
+                ssv.subSystem<ISharedData>()}};
+
+            auto const retrieve_result{
+                shared_data_viewer.view(ShareableTestData::address())};
+            CHECK(retrieve_result);
+            CHECK(retrieve_result->a == 66);
+            CHECK(retrieve_result->b == 342.56F);
+            CHECK(retrieve_result->c == "abcdefg");
+        }
+
+        {
+            auto shared_data_updater{SharedDataUpdater<ShareableTestData>{
+                ssv.subSystem<ISharedData>()}};
+
+            auto const update_result{
+                shared_data_updater.update(ShareableTestData::address())};
+            CHECK(update_result);
+            CHECK(update_result->a == 66);
+            CHECK(update_result->b == 342.56F);
+            CHECK(update_result->c == "abcdefg");
+        }
+    }
+
     SECTION("Store and update")
     {
         shareable_test_data.a = 42;

@@ -23,10 +23,11 @@ public:
     {}
 
     using BaseClass::update;
+    using BaseClass::updateOrCreate;
     
     bool commit()
     {
-        if (BaseClass::internal_data_ != nullptr)
+        if (BaseClass::internalData() != nullptr)
         {
             bool const result{BaseClass::store()};
             BaseClass::resetInternalData();
@@ -37,7 +38,7 @@ public:
 
     bool rollback()
     {
-        if (BaseClass::internal_data_ != nullptr)
+        if (BaseClass::internalData() != nullptr)
         {
             BaseClass::resetInternalData();
             return true;

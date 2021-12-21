@@ -60,15 +60,24 @@ void goGame(rptr<MenuPaged> scene_node,
             vector<s32> menu_data)
 {
     {
-        GameSharedData game_shared_data{};
+        using namespace haf::shdata;
+        auto game_shared_data_updater{SharedDataUpdater<GameSharedData>{
+            scene_node->subSystem<ISharedData>()}};
 
-        game_shared_data.startLevel = menu_data[0U];
-        game_shared_data.gameMode   = game_mode;
-        DisplayLog::info(game_shared_data.to_str());
-        scene_node->subSystem<shdata::ISharedData>()->store(
-            GameSharedData::address(), game_shared_data);
+        auto game_shared_data{
+            game_shared_data_updater.updateOrCreate(GameSharedData::address())};
+
+        game_shared_data->startLevel = menu_data[0U];
+        game_shared_data->gameMode   = game_mode;
+        DisplayLog::info(game_shared_data->to_str());
     }
 
+    auto game_shared_data2 = shdata::SharedDataViewer<GameSharedData>(
+                                scene_node->subSystem<shdata::ISharedData>())
+                                .view(GameSharedData::address());
+
+    auto a = game_shared_data2->score;
+    (void)(a);
     scene_node->terminate(MenuFinishedStatus::Forward);
 }
 
@@ -77,8 +86,7 @@ void MainMenu::onCreated()
     BaseClass::onCreated();
 
     Rectf32 textBox{
-        rectFromSize(
-            subSystem<ISceneMetricsView>()->currentView().size())
+        rectFromSize(subSystem<ISceneMetricsView>()->currentView().size())
             .setLeftTop({0, 750})
             .setSize({2000, 4 * 150})};
     prop<Position>() = textBox.leftTop();

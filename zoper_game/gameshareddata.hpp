@@ -21,7 +21,7 @@ enum class GameMode : htps::u8
 
 struct GameSharedData : public haf::shdata::IShareable
 {
-    static constexpr char address_str[] = "/";
+    static constexpr char address_str[] = "/game_shared_data/";
 
     // MenuScene will write these
     htps::size_type startLevel{0U};
