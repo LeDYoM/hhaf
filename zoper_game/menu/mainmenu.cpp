@@ -108,56 +108,64 @@ void MainMenu::onCreated()
     vector_shared_pointers<scene::MenuPage> menu_steps;
 
     // Create and register menu pages
-    PageOptions main_page_options{true};
-    auto menuPageMain{createAndConfigureMenuPage(
-        "menuPageMain",
-        vector_shared_pointers<MenuPagedOption>{
-            make_option("Play Token mode", RangeOption(), 1),
-            make_option("Play Time mode", RangeOption(), 2),
-            make_option("Options", RangeOption(), 3),
-            make_option("Exit", RangeOption(), MenuPagedOption::GoBack)},
-        main_page_options)};
+    {
+        PageOptions main_page_options{true};
+        auto menuPageMain{createAndConfigureMenuPage(
+            "menuPageMain",
+            vector_shared_pointers<MenuPagedOption>{
+                make_option("Play Token mode", RangeOption(), 1),
+                make_option("Play Time mode", RangeOption(), 2),
+                make_option("Options", RangeOption(), 3),
+                make_option("Exit", RangeOption(), MenuPagedOption::GoBack)},
+            main_page_options)};
 
-    menu_steps.emplace_back(menuPageMain);
+        menu_steps.emplace_back(std::move(menuPageMain));
+    }
 
-    auto menuPageByToken{createAndConfigureMenuPage(
-        "menuPageByToken",
-        vector_shared_pointers<MenuPagedOption>{
-            make_option("Start level Token Mode", RangeOption(1U, 10U)),
-            make_option("Play", RangeOption(), MenuPagedOption::Accept),
-            make_option("Back", RangeOption(), MenuPagedOption::GoBack)})};
+    {
+        auto menuPageByToken{createAndConfigureMenuPage(
+            "menuPageByToken",
+            vector_shared_pointers<MenuPagedOption>{
+                make_option("Start level Token Mode", RangeOption(1U, 10U)),
+                make_option("Play", RangeOption(), MenuPagedOption::Accept),
+                make_option("Back", RangeOption(), MenuPagedOption::GoBack)})};
 
-    menu_steps.emplace_back(menuPageByToken);
-
+        menu_steps.emplace_back(std::move(menuPageByToken));
+    }
     menu_steps.back()->Accepted.connect(
         make_function(this, &MainMenu::goTokenGame));
+    {
+        auto menuPageByTime{createAndConfigureMenuPage(
+            "menuPageByTime",
+            vector_shared_pointers<MenuPagedOption>{
+                make_option("Start level Time Mode", RangeOption(1U, 10U)),
+                make_option("Play", RangeOption(), MenuPagedOption::Accept),
+                make_option("Back", RangeOption(), MenuPagedOption::GoBack)})};
 
-    auto menuPageByTime{createAndConfigureMenuPage(
-        "menuPageByTime",
-        vector_shared_pointers<MenuPagedOption>{
-            make_option("Start level Time Mode", RangeOption(1U, 10U)),
-            make_option("Play", RangeOption(), MenuPagedOption::Accept),
-            make_option("Back", RangeOption(), MenuPagedOption::GoBack)})};
-
-    menu_steps.emplace_back(menuPageByTime);
+        menu_steps.emplace_back(std::move(menuPageByTime));
+    }
 
     menu_steps.back()->Accepted.connect(
         make_function(this, &MainMenu::goTimeGame));
 
-    auto menuPageOptions{createAndConfigureMenuPage(
-        "menuPageOptions",
-        vector_shared_pointers<MenuPagedOption>{
-            make_option("Antialiasing", RangeOption{Antialiasing{}}),
-            make_option("Resolution",
-                        RangeOption(string_vector{"Worst", "Bad", "Normal",
-                                                  "Good", "Best"})),
-            make_option("Fullscreen", RangeOption(string_vector{"No", "Yes"})),
-            make_option("VSync", RangeOption(string_vector{"No", "Yes"})),
-            make_option("Redefine keyboard", RangeOption()),
-            make_option("Accept", RangeOption(), MenuPagedOption::GoBack),
-            make_option("Cancel", RangeOption(), MenuPagedOption::GoBack)})};
+    {
+        auto menuPageOptions{createAndConfigureMenuPage(
+            "menuPageOptions",
+            vector_shared_pointers<MenuPagedOption>{
+                make_option("Antialiasing", RangeOption{Antialiasing{}}),
+                make_option("Resolution",
+                            RangeOption(string_vector{"Worst", "Bad", "Normal",
+                                                      "Good", "Best"})),
+                make_option("Fullscreen",
+                            RangeOption(string_vector{"No", "Yes"})),
+                make_option("VSync", RangeOption(string_vector{"No", "Yes"})),
+                make_option("Redefine keyboard", RangeOption()),
+                make_option("Accept", RangeOption(), MenuPagedOption::GoBack),
+                make_option("Cancel", RangeOption(),
+                            MenuPagedOption::GoBack)})};
 
-    menu_steps.emplace_back(menuPageOptions);
+        menu_steps.emplace_back(std::move(menuPageOptions));
+    }
 
     configure_menu(std::move(menu_steps));
 
