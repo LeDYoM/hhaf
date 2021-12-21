@@ -129,11 +129,6 @@ void MainMenu::onCreated()
 
     menu_steps.emplace_back(menuPageByToken);
 
-    menu_steps.back()->Accepted.connect([this](vector<s32> menu_data) {
-        make_function(this, &MainMenu::goGame)(GameMode::Token,
-                                               std::move(menu_data));
-    });
-
     menu_steps.back()->Accepted.connect(
         make_function(this, &MainMenu::goTokenGame));
 
