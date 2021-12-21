@@ -55,30 +55,30 @@ constexpr auto to_str(Antialiasing const aa)
     }
 }
 
-void goGame(rptr<MenuPaged> scene_node,
-            const GameMode game_mode,
-            vector<s32> menu_data)
+void MainMenu::goGame(GameMode const game_mode, vector<s32> menu_data)
 {
-    {
-        using namespace haf::shdata;
-        auto game_shared_data_updater{SharedDataUpdater<GameSharedData>{
-            scene_node->subSystem<ISharedData>()}};
+    using namespace haf::shdata;
+    auto game_shared_data_updater{
+        SharedDataUpdater<GameSharedData>{subSystem<ISharedData>()}};
 
-        auto game_shared_data{
-            game_shared_data_updater.updateOrCreate(GameSharedData::address())};
+    auto game_shared_data{
+        game_shared_data_updater.updateOrCreate(GameSharedData::address())};
 
-        game_shared_data->startLevel = menu_data[0U];
-        game_shared_data->gameMode   = game_mode;
-        DisplayLog::info(game_shared_data->to_str());
-    }
+    game_shared_data->startLevel = menu_data[0U];
+    game_shared_data->gameMode   = game_mode;
+    DisplayLog::info(game_shared_data->to_str());
 
-    auto game_shared_data2 = shdata::SharedDataViewer<GameSharedData>(
-                                scene_node->subSystem<shdata::ISharedData>())
-                                .view(GameSharedData::address());
+    terminate(MenuFinishedStatus::Forward);
+}
 
-    auto a = game_shared_data2->score;
-    (void)(a);
-    scene_node->terminate(MenuFinishedStatus::Forward);
+void MainMenu::goTimeGame(vector<s32> menu_data)
+{
+    goGame(GameMode::Time, std::move(menu_data));
+}
+
+void MainMenu::goTokenGame(vector<s32> menu_data)
+{
+    goGame(GameMode::Token, std::move(menu_data));
 }
 
 void MainMenu::onCreated()
@@ -130,8 +130,12 @@ void MainMenu::onCreated()
     menu_steps.emplace_back(menuPageByToken);
 
     menu_steps.back()->Accepted.connect([this](vector<s32> menu_data) {
-        goGame(this, GameMode::Token, std::move(menu_data));
+        make_function(this, &MainMenu::goGame)(GameMode::Token,
+                                               std::move(menu_data));
     });
+
+    menu_steps.back()->Accepted.connect(
+        make_function(this, &MainMenu::goTokenGame));
 
     auto menuPageByTime{createAndConfigureMenuPage(
         "menuPageByTime",
@@ -142,9 +146,8 @@ void MainMenu::onCreated()
 
     menu_steps.emplace_back(menuPageByTime);
 
-    menu_steps.back()->Accepted.connect([this](vector<s32> menu_data) {
-        goGame(this, GameMode::Time, std::move(menu_data));
-    });
+    menu_steps.back()->Accepted.connect(
+        make_function(this, &MainMenu::goTimeGame));
 
     auto menuPageOptions{createAndConfigureMenuPage(
         "menuPageOptions",
