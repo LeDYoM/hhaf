@@ -17,4 +17,14 @@ s32 MenuPagedOption::onSelected() const noexcept
     return on_selected_;
 }
 
+str const& MenuPagedOption::title() const noexcept
+{
+    return title_;
+}
+
+RangeOption const& MenuPagedOption::option() const noexcept
+{
+    return option_;
+}
+
 }  // namespace haf::scene

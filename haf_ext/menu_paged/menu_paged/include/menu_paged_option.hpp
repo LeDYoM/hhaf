@@ -25,8 +25,8 @@ public:
                     RangeOption range_options,
                     htps::s32 on_selected = NoAction);
 
-    inline htps::str title() const noexcept { return title_; }
-    const RangeOption& option() const noexcept { return option_; }
+    htps::str const& title() const noexcept;
+    RangeOption const& option() const noexcept;
     htps::s32 onSelected() const noexcept;
 
 private:
