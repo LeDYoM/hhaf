@@ -159,7 +159,6 @@ set(sources
   ${src_dir}/system/system_provider.cpp
   ${src_dir}/system/system_provider.hpp
   ${src_dir}/system/system_configuration.hpp
-  ${src_dir}/system/systemdatawrappercreator.hpp
 
   # Time
   ${src_dir}/time/time_point.cpp

@@ -6,7 +6,7 @@
 namespace haf::time
 {
 /**
- * @brief @b IDataWrapper to provide access to the current time
+ * @brief Subsystem to provide access to the current time
  */
 class ITimeView
 {

@@ -6,7 +6,6 @@
 #include "ttfont.hpp"
 #include "bmpfont.hpp"
 #include "bmpfontfactory.hpp"
-#include "system/systemdatawrappercreator.hpp"
 
 #include <htypes/include/dictionary.hpp>
 #include <hlog/include/hlog.hpp>

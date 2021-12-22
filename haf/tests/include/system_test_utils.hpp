@@ -3,8 +3,6 @@
 
 #include <htypes/include/types.hpp>
 #include "system/system_provider.hpp"
-#include "system/systemdatawrappercreator.hpp"
-#include <haf/include/system/datawrappercreator.hpp>
 #include <haf/include/system/subsystem_view.hpp>
 #include "shareddata/shared_data_system.hpp"
 #include "time/time_system.hpp"
@@ -16,12 +14,6 @@ class TestSystem
 {
 public:
     TestSystem() : system_provider_{}, init_system_options_{} {}
-
-    haf::sys::SystemDataWrapperCreator get()
-    {
-        return haf::sys::SystemDataWrapperCreator{
-            systemProvider().template system<T>()};
-    }
 
     haf::sys::SubSystemViewer getSubSystemViewer()
     {
