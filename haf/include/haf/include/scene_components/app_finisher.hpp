@@ -19,6 +19,14 @@ public:
     htps::BasicProperty<htps::str> NextApp;
 };
 
+class IAppFinisher
+{
+protected:
+    virtual ~IAppFinisher() = default;
+public:
+    virtual bool setNextApp(htps::str const& next_app) = 0;
+};
+
 }  // namespace haf::scene
 
 #endif

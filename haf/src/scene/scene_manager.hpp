@@ -6,19 +6,24 @@
 #include <haf/include/scene_components/iscene_metrics.hpp>
 #include <haf/include/scene_components/iscene_metrics_view.hpp>
 #include <haf/include/scene_components/iscene_control.hpp>
+#include <haf/include/scene_components/app_initializer.hpp>
+#include <haf/include/scene_components/app_finisher.hpp>
 #include "system/system_base.hpp"
 
 namespace haf::scene
 {
 class SceneController;
 class SceneNode;
+class SceneFactory;
 }  // namespace haf::scene
 
 namespace haf::scene
 {
 class SceneManager final : public sys::SystemBase,
                            public ISceneMetrics,
-                           public ISceneControl
+                           public ISceneControl,
+                           public IAppInitializer,
+                           public IAppFinisher
 {
 public:
     explicit SceneManager(sys::SystemProvider& system_provider);
@@ -66,6 +71,10 @@ public:
      *  application.
      */
     bool exitRequested() const override;
+
+    SceneNodeFactory& sceneNodeFactory() override;
+
+    bool setNextApp(htps::str const& next_app) override;
 
 private:
     htps::sptr<SceneController> scene_controller_;

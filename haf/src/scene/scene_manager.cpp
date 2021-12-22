@@ -91,4 +91,14 @@ bool SceneManager::exitRequested() const
     return scene_controller_->exitRequested();
 }
 
+SceneNodeFactory& SceneManager::sceneNodeFactory()
+{
+    return scene_controller_->sceneNodeFactory();
+}
+
+bool SceneManager::setNextApp(htps::str const&)
+{
+    return true;
+}
+
 }  // namespace haf::scene
