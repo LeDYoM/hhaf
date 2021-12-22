@@ -6,8 +6,8 @@
 #include <haf/include/scene_components/iscene_metrics.hpp>
 #include <haf/include/scene_components/iscene_metrics_view.hpp>
 #include <haf/include/scene_components/iscene_control.hpp>
-#include <haf/include/scene_components/app_initializer.hpp>
-#include <haf/include/scene_components/app_finisher.hpp>
+#include <haf/include/scene_components/iapp_initializer.hpp>
+#include <haf/include/scene_components/iapp_finisher.hpp>
 #include "system/system_base.hpp"
 
 namespace haf::scene

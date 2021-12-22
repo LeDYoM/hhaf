@@ -18,8 +18,8 @@ class CLASS_NAME final  \
                                                      App_name>          \
 {   \
 public: \
-    void onInit(haf::scene::AppInitializer& app_initializer) override;  \
-    void onFinish(haf::scene::AppFinisher& app_finisher) override;      \
+    void onInit(haf::scene::IAppInitializer& app_initializer) override;  \
+    void onFinish(haf::scene::IAppFinisher& app_finisher) override;      \
 };  \
 }
 

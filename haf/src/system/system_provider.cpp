@@ -19,10 +19,9 @@
 #include <hlog/include/hlog.hpp>
 #include <hosted_app/include/iapp.hpp>
 
-#include <haf/include/system/datawrappercreator.hpp>
 #include <haf/include/system/system_access.hpp>
-#include <haf/include/scene_components/app_initializer.hpp>
-#include <haf/include/scene_components/app_finisher.hpp>
+#include <haf/include/scene_components/iapp_initializer.hpp>
+#include <haf/include/scene_components/iapp_finisher.hpp>
 
 #include <htypes/include/parpar.hpp>
 
@@ -241,17 +240,14 @@ void SystemProvider::init(rptr<IApp> iapp,
 
     createSystems(init_system_options);
 
-    SystemAccess system_access(this);
-    DataWrapperCreator dwc(&system_access);
-    p_->app_->onInit(*dwc.dataWrapper<scene::AppInitializer>());
+    p_->app_->onInit(
+        *(SubSystemViewer{this}.subSystem<scene::IAppInitializer>()));
 }
 
 void SystemProvider::terminate()
 {
-    SystemAccess system_access(this);
-    DataWrapperCreator dwc(&system_access);
-
-    p_->app_->onFinish(*dwc.dataWrapper<scene::AppFinisher>());
+    p_->app_->onFinish(
+        *(SubSystemViewer{this}.subSystem<scene::IAppFinisher>()));
     p_->scene_manager_->finish();
     p_->scene_manager_.reset();
     p_->simulation_system_.reset();

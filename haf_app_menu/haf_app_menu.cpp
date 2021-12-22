@@ -1,7 +1,7 @@
 #include "haf_app_menu.hpp"
 
-#include <haf/include/scene_components/app_finisher.hpp>
-#include <haf/include/scene_components/app_initializer.hpp>
+#include <haf/include/scene_components/iapp_finisher.hpp>
+#include <haf/include/scene_components/iapp_initializer.hpp>
 
 #include <hlog/include/hlog.hpp>
 
@@ -12,15 +12,15 @@ using namespace haf::scene;
 namespace haf::app_menu
 {
 
-void HafAppMenu::onInit(AppInitializer& app_initializer)
+void HafAppMenu::onInit(IAppInitializer& app_initializer)
 {
     (void)(app_initializer);
     DisplayLog::verbose("Initializing HafAppMenu");
 }
 
-void HafAppMenu::onFinish(scene::AppFinisher& finisher)
+void HafAppMenu::onFinish(IAppFinisher& finisher)
 {
-    finisher.NextApp = "Zoper";
+    finisher.setNextApp("Zoper");
 }
 
 }  // namespace haf::app_menu

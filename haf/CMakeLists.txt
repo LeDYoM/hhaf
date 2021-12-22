@@ -119,8 +119,6 @@ set(sources
   ${src_dir}/scene/transformation.cpp
 
   # Scene components
-  ${src_dir}/scene_components/app_finisher.cpp
-  ${src_dir}/scene_components/app_initializer.cpp
   ${src_dir}/scene_components/discretetextcomponent.cpp
   ${src_dir}/scene_components/texteditorcomponent.cpp
   ${src_dir}/scene_components/visibility_selector_component.cpp
@@ -279,9 +277,9 @@ set(headers
   ${inc_dir}/scene/transformation.hpp
 
   # Scene components
-  ${inc_dir}/scene_components/app_finisher.hpp
-  ${inc_dir}/scene_components/app_initializer.hpp
   ${inc_dir}/scene_components/discretetextcomponent.hpp
+  ${inc_dir}/scene_components/iapp_finisher.hpp
+  ${inc_dir}/scene_components/iapp_initializer.hpp
   ${inc_dir}/scene_components/iscene_control.hpp
   ${inc_dir}/scene_components/iscene_metrics_view.hpp
   ${inc_dir}/scene_components/iscene_metrics.hpp

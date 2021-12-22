@@ -12,8 +12,8 @@ class DataWrapperCreator;
 
 namespace haf::scene
 {
-class AppInitializer;
-class AppFinisher;
+class IAppInitializer;
+class IAppFinisher;
 }  // namespace haf::scene
 
 namespace haf
@@ -34,23 +34,23 @@ public:
 
     /**
      * @brief Initialization function. This function will be invoked
-     * from the haf system to initialize the app. An @b AppInitializer
+     * from the haf system to initialize the app. An @b IAppInitializer
      * instance will provide with the necessary data and members to
      * perform some initialization actions.
      * 
      * @param app_initializer Class to help the app perform initialization
      * actions.
      */
-    virtual void onInit(scene::AppInitializer& app_initializer) = 0;
+    virtual void onInit(scene::IAppInitializer& app_initializer) = 0;
 
     /**
      * @brief Destroying function. This function will be invoked from the
-     * haf system before destroying this App. An @b AppFinisher will be
+     * haf system before destroying this App. An @b IAppFinisher will be
      * provided to help in deinitialize actions.
      * 
      * @param app_finisher Class to help the app perform destruction
      */
-    virtual void onFinish(scene::AppFinisher& app_finisher)     = 0;
+    virtual void onFinish(scene::IAppFinisher& app_finisher)     = 0;
 
     /**
      * @brief Function that should retrieve the version of the app.
