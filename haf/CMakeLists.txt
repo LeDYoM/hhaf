@@ -312,8 +312,6 @@ set(headers
   ${inc_dir}/simulation/simulationactiongroup.hpp
 
   # System
-  ${inc_dir}/system/datawrappercreator.hpp
-  ${inc_dir}/system/idatawrapper.hpp
   ${inc_dir}/system/isystem_controller.hpp
   ${inc_dir}/system/isystem_provider.hpp
   ${inc_dir}/system/subsystem_view.hpp

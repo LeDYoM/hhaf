@@ -5,11 +5,6 @@
 #include <htypes/include/str.hpp>
 #include <host_connector/include/ihost_connector.hpp>
 
-namespace haf::sys
-{
-class DataWrapperCreator;
-}  // namespace haf::sys
-
 namespace haf::scene
 {
 class IAppInitializer;

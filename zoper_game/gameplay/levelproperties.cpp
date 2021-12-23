@@ -3,7 +3,6 @@
 
 #include <hlog/include/hlog.hpp>
 #include <haf/include/shareddata/shared_data_updater.hpp>
-#include <haf/include/system/datawrappercreator.hpp>
 #include <haf/include/time/timer_component.hpp>
 
 using namespace htps;

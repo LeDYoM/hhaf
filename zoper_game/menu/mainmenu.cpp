@@ -10,7 +10,6 @@
 #include <haf/include/scene_components/iscene_metrics_view.hpp>
 #include <htypes/include/function.hpp>
 #include <htypes/include/types.hpp>
-#include <haf/include/system/datawrappercreator.hpp>
 
 using namespace htps;
 using namespace haf;

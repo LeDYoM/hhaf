@@ -8,7 +8,7 @@
 namespace haf::shdata
 {
 /**
- * @brief DataWrapper to provide access to data resources.
+ * @brief SubSystem to provide access to data resources.
  * This wrapper can be used standalone or as a base class of other wrappers.
  */
 class ISharedData

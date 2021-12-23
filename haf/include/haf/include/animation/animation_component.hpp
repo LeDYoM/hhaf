@@ -7,7 +7,6 @@
 #include <haf/include/animation/property_animation.hpp>
 #include <haf/include/animation/property_animation_builder.hpp>
 #include <haf/include/scene/scene_node.hpp>
-#include <haf/include/system/datawrappercreator.hpp>
 #include <haf/include/time/timer_component.hpp>
 #include <haf/include/time/timer_connector.hpp>
 #include <htypes/include/properties.hpp>

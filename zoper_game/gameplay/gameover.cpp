@@ -9,7 +9,6 @@
 #include <hlog/include/hlog.hpp>
 #include <haf/include/resources/ittfont.hpp>
 #include <haf/include/resources/iresource_retriever.hpp>
-#include <haf/include/system/datawrappercreator.hpp>
 
 using namespace htps;
 

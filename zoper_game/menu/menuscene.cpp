@@ -16,7 +16,6 @@
 #include <haf/include/render/renderizables.hpp>
 #include <haf/include/render/renderizable_builder.hpp>
 #include <haf/include/scene/renderizables_scene_node.hpp>
-#include <haf/include/system/datawrappercreator.hpp>
 
 using namespace htps;
 using namespace haf;

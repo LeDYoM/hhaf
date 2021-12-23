@@ -12,7 +12,6 @@ SceneNode::SceneNode(rptr<SceneNode> parent, str name) :
                                         : nullptr},
     SceneNodeProperties(true),
     component::ComponentContainer{this},
-    sys::DataWrapperCreator{this},
     sys::SubSystemViewer{&isystemProvider()}
 {}
 

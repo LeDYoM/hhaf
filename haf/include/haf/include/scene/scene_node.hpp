@@ -9,7 +9,6 @@
 #include <haf/include/scene/hasname.hpp>
 #include <haf/include/system/system_access.hpp>
 #include <haf/include/component/component_container.hpp>
-#include <haf/include/system/datawrappercreator.hpp>
 #include <haf/include/system/subsystem_view.hpp>
 
 namespace haf::scene
@@ -25,7 +24,6 @@ class HAF_API SceneNode : public sys::HasName,
                           public sys::SystemAccess,
                           public SceneNodeProperties,
                           public component::ComponentContainer,
-                          public sys::DataWrapperCreator,
                           public sys::SubSystemViewer
 {
 public:
