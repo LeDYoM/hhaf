@@ -16,8 +16,8 @@ public:
 
     virtual void initialize() = 0;
 
-    virtual void render(const IRenderData* render_data_begin,
-                        const IRenderData* render_data_end) = 0;
+    virtual void render(IRenderData const * render_data_begin,
+                        IRenderData const* const render_data_end) = 0;
 
     virtual void setViewPort(const htps::Rectf32& nviewport) = 0;
     virtual htps::Rectf32 viewPort() const                   = 0;

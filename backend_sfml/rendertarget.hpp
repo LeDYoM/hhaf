@@ -16,8 +16,8 @@ public:
     ~RenderTarget() override;
     void initialize() override;
 
-    void render(const IRenderData* render_data_begin,
-                const IRenderData* render_data_end) override;
+    void render(IRenderData const* render_data_begin,
+                IRenderData const* const render_data_end) override;
 
     void setViewPort(const htps::Rectf32& nviewport) override;
     htps::Rectf32 viewPort() const override;

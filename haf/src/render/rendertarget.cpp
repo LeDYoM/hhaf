@@ -15,13 +15,13 @@ using namespace htps;
 
 namespace
 {
-const haf::backend::iVertex* to_backend(
-    const haf::render::Vertex* vertices) noexcept
+haf::backend::iVertex const* to_backend(
+    haf::render::Vertex const* vertices) noexcept
 {
     static_assert(
         sizeof(haf::backend::iVertex) == sizeof(haf::render::Vertex),
         "The scene Vertex and the backend Vertex do not have the same size");
-    return reinterpret_cast<const haf::backend::iVertex*>(vertices);
+    return reinterpret_cast<haf::backend::iVertex const*>(vertices);
 }
 
 haf::backend::iPrimitiveType to_backend(
@@ -37,17 +37,17 @@ haf::backend::iPrimitiveType to_backend(
 void do_render(const rptr<haf::backend::IRenderTarget> irender_target_,
                const haf::render::RenderData& renderData)
 {
-    haf::backend::IRenderData render_data{
+    haf::backend::IRenderData const render_data{
         to_backend(renderData.vArray.verticesArray().cbegin()),
         renderData.vArray.verticesArray().size(),
         to_backend(renderData.vArray.primitiveType()),
         renderData.transform.getMatrix(),
         renderData.texture
-            ? dynamic_cast<const haf::res::Texture*>(renderData.texture)
+            ? dynamic_cast<haf::res::Texture const*>(renderData.texture)
                   ->backEndTexture()
             : nullptr,
         renderData.shader
-            ? dynamic_cast<const haf::res::Shader*>(renderData.shader)
+            ? dynamic_cast<haf::res::Shader const*>(renderData.shader)
                   ->backEndShader()
             : nullptr};
 

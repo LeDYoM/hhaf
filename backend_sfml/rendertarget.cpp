@@ -18,8 +18,8 @@ void RenderTarget::initialize()
     sf::RenderTarget::initialize();
 }
 
-void RenderTarget::render(const IRenderData* render_data_begin,
-                          const IRenderData* render_data_end)
+void RenderTarget::render(IRenderData const * render_data_begin,
+                          IRenderData const * const render_data_end)
 {
     while (render_data_begin != render_data_end)
     {

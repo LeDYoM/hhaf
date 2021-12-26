@@ -12,12 +12,12 @@ class IShader;
 
 struct IRenderData
 {
-    const iVertex* vertices;
-    const htps::size_type nVertex;
-    const iPrimitiveType pType;
-    const htps::f32* transform;
-    const ITexture* texture;
-    const IShader* shader;
+    iVertex const* vertices;
+    htps::size_type const nVertex;
+    iPrimitiveType const pType;
+    htps::f32 const* transform;
+    ITexture const* texture;
+    IShader const* shader;
 };
 }  // namespace haf::backend
 
