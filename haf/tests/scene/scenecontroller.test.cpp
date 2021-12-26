@@ -4,7 +4,7 @@
 #include <htypes/include/str.hpp>
 
 #include <haf/include/scene/scene.hpp>
-#include "scene/scenecontroller.hpp"
+#include "scene/scene_controller.hpp"
 
 using namespace htps;
 

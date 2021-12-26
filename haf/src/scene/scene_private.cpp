@@ -1,5 +1,5 @@
 #include "scene_private.hpp"
-#include "scenecontroller.hpp"
+#include "scene_controller.hpp"
 
 #include <haf/include/system/isystem_provider.hpp>
 #include <haf/include/system/system_access.hpp>

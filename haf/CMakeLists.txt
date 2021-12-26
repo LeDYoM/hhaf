@@ -102,14 +102,14 @@ set(sources
   ${src_dir}/scene/color.cpp
   ${src_dir}/scene/matrix4x4.cpp
   ${src_dir}/scene/renderizables_scene_node.cpp
+  ${src_dir}/scene/scene_controller.cpp
+  ${src_dir}/scene/scene_controller.hpp
   ${src_dir}/scene/scene_manager_subsystems_view.cpp
   ${src_dir}/scene/scene_private.cpp
   ${src_dir}/scene/scene_private.hpp
   ${src_dir}/scene/scene_render.cpp
   ${src_dir}/scene/scene_render.hpp  
   ${src_dir}/scene/scene.cpp
-  ${src_dir}/scene/scenecontroller.cpp
-  ${src_dir}/scene/scenecontroller.hpp
   ${src_dir}/scene/scene_manager.cpp
   ${src_dir}/scene/scene_manager.hpp
   ${src_dir}/scene/scene_node.cpp

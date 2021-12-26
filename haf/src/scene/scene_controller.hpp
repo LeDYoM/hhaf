@@ -16,7 +16,6 @@ class SystemAccess;
 namespace haf::scene
 {
 class SceneManager;
-class Scene::ScenePrivate;
 
 /**
  * @brief Class to control which @b Scene is active and which are not.
