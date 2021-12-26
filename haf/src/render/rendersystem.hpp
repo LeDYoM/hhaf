@@ -27,7 +27,7 @@ public:
     using SystemBase::SystemBase;
     void update();
 
-    void draw(const render::RenderData& renderData);
+    void draw(render::RenderData const& renderData);
     void clear();
 
     void setRenderTarget(htps::sptr<RenderTarget> render_target);

@@ -16,7 +16,7 @@ void RenderSystem::update()
     render_data_container_.clear();
 }
 
-void RenderSystem::draw(const render::RenderData& renderData)
+void RenderSystem::draw(render::RenderData const& renderData)
 {
     render_data_container_.push_back(renderData);
 }
