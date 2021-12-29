@@ -7,6 +7,11 @@
 #include <haf/include/utils/attachable_manager.hpp>
 #include <haf/include/utils/type_data.hpp>
 
+namespace haf::scene
+{
+    class SceneNode;
+}
+
 namespace haf::component
 {
 /**
@@ -16,16 +21,15 @@ namespace haf::component
 class HAF_API ComponentContainer : private utils::AttachableManager<IComponent>
 {
     using BaseClass      = utils::AttachableManager<IComponent>;
-    using AttachableType = typename BaseClass::AttachableType;
+    using AttachableType = scene::SceneNode;
 
 public:
     explicit ComponentContainer(htps::rptr<AttachableType> attachable);
 
     /**
      * @brief Destroy the Component Container object
-     * @note It is not virtual because the base class is private
      */
-    ~ComponentContainer();
+    virtual ~ComponentContainer();
 
     /**
      * @brief Create or get a pointer to a component type. This method
