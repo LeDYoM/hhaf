@@ -23,7 +23,13 @@ struct ComponentContainer::ComponentContainerPrivate
 };
 
 ComponentContainer::ComponentContainer(rptr<AttachableType> attachable) :
+<<<<<<< HEAD
     attachable_{attachable}, p_{make_pimplp<ComponentContainerPrivate>()}
+=======
+    BaseClass{attachable},
+    attachable_{attachable},
+    p_{make_pimplp<ComponentContainerPrivate>()}
+>>>>>>> 4dea94148a62b8ae98c4048054ab7b11685ab71c
 {}
 
 ComponentContainer::~ComponentContainer() = default;
