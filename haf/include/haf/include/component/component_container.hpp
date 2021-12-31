@@ -6,6 +6,7 @@
 #include <haf/include/component/icomponent.hpp>
 #include <haf/include/utils/attachable_manager.hpp>
 #include <haf/include/utils/type_data.hpp>
+#include <haf/include/component/icomponent.hpp>
 
 namespace haf::scene
 {
@@ -46,7 +47,7 @@ public:
         types::sptr<T> result{componentOfType<T>()};
         if (result == nullptr)
         {
-            result = BaseClass::template create<T>();
+            result = create<T>();
             addComponent(result);
         }
         return result;
@@ -105,7 +106,26 @@ public:
      */
     void clearComponents() noexcept;
 
+protected:
+    template <typename T>
+    auto create() const
+    {
+        // Static check that T is a valid type for this class.
+//        static_assert(std::is_base_of_v<Attachable<AttachableType>, T>,
+//                      "You can only use this "
+//                      "function with types derived from AttachedBase");
+
+        auto result{htps::muptr<T>()};
+        initialize(*result);
+        return result;
+    }
+
 private:
+    void initialize(IComponent& dw) const
+    {
+        dw.setAttachedNode(attachable_);
+    }
+
     template <typename T>
     utils::type_index type_of() const noexcept
     {
@@ -114,6 +134,8 @@ private:
 
     bool addComponent(htps::sptr<IComponent> nc);
     types::sptr<IComponent> componentOfType(utils::type_index const& ti) const;
+
+    const htps::rptr<scene::SceneNode> attachable_;
 
     struct ComponentContainerPrivate;
     types::PImplPointer<ComponentContainerPrivate> p_;

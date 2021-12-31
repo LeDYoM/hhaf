@@ -22,9 +22,10 @@ struct ComponentContainer::ComponentContainerPrivate
     htps::LockableVector<sptr<IComponent>> components_;
 };
 
-ComponentContainer::ComponentContainer(
-    rptr<BaseClass::AttachableType> attachable) :
-    BaseClass{attachable}, p_{make_pimplp<ComponentContainerPrivate>()}
+ComponentContainer::ComponentContainer(rptr<AttachableType> attachable) :
+    BaseClass{attachable},
+    attachable_{attachable},
+    p_{make_pimplp<ComponentContainerPrivate>()}
 {}
 
 ComponentContainer::~ComponentContainer() = default;
