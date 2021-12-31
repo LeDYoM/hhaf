@@ -5,11 +5,7 @@
 #include <haf/include/types/basic_types.hpp>
 #include <haf/include/component/icomponent.hpp>
 #include <haf/include/utils/type_data.hpp>
-<<<<<<< HEAD
 #include <hlog/include/hlog.hpp>
-=======
-#include <haf/include/component/icomponent.hpp>
->>>>>>> 4dea94148a62b8ae98c4048054ab7b11685ab71c
 
 namespace haf::scene
 {
@@ -113,15 +109,9 @@ protected:
     auto create() const
     {
         // Static check that T is a valid type for this class.
-<<<<<<< HEAD
         static_assert(std::is_base_of_v<IComponent, T>,
                       "You can only use this "
                       "function with types derived from AttachedBase");
-=======
-//        static_assert(std::is_base_of_v<Attachable<AttachableType>, T>,
-//                      "You can only use this "
-//                      "function with types derived from AttachedBase");
->>>>>>> 4dea94148a62b8ae98c4048054ab7b11685ab71c
 
         auto result{htps::muptr<T>()};
         initialize(*result);
