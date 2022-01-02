@@ -334,8 +334,6 @@ set(headers
   ${inc_dir}/types/vector.hpp
 
   # Utils
-  ${inc_dir}/utils/attachable_manager.hpp
-  ${inc_dir}/utils/attachable.hpp
   ${inc_dir}/utils/object_factory.hpp
   ${inc_dir}/utils/type_data.hpp
 
