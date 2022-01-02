@@ -1,8 +1,7 @@
 #include <haf/include/component/component_container.hpp>
-
 #include <htypes/include/lockablevector.hpp>
 
-using namespace haf::types;
+using namespace htps;
 
 namespace haf::component
 {
@@ -19,11 +18,17 @@ struct ComponentContainer::ComponentContainerPrivate
         return (iterator == v.cend()) ? nullptr : (*iterator);
     }
 
-    htps::LockableVector<sptr<IComponent>> components_;
+    rptr<scene::SceneNode> const attachable_;
+    LockableVector<sptr<IComponent>> components_;
+
+    ComponentContainer::ComponentContainerPrivate(
+        rptr<scene::SceneNode> attachable) noexcept :
+        attachable_{attachable}
+    {}
 };
 
 ComponentContainer::ComponentContainer(rptr<AttachableType> attachable) :
-    attachable_{attachable}, p_{make_pimplp<ComponentContainerPrivate>()}
+    p_{make_pimplp<ComponentContainerPrivate>(attachable)}
 {}
 
 ComponentContainer::~ComponentContainer() = default;
@@ -50,6 +55,11 @@ sptr<IComponent> ComponentContainer::componentOfType(
     utils::type_index const& ti) const
 {
     return p_->getComponentFromTypeIndex(ti);
+}
+
+void ComponentContainer::initialize(IComponent& component) const
+{
+    component.setAttachedNode(p_->attachable_);
 }
 
 }  // namespace haf::component

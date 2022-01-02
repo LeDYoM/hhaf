@@ -9,7 +9,7 @@
 
 namespace haf::scene
 {
-    class SceneNode;
+class SceneNode;
 }
 
 namespace haf::component
@@ -42,10 +42,11 @@ public:
     template <typename T>
     types::sptr<T> component()
     {
-        types::sptr<T> result{componentOfType<T>()};
+        htps::sptr<T> result{componentOfType<T>()};
         if (result == nullptr)
         {
-            result = create<T>();
+            result = htps::msptr<T>();
+            initialize(*result);
             addComponent(result);
         }
         return result;
@@ -104,25 +105,8 @@ public:
      */
     void clearComponents() noexcept;
 
-protected:
-    template <typename T>
-    auto create() const
-    {
-        // Static check that T is a valid type for this class.
-        static_assert(std::is_base_of_v<IComponent, T>,
-                      "You can only use this "
-                      "function with types derived from AttachedBase");
-
-        auto result{htps::muptr<T>()};
-        initialize(*result);
-        return result;
-    }
-
 private:
-    void initialize(IComponent& dw) const
-    {
-        dw.setAttachedNode(attachable_);
-    }
+    void initialize(IComponent& component) const;
 
     template <typename T>
     utils::type_index type_of() const noexcept
@@ -132,8 +116,6 @@ private:
 
     bool addComponent(htps::sptr<IComponent> nc);
     types::sptr<IComponent> componentOfType(utils::type_index const& ti) const;
-
-    const htps::rptr<scene::SceneNode> attachable_;
 
     struct ComponentContainerPrivate;
     types::PImplPointer<ComponentContainerPrivate> p_;
