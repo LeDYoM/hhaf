@@ -3,11 +3,11 @@
 
 #include <htypes/include/types.hpp>
 #include <haf/include/scene_nodes/scenenodetext.hpp>
-#include <haf/include/component/icomponent.hpp>
+#include <haf/include/component/component.hpp>
 
 namespace haf::scene
 {
-class DiscreteTextComponent final : public component::IComponent
+class DiscreteTextComponent final : public component::Component
 {
     using BaseClass = component::IComponent;
 

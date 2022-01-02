@@ -9,7 +9,7 @@ using namespace htps;
 namespace haf::scene
 {
 VisibilitySelectorComponent::VisibilitySelectorComponent() :
-    IComponent{}, visible_index{0U}
+    Component{}, visible_index{0U}
 {}
 
 void VisibilitySelectorComponent::update()

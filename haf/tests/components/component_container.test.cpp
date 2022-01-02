@@ -4,14 +4,14 @@
 #include <haf/include/scene/scene_node.hpp>
 #include <haf/include/scene/scene.hpp>
 #include <haf/include/component/component_container.hpp>
-#include <haf/include/component/icomponent.hpp>
+#include <haf/include/component/component.hpp>
 
 using namespace htps;
 using namespace haf;
 using namespace haf::scene;
 using namespace haf::component;
 
-struct TestComponent : public IComponent
+struct TestComponent : public Component
 {
     int data_{0};
 

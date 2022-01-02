@@ -5,7 +5,7 @@
 #include <htypes/include/lockablevector.hpp>
 #include <haf/include/time/timer_connector.hpp>
 #include <haf/include/time/timer_type.hpp>
-#include <haf/include/component/icomponent.hpp>
+#include <haf/include/component/component.hpp>
 
 namespace haf::time
 {
@@ -15,7 +15,7 @@ namespace haf::time
  * managed by the returned @b TimerConnectorSptr. They can be of different
  * @b TimerType.
  */
-class TimerComponent : public component::IComponent
+class TimerComponent : public component::Component
 {
 public:
     /**

@@ -205,6 +205,8 @@ set(headers
 
   # Component
   ${inc_dir}/component/component_container.hpp
+  ${inc_dir}/component/component.hpp
+  ${inc_dir}/component/icomponent_attached_node.hpp
   ${inc_dir}/component/icomponent_mixin.hpp
   ${inc_dir}/component/icomponent.hpp
 

@@ -4,14 +4,14 @@
 #include <htypes/include/types.hpp>
 #include <htypes/include/function.hpp>
 #include <htypes/include/vector2d.hpp>
-#include <haf/include/component/icomponent.hpp>
+#include <haf/include/component/component.hpp>
 #include "itile.hpp"
 
 namespace haf::board
 {
 class IBoardManagerActuator;
 
-class BoardManager : public haf::component::IComponent
+class BoardManager : public haf::component::Component
 {
 public:
     using BackgroundData = htps::s32;

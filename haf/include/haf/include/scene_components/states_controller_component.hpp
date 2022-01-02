@@ -7,7 +7,7 @@
 #include <htypes/include/stack.hpp>
 #include <htypes/include/lockablevector.hpp>
 #include <hlog/include/hlog.hpp>
-#include <haf/include/component/icomponent.hpp>
+#include <haf/include/component/component.hpp>
 
 namespace haf
 {
@@ -138,7 +138,7 @@ private:
 
 template <typename T>
 class StatesControllerComponent : public StatesControllerRaw<T>,
-                                  public component::IComponent
+                                  public component::Component
 {
 public:
     ~StatesControllerComponent() override = default;
