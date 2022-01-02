@@ -42,7 +42,7 @@ protected:
      * @brief Get the attached node.
      * @return The pointer to const attached node.
      */
-    constexpr htps::rptr<scene::SceneNode> attachedNode() const noexcept
+    constexpr htps::rptr<scene::SceneNode const> attachedNode() const noexcept
     {
         return attachedNode_;
     }
