@@ -20,10 +20,8 @@ namespace haf::component
  */
 class HAF_API ComponentContainer
 {
-    using AttachableType = scene::SceneNode;
-
 public:
-    explicit ComponentContainer(htps::rptr<AttachableType> attachable);
+    explicit ComponentContainer(htps::rptr<scene::SceneNode> attachable);
 
     /**
      * @brief Destroy the Component Container object

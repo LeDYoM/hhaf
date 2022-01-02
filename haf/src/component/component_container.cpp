@@ -27,7 +27,7 @@ struct ComponentContainer::ComponentContainerPrivate
     {}
 };
 
-ComponentContainer::ComponentContainer(rptr<AttachableType> attachable) :
+ComponentContainer::ComponentContainer(rptr<scene::SceneNode> attachable) :
     p_{make_pimplp<ComponentContainerPrivate>(attachable)}
 {}
 
