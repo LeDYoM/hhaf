@@ -31,7 +31,8 @@ public:
      */
     virtual void onAttached() = 0;
 
-    virtual void setAttachedNode(htps::rptr<scene::SceneNode> attachedNode) noexcept = 0;
+    virtual void setAttachedNode(
+        htps::rptr<scene::SceneNode> const attachedNode) noexcept = 0;
 };
 
 }  // namespace haf::component

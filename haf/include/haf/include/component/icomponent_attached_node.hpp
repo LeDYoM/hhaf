@@ -3,26 +3,24 @@
 
 #include <haf/include/types/basic_types.hpp>
 
-namespace haf::scene
-{
-class SceneNode;
-}
-
 namespace haf::component
 {
-
+template <typename T>
 class IComponentAttachedNode
 {
 public:
+    using type = T;
+    using pointer = htps::rptr<type>;
+    using const_pointer = htps::rptr<type const>;
 
     /**
      * @brief Destroy the Attachable object
      */
     virtual ~IComponentAttachedNode() = default;
 
-    void setAttachedNodeNode(htps::rptr<scene::SceneNode> attachedNode) noexcept
+    void setAttachedNodeNode(pointer const attachedNode) noexcept
     {
-        attachedNode_ = std::move(attachedNode);
+        attachedNode_ = attachedNode;
     }
 
 protected:
@@ -30,7 +28,7 @@ protected:
      * @brief Get the attached node.
      * @return The pointer to const attached node.
      */
-    constexpr htps::rptr<scene::SceneNode const> attachedNode() const noexcept
+    constexpr const_pointer attachedNode() const noexcept
     {
         return attachedNode_;
     }
@@ -39,7 +37,7 @@ protected:
      * @brief Get the attached node.
      * @return The pointer to the attached node.
      */
-    constexpr htps::rptr<scene::SceneNode> attachedNode() noexcept
+    constexpr pointer attachedNode() noexcept
     {
         return attachedNode_;
     }
@@ -72,7 +70,7 @@ protected:
     }
 
 private:
-    htps::rptr<scene::SceneNode> attachedNode_{nullptr};
+    pointer attachedNode_{nullptr};
 };
 
 }  // namespace haf::component
