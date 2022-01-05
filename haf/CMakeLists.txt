@@ -44,9 +44,9 @@ set(sources
   # Input
   ${src_dir}/input/input_component_base.cpp
   ${src_dir}/input/input_component.cpp
-  ${src_dir}/input/inputdriver_wrapper.cpp
-  ${src_dir}/input/inputsystem.cpp
-  ${src_dir}/input/inputsystem.hpp
+  ${src_dir}/input/input_driver_wrapper.cpp
+  ${src_dir}/input/input_system.cpp
+  ${src_dir}/input/input_system.hpp
   ${src_dir}/input/stated_input_component_base.cpp
   ${src_dir}/input/virtual_input_component.cpp
 

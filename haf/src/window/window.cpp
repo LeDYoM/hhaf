@@ -3,7 +3,7 @@
 #include <backend_dev/include/iwindow.hpp>
 #include <backend/include/backendfactory.hpp>
 
-#include "input/inputsystem.hpp"
+#include "input/input_system.hpp"
 #include "render/rendertarget.hpp"
 #include "time/time_system.hpp"
 #include "system/system_provider.hpp"

@@ -7,7 +7,7 @@
 #include "scene/scene_manager.hpp"
 #include "render/rendersystem.hpp"
 #include "resources/resource_manager.hpp"
-#include "input/inputsystem.hpp"
+#include "input/input_system.hpp"
 #include "time/time_system.hpp"
 #include "shareddata/shared_data_system.hpp"
 #include "filesystem/file_system.hpp"

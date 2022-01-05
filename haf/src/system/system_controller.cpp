@@ -1,7 +1,7 @@
 #include "system_controller.hpp"
 #include "window/window.hpp"
 #include "simulation/simulation_system.hpp"
-#include "input/inputsystem.hpp"
+#include "input/input_system.hpp"
 #include "scene/scene_manager.hpp"
 #include "render/rendersystem.hpp"
 

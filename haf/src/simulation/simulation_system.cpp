@@ -15,7 +15,7 @@
 #include "random/randomsystem.hpp"
 #include "time/time_system.hpp"
 #include "filesystem/file_system.hpp"
-#include "input/inputsystem.hpp"
+#include "input/input_system.hpp"
 
 using namespace htps;
 

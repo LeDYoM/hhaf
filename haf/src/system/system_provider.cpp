@@ -6,7 +6,7 @@
 #include <backend/include/backend_creator.hpp>
 #include "debug_utils/debug_system.hpp"
 #include "filesystem/file_system.hpp"
-#include "input/inputsystem.hpp"
+#include "input/input_system.hpp"
 #include "random/randomsystem.hpp"
 #include "render/rendersystem.hpp"
 #include "scene/scene_manager.hpp"

@@ -1,5 +1,5 @@
 #include <haf/include/input/input_component.hpp>
-#include "inputsystem.hpp"
+#include "input_system.hpp"
 
 #include <hlog/include/hlog.hpp>
 #include <haf/include/input/key.hpp>
