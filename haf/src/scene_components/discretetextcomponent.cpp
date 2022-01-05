@@ -45,7 +45,7 @@ void DiscreteTextComponent::update()
     }
 }
 
-void DiscreteTextComponent::_setText(const str& nText)
+void DiscreteTextComponent::_setText(str const& nText)
 {
     using namespace nodes;
     attachedNode()->prop<SceneNodeTextProperties>().set<Text>(nText);

@@ -22,7 +22,7 @@ public:
     virtual void update() override;
 
 private:
-    void _setText(const htps::str& nText);
+    void _setText(htps::str const& nText);
 };
 }  // namespace haf::scene
 
