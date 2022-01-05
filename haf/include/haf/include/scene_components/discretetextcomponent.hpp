@@ -7,7 +7,8 @@
 
 namespace haf::scene
 {
-class DiscreteTextComponent final : public component::Component
+class DiscreteTextComponent final
+    : public component::ComponentForType<nodes::SceneNodeText>
 {
     using BaseClass = component::IComponent;
 

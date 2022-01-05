@@ -6,6 +6,8 @@
 #include <haf/include/component/icomponent.hpp>
 #include <haf/include/scene/scene_node.hpp>
 #include <haf/include/scene/scenenode_cast.hpp>
+#include <hlog/include/hlog.hpp>
+#include <concepts>
 
 namespace haf::scene
 {
@@ -39,8 +41,12 @@ public:
     void setAttachedNode(
         htps::rptr<scene::SceneNode> const attachedNode) noexcept override
     {
-        auto converted{
-            scene::sceneNodeCast<ComponentAttachedNode::type>(attachedNode)};
+        using dest_type = ComponentAttachedNode::type;
+        static_assert(std::derived_from<dest_type, scene::SceneNode>,
+                      "Invalid type for component type");
+        auto const converted{scene::sceneNodeCast<dest_type>(attachedNode)};
+        LogAsserter::log_assert(converted != nullptr,
+                                " Trying to attach nullptr node");
         ComponentAttachedNode::setAttachedNodeImpl(converted);
         onAttached();
     }
