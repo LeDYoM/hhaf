@@ -41,7 +41,7 @@ public:
     {
         auto converted{
             scene::sceneNodeCast<ComponentAttachedNode::type>(attachedNode)};
-        ComponentAttachedNode::setAttachedNodeNode(converted);
+        ComponentAttachedNode::setAttachedNodeImpl(converted);
         onAttached();
     }
 };

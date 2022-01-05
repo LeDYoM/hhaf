@@ -18,7 +18,7 @@ public:
      */
     virtual ~IComponentAttachedNode() = default;
 
-    void setAttachedNodeNode(pointer const attachedNode) noexcept
+    void setAttachedNodeImpl(pointer const attachedNode) noexcept
     {
         attachedNode_ = attachedNode;
     }
