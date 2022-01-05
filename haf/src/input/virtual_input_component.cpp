@@ -4,8 +4,6 @@
 
 #include "system/get_system.hpp"
 
-#include <hlog/include/hlog.hpp>
-
 namespace haf::input
 {
 VirtualInputComponent::VirtualInputComponent()  = default;
@@ -13,17 +11,17 @@ VirtualInputComponent::~VirtualInputComponent() = default;
 
 void VirtualInputComponent::update()
 {
-    if (attachedNode())
+    if (attachedNode() != nullptr)
     {
-        const sys::InputSystem& input_system{
+        sys::InputSystem const& input_system{
             sys::getSystem<sys::InputSystem>(attachedNode())};
 
-        for (const auto& pressedKey : input_system.pressedKeys())
+        for (auto const pressedKey : input_system.pressedKeys())
         {
             onKeyPressed(pressedKey);
         }
 
-        for (const auto& releasedKey : input_system.releasedKeys())
+        for (auto const releasedKey : input_system.releasedKeys())
         {
             onKeyReleased(releasedKey);
         }
