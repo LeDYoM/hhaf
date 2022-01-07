@@ -31,14 +31,14 @@ bool TileHitChecker::operator()(board::BoardPositionType const& loopPosition)
 {
     bool result{true};
 
+    // Store the position of this last cosumed token
+    last_token_position_ = board_group_->board2Scene(loopPosition);
+
     if (!board_group_->boardManager()->tileEmpty(loopPosition) &&
         TokenZones::toBoardBackgroundType(
             board_group_->boardManager()->backgroundData(loopPosition)) !=
             TokenZones::BoardBackgroundType::Center)
     {
-        // Store the position of this last cosumed token
-        last_token_position_ = board_group_->board2Scene(loopPosition);
-
         if (board_group_->boardManager()->getTile(loopPosition)->value() ==
             tokenType)
         {
