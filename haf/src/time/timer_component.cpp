@@ -31,6 +31,8 @@ TimerConnectorSPtr TimerComponent::addFreeTimer()
 void TimerComponent::update()
 {
     activeTimers_.performUpdate([this](auto& timerConnector) {
+        // Perform update for each timer connector if and only if:
+        // It has timed out and is not a free timer and is not paused
         if (timerConnector->timeOut() &&
             timerConnector->timer_type_ != TimerType::Free &&
             !timerConnector->isPaused())
