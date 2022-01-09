@@ -17,6 +17,11 @@ bool TimerConnector::timeOut() const
     return timer_->ellapsed() >= time_out_;
 }
 
+bool TimerConnector::isPaused() const
+{
+    return timer_->isPaused();
+}
+
 void TimerConnector::pause()
 {
     timer_->pause();

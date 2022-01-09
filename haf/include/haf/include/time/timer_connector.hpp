@@ -29,6 +29,7 @@ public:
                    timer_callback_t emitter);
 
     bool timeOut() const;
+    bool isPaused() const;
     void pause();
     void resume();
     void restart();

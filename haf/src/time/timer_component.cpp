@@ -32,7 +32,8 @@ void TimerComponent::update()
 {
     activeTimers_.performUpdate([this](auto& timerConnector) {
         if (timerConnector->timeOut() &&
-            timerConnector->timer_type_ != TimerType::Free)
+            timerConnector->timer_type_ != TimerType::Free &&
+            !timerConnector->isPaused())
         {
             // Delta time has passed, so trigger
             // the callback and update the timer
