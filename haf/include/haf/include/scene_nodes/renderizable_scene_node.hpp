@@ -1,7 +1,7 @@
 #ifndef HAF_SCENE_RENDERIZABLE_SCENENODE_INCLUDE_HPP
 #define HAF_SCENE_RENDERIZABLE_SCENENODE_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
+#include <haf/include/types/basic_types.hpp> 
 #include <haf/include/render/renderizable_builder.hpp>
 #include <haf/include/scene/renderizables_scene_node.hpp>
 
@@ -19,15 +19,15 @@ class RenderizableSceneNode : public RenderizablesSceneNode
 public:
     using BaseClass::prop;
 
-    RenderizableSceneNode(htps::rptr<SceneNode> parent, const htps::str& name);
+    RenderizableSceneNode(htps::rptr<SceneNode> parent, types::str const& name);
 
     void buildNode(render::RenderizableBuilder& node_builder);
 
-    htps::sptr<render::Renderizable> node() noexcept;
-    const htps::sptr<render::Renderizable> node() const noexcept;
+    types::sptr<render::Renderizable> node() noexcept;
+    types::sptr<render::Renderizable const> node() const noexcept;
 
 private:
-    htps::sptr<render::Renderizable> node_;
+    types::sptr<render::Renderizable> node_;
 };
 }  // namespace haf::scene
 

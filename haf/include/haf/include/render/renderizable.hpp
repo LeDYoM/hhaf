@@ -42,7 +42,7 @@ public:
     htps::PropertyState<htps::sptr<res::IShader>> shader;
 
     htps::PropertyState<
-        htps::function<scene::Color(const RenderizableModifierContext&)>>
+        htps::function<scene::Color(RenderizableModifierContext const&)>>
         color_modifier;
 
     htps::BasicProperty<bool> visible{true};
