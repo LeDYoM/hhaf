@@ -26,32 +26,32 @@ namespace haf::render
 struct RenderizableName : BasicPropertyBase<types::str>
 {};
 
-struct FigureTypeProperty : BasicPropertyBase<FigType_t>
+struct FigureTypeProperty : PropertyStateBase<FigType_t>
 {};
 
-struct RenderizableSceneBoxProperty : BasicPropertyBase<SceneBox>
+struct BoxProperty : PropertyStateBase<SceneBox>
 {};
 
-struct ColorProperty : BasicPropertyBase<scene::Color>
+struct ColorProperty : PropertyStateBase<scene::Color>
 {};
 
-struct PointCount : BasicPropertyBase<types::size_type>
+struct PointCount : PropertyStateBase<types::size_type>
 {};
 
-struct ShaderProperty : BasicPropertyBase<types::sptr<res::IShader>>
+struct ShaderProperty : PropertyStateBase<types::sptr<res::IShader>>
 {};
 
-struct TextureProperty : BasicPropertyBase<types::sptr<res::ITexture>>
+struct TextureProperty : PropertyStateBase<types::sptr<res::ITexture>>
 {};
 
 struct ColorModifierProperty
-    : BasicPropertyBase<
+    : PropertyStateBase<
           function<scene::Color(const RenderizableModifierContext&)>>
 {};
 
 using RenderizableData = types::PropertyGroup<RenderizableName,
                                               FigureTypeProperty,
-                                              RenderizableSceneBoxProperty,
+                                              BoxProperty,
                                               ColorProperty,
                                               PointCount,
                                               ShaderProperty,

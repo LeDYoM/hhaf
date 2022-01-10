@@ -22,7 +22,7 @@ class TransformableSceneNode;
 
 namespace haf::render
 {
-class Renderizable final : public sys::HasName, public RenderizableData
+class Renderizable final : public sys::HasName, private RenderizableData
 {
 public:
     using RenderizableData::prop;
@@ -35,10 +35,7 @@ public:
 
     void render();
 
-    htps::PropertyState<FigType_t> figType;
-    htps::PropertyState<htps::Rectf32> box;
     htps::PropertyState<scene::Color> color;
-    htps::PropertyState<htps::size_type> pointCount;
     htps::PropertyState<htps::sptr<res::IShader>> shader;
 
     htps::PropertyState<

@@ -121,14 +121,14 @@ constexpr void ps_resetHasChanged(PropertyState<T>& arg,
     ps_resetHasChanged(std::forward<Args>(args)...);
 }
 
-template <typename T>
-constexpr void ps_resetHasChanged(PropertyState<T>& arg) noexcept
+template <typename T, typename Tag>
+constexpr void ps_resetHasChanged(PropertyState<T, Tag>& arg) noexcept
 {
     return arg.resetHasChanged();
 }
 
-template <typename T, typename... Args>
-constexpr bool ps_readResetHasAnyChanged(PropertyState<T>& arg,
+template <typename T, typename Tag, typename... Args>
+constexpr bool ps_readResetHasAnyChanged(PropertyState<T, Tag>& arg,
                                          Args&&... args) noexcept
 {
     const auto result_unary{arg.readResetHasChanged()};
@@ -175,8 +175,8 @@ constexpr bool ps_readResetHasAllChanged(PropertyState<T>& arg,
     }
 }
 
-template <typename T>
-constexpr bool ps_readResetHasChanged(PropertyState<T>& arg) noexcept
+template <typename T, typename Tag>
+constexpr bool ps_readResetHasChanged(PropertyState<T, Tag>& arg) noexcept
 {
     return arg.readResetHasChanged();
 }

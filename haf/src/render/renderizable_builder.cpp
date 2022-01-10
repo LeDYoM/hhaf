@@ -34,7 +34,7 @@ RenderizableBuilder& RenderizableBuilder::figType(FigType_t const& fig_type)
 
 RenderizableBuilder& RenderizableBuilder::box(SceneBox const& _box)
 {
-    data_.builder_data_.prop<RenderizableSceneBoxProperty>() = _box;
+    data_.builder_data_.prop<BoxProperty>() = _box;
     return *this;
 }
 

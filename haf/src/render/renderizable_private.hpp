@@ -40,10 +40,14 @@ struct Renderizable::RenderizablePrivate
 
     Renderizable::RenderizableInternalData getMomentumInternalData() const
     {
-        return {i_this_->figType(), i_this_->box(),
-                i_this_->color(),   i_this_->pointCount(),
-                i_this_->shader(),  i_this_->textureRect(),
-                i_this_->texture(), i_this_->color_modifier()};
+        return {i_this_->prop<FigureTypeProperty>()(),
+                i_this_->prop<BoxProperty>()(),
+                i_this_->color(),
+                i_this_->prop<PointCount>()(),
+                i_this_->shader(),
+                i_this_->textureRect(),
+                i_this_->texture(),
+                i_this_->color_modifier()};
     }
 };
 

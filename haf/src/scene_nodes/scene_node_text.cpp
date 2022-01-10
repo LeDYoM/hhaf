@@ -120,7 +120,7 @@ void SceneNodeText::update()
                         std::dynamic_pointer_cast<RenderizableSceneNode>(
                             sceneNodes()[counter]);
                     letterNode->node()->color.set(text_color);
-                    letterNode->node()->box.set(letterBox);
+                    letterNode->node()->prop<render::BoxProperty>().set(letterBox);
                 }
                 else
                 {

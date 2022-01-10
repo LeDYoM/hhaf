@@ -26,8 +26,8 @@ Player::Player(types::rptr<SceneNode> parent, types::str name) :
     buildNode(renderizableBuilder()
                   .name("player_render_scene_node")
                   .figType(FigType_t::Shape)
-                  .pointCount(3U));
-    node()->box.set(rectFromSize(board2Scene({1, 1})));
+                  .pointCount(3U)
+                  .box(rectFromSize(board2Scene({1, 1}))));
 
     reserveExtraTransformations(4U);
     move_in_  = addTransformation();

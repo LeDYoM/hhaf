@@ -21,10 +21,7 @@ namespace haf::render
 Renderizable::Renderizable(rptr<TransformableSceneNode> parent,
                            RenderizableData&& renderizable_data) :
     sys::HasName{std::move(renderizable_data.prop<RenderizableName>()())},
-    figType{renderizable_data.prop<FigureTypeProperty>()()},
-    box{renderizable_data.prop<RenderizableSceneBoxProperty>()()},
     color{renderizable_data.prop<ColorProperty>()()},
-    pointCount{renderizable_data.prop<PointCount>()()},
     shader{renderizable_data.prop<ShaderProperty>()()},
     p_{make_pimplp<RenderizablePrivate>(
         parent,
@@ -37,7 +34,12 @@ Renderizable::Renderizable(rptr<TransformableSceneNode> parent,
     textureRect{textureFillQuad(renderizable_data.prop<TextureProperty>()())},
     texture{renderizable_data.prop<TextureProperty>()()},
     color_modifier{renderizable_data.prop<ColorModifierProperty>()()}
-{}
+{
+    prop<PointCount>().set(renderizable_data.prop<PointCount>()());
+    prop<FigureTypeProperty>().set(
+        renderizable_data.prop<FigureTypeProperty>()());
+    prop<BoxProperty>().set(renderizable_data.prop<BoxProperty>()());
+}
 
 Renderizable::~Renderizable() = default;
 
@@ -95,7 +97,9 @@ void Renderizable::update()
 {
     auto const& mi_data{p_->getMomentumInternalData()};
 
-    if (ps_readResetHasAnyChanged(box, figType, pointCount))
+    if (ps_readResetHasAnyChanged(prop<PointCount>(),
+                                  prop<FigureTypeProperty>(),
+                                  prop<BoxProperty>()))
     {
         updateGeometry(p_->vertices_.verticesArray(), mi_data);
         textureRect.resetHasChanged();

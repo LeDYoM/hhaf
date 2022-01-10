@@ -37,7 +37,7 @@ Token::~Token() = default;
 
 void Token::setBox(const Rectf32& box)
 {
-    node()->box = box;
+    node()->prop<render::BoxProperty>() = box;
 }
 
 bool Token::canBeMoved(BoardPositionType const&) const
@@ -57,7 +57,7 @@ void Token::tileAdded(const BoardPositionType& position_)
     DisplayLog::info("Token ", name(), " appeared at ", position_);
 
     auto const AppearTokenTime = time::TimePoint_as_miliseconds(1000U);
-    auto const nodeBox{node()->box().size() / 2.0F};
+    auto const nodeBox{node()->prop<render::BoxProperty>()().size() / 2.0F};
 
     reserveExtraTransformations(2U);
     auto const newTransformationPosition{addTransformation()};
