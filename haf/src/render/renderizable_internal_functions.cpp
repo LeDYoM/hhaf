@@ -51,9 +51,8 @@ Rects32 textureFillQuad(sptr<res::ITexture const> const& texture) noexcept
                    : Rects32{};
 }
 
-vector2df normalizeInBox(
-    vector2df const& position,
-    Renderizable::RenderizableInternalData const& data) noexcept
+vector2df normalizeInBox(vector2df const& position,
+                         RenderizableInternalData const& data) noexcept
 {
     const f32 xratio{(position.x - data.box.left) / data.box.width};
     const f32 yratio{(position.y - data.box.top) / data.box.height};
@@ -61,7 +60,7 @@ vector2df normalizeInBox(
             (data.textureRect.top + (data.textureRect.height * yratio))};
 }
 
-void updateColorForVertex(Renderizable::RenderizableInternalData const& data,
+void updateColorForVertex(RenderizableInternalData const& data,
                           BasicVertexArray::value_type& vertex)
 {
     scene::Color dest_color{data.color};
@@ -76,7 +75,7 @@ void updateColorForVertex(Renderizable::RenderizableInternalData const& data,
 }
 
 void updateColors(BasicVertexArray& vertices,
-                  Renderizable::RenderizableInternalData const& data)
+                  RenderizableInternalData const& data)
 {
     for (auto& vertex : vertices)
     {
@@ -86,16 +85,15 @@ void updateColors(BasicVertexArray& vertices,
 
 void updateTextureCoordsAndColorForVertex(
     BasicVertexArray::iterator const v_iterator,
-    Renderizable::RenderizableInternalData const& iData)
+    RenderizableInternalData const& iData)
 {
     auto& dest_vertex     = *v_iterator;
     dest_vertex.texCoords = normalizeInBox(dest_vertex.position, iData);
     updateColorForVertex(iData, dest_vertex);
 }
 
-void updateTextureCoordsAndColor(
-    BasicVertexArray& vertices,
-    Renderizable::RenderizableInternalData const& data)
+void updateTextureCoordsAndColor(BasicVertexArray& vertices,
+                                 RenderizableInternalData const& data)
 {
     for (auto& vertex : vertices)
     {
@@ -104,7 +102,7 @@ void updateTextureCoordsAndColor(
 }
 
 void updateGeometry(BasicVertexArray& vertices,
-                    Renderizable::RenderizableInternalData const& data)
+                    RenderizableInternalData const& data)
 {
     if (data.pointCount > 0U)
     {

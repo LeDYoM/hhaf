@@ -38,16 +38,16 @@ struct Renderizable::RenderizablePrivate
         i_this_{std::move(i_this)}
     {}
 
-    Renderizable::RenderizableInternalData getMomentumInternalData() const
+    RenderizableInternalData getMomentumInternalData() const
     {
         return {i_this_->prop<FigureTypeProperty>()(),
                 i_this_->prop<BoxProperty>()(),
-                i_this_->color(),
+                i_this_->prop<ColorProperty>()(),
                 i_this_->prop<PointCount>()(),
-                i_this_->shader(),
+                i_this_->prop<ShaderProperty>()(),
                 i_this_->textureRect(),
                 i_this_->texture(),
-                i_this_->color_modifier()};
+                i_this_->prop<ColorModifierProperty>()()};
     }
 };
 

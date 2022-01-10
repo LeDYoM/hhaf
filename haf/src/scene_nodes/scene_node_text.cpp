@@ -119,8 +119,10 @@ void SceneNodeText::update()
                     letterNode =
                         std::dynamic_pointer_cast<RenderizableSceneNode>(
                             sceneNodes()[counter]);
-                    letterNode->node()->color.set(text_color);
-                    letterNode->node()->prop<render::BoxProperty>().set(letterBox);
+                    letterNode->node()->prop<render::ColorProperty>().set(
+                        text_color);
+                    letterNode->node()->prop<render::BoxProperty>().set(
+                        letterBox);
                 }
                 else
                 {
@@ -187,7 +189,7 @@ void SceneNodeText::update()
 
         for_each_sceneNode_as<RenderizableSceneNode>(
             [&text_color](sptr<RenderizableSceneNode> const& sNode) {
-                sNode->node()->color = text_color;
+                sNode->node()->prop<render::ColorProperty>() = text_color;
             });
     }
 

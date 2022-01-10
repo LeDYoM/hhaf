@@ -47,24 +47,24 @@ htps::Rects32 textureFillQuad(
 
 htps::vector2df normalizeInBox(
     htps::vector2df const& position,
-    Renderizable::RenderizableInternalData const& data) noexcept;
+    RenderizableInternalData const& data) noexcept;
 
-void updateColorForVertex(Renderizable::RenderizableInternalData const& data,
+void updateColorForVertex(RenderizableInternalData const& data,
                           BasicVertexArray::value_type& vertex);
 
 void updateColors(BasicVertexArray& vertices,
-                  Renderizable::RenderizableInternalData const& data);
+                  RenderizableInternalData const& data);
 
 void updateTextureCoordsAndColorForVertex(
     BasicVertexArray::iterator const v_iterator,
-    Renderizable::RenderizableInternalData const& iData);
+    RenderizableInternalData const& iData);
 
 void updateTextureCoordsAndColor(
     BasicVertexArray& vertices,
-    Renderizable::RenderizableInternalData const& data);
+    RenderizableInternalData const& data);
 
 void updateGeometry(BasicVertexArray& vertices,
-                    Renderizable::RenderizableInternalData const& data);
+                    RenderizableInternalData const& data);
 }  // namespace haf::render
 
 #endif

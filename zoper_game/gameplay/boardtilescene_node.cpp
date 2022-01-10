@@ -61,7 +61,8 @@ void BoardTileSceneNode::update()
 
     if (prop<BackgroundColor>().readResetHasChanged())
     {
-        background_tile_->color = std::move(prop<BackgroundColor>().get());
+        background_tile_->prop<ColorProperty>() =
+            std::move(prop<BackgroundColor>().get());
     }
 }
 

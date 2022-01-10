@@ -21,8 +21,6 @@ namespace haf::render
 Renderizable::Renderizable(rptr<TransformableSceneNode> parent,
                            RenderizableData&& renderizable_data) :
     sys::HasName{std::move(renderizable_data.prop<RenderizableName>()())},
-    color{renderizable_data.prop<ColorProperty>()()},
-    shader{renderizable_data.prop<ShaderProperty>()()},
     p_{make_pimplp<RenderizablePrivate>(
         parent,
         renderizable_data.prop<FigureTypeProperty>()(),
@@ -32,13 +30,16 @@ Renderizable::Renderizable(rptr<TransformableSceneNode> parent,
         renderizable_data.prop<ShaderProperty>()().get(),
         this)},
     textureRect{textureFillQuad(renderizable_data.prop<TextureProperty>()())},
-    texture{renderizable_data.prop<TextureProperty>()()},
-    color_modifier{renderizable_data.prop<ColorModifierProperty>()()}
+    texture{renderizable_data.prop<TextureProperty>()()}
 {
     prop<PointCount>().set(renderizable_data.prop<PointCount>()());
     prop<FigureTypeProperty>().set(
         renderizable_data.prop<FigureTypeProperty>()());
     prop<BoxProperty>().set(renderizable_data.prop<BoxProperty>()());
+    prop<ShaderProperty>().set(renderizable_data.prop<ShaderProperty>()());
+    prop<ColorModifierProperty>().set(
+        renderizable_data.prop<ColorModifierProperty>()());
+    prop<ColorProperty>().set(renderizable_data.prop<ColorProperty>()());
 }
 
 Renderizable::~Renderizable() = default;
@@ -103,16 +104,17 @@ void Renderizable::update()
     {
         updateGeometry(p_->vertices_.verticesArray(), mi_data);
         textureRect.resetHasChanged();
-        color.resetHasChanged();
-        color_modifier.resetHasChanged();
+        prop<ColorProperty>().resetHasChanged();
+        prop<ColorModifierProperty>().resetHasChanged();
     }
     else if (textureRect.readResetHasChanged())
     {
         updateTextureCoordsAndColor(p_->vertices_.verticesArray(), mi_data);
-        color.resetHasChanged();
-        color_modifier.resetHasChanged();
+        prop<ColorProperty>().resetHasChanged();
+        prop<ColorModifierProperty>().resetHasChanged();
     }
-    else if (ps_readResetHasAnyChanged(color, color_modifier))
+    else if (ps_readResetHasAnyChanged(prop<ColorProperty>(),
+                                       prop<ColorModifierProperty>()))
     {
         updateColors(p_->vertices_.verticesArray(), mi_data);
     }
@@ -122,9 +124,9 @@ void Renderizable::update()
         p_->render_data_.texture = texture().get();
     }
 
-    if (shader.readResetHasChanged())
+    if (prop<ShaderProperty>().readResetHasChanged())
     {
-        p_->render_data_.shader = shader().get();
+        p_->render_data_.shader = prop<ShaderProperty>()().get();
     }
 }
 

@@ -131,7 +131,7 @@ void Player::launchAnimationBack(SceneCoordinates const& toWhere)
 void Player::tileAdded(BoardPositionType const& position_)
 {
     DisplayLog::info("TokenPlayer appeared at ", position_);
-    node()->color.set(getColorForToken());
+    node()->prop<render::ColorProperty>().set(getColorForToken());
 
     // Set the position in the scene depending on the board position
     boardPosition.set(position_);

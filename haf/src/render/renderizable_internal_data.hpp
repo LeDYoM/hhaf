@@ -6,7 +6,7 @@
 namespace haf::render
 {
 
-struct Renderizable::RenderizableInternalData
+struct RenderizableInternalData
 {
     FigType_t const& figType;
     htps::Rectf32 const& box;

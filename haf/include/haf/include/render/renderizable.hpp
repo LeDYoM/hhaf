@@ -35,13 +35,6 @@ public:
 
     void render();
 
-    htps::PropertyState<scene::Color> color;
-    htps::PropertyState<htps::sptr<res::IShader>> shader;
-
-    htps::PropertyState<
-        htps::function<scene::Color(RenderizableModifierContext const&)>>
-        color_modifier;
-
     htps::BasicProperty<bool> visible{true};
 
     void setTextureAndTextureRectFromTextureSize(
@@ -56,8 +49,6 @@ public:
 
     htps::rptr<scene::TransformableSceneNode> parent() noexcept;
     htps::rptr<scene::TransformableSceneNode const> parent() const noexcept;
-
-    struct RenderizableInternalData;
 
 private:
     struct RenderizablePrivate;
