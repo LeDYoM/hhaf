@@ -3,7 +3,7 @@
 
 #include <htypes/include/types.hpp>
 #include <haf/include/scene/transformable_scene_node.hpp>
-#include <haf/include/scene_nodes/textquad.hpp>
+#include <haf/include/scene_nodes/scene_node_text_quad.hpp>
 
 namespace zoper
 {

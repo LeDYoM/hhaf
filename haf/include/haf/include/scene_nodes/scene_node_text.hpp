@@ -1,10 +1,10 @@
-#ifndef HAF_SCENE_NODES_SCENENODETEXT_INCLUDE_HPP
-#define HAF_SCENE_NODES_SCENENODETEXT_INCLUDE_HPP
+#ifndef HAF_SCENE_NODES_SCENE_NODE_TEXT_INCLUDE_HPP
+#define HAF_SCENE_NODES_SCENE_NODE_TEXT_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/properties.hpp>
 #include <haf/include/types/property_group.hpp>
-#include <haf/include/scene_nodes/scenenodetext_properties.hpp>
+#include <haf/include/scene_nodes/scene_node_text_properties.hpp>
 #include <haf/include/scene/transformable_scene_node.hpp>
 
 namespace haf::scene::nodes

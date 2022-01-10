@@ -1,9 +1,9 @@
 #include <haf/include/debug_utils/console.hpp>
-#include <haf/include/scene_nodes/scenenodetext.hpp>
+#include <haf/include/scene_nodes/scene_node_text.hpp>
 //#include "../loaders/mainmenuresources.hpp"
 
 #include <haf/include/scene/scene.hpp>
-#include <haf/include/scene_nodes/scenenodetext.hpp>
+#include <haf/include/scene_nodes/scene_node_text.hpp>
 
 #include <hlog/include/hlog.hpp>
 #include <haf/include/resources/iresource_retriever.hpp>

@@ -3,7 +3,7 @@
 
 #include <haf/include/types/basic_types.hpp>
 #include <haf/include/types/str.hpp>
-#include <haf/include/scene_nodes/text_table_node.hpp>
+#include <haf/include/scene_nodes/scene_node_table_text.hpp>
 
 namespace haf
 {

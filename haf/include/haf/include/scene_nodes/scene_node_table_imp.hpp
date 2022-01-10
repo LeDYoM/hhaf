@@ -1,11 +1,11 @@
-#ifndef HAF_SCENE_TABLENODE_IMP_INCLUDE_HPP
-#define HAF_SCENE_TABLENODE_IMP_INCLUDE_HPP
+#ifndef HAF_SCENE_SCENE_NODE_TABLE_IMP_INCLUDE_HPP
+#define HAF_SCENE_SCENE_NODE_TABLE_IMP_INCLUDE_HPP
 
 #include <htypes/include/properties.hpp>
 #include <haf/include/haf_export.hpp>
 #include <haf/include/types/basic_types.hpp>
 #include <haf/include/scene/transformable_scene_node.hpp>
-#include <haf/include/scene_nodes/tablenode_properties.hpp>
+#include <haf/include/scene_nodes/scene_node_table_properties.hpp>
 #include <hlog/include/hlog.hpp>
 
 namespace haf::scene::nodes

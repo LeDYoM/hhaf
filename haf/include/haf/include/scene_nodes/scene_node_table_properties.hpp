@@ -1,5 +1,5 @@
-#ifndef HAF_SCENE_TABLENODE_PROPERTIES_INCLUDE_HPP
-#define HAF_SCENE_TABLENODE_PROPERTIES_INCLUDE_HPP
+#ifndef HAF_SCENE_NODE_TABLE_PROPERTIES_INCLUDE_HPP
+#define HAF_SCENE_NODE_TABLE_PROPERTIES_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
 #include <haf/include/types/property_group.hpp>

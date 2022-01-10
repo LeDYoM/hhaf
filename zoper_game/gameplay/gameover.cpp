@@ -3,7 +3,7 @@
 #include "../loaders/gameresources.hpp"
 
 #include <haf/include/scene/scene.hpp>
-#include <haf/include/scene_nodes/scenenodetext.hpp>
+#include <haf/include/scene_nodes/scene_node_text.hpp>
 #include <haf/include/scene_components/iscene_metrics_view.hpp>
 
 #include <hlog/include/hlog.hpp>

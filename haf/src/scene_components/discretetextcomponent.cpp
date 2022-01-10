@@ -1,5 +1,5 @@
 #include <haf/include/scene_components/discretetextcomponent.hpp>
-#include <haf/include/scene_nodes/scenenodetext_properties.hpp>
+#include <haf/include/scene_nodes/scene_node_text_properties.hpp>
 
 using namespace htps;
 

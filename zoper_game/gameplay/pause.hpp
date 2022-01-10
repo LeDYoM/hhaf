@@ -4,7 +4,7 @@
 #include <htypes/include/types.hpp>
 
 #include <haf/include/scene/scene_node.hpp>
-#include <haf/include/scene_nodes/scenenodetext.hpp>
+#include <haf/include/scene_nodes/scene_node_text.hpp>
 #include <haf/include/animation/animation_component.hpp>
 
 namespace zoper

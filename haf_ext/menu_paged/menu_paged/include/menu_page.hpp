@@ -4,8 +4,8 @@
 #include <htypes/include/types.hpp>
 #include <menu_paged/include/menu_paged_option.hpp>
 #include <haf/include/scene/scene_node.hpp>
-#include <haf/include/scene_nodes/table_node.hpp>
-#include <haf/include/scene_nodes/scenenodetext.hpp>
+#include <haf/include/scene_nodes/scene_node_table.hpp>
+#include <haf/include/scene_nodes/scene_node_text.hpp>
 
 #include <htypes/include/connection.hpp>
 #include <haf/include/scene_components/discretetextcomponent.hpp>

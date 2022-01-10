@@ -125,10 +125,10 @@ set(sources
 
   # Scene nodes
   ${src_dir}/scene_nodes/renderizable_scene_node.cpp
-  ${src_dir}/scene_nodes/scenenodetext.cpp
-  ${src_dir}/scene_nodes/tablenode_imp.cpp
-  ${src_dir}/scene_nodes/text_table_node.cpp
-  ${src_dir}/scene_nodes/textquad.cpp
+  ${src_dir}/scene_nodes/scene_node_table_imp.cpp
+  ${src_dir}/scene_nodes/scene_node_table_text.cpp
+  ${src_dir}/scene_nodes/scene_node_text_quad.cpp
+  ${src_dir}/scene_nodes/scene_node_text.cpp
 
   # Shared data
   ${src_dir}/shareddata/address.cpp
@@ -293,13 +293,13 @@ set(headers
   # Scene nodes
   ${inc_dir}/scene_nodes/renderizable_scene_node.hpp
   ${inc_dir}/scene_nodes/scene_node_size.hpp
-  ${inc_dir}/scene_nodes/scenenodetext_properties.hpp
-  ${inc_dir}/scene_nodes/scenenodetext.hpp
-  ${inc_dir}/scene_nodes/tablenode_imp.hpp
-  ${inc_dir}/scene_nodes/tablenode_properties.hpp
-  ${inc_dir}/scene_nodes/table_node.hpp
-  ${inc_dir}/scene_nodes/text_table_node.hpp
-  ${inc_dir}/scene_nodes/textquad.hpp
+  ${inc_dir}/scene_nodes/scene_node_table_imp.hpp
+  ${inc_dir}/scene_nodes/scene_node_table_properties.hpp
+  ${inc_dir}/scene_nodes/scene_node_table_text.hpp
+  ${inc_dir}/scene_nodes/scene_node_table.hpp
+  ${inc_dir}/scene_nodes/scene_node_text_properties.hpp
+  ${inc_dir}/scene_nodes/scene_node_text_quad.hpp
+  ${inc_dir}/scene_nodes/scene_node_text.hpp
 
   # Shared data
   ${inc_dir}/shareddata/address.hpp

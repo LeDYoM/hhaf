@@ -1,8 +1,8 @@
-#ifndef HAF_SCENE_TABLENODE_INCLUDE_HPP
-#define HAF_SCENE_TABLENODE_INCLUDE_HPP
+#ifndef HAF_SCENE_NODE_TABLE_INCLUDE_HPP
+#define HAF_SCENE_NODE_TABLE_INCLUDE_HPP
 
 #include <haf/include/haf_export.hpp>
-#include <haf/include/scene_nodes/tablenode_imp.hpp>
+#include <haf/include/scene_nodes/scene_node_table_imp.hpp>
 #include <hlog/include/hlog.hpp>
 
 namespace haf::scene::nodes

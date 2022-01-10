@@ -1,9 +1,9 @@
-#ifndef HAF_SCENE_TEXTQUAD_INCLUDE_HPP
-#define HAF_SCENE_TEXTQUAD_INCLUDE_HPP
+#ifndef HAF_SCENE_NODE_TEXT_QUAD_INCLUDE_HPP
+#define HAF_SCENE_NODE_TEXT_QUAD_INCLUDE_HPP
 
-#include <haf/include/scene_nodes/table_node.hpp>
-#include <haf/include/scene_nodes/scenenodetext.hpp>
-#include <haf/include/scene_nodes/text_table_node.hpp>
+#include <haf/include/scene_nodes/scene_node_table.hpp>
+#include <haf/include/scene_nodes/scene_node_text.hpp>
+#include <haf/include/scene_nodes/scene_node_table_text.hpp>
 
 namespace haf::scene::nodes
 {

@@ -5,8 +5,8 @@
 #include <htypes/include/connection.hpp>
 
 #include <haf/include/scene/scene_node.hpp>
-#include <haf/include/scene_nodes/table_node.hpp>
-#include <haf/include/scene_nodes/tablenode_properties.hpp>
+#include <haf/include/scene_nodes/scene_node_table.hpp>
+#include <haf/include/scene_nodes/scene_node_table_properties.hpp>
 
 #include "boardtilescene_node.hpp"
 #include "direction.hpp"

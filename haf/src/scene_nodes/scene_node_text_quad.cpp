@@ -1,4 +1,4 @@
-#include <haf/include/scene_nodes/textquad.hpp>
+#include <haf/include/scene_nodes/scene_node_text_quad.hpp>
 
 using namespace htps;
 

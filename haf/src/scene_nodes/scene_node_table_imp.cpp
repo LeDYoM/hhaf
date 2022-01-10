@@ -1,6 +1,6 @@
 #include <htypes/include/types.hpp>
 #include <htypes/include/vector2d.hpp>
-#include <haf/include/scene_nodes/tablenode_imp.hpp>
+#include <haf/include/scene_nodes/scene_node_table_imp.hpp>
 
 namespace haf::scene::nodes
 {

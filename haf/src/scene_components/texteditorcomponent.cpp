@@ -1,5 +1,5 @@
 #include <haf/include/scene_components/texteditorcomponent.hpp>
-#include <haf/include/scene_nodes/scenenodetext.hpp>
+#include <haf/include/scene_nodes/scene_node_text.hpp>
 #include <haf/include/input/key.hpp>
 
 using namespace htps;

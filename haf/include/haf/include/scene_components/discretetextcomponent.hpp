@@ -2,7 +2,7 @@
 #define HAF_COMPONENT_DISCRETE_TEXT_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
-#include <haf/include/scene_nodes/scenenodetext.hpp>
+#include <haf/include/scene_nodes/scene_node_text.hpp>
 #include <haf/include/component/component.hpp>
 
 namespace haf::scene
