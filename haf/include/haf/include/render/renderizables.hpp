@@ -47,10 +47,10 @@ public:
 
     template <typename T>
     constexpr void for_each_node_as(
-        htps::function<void(htps::sptr<T> const&)> action)
+        htps::function<void(htps::sptr<T> const&)> action) const
     {
-        for_each_node([&action](const htps::sptr<Renderizable>& node) {
-            if (auto tnode{std::dynamic_pointer_cast<T>(node)})
+        for_each_node([&action](htps::sptr<Renderizable> const& node) {
+            if (auto const tnode{std::dynamic_pointer_cast<T>(node)})
             {
                 action(tnode);
             }
