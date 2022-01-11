@@ -21,24 +21,15 @@ namespace haf::render
 Renderizable::Renderizable(rptr<TransformableSceneNode> parent,
                            RenderizableData&& renderizable_data) :
     sys::HasName{std::move(renderizable_data.prop<RenderizableName>()())},
-    p_{make_pimplp<RenderizablePrivate>(
-        parent,
-        renderizable_data.prop<FigureTypeProperty>()(),
-        renderizable_data.prop<PointCount>()(),
-        parent->globalTransform(),
-        renderizable_data.prop<TextureProperty>()().get(),
-        renderizable_data.prop<ShaderProperty>()().get(),
-        this)}
+    RenderizableData{std::move(renderizable_data)},
+    p_{make_pimplp<RenderizablePrivate>(parent,
+                                        prop<FigureTypeProperty>()(),
+                                        prop<PointCount>()(),
+                                        parent->globalTransform(),
+                                        prop<TextureProperty>()().get(),
+                                        prop<ShaderProperty>()().get(),
+                                        this)}
 {
-    prop<PointCount>().set(renderizable_data.prop<PointCount>()());
-    prop<FigureTypeProperty>().set(
-        renderizable_data.prop<FigureTypeProperty>()());
-    prop<BoxProperty>().set(renderizable_data.prop<BoxProperty>()());
-    prop<ShaderProperty>().set(renderizable_data.prop<ShaderProperty>()());
-    prop<ColorModifierProperty>().set(
-        renderizable_data.prop<ColorModifierProperty>()());
-    prop<ColorProperty>().set(renderizable_data.prop<ColorProperty>()());
-    prop<TextureProperty>().set(renderizable_data.prop<TextureProperty>()());
     prop<TextureRectProperty>().set(
         textureFillQuad(renderizable_data.prop<TextureProperty>()()));
 }
