@@ -42,7 +42,7 @@ public:
 
     RenderizableBuilder renderizableBuilder();
 
-    void removeRenderizable(const htps::sptr<Renderizable>& element);
+    void removeRenderizable(htps::sptr<Renderizable> const& element);
     void clearRenderizables();
 
     template <typename T>

@@ -36,7 +36,7 @@ void Renderizables::updateRenderizables()
     }
 }
 
-void Renderizables::removeRenderizable(const sptr<Renderizable>& element)
+void Renderizables::removeRenderizable(sptr<Renderizable> const& element)
 {
     LogAsserter::log_assert(element.get() != nullptr,
                             "Received empty renderizable node to be deleted");
