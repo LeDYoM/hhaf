@@ -30,7 +30,7 @@ Token::Token(SceneNode* const parent, str name) :
     buildNode(renderizableBuilder()
                   .name("Node" + str::to_str(tile_counter_))
                   .figType(FigType_t::Shape)
-                  .pointCount(30U));
+                  .pointCount(30U).get());
 }
 
 Token::~Token() = default;

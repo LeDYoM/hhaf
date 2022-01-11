@@ -35,7 +35,7 @@ void BoardTileSceneNode::createBackgroundTile(const htps::Rectf32& tileBox)
             .name("backgroundTilePoint")
             .figType(FigType_t::Quad)
             .box(Rectf32{0, 0, point_box.width, point_box.height})
-            .color(colors::White));
+            .color(colors::White).get());
 
     point_in_center_->prop<Position>().set(point_box.leftTop());
 

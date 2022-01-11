@@ -27,7 +27,7 @@ Player::Player(types::rptr<SceneNode> parent, types::str name) :
                   .name("player_render_scene_node")
                   .figType(FigType_t::Shape)
                   .pointCount(3U)
-                  .box(rectFromSize(board2Scene({1, 1}))));
+                  .box(rectFromSize(board2Scene({1, 1}))).get());
 
     reserveExtraTransformations(4U);
     move_in_  = addTransformation();

@@ -6,27 +6,23 @@
 
 #include <haf/include/scene/scene_node.hpp>
 
+using namespace haf::types;
+
 namespace haf::scene
 {
-RenderizableSceneNode::RenderizableSceneNode(htps::rptr<SceneNode> parent,
-                                             const htps::str& name) :
-    BaseClass{std::move(parent), name}, node_{}
+RenderizableSceneNode::RenderizableSceneNode(rptr<SceneNode> parent, str name) :
+    BaseClass{std::move(parent), std::move(name)}, node_{}
 {}
 
 void RenderizableSceneNode::buildNode(
-    render::RenderizableBuilder& node_builder)
+    render::RenderizableBuilder&& node_builder)
 {
     node_ = node_builder.create();
 }
 
-htps::sptr<render::Renderizable> RenderizableSceneNode::node() noexcept
+sptr<render::Renderizable> const& RenderizableSceneNode::node() const noexcept
 {
     return node_;
 }
 
-htps::sptr<render::Renderizable const> RenderizableSceneNode::node()
-    const noexcept
-{
-    return node_;
-}
 }  // namespace haf::scene

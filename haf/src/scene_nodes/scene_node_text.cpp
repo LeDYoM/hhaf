@@ -133,7 +133,7 @@ void SceneNodeText::update()
                             .name("text_" + str::to_str(counter))
                             .figType(render::FigType_t::Quad)
                             .box(letterBox)
-                            .color(text_color));
+                            .color(text_color).get());
                 }
 
                 ++counter;
