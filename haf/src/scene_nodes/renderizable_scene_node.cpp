@@ -17,7 +17,7 @@ RenderizableSceneNode::RenderizableSceneNode(rptr<SceneNode> parent, str name) :
 void RenderizableSceneNode::buildNode(
     render::RenderizableBuilder&& node_builder)
 {
-    node_ = node_builder.create();
+    node_ = createRenderizable(node_builder.extract());
 }
 
 sptr<render::Renderizable> const& RenderizableSceneNode::node() const noexcept
