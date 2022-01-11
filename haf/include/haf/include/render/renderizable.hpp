@@ -54,9 +54,6 @@ private:
     struct RenderizablePrivate;
     htps::PImplPointer<RenderizablePrivate> p_;
 
-    htps::PropertyState<htps::Rects32> textureRect;
-    htps::PropertyState<htps::sptr<res::ITexture>> texture;
-
     void update();
 };
 }  // namespace haf::render

@@ -45,8 +45,8 @@ struct Renderizable::RenderizablePrivate
                 i_this_->prop<ColorProperty>()(),
                 i_this_->prop<PointCount>()(),
                 i_this_->prop<ShaderProperty>()(),
-                i_this_->textureRect(),
-                i_this_->texture(),
+                i_this_->prop<TextureRectProperty>()(),
+                i_this_->prop<TextureProperty>()(),
                 i_this_->prop<ColorModifierProperty>()()};
     }
 };

@@ -28,9 +28,7 @@ Renderizable::Renderizable(rptr<TransformableSceneNode> parent,
         parent->globalTransform(),
         renderizable_data.prop<TextureProperty>()().get(),
         renderizable_data.prop<ShaderProperty>()().get(),
-        this)},
-    textureRect{textureFillQuad(renderizable_data.prop<TextureProperty>()())},
-    texture{renderizable_data.prop<TextureProperty>()()}
+        this)}
 {
     prop<PointCount>().set(renderizable_data.prop<PointCount>()());
     prop<FigureTypeProperty>().set(
@@ -40,6 +38,9 @@ Renderizable::Renderizable(rptr<TransformableSceneNode> parent,
     prop<ColorModifierProperty>().set(
         renderizable_data.prop<ColorModifierProperty>()());
     prop<ColorProperty>().set(renderizable_data.prop<ColorProperty>()());
+    prop<TextureProperty>().set(renderizable_data.prop<TextureProperty>()());
+    prop<TextureRectProperty>().set(
+        textureFillQuad(renderizable_data.prop<TextureProperty>()()));
 }
 
 Renderizable::~Renderizable() = default;
@@ -71,8 +72,8 @@ void Renderizable::setTextureAndTextureRectFromTextureSize(
     sptr<res::ITexture> texture_,
     Rects32 const& textRect) noexcept
 {
-    textureRect = textRect;
-    texture     = std::move(texture_);
+    prop<TextureRectProperty>().set(textRect);
+    prop<TextureProperty>().set(std::move(texture_));
 }
 
 void Renderizable::setTextureAndTextureRectNormalizedRect(
@@ -84,8 +85,8 @@ void Renderizable::setTextureAndTextureRectNormalizedRect(
     // Scale it according to the size of the current texture
     dest_textureRect.scale(texture_->size());
     // Use it as a new texture rect
-    textureRect = std::move(dest_textureRect);
-    texture     = std::move(texture_);
+    setTextureAndTextureRectFromTextureSize(std::move(texture_),
+                                            dest_textureRect);
 }
 
 void Renderizable::setTextureFill(sptr<res::ITexture> texture_)
@@ -103,11 +104,11 @@ void Renderizable::update()
                                   prop<BoxProperty>()))
     {
         updateGeometry(p_->vertices_.verticesArray(), mi_data);
-        textureRect.resetHasChanged();
+        prop<TextureRectProperty>().resetHasChanged();
         prop<ColorProperty>().resetHasChanged();
         prop<ColorModifierProperty>().resetHasChanged();
     }
-    else if (textureRect.readResetHasChanged())
+    else if (prop<TextureRectProperty>().readResetHasChanged())
     {
         updateTextureCoordsAndColor(p_->vertices_.verticesArray(), mi_data);
         prop<ColorProperty>().resetHasChanged();
@@ -119,9 +120,9 @@ void Renderizable::update()
         updateColors(p_->vertices_.verticesArray(), mi_data);
     }
 
-    if (texture.readResetHasChanged())
+    if (prop<TextureProperty>().readResetHasChanged())
     {
-        p_->render_data_.texture = texture().get();
+        p_->render_data_.texture = prop<TextureProperty>()().get();
     }
 
     if (prop<ShaderProperty>().readResetHasChanged())
