@@ -23,11 +23,12 @@ Player::Player(types::rptr<SceneNode> parent, types::str name) :
     boardPosition{},
     currentDirection{Direction{Direction::DirectionData::Up}}
 {
-    buildNode(renderizableBuilder()
-                  .name("player_render_scene_node")
-                  .figType(FigType_t::Shape)
-                  .pointCount(3U)
-                  .box(rectFromSize(board2Scene({1, 1}))).get());
+    renderizableBuilder()
+        .name("player_render_scene_node")
+        .figType(FigType_t::Shape)
+        .pointCount(3U)
+        .box(rectFromSize(board2Scene({1, 1})))
+        .create();
 
     reserveExtraTransformations(4U);
     move_in_  = addTransformation();

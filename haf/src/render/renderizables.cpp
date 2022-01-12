@@ -10,15 +10,15 @@ using namespace haf::scene;
 namespace haf::render
 {
 Renderizables::Renderizables(
-    htps::rptr<TransformableSceneNode> scene_node) noexcept :
+    rptr<TransformableSceneNode> scene_node) noexcept :
     scene_node_{std::move(scene_node)}
 {}
 
-htps::sptr<Renderizable> Renderizables::createRenderizable(
+sptr<Renderizable> Renderizables::createRenderizable(
     RenderizableBuilderData&& renderizable_builder_data)
 {
-    auto result{msptr<Renderizable>(
-        scene_node_, renderizable_builder_data.extract())};
+    auto result{
+        msptr<Renderizable>(scene_node_, renderizable_builder_data.extract())};
     addRenderizable(result);
     return result;
 }
@@ -51,11 +51,28 @@ void Renderizables::clearRenderizables()
 void Renderizables::for_each_node(
     function<void(const sptr<Renderizable>&)> action) const
 {
-    std::for_each(render_nodes_.cbegin(), render_nodes_.cend(), action);
+    render_nodes_.cfor_each(std::move(action));
 }
 
 void Renderizables::addRenderizable(sptr<Renderizable> newElement)
 {
     render_nodes_.push_back(std::move(newElement));
 }
+
+sptr<Renderizable> const& Renderizables::operator[](
+    size_type const index) const noexcept
+{
+    return render_nodes_[index];
+}
+
+size_type Renderizables::size() const
+{
+    return render_nodes_.size();
+}
+
+bool Renderizables::empty() const
+{
+    return render_nodes_.empty();
+}
+
 }  // namespace haf::render

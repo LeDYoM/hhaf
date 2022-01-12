@@ -1,10 +1,8 @@
 #ifndef HAF_COMPONENT_RENDERIZABLES_INCLUDE_HPP
 #define HAF_COMPONENT_RENDERIZABLES_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
-#include <htypes/include/function.hpp>
-#include <htypes/include/vector.hpp>
-
+#include <haf/include/types/basic_types.hpp>
+#include <haf/include/types/vector.hpp>
 #include <haf/include/render/renderizable.hpp>
 #include <haf/include/render/renderizable_builder.hpp>
 
@@ -23,7 +21,7 @@ public:
      * @param scene_node Node to be used as a parent
      */
     explicit Renderizables(
-        htps::rptr<scene::TransformableSceneNode> scene_node) noexcept;
+        types::rptr<scene::TransformableSceneNode> scene_node) noexcept;
 
     /**
      * @brief Create a Renderizable object
@@ -42,14 +40,14 @@ public:
 
     RenderizableBuilder renderizableBuilder();
 
-    void removeRenderizable(htps::sptr<Renderizable> const& element);
+    void removeRenderizable(types::sptr<Renderizable> const& element);
     void clearRenderizables();
 
     template <typename T>
     constexpr void for_each_node_as(
-        htps::function<void(htps::sptr<T> const&)> action) const
+        htps::function<void(types::sptr<T> const&)> action) const
     {
-        for_each_node([&action](htps::sptr<Renderizable> const& node) {
+        for_each_node([&action](types::sptr<Renderizable> const& node) {
             if (auto const tnode{std::dynamic_pointer_cast<T>(node)})
             {
                 action(tnode);
@@ -58,14 +56,20 @@ public:
     }
 
     void for_each_node(
-        htps::function<void(htps::sptr<Renderizable> const&)> action) const;
+        htps::function<void(types::sptr<Renderizable> const&)> action) const;
 
     void updateRenderizables();
 
+    types::sptr<Renderizable> const& operator[](
+        types::size_type const index) const noexcept;
+
+    types::size_type size() const;
+    bool empty() const;
+
 private:
-    void addRenderizable(htps::sptr<Renderizable> newElement);
-    htps::rptr<scene::TransformableSceneNode> scene_node_;
-    htps::vector<htps::sptr<Renderizable>> render_nodes_;
+    void addRenderizable(types::sptr<Renderizable> newElement);
+    types::rptr<scene::TransformableSceneNode> scene_node_;
+    vector<types::sptr<Renderizable>> render_nodes_;
 };
 }  // namespace haf::render
 

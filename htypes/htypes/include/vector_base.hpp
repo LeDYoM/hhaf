@@ -189,11 +189,24 @@ public:
     {
         if (!empty())
         {
-            iterator current{begin()};
+            auto current{begin()};
             do
             {
                 f(*current);
             } while (++current != end());
+        }
+    }
+
+    template <typename F>
+    constexpr void cfor_each(F f) const
+    {
+        if (!empty())
+        {
+            auto current{cbegin()};
+            do
+            {
+                f(*current);
+            } while (++current != cend());
         }
     }
 

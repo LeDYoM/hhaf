@@ -30,12 +30,12 @@ void BoardTileSceneNode::createBackgroundTile(const htps::Rectf32& tileBox)
     point_in_center_ =
         createSceneNode<RenderizableSceneNode>("backgroundTilePoint");
 
-    point_in_center_->buildNode(
-        point_in_center_->renderizableBuilder()
-            .name("backgroundTilePoint")
-            .figType(FigType_t::Quad)
-            .box(Rectf32{0, 0, point_box.width, point_box.height})
-            .color(colors::White).get());
+    point_in_center_->renderizableBuilder()
+        .name("backgroundTilePoint")
+        .figType(FigType_t::Quad)
+        .box(Rectf32{0, 0, point_box.width, point_box.height})
+        .color(colors::White)
+        .create();
 
     point_in_center_->prop<Position>().set(point_box.leftTop());
 

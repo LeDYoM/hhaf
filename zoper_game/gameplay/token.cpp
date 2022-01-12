@@ -27,10 +27,11 @@ Token::Token(SceneNode* const parent, str name) :
     animation_component_{component<anim::AnimationComponent>()}
 {
     ++tile_counter_;
-    buildNode(renderizableBuilder()
-                  .name("Node" + str::to_str(tile_counter_))
-                  .figType(FigType_t::Shape)
-                  .pointCount(30U).get());
+    renderizableBuilder()
+        .name("Node" + str::to_str(tile_counter_))
+        .figType(FigType_t::Shape)
+        .pointCount(30U)
+        .create();
 }
 
 Token::~Token() = default;
