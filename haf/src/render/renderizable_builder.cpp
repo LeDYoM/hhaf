@@ -74,14 +74,4 @@ RenderizableBuilder& RenderizableBuilder::colorModifier(
     return *this;
 }
 
-RenderizableBuilder&& RenderizableBuilder::get() noexcept
-{
-    return std::move(*this);
-}
-
-RenderizableBuilderData&& RenderizableBuilder::extract() noexcept
-{
-    return std::move(data_);
-}
-
 }  // namespace haf::render

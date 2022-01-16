@@ -48,9 +48,6 @@ public:
     RenderizableBuilder& colorModifier(
         htps::function<scene::Color(const RenderizableModifierContext&)>
             color_modifier);
-
-    RenderizableBuilder&& get() noexcept;
-    RenderizableBuilderData&& extract() noexcept;
 private:
     RenderizableBuilderData data_;
 };
