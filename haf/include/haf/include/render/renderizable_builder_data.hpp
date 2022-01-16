@@ -12,6 +12,10 @@ class Renderizables;
 
 namespace haf::render
 {
+/**
+ * @brief Class to expose the data that can be modified and set by the
+ * @b RenderizableBuilder;
+ */
 struct RenderizableBuilderData
 {
     htps::rptr<Renderizables> renderizables_;

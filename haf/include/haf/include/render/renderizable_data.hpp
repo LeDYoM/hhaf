@@ -53,13 +53,6 @@ enum class TextureSizeMode : types::u8
     Relative = 1U
 };
 
-struct RenderizableTextureData
-{
-    types::sptr<res::ITexture> texture;
-    SceneBox textureRect;
-    TextureSizeMode textureSizeMode;
-};
-
 struct ColorModifierProperty
     : PropertyStateBase<
           function<scene::Color(const RenderizableModifierContext&)>>
