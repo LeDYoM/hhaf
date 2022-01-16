@@ -6,7 +6,7 @@
 #include <htypes/include/properties.hpp>
 #include <htypes/include/vector.hpp>
 #include <haf/include/render/vertex.hpp>
-#include <haf/include/render/primitivetype.hpp>
+#include <haf/include/render/primitive_type.hpp>
 
 namespace haf::render
 {

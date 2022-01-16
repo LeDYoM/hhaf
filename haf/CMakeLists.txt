@@ -241,7 +241,7 @@ set(headers
 
   # Render
   ${inc_dir}/render/fig_type.hpp
-  ${inc_dir}/render/primitivetype.hpp
+  ${inc_dir}/render/primitive_type.hpp
   ${inc_dir}/render/renderdata.hpp
   ${inc_dir}/render/renderizable_builder_data.hpp
   ${inc_dir}/render/renderizable_builder.hpp

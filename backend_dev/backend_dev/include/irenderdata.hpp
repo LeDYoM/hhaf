@@ -3,7 +3,7 @@
 
 #include <htypes/include/types.hpp>
 #include "ivertex.hpp"
-#include "iprimitivetype.hpp"
+#include "iprimitive_type.hpp"
 
 namespace haf::backend
 {
