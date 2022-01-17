@@ -47,12 +47,6 @@ struct TextureProperty : PropertyStateBase<types::sptr<res::ITexture>>
 struct TextureRectProperty : PropertyStateBase<htps::Rects32>
 {};
 
-enum class TextureSizeMode : types::u8
-{
-    Pixel = 0U,
-    Relative = 1U
-};
-
 struct ColorModifierProperty
     : PropertyStateBase<
           function<scene::Color(const RenderizableModifierContext&)>>
