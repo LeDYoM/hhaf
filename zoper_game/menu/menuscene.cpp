@@ -1,61 +1,78 @@
 #include "menuscene.hpp"
-#include <haf/resources/include/resourceview.hpp>
-#include <haf/resources/include/itexture.hpp>
-#include <haf/shareddata/include/shareddata.hpp>
-#include <haf/scene_components/include/scenecontrol.hpp>
+#include <haf/include/resources/iresource_retriever.hpp>
+#include <haf/include/resources/itexture.hpp>
+#include <haf/include/shareddata/ishared_data.hpp>
+#include <haf/include/scene_components/iscene_control.hpp>
 
-#include "../menu/mainmenu.hpp"
+#include "mainmenu.hpp"
 #include "../loaders/mainmenuresources.hpp"
 #include "../zoperprogramcontroller.hpp"
 #include "../common_scene_nodes.hpp"
+#include "../static_data.hpp"
+#include <haf/include/debug_utils/displayvar_console.hpp>
 
-#include <haf/resources/include/iresourceconfigurator.hpp>
-#include <haf/system/include/interfaceaccess.hpp>
+#include <haf/include/resources/iresource_configurator.hpp>
+#include <haf/include/scene_components/iscene_metrics.hpp>
+#include <haf/include/render/renderizables.hpp>
+#include <haf/include/render/renderizable_builder.hpp>
+#include <haf/include/scene/renderizables_scene_node.hpp>
 
-using namespace mtps;
+using namespace htps;
 using namespace haf;
 using namespace haf::scene;
+using namespace haf::render;
 
 namespace zoper
 {
-
-constexpr u32 PointsPerQuad = 6U;
 
 MenuScene::MenuScene() : BaseClass{StaticTypeName}
 {}
 
 MenuScene::~MenuScene() = default;
 
-str MenuScene::nextSceneName() { return GAME_SCENE_NAME; }
+str MenuScene::nextSceneName()
+{
+    return GAME_SCENE_NAME;
+}
 
 void MenuScene::onCreated()
 {
     BaseClass::onCreated();
 
-    auto& resources_configurator =
-        systemInterface<res::IResourcesConfigurator>();
-    resources_configurator.setResourceConfigFile("resources.txt");
-    resources_configurator.loadSection("menu");
+    // Set the default view for this scene
+    subSystem<ISceneMetrics>()->setViewRect(DefaultView);
 
-    createStandardBackground(this);
+    // Load the necessary resources
+    auto resources_configurator{
+        subSystem<res::IResourcesConfigurator>()};
+    resources_configurator->setResourceConfigFile("resources.txt");
+    resources_configurator->setResourcesDirectory("resources/");
+    resources_configurator->loadSection("menu");
 
-    auto resources_viewer = dataWrapper<res::ResourceView>();
-    auto logo =
-        renderizableBuilder()
-            .name("mainLogo")
-            .figType(FigType_t::Quad)
-            .box(Rectf32{500, 150, 1000, 500})
-            .texture(resources_viewer->getTexture(MainMenuResources::LogoId))
-            .create();
+    // Create the background
+    auto main_menu_background{
+        createSceneNode<RenderizablesSceneNode>("main_menu_background")};
+    createStandardBackground(main_menu_background->renderizableBuilder());
 
-    auto mainMenu(createSceneNode<MainMenu>(MainMenu::ClassName));
+    // Create the logo
+    main_menu_background->renderizableBuilder()
+        .name("mainLogo")
+        .figType(FigType_t::Quad)
+        .box(Rectf32{500.f, 150.f, 1000.f, 500.f})
+        .texture(subSystem<res::IResourceRetriever>()->getTexture(
+            MainMenuResources::LogoId))
+        .create();
 
-    mainMenu->MenuFinished.connect([this](const s32 status) {
-        if (status == 0)
-        {
-            dataWrapper<SceneControl>()->requestExit();
-        }
-        dataWrapper<SceneControl>()->switchToNextScene();
-    });
+    createSceneNode<MainMenu>(MainMenu::StaticTypeName)
+        ->MenuFinished.connect([this](MenuFinishedStatus const status) {
+            if (status == MenuFinishedStatus::Backward)
+            {
+                subSystem<ISceneControl>()->requestExit();
+            }
+        });
+
+    auto a = createSceneNode<DisplayVarConsole>("a");
+
+    installDebugUtils();
 }
 }  // namespace zoper

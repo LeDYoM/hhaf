@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef HAF_LOG_LOG_ASSERTER_INCLUDE_HPP
 #define HAF_LOG_LOG_ASSERTER_INCLUDE_HPP
 
@@ -18,7 +16,8 @@ template <typename LogDisplayerClass>
 struct LogAsserter
 {
     template <typename... Args>
-    static constexpr void log_assert(const bool condition, Args&&... args) noexcept
+    static constexpr void log_assert(const bool condition,
+                                     Args&&... args)
     {
         // Store the condition in a variable to execute it only once.
         const bool cond{condition};
@@ -26,10 +25,18 @@ struct LogAsserter
         if (!cond)
         {
             LogDisplayerClass::error(std::forward<Args>(args)...);
-            assert(cond);
+            if (UseLowLevelAssert)
+            {
+                assert(cond);
+            }
         }
     }
+
+    static bool UseLowLevelAssert;
 };
+
+template <typename LogDisplayerClass>
+bool LogAsserter<LogDisplayerClass>::UseLowLevelAssert{true};
 
 }  // namespace logger
 

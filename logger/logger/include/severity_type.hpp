@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef HAF_LOG_SEVERITY_TYPE_INCLUDE_HPP
 #define HAF_LOG_SEVERITY_TYPE_INCLUDE_HPP
 
@@ -44,7 +42,7 @@ struct SeverityType
                 return "<ERROR> :";
                 break;
             case severity_type_t::none:
-                return "";
+                return "<NONE?> :";
                 break;
             default:
                 // That should not happen.
@@ -52,11 +50,12 @@ struct SeverityType
         }
     }
 
+    static constexpr severity_type_t MinSeverity = severity_type_t::debug;
+
     template <severity_type_t severity_type>
     static constexpr bool ShowSeverity =
         (static_cast<std::underlying_type_t<severity_type_t>>(severity_type) >=
-         static_cast<std::underlying_type_t<severity_type_t>>(
-             severity_type_t::debug));
+         static_cast<std::underlying_type_t<severity_type_t>>(MinSeverity));
 };
 
 }  // namespace logger

@@ -7,17 +7,15 @@
 #include <logger/include/severity_type.hpp>
 #include <hlog/include/thread_commiter.hpp>
 
-#include <mtypes/include/str.hpp>
+#include <htypes/include/str.hpp>
 
 namespace logger
 {
-    template struct Log<true, mtps::str, MixinCommiter<haf::ThreadCommiter>>;
-    template struct LogDisplayer<haf::LogClass, SeverityType>;
-    template struct LogAsserter<haf::DisplayLog>;
-    template struct LogInitializer<haf::LogClass>;
-}
+template struct Log<true, htps::str, MixinCommiter<haf::ThreadCommiter>>;
+template struct LogDisplayer<haf::LogClass, SeverityType>;
+template struct LogAsserter<haf::DisplayLog>;
+template struct LogInitializer<haf::LogClass>;
+}  // namespace logger
 
 namespace haf
-{
-
-} // namespace haf
+{}  // namespace haf

@@ -1,25 +1,24 @@
-#pragma once
-
 #ifndef HAF_BACKEND_SFML_TTFONTFACTORY_HPP
 #define HAF_BACKEND_SFML_TTFONTFACTORY_HPP
 
-#include <mtypes/include/types.hpp>
-#include <mtypes/include/vector2d.hpp>
+#include <htypes/include/types.hpp>
+#include <htypes/include/vector2d.hpp>
 
 #include <backend_dev/include/iresourcefactories.hpp>
 #include "ttfont.hpp"
 
 namespace haf::backend::sfmlb
 {
-    class TTFontFactory : public ITTFontFactory
-    {
-    public:
-        virtual ITTFont* loadFromFile(const mtps::str &file) override;
-        ITTFont *loadFromRawMemory(mtps::RawMemory *raw_memory) override;
-        ~TTFontFactory() override;
-    private:
-        mtps::vector<mtps::uptr<TTFont>> m_fontCache;
-    };
-}
+class TTFontFactory : public ITTFontFactory
+{
+public:
+    virtual ITTFont* loadFromFile(const htps::str& file) override;
+    ITTFont* loadFromRawMemory(htps::RawMemory* raw_memory) override;
+    ~TTFontFactory() override;
+
+private:
+    htps::vector<htps::uptr<TTFont>> font_cache_;
+};
+}  // namespace haf::backend::sfmlb
 
 #endif

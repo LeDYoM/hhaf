@@ -1,10 +1,8 @@
-#pragma once
-
 #ifndef HAF_BACKEND_IWINDOW_INCLUDE_HPP
 #define HAF_BACKEND_IWINDOW_INCLUDE_HPP
 
-#include <mtypes/include/types.hpp>
-#include <mtypes/include/str.hpp>
+#include <htypes/include/types.hpp>
+#include <htypes/include/str.hpp>
 #include "iresourceinfo.hpp"
 
 namespace haf::backend
@@ -37,26 +35,28 @@ public:
      * @return true The window is successfully created.
      * @return false Error creating the Window.
      */
-    virtual bool createWindow(const mtps::u32 width,
-                              const mtps::u32 height,
-                              const mtps::u8 red_bpp,
-                              const mtps::u8 green_bpp,
-                              const mtps::u8 blue_bpp,
-                              const mtps::u8 alpha_bpp,
+    virtual bool createWindow(const htps::u32 width,
+                              const htps::u32 height,
+                              const htps::u8 red_bpp,
+                              const htps::u8 green_bpp,
+                              const htps::u8 blue_bpp,
+                              const htps::u8 alpha_bpp,
                               const unsigned int num_extra_parameters,
                               const unsigned int* const extra_parameters) = 0;
+
+    virtual bool isAlreadyCreated() const = 0;
 
     virtual bool setActive(const bool activate) = 0;
 
     virtual bool processEvents() = 0;
 
     virtual void display()                          = 0;
-    virtual void setWindowTitle(mtps::str newTitle) = 0;
+    virtual void setWindowTitle(htps::str newTitle) = 0;
     virtual void closeWindow()                      = 0;
 
     virtual IRenderTarget* renderTarget() = 0;
     virtual IInputDriver* inputDriver()   = 0;
-    virtual mtps::str settingsInfo()      = 0;
+    virtual htps::str settingsInfo()      = 0;
 };
 
 }  // namespace haf::backend

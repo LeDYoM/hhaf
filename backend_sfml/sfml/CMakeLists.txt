@@ -14,10 +14,6 @@ if (NOT use_system_sfml)
     #  URL "https://github.com/SFML/SFML/archive/${SFML_VERSION}.zip"
     #)
 
-    set(CMAKE_CXX_STANDARD 11)
-    set(CMAKE_CXX_STANDARD_REQUIRED ON)
-    set(CMAKE_CXX_EXTENSIONS OFF)
-
     FetchContent_Declare(SFML
         GIT_REPOSITORY https://github.com/SFML/SFML.git
         GIT_TAG ${SFML_VERSION} #Always build with this tag, so we're sure it is stable.

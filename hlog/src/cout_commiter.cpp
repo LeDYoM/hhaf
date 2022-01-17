@@ -4,5 +4,5 @@
 
 namespace haf
 {
-//template logger::StreamCommiter<&(std::cout)>;
+// template logger::StreamCommiter<&(std::cout)>;
 }  // namespace haf

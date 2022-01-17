@@ -1,10 +1,11 @@
 #include "catch.hpp"
 
-#include <mtypes/include/types.hpp>
-#include <haf/scene/include/scenenode.hpp>
-#include <haf/scene/include/scene.hpp>
+#include <htypes/include/types.hpp>
+#include <haf/include/scene/scene_node.hpp>
+#include <haf/include/scene/scene.hpp>
+#include <haf/include/scene/scenenode_cast.hpp>
 
-using namespace mtps;
+using namespace htps;
 
 class TestScene : public haf::scene::Scene
 {
@@ -29,9 +30,9 @@ TEST_CASE("SceneNodeParent::SceneNodeParent", "[SceneNode][SceneNodeParent]")
     using namespace haf::scene;
 
     auto test_scene = msptr<TestScene>("TestScene");
-    auto scene_node_test(
-        test_scene->createSceneNode<TestSceneNode>("TestSceneNode_test"));
-    auto scene_node(scene_node_test->createSceneNode("TestSceneNode"));
+    auto scene_node_test{
+        test_scene->createSceneNode<TestSceneNode>("TestSceneNode_test")};
+    auto scene_node{scene_node_test->createSceneNode("TestSceneNode")};
 
     SECTION("Get Parent")
     {
@@ -57,12 +58,12 @@ TEST_CASE("SceneNodeParent::SceneNodeParent", "[SceneNode][SceneNodeParent]")
         CHECK(scene_node->ancestor<Scene>() == test_scene.get());
         CHECK(scene_node->ancestor<UnusedScene>() == nullptr);
         CHECK(scene_node->ancestor<TestScene>() == test_scene.get());
-        CHECK(scene_node->ancestor() == scene_node_test.get());
+        CHECK(scene_node->ancestor<SceneNode>() == scene_node_test.get());
 
         CHECK(scene_node_test->ancestor<TestSceneNode>() == nullptr);
         CHECK(scene_node_test->ancestor<Scene>() == test_scene.get());
         CHECK(scene_node_test->ancestor<UnusedScene>() == nullptr);
         CHECK(scene_node_test->ancestor<TestScene>() == test_scene.get());
-        CHECK(scene_node_test->ancestor() == test_scene.get());
+        CHECK(scene_node_test->ancestor<SceneNode>() == test_scene.get());
     }
 }

@@ -3,17 +3,21 @@
 #include "tokenzones.hpp"
 #include "player.hpp"
 #include "levelproperties.hpp"
+#include "scoreutils.hpp"
+#include "boardutils.hpp"
 
-#include <haf/scene/include/scenenode.hpp>
-#include <haf/scene_nodes/include/tablenode.hpp>
-#include <haf/scene_nodes/include/scene_node_size.hpp>
-#include <haf/scene_components/include/scenemetricsview.hpp>
-#include <haf/render/include/renderizable.hpp>
+#include <haf/include/scene/scene_node.hpp>
+#include <haf/include/scene_nodes/scene_node_table.hpp>
+#include <haf/include/scene_nodes/scene_node_size.hpp>
+#include <haf/include/scene_components/iscene_metrics_view.hpp>
+#include <haf/include/render/renderizable.hpp>
+#include <haf/include/scene/scenenode_cast.hpp>
+#include <haf/include/component/component_container.hpp>
 
 #include <boardmanager/include/boardmanager.hpp>
 #include <boardmanager/include/itile.hpp>
 
-using namespace mtps;
+using namespace htps;
 using namespace haf::scene;
 using namespace haf::scene::nodes;
 
@@ -29,15 +33,14 @@ void BoardGroup::configure(vector2dst size,
     prop<TableSize>().set(size);
     auto const tableSize{prop<TableSize>().get()};
 
-    Rectf32 textBox{dataWrapper<SceneMetricsView>()->currentView()};
+    Rectf32 textBox{subSystem<ISceneMetricsView>()->currentView()};
     prop<Position>() = textBox.leftTop();
-    sceneNodeCast<TableNode<BoardTileSceneNode>>(this)
-        ->prop<SceneNodeSize>()
-        .set(textBox.size());
+    prop<SceneNodeSize>().set(textBox.size());
 
     Rectf32 const bBox{textBox};
     Rectf32 tileBox({}, cellSize());
 
+    // Create the nodes to render the tiles
     for (size_type y{0U}; y < tableSize.y; ++y)
     {
         for (size_type x{0U}; x < tableSize.x; ++x)
@@ -47,11 +50,12 @@ void BoardGroup::configure(vector2dst size,
         }
     }
 
-    board_model_ = addComponentOfType<board::BoardManager>();
-    board_model_->initialize(tableSize, this);
+    // Create and initialize the BoardManager
+    auto board_model{component<board::BoardManager>()};
+    board_model->initialize(tableSize, this);
 
-    board_model_->setBackgroundFunction(
-        [](const vector2dst& position) -> board::BackgroundData {
+    board_model->setBackgroundFunction(
+        [](const vector2dst& position) -> board::BoardManager::BackgroundData {
             return ((TokenZones::pointInCenter(position)) ? (1) : (0));
         });
 
@@ -59,10 +63,8 @@ void BoardGroup::configure(vector2dst size,
     setLevel(level_properties_->currentLevel());
     addPlayer();
 
-    level_properties_->levelChanged.connect([this](const auto level) {
-        // Forward current leve
-        setLevel(level);
-    });
+    level_properties_->levelChanged.connect(
+        make_function(this, &BoardGroup::setLevel));
 }
 
 void BoardGroup::addPlayer()
@@ -70,16 +72,16 @@ void BoardGroup::addPlayer()
     DisplayLog::info("Adding player tile at ",
                      TokenZones::centerRect.leftTop());
     LogAsserter::log_assert(player_ == nullptr, "Player already initialized");
+
     // Create the player instance
     player_ = tokens_scene_node->createSceneNode<Player>("playerNode");
-    player_->configure(TokenZones::centerRect.leftTop(),
-                       rectFromSize(tileSize()), board2SceneFactor());
 
     // Add it to the board and to the scene nodes
-    board_model_->setTile(player_->boardPosition(), player_);
+    componentOfType<board::BoardManager>()->setTile(
+        TokenZones::centerRect.leftTop(), player_);
 }
 
-void BoardGroup::createNewToken(const board::BoardTileData data,
+void BoardGroup::createNewToken(const BoardTileData data,
                                 const vector2dst& board_position,
                                 const vector2df& size)
 {
@@ -93,13 +95,12 @@ void BoardGroup::createNewToken(const board::BoardTileData data,
 
     // Set the position in the scene depending on the board position
     new_tile_token->prop<Position>().set(board2Scene(board_position));
+    new_tile_token->setBox(rectFromSize(size));
 
     // Add it to the board
-    board_model_->setTile(board_position, new_tile_token);
-    board_model_->changeTileData(board_position, data);
-    // Configure it.
-    new_tile_token->configure(level_properties_, rectFromSize(size),
-                              board2SceneFactor());
+    auto board_model{componentOfType<board::BoardManager>()};
+    board_model->setTile(board_position, new_tile_token);
+    board_model->changeTileData(board_position, data);
 }
 
 void BoardGroup::tileRemoved(const vector2dst, board::SITilePointer& tile)
@@ -216,16 +217,18 @@ Color BoardGroup::getBackgroundTileColor(const size_type level,
 bool BoardGroup::moveTileInDirection(Direction const direction,
                                      vector2dst const position)
 {
+    auto board_model{componentOfType<board::BoardManager>()};
+
     // Is the current tile position empty?
-    if (!board_model_->tileEmpty(position))
+    if (!board_model->tileEmpty(position))
     {
         // If not, what about the next position to check, is empty?
         const auto next = direction.applyToVector(position);
 
-        LogAsserter::log_assert(board_model_->tileEmpty(next),
+        LogAsserter::log_assert(board_model->tileEmpty(next),
                                 "Trying to move a token to a non empty tile");
-        board_model_->moveTile(position, next);
-        return (TokenZones::toBoardBackgroundType(board_model_->backgroundType(
+        board_model->moveTile(position, next);
+        return (TokenZones::toBoardBackgroundType(board_model->backgroundData(
                     next)) == TokenZones::BoardBackgroundType::Center);
     }
     return false;
@@ -235,22 +238,27 @@ bool BoardGroup::moveTowardsCenter(Direction const direction,
                                    vector2dst const& position)
 {
     bool moved_to_center{false};
+    auto board_model{componentOfType<board::BoardManager>()};
 
     // Is the current tile position empty?
-    if (!board_model_->tileEmpty(position))
+    if (!board_model->tileEmpty(position))
     {
         // If not, what about the next position to check, is empty?
         const auto next = direction.applyToVector(position);
 
-        if (!board_model_->tileEmpty(next))
+        if (!board_model->tileEmpty(next))
         {
             // If the target position where to move the
             // token is occupied, move the this target first.
             moved_to_center = moveTowardsCenter(direction, next);
         }
-        board_model_->moveTile(position, next);
-        if (TokenZones::toBoardBackgroundType(board_model_->backgroundType(
-                next)) == TokenZones::BoardBackgroundType::Center)
+        board_model->moveTile(position, next);
+        auto dest_tile{
+            std::dynamic_pointer_cast<Token>(board_model->getTile(next))};
+
+        LogAsserter::log_assert(dest_tile != nullptr, "Error moving the tile!");
+
+        if (dest_tile->isInCenter())
         {
             LogAsserter::log_assert(!moved_to_center, "Double game over!");
             moved_to_center = true;
@@ -261,8 +269,8 @@ bool BoardGroup::moveTowardsCenter(Direction const direction,
 
 vector2df BoardGroup::board2SceneFactor() const
 {
-    return dataWrapper<SceneMetricsView>()->currentView().size() /
-        board_model_->size();
+    return subSystem<ISceneMetricsView>()->currentView().size() /
+        componentOfType<board::BoardManager>()->size();
 }
 
 vector2df BoardGroup::board2Scene(const vector2dst& bPosition) const
@@ -275,32 +283,33 @@ vector2df BoardGroup::tileSize() const
     return board2Scene({1, 1});
 }
 
-mtps::sptr<board::BoardManager> BoardGroup::boardModel() noexcept
+htps::sptr<board::BoardManager> BoardGroup::boardManager() noexcept
 {
-    return board_model_;
+    return componentOfType<board::BoardManager>();
 }
 
-const mtps::sptr<const board::BoardManager> BoardGroup::boardModel()
+const htps::sptr<const board::BoardManager> BoardGroup::boardManager()
     const noexcept
 {
-    return board_model_;
+    return componentOfType<board::BoardManager>();
 }
 
-mtps::sptr<scene::SceneNode> BoardGroup::tokensSceneNode() noexcept
+htps::sptr<scene::SceneNode> BoardGroup::tokensSceneNode() noexcept
 {
     return tokens_scene_node;
 }
 
-const mtps::sptr<scene::SceneNode> BoardGroup::tokensSceneNode() const noexcept
+const htps::sptr<scene::SceneNode> BoardGroup::tokensSceneNode() const noexcept
 {
     return tokens_scene_node;
 }
 
-mtps::sptr<Player> BoardGroup::player() noexcept
+htps::sptr<Player> BoardGroup::player() noexcept
 {
     return player_;
 }
-const mtps::sptr<Player> BoardGroup::player() const noexcept
+
+const htps::sptr<Player> BoardGroup::player() const noexcept
 {
     return player_;
 }

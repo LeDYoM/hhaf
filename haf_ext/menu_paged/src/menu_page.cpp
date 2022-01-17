@@ -1,14 +1,15 @@
 #include <menu_paged/include/menu_page.hpp>
 #include <menu_paged/include/menu_paged.hpp>
 #include <menu_paged/include/menu_paged_input_component.hpp>
+#include <haf/include/component/component_container.hpp>
 
 #include <hlog/include/hlog.hpp>
-#include <haf/input/include/key.hpp>
-#include <haf/scene_components/include/discretetextcomponent.hpp>
+#include <haf/include/input/key.hpp>
+#include <haf/include/scene_components/discretetextcomponent.hpp>
 
-#include <mtypes/include/function.hpp>
+#include <htypes/include/function.hpp>
 
-using namespace mtps;
+using namespace htps;
 
 namespace haf::scene
 {
@@ -18,17 +19,12 @@ void MenuPage::onCreated()
 {
     BaseClass::onCreated();
 
-    auto input = addComponentOfType<MenuPageInputComponent>();
+    auto input{component<MenuPageInputComponent>()};
     input->Up.connect({this, &MenuPage::goUp});
     input->Down.connect({this, &MenuPage::goDown});
     input->Left.connect({this, &MenuPage::goLeft});
     input->Right.connect({this, &MenuPage::goRight});
     input->Selected.connect({this, &MenuPage::goSelected});
-}
-
-rptr<MenuPaged> MenuPage::parentMenuPaged()
-{
-    return parentAs<MenuPaged>();
 }
 
 rptr<MenuPaged const> MenuPage::parentMenuPaged() const
@@ -58,7 +54,8 @@ size_type MenuPage::SelectedOptionAtRow(const size_type row) const
     if (row < prop<TableSize>().get().y)
     {
         auto node(nodeAt({columnForOptions, row}));
-        if (auto discreteText = node->componentOfType<DiscreteTextComponent>())
+        if (auto discreteText =
+                node->componentOfType<DiscreteTextComponent>())
         {
             return discreteText->index();
         }
@@ -102,7 +99,7 @@ void MenuPage::configure(vector<sptr<MenuPagedOption>> options,
                              make_str("option", counter)));
             standarizeText(discreteTextLabel);
             auto discreteTextComponent(
-                discreteTextLabel->addComponentOfType<DiscreteTextComponent>());
+                discreteTextLabel->component<DiscreteTextComponent>());
             discreteTextComponent->data.set(option->option().options());
         }
 
@@ -112,7 +109,7 @@ void MenuPage::configure(vector<sptr<MenuPagedOption>> options,
 
     Selection.connect(
         [this, options](const size_type index, const s32 /*selection*/) {
-            LogAsserter::log_assert(index <= static_cast<s32>(options.size()),
+            LogAsserter::log_assert(index <= options.size(),
                                     "Logical error: Received invalid "
                                     "index in Selection");
 
@@ -140,22 +137,24 @@ vector<s32> MenuPage::optionsSelected() const
     for (size_type index{0U}; index < prop<TableSize>().get().y; ++index)
     {
         result.emplace_back(
-            (nodeHasOptions(index)) ? static_cast<s32>(optionsLabelAt(index)->index()) : -1);
+            (nodeHasOptions(index))
+                ? static_cast<s32>(optionsLabelAt(index)->index())
+                : -1);
     }
     return result;
 }
 
 void MenuPage::setSelectedItem(const size_type index)
 {
-    m_previouslySelectedItem = m_selectedItem;
-    m_selectedItem           = index;
+    previously_selected_item_ = selected_item_;
+    selected_item_           = index;
     updateSelection();
 }
 
 void MenuPage::updateSelection()
 {
-    setColorToLine(m_previouslySelectedItem, normalColor());
-    setColorToLine(m_selectedItem, selectedColor());
+    setColorToLine(previously_selected_item_, normalColor());
+    setColorToLine(selected_item_, selectedColor());
 }
 
 void MenuPage::setColorToLine(const size_type index, const Color& color)
@@ -178,32 +177,32 @@ void MenuPage::standarizeText(const sptr<ContainedElement>& ntext)
 
 void MenuPage::goDown()
 {
-    m_previouslySelectedItem = m_selectedItem;
-    setSelectedItem((m_selectedItem < (prop<TableSize>().get().y - 1U))
-                        ? (m_selectedItem + 1U)
+    previously_selected_item_ = selected_item_;
+    setSelectedItem((selected_item_ < (prop<TableSize>().get().y - 1U))
+                        ? (selected_item_ + 1U)
                         : (0U));
 }
 
 void MenuPage::goUp()
 {
-    m_previouslySelectedItem = m_selectedItem;
-    setSelectedItem((m_selectedItem > 0U) ? (m_selectedItem - 1U)
+    previously_selected_item_ = selected_item_;
+    setSelectedItem((selected_item_ > 0U) ? (selected_item_ - 1U)
                                           : (prop<TableSize>().get().y - 1U));
 }
 
 void MenuPage::goLeft()
 {
-    if (nodeHasOptions(m_selectedItem))
+    if (nodeHasOptions(selected_item_))
     {
-        optionsLabelAt(m_selectedItem)->decrementIndex();
+        optionsLabelAt(selected_item_)->decrementIndex();
     }
 }
 
 void MenuPage::goRight()
 {
-    if (nodeHasOptions(m_selectedItem))
+    if (nodeHasOptions(selected_item_))
     {
-        optionsLabelAt(m_selectedItem)->incrementIndex();
+        optionsLabelAt(selected_item_)->incrementIndex();
     }
 }
 
@@ -211,13 +210,13 @@ void MenuPage::goSelected()
 {
     s32 option_selected_in_node{-1};
 
-    if (nodeHasOptions(m_selectedItem))
+    if (nodeHasOptions(selected_item_))
     {
         option_selected_in_node =
-            static_cast<s32>(optionsLabelAt(m_selectedItem)->index());
+            static_cast<s32>(optionsLabelAt(selected_item_)->index());
     }
 
-    Selection(m_selectedItem, option_selected_in_node);
+    Selection(selected_item_, option_selected_in_node);
 }
 
 sptr<DiscreteTextComponent> MenuPage::optionsLabelAt(const size_type y) const

@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef ZOOPER_GAME_RESOURCES_INCLUDE_HPP
 #define ZOOPER_GAME_RESOURCES_INCLUDE_HPP
 
@@ -10,6 +8,6 @@ class GameResources
 public:
     static constexpr char ScoreFontId[] = "score_font";
 };
-} // namespace zoper
+}  // namespace zoper
 
 #endif

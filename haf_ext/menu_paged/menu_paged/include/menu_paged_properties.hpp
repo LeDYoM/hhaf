@@ -1,37 +1,28 @@
 #ifndef HAF_EXT_MENUPAGED_MENUPAGED_PROPERTIES_INCLUDE_HPP
 #define HAF_EXT_MENUPAGED_MENUPAGED_PROPERTIES_INCLUDE_HPP
 
-#include <mtypes/include/types.hpp>
-#include <mtypes/include/grouping_property.hpp>
-#include <haf/resources/include/ifont.hpp>
-#include <haf/scene/include/color.hpp>
+#include <htypes/include/types.hpp>
+#include <haf/include/types/property_group.hpp>
+#include <haf/include/resources/ifont.hpp>
+#include <haf/include/scene/color.hpp>
 
 namespace haf::scene
 {
-struct NormalTextFont
-{
-    using value_type = mtps::sptr<haf::res::IFont>;
-};
+struct NormalTextFont : PropertyStateBase<types::sptr<res::IFont>> {};
 
-struct NormalColor
-{
-    using value_type = haf::scene::Color;
-};
+struct NormalColor : PropertyStateBase<Color> {};
 
-struct SelectedColor
-{
-    using value_type = haf::scene::Color;
-};
+struct SelectedColor : PropertyStateBase<Color> {};
 
-struct SceneNodeSizeForPages
-{
-    using value_type = mtps::vector2df;
-};
+struct SceneNodeSizeForPages : PropertyStateBase<htps::vector2df> {};
 
-using MenuPagedProperties = mtps::PropertyGroup<NormalTextFont,
+struct FinishSceneAtEnd : PropertyStateBase<bool> {};
+
+using MenuPagedProperties = types::PropertyGroup<NormalTextFont,
                                                 NormalColor,
                                                 SelectedColor,
-                                                SceneNodeSizeForPages>;
+                                                SceneNodeSizeForPages,
+                                                FinishSceneAtEnd>;
 
 }  // namespace haf::scene
 

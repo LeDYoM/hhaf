@@ -1,11 +1,9 @@
-#pragma once
-
 #ifndef ZOPER_BOARDUTILS_INCLUDE_HPP
 #define ZOPER_BOARDUTILS_INCLUDE_HPP
 
-#include <mtypes/include/types.hpp>
-#include <mtypes/include/vector.hpp>
-#include <mtypes/include/function.hpp>
+#include <htypes/include/types.hpp>
+#include <htypes/include/vector.hpp>
+#include <htypes/include/function.hpp>
 
 #include "direction.hpp"
 
@@ -25,10 +23,9 @@ public:
      * @param updatePredicate Function to call for each position
      */
     static void for_each_coordinate(
-        const mtps::vector2dst& startPosition,
-        const Direction& direction,
-        mtps::function<bool(const mtps::vector2dst&, const Direction&)>
-            updatePredicate);
+        htps::vector2dst startPosition,
+        Direction const& direction,
+        htps::function<bool(const htps::vector2dst&)> updatePredicate);
 
     /**
      * @brief For a rectangle, given a start point and a direction, the update
@@ -42,12 +39,10 @@ public:
      * @param updatePredicate Function to call for each position
      */
     static void for_each_coordinate_in_rect(
-        const mtps::vector2dst& startPosition,
-        const Direction& direction,
-        const mtps::vector2dst& board_size,
-        mtps::function<bool(const mtps::vector2dst&, const Direction&)>
-            updatePredicate);
-
+        htps::vector2dst const& startPosition,
+        Direction const& direction,
+        htps::vector2dst const& board_size,
+        htps::function<bool(const htps::vector2dst&)> updatePredicate);
 };
 }  // namespace zoper
 

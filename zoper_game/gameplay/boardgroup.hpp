@@ -1,15 +1,14 @@
-#pragma once
-
 #ifndef ZOPER_BOARDGROUP_HPP
 #define ZOPER_BOARDGROUP_HPP
 
-#include <mtypes/include/vector2d.hpp>
+#include <htypes/include/vector2d.hpp>
+#include <htypes/include/connection.hpp>
 
-#include <haf/scene/include/scenenode.hpp>
-#include <haf/scene_nodes/include/tablenode.hpp>
-#include <haf/scene_nodes/include/tablenode_properties.hpp>
+#include <haf/include/scene/scene_node.hpp>
+#include <haf/include/scene_nodes/scene_node_table.hpp>
+#include <haf/include/scene_nodes/scene_node_table_properties.hpp>
 
-#include "boardtilescenenode.hpp"
+#include "boardtilescene_node.hpp"
 #include "direction.hpp"
 
 #include <boardmanager/include/boardmanager.hpp>
@@ -25,26 +24,30 @@ class Player;
 class BoardGroup : public haf::scene::nodes::TableNode<BoardTileSceneNode>,
                    public haf::board::IBoardManagerActuator
 {
+
 private:
     using BaseClass = haf::scene::nodes::TableNode<BoardTileSceneNode>;
-    using BaseClass::prop;    
+    using BaseClass::prop;
+
 public:
+    using BoardTileData = haf::board::IBoardManagerActuator::BoardTileData;
     using BaseClass::BaseClass;
+    constexpr static char const StaticName[] = "BoardGroup";
 
     ~BoardGroup() override;
 
-    void configure(mtps::vector2dst size,
-                   mtps::sptr<LevelProperties> level_properties);
-    void createNewToken(const haf::board::BoardTileData data,
-                        const mtps::vector2dst& board_position,
-                        const mtps::vector2df& size);
+    void configure(htps::vector2dst size,
+                   htps::sptr<LevelProperties> level_properties);
+    void createNewToken(const BoardTileData data,
+                        const htps::vector2dst& board_position,
+                        const htps::vector2df& size);
 
-    void tileRemoved(const mtps::vector2dst,
+    void tileRemoved(const htps::vector2dst,
                      haf::board::SITilePointer&) override;
-    void setLevel(const mtps::size_type level);
+    void setLevel(const htps::size_type level);
 
-    haf::scene::Color getBackgroundTileColor(const mtps::size_type level,
-                                             mtps::vector2dst position,
+    haf::scene::Color getBackgroundTileColor(const htps::size_type level,
+                                             htps::vector2dst position,
                                              const bool isCenter) const;
 
     /**
@@ -57,27 +60,27 @@ public:
      * @return false The tile is not in the center
      */
     bool moveTileInDirection(Direction const direction,
-                             mtps::vector2dst const position);
+                             htps::vector2dst const position);
 
     bool moveTowardsCenter(Direction const direction,
-                           mtps::vector2dst const& position);
+                           htps::vector2dst const& position);
 
-    mtps::sptr<haf::board::BoardManager> boardModel() noexcept;
-    const mtps::sptr<const haf::board::BoardManager> boardModel() const noexcept;
-    mtps::sptr<haf::scene::SceneNode> tokensSceneNode() noexcept;
-    const mtps::sptr<haf::scene::SceneNode> tokensSceneNode() const noexcept;
-    mtps::sptr<Player> player() noexcept;
-    const mtps::sptr<Player> player() const noexcept;
+    htps::sptr<haf::board::BoardManager> boardManager() noexcept;
+    const htps::sptr<const haf::board::BoardManager> boardManager()
+        const noexcept;
+    htps::sptr<haf::scene::SceneNode> tokensSceneNode() noexcept;
+    const htps::sptr<haf::scene::SceneNode> tokensSceneNode() const noexcept;
+    htps::sptr<Player> player() noexcept;
+    const htps::sptr<Player> player() const noexcept;
 
-    mtps::vector2df board2SceneFactor() const;
-    mtps::vector2df board2Scene(const mtps::vector2dst& bPosition) const;
-    mtps::vector2df tileSize() const;
+    htps::vector2df board2SceneFactor() const;
+    htps::vector2df board2Scene(const htps::vector2dst& bPosition) const;
+    htps::vector2df tileSize() const;
 
 private:
-    mtps::sptr<haf::board::BoardManager> board_model_;
-    mtps::sptr<Player> player_;
-    mtps::sptr<haf::scene::SceneNode> tokens_scene_node;
-    mtps::sptr<LevelProperties> level_properties_;
+    htps::sptr<Player> player_;
+    htps::sptr<haf::scene::SceneNode> tokens_scene_node;
+    htps::sptr<LevelProperties> level_properties_;
 
     void addPlayer();
 };

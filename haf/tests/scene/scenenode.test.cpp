@@ -1,10 +1,10 @@
 #include "catch.hpp"
 
-#include <mtypes/include/types.hpp>
-#include <haf/scene/include/scenenode.hpp>
-#include <haf/scene/include/scene.hpp>
+#include <htypes/include/types.hpp>
+#include <haf/include/scene/scene_node.hpp>
+#include <haf/include/scene/scene.hpp>
 
-using namespace mtps;
+using namespace htps;
 
 auto unitTestScene()
 {

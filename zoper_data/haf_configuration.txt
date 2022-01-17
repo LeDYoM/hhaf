@@ -1,0 +1,4 @@
+{
+    simulation_configuration_file_fake: "simulation_configuration.txt",
+    window_configuration_file: "window_configuration.txt"
+}

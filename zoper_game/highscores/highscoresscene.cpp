@@ -6,12 +6,14 @@
 #include "../loaders/highscoresresources.hpp"
 #include "../common_scene_nodes.hpp"
 
-#include <haf/scene_components/include/statescontroller.hpp>
-#include <haf/input/include/inputcomponent.hpp>
-#include <haf/resources/include/resourceview.hpp>
-#include <haf/scene_components/include/scenecontrol.hpp>
-#include <haf/resources/include/iresourceconfigurator.hpp>
-#include <haf/system/include/interfaceaccess.hpp>
+#include <haf/include/scene_components/states_controller_component.hpp>
+#include <haf/include/input/input_component.hpp>
+#include <haf/include/resources/iresource_retriever.hpp>
+#include <haf/include/resources/iresource_configurator.hpp>
+#include <haf/include/scene_components/iscene_control.hpp>
+#include <haf/include/render/renderizables.hpp>
+#include <haf/include/render/renderizable_builder.hpp>
+#include <haf/include/component/component_container.hpp>
 
 namespace zoper
 {
@@ -24,33 +26,40 @@ HighScoresScene::HighScoresScene() : Scene{StaticTypeName}
 
 HighScoresScene::~HighScoresScene() = default;
 
-mtps::str HighScoresScene::nextSceneName() { return MENU_SCENE_NAME; }
+htps::str HighScoresScene::nextSceneName()
+{
+    return MENU_SCENE_NAME;
+}
 
 void HighScoresScene::onCreated()
 {
     BaseClass::onCreated();
 
-    auto& resources_configurator =
-        systemInterface<res::IResourcesConfigurator>();
-    resources_configurator.setResourceConfigFile("resources.txt");
-    resources_configurator.loadSection("high_scores");
+    auto resources_configurator{
+        subSystem<res::IResourcesConfigurator>()};
+    resources_configurator->setResourceConfigFile("resources.txt");
+    resources_configurator->loadSection("high_scores");
 
-    auto statesController(
-        addComponentOfType<StatesController<HighScoresSceneStates>>());
-    auto resources_viewer = dataWrapper<res::ResourceView>();
+    auto statesController{
+        component<StatesControllerComponent<HighScoresSceneStates>>()};
 
-    m_normalFont =
-        resources_viewer->getTTFont(HighScoresResources::MenuFontId)->font(72);
-    m_normalColor   = colors::Blue;
-    m_selectedColor = colors::Red;
+    normal_font_ = 
+                       subSystem<res::IResourceRetriever>()
+                       ->getTTFont(HighScoresResources::MenuFontId)
+                       ->font(72);
+    normal_color_   = colors::Blue;
+    selected_color_ = colors::Red;
 
-    createStandardBackground(this);
+    createStandardBackground(createSceneNode<RenderizablesSceneNode>(
+                                  "high_scores_main_menu_background")
+                                  ->renderizableBuilder());
 
-    auto highScoreTextController(
-        createSceneNode<HighScoreTextController>("HighScoreTextController"));
+    auto highScoreTextController{
+        createSceneNode<HighScoreTextController>("HighScoreTextController")};
     highScoreTextController->Finished.connect([this, statesController]() {
-        dataWrapper<SceneControl>()->switchToNextScene();
+        subSystem<ISceneControl>()->switchToNextScene();
     });
+    installDebugUtils();
 
     statesController->start(HighScoresSceneStates::Show);
 }

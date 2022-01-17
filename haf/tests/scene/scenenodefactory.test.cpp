@@ -1,13 +1,13 @@
 #include "catch.hpp"
 
-#include <mtypes/include/types.hpp>
-#include <haf/scene/include/scene.hpp>
-#include <haf/scene/include/scenenode.hpp>
-#include <haf/scene/include/scenenodefactory.hpp>
+#include <htypes/include/types.hpp>
+#include <haf/include/scene/scene.hpp>
+#include <haf/include/scene/scene_node.hpp>
+#include <haf/include/scene/scenenodefactory.hpp>
 
 #include <typeinfo>
 
-using namespace mtps;
+using namespace htps;
 using namespace haf;
 using namespace haf::scene;
 

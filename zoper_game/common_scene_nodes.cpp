@@ -1,22 +1,23 @@
-#include <mtypes/include/types.hpp>
-#include <mtypes/include/properties.hpp>
+#include <htypes/include/types.hpp>
+#include <htypes/include/properties.hpp>
 
 #include <hlog/include/hlog.hpp>
-#include <haf/render/include/renderizable.hpp>
-#include <haf/scene/include/scenenode.hpp>
+#include <haf/include/render/renderizable.hpp>
+#include <haf/include/scene/scene_node.hpp>
+#include <haf/include/render/renderizables.hpp>
+#include <haf/include/render/renderizable_modifier_context.hpp>
 
 namespace zoper
 {
-using namespace mtps;
+using namespace htps;
 using namespace haf;
 using namespace haf::scene;
+using namespace haf::render;
 
-void createStandardBackground(
-    const rptr<haf::scene::Renderizables> renderizables)
+void createStandardBackground(RenderizableBuilder&& renderizable_builder)
 {
-    auto background =
-        renderizables->renderizableBuilder()
-            .name("background")
+    auto background{
+        renderizable_builder.name("background")
             .figType(FigType_t::Quad)
             .box(rectFromSize(2000.0f, 2000.0f))
             .colorModifier([](const RenderizableModifierContext& context) {
@@ -26,16 +27,6 @@ void createStandardBackground(
                                          n.y * decrease_ratio,
                                          n.y * decrease_ratio);
             })
-            .create();
-
-    background->color_modifier = [](const RenderizableModifierContext& context) {
-                const auto n = context.normalizedVertexInBox();
-                static constexpr auto decrease_ratio = 0.5F;
-                return Color::fromFloats(n.y * decrease_ratio,
-                                         n.y * decrease_ratio,
-                                         n.y * decrease_ratio);
-            };
-    //        background->shader =
-    //        resources_viewer->getShader(MainMenuResources::Shader);
+            .create()};
 }
 }  // namespace zoper

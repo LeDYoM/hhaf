@@ -1,36 +1,61 @@
-#pragma once
-
 #ifndef ZOPER_GAMEBASETILE_HPP
 #define ZOPER_GAMEBASETILE_HPP
 
-#include <mtypes/include/types.hpp>
-#include <haf/scene/include/scenenode.hpp>
-#include <haf/render/include/renderizable.hpp>
+#include <htypes/include/types.hpp>
+#include <haf/include/types/basic_types.hpp>
+#include <haf/include/render/renderizable.hpp>
 #include <boardmanager/include/itile.hpp>
+#include "boardgroup.hpp"
 
 namespace haf::board
 {
-    class BoardManager;
+class BoardManager;
 }
+
 namespace zoper
 {
 
-class GameBaseTile : public haf::board::ITile, public haf::scene::SceneNode
+class GameBaseTile : public haf::board::ITile,
+                     public haf::scene::RenderizableSceneNode
 {
-public:
-    GameBaseTile(haf::scene::SceneNode* const parent, mtps::str name);
-    ~GameBaseTile() override;
-
-    haf::scene::Color getColorForToken() const;
-
-    void tileChanged(const mtps::vector2dst& /*position */,
-                     const haf::board::BoardTileData /* oldValue */,
-                     const haf::board::BoardTileData /* newValue */) override;
-
-    mtps::sptr<haf::board::BoardManager> getBoardModel();
+    using BaseClass = haf::scene::RenderizableSceneNode;
 
 protected:
-    mtps::sptr<haf::scene::Renderizable> node_;
+    using TileBase = haf::board::ITile;
+
+public:
+    using BoardPositionType = TileBase::BoardPositionType;
+    using BoardTileData = haf::board::ITile::BoardTileData;
+
+    GameBaseTile(htps::rptr<haf::scene::SceneNode> const parent,
+                 htps::str name);
+    ~GameBaseTile() override;
+
+    void tileChanged(BoardPositionType const& position,
+                     BoardTileData const oldValue,
+                     BoardTileData const newValue) override;
+
+    void tileAdded(BoardPositionType const& position) override;
+
+    void tileMoved(BoardPositionType const& source,
+                   BoardPositionType const& dest) override;
+
+    bool isInCenter() const noexcept;
+
+protected:
+    haf::scene::Color getColorForToken() const;
+
+    htps::sptr<haf::board::BoardManager> getBoardManager();
+    htps::sptr<haf::board::BoardManager const> const getBoardManager() const;
+    htps::rptr<BoardGroup> getBoardGroup();
+    htps::rptr<BoardGroup const> getBoardGroup() const;
+
+    htps::vector2df board2SceneFactor() const;
+    htps::vector2df board2Scene(const htps::vector2dst& bPosition) const;
+    htps::vector2df tileSize() const;
+
+private:
+    bool is_in_center{false};
 };
 }  // namespace zoper
 

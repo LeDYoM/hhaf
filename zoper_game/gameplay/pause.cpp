@@ -2,15 +2,17 @@
 
 #include "../loaders/gameresources.hpp"
 
-#include <haf/scene_nodes/include/scenenodetext.hpp>
-#include <haf/scene_components/include/animationcomponent.hpp>
-#include <haf/scene_components/include/scenemetricsview.hpp>
+#include <haf/include/scene/color.hpp>
+#include <haf/include/scene_nodes/scene_node_text.hpp>
+#include <haf/include/animation/animation_component.hpp>
+#include <haf/include/scene_components/iscene_metrics_view.hpp>
+#include <haf/include/component/component_container.hpp>
 
-#include <haf/resources/include/itexture.hpp>
-#include <haf/resources/include/ittfont.hpp>
-#include <haf/resources/include/resourceview.hpp>
+#include <haf/include/resources/itexture.hpp>
+#include <haf/include/resources/ittfont.hpp>
+#include <haf/include/resources/iresource_retriever.hpp>
 
-using namespace mtps;
+using namespace htps;
 
 namespace zoper
 {
@@ -23,16 +25,16 @@ PauseSceneNode::~PauseSceneNode() = default;
 
 void PauseSceneNode::onCreated()
 {
-    auto resources_viewer = dataWrapper<res::ResourceView>();
-
-    m_pauseText = createSceneNode<SceneNodeText>("pausetext");
-    m_pauseText->prop<SceneNodeTextProperties>()
+    pause_text_ = createSceneNode<SceneNodeText>("pausetext");
+    pause_text_->prop<SceneNodeTextProperties>()
         .put<Text>("PAUSE")
         .put<Font>(
-            resources_viewer->getTTFont(GameResources::ScoreFontId)->font(180U))
+                       subSystem<res::IResourceRetriever>()
+                       ->getTTFont(GameResources::ScoreFontId)
+                       ->font(180U))
         .put<TextColor>(colors::White)
         .put<AlignmentSize>(
-            dataWrapper<SceneMetricsView>()->currentView().size())
+            subSystem<ISceneMetricsView>()->currentView().size())
         .put<AlignmentX>(AlignmentXModes::Center)
         .put<AlignmentY>(AlignmentYModes::Middle);
 
@@ -42,11 +44,16 @@ void PauseSceneNode::onCreated()
 void PauseSceneNode::enterPause()
 {
     prop<Visible>().set(true);
-    ensureComponentOfType(animation_component_);
-    animation_component_->addPropertyAnimation(
-        TimePoint_as_miliseconds(1000U),
-        m_pauseText->prop<TextColor>(),
-        Color{255U, 255U, 255U, 0U}, Color{255U, 255U, 255U, 255U});
+    pause_text_->component(animation_component_);
+
+    auto builder{
+        animation_component_->make_property_animation_builder_from_attached<
+            TextColor, SceneNodeText>()};
+    builder.startValue(Color{colors::White, Color::Transparent})
+        .endValue(Color{colors::White, Color::Opaque})
+        .duration(TimePoint_as_miliseconds(1000U));
+
+    animation_component_->addAnimation(std::move(builder));
 }
 
 void PauseSceneNode::exitPause()

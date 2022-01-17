@@ -1,11 +1,12 @@
 #include <menu_paged/include/menu_paged.hpp>
 #include <menu_paged/include/menu_page.hpp>
 
-#include <haf/scene_components/include/statescontroller.hpp>
-#include <haf/scene_components/include/visibility_selector.hpp>
-#include <haf/scene_components/include/scenemetricsview.hpp>
+#include <haf/include/scene_components/states_controller_component.hpp>
+#include <haf/include/scene_components/visibility_selector_component.hpp>
+#include <haf/include/component/component_container.hpp>
+#include <haf/include/scene_components/iscene_control.hpp>
 
-using namespace mtps;
+using namespace htps;
 
 namespace haf::scene
 {
@@ -16,23 +17,17 @@ void MenuPaged::update()
 {
     if (prop<SceneNodeSizeForPages>().readResetHasChanged())
     {
-        auto const size = prop<SceneNodeSizeForPages>().get();
-        for (auto& sceneNode : sceneNodes())
-        {
-            if (auto menu_page = std::dynamic_pointer_cast<MenuPage>(sceneNode))
-            {
-                    menu_page->prop<SceneNodeSize>().set(size);
-            }
-        }
+        auto const size{prop<SceneNodeSizeForPages>()()};
+        set_property_for_each_sceneNode_as<MenuPage, SceneNodeSize>(size);
     }
 }
 
-void MenuPaged::setMenuPagedStatus(const s32 status)
+void MenuPaged::setMenuPagedStatus(MenuFinishedStatus const status)
 {
     status_ = status;
 }
 
-s32 MenuPaged::status() const
+MenuFinishedStatus MenuPaged::status() const
 {
     return status_;
 }
@@ -46,9 +41,10 @@ void MenuPaged::configure_menu(
     vector_shared_pointers<scene::MenuPage> menu_steps)
 {
     auto visibility_selector =
-        addComponentOfType<VisibilitySelectorComponent>();
-    auto statesController = addComponentOfType<StatesController<s32>>();
-    menu_steps_           = std::move(menu_steps);
+        component<VisibilitySelectorComponent>();
+    auto statesController =
+        component<StatesControllerComponent<s32>>();
+    menu_steps_ = std::move(menu_steps);
 
     for (auto&& menu_page : menu_steps_)
     {
@@ -70,24 +66,31 @@ void MenuPaged::configure_menu(
 
     statesController->StatePushed.connect(
         [visibility_selector](const s32 menu_page) {
-            visibility_selector->show(static_cast<size_type>(menu_page));
+            visibility_selector->visible_index.set(
+                static_cast<size_type>(menu_page));
         });
 
     statesController->StateResumed.connect(
         [visibility_selector](const s32 menu_page) {
-            visibility_selector->show(static_cast<size_type>(menu_page));
+            visibility_selector->visible_index.set(
+                static_cast<size_type>(menu_page));
         });
 
-    statesController->AfterFinish.connect([this]() { MenuFinished(status_); });
+    statesController->AfterFinish.connect([this]() { terminate(status_); });
 
     statesController->start(0);
-    visibility_selector->configure(0U);
+    visibility_selector->visible_index.set(0U);
 }
 
-void MenuPaged::terminate(const s32 status)
+void MenuPaged::terminate(MenuFinishedStatus const status)
 {
     setMenuPagedStatus(status);
     MenuFinished(status_);
+    
+    if (prop<FinishSceneAtEnd>()())
+    {
+        subSystem<ISceneControl>()->switchToNextScene();
+    }
 }
 
 }  // namespace haf::scene

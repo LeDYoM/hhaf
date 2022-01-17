@@ -1,25 +1,31 @@
-#pragma once
-
 #ifndef HAF_TESTS_SHAREABLE_TEST_DATA_INCLUDE_HPP
 #define HAF_TESTS_SHAREABLE_TEST_DATA_INCLUDE_HPP
 
-#include <mtypes/include/types.hpp>
-#include <mtypes/include/str.hpp>
-#include <haf/shareddata/include/ishareable.hpp>
-#include <haf/shareddata/include/address.hpp>
+#include <htypes/include/types.hpp>
+#include <htypes/include/str.hpp>
+#include <haf/include/shareddata/ishareable.hpp>
+#include <haf/include/shareddata/address.hpp>
 
 class ShareableTestData : public haf::shdata::IShareable
 {
 public:
-    mtps::s32 a;
-    mtps::f32 b;
-    mtps::str c;
+    htps::s32 a;
+    htps::f32 b;
+    htps::str c;
+
+    bool operator==(ShareableTestData const& rhs) const
+    {
+        return a == rhs.a && b == rhs.b && c == rhs.c;
+    }
 
     ~ShareableTestData() override = default;
 
-    static haf::shdata::Address address() { return haf::shdata::Address{"/test/data/"}; }
+    static haf::shdata::Address address()
+    {
+        return haf::shdata::Address{"/test/data/"};
+    }
 
-    bool serialize(mtps::Object& obj) const override
+    bool serialize(htps::Object& obj) const override
     {
         bool result{true};
         result &= obj.set("a", a);
@@ -29,7 +35,7 @@ public:
         return result;
     }
 
-    bool deserialize(mtps::Object const& obj) override
+    bool deserialize(htps::Object const& obj) override
     {
         bool result = true;
         result &= obj.getValue("a").as(a);

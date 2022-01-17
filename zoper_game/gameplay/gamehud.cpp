@@ -2,14 +2,14 @@
 
 #include "../loaders/gameresources.hpp"
 
-#include <haf/scene/include/scene.hpp>
-#include <haf/scene_nodes/include/scenenodetext.hpp>
+#include <haf/include/scene/scene.hpp>
+#include <haf/include/scene_nodes/scene_node_text.hpp>
 
 #include <hlog/include/hlog.hpp>
-#include <haf/resources/include/resourceview.hpp>
-#include <haf/resources/include/ittfont.hpp>
+#include <haf/include/resources/iresource_retriever.hpp>
+#include <haf/include/resources/ittfont.hpp>
 
-using namespace mtps;
+using namespace htps;
 using namespace haf;
 using namespace haf::scene;
 using namespace haf::scene::nodes;
@@ -17,69 +17,69 @@ using namespace haf::scene::nodes;
 namespace zoper
 {
 GameHudSceneNode::GameHudSceneNode(
-    mtps::rptr<haf::scene::SceneNode> const parent,
+    htps::rptr<haf::scene::SceneNode> const parent,
     str name) :
-    SceneNode{parent, std::move(name)}
+    BaseClass{parent, std::move(name)}
 {
-    auto resources_viewer = dataWrapper<res::ResourceView>();
+    Font::value_type font{subSystem<res::IResourceRetriever>()
+                              ->getTTFont(GameResources::ScoreFontId)
+                              ->font(90U)};
+    (score_quad_ = parent->createSceneNode<TextQuad>("score"))
+        ->setTableNodeProperty<Font>(font)
+        ->setTableNodeProperty<TextColor>(colors::White)
+        ->setTableNodeProperty<AlignmentSize>(vector2df{600, 300});
 
-    m_scoreQuad = parent->createSceneNode<TextQuad>("score");
-    m_scoreQuad->configure(
-        resources_viewer->getTTFont(GameResources::ScoreFontId)->font(90U),
-        colors::White, vector2df{600, 300});
-    m_scoreQuad->prop<Position>() = Position::value_type{50, 150};
-    m_scoreQuad->text(vector2dst{0U, 0U})
+    score_quad_->prop<Position>() = Position::value_type{50, 150};
+    score_quad_->text(vector2dst{0U, 0U})
         ->prop<SceneNodeTextProperties>()
         .put<Text>("Level:")
         .put<TextColor>(colors::Blue);
-    m_scoreQuad->text(vector2dst{0U, 1})
+    score_quad_->text(vector2dst{0U, 1})
         ->prop<SceneNodeTextProperties>()
         .put<Text>("Score:")
         .put<TextColor>(colors::Blue);
 
-    m_goalQuad = parent->createSceneNode<TextQuad>("goal");
-    m_goalQuad->configure(
-        resources_viewer->getTTFont(GameResources::ScoreFontId)->font(90),
-        colors::White, vector2df{600, 300});
-    m_goalQuad->prop<Position>().set(vector2df{1250, 150});
-    m_goalQuad->text({0U, 0U})
+    (goal_quad_ = parent->createSceneNode<TextQuad>("goal"))
+        ->setTableNodeProperty<Font>(font)
+        ->setTableNodeProperty<TextColor>(colors::White)
+        ->setTableNodeProperty<AlignmentSize>(vector2df{600, 300});
+
+    goal_quad_->prop<Position>().set(vector2df{1250, 150});
+    goal_quad_->text({0U, 0U})
         ->prop<SceneNodeTextProperties>()
         .put<TextColor>(colors::Blue)
-        .put<Text>("Look here");
-    m_goalQuad->text({0U, 1U})
+        .put<Text>("Current");
+    goal_quad_->text({0U, 1U})
         ->prop<SceneNodeTextProperties>()
         .put<TextColor>(colors::Blue)
         .put<Text>("Goal:");
 
-    //    m_goalQuad->text(vector2dst{0, 0})
+    //    goal_quad->text(vector2dst{0, 0})
     //        ->text.set(
     //            gameMode == GameMode::Token ? "Tokens: " : "Time: ")
     //            "Look here: ");
 }
 
-GameHudSceneNode::~GameHudSceneNode() = default;
-
 void GameHudSceneNode::setLevel(const size_type level)
 {
-    m_scoreQuad->text({1U, 0U})->prop<Text>().set(
-        make_str(level + 1U));
+    score_quad_->text({1U, 0U})->prop<Text>().set(make_str(level + 1U));
 }
 
 void GameHudSceneNode::setStayCounter(const size_type stayCounter)
 {
-    m_goalQuad->text({1U, 1U})->prop<Text>().set(make_str(stayCounter));
+    goal_quad_->text({1U, 1U})->prop<Text>().set(make_str(stayCounter));
 }
 
 void GameHudSceneNode::setConsumedTokens(const size_type consumedTokens)
 {
-    m_goalQuad->text(vector2dst{1U, 0U})
+    goal_quad_->text(vector2dst{1U, 0U})
         ->prop<Text>()
         .set(str::to_str(consumedTokens));
 }
 
 void GameHudSceneNode::setEllapsedTimeInSeconds(const u64 seconds)
 {
-    m_goalQuad->text({1U, 0U})->prop<Text>().set(
+    goal_quad_->text({1U, 0U})->prop<Text>().set(
         str::to_str(static_cast<u16>(seconds)));
 }
 
@@ -90,6 +90,6 @@ void GameHudSceneNode::setScore(const size_type score)
     str result(str::to_str(score));
     while (result.size() < scoreSize)
         result = "0" + result;
-    m_scoreQuad->text({1U, 1U})->prop<Text>().set(result);
+    score_quad_->text({1U, 1U})->prop<Text>().set(result);
 }
 }  // namespace zoper

@@ -2,9 +2,10 @@
 #include "../gameshareddata.hpp"
 
 #include <hlog/include/hlog.hpp>
-#include <haf/shareddata/include/shareddataupdater.hpp>
+#include <haf/include/shareddata/shared_data_updater.hpp>
+#include <haf/include/time/timer_component.hpp>
 
-using namespace mtps;
+using namespace htps;
 
 namespace zoper
 {
@@ -13,26 +14,26 @@ using namespace haf::scene;
 using namespace haf::sys;
 
 void LevelProperties::configure(
-    const size_type currentLevel,
-    const GameMode gameMode,
+    size_type const currentLevel,
+    GameMode const gameMode,
     sptr<time::TimerComponent> scene_timer_component)
 {
     using namespace time;
 
-    if (!level_timer_)
-    {
-        level_timer_ = attachedNode()->dataWrapper<Timer>();
-    }
     LogAsserter::log_assert(scene_timer_component != nullptr,
-                            "m_sceneNodeComponent already contains a value");
-    LogAsserter::log_assert(scene_timerComponent_ == nullptr,
                             "Passed nullptr sceneTimerComponent");
+    LogAsserter::log_assert(scene_timer_component_ == nullptr,
+                            "m_sceneNodeComponent already contains a value");
 
-    game_mode_ = gameMode;
-    scene_timerComponent_.swap(scene_timer_component);
+    game_mode_             = gameMode;
+    scene_timer_component_ = std::move(scene_timer_component);
 
-    update_levelData_timer_ = scene_timerComponent_->addTimer(
-        TimerType::Continuous, TimePoint_as_miliseconds(120),
+    LogAsserter::log_assert(level_timer_ == nullptr,
+                            "LevelProperties already has a timer!");
+    level_timer_ = scene_timer_component_->addFreeTimer();
+
+    update_level_data_timer_ = scene_timer_component_->addTimer(
+        TimerType::Continuous, TimePoint_as_miliseconds(120U),
         [this](TimePoint /*realEllapsed*/) { updateLevelData(); });
 
     game_hud_ = attachedNode()->createSceneNode<GameHudSceneNode>("hud");
@@ -41,16 +42,16 @@ void LevelProperties::configure(
     setLevel(currentLevel);
 }
 
-void LevelProperties::setScore(const size_type new_score)
+void LevelProperties::setScore(size_type const new_score)
 {
     current_score_ = new_score;
 
     {
-        auto const game_shared_data_updater =
-            attachedNode()
-                ->dataWrapper<shdata::SharedDataUpdater<GameSharedData>>();
+        auto game_shared_data_updater =
+            shdata::SharedDataUpdater<GameSharedData>(
+                attachedNode()->subSystem<shdata::ISharedData>());
         auto game_shared_data =
-            game_shared_data_updater->update(GameSharedData::address());
+            game_shared_data_updater.update(GameSharedData::address());
 
         if (!game_shared_data)
         {
@@ -64,17 +65,23 @@ void LevelProperties::setScore(const size_type new_score)
     game_hud_->setScore(current_score_);
 }
 
-void LevelProperties::setLevel(const LevelType currentLevel)
+htps::size_type LevelProperties::millisBetweenTokens() const
+{
+    return millis_between_tokens_;
+}
+
+void LevelProperties::setLevel(LevelType const currentLevel)
 {
     level_timer_->restart();
 
     current_level_ = currentLevel;
 
     {
+        auto game_shared_data_updater =
+            shdata::SharedDataUpdater<GameSharedData>(
+                attachedNode()->subSystem<shdata::ISharedData>());
         auto game_shared_data =
-            attachedNode()
-                ->dataWrapper<shdata::SharedDataUpdater<GameSharedData>>()
-                ->update(GameSharedData::address());
+            game_shared_data_updater.update(GameSharedData::address());
 
         if (game_shared_data == nullptr)
         {
@@ -149,7 +156,7 @@ void LevelProperties::updateLevelData()
     }
 }
 
-void LevelProperties::increaseScore(const size_type scoreIncrement)
+void LevelProperties::increaseScore(size_type const scoreIncrement)
 {
     setScore(current_score_ + scoreIncrement);
 }

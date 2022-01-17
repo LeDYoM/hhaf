@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef HLOG_THREAD_COMMITER_INCLUDE_HPP
 #define HLOG_THREAD_COMMITER_INCLUDE_HPP
 
@@ -17,6 +15,6 @@ struct ThreadCommiter
     static void commitlog(const char* const log_stream);
 };
 
-}  // namespace logger
+}  // namespace haf
 
 #endif

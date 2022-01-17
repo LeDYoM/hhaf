@@ -1,9 +1,7 @@
-#pragma once
-
 #ifndef HAF_BACKEND_IRESOURCEFACTORIES_INCLUDE_HPP
 #define HAF_BACKEND_IRESOURCEFACTORIES_INCLUDE_HPP
 
-#include <mtypes/include/str.hpp>
+#include <htypes/include/str.hpp>
 
 #include "iresourcefactory.hpp"
 #include "itexture.hpp"

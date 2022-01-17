@@ -1,15 +1,16 @@
 #include <backend_client/include/default_backend_manager.hpp>
-#include <backend_client/include/ibackendregister.hpp>
+#include <backend_dev/include/ibackendregister.hpp>
 
-using namespace mtps;
+#include <htypes/include/vector.hpp>
+
+using namespace htps;
 
 namespace haf::backend::client
 {
 struct DefaultBackendManager::DefaultBackendManagerPrivate
 {
-    mtps::vector<mtps::uptr<IAutoRegisterFactory>> factories;
-    void pushFactory(mtps::uptr<IAutoRegisterFactory> f);
-
+    htps::vector<htps::uptr<IAutoRegisterFactory>> factories;
+    void pushFactory(htps::uptr<IAutoRegisterFactory> f);
 };
 
 DefaultBackendManager::DefaultBackendManager() :

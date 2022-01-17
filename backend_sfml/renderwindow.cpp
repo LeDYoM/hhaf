@@ -5,14 +5,16 @@
 
 #include <string>
 
-using namespace mtps;
+using namespace htps;
 
 namespace haf::backend::sfmlb
 {
 RenderWindow::RenderWindow()
 {}
 RenderWindow::~RenderWindow()
-{}
+{
+    sf::Window::close();
+}
 
 class ParamExtractor
 {
@@ -37,6 +39,11 @@ private:
     const unsigned int* const data_;
 };
 
+bool RenderWindow::isAlreadyCreated() const
+{
+    return already_created_;
+}
+
 bool RenderWindow::createWindow(const u32 width,
                                 const u32 height,
                                 const u8 red_bpp,
@@ -46,26 +53,31 @@ bool RenderWindow::createWindow(const u32 width,
                                 const unsigned int num_extra_parameters,
                                 const unsigned int* const extra_parameters)
 {
-    using uint = unsigned int;
-    sf::Uint32 style{sf::Style::Default};
-    //        if (wcp.fullScreen)
-    //            style = sf::Style::Fullscreen;
+    if (!already_created_)
+    {
+        sf::Uint32 style{sf::Style::Default};
+        //        if (wcp.fullScreen)
+        //            style = sf::Style::Fullscreen;
 
-    ParamExtractor prm_xtr{num_extra_parameters, extra_parameters};
-    //    uint width = prm_xtr.getParam(800U);
-    //    uint height = prm_xtr.getParam(600U);
-    //    uint bpp = prm_xtr.getParam(32U);
+        ParamExtractor prm_xtr{num_extra_parameters, extra_parameters};
+        //    uint width = prm_xtr.getParam(800U);
+        //    uint height = prm_xtr.getParam(600U);
+        //    uint bpp = prm_xtr.getParam(32U);
 
-    unsigned int w = static_cast<unsigned int>(width);
-    unsigned int h = static_cast<unsigned int>(height);
-    unsigned int bpp =
-        static_cast<unsigned int>(red_bpp + green_bpp + blue_bpp + alpha_bpp);
+        unsigned int w   = static_cast<unsigned int>(width);
+        unsigned int h   = static_cast<unsigned int>(height);
+        unsigned int bpp = static_cast<unsigned int>(red_bpp + green_bpp +
+                                                     blue_bpp + alpha_bpp);
 
-    sf::ContextSettings context_settings = sf::ContextSettings();
-    sf::Window::create(sf::VideoMode(w, h, bpp), "", style, context_settings);
+        sf::ContextSettings context_settings = sf::ContextSettings();
+        sf::Window::create(sf::VideoMode(w, h, bpp), "", style,
+                           context_settings);
 
-    setVerticalSyncEnabled(false);
-    return true;
+        setVerticalSyncEnabled(false);
+        already_created_ = true;
+        return true;
+    }
+    return false;
 }
 
 sf::Vector2u RenderWindow::getSize() const
@@ -73,7 +85,7 @@ sf::Vector2u RenderWindow::getSize() const
     return Window::getSize();
 }
 
-IRenderTarget* RenderWindow::renderTarget()
+rptr<IRenderTarget> RenderWindow::renderTarget()
 {
     return this;
 }
@@ -85,6 +97,7 @@ bool RenderWindow::setActive(bool active)
 
 bool RenderWindow::processEvents()
 {
+    input_driver_.clearInternalInputBuffer();
     sf::Event event;
     while (pollEvent(event))
     {
@@ -116,7 +129,7 @@ void RenderWindow::closeWindow()
     Window::close();
 }
 
-IInputDriver* RenderWindow::inputDriver()
+rptr<IInputDriver> RenderWindow::inputDriver()
 {
     return &input_driver_;
 }
@@ -133,11 +146,12 @@ str RenderWindow::settingsInfo()
     sf::ContextSettings settings = sf::Window::getSettings();
 
     return make_str("Depth bits: ", settings.depthBits,
-    ", stencil bits: ", settings.stencilBits,
-    ", antialiasing level: ", settings.antialiasingLevel,
-    ", attribute flags: ", settings.attributeFlags,
-    ", sRGB capable: ", settings.sRgbCapable,
-    ", version: ", settings.majorVersion, ".", settings.minorVersion);
+                    ", stencil bits: ", settings.stencilBits,
+                    ", antialiasing level: ", settings.antialiasingLevel,
+                    ", attribute flags: ", settings.attributeFlags,
+                    ", sRGB capable: ", settings.sRgbCapable,
+                    ", version: ", settings.majorVersion, ".",
+                    settings.minorVersion);
 }
 
 void RenderWindow::onCreate()

@@ -1,16 +1,14 @@
-#pragma once
-
 #ifndef HEF_EXT_MENU_PAGE_INCLUDE_HPP
 #define HEF_EXT_MENU_PAGE_INCLUDE_HPP
 
-#include <mtypes/include/types.hpp>
+#include <htypes/include/types.hpp>
 #include <menu_paged/include/menu_paged_option.hpp>
-#include <haf/scene/include/scenenode.hpp>
-#include <haf/scene_nodes/include/tablenode.hpp>
-#include <haf/scene_nodes/include/scenenodetext.hpp>
+#include <haf/include/scene/scene_node.hpp>
+#include <haf/include/scene_nodes/scene_node_table.hpp>
+#include <haf/include/scene_nodes/scene_node_text.hpp>
 
-#include <mtypes/include/connection.hpp>
-#include <haf/scene_components/include/discretetextcomponent.hpp>
+#include <htypes/include/connection.hpp>
+#include <haf/include/scene_components/discretetextcomponent.hpp>
 
 namespace haf::scene
 {
@@ -20,53 +18,51 @@ class MenuPage : public scene::nodes::TableNode<nodes::SceneNodeText>
 public:
     using BaseClass = scene::nodes::TableNode<nodes::SceneNodeText>;
     using BaseClass::prop;
-private:
 
-    void standarizeText(const mtps::sptr<ContainedElement> &ntext);
+private:
+    void standarizeText(const htps::sptr<ContainedElement>& ntext);
     void goDown();
     void goUp();
     void goLeft();
     void goRight();
     void goSelected();
 
-    bool nodeHasOptions(const mtps::size_type y) const noexcept;
-    mtps::sptr<DiscreteTextComponent> optionsLabelAt(const mtps::size_type y) const;
-    void setSelectedItem(const mtps::size_type index);
+    bool nodeHasOptions(const htps::size_type y) const noexcept;
+    htps::sptr<DiscreteTextComponent> optionsLabelAt(
+        const htps::size_type y) const;
+    void setSelectedItem(const htps::size_type index);
     void updateSelection();
-    void setColorToLine(const mtps::size_type, const scene::Color &);
-    mtps::vector<mtps::s32> optionsSelected() const;
+    void setColorToLine(const htps::size_type, const scene::Color&);
+    htps::vector<htps::s32> optionsSelected() const;
 
 protected:
     using ContainedElement = BaseClass::ContainedElement;
 
-    mtps::rptr<MenuPaged> parentMenuPaged();
-    mtps::rptr<MenuPaged const> parentMenuPaged() const;
+    htps::rptr<MenuPaged const> parentMenuPaged() const;
 
-    mtps::sptr<res::IFont> normalFont() const;
+    htps::sptr<res::IFont> normalFont() const;
     Color normalColor() const;
     Color selectedColor() const;
 
-    mtps::size_type m_previouslySelectedItem{0U};
-    mtps::size_type m_selectedItem{0U};
-
-    mtps::ireceiver m_receiver;
+    htps::size_type previously_selected_item_{0U};
+    htps::size_type selected_item_{0U};
 
 public:
     using BaseClass::BaseClass;
     ~MenuPage() override;
 
     void onCreated() override;
-    void configure(mtps::vector<mtps::sptr<MenuPagedOption>> options,
-        PageOptions page_options = PageOptions{});
-    mtps::size_type SelectedOptionAtRow(const mtps::size_type row) const;
+    void configure(htps::vector<htps::sptr<MenuPagedOption>> options,
+                   PageOptions page_options = PageOptions{});
+    htps::size_type SelectedOptionAtRow(const htps::size_type row) const;
 
-    mtps::emitter<const mtps::s32> Forward;
-    mtps::emitter<mtps::vector<mtps::s32>> Accepted;
-    mtps::emitter<> Back;
-    mtps::emitter<mtps::vector<mtps::s32>> Canceled;
-    mtps::emitter<const mtps::size_type, const mtps::s32> Selection;
+    htps::emitter<const htps::s32> Forward;
+    htps::emitter<htps::vector<htps::s32>> Accepted;
+    htps::emitter<> Back;
+    htps::emitter<htps::vector<htps::s32>> Canceled;
+    htps::emitter<const htps::size_type, const htps::s32> Selection;
 };
 
-} // namespace haf::scene
+}  // namespace haf::scene
 
 #endif

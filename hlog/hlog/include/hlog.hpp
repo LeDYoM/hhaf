@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef HAF_HLOG_INCLUDE_HPP
 #define HAF_HLOG_INCLUDE_HPP
 
@@ -11,18 +9,17 @@
 #include <logger/include/mixin_commiter.hpp>
 #include <hlog/include/thread_commiter.hpp>
 
-#include <mtypes/include/str.hpp>
+#include <htypes/include/str.hpp>
 
 namespace logger
 {
-extern template struct Log<true, mtps::str, MixinCommiter<haf::ThreadCommiter>>;
+extern template struct Log<true, htps::str, MixinCommiter<haf::ThreadCommiter>>;
 }
+
 namespace haf
 {
-
 using LogClass =
-    logger::Log<true, mtps::str, logger::MixinCommiter<ThreadCommiter>>;
-
+    logger::Log<true, htps::str, logger::MixinCommiter<ThreadCommiter>>;
 }
 
 namespace logger
@@ -53,6 +50,6 @@ extern template struct LogInitializer<haf::LogClass>;
 namespace haf
 {
 using LogInitializer = logger::LogInitializer<LogClass>;
-}  // namespace haf
+}
 
 #endif

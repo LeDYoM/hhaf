@@ -1,21 +1,16 @@
-#pragma once
-
 #ifndef ZOPER_TOKEN_HPP
 #define ZOPER_TOKEN_HPP
 
 #include "gamebasetile.hpp"
 
-#include <mtypes/include/types.hpp>
-#include <mtypes/include/vector2d.hpp>
+#include <htypes/include/types.hpp>
+#include <htypes/include/vector2d.hpp>
 
 #include <boardmanager/include/itile.hpp>
-#include <haf/scene_components/include/animationcomponent.hpp>
+#include <haf/include/animation/animation_component.hpp>
 
 namespace zoper
 {
-
-class LevelProperties;
-
 /**
  * @brief This class represents one of the enemies in the board of the game.
  * The clas contains internal data like the token type inherited from
@@ -23,32 +18,32 @@ class LevelProperties;
  */
 class Token : public GameBaseTile
 {
-public:
     using BaseClass = GameBaseTile;
+public:
+    using BoardTileData = GameBaseTile::BoardTileData;
+    using BoardPositionType = BaseClass::BoardPositionType;
 
-    Token(mtps::rptr<haf::scene::SceneNode> parent, mtps::str name);
+    Token(htps::rptr<haf::scene::SceneNode> parent, htps::str name);
     ~Token() override;
 
-    void configure(mtps::sptr<LevelProperties> level_properties,
-                   const mtps::Rectf32 &box,
-                   const mtps::vector2df &board2SceneFactor);
+    void setBox(const htps::Rectf32& box);
 
     static void resetTileCounter();
 
-    void tileAdded(const mtps::vector2dst &position) override;
-    void tileRemoved(const mtps::vector2dst & /* position */) override;
-    void tileChanged(const mtps::vector2dst & /*position */,
-                     const haf::board::BoardTileData oldValue,
-                     const haf::board::BoardTileData newValue) override;
-    void tileMoved(const mtps::vector2dst &source,
-                   const mtps::vector2dst &dest) override;
+    bool canBeMoved(BoardPositionType const& dest_position) const;
+    void tileAdded(BoardPositionType const& position) override;
+    void tileRemoved(BoardPositionType const& position) override;
+    void tileChanged(BoardPositionType const& position,
+                     BoardTileData const oldValue,
+                     BoardTileData const newValue) override;
+    void tileMoved(BoardPositionType const& source,
+                   BoardPositionType const& dest) override;
 
 private:
-    static mtps::u32 m_tileCounter;
-    mtps::vector2df board2SceneFactor_;
-    mtps::sptr<haf::scene::AnimationComponent> animation_component_;
-    mtps::sptr<LevelProperties> level_properties_;
+    static htps::u32 tile_counter_;
+    htps::vector2df board2SceneFactor_;
+    htps::sptr<haf::anim::AnimationComponent> animation_component_;
 };
-} // namespace zoper
+}  // namespace zoper
 
 #endif

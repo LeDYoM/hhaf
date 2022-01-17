@@ -1,7 +1,7 @@
 #include "catch.hpp"
 
-#include <mtypes/include/types.hpp>
-#include <haf/scene/include/matrix4x4.hpp>
+#include <htypes/include/types.hpp>
+#include <haf/include/scene/matrix4x4.hpp>
 #include "matrix_utils.hpp"
 #include <limits>
 
@@ -35,7 +35,8 @@ TEST_CASE("haf::scene::Matrix4x4", "[haf][scene][Matrix4x4][Transformable]")
     CHECK(isAlmostEqual(matrix2.getMatrix()[15U], 900.0F));
 }
 
-TEST_CASE("haf::scene::Matrix4x4 math", "[haf][scene][Matrix4x4][Transformable]")
+TEST_CASE("haf::scene::Matrix4x4 math",
+          "[haf][scene][Matrix4x4][Transformable]")
 {
     Matrix4x4 matrix1;
     Matrix4x4 matrix2(100.0F, 200.0F, 300.0F, 400.0F, 500.0F, 600.0F, 700.0F,
@@ -60,5 +61,4 @@ TEST_CASE("haf::scene::Matrix4x4 math", "[haf][scene][Matrix4x4][Transformable]"
         Matrix4x4 matrix3 = matrix1 * matrix1 * matrix1;
         CHECK_FALSE(isAlmostEqual(matrix2, matrix3));
     }
-
 }

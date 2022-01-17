@@ -1,11 +1,23 @@
-project(memmanager)
-cmake_minimum_required(VERSION 3.11)
+project("HAF MemManager"
+    VERSION 0.2.0.0
+    DESCRIPTION "Memory manager for HAF"
+    # [HOMEPAGE_URL <url-string>]
+    LANGUAGES CXX
+)
 
 set(CURRENT_TARGET memmanager)
 
-set(SOURCES "src/memmanager.cpp")
+set(sources 
+    src/memmanager.cpp
+    src/memory_statistics.cpp
+    src/memory_statistics.hpp
+)
 
-add_library(${CURRENT_TARGET} SHARED ${SOURCES})
-set_target_properties(${CURRENT_TARGET} PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS true)
+set(headers 
+    memmanager/include/memmanager.hpp
+    memmanager/include/memory_view.hpp
+)
 
-target_include_directories(${CURRENT_TARGET} PUBLIC ${PROJECT_SOURCE_DIR})
+build_lib_component(EXPORT_ALL HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}" SOURCES
+                    "${sources}" HEADERS "${headers}" )
+ 

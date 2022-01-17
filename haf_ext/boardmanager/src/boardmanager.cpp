@@ -5,7 +5,7 @@
 
 #include <utility>
 
-using namespace mtps;
+using namespace htps;
 
 namespace haf::board
 {
@@ -24,10 +24,10 @@ void BoardManager::initialize(
 
     // Create the tiles.
     tiles_.reserve(size.x);
-    for (auto x = 0U; x < size.x; ++x)
+    for (decltype(size.x) x{0U}; x < size.x; ++x)
     {
         tiles_.emplace_back(size.y);
-        for (auto y = 0U; y < size.y; ++y)
+        for (decltype(size.y) y{0U}; y < size.y; ++y)
         {
             tiles_[x].emplace_back();
         }
@@ -35,14 +35,14 @@ void BoardManager::initialize(
     tiles_.shrink_to_fit();
 }
 
-BackgroundFunction BoardManager::setBackgroundFunction(
-    BackgroundFunction background_function)
+BoardManager::BackgroundFunction BoardManager::setBackgroundFunction(
+    BoardManager::BackgroundFunction background_function)
 {
     return std::exchange(background_function_, std::move(background_function));
 }
 
-BackgroundData BoardManager::backgroundType(
-    const mtps::vector2dst& tPosition) const
+BoardManager::BackgroundData BoardManager::backgroundData(
+    const htps::vector2dst& tPosition) const
 {
     if (background_function_ && validCoords(tPosition))
     {
@@ -51,8 +51,7 @@ BackgroundData BoardManager::backgroundType(
     return BackgroundData{};
 }
 
-SITilePointer BoardManager::getTile(
-    const vector2dst& position) const noexcept
+SITilePointer BoardManager::getTile(const vector2dst& position) const noexcept
 {
     if (validCoords(position))
     {
@@ -63,8 +62,7 @@ SITilePointer BoardManager::getTile(
     return SITilePointer();
 }
 
-bool BoardManager::setTile(const vector2dst& tPosition,
-                                  SITilePointer newTile)
+bool BoardManager::setTile(const vector2dst& tPosition, SITilePointer newTile)
 {
     LogAsserter::log_assert(tileEmpty(tPosition),
                             "You can only set data in empty tiles");
@@ -109,7 +107,7 @@ bool BoardManager::deleteTile(const vector2dst& position)
 }
 
 bool BoardManager::changeTileData(const vector2dst& source,
-                                         const BoardTileData& nv)
+                                  const BoardTileData& nv)
 {
     LogAsserter::log_assert(!tileEmpty(source),
                             "You can only change data in not empty tiles");
@@ -130,8 +128,7 @@ bool BoardManager::changeTileData(const vector2dst& source,
     return false;
 }
 
-bool BoardManager::swapTileData(const vector2dst& lhs,
-                                       const vector2dst& rhs)
+bool BoardManager::swapTileData(const vector2dst& lhs, const vector2dst& rhs)
 {
     LogAsserter::log_assert(!tileEmpty(lhs),
                             "You can only change data in not empty tiles");
@@ -148,18 +145,23 @@ bool BoardManager::swapTileData(const vector2dst& lhs,
     return false;
 }
 
-bool BoardManager::moveTile(const vector2dst& source,
-                                   const vector2dst& dest)
+bool BoardManager::moveTile(const vector2dst& source, const vector2dst& dest)
 {
     if (!tileEmpty(source))
     {
         DisplayLog::info("Moving tile from ", source, " to ", dest);
 
         SITilePointer sourceTile{getTile(source)};
-        SITilePointer destTile{getTile(dest)};
 
         if (sourceTile)
         {
+            // Check if we can move the tile sourceTile to its destination
+            if (!sourceTile->canBeMoved(dest))
+            {
+                return false;
+            }
+
+            SITilePointer destTile{getTile(dest)};
             DisplayLog::info("Source Value: ", sourceTile->value());
             LogAsserter::log_assert(
                 !destTile, "Trying to move to a not empty tile: ", dest);
@@ -176,6 +178,11 @@ bool BoardManager::moveTile(const vector2dst& source,
                 sourceTile->tileMoved(source, dest);
                 return true;
             }
+            else
+            {
+                DisplayLog::error("Trying to move to non empty tile");
+                return false;
+            }
         }
     }
     else
@@ -186,8 +193,7 @@ bool BoardManager::moveTile(const vector2dst& source,
     return false;
 }
 
-bool BoardManager::validCoords(
-    const vector2dst& tPosition) const noexcept
+bool BoardManager::validCoords(const vector2dst& tPosition) const noexcept
 {
     return tiles_.size() > tPosition.x && tiles_[0U].size() > tPosition.y;
 }
@@ -215,7 +221,7 @@ str BoardManager::toStr()
             }
             else
             {
-                BackgroundData background_data{backgroundType({x, y})};
+                auto const background_data{backgroundData({x, y})};
                 if (background_data == BackgroundData{})
                 {
                     chTemp = "*";
@@ -233,8 +239,7 @@ str BoardManager::toStr()
     return temp;
 }
 
-void BoardManager::_setTile(const vector2dst& position,
-                                   SITilePointer newTile)
+void BoardManager::_setTile(const vector2dst& position, SITilePointer newTile)
 {
     tiles_[position.x][position.y] = newTile;
 }

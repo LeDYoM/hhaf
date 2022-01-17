@@ -1,85 +1,98 @@
-#pragma once
-
 #ifndef ZOPER_HIGHSCORESDATA_INCLUDE_HPP
 #define ZOPER_HIGHSCORESDATA_INCLUDE_HPP
 
-#include <mtypes/include/types.hpp>
-#include <mtypes/include/array.hpp>
-#include <mtypes/include/object.hpp>
-#include <haf/shareddata/include/ishareable.hpp>
+#include <htypes/include/types.hpp>
+#include <htypes/include/array.hpp>
+#include <htypes/include/object.hpp>
+#include <haf/include/data/ifullserializable.hpp>
 
 namespace zoper
 {
 
-constexpr mtps::fast_u16 NumHighScore = 10U;
+constexpr htps::fast_u16 NumHighScore = 10U;
 
-using Score = mtps::size_type;
+using Score = htps::size_type;
 
 struct HighScore
 {
-    mtps::str name{};
+    htps::str name{};
     Score score{0U};
 };
 
-inline const mtps::Object &operator>>(const mtps::Object &obj, HighScore &high_score_data)
+inline const htps::Object& operator>>(const htps::Object& obj,
+                                      HighScore& high_score_data)
 {
-    high_score_data.name = obj["name"].as<mtps::str>();
+    high_score_data.name  = obj["name"].as<htps::str>();
     high_score_data.score = obj["score"].as<Score>();
     return obj;
 }
 
-inline mtps::Object &operator<<(mtps::Object &obj, const HighScore &high_score_data)
+inline htps::Object& operator<<(htps::Object& obj,
+                                const HighScore& high_score_data)
 {
     obj.set("name", high_score_data.name);
     obj.set("score", high_score_data.score);
     return obj;
 }
 
-class HighScoresData : public haf::shdata::IShareable
+class HighScoresData : public haf::data::IFullSerializable
 {
 public:
-    using HighScoresList = mtps::array<HighScore, NumHighScore>;
+    using HighScoresList = htps::array<HighScore, NumHighScore>;
     HighScoresData();
-    bool positionForScore(const Score score, mtps::size_type &positionInTable);
-    bool tryInsertHighScore(const Score score, mtps::size_type &positionInTable);
-    void setHighScoreName(const mtps::size_type positionInTable, const mtps::str &nName);
-    const HighScore &operator[](const mtps::size_type index) const { return m_highScoreList[index]; }
-    const HighScoresList &highScoresList() const noexcept { return m_highScoreList; }
+    bool positionForScore(const Score score, htps::size_type& positionInTable);
+    bool tryInsertHighScore(const Score score,
+                            htps::size_type& positionInTable);
+    void setHighScoreName(const htps::size_type positionInTable,
+                          const htps::str& nName);
+    const HighScore& operator[](const htps::size_type index) const
+    {
+        return high_score_list_[index];
+    }
+    const HighScoresList& highScoresList() const noexcept
+    {
+        return high_score_list_;
+    }
 
-    friend mtps::Object &operator<<(mtps::Object &obj, const HighScoresData &high_scores_data);
-    friend const mtps::Object &operator>>(const mtps::Object &obj, HighScoresData &high_scores_data);
+    friend htps::Object& operator<<(htps::Object& obj,
+                                    const HighScoresData& high_scores_data);
+    friend const htps::Object& operator>>(const htps::Object& obj,
+                                          HighScoresData& high_scores_data);
 
-    bool serialize(mtps::Object& obj) const override
+    bool serialize(htps::Object& obj) const override
     {
         obj << *this;
         return true;
     }
 
-    bool deserialize(mtps::Object const& obj) override
+    bool deserialize(htps::Object const& obj) override
     {
         obj >> *this;
         return true;
     }
 
 private:
-    HighScoresList m_highScoreList;
+    HighScoresList high_score_list_;
 };
 
-inline const mtps::Object &operator>>(const mtps::Object &obj, HighScoresData &high_scores_data)
+inline const htps::Object& operator>>(const htps::Object& obj,
+                                      HighScoresData& high_scores_data)
 {
-    if (const auto obj_high_scores_data = obj["high_scores"]; obj_high_scores_data.isObject())
+    if (const auto obj_high_scores_data = obj["high_scores"];
+        obj_high_scores_data.isObject())
     {
-        obj_high_scores_data.getObject() >> high_scores_data.m_highScoreList;
+        obj_high_scores_data.getObject() >> high_scores_data.high_score_list_;
     }
     return obj;
 }
 
-inline mtps::Object &operator<<(mtps::Object &obj, const HighScoresData &high_scores_data)
+inline htps::Object& operator<<(htps::Object& obj,
+                                const HighScoresData& high_scores_data)
 {
-    obj.set("high_scores", high_scores_data.m_highScoreList);
+    obj.set("high_scores", high_scores_data.high_score_list_);
     return obj;
 }
 
-} // namespace zoper
+}  // namespace zoper
 
 #endif

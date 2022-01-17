@@ -11,7 +11,7 @@
             "program": "${command:cmake.launchTargetPath}",
             "args": [],
             "stopAtEntry": false,
-            "cwd": "${command:cmake.buildDirectory}/bin/${command:cmake.buildType}/",
+            "cwd": "${command:cmake.launchTargetDirectory}",
             "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",
@@ -30,9 +30,18 @@
             "program": "${command:cmake.launchTargetPath}",
             "args": [],
             "stopAtEntry": false,
-            "cwd": "${workspaceFolder}/build/bin/${command:cmake.buildType}",
-            "environment": [],
-            "externalConsole": false
+            "cwd": "${command:cmake.launchTargetDirectory}",
+            "environment": []
+        },
+        {
+            "name": "(Windows) Launch with config",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${command:cmake.launchTargetPath}",
+            "args": ["-haf_config=haf_configuration.txt"],
+            "stopAtEntry": false,
+            "cwd": "${command:cmake.launchTargetDirectory}",
+            "environment": []
         }
     ]
 }

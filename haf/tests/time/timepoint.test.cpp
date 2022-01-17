@@ -1,7 +1,7 @@
 #include "catch.hpp"
 
-#include <haf/time/include/timepoint.hpp>
-#include <mtypes/include/str.hpp>
+#include <haf/include/time/time_point.hpp>
+#include <htypes/include/str.hpp>
 
 #include <type_traits>
 
@@ -181,7 +181,7 @@ TEST_CASE("TimePoint comparison operators")
 TEST_CASE("TimePoint output operator")
 {
     TimePoint time_point{500U};
-    mtps::str result("The result: ");
+    htps::str result("The result: ");
     result << time_point;
     CHECK(result == "The result: 500");
 }

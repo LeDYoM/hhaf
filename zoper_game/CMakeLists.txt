@@ -8,7 +8,6 @@ project(
 
 file (GLOB_RECURSE HEADERS "*.hpp")
 file (GLOB_RECURSE SOURCES "*.cpp")
-
 set (CURRENT_TARGET ${PROJECT_NAME})
 
 include(client_functions)
@@ -17,6 +16,7 @@ build_client_library(
 
     DATA_SOURCE "${PROJECT_SOURCE_DIR}/../zoper_data/"
 
+    DATA_DEST "."
     HEADERS 
     ${HEADERS}
     

@@ -9,3 +9,12 @@
 
 To format from command line:
 find haf/ -iname *.hpp -o -iname *.cpp| xargs clang-format -i
+
+# When changing level, tokens spawn to same speed always.
+# Points to score not working.
+- Points to score go to somewhere on top
+# Make the Boardmanager tests not need the init_log
+# Fix warnings
+#- Make animation components have the scene node instead of the property? Nop
+- Make transformations explicit of rotation, scalation, position, etc...
+   that should help to not store the entire matrix always.

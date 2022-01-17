@@ -1,25 +1,25 @@
 #include "texture.hpp"
 
-using namespace mtps;
+using namespace htps;
 
 namespace haf::backend::sfmlb
 {
 Texture::Texture(const sf::Texture* const texture, const bool owned) :
-    m_texturePrivate{texture}, owned_{owned}
+    priv_{texture}, owned_{owned}
 {}
 
 Texture::~Texture()
 {
-    if (owned_ && m_texturePrivate != nullptr)
+    if (owned_ && priv_ != nullptr)
     {
-        delete m_texturePrivate;
+        delete priv_;
     }
 }
 
 vector2du32 Texture::size() const
 {
-    return {static_cast<u32>(m_texturePrivate->getSize().x),
-            static_cast<u32>(m_texturePrivate->getSize().y)};
+    return {static_cast<u32>(priv_->getSize().x),
+            static_cast<u32>(priv_->getSize().y)};
 }
 
 str Texture::info() const

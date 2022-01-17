@@ -5,44 +5,39 @@
 #include <boardmanager/include/boardmanager.hpp>
 
 #include <hlog/include/hlog.hpp>
-#include <haf/scene_nodes/include/renderizable_scenenode.hpp>
+#include <haf/include/scene_nodes/renderizable_scene_node.hpp>
+#include <haf/include/render/renderizables.hpp>
+#include <haf/include/component/component_container.hpp>
 
 namespace zoper
 {
-using namespace mtps;
+using namespace htps;
 using namespace haf;
 using namespace haf::scene;
+using namespace haf::render;
 using namespace haf::time;
+using namespace haf::anim;
 
-Player::Player(rptr<SceneNode> parent, str name) :
+Player::Player(types::rptr<SceneNode> parent, types::str name) :
     BaseClass{std::move(parent), std::move(name)},
     boardPosition{},
-    currentDirection{Direction{Direction::DirectionData::Up}},
-    m_board2SceneFactor{}
+    currentDirection{Direction{Direction::DirectionData::Up}}
 {
-    rotator_scalator_ = createSceneNode("player_rotator");
+    renderizableBuilder()
+        .name("player_render_scene_node")
+        .figType(FigType_t::Shape)
+        .pointCount(3U)
+        .box(rectFromSize(board2Scene({1, 1})))
+        .create();
 
-    auto render_scene_node = rotator_scalator_->createSceneNode<RenderizableSceneNode>(
-        "player_render_scene_node");
-
-    render_scene_node->buildNode(render_scene_node->renderizableBuilder()
-                                     .name("player_render_scene_node")
-                                     .figType(FigType_t::Shape)
-                                     .pointCount(3U));
-    node_     = render_scene_node->node();
-    rotator_scalator_->addTransformation();
+    reserveExtraTransformations(4U);
+    move_in_  = addTransformation();
+    rotator_  = addTransformation();
+    scalator_ = addTransformation();
+    move_out_ = addTransformation();
 }
 
 Player::~Player() = default;
-
-void Player::configure(const vector2dst& bPosition,
-                       const Rectf32& box,
-                       const vector2df& board2SceneFactor)
-{
-    m_board2SceneFactor = board2SceneFactor;
-    boardPosition.set(bPosition);
-    node_->box.set(box);
-}
 
 void Player::update()
 {
@@ -51,82 +46,101 @@ void Player::update()
     if (boardPosition.readResetHasChanged())
     {
         DisplayLog::info("Player board position: ", boardPosition());
-        prop<Position>() = m_board2SceneFactor * boardPosition();
+        prop<Position>() = board2Scene(boardPosition());
         DisplayLog::info("Player scene position: ", prop<Position>().get());
     }
 
     if (currentDirection.readResetHasChanged())
     {
-        const auto direction{currentDirection()};
+        auto const direction{currentDirection()};
+        auto const tile_center{board2SceneFactor() / 2.0F};
 
-        const auto tileCenter{m_board2SceneFactor / 2.0F};
-        rotator_scalator_->rotateAround(tileCenter, direction.angle());
+        getTransformation(move_in_).prop<Position>() = tile_center;
 
-        rotator_scalator_->getTransformation(1).
-        scaleAround(
-            tileCenter,
-            (!direction.isVertical())
-                ? vector2df{1.0F, 1.0F}
-                : vector2df{m_board2SceneFactor.y / m_board2SceneFactor.x,
-                            m_board2SceneFactor.x / m_board2SceneFactor.y});
+        getTransformation(rotator_).prop<Rotation>().set(direction.angle());
 
-        rotator_scalator_->prop<Position>() = tileCenter;
-        rotator_scalator_->getTransformation(1).prop<Position>() = tileCenter;
+        getTransformation(scalator_).prop<Scale>().set(
+            (direction.isVertical())
+                ? vector2df{board2SceneFactor().y / board2SceneFactor().x,
+                            board2SceneFactor().x / board2SceneFactor().y}
+                : vector2df{1.0F, 1.0F});
+
+        getTransformation(move_out_).prop<Position>() = -tile_center;
     }
 }
 
-void Player::movePlayer(const Direction& direction)
+bool Player::canBeMoved(BoardPositionType const& dest_position) const
+{
+    return TokenZones::pointInCenter(dest_position);
+}
+
+void Player::movePlayer(Direction const& direction)
 {
     LogAsserter::log_assert(direction.isValid(),
                             "Invalid direction passed to move");
     currentDirection = direction;
-    auto nPosition   = direction.applyToVector(boardPosition());
-    if (TokenZones::pointInCenter(nPosition))
+    auto nPosition{currentDirection().applyToVector(boardPosition())};
+    if (getBoardManager()->moveTile(boardPosition(), nPosition))
     {
-        getBoardModel()->moveTile(boardPosition(), nPosition);
+        ++movements_;
     }
 }
 
-void Player::tileMoved(const vector2dst& /*source*/, const vector2dst& dest)
+void Player::tileMoved(BoardPositionType const& source,
+                       BoardPositionType const& dest)
 {
-    boardPosition.set(dest);
+    BaseClass::tileMoved(source, dest);
+    DisplayLog::info("Player board position: ", dest);
+    prop<Position>() = board2Scene(dest);
+    DisplayLog::info("Player scene position: ", prop<Position>().get());
+
+    boardPosition = dest;
 }
 
-void Player::launchAnimation(const vector2df& toWhere)
+void Player::launchPlayerAnimation(vector2df const& toWhere)
 {
-    ensureComponentOfType(animation_component_);
-    animation_component_->addPropertyAnimation(
-        TimePoint_as_miliseconds(
-            gameplay::constants::MillisAnimationLaunchPlayerStep),
-        prop<Position>(), prop<Position>()(), toWhere, Animation::AnimationDirection::Forward,
-        [this, currentPosition = prop<Position>()()]() {
+    component(animation_component_);
+
+    auto property_animation_builder{
+        animation_component_->make_property_animation_builder_from_attached<
+            Position, Player>()};
+    property_animation_builder.startValue(prop<Position>()())
+        .endValue(toWhere)
+        .duration(TimePoint_as_miliseconds(
+            gameplay::constants::MillisAnimationLaunchPlayerStep))
+        .actionWhenFinished([this, currentPosition = prop<Position>()()]() {
             launchAnimationBack(currentPosition);
         });
+    animation_component_->addAnimation(std::move(property_animation_builder));
 }
 
-void Player::launchAnimationBack(const vector2df& toWhere)
+void Player::launchAnimationBack(SceneCoordinates const& toWhere)
 {
     DisplayLog::info("Creating animation for player to go back");
     currentDirection = currentDirection().negate();
-    ensureComponentOfType(animation_component_);
-    animation_component_->addPropertyAnimation(
+    component(animation_component_);
+
+    auto property_animation_builder{
+        animation_component_->make_property_animation_builder<Position, Player>(
+            this)};
+    property_animation_builder.startValueIsCurrent().endValue(toWhere).duration(
         TimePoint_as_miliseconds(
-            gameplay::constants::MillisAnimationLaunchPlayerStep),
-        prop<Position>(), prop<Position>().get(), toWhere);
+            gameplay::constants::MillisAnimationLaunchPlayerStep));
+    animation_component_->addAnimation(std::move(property_animation_builder));
 }
 
-void Player::tileAdded(const vector2dst& position_)
+void Player::tileAdded(BoardPositionType const& position_)
 {
     DisplayLog::info("TokenPlayer appeared at ", position_);
-    node_->color.set(getColorForToken());
+    node()->prop<render::ColorProperty>().set(getColorForToken());
 
     // Set the position in the scene depending on the board position
     boardPosition.set(position_);
 }
 
-void Player::tileChanged(const vector2dst& position_,
-                         const board::BoardTileData oldValue,
-                         const board::BoardTileData newValue)
+void Player::tileChanged(BoardPositionType const& position_,
+                         BoardTileData const oldValue,
+                         BoardTileData const newValue)
 {
     BaseClass::tileChanged(position_, oldValue, newValue);
     DisplayLog::info("Player (position ", position_, ") changed from ",

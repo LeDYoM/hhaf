@@ -4,7 +4,7 @@
 #include "texture.hpp"
 #include <filesystem>
 
-using namespace mtps;
+using namespace htps;
 
 namespace haf::backend::sfmlb
 {
@@ -64,8 +64,8 @@ IShader* ShaderFactory::loadFromFile(const str& file)
             if (result)
             {
                 uptr<Shader> t{muptr<Shader>(std::move(shader))};
-                m_shaderCache.emplace_back(std::move(t));
-                return (*(m_shaderCache.end() - 1)).get();
+                shader_cache_.emplace_back(std::move(t));
+                return (*(shader_cache_.end() - 1)).get();
             }
         }
     }

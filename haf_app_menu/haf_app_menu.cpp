@@ -1,39 +1,26 @@
 #include "haf_app_menu.hpp"
 
-#include <mtypes/include/serializer.hpp>
-#include <haf/filesystem/include/fileserializer.hpp>
-#include <haf/scene_components/include/scenemetrics.hpp>
-#include <haf/scene_components/include/scenefactory.hpp>
-#include <haf/scene_components/include/scenecontrol.hpp>
-#include <haf/shareddata/include/shareddata.hpp>
+#include <haf/include/scene_components/iapp_finisher.hpp>
+#include <haf/include/scene_components/iapp_initializer.hpp>
+
 #include <hlog/include/hlog.hpp>
 
-using namespace mtps;
+using namespace htps;
 using namespace haf;
 using namespace haf::scene;
 
 namespace haf::app_menu
 {
 
-void HafAppMenu::configureScenes(
-    haf::sys::DataWrapperCreator&)
+void HafAppMenu::onInit(IAppInitializer& app_initializer)
 {
-}
-
-HafAppMenu::HafAppMenu()  = default;
-HafAppMenu::~HafAppMenu() = default;
-
-void HafAppMenu::onInit(
-    haf::sys::DataWrapperCreator& data_wrapper_creator)
-{
+    (void)(app_initializer);
     DisplayLog::verbose("Initializing HafAppMenu");
-
-    configureScenes(data_wrapper_creator);
 }
 
-void HafAppMenu::onFinish(
-    haf::sys::DataWrapperCreator&)
+void HafAppMenu::onFinish(IAppFinisher& finisher)
 {
+    finisher.setNextApp("Zoper");
 }
 
-}  // namespace zoper
+}  // namespace haf::app_menu

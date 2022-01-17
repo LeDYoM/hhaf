@@ -1,12 +1,10 @@
-#pragma once
-
 #ifndef ZOPER_MENUSCENE_INCLUDE_HPP
 #define ZOPER_MENUSCENE_INCLUDE_HPP
 
-#include <mtypes/include/types.hpp>
-#include <mtypes/include/connection.hpp>
-#include <haf/render/include/renderizable.hpp>
-#include <haf/scene/include/scene.hpp>
+#include <htypes/include/types.hpp>
+#include <htypes/include/connection.hpp>
+#include <haf/include/render/renderizable.hpp>
+#include <haf/include/scene/scene.hpp>
 
 #include "../scene_names.hpp"
 
@@ -22,12 +20,9 @@ public:
 
     using BaseClass = haf::scene::Scene;
 
-    mtps::str nextSceneName() override;
+    htps::str nextSceneName() override;
     void onCreated() override;
-
-private:
-    mtps::ireceiver m_receiver;
 };
-} // namespace zoper
+}  // namespace zoper
 
 #endif

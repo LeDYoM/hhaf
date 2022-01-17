@@ -1,43 +1,47 @@
 #include <backend/include/backendregister.hpp>
 
+using namespace htps;
+
 namespace haf::backend
 {
-void BackendRegister::setFactory(IWindowFactory* const window_factory) noexcept
+void BackendRegister::setFactory(uptr<IWindowFactory> window_factory) noexcept
 {
-    window_factory_ = window_factory;
-}
-
-void BackendRegister::setFactory(IRenderTargetFactory* const render_target_factory) noexcept
-{
-    render_target_factory_ = render_target_factory;
+    window_factory_ = std::move(window_factory);
 }
 
 void BackendRegister::setFactory(
-    ITTFontFactoryFactory* const ttfont_factory_factory) noexcept
+    uptr<IRenderTargetFactory> render_target_factory) noexcept
 {
-    ttfont_factory_factory_ = ttfont_factory_factory;
+    render_target_factory_ = std::move(render_target_factory);
 }
 
 void BackendRegister::setFactory(
-    ITextureFactoryFactory* const texture_factory_factory) noexcept
+    uptr<ITTFontFactoryFactory> ttfont_factory_factory) noexcept
 {
-    texture_factory_factory_ = texture_factory_factory;
+    ttfont_factory_factory_ = std::move(ttfont_factory_factory);
 }
 
 void BackendRegister::setFactory(
-    IShaderFactoryFactory* const shader_factory_factory) noexcept
+    uptr<ITextureFactoryFactory> texture_factory_factory) noexcept
 {
-    shader_factory_factory_ = shader_factory_factory;
+    texture_factory_factory_ = std::move(texture_factory_factory);
 }
 
 void BackendRegister::setFactory(
-    IBMPFontFactoryFactory* const bmpfont_factory_factory) noexcept
+    uptr<IShaderFactoryFactory> shader_factory_factory) noexcept
 {
-    bmpfont_factory_factory_ = bmpfont_factory_factory;
+    shader_factory_factory_ = std::move(shader_factory_factory);
 }
 
-void BackendRegister::setLibFuncs(p_initHaf init_lib_func,
-                                  p_finishHaf finish_lib_func) noexcept
+void BackendRegister::setFactory(
+    uptr<IBMPFontFactoryFactory> bmpfont_factory_factory) noexcept
+{
+    bmpfont_factory_factory_ = std::move(bmpfont_factory_factory);
+}
+
+void BackendRegister::setLibFuncs(
+    p_initBackendClient init_lib_func,
+    p_finishBackendClient finish_lib_func) noexcept
 {
     init_lib_func_   = init_lib_func;
     finish_lib_func_ = finish_lib_func;

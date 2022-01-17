@@ -1,12 +1,12 @@
 #include "catch.hpp"
 
-#include <mtypes/include/types.hpp>
-#include <haf/utils/include/object_factory.hpp>
+#include <htypes/include/types.hpp>
+#include <haf/include/utils/object_factory.hpp>
 
 #include <typeinfo>
 #include <typeindex>
 
-using namespace mtps;
+using namespace htps;
 using namespace haf;
 using namespace haf::utils;
 

@@ -24,14 +24,4 @@ build_client_library(
     ${SOURCES}
 )
 
-# Extension libraries
 target_link_libraries(${CURRENT_TARGET} PRIVATE haf_user)
-#target_link_libraries(${CURRENT_TARGET} PRIVATE boardmanager)
-#target_link_libraries(${CURRENT_TARGET} PRIVATE menu_paged)
-
-#target_compile_definitions(${CURRENT_TARGET} PRIVATE USE_DEBUG_ACTIONS)
-#target_compile_definitions(${CURRENT_TARGET} PRIVATE TEST_BMP_FONT)
-
-#install(TARGETS ${CURRENT_TARGET} DESTINATION  .)
-#install(DIRECTORY ${SFML_ROOT}/bin/$<CONFIGURATION>/ DESTINATION .)
-#install(DIRECTORY ${PROJECT_SOURCE_DIR}/zoper/data/ DESTINATION .)

@@ -1,34 +1,26 @@
-#include <host/include/host.hpp>
 #include <hlog/include/hlog.hpp>
-#include <logger/include/log.hpp>
-#include <logger/include/log_init.hpp>
-#include <host/include/apploader.hpp>
-#include <mtypes/include/parpar.hpp>
+#include "host.hpp"
 
-#ifdef _WIN32
-    #define HOST_API extern "C" __declspec(dllexport)
-#else
-    #define HOST_API extern "C" __attribute__((visibility("default")))
-#endif
+#include "host_export.hpp"
 
-
-HOST_API int haf_host_main(int argc, char* argv[])
+HOST_PRIVATE int host_main(int argc, char* argv[]) noexcept
 {
     using namespace haf;
-    using namespace haf::host;
 
-    int result = -1;
+    int result{-1};
 
     try
     {
+        using namespace haf::host;
+
+        LogInitializer log_init;
+        Host host(argc, argv);
+        if (host.initialize())
         {
-            LogInitializer log_init;
-            Host host(argc, argv);
-            host.loadApplication("Zoper");
             result = host.run();
         }
     }
-    catch (std::exception &e)
+    catch (std::exception& e)
     {
         DisplayLog::error("std::Exception: ", e.what());
     }
@@ -37,4 +29,9 @@ HOST_API int haf_host_main(int argc, char* argv[])
         DisplayLog::info("Unexpected exception");
     }
     return result;
+}
+
+HOST_API int haf_host_main(int argc, char* argv[])
+{
+    return host_main(argc, argv);
 }

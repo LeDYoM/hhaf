@@ -1,9 +1,7 @@
-#pragma once
-
 #ifndef ZOPER_SCOREUTILS_INCLUDE_HPP
 #define ZOPER_SCOREUTILS_INCLUDE_HPP
 
-#include <mtypes/include/types.hpp>
+#include <htypes/include/types.hpp>
 
 namespace zoper
 {
@@ -19,14 +17,15 @@ class ScoreIncrementer
 public:
     /**
      * @brief Construct a new Score Incrementer object
-     * 
-     * @param level_properties 
+     *
+     * @param level_properties
      */
-    ScoreIncrementer(mtps::sptr<LevelProperties> level_properties);
+    ScoreIncrementer(htps::sptr<LevelProperties> level_properties);
+    ScoreIncrementer(ScoreIncrementer &) = delete;
 
     /**
      * @brief Destroy the Score Incrementer object
-     * 
+     *
      */
     ~ScoreIncrementer();
 
@@ -36,9 +35,9 @@ public:
     void addHit();
 
 private:
-    mtps::size_type hits_{0U};
-    mtps::sptr<LevelProperties> level_properties_;
+    htps::size_type hits_{0U};
+    htps::sptr<LevelProperties> level_properties_;
 };
-} // namespace zoper
+}  // namespace zoper
 
 #endif

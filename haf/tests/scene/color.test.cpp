@@ -1,10 +1,10 @@
 #include "catch.hpp"
 
-#include <mtypes/include/types.hpp>
-#include <haf/scene/include/color.hpp>
+#include <htypes/include/types.hpp>
+#include <haf/include/scene/color.hpp>
 #include <type_traits>
 
-using namespace mtps;
+using namespace htps;
 using namespace haf;
 using namespace haf::scene;
 
@@ -30,20 +30,20 @@ TEST_CASE("Color::Color", "[color][scene]")
     {
         Color color;
 
-        CHECK(color.r == 0U);
-        CHECK(color.g == 0U);
-        CHECK(color.b == 0U);
-        CHECK(color.a == 255U);
+        CHECK(color.red() == 0U);
+        CHECK(color.green() == 0U);
+        CHECK(color.blue() == 0U);
+        CHECK(color.alpha() == 255U);
     }
 
     SECTION("Value constructor")
     {
         Color color{1U, 2U, 3U, 4U};
 
-        CHECK(color.r == 1U);
-        CHECK(color.g == 2U);
-        CHECK(color.b == 3U);
-        CHECK(color.a == 4U);
+        CHECK(color.red() == 1U);
+        CHECK(color.green() == 2U);
+        CHECK(color.blue() == 3U);
+        CHECK(color.alpha() == 4U);
     }
 }
 
@@ -54,26 +54,26 @@ TEST_CASE("Color multiplication", "[color][scene]")
         Color color{128U, 128U, 128U};
         color *= 2.0F;
 
-        CHECK(color.r == 255U);
-        CHECK(color.g == 255U);
-        CHECK(color.b == 255U);
-        CHECK(color.a == 255U);
+        CHECK(color.red() == 255U);
+        CHECK(color.green() == 255U);
+        CHECK(color.blue() == 255U);
+        CHECK(color.alpha() == 255U);
 
         color = Color{128U, 128U, 128U};
         color *= 0.0F;
 
-        CHECK(color.r == 0U);
-        CHECK(color.g == 0U);
-        CHECK(color.b == 0U);
-        CHECK(color.a == 0U);
+        CHECK(color.red() == 0U);
+        CHECK(color.green() == 0U);
+        CHECK(color.blue() == 0U);
+        CHECK(color.alpha() == 0U);
 
         color = Color{255U, 255U, 255U};
         color *= 0.5F;
 
-        CHECK(color.r == 127U);
-        CHECK(color.g == 127U);
-        CHECK(color.b == 127U);
-        CHECK(color.a == 127U);
+        CHECK(color.red() == 127U);
+        CHECK(color.green() == 127U);
+        CHECK(color.blue() == 127U);
+        CHECK(color.alpha() == 127U);
     }
 
     SECTION("operator*")
@@ -81,25 +81,25 @@ TEST_CASE("Color multiplication", "[color][scene]")
         Color color_source{128U, 128U, 128U};
         Color color = color_source * 2.0F;
 
-        CHECK(color.r == 255U);
-        CHECK(color.g == 255U);
-        CHECK(color.b == 255U);
-        CHECK(color.a == 255U);
+        CHECK(color.red() == 255U);
+        CHECK(color.green() == 255U);
+        CHECK(color.blue() == 255U);
+        CHECK(color.alpha() == 255U);
 
         color_source = Color{128U, 128U, 128U};
         color        = color_source * 0.0F;
 
-        CHECK(color.r == 0U);
-        CHECK(color.g == 0U);
-        CHECK(color.b == 0U);
-        CHECK(color.a == 0U);
+        CHECK(color.red() == 0U);
+        CHECK(color.green() == 0U);
+        CHECK(color.blue() == 0U);
+        CHECK(color.alpha() == 0U);
 
         color_source = Color{255U, 255U, 255U};
         color        = color_source * 0.5F;
 
-        CHECK(color.r == 127U);
-        CHECK(color.g == 127U);
-        CHECK(color.b == 127U);
-        CHECK(color.a == 127U);
+        CHECK(color.red() == 127U);
+        CHECK(color.green() == 127U);
+        CHECK(color.blue() == 127U);
+        CHECK(color.alpha() == 127U);
     }
 }

@@ -4,20 +4,22 @@
 
 #include <SFML/Config.hpp>
 
-using namespace mtps;
+using namespace htps;
 
 namespace haf::backend::sfmlb
 {
 static_assert(sizeof(sf::Vertex) == sizeof(iVertex),
               "Incomptable version of SFML");
 
+RenderTarget::~RenderTarget() = default;
+
 void RenderTarget::initialize()
 {
     sf::RenderTarget::initialize();
 }
 
-void RenderTarget::render(const IRenderData* render_data_begin,
-                          const IRenderData* render_data_end)
+void RenderTarget::render(IRenderData const * render_data_begin,
+                          IRenderData const * const render_data_end)
 {
     while (render_data_begin != render_data_end)
     {
@@ -65,7 +67,7 @@ void RenderTarget::clear()
     sf::RenderTarget::clear();
 }
 
-mtps::str RenderTarget::info() const
+htps::str RenderTarget::info() const
 {
     return make_str(
         "name:SFMLWindowRenderTargget;provider:SFML;provider_version:",

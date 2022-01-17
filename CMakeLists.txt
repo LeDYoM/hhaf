@@ -1,41 +1,19 @@
 # Host Application Framework
-cmake_minimum_required(VERSION 3.14)
+cmake_minimum_required(VERSION 3.16)
 project(
-  haf_repo
-  VERSION 0.2.1
+  hhaf
+  VERSION 1.0.1
   DESCRIPTION "Host Application Framework"
   # [HOMEPAGE_URL <url-string>]
   LANGUAGES CXX)
+set(CMAKE_INSTALL_PREFIX hhaf)
 
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS OFF)
-set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
+include(functions)
+setOptions()
+includeForOptions()
 
-# Set compiler flags and options.
-
-#Equivalent to:
-if(MSVC)
-#  target_compile_options(${TARGET_NAME} PRIVATE /W4 /WX)
-  add_compile_options(
-      /W4
-#      /WX
-      )
-else()
-#  target_compile_options(${TARGET_NAME} PRIVATE -Wall -Wextra -pedantic -Werror)
-  add_compile_options(
-#    -Wall
-#    -Wextra
-#    -pedantic
-#    -Werror
-  )
-endif()
-
-add_compile_definitions(HAF_ALLOW_ACCELERATION)
-
-message("CXX Flags: " ${CMAKE_CXX_FLAGS})
-
-set(_REPO_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set(_REPO_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
 
 # First for the generic no-config case (e.g. with mingw, Ninja, Makefiles...)
 if(DEFINED CMAKE_BUILD_TYPE)
@@ -62,36 +40,47 @@ foreach(OUTPUTCONFIG ${CMAKE_CONFIGURATION_TYPES})
       ${_REPO_OUTPUT_DIRECTORY}/${OUTPUTCONFIG})
 endforeach()
 
-set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
-include(functions)
-
-# Use the memmanager
-option(MTYPES_USE_MEMMANAGER "Compile mtypes using the memmanager wrappers" ON)
-
-# Prepare the test framework
-add_subdirectory(tests)
-
-# Sub-directories where more CMakeLists.txt exist
-add_subdirectory(memmanager)
-add_subdirectory(mtypes)
-add_subdirectory(logger)
-
 # Create interface library to add loggger and types with memory management
 # in one line.
 add_library(log_and_types INTERFACE)
-target_link_libraries(log_and_types INTERFACE mtypes memmanager hlog)
+target_link_libraries(log_and_types INTERFACE htypes memmanager hlog)
 
-add_subdirectory(hlog)
-add_subdirectory(loader)
-add_subdirectory(hosted_app)
-add_subdirectory(host)
-add_subdirectory(backend_dev)
-add_subdirectory(backend_client)
-add_subdirectory(backend)
-add_subdirectory(haf)
+add_subdirectory(tools)
+
+set(hhaf_core_module_list
+  agloader
+  logger
+  memmanager
+  htypes
+  hlog
+  host_connector
+  hosted_app
+  host
+  backend_dev
+  backend
+  haf
+  haf_user
+  haf_run
+)
+
+#set(module_list "${hhaf_core_module_list};${backend_module_list}")
+set(module_list "${hhaf_core_module_list}")
+foreach(target ${module_list})
+  message("Adding module: ${target}")
+  add_subdirectory(${target})
+endforeach()
+
 add_subdirectory(haf_ext)
-add_subdirectory(haf_user)
+
+add_subdirectory(backend_client)
 add_subdirectory(backend_sfml)
 add_subdirectory(zoper_game)
+
 add_subdirectory(haf_app_menu)
-add_subdirectory(haf_run)
+add_subdirectory(haf_app_middleware)
+
+#if(BUILD_PACKAGES)
+#  generate_package("${hhaf_core_module_list}")
+#endif()
+
+build_docs("${module_list}")

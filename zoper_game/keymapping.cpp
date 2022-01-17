@@ -1,7 +1,8 @@
 #include "keymapping.hpp"
+#include <hlog/include/hlog.hpp>
 
 using namespace haf;
-using namespace mtps;
+using namespace htps;
 
 namespace zoper
 {
@@ -15,22 +16,22 @@ void KeyMapping::reset()
 {
     using namespace input;
 
-    m_keys = {Key::Left, Key::Right, Key::Up,
+    keys_ = {Key::Left, Key::Right, Key::Up,
               Key::Down, Key::Space, Key::Escape};
 }
 
 input::Key KeyMapping::getKey(const Direction d) const noexcept
 {
-    return m_keys[d];
+    return keys_[static_cast<size_type>(d.value())];
 }
 
 Direction KeyMapping::getDirectionFromKey(const input::Key key) const noexcept
 {
-    for (u8 i = 0U; i < Direction::Total; ++i)
+    for (fast_u8 i{0U}; i < Direction::Total; ++i)
     {
-        if (m_keys[i] == key)
+        if (keys_[i] == key)
         {
-            return static_cast<Direction>(i);
+            return static_cast<Direction::DirectionData>(i);
         }
     }
     return Direction::DirectionData::Invalid;
@@ -38,7 +39,7 @@ Direction KeyMapping::getDirectionFromKey(const input::Key key) const noexcept
 
 input::Key KeyMapping::getLaunchKey() const noexcept
 {
-    return m_keys[Direction::Total];
+    return keys_[Direction::Total];
 }
 
 bool KeyMapping::isLaunchKey(const input::Key key) const noexcept
@@ -48,7 +49,7 @@ bool KeyMapping::isLaunchKey(const input::Key key) const noexcept
 
 input::Key KeyMapping::getPauseKey() const noexcept
 {
-    return m_keys[Direction::Total + 1];
+    return keys_[Direction::Total + 1];
 }
 
 bool KeyMapping::isPauseKey(const input::Key key) const noexcept
@@ -62,24 +63,24 @@ bool KeyMapping::setKey(const u32 index, const input::Key key)
 
     for (u32 i{0U}; i < index; ++i)
     {
-        if (m_keys[i] == key)
+        if (keys_[i] == key)
         {
             return false;
         }
     }
-    m_keys[index] = key;
+    keys_[index] = key;
     return true;
 }
 
-bool KeyMapping::serialize(mtps::Object &obj) const
+bool KeyMapping::serialize(htps::Object& obj) const
 {
-    obj << *this;
+    obj.set("keys", keys_);
     return true;
 }
 
-bool KeyMapping::deserialize(mtps::Object const &obj)
+bool KeyMapping::deserialize(htps::Object const& obj)
 {
-    obj >> *this;
+    obj["keys"].getObject() >> keys_;
     return true;
 }
 
@@ -87,11 +88,12 @@ void KeyMapping::apply()
 {
     for (auto i = 0u; i < Direction::Total; ++i)
     {
-        //addConfigInt("key" + str(i), _keys[i],true);
+        // addConfigInt("key" + str(i), _keys[i],true);
     }
 
     //  addConfigInt("key_launch" + str(Direction::Total),
-    //_keys[Direction::Total]); 		addConfigInt("key_pause" + str(Direction::Total
+    //_keys[Direction::Total]); 		addConfigInt("key_pause" +
+    //str(Direction::Total
     //+ 1), _keys[Direction::Total + 1]);
 }
 }  // namespace zoper

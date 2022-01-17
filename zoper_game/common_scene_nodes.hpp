@@ -1,14 +1,13 @@
-#pragma once
-
 #ifndef ZOPER_COMMON_SCENE_NODES_INCLUDE_HPP
 #define ZOPER_COMMON_SCENE_NODES_INCLUDE_HPP
 
-#include <haf/render/include/renderizables.hpp>
+#include <haf/include/scene/scene_node.hpp>
+#include <haf/include/render/renderizable_builder.hpp>
 
 namespace zoper
 {
-    void createStandardBackground(
-        const mtps::rptr<haf::scene::Renderizables> renderizables);
+void createStandardBackground(
+    haf::render::RenderizableBuilder&& renderizable_builder);
 }
 
 #endif

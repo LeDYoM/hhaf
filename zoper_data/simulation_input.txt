@@ -1,0 +1,17 @@
+{
+    replay_data:[3,0,3,3,2,1],
+    input_data:
+        [
+            {type:0,time_point:1069959500,key:58},
+            {type:1,time_point:1069959500,key:58},
+            {type:0,time_point:556113100,key:74},
+            {type:1,time_point:556113100,key:74},
+            {type:0,time_point:318269600,key:58},
+            {type:1,time_point:318269600,key:58},
+            {type:0,time_point:2034680400,key:74},
+            {type:1,time_point:2034680400,key:74},
+            {type:0,time_point:247402400,key:74},
+            {type:1,time_point:247402400,key:74},
+            {type:0,time_point:197274900,key:74},
+            {type:1,time_point:197274900,key:74}]
+}

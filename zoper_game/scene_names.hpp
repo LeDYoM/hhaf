@@ -3,5 +3,5 @@
 
 #define MENU_SCENE_NAME "MenuScene"
 #define GAME_SCENE_NAME "GameScene"
-#define HIGHSCORES_SCENE_NAME "HighScoresScene";
+#define HIGHSCORES_SCENE_NAME "HighScoresScene"
 #endif

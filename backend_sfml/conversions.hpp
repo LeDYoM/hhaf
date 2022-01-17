@@ -1,3 +1,4 @@
+#include <htypes/include/cast.hpp>
 #include "renderwindow.hpp"
 #include <backend_dev/include/ikey.hpp>
 #include <backend_dev/include/itexture.hpp>
@@ -10,92 +11,92 @@
 namespace haf::backend::sfmlb
 {
 template <typename T>
-constexpr const sf::Rect<T> to_sf_type(const mtps::Rect<T>& rect) noexcept
+constexpr sf::Rect<T> to_sf_type(htps::Rect<T> const& rect) noexcept
 {
     return sf::Rect<T>{rect.left, rect.top, rect.width, rect.height};
 }
 
 template <typename T>
-constexpr const mtps::Rect<T> from_sft_type(const sf::Rect<T>& rect) noexcept
+constexpr htps::Rect<T> from_sft_type(sf::Rect<T> const& rect) noexcept
 {
-    return mtps::Rect<T>{rect.left, rect.top, rect.width, rect.height};
+    return htps::Rect<T>{rect.left, rect.top, rect.width, rect.height};
 }
 
 template <typename T>
-constexpr const sf::Vector2<T> to_sf_type(const mtps::vector2d<T>& v) noexcept
+constexpr const sf::Vector2<T> to_sf_type(htps::vector2d<T> const& v) noexcept
 {
     return sf::Vector2<T>{v.x, v.y};
 }
 
 template <typename T>
-constexpr const mtps::vector2d<T> from_sf_type(const sf::Vector2<T>& v) noexcept
+constexpr const htps::vector2d<T> from_sf_type(sf::Vector2<T> const& v) noexcept
 {
-    return mtps::vector2d<T>{v.x, v.y};
+    return htps::vector2d<T>{v.x, v.y};
 }
 
-constexpr iKey doCast(const sf::Keyboard::Key& k) noexcept
+constexpr IKey doCast(sf::Keyboard::Key const& k) noexcept
 {
-    return static_cast<iKey>((int)k);
+    return static_cast<IKey>(k);
 }
 
-inline sf::String to_sf_type(const mtps::str& other) noexcept
+inline auto to_sf_type(htps::str const& other) noexcept
 {
-    return sf::String(other.c_str());
+    return sf::String{other.c_str()};
 }
 
-inline sf::String to_sf_type(const char* other) noexcept
+inline auto to_sf_type(char const* const other) noexcept
 {
-    return sf::String(other);
+    return sf::String{other};
 }
 
-inline sf::Transform to_sf_type(const mtps::f32* matrix) noexcept
+inline sf::Transform to_sf_type(htps::f32 const* const matrix) noexcept
 {
-    return sf::Transform{matrix[0], matrix[4], matrix[12],
-                         matrix[1], matrix[5], matrix[13],
-                         matrix[3], matrix[7], matrix[15]};
+    return sf::Transform{matrix[0U], matrix[4U], matrix[12U],
+                         matrix[1U], matrix[5U], matrix[13U],
+                         matrix[3U], matrix[7U], matrix[15U]};
 }
 
-constexpr const sf::Texture* const to_sf_type(const ITexture* t)
+constexpr sf::Texture const* to_sf_type(ITexture const* texture) noexcept
 {
-    if (t)
+    if (texture != nullptr)
     {
-        if (auto tmp = dynamic_cast<const Texture*>(t))
+        if (auto const sf_texture{htps::d_cast<Texture const*>(texture)})
         {
-            return &(tmp->backEndTexture());
+            return &(sf_texture->backEndTexture());
         }
     }
     return nullptr;
 }
 
-constexpr const sf::Shader* const to_sf_type(const IShader* s)
+constexpr sf::Shader const* to_sf_type(IShader const* const shader) noexcept
 {
-    if (s)
+    if (shader != nullptr)
     {
-        if (auto tmp = dynamic_cast<const Shader*>(s))
+        if (auto const sf_shader{htps::d_cast<Shader const*>(shader)})
         {
-            return &(tmp->backEndShader());
+            return &(sf_shader->backEndShader());
         }
     }
     return nullptr;
 }
 
-inline const sf::PrimitiveType to_sf_type(
-    const iPrimitiveType primitive_type)
+constexpr auto to_sf_type(
+    iPrimitiveType const primitive_type) noexcept
 {
     return static_cast<sf::PrimitiveType>(primitive_type);
 }
 
-inline const sf::Vertex* to_sf_type(const iVertex* vertex)
+inline auto to_sf_type(iVertex const* const vertex) noexcept
 {
-    return reinterpret_cast<const sf::Vertex*>(vertex);
+    return reinterpret_cast<sf::Vertex const* const>(vertex);
 }
 
-inline const sf::RenderStates to_sf_type(const mtps::f32* matrix,
-                                         const ITexture* texture,
-                                         const IShader* shader) noexcept
+inline auto to_sf_type(htps::f32 const* const matrix,
+                                   ITexture const* const texture,
+                                   IShader const* const shader) noexcept
 {
-    return sf::RenderStates(sf::RenderStates::Default.blendMode,
+    return sf::RenderStates{sf::RenderStates::Default.blendMode,
                             to_sf_type(matrix), to_sf_type(texture),
-                            to_sf_type(shader));
+                            to_sf_type(shader)};
 }
 }  // namespace haf::backend::sfmlb

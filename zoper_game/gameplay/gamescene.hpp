@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef ZOOPER_GAMESCENE_INCLUDE_HPP
 #define ZOOPER_GAMESCENE_INCLUDE_HPP
 
@@ -13,70 +11,66 @@
 #include "../gameshareddata.hpp"
 #include "../loaders/gameresources.hpp"
 
-#include <mtypes/include/types.hpp>
-#include <mtypes/include/function.hpp>
-#include <haf/scene/include/scene.hpp>
+#include <htypes/include/types.hpp>
+#include <htypes/include/function.hpp>
+#include <haf/include/scene/scene.hpp>
 #include <boardmanager/include/boardmanager.hpp>
-#include <haf/render/include/renderizable.hpp>
-#include <haf/time/include/timercomponent.hpp>
-#include <haf/scene_components/include/statescontroller.hpp>
-#include <haf/scene_components/include/statescontrolleractuator.hpp>
-#include <haf/time/include/timercomponent.hpp>
+#include <boardmanager/include/board_types.hpp>
+#include <haf/include/render/renderizable.hpp>
+#include <haf/include/time/timer_component.hpp>
+#include <haf/include/scene_components/states_controller_component.hpp>
+#include <haf/include/scene_components/statescontrolleractuator.hpp>
+#include <haf/include/time/timer_component.hpp>
 
 #include "../scene_names.hpp"
 
 namespace zoper
 {
-class PauseSceneNode;
-class GameOverSceneNode;
 class NextToken;
 
-class GameScene final : public haf::scene::Scene,
-                        public haf::StatesControllerActuator<GameSceneStates>
+class GameScene final : public haf::scene::Scene
 {
+    using BaseClass = haf::scene::Scene;
+
 public:
     GameScene();
     ~GameScene() override;
 
     static constexpr char StaticTypeName[] = GAME_SCENE_NAME;
 
-    mtps::str nextSceneName() override;
+    htps::str nextSceneName() override;
     void onCreated() override;
 
-    void onEnterState(const GameSceneStates &) override;
-    void onExitState(const GameSceneStates &) override;
-
-    mtps::sptr<LevelProperties> levelProperties() const
+    htps::sptr<LevelProperties> levelProperties() const noexcept
     {
         return level_properties_;
     }
-    
+
     void goGameOver();
+    void tokenHitAnimation(haf::board::BoardPositionType const& pos);
+    void launchPlayer();
 
 private:
     struct GameScenePrivate;
-    mtps::uptr<GameScenePrivate> private_;
-    using BaseClass = scene::Scene;
-    void generateNextToken();
-    mtps::vector2df tileSize() const;
+    htps::uptr<GameScenePrivate> p_;
 
-    mtps::sptr<scene::StatesController<GameSceneStates>> m_sceneStates;
-    void launchPlayer();
+    void generateNextToken();
+
+    htps::sptr<scene::StatesControllerComponent<GameSceneStates>> scene_states_;
+
     void _debugDisplayBoard() const;
 
-    mtps::sptr<BoardGroup> m_boardGroup;
+    htps::sptr<BoardGroup> board_group_;
 
     // Timer related properties
-    mtps::sptr<time::TimerComponent> scene_timer_component_;
-    time::TimerConnectorSPtr m_nextTokenTimer;
-    mtps::sptr<NextToken> next_token_;
+    htps::sptr<time::TimerComponent> scene_timer_component_;
+    time::TimerConnectorSPtr next_token_timer_;
+    htps::sptr<NextToken> next_token_;
 
     // General properties.
-    mtps::u8 m_nextTokenPart{0U};
-    mtps::sptr<LevelProperties> level_properties_;
-    mtps::sptr<GameOverSceneNode> m_gameOver;
-    mtps::sptr<PauseSceneNode> pause_node_;
+    htps::u16 next_token_part_{0U};
+    htps::sptr<LevelProperties> level_properties_;
 };
-} // namespace zoper
+}  // namespace zoper
 
 #endif
