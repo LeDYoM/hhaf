@@ -13,7 +13,7 @@ void RenderSystem::update()
 {
     render_target_->render(render_data_container_.cbegin(),
                            render_data_container_.cend());
-    render_data_container_.clear();
+    clearRenderQueue();
 }
 
 void RenderSystem::draw(render::RenderData const& renderData)
