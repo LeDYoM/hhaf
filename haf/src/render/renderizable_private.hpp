@@ -3,12 +3,11 @@
 
 #include <htypes/include/types.hpp>
 #include <haf/include/render/renderizable.hpp>
-#include <haf/include/render/renderdata.hpp>
 #include <haf/include/scene/transformable_scene_node.hpp>
 #include <haf/include/resources/itexture.hpp>
 #include <haf/include/resources/ishader.hpp>
 #include <haf/include/render/vertexarray.hpp>
-#include <haf/include/render/renderdata.hpp>
+#include "render_data.hpp"
 #include "renderizable_internal_functions.hpp"
 
 using namespace htps;

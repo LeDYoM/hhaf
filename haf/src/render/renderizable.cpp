@@ -4,14 +4,13 @@
 #include "renderizable_internal_data.hpp"
 #include "renderizable_internal_functions.hpp"
 #include "system/get_system.hpp"
+#include "render_data.hpp"
 
-#include <haf/include/render/renderdata.hpp>
 #include <haf/include/scene/transformable_scene_node.hpp>
 #include <haf/include/render/renderizable_builder.hpp>
 #include <haf/include/resources/itexture.hpp>
 #include <haf/include/resources/ishader.hpp>
 #include <haf/include/render/vertexarray.hpp>
-#include <haf/include/render/renderdata.hpp>
 
 using namespace htps;
 using namespace haf::scene;
