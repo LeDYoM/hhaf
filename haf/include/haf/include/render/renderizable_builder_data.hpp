@@ -6,7 +6,6 @@
 
 namespace haf::render
 {
-struct RenderizableModifierContext;
 class Renderizables;
 }  // namespace haf::render
 
@@ -14,7 +13,7 @@ namespace haf::render
 {
 /**
  * @brief Class to expose the data that can be modified and set by the
- * @b RenderizableBuilder;
+ * @b RenderizableBuilder
  */
 struct RenderizableBuilderData
 {
