@@ -37,7 +37,7 @@ struct Renderizable::RenderizablePrivate
         i_this_{std::move(i_this)}
     {}
 
-    RenderizableInternalData getMomentumInternalData() const
+    constexpr RenderizableInternalData getMomentumInternalData() const noexcept
     {
         return {i_this_->prop<FigureTypeProperty>()(),
                 i_this_->prop<BoxProperty>()(),
