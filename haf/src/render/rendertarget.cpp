@@ -15,7 +15,7 @@ using namespace htps;
 
 namespace
 {
-haf::backend::iVertex const* to_backend(
+inline haf::backend::iVertex const* to_backend(
     haf::render::Vertex const* vertices) noexcept
 {
     static_assert(
@@ -24,7 +24,7 @@ haf::backend::iVertex const* to_backend(
     return reinterpret_cast<haf::backend::iVertex const*>(vertices);
 }
 
-haf::backend::iPrimitiveType to_backend(
+inline haf::backend::iPrimitiveType to_backend(
     const haf::render::PrimitiveType primitive_type) noexcept
 {
     static_assert(sizeof(haf::backend::iPrimitiveType) ==
@@ -34,7 +34,7 @@ haf::backend::iPrimitiveType to_backend(
     return static_cast<haf::backend::iPrimitiveType>(primitive_type);
 }
 
-void do_render(const rptr<haf::backend::IRenderTarget> irender_target_,
+inline void do_render(rptr<haf::backend::IRenderTarget> const irender_target_,
                const haf::render::RenderData& renderData)
 {
     haf::backend::IRenderData const render_data{
