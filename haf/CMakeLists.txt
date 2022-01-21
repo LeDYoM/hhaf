@@ -57,6 +57,8 @@ set(sources
 
   # Render
   ${src_dir}/render/geometry_math.hpp
+  ${src_dir}/render/render_data_conversion.cpp
+  ${src_dir}/render/render_data_conversion.hpp
   ${src_dir}/render/render_data.hpp
   ${src_dir}/render/render_system.cpp
   ${src_dir}/render/render_system.hpp

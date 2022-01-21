@@ -1,5 +1,5 @@
-#ifndef HAF_SCENE_RENDERDATA_INCLUDE_HPP
-#define HAF_SCENE_RENDERDATA_INCLUDE_HPP
+#ifndef HAF_RENDER__RENDER_DATA_INCLUDE_HPP
+#define HAF_RENDER__RENDER_DATA_INCLUDE_HPP
 
 namespace haf::backend
 {
@@ -43,6 +43,7 @@ public:
     res::IShader const* shader;
     backend::IRenderData const* const irender_data;
 };
+
 }  // namespace haf::render
 
 #endif

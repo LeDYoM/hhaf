@@ -10,6 +10,7 @@
 #include "render_data.hpp"
 #include "renderizable_internal_functions.hpp"
 #include <backend_dev/include/irenderdata.hpp>
+#include "render_data_conversion.hpp"
 
 using namespace htps;
 using namespace haf::scene;
@@ -22,6 +23,7 @@ struct Renderizable::RenderizablePrivate
     rptr<TransformableSceneNode> parent_;
     VertexArray vertices_;
     RenderData render_data_;
+    backend::IRenderData irender_data_;
     rptr<Renderizable const> const i_this_;
 
     RenderizablePrivate(rptr<TransformableSceneNode> parent,
@@ -35,6 +37,7 @@ struct Renderizable::RenderizablePrivate
         vertices_{initDataVertexPerFigureAndNumPoints(figure_type,
                                                       initial_point_count)},
         render_data_{vertices_, matrix, texture, shader},
+        irender_data_{to_backend(render_data_)},
         i_this_{std::move(i_this)}
     {}
 
