@@ -13,8 +13,8 @@ class IShader;
 struct IRenderData
 {
     iVertex const* vertices;
-    htps::size_type const nVertex;
-    iPrimitiveType const pType;
+    htps::size_type nVertex;
+    iPrimitiveType pType;
     htps::f32 const* transform;
     ITexture const* texture;
     IShader const* shader;

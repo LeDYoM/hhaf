@@ -36,7 +36,7 @@ struct Renderizable::RenderizablePrivate
         parent_{parent},
         vertices_{initDataVertexPerFigureAndNumPoints(figure_type,
                                                       initial_point_count)},
-        render_data_{vertices_, matrix, texture, shader},
+        render_data_{vertices_, matrix, texture, shader, &irender_data_},
         irender_data_{to_backend(render_data_)},
         i_this_{std::move(i_this)}
     {}
@@ -51,6 +51,11 @@ struct Renderizable::RenderizablePrivate
                 i_this_->prop<TextureRectProperty>()(),
                 i_this_->prop<TextureProperty>()(),
                 i_this_->prop<ColorModifierProperty>()()};
+    }
+
+    void updateBackendData()
+    {
+        irender_data_ = to_backend(render_data_);
     }
 };
 
