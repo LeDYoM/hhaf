@@ -1,4 +1,4 @@
-#include <haf/include/render/vertexarray.hpp>
+#include <haf/include/render/vertex_array.hpp>
 
 using namespace htps;
 using namespace haf::scene;

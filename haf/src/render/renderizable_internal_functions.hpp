@@ -5,7 +5,7 @@
 
 #include <haf/include/render/renderizable.hpp>
 #include <haf/include/render/primitive_type.hpp>
-#include <haf/include/render/vertexarray.hpp>
+#include <haf/include/render/vertex_array.hpp>
 #include "renderizable_internal_data.hpp"
 
 namespace haf::render

@@ -3,7 +3,7 @@
 #include "simulation/simulation_system.hpp"
 #include "input/input_system.hpp"
 #include "scene/scene_manager.hpp"
-#include "render/rendersystem.hpp"
+#include "render/render_system.hpp"
 
 #include <hlog/include/hlog.hpp>
 #include <hosted_app/include/iapp.hpp>

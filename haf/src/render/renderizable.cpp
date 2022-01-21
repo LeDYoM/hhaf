@@ -1,6 +1,6 @@
 #include <haf/include/render/renderizable.hpp>
 #include "render/renderizable_private.hpp"
-#include "rendersystem.hpp"
+#include "render_system.hpp"
 #include "renderizable_internal_data.hpp"
 #include "renderizable_internal_functions.hpp"
 #include "system/get_system.hpp"
@@ -10,7 +10,7 @@
 #include <haf/include/render/renderizable_builder.hpp>
 #include <haf/include/resources/itexture.hpp>
 #include <haf/include/resources/ishader.hpp>
-#include <haf/include/render/vertexarray.hpp>
+#include <haf/include/render/vertex_array.hpp>
 
 using namespace htps;
 using namespace haf::scene;

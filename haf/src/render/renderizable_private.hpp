@@ -6,7 +6,7 @@
 #include <haf/include/scene/transformable_scene_node.hpp>
 #include <haf/include/resources/itexture.hpp>
 #include <haf/include/resources/ishader.hpp>
-#include <haf/include/render/vertexarray.hpp>
+#include <haf/include/render/vertex_array.hpp>
 #include "render_data.hpp"
 #include "renderizable_internal_functions.hpp"
 #include <backend_dev/include/irenderdata.hpp>

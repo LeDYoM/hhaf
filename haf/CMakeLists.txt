@@ -58,6 +58,10 @@ set(sources
   # Render
   ${src_dir}/render/geometry_math.hpp
   ${src_dir}/render/render_data.hpp
+  ${src_dir}/render/render_system.cpp
+  ${src_dir}/render/render_system.hpp
+  ${src_dir}/render/render_target.cpp
+  ${src_dir}/render/render_target.hpp
   ${src_dir}/render/renderizable_builder.cpp
   ${src_dir}/render/renderizable_internal_data.hpp
   ${src_dir}/render/renderizable_internal_functions.cpp
@@ -65,11 +69,7 @@ set(sources
   ${src_dir}/render/renderizable_private.hpp
   ${src_dir}/render/renderizable.cpp
   ${src_dir}/render/renderizables.cpp
-  ${src_dir}/render/rendersystem.cpp
-  ${src_dir}/render/rendersystem.hpp
-  ${src_dir}/render/rendertarget.cpp
-  ${src_dir}/render/rendertarget.hpp
-  ${src_dir}/render/vertexarray.cpp
+  ${src_dir}/render/vertex_array.cpp
 
   # Resources
   ${src_dir}/resources/bmpfont_private.cpp
@@ -250,7 +250,7 @@ set(headers
   ${inc_dir}/render/renderizable.hpp
   ${inc_dir}/render/renderizables.hpp
   ${inc_dir}/render/vertex.hpp
-  ${inc_dir}/render/vertexarray.hpp
+  ${inc_dir}/render/vertex_array.hpp
 
   # Resources
   ${inc_dir}/resources/ifont.hpp

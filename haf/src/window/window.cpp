@@ -4,7 +4,7 @@
 #include <backend/include/backendfactory.hpp>
 
 #include "input/input_system.hpp"
-#include "render/rendertarget.hpp"
+#include "render/render_target.hpp"
 #include "time/time_system.hpp"
 #include "system/system_provider.hpp"
 #include "utils/compile_time_constants.hpp"

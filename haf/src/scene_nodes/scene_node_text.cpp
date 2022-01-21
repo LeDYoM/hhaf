@@ -5,7 +5,7 @@
 
 #include <haf/include/resources/ifont.hpp>
 #include <haf/include/resources/itexture.hpp>
-#include <haf/include/render/vertexarray.hpp>
+#include <haf/include/render/vertex_array.hpp>
 #include <haf/include/scene_nodes/renderizable_scene_node.hpp>
 #include <haf/include/scene/scenenode_cast.hpp>
 #include <hlog/include/hlog.hpp>
