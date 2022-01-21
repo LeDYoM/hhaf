@@ -53,6 +53,7 @@ void Renderizable::render()
 
         if (!p_->vertices_.empty())
         {
+            p_->updateBackendData();
             sys::getSystem<sys::RenderSystem>(parent()).draw(p_->render_data_);
         }
     }

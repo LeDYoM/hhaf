@@ -37,21 +37,8 @@ inline haf::backend::iPrimitiveType to_backend(
 inline void do_render(rptr<haf::backend::IRenderTarget> const irender_target_,
                const haf::render::RenderData& renderData)
 {
-    haf::backend::IRenderData const render_data{
-        to_backend(renderData.vArray.verticesArray().cbegin()),
-        renderData.vArray.verticesArray().size(),
-        to_backend(renderData.vArray.primitiveType()),
-        renderData.transform.getMatrix(),
-        renderData.texture
-            ? dynamic_cast<haf::res::Texture const*>(renderData.texture)
-                  ->backEndTexture()
-            : nullptr,
-        renderData.shader
-            ? dynamic_cast<haf::res::Shader const*>(renderData.shader)
-                  ->backEndShader()
-            : nullptr};
-
-    irender_target_->render(&render_data, &render_data + 1);
+    auto rd = renderData.irender_data;
+    irender_target_->render(rd, rd + 1);
 }
 
 }  // namespace
