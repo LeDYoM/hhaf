@@ -9,6 +9,7 @@
 #include <haf/include/render/vertexarray.hpp>
 #include "render_data.hpp"
 #include "renderizable_internal_functions.hpp"
+#include <backend_dev/include/irenderdata.hpp>
 
 using namespace htps;
 using namespace haf::scene;
