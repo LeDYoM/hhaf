@@ -43,6 +43,7 @@ public:
 
     void render(htps::rptr<render::RenderData const> const render_data_begin,
                 htps::rptr<render::RenderData const> const render_data_end);
+
     void clear();
 
 private:

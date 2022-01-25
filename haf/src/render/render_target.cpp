@@ -15,27 +15,8 @@ using namespace htps;
 
 namespace
 {
-inline haf::backend::iVertex const* to_backend(
-    haf::render::Vertex const* vertices) noexcept
-{
-    static_assert(
-        sizeof(haf::backend::iVertex) == sizeof(haf::render::Vertex),
-        "The scene Vertex and the backend Vertex do not have the same size");
-    return reinterpret_cast<haf::backend::iVertex const*>(vertices);
-}
-
-inline haf::backend::iPrimitiveType to_backend(
-    const haf::render::PrimitiveType primitive_type) noexcept
-{
-    static_assert(sizeof(haf::backend::iPrimitiveType) ==
-                      sizeof(haf::render::PrimitiveType),
-                  "The scene PrimitiveType and the backend PrimitiveType do "
-                  "not have the same size");
-    return static_cast<haf::backend::iPrimitiveType>(primitive_type);
-}
-
 inline void do_render(rptr<haf::backend::IRenderTarget> const irender_target_,
-               const haf::render::RenderData& renderData)
+                      const haf::render::RenderData& renderData)
 {
     auto rd = renderData.irender_data;
     irender_target_->render(rd, rd + 1);
