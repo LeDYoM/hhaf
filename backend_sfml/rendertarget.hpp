@@ -27,6 +27,9 @@ public:
 
     htps::str info() const override;
     sf::Vector2u getSize() const override;
+
+    IRenderElement* createRenderElement() override;
+    bool destroyRenderElement(IRenderElement* render_element) override;
 };
 }  // namespace haf::backend::sfmlb
 

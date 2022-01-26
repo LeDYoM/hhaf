@@ -10,6 +10,7 @@
 #include "render_data.hpp"
 #include "renderizable_internal_functions.hpp"
 #include <backend_dev/include/irenderdata.hpp>
+#include <backend_dev/include/irender_element.hpp>
 #include "render_data_conversion.hpp"
 
 using namespace htps;
@@ -25,6 +26,7 @@ struct Renderizable::RenderizablePrivate
     RenderData render_data_;
     backend::IRenderData irender_data_;
     rptr<Renderizable const> const i_this_;
+    backend::IRenderData* render_element_{nullptr};
 
     RenderizablePrivate(rptr<TransformableSceneNode> parent,
                         FigType_t const figure_type,

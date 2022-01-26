@@ -3,6 +3,13 @@
 
 namespace haf::backend::sfmlb
 {
+RenderElement::~RenderElement() = default;
+
+void RenderElement::setPrimitiveType(iPrimitiveType const primitive_type)
+{
+    vertex_array_.setPrimitiveType(to_sf_type(primitive_type));
+}
+
 void RenderElement::setSize(htps::size_type const size)
 {
     vertex_array_.resize(static_cast<std::size_t>(size));

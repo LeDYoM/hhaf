@@ -1,5 +1,6 @@
 #include "rendertarget.hpp"
 #include "conversions.hpp"
+#include "render_element.hpp"
 #include <backend_dev/include/ivertex.hpp>
 
 #include <SFML/Config.hpp>
@@ -18,8 +19,8 @@ void RenderTarget::initialize()
     sf::RenderTarget::initialize();
 }
 
-void RenderTarget::render(IRenderData const * render_data_begin,
-                          IRenderData const * const render_data_end)
+void RenderTarget::render(IRenderData const* render_data_begin,
+                          IRenderData const* const render_data_end)
 {
     while (render_data_begin != render_data_end)
     {
@@ -78,6 +79,26 @@ htps::str RenderTarget::info() const
 sf::Vector2u RenderTarget::getSize() const
 {
     return sf::Vector2u{};
+}
+
+IRenderElement* RenderTarget::createRenderElement()
+{
+    return new RenderElement();
+}
+
+bool RenderTarget::destroyRenderElement(IRenderElement* render_element)
+{
+    if (render_element != nullptr)
+    {
+        if (auto* casted_render_element{
+                dynamic_cast<RenderElement*>(render_element)};
+            render_element != nullptr)
+        {
+            delete casted_render_element;
+            return true;
+        }
+    }
+    return false;
 }
 
 }  // namespace haf::backend::sfmlb

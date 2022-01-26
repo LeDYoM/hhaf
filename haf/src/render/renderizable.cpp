@@ -27,7 +27,7 @@ Renderizable::Renderizable(rptr<TransformableSceneNode> parent,
                                         parent->globalTransform(),
                                         prop<TextureProperty>()().get(),
                                         prop<ShaderProperty>()().get(),
-                                        this)}
+                                        this/*, sys::getSystem<sys::RenderSystem>(parent).re*/)}
 {
     prop<TextureRectProperty>().set(
         textureFillQuad(renderizable_data.prop<TextureProperty>()()));

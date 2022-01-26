@@ -10,13 +10,14 @@ namespace haf::backend::sfmlb
 class RenderElement : public IRenderElement
 {
 public:
+    void setPrimitiveType(iPrimitiveType const primitive_type) override;
     void setSize(htps::size_type const size) override;
     void setVertexData(iVertex const* const vertex_data) override;
     void setTexture(ITexture const* const texture) override;
     void setModelViewMatrix(htps::f32 const* const model_view_matrix) override;
     void setProjectionMatrix(htps::f32 const* const projection_matrix) override;
     void setShader(IShader const* const shader) override;
-
+    ~RenderElement() override;
 private:
     sf::VertexArray vertex_array_;
     sf::RenderStates render_states_;

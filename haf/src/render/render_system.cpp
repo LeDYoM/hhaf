@@ -40,4 +40,15 @@ void RenderSystem::clearRenderQueue()
     render_data_container_.clear();
 }
 
+backend::IRenderElement* RenderSystem::createRenderElement()
+{
+    return nullptr;
+}
+
+bool RenderSystem::destroyRenderElement(
+    backend::IRenderElement* /*render_element*/)
+{
+    return true;
+}
+
 }  // namespace haf::sys

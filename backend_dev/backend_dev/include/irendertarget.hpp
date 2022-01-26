@@ -9,6 +9,8 @@
 
 namespace haf::backend
 {
+class IRenderElement;
+
 class IRenderTarget : public IResourceInfo
 {
 public:
@@ -16,7 +18,7 @@ public:
 
     virtual void initialize() = 0;
 
-    virtual void render(IRenderData const * render_data_begin,
+    virtual void render(IRenderData const* render_data_begin,
                         IRenderData const* const render_data_end) = 0;
 
     virtual void setViewPort(const htps::Rectf32& nviewport) = 0;
@@ -25,6 +27,9 @@ public:
     virtual htps::Rectf32 viewRect() const                   = 0;
 
     virtual void clear() = 0;
+
+    virtual IRenderElement* createRenderElement()              = 0;
+    virtual bool destroyRenderElement(IRenderElement* element) = 0;
 };
 }  // namespace haf::backend
 

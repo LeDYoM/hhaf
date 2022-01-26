@@ -8,6 +8,11 @@
 
 #include "system/system_base.hpp"
 
+namespace haf::backend
+{
+class IRenderElement;
+}
+
 namespace haf::scene
 {
 class RenderData;
@@ -32,6 +37,9 @@ public:
 
     void setRenderTarget(htps::sptr<RenderTarget> render_target);
     void clearRenderQueue();
+
+    backend::IRenderElement* createRenderElement();
+    bool destroyRenderElement(backend::IRenderElement* render_element);
 
 private:
     htps::sptr<RenderTarget> render_target_;
