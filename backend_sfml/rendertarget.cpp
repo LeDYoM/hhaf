@@ -44,7 +44,7 @@ void RenderTarget::setViewPort(const Rectf32& nviewport)
 Rectf32 RenderTarget::viewPort() const
 {
     sf::View currentView(getView());
-    return from_sft_type(currentView.getViewport());
+    return from_sf_type(currentView.getViewport());
 }
 
 void RenderTarget::setViewRect(const Rectf32& nviewRect)

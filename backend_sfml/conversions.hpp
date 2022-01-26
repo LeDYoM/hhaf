@@ -17,7 +17,7 @@ constexpr sf::Rect<T> to_sf_type(htps::Rect<T> const& rect) noexcept
 }
 
 template <typename T>
-constexpr htps::Rect<T> from_sft_type(sf::Rect<T> const& rect) noexcept
+constexpr htps::Rect<T> from_sf_type(sf::Rect<T> const& rect) noexcept
 {
     return htps::Rect<T>{rect.left, rect.top, rect.width, rect.height};
 }
@@ -80,8 +80,7 @@ constexpr sf::Shader const* to_sf_type(IShader const* const shader) noexcept
     return nullptr;
 }
 
-constexpr auto to_sf_type(
-    iPrimitiveType const primitive_type) noexcept
+constexpr auto to_sf_type(iPrimitiveType const primitive_type) noexcept
 {
     return static_cast<sf::PrimitiveType>(primitive_type);
 }
@@ -91,9 +90,16 @@ inline auto to_sf_type(iVertex const* const vertex) noexcept
     return reinterpret_cast<sf::Vertex const* const>(vertex);
 }
 
+inline auto to_sf_type(iVertex const vertex) noexcept
+{
+    return sf::Vertex{sf::Vector2f{vertex.pos_x, vertex.pos_y},
+                      sf::Color{vertex.r, vertex.g, vertex.b},
+                      sf::Vector2f{vertex.tc_x, vertex.tc_y}};
+}
+
 inline auto to_sf_type(htps::f32 const* const matrix,
-                                   ITexture const* const texture,
-                                   IShader const* const shader) noexcept
+                       ITexture const* const texture,
+                       IShader const* const shader) noexcept
 {
     return sf::RenderStates{sf::RenderStates::Default.blendMode,
                             to_sf_type(matrix), to_sf_type(texture),

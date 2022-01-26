@@ -12,14 +12,14 @@ TTFont::~TTFont() = default;
 
 Rectf32 TTFont::getBounds(const u32 codePoint, const u32 characterSize) const
 {
-    return from_sft_type<f32>(
+    return from_sf_type<f32>(
         font_->getGlyph(codePoint, characterSize, false).bounds);
 }
 
 Rectf32 TTFont::getTextureBounds(const u32 codePoint,
                                  const u32 characterSize) const
 {
-    return from_sft_type<s32>(
+    return from_sf_type<s32>(
         font_->getGlyph(codePoint, characterSize, false).textureRect);
 }
 
