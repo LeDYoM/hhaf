@@ -42,13 +42,13 @@ void RenderSystem::clearRenderQueue()
 
 backend::IRenderElement* RenderSystem::createRenderElement()
 {
-    return nullptr;
+    return render_target_->createRenderElement();
 }
 
 bool RenderSystem::destroyRenderElement(
-    backend::IRenderElement* /*render_element*/)
+    backend::IRenderElement* render_element)
 {
-    return true;
+    return render_target_->destroyRenderElement(render_element);
 }
 
 }  // namespace haf::sys

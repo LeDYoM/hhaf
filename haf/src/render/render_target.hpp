@@ -7,7 +7,9 @@
 namespace haf::backend
 {
 class IRenderTarget;
+class IRenderElement;
 }
+
 namespace haf::render
 {
 class RenderData;
@@ -45,6 +47,9 @@ public:
                 htps::rptr<render::RenderData const> const render_data_end);
 
     void clear();
+
+    backend::IRenderElement* createRenderElement();
+    bool destroyRenderElement(backend::IRenderElement* render_element);
 
 private:
     const htps::rptr<backend::IRenderTarget> irender_target_;

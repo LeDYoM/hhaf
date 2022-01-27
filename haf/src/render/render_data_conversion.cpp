@@ -7,10 +7,18 @@
 #include "resources/shader.hpp"
 #include <haf/include/scene/matrix4x4.hpp>
 
-namespace
+namespace haf::render
 {
-inline haf::backend::iVertex const* to_backend_member(
-    haf::render::Vertex const* vertices) noexcept
+
+backend::iPrimitiveType to_backend(const PrimitiveType primitive_type) noexcept
+{
+    static_assert(sizeof(backend::iPrimitiveType) == sizeof(PrimitiveType),
+                  "The scene PrimitiveType and the backend PrimitiveType do "
+                  "not have the same size");
+    return static_cast<backend::iPrimitiveType>(primitive_type);
+}
+
+backend::iVertex const* to_backend(Vertex const* vertices) noexcept
 {
     static_assert(
         sizeof(haf::backend::iVertex) == sizeof(haf::render::Vertex),
@@ -18,35 +26,29 @@ inline haf::backend::iVertex const* to_backend_member(
     return reinterpret_cast<haf::backend::iVertex const*>(vertices);
 }
 
-inline haf::backend::iPrimitiveType to_backend_member(
-    const haf::render::PrimitiveType primitive_type) noexcept
+backend::ITexture const* to_backend(res::ITexture const* texture)
 {
-    static_assert(sizeof(haf::backend::iPrimitiveType) ==
-                      sizeof(haf::render::PrimitiveType),
-                  "The scene PrimitiveType and the backend PrimitiveType do "
-                  "not have the same size");
-    return static_cast<haf::backend::iPrimitiveType>(primitive_type);
+    return texture
+        ? dynamic_cast<res::Texture const*>(texture)->backEndTexture()
+        : nullptr;
 }
-}  // namespace
 
-namespace haf::render
+backend::IShader const* to_backend(res::IShader const* shader)
 {
+    return shader
+        ? dynamic_cast<res::Shader const*>(shader)->backEndShader()
+        : nullptr;
+}
 
 backend::IRenderData to_backend(RenderData const& render_data)
 {
     return backend::IRenderData{
-        to_backend_member(render_data.vArray.verticesArray().cbegin()),
+        to_backend(render_data.vArray.verticesArray().cbegin()),
         render_data.vArray.verticesArray().size(),
-        to_backend_member(render_data.vArray.primitiveType()),
+        to_backend(render_data.vArray.primitiveType()),
         render_data.transform.getMatrix(),
-        render_data.texture
-            ? dynamic_cast<haf::res::Texture const*>(render_data.texture)
-                  ->backEndTexture()
-            : nullptr,
-        render_data.shader
-            ? dynamic_cast<haf::res::Shader const*>(render_data.shader)
-                  ->backEndShader()
-            : nullptr};
+        to_backend(render_data.texture),
+        to_backend(render_data.shader)};
 }
 
 }  // namespace haf::render

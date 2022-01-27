@@ -21,13 +21,15 @@ Renderizable::Renderizable(rptr<TransformableSceneNode> parent,
                            RenderizableData&& renderizable_data) :
     sys::HasName{std::move(renderizable_data.prop<RenderizableName>()())},
     RenderizableData{std::move(renderizable_data)},
-    p_{make_pimplp<RenderizablePrivate>(parent,
-                                        prop<FigureTypeProperty>()(),
-                                        prop<PointCount>()(),
-                                        parent->globalTransform(),
-                                        prop<TextureProperty>()().get(),
-                                        prop<ShaderProperty>()().get(),
-                                        this/*, sys::getSystem<sys::RenderSystem>(parent).re*/)}
+    p_{make_pimplp<RenderizablePrivate>(
+        parent,
+        prop<FigureTypeProperty>()(),
+        prop<PointCount>()(),
+        parent->globalTransform(),
+        prop<TextureProperty>()().get(),
+        prop<ShaderProperty>()().get(),
+        this,
+        sys::getSystem<sys::RenderSystem>(parent))}
 {
     prop<TextureRectProperty>().set(
         textureFillQuad(renderizable_data.prop<TextureProperty>()()));
@@ -95,6 +97,7 @@ void Renderizable::update()
                                   prop<BoxProperty>()))
     {
         updateGeometry(p_->vertices_.verticesArray(), mi_data);
+//        p_->render_element_->
         prop<TextureRectProperty>().resetHasChanged();
         prop<ColorProperty>().resetHasChanged();
         prop<ColorModifierProperty>().resetHasChanged();
