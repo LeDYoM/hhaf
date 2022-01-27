@@ -47,16 +47,16 @@ rptr<TransformableSceneNode const> Renderizable::parent() const noexcept
     return p_->parent_;
 }
 
-void Renderizable::render()
+void Renderizable::render(bool const parent_transformation_changed)
 {
     if (visible())
     {
-        update();
+        update(parent_transformation_changed);
 
         if (!p_->vertices_.empty())
         {
             p_->updateBackendData();
-            sys::getSystem<sys::RenderSystem>(parent()).draw(p_->render_data_);
+            p_->render_system_.draw(p_->render_data_);
         }
     }
 }
@@ -88,8 +88,12 @@ void Renderizable::setTextureFill(sptr<res::ITexture> texture_)
                                             textureFillQuad(texture_));
 }
 
-void Renderizable::update()
+void Renderizable::update(bool const parent_transformation_changed)
 {
+    if (parent_transformation_changed)
+    {
+        
+    }
     auto const& mi_data{p_->getMomentumInternalData()};
 
     if (ps_readResetHasAnyChanged(prop<PointCount>(),
@@ -97,7 +101,8 @@ void Renderizable::update()
                                   prop<BoxProperty>()))
     {
         updateGeometry(p_->vertices_.verticesArray(), mi_data);
-//        p_->render_element_->
+        p_->render_element_->setVertexData(
+            to_backend(p_->vertices_.verticesArray().cbegin()));
         prop<TextureRectProperty>().resetHasChanged();
         prop<ColorProperty>().resetHasChanged();
         prop<ColorModifierProperty>().resetHasChanged();
@@ -105,6 +110,8 @@ void Renderizable::update()
     else if (prop<TextureRectProperty>().readResetHasChanged())
     {
         updateTextureCoordsAndColor(p_->vertices_.verticesArray(), mi_data);
+        p_->render_element_->setVertexData(
+            to_backend(p_->vertices_.verticesArray().cbegin()));
         prop<ColorProperty>().resetHasChanged();
         prop<ColorModifierProperty>().resetHasChanged();
     }
@@ -112,16 +119,20 @@ void Renderizable::update()
                                        prop<ColorModifierProperty>()))
     {
         updateColors(p_->vertices_.verticesArray(), mi_data);
+        p_->render_element_->setVertexData(
+            to_backend(p_->vertices_.verticesArray().cbegin()));
     }
 
     if (prop<TextureProperty>().readResetHasChanged())
     {
         p_->render_data_.texture = prop<TextureProperty>()().get();
+        p_->render_element_->setTexture(to_backend(p_->render_data_.texture));
     }
 
     if (prop<ShaderProperty>().readResetHasChanged())
     {
         p_->render_data_.shader = prop<ShaderProperty>()().get();
+        p_->render_element_->setShader(to_backend(p_->render_data_.shader));
     }
 }
 

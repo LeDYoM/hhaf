@@ -33,7 +33,7 @@ public:
 
     ~Renderizable();
 
-    void render();
+    void render(bool const parent_transformation_changed);
 
     htps::BasicProperty<bool> visible{true};
 
@@ -54,7 +54,7 @@ private:
     struct RenderizablePrivate;
     htps::PImplPointer<RenderizablePrivate> p_;
 
-    void update();
+    void update(bool const parent_transformation_changed);
 };
 }  // namespace haf::render
 

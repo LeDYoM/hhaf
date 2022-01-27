@@ -9,8 +9,7 @@ using namespace haf::scene;
 
 namespace haf::render
 {
-Renderizables::Renderizables(
-    rptr<TransformableSceneNode> scene_node) noexcept :
+Renderizables::Renderizables(rptr<TransformableSceneNode> scene_node) noexcept :
     scene_node_{std::move(scene_node)}
 {}
 
@@ -28,11 +27,12 @@ RenderizableBuilder Renderizables::renderizableBuilder()
     return RenderizableBuilder{this};
 }
 
-void Renderizables::updateRenderizables()
+void Renderizables::updateRenderizables(
+    bool const parent_transformation_changed)
 {
     for (auto&& renderizable : render_nodes_)
     {
-        renderizable->render();
+        renderizable->render(parent_transformation_changed);
     }
 }
 

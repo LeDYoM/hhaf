@@ -37,7 +37,8 @@ void render(SceneNode& scene_node, bool parent_transformation_changed)
                 dynamic_cast<RenderizablesSceneNode*>(&scene_node)};
             renderizable_scene_node != nullptr)
         {
-            renderizable_scene_node->updateRenderizables();
+            renderizable_scene_node->updateRenderizables(
+                parent_transformation_changed);
         }
 
         // Render the nodes added to this node

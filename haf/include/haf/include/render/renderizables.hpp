@@ -58,7 +58,7 @@ public:
     void for_each_node(
         htps::function<void(types::sptr<Renderizable> const&)> action) const;
 
-    void updateRenderizables();
+    void updateRenderizables(bool const parent_transformation_changed);
 
     types::sptr<Renderizable> const& operator[](
         types::size_type const index) const noexcept;
