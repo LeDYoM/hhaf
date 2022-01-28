@@ -20,8 +20,8 @@ public:
     void render(IRenderData const* render_data_begin,
                 IRenderData const* const render_data_end) override;
 
-    void render(IRenderElement const* render_element_begin,
-                IRenderElement const* const render_element_end) override;
+    void render(IRenderElement const** render_element_begin,
+                IRenderElement const** const render_element_end) override;
 
     void setViewPort(const htps::Rectf32& nviewport) override;
     htps::Rectf32 viewPort() const override;

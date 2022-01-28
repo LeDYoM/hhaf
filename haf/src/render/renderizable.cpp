@@ -93,7 +93,8 @@ void Renderizable::update(bool const parent_transformation_changed)
 {
     if (parent_transformation_changed)
     {
-        
+        p_->render_element_->setModelViewMatrix(
+            parent()->globalTransform().getMatrix());
     }
     auto const& mi_data{p_->getMomentumInternalData()};
 

@@ -46,9 +46,9 @@ void RenderTarget::render(
     }
 }
 
-void RenderTarget::render(
-    rptr<backend::IRenderElement const> render_element_begin,
-    rptr<backend::IRenderElement const> const render_element_end)
+void RenderTarget ::render(
+    rptr<rptr<backend::IRenderElement const>> render_element_begin,
+    rptr<rptr<backend::IRenderElement const>> render_element_end)
 {
     irender_target_->render(render_element_begin, render_element_end);
 }

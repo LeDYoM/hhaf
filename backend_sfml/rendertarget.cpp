@@ -22,8 +22,9 @@ void RenderTarget::initialize()
 void RenderTarget::render(IRenderData const* render_data_begin,
                           IRenderData const* const render_data_end)
 {
+    
     while (render_data_begin != render_data_end)
-    {
+    {/*
         sf::RenderTarget::draw(
             to_sf_type((*render_data_begin).vertices),
             static_cast<size_type>((*render_data_begin).nVertex),
@@ -31,13 +32,28 @@ void RenderTarget::render(IRenderData const* render_data_begin,
             to_sf_type((*render_data_begin).transform,
                        (*render_data_begin).texture,
                        (*render_data_begin).shader));
+                       */
         ++render_data_begin;
     }
 }
 
-void RenderTarget::render(IRenderElement const* /*render_element_begin*/,
-                          IRenderElement const* const /*render_element_end*/)
-{}
+void RenderTarget::render(IRenderElement const** render_element_begin,
+                          IRenderElement const** const render_element_end)
+{
+    while (render_element_begin != render_element_end)
+    {
+        auto const* const r =
+            dynamic_cast<RenderElement const* const>(*render_element_begin);
+//        sf::RenderTarget::draw(r->nativeVertexArray(), r->nativeRenderStates());
+        sf::RenderTarget::draw(
+            &(r->nativeVertexArray()[0U]),
+            r->nativeVertexArray().getVertexCount(),
+            r->nativeVertexArray().getPrimitiveType(),
+            r->nativeRenderStates());
+
+        render_element_begin++;
+    }
+}
 
 void RenderTarget::setViewPort(const Rectf32& nviewport)
 {

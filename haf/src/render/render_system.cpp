@@ -13,8 +13,8 @@ void RenderSystem::update()
 {
     render_target_->render(render_data_container_.cbegin(),
                            render_data_container_.cend());
-    render_target_->render(*render_element_container_.begin(),
-                           *render_element_container_.cend());
+    render_target_->render(render_element_container_.begin(),
+                           render_element_container_.end());
     clearRenderQueue();
 }
 

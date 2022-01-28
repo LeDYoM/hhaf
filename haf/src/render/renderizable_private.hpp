@@ -50,8 +50,10 @@ struct Renderizable::RenderizablePrivate
         render_element_{render_system_.createRenderElement()}
     {
         render_element_->setPrimitiveType(
-            to_backend(vertices_.primitiveType()));
-        render_element_->setSize(initial_point_count);
+            to_backend(initDataVertexPerFigureAndNumPoints(figure_type,
+                                                      initial_point_count).first));
+        render_element_->setSize(initDataVertexPerFigureAndNumPoints(figure_type,
+                                                      initial_point_count).second);
         render_element_->setVertexData(
             to_backend(vertices_.verticesArray().cbegin()));
         render_element_->setModelViewMatrix(matrix.getMatrix());

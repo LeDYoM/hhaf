@@ -17,9 +17,11 @@ void RenderElement::setSize(htps::size_type const size)
 
 void RenderElement::setVertexData(iVertex const* const vertex_data)
 {
+    iVertex const* vtemp{vertex_data};
     for (auto i{0U}; i < vertex_array_.getVertexCount(); ++i)
     {
-        vertex_array_[i] = to_sf_type(*vertex_data);
+        vertex_array_[i] = to_sf_type(*vtemp);
+        ++vtemp;
     }
 }
 

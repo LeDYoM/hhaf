@@ -46,9 +46,10 @@ public:
     void render(htps::rptr<render::RenderData const> const render_data_begin,
                 htps::rptr<render::RenderData const> const render_data_end);
 
-    void render(
-        htps::rptr<backend::IRenderElement const> render_element_begin,
-        htps::rptr<backend::IRenderElement const> const render_element_end);
+    void render(htps::rptr<htps::rptr<backend::IRenderElement const>>
+                    render_element_begin,
+                htps::rptr<htps::rptr<backend::IRenderElement const>>
+                    render_element_end);
 
     void clear();
 

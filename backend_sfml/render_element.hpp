@@ -18,9 +18,19 @@ public:
     void setProjectionMatrix(htps::f32 const* const projection_matrix) override;
     void setShader(IShader const* const shader) override;
     ~RenderElement() override;
+
+    constexpr sf::VertexArray const& nativeVertexArray() const noexcept
+    {
+        return vertex_array_;
+    }
+    constexpr sf::RenderStates const& nativeRenderStates() const noexcept
+    {
+        return render_states_;
+    }
+
 private:
     sf::VertexArray vertex_array_;
-    sf::RenderStates render_states_;
+    sf::RenderStates render_states_ = sf::RenderStates::Default;
 };
 }  // namespace haf::backend::sfmlb
 
