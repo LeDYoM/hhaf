@@ -2,7 +2,6 @@
 
 #include <backend_dev/include/irendertarget.hpp>
 #include <backend_dev/include/irenderdata.hpp>
-#include "render_data.hpp"
 #include <haf/include/resources/itexture.hpp>
 #include "resources/texture.hpp"
 #include <haf/include/resources/ishader.hpp>
@@ -13,16 +12,6 @@
 
 using namespace htps;
 
-namespace
-{
-inline void do_render(rptr<haf::backend::IRenderTarget> const irender_target_,
-                      const haf::render::RenderData& renderData)
-{
-    auto rd = renderData.irender_data;
-    irender_target_->render(rd, rd + 1);
-}
-
-}  // namespace
 namespace haf::sys
 {
 RenderTarget::RenderTarget(rptr<haf::backend::IRenderTarget> renderTarget) :
@@ -33,18 +22,6 @@ RenderTarget::RenderTarget(rptr<haf::backend::IRenderTarget> renderTarget) :
 }
 
 RenderTarget::~RenderTarget() = default;
-
-void RenderTarget::render(
-    rptr<render::RenderData const> const render_data_begin,
-    rptr<render::RenderData const> const render_data_end)
-{
-    auto render_data_begin_temp{render_data_begin};
-
-    while (render_data_begin_temp != render_data_end)
-    {
-        do_render(irender_target_, *(render_data_begin_temp++));
-    }
-}
 
 void RenderTarget ::render(
     rptr<rptr<backend::IRenderElement const>> render_element_begin,

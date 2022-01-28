@@ -1,5 +1,4 @@
-#include "render_data.hpp"
-#include <backend_dev/include/irenderdata.hpp>
+#include "render_data_conversion.hpp"
 #include <haf/include/render/vertex.hpp>
 #include <haf/include/render/primitive_type.hpp>
 #include <haf/include/render/vertex_array.hpp>
@@ -38,17 +37,6 @@ backend::IShader const* to_backend(res::IShader const* shader)
     return shader
         ? dynamic_cast<res::Shader const*>(shader)->backEndShader()
         : nullptr;
-}
-
-backend::IRenderData to_backend(RenderData const& render_data)
-{
-    return backend::IRenderData{
-        to_backend(render_data.vArray.verticesArray().cbegin()),
-        render_data.vArray.verticesArray().size(),
-        to_backend(render_data.vArray.primitiveType()),
-        render_data.transform.getMatrix(),
-        to_backend(render_data.texture),
-        to_backend(render_data.shader)};
 }
 
 }  // namespace haf::render

@@ -43,9 +43,6 @@ public:
     void setViewRect(const htps::Rectf32& nviewRect);
     htps::Rectf32 viewRect() const;
 
-    void render(htps::rptr<render::RenderData const> const render_data_begin,
-                htps::rptr<render::RenderData const> const render_data_end);
-
     void render(htps::rptr<htps::rptr<backend::IRenderElement const>>
                     render_element_begin,
                 htps::rptr<htps::rptr<backend::IRenderElement const>>

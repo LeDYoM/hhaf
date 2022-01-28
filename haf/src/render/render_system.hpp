@@ -3,19 +3,11 @@
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/vector.hpp>
-#include "render_target.hpp"
-#include "render_data.hpp"
-
 #include "system/system_base.hpp"
 
 namespace haf::backend
 {
 class IRenderElement;
-}
-
-namespace haf::scene
-{
-class RenderData;
 }
 
 namespace haf::sys
@@ -32,7 +24,6 @@ public:
     using SystemBase::SystemBase;
     void update();
 
-    void draw(render::RenderData const& renderData);
     void draw(backend::IRenderElement const* render_element);
     void clear();
 
@@ -44,7 +35,6 @@ public:
 
 private:
     htps::sptr<RenderTarget> render_target_;
-    htps::vector<render::RenderData> render_data_container_;
     htps::vector<htps::rptr<backend::IRenderElement const>> render_element_container_;
 };
 }  // namespace haf::sys

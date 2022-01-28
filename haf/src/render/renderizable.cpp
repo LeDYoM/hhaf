@@ -4,7 +4,6 @@
 #include "renderizable_internal_data.hpp"
 #include "renderizable_internal_functions.hpp"
 #include "system/get_system.hpp"
-#include "render_data.hpp"
 
 #include <haf/include/scene/transformable_scene_node.hpp>
 #include <haf/include/render/renderizable_builder.hpp>
@@ -55,8 +54,6 @@ void Renderizable::render(bool const parent_transformation_changed)
 
         if (!p_->vertices_.empty())
         {
-            p_->updateBackendData();
-            p_->render_system_.draw(p_->render_data_);
             p_->render_system_.draw(p_->render_element_);
         }
     }
@@ -127,14 +124,14 @@ void Renderizable::update(bool const parent_transformation_changed)
 
     if (prop<TextureProperty>().readResetHasChanged())
     {
-        p_->render_data_.texture = prop<TextureProperty>()().get();
-        p_->render_element_->setTexture(to_backend(p_->render_data_.texture));
+        p_->render_element_->setTexture(
+            to_backend(prop<TextureProperty>()().get()));
     }
 
     if (prop<ShaderProperty>().readResetHasChanged())
     {
-        p_->render_data_.shader = prop<ShaderProperty>()().get();
-        p_->render_element_->setShader(to_backend(p_->render_data_.shader));
+        p_->render_element_->setShader(
+            to_backend(prop<ShaderProperty>()().get()));
     }
 }
 

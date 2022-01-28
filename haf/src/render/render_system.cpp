@@ -1,8 +1,6 @@
 #include "render_system.hpp"
-#include "render_data.hpp"
+#include "render_target.hpp"
 #include <hlog/include/hlog.hpp>
-
-#include <htypes/include/types.hpp>
 
 using namespace htps;
 
@@ -11,16 +9,9 @@ namespace haf::sys
 
 void RenderSystem::update()
 {
-    render_target_->render(render_data_container_.cbegin(),
-                           render_data_container_.cend());
     render_target_->render(render_element_container_.begin(),
                            render_element_container_.end());
     clearRenderQueue();
-}
-
-void RenderSystem::draw(render::RenderData const& renderData)
-{
-    render_data_container_.push_back(renderData);
 }
 
 void RenderSystem::draw(backend::IRenderElement const* render_element)
@@ -44,7 +35,6 @@ void RenderSystem::setRenderTarget(sptr<RenderTarget> render_target)
 
 void RenderSystem::clearRenderQueue()
 {
-    render_data_container_.clear();
     render_element_container_.clear();
 }
 
