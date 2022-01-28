@@ -35,6 +35,10 @@ void RenderTarget::render(IRenderData const* render_data_begin,
     }
 }
 
+void RenderTarget::render(IRenderElement const* /*render_element_begin*/,
+                          IRenderElement const* const /*render_element_end*/)
+{}
+
 void RenderTarget::setViewPort(const Rectf32& nviewport)
 {
     sf::View currentView(getView());

@@ -13,12 +13,19 @@ void RenderSystem::update()
 {
     render_target_->render(render_data_container_.cbegin(),
                            render_data_container_.cend());
+    render_target_->render(*render_element_container_.begin(),
+                           *render_element_container_.cend());
     clearRenderQueue();
 }
 
 void RenderSystem::draw(render::RenderData const& renderData)
 {
     render_data_container_.push_back(renderData);
+}
+
+void RenderSystem::draw(backend::IRenderElement const* render_element)
+{
+    render_element_container_.push_back(render_element);
 }
 
 void RenderSystem::clear()
@@ -38,6 +45,7 @@ void RenderSystem::setRenderTarget(sptr<RenderTarget> render_target)
 void RenderSystem::clearRenderQueue()
 {
     render_data_container_.clear();
+    render_element_container_.clear();
 }
 
 backend::IRenderElement* RenderSystem::createRenderElement()
@@ -45,8 +53,7 @@ backend::IRenderElement* RenderSystem::createRenderElement()
     return render_target_->createRenderElement();
 }
 
-bool RenderSystem::destroyRenderElement(
-    backend::IRenderElement* render_element)
+bool RenderSystem::destroyRenderElement(backend::IRenderElement* render_element)
 {
     return render_target_->destroyRenderElement(render_element);
 }

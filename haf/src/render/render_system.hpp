@@ -33,6 +33,7 @@ public:
     void update();
 
     void draw(render::RenderData const& renderData);
+    void draw(backend::IRenderElement const* render_element);
     void clear();
 
     void setRenderTarget(htps::sptr<RenderTarget> render_target);
@@ -44,6 +45,7 @@ public:
 private:
     htps::sptr<RenderTarget> render_target_;
     htps::vector<render::RenderData> render_data_container_;
+    htps::vector<htps::rptr<backend::IRenderElement const>> render_element_container_;
 };
 }  // namespace haf::sys
 

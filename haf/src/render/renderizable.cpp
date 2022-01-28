@@ -57,6 +57,7 @@ void Renderizable::render(bool const parent_transformation_changed)
         {
             p_->updateBackendData();
             p_->render_system_.draw(p_->render_data_);
+            p_->render_system_.draw(p_->render_element_);
         }
     }
 }

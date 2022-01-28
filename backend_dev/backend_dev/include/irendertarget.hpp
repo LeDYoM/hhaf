@@ -21,6 +21,9 @@ public:
     virtual void render(IRenderData const* render_data_begin,
                         IRenderData const* const render_data_end) = 0;
 
+    virtual void render(IRenderElement const* render_element_begin,
+                        IRenderElement const* const render_element_end) = 0;
+
     virtual void setViewPort(const htps::Rectf32& nviewport) = 0;
     virtual htps::Rectf32 viewPort() const                   = 0;
     virtual void setViewRect(const htps::Rectf32& nviewRect) = 0;

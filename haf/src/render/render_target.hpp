@@ -8,7 +8,7 @@ namespace haf::backend
 {
 class IRenderTarget;
 class IRenderElement;
-}
+}  // namespace haf::backend
 
 namespace haf::render
 {
@@ -45,6 +45,10 @@ public:
 
     void render(htps::rptr<render::RenderData const> const render_data_begin,
                 htps::rptr<render::RenderData const> const render_data_end);
+
+    void render(
+        htps::rptr<backend::IRenderElement const> render_element_begin,
+        htps::rptr<backend::IRenderElement const> const render_element_end);
 
     void clear();
 
