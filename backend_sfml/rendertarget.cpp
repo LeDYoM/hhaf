@@ -9,9 +9,6 @@ using namespace htps;
 
 namespace haf::backend::sfmlb
 {
-static_assert(sizeof(sf::Vertex) == sizeof(iVertex),
-              "Incomptable version of SFML");
-
 RenderTarget::~RenderTarget() = default;
 
 void RenderTarget::initialize()
@@ -25,7 +22,7 @@ void RenderTarget::render(IRenderElement const** render_element_begin,
     while (render_element_begin != render_element_end)
     {
         auto const* const r{
-            dynamic_cast<RenderElement const* const>(*render_element_begin++)};
+            static_cast<RenderElement const* const>(*render_element_begin++)};
         sf::RenderTarget::draw(
             &(r->nativeVertexArray()[0U]),
             r->nativeVertexArray().getVertexCount(),

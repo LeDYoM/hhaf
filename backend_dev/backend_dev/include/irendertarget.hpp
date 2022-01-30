@@ -13,8 +13,7 @@ class IRenderElement;
 class IRenderTarget : public IResourceInfo
 {
 public:
-    ~IRenderTarget() override {}
-
+    ~IRenderTarget() override = default;
     virtual void initialize() = 0;
 
     virtual void render(IRenderElement const** render_element_begin,
