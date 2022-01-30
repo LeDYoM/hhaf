@@ -35,7 +35,6 @@ public:
 
 private:
     htps::sptr<RenderTarget> render_target_;
-    htps::vector<htps::rptr<backend::IRenderElement const>> render_element_container_;
 };
 }  // namespace haf::sys
 

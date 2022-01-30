@@ -9,14 +9,13 @@ namespace haf::sys
 
 void RenderSystem::update()
 {
-    render_target_->render(render_element_container_.begin(),
-                           render_element_container_.end());
+    render_target_->update();
     clearRenderQueue();
 }
 
 void RenderSystem::draw(backend::IRenderElement const* render_element)
 {
-    render_element_container_.push_back(render_element);
+    render_target_->draw(render_element);
 }
 
 void RenderSystem::clear()
@@ -35,7 +34,7 @@ void RenderSystem::setRenderTarget(sptr<RenderTarget> render_target)
 
 void RenderSystem::clearRenderQueue()
 {
-    render_element_container_.clear();
+    render_target_->clearRenderQueue();
 }
 
 backend::IRenderElement* RenderSystem::createRenderElement()

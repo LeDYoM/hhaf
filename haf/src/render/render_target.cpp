@@ -22,16 +22,26 @@ RenderTarget::RenderTarget(rptr<haf::backend::IRenderTarget> renderTarget) :
 
 RenderTarget::~RenderTarget() = default;
 
-void RenderTarget ::render(
-    rptr<rptr<backend::IRenderElement const>> render_element_begin,
-    rptr<rptr<backend::IRenderElement const>> render_element_end)
+void RenderTarget::draw(
+    htps::rptr<backend::IRenderElement const> render_element)
 {
-    irender_target_->render(render_element_begin, render_element_end);
+    render_element_container_.push_back(render_element);
+}
+
+void RenderTarget::update()
+{
+    irender_target_->render(render_element_container_.begin(),
+                            render_element_container_.end());
 }
 
 void RenderTarget::clear()
 {
     irender_target_->clear();
+}
+
+void RenderTarget::clearRenderQueue()
+{
+    render_element_container_.clear();
 }
 
 Rectf32 RenderTarget::viewPort() const

@@ -43,10 +43,9 @@ public:
     void setViewRect(const htps::Rectf32& nviewRect);
     htps::Rectf32 viewRect() const;
 
-    void render(htps::rptr<htps::rptr<backend::IRenderElement const>>
-                    render_element_begin,
-                htps::rptr<htps::rptr<backend::IRenderElement const>>
-                    render_element_end);
+    void draw(htps::rptr<backend::IRenderElement const> render_element);
+    void update();
+    void clearRenderQueue();
 
     void clear();
 
@@ -54,7 +53,9 @@ public:
     bool destroyRenderElement(backend::IRenderElement* render_element);
 
 private:
-    const htps::rptr<backend::IRenderTarget> irender_target_;
+    htps::rptr<backend::IRenderTarget> irender_target_;
+    htps::vector<htps::rptr<backend::IRenderElement const>>
+        render_element_container_;
 };
 }  // namespace haf::sys
 
