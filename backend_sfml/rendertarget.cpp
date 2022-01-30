@@ -24,15 +24,13 @@ void RenderTarget::render(IRenderElement const** render_element_begin,
 {
     while (render_element_begin != render_element_end)
     {
-        auto const* const r =
-            dynamic_cast<RenderElement const* const>(*render_element_begin);
+        auto const* const r{
+            dynamic_cast<RenderElement const* const>(*render_element_begin++)};
         sf::RenderTarget::draw(
             &(r->nativeVertexArray()[0U]),
             r->nativeVertexArray().getVertexCount(),
             r->nativeVertexArray().getPrimitiveType(),
             r->nativeRenderStates());
-
-        render_element_begin++;
     }
 }
 
