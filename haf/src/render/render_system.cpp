@@ -15,7 +15,7 @@ void RenderSystem::update()
 
 void RenderSystem::draw(backend::IRenderElement const* render_element)
 {
-    render_target_->draw(render_element);
+    render_target_->draw(std::move(render_element));
 }
 
 void RenderSystem::clear()
