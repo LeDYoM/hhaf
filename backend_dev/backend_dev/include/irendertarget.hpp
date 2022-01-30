@@ -4,7 +4,6 @@
 #include <htypes/include/types.hpp>
 #include <htypes/include/vector2d.hpp>
 #include <htypes/include/rect.hpp>
-#include "irenderdata.hpp"
 #include "iresourceinfo.hpp"
 
 namespace haf::backend
@@ -17,9 +16,6 @@ public:
     ~IRenderTarget() override {}
 
     virtual void initialize() = 0;
-
-    virtual void render(IRenderData const* render_data_begin,
-                        IRenderData const* const render_data_end) = 0;
 
     virtual void render(IRenderElement const** render_element_begin,
                         IRenderElement const** const render_element_end) = 0;

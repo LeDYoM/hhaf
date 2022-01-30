@@ -14,7 +14,6 @@ set(headers
     ${include_dir}/ikey.hpp
     ${include_dir}/iprimitive_type.hpp
     ${include_dir}/irender_element.hpp
-    ${include_dir}/irenderdata.hpp
     ${include_dir}/irendertarget.hpp
     ${include_dir}/iresourcefactories.hpp
     ${include_dir}/iresourcefactory.hpp
