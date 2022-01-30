@@ -2,7 +2,6 @@
 #define HAF_BACKEND_RENDER_TARGET_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
-#include <htypes/include/vector2d.hpp>
 #include <htypes/include/rect.hpp>
 #include "iresourceinfo.hpp"
 

@@ -1,12 +1,6 @@
 #include "render_target.hpp"
 
 #include <backend_dev/include/irendertarget.hpp>
-#include <haf/include/resources/itexture.hpp>
-#include "resources/texture.hpp"
-#include <haf/include/resources/ishader.hpp>
-#include "resources/shader.hpp"
-#include <haf/include/scene/matrix4x4.hpp>
-#include <haf/include/render/vertex_array.hpp>
 #include <hlog/include/hlog.hpp>
 
 using namespace htps;
