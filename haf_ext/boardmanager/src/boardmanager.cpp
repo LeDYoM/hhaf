@@ -9,9 +9,8 @@ using namespace htps;
 
 namespace haf::board
 {
-
 void BoardManager::initialize(
-    const vector2dst& size,
+    vector2dst const& size,
     rptr<IBoardManagerActuator> board_manager_actuator)
 {
     DisplayLog::info("BoardManager initialize with size: ", size);
@@ -21,7 +20,11 @@ void BoardManager::initialize(
     LogAsserter::log_assert(actuator_ == nullptr,
                             "m_actuator already contains a value");
     std::swap(actuator_, board_manager_actuator);
+    initializeTileMatrix(size);
+}
 
+void BoardManager::initializeTileMatrix(htps::vector2dst const& size)
+{
     // Create the tiles.
     tiles_.reserve(size.x);
     for (decltype(size.x) x{0U}; x < size.x; ++x)
@@ -42,7 +45,7 @@ BoardManager::BackgroundFunction BoardManager::setBackgroundFunction(
 }
 
 BoardManager::BackgroundData BoardManager::backgroundData(
-    const htps::vector2dst& tPosition) const
+    htps::vector2dst const& tPosition) const
 {
     if (background_function_ && validCoords(tPosition))
     {
@@ -51,7 +54,7 @@ BoardManager::BackgroundData BoardManager::backgroundData(
     return BackgroundData{};
 }
 
-SITilePointer BoardManager::getTile(const vector2dst& position) const noexcept
+SITilePointer BoardManager::getTile(vector2dst const& position) const noexcept
 {
     if (validCoords(position))
     {
@@ -62,7 +65,7 @@ SITilePointer BoardManager::getTile(const vector2dst& position) const noexcept
     return SITilePointer();
 }
 
-bool BoardManager::setTile(const vector2dst& tPosition, SITilePointer newTile)
+bool BoardManager::setTile(vector2dst const& tPosition, SITilePointer newTile)
 {
     LogAsserter::log_assert(tileEmpty(tPosition),
                             "You can only set data in empty tiles");
@@ -81,12 +84,12 @@ bool BoardManager::setTile(const vector2dst& tPosition, SITilePointer newTile)
     return false;
 }
 
-bool BoardManager::tileEmpty(const vector2dst& position) const noexcept
+bool BoardManager::tileEmpty(vector2dst const& position) const noexcept
 {
     return getTile(position) == nullptr;
 }
 
-bool BoardManager::deleteTile(const vector2dst& position)
+bool BoardManager::deleteTile(vector2dst const& position)
 {
     LogAsserter::log_assert(!tileEmpty(position),
                             "You can only delete not empty tiles");
@@ -106,8 +109,8 @@ bool BoardManager::deleteTile(const vector2dst& position)
     return false;
 }
 
-bool BoardManager::changeTileData(const vector2dst& source,
-                                  const BoardTileData& nv)
+bool BoardManager::changeTileData(vector2dst const& source,
+                                  BoardTileData const& nv)
 {
     LogAsserter::log_assert(!tileEmpty(source),
                             "You can only change data in not empty tiles");
@@ -128,7 +131,7 @@ bool BoardManager::changeTileData(const vector2dst& source,
     return false;
 }
 
-bool BoardManager::swapTileData(const vector2dst& lhs, const vector2dst& rhs)
+bool BoardManager::swapTileData(vector2dst const& lhs, vector2dst const& rhs)
 {
     LogAsserter::log_assert(!tileEmpty(lhs),
                             "You can only change data in not empty tiles");
@@ -145,7 +148,7 @@ bool BoardManager::swapTileData(const vector2dst& lhs, const vector2dst& rhs)
     return false;
 }
 
-bool BoardManager::moveTile(const vector2dst& source, const vector2dst& dest)
+bool BoardManager::moveTile(vector2dst const& source, vector2dst const& dest)
 {
     if (!tileEmpty(source))
     {
@@ -193,7 +196,7 @@ bool BoardManager::moveTile(const vector2dst& source, const vector2dst& dest)
     return false;
 }
 
-bool BoardManager::validCoords(const vector2dst& tPosition) const noexcept
+bool BoardManager::validCoords(vector2dst const& tPosition) const noexcept
 {
     return tiles_.size() > tPosition.x && tiles_[0U].size() > tPosition.y;
 }
@@ -239,8 +242,8 @@ str BoardManager::toStr()
     return temp;
 }
 
-void BoardManager::_setTile(const vector2dst& position, SITilePointer newTile)
+void BoardManager::_setTile(vector2dst const& position, SITilePointer newTile)
 {
-    tiles_[position.x][position.y] = newTile;
+    tiles_[position.x][position.y] = std::move(newTile);
 }
 }  // namespace haf::board

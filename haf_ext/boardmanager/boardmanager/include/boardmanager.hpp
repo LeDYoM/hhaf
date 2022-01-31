@@ -18,7 +18,7 @@ public:
     using BoardTileData  = ITile::BoardTileData;
 
     using BackgroundFunction =
-        htps::function<BackgroundData(const htps::vector2dst&)>;
+        htps::function<BackgroundData(htps::vector2dst const&)>;
 
     /**
      * @brief Method to initialize the component.
@@ -29,20 +29,20 @@ public:
      * @param board_manager_actuator Pointer to a @b IBoardManagerActuator
      * to handle the callbacks.
      */
-    void initialize(const htps::vector2dst& size,
+    void initialize(htps::vector2dst const& size,
                     htps::rptr<IBoardManagerActuator> board_manager_actuator);
 
     BackgroundFunction setBackgroundFunction(
         BackgroundFunction background_function);
 
-    SITilePointer getTile(const htps::vector2dst& position) const noexcept;
-    bool tileEmpty(const htps::vector2dst& position) const noexcept;
-    bool setTile(const htps::vector2dst& position, SITilePointer newTile);
-    bool deleteTile(const htps::vector2dst& position);
-    bool moveTile(const htps::vector2dst& source, const htps::vector2dst& dest);
-    bool changeTileData(const htps::vector2dst& source,
-                        const BoardTileData& nv);
-    bool swapTileData(const htps::vector2dst& lhs, const htps::vector2dst& rhs);
+    SITilePointer getTile(htps::vector2dst const& position) const noexcept;
+    bool tileEmpty(htps::vector2dst const& position) const noexcept;
+    bool setTile(htps::vector2dst const& position, SITilePointer newTile);
+    bool deleteTile(htps::vector2dst const& position);
+    bool moveTile(htps::vector2dst const& source, htps::vector2dst const& dest);
+    bool changeTileData(htps::vector2dst const& source,
+                        BoardTileData const& nv);
+    bool swapTileData(htps::vector2dst const& lhs, htps::vector2dst const& rhs);
 
     bool validCoords(const htps::vector2dst& tPosition) const noexcept;
     BackgroundData backgroundData(const htps::vector2dst& tPosition) const;
@@ -51,6 +51,7 @@ public:
     htps::str toStr();
 
 private:
+    void initializeTileMatrix(htps::vector2dst const& size);
     void _setTile(const htps::vector2dst& position, SITilePointer newTile);
 
     BackgroundFunction background_function_{};
