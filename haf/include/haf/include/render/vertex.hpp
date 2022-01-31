@@ -21,8 +21,8 @@ struct Vertex final
     constexpr Vertex() noexcept         = default;
     constexpr Vertex(Vertex&&) noexcept = default;
     constexpr Vertex& operator=(Vertex&&) noexcept = default;
-    constexpr Vertex(const Vertex&) noexcept       = default;
-    constexpr Vertex& operator=(const Vertex&) noexcept = default;
+    constexpr Vertex(Vertex const&) noexcept       = default;
+    constexpr Vertex& operator=(Vertex const&) noexcept = default;
 
     htps::vector2df position{};
     scene::Color color{};
