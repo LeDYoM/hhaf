@@ -90,14 +90,6 @@ PImplPointer<T> make_pimplp(Args&&... args)
 
 namespace haf
 {
-using SceneUnit        = htps::f32;
-using SceneCoordinates = htps::vector2d<SceneUnit>;
-using SceneBox         = htps::Rect<SceneUnit>;
-
-}  // namespace haf
-
-namespace haf
-{
 template <typename T>
 using function = htps::function<T>;
 }

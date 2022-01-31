@@ -1,7 +1,7 @@
 #ifndef HAF_SCENE_ISCENEMETRICS_VIEW_INCLUDE_HPP
 #define HAF_SCENE_ISCENEMETRICS_VIEW_INCLUDE_HPP
 
-#include <haf/include/types/basic_types.hpp>
+#include <haf/include/types/scene_types.hpp>
 
 namespace haf::scene
 {

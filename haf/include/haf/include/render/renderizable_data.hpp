@@ -2,6 +2,7 @@
 #define HAF_RENDERIZABLE_DATA_INCLUDE_HPP
 
 #include <haf/include/types/basic_types.hpp>
+#include <haf/include/types/scene_types.hpp>
 #include <haf/include/types/property_group.hpp>
 #include <htypes/include/rect.hpp>
 #include <htypes/include/str.hpp>
