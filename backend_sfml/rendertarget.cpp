@@ -23,11 +23,7 @@ void RenderTarget::render(IRenderElement const** render_element_begin,
     {
         auto const* const r{
             static_cast<RenderElement const* const>(*render_element_begin++)};
-        sf::RenderTarget::draw(
-            &(r->nativeVertexArray()[0U]),
-            r->nativeVertexArray().getVertexCount(),
-            r->nativeVertexArray().getPrimitiveType(),
-            r->nativeRenderStates());
+        sf::RenderTarget::draw(r->nativeVertexArray(), r->nativeRenderStates());
     }
 }
 

@@ -2,6 +2,7 @@
 #define ZOOPER_TILE_HIT_LAUNCHER_INCLUDE_HPP
 
 #include <haf/include/types/basic_types.hpp>
+#include <haf/include/types/scene_types.hpp>
 #include <boardmanager/include/itile.hpp>
 #include <boardmanager/include/board_types.hpp>
 

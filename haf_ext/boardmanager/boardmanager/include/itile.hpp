@@ -2,6 +2,7 @@
 #define HAF_BOARD_ITILE_HPP
 
 #include <haf/include/types/basic_types.hpp>
+#include <haf/include/types/scene_types.hpp>
 #include <htypes/include/vector2d.hpp>
 #include <boardmanager/include/board_types.hpp>
 

@@ -93,7 +93,7 @@ inline auto to_sf_type(iVertex const* const vertex) noexcept
 inline auto to_sf_type(iVertex const vertex) noexcept
 {
     return sf::Vertex{sf::Vector2f{vertex.pos_x, vertex.pos_y},
-                      sf::Color{vertex.r, vertex.g, vertex.b},
+                      sf::Color{vertex.r, vertex.g, vertex.b, vertex.a},
                       sf::Vector2f{vertex.tc_x, vertex.tc_y}};
 }
 

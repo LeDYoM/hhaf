@@ -3,6 +3,7 @@
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/rect.hpp>
+#include <haf/include/types/scene_types.hpp>
 #include <haf/include/scene_components/iscene_metrics.hpp>
 #include <haf/include/scene_components/iscene_metrics_view.hpp>
 #include <haf/include/scene_components/iscene_control.hpp>

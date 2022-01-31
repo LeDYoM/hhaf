@@ -24,8 +24,6 @@ struct Renderizable::RenderizablePrivate
 {
     rptr<TransformableSceneNode> parent_;
     VertexArray vertices_;
-//    RenderData render_data_;
-//    backend::IRenderData irender_data_;
     rptr<Renderizable const> const i_this_;
     sys::RenderSystem& render_system_;
     backend::IRenderElement* render_element_{nullptr};
@@ -41,8 +39,6 @@ struct Renderizable::RenderizablePrivate
         parent_{parent},
         vertices_{initDataVertexPerFigureAndNumPoints(figure_type,
                                                       initial_point_count)},
-//        render_data_{vertices_, matrix, texture, shader, &irender_data_},
-//        irender_data_{to_backend(render_data_)},
         i_this_{std::move(i_this)},
         render_system_{render_system},
         render_element_{render_system_.createRenderElement()}

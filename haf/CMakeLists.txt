@@ -333,6 +333,7 @@ set(headers
   # Types
   ${inc_dir}/types/basic_types.hpp
   ${inc_dir}/types/property_group.hpp
+  ${inc_dir}/types/scene_types.hpp
   ${inc_dir}/types/str.hpp
   ${inc_dir}/types/vector.hpp
 
