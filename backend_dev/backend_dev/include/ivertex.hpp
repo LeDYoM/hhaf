@@ -12,6 +12,7 @@ struct iVertex final
     htps::u8 r;
     htps::u8 g;
     htps::u8 b;
+    htps::u8 a;
     htps::f32 tc_x;
     htps::f32 tc_y;
 };
