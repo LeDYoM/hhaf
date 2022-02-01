@@ -236,20 +236,24 @@ bool BoardGroup::moveTileInDirection(Direction const direction,
 
 void BoardGroup::movePlayer(Direction const& direction)
 {
-    player_->movePlayer(direction);
+    LogAsserter::log_assert(direction.isValid(),
+                            "Invalid direction passed to move");
+    auto const nPosition{direction.applyToVector(player_->boardPosition())};
+    componentOfType<board::BoardManager>()->moveTile(player_->boardPosition(),
+                                                     nPosition);
 }
 
 bool BoardGroup::moveTowardsCenter(Direction const direction,
-                                   vector2dst const& position)
+                                   vector2dst const position)
 {
     bool moved_to_center{false};
-    auto board_model{componentOfType<board::BoardManager>()};
+    auto const board_model{componentOfType<board::BoardManager>()};
 
     // Is the current tile position empty?
     if (!board_model->tileEmpty(position))
     {
         // If not, what about the next position to check, is empty?
-        const auto next = direction.applyToVector(position);
+        const auto next{direction.applyToVector(position)};
 
         if (!board_model->tileEmpty(next))
         {
@@ -258,7 +262,7 @@ bool BoardGroup::moveTowardsCenter(Direction const direction,
             moved_to_center = moveTowardsCenter(direction, next);
         }
         board_model->moveTile(position, next);
-        auto dest_tile{
+        auto const dest_tile{
             std::dynamic_pointer_cast<Token>(board_model->getTile(next))};
 
         LogAsserter::log_assert(dest_tile != nullptr, "Error moving the tile!");

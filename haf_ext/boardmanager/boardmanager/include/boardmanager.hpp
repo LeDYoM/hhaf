@@ -39,9 +39,9 @@ public:
     bool tileEmpty(htps::vector2dst const& position) const noexcept;
     bool setTile(htps::vector2dst const& position, SITilePointer newTile);
     bool deleteTile(htps::vector2dst const& position);
-    bool moveTile(htps::vector2dst const& source, htps::vector2dst const& dest);
+    bool moveTile(htps::vector2dst const source, htps::vector2dst const dest);
     bool changeTileData(htps::vector2dst const& source,
-                        BoardTileData const& nv);
+                        BoardTileData const& new_value);
     bool swapTileData(htps::vector2dst const& lhs, htps::vector2dst const& rhs);
 
     bool validCoords(const htps::vector2dst& tPosition) const noexcept;

@@ -65,7 +65,7 @@ public:
                              htps::vector2dst const position);
 
     bool moveTowardsCenter(Direction const direction,
-                           htps::vector2dst const& position);
+                           htps::vector2dst const position);
 
     htps::sptr<haf::board::BoardManager> boardManager() noexcept;
     const htps::sptr<const haf::board::BoardManager> boardManager()

@@ -22,26 +22,22 @@ public:
            haf::types::str name);
     ~Player() override;
 
-    htps::PropertyState<BoardPositionType> boardPosition;
+    htps::PropertyState<BoardPositionType> player_board_position;
     htps::PropertyState<Direction> currentDirection;
 
-    bool canBeMoved(BoardPositionType const& dest_position) const;
+    bool canBeMovedTo(BoardPositionType const& dest_position) const override;
 
-    void movePlayer(Direction const& direction);
     void launchPlayerAnimation(htps::vector2df const& toWhere);
 
-    void tileAdded(BoardPositionType const& position) override;
-    void tileChanged(BoardPositionType const& position,
-                     BoardTileData const oldValue,
+    void tileAdded() override;
+    void tileChanged(BoardTileData const oldValue,
                      BoardTileData const newValue) override;
 
-    void tileMoved(BoardPositionType const& source,
-                   BoardPositionType const& dest) override;
+    void tileMoved(BoardPositionType const& source) override;
 
     void update() override;
 
 private:
-    htps::u32 movements_{0U};
     htps::size_type move_in_;
     htps::size_type rotator_;
     htps::size_type scalator_;
