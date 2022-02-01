@@ -10,7 +10,11 @@
 namespace haf::board
 {
 class IBoardManagerActuator;
-
+/**
+ * @brief Component to manage a board of tiles.
+ * This component implements a way to manage a group of tiles in a 2D matrix
+ * providing functionality to add, remove and check for data.
+ */
 class BoardManager : public haf::component::Component
 {
 public:
