@@ -9,6 +9,7 @@ namespace zoper
 class Direction
 {
     using DirectionDataUnderlying = haf::types::u8;
+
 public:
     enum class DirectionData : DirectionDataUnderlying
     {
@@ -68,6 +69,9 @@ public:
 private:
     DirectionData data;
 };
+
+Direction fromPositions(htps::vector2dst const& origin,
+                        htps::vector2dst const& dest);
 }  // namespace zoper
 
 #endif

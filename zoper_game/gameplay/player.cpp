@@ -20,7 +20,7 @@ using namespace haf::anim;
 
 Player::Player(types::rptr<SceneNode> parent, types::str name) :
     BaseClass{std::move(parent), std::move(name)},
-    boardPosition{},
+    player_board_position{},
     currentDirection{Direction{Direction::DirectionData::Up}}
 {
     renderizableBuilder()
@@ -43,7 +43,7 @@ void Player::update()
 {
     BaseClass::update();
 
-    if (boardPosition.readResetHasChanged())
+    if (player_board_position.readResetHasChanged())
     {
         DisplayLog::info("Player board position: ", boardPosition());
         prop<Position>() = board2Scene(boardPosition());
@@ -69,32 +69,23 @@ void Player::update()
     }
 }
 
-bool Player::canBeMoved(BoardPositionType const& dest_position) const
+bool Player::canBeMovedTo(BoardPositionType const& dest_position) const
 {
     return TokenZones::pointInCenter(dest_position);
 }
 
-void Player::movePlayer(Direction const& direction)
+void Player::tileMoved(BoardPositionType const& source)
 {
-    LogAsserter::log_assert(direction.isValid(),
-                            "Invalid direction passed to move");
-    currentDirection = direction;
-    auto nPosition{currentDirection().applyToVector(boardPosition())};
-    if (getBoardManager()->moveTile(boardPosition(), nPosition))
-    {
-        ++movements_;
-    }
-}
-
-void Player::tileMoved(BoardPositionType const& source,
-                       BoardPositionType const& dest)
-{
-    BaseClass::tileMoved(source, dest);
-    DisplayLog::info("Player board position: ", dest);
-    prop<Position>() = board2Scene(dest);
+    BaseClass::tileMoved(source);
+    DisplayLog::info("Player old board position: ", source);
+    LogAsserter::log_assert(boardPosition() != source,
+                            "Source and dest are the same!");
+    DisplayLog::info("Player board position: ", boardPosition());
+    prop<Position>() = board2Scene(boardPosition());
     DisplayLog::info("Player scene position: ", prop<Position>().get());
 
-    boardPosition = dest;
+    player_board_position = boardPosition();
+    currentDirection = fromPositions(source, boardPosition());
 }
 
 void Player::launchPlayerAnimation(vector2df const& toWhere)
@@ -129,21 +120,20 @@ void Player::launchAnimationBack(SceneCoordinates const& toWhere)
     animation_component_->addAnimation(std::move(property_animation_builder));
 }
 
-void Player::tileAdded(BoardPositionType const& position_)
+void Player::tileAdded()
 {
-    DisplayLog::info("TokenPlayer appeared at ", position_);
+    DisplayLog::info("TokenPlayer appeared at ", boardPosition());
     node()->prop<render::ColorProperty>().set(getColorForToken());
 
     // Set the position in the scene depending on the board position
-    boardPosition.set(position_);
+    player_board_position.set(boardPosition());
 }
 
-void Player::tileChanged(BoardPositionType const& position_,
-                         BoardTileData const oldValue,
+void Player::tileChanged(BoardTileData const oldValue,
                          BoardTileData const newValue)
 {
-    BaseClass::tileChanged(position_, oldValue, newValue);
-    DisplayLog::info("Player (position ", position_, ") changed from ",
+    BaseClass::tileChanged(oldValue, newValue);
+    DisplayLog::info("Player (position ", boardPosition(), ") changed from ",
                      oldValue, " to ", newValue);
 }
 

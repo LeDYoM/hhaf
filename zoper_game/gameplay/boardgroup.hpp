@@ -50,6 +50,8 @@ public:
                                              htps::vector2dst position,
                                              const bool isCenter) const;
 
+    void movePlayer(Direction const& direction);
+
     /**
      * @brief Move a tile from its current position towards the center in a
      * given direction.
@@ -63,7 +65,7 @@ public:
                              htps::vector2dst const position);
 
     bool moveTowardsCenter(Direction const direction,
-                           htps::vector2dst const& position);
+                           htps::vector2dst const position);
 
     htps::sptr<haf::board::BoardManager> boardManager() noexcept;
     const htps::sptr<const haf::board::BoardManager> boardManager()

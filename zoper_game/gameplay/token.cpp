@@ -41,7 +41,7 @@ void Token::setBox(const Rectf32& box)
     node()->prop<render::BoxProperty>() = box;
 }
 
-bool Token::canBeMoved(BoardPositionType const&) const
+bool Token::canBeMovedTo(BoardPositionType const&) const
 {
     return true;
     //    return !TokenZones::pointInCenter(dest_position);
@@ -52,10 +52,10 @@ void Token::resetTileCounter()
     tile_counter_ = 0U;
 }
 
-void Token::tileAdded(const BoardPositionType& position_)
+void Token::tileAdded()
 {
-    BaseClass::tileAdded(position_);
-    DisplayLog::info("Token ", name(), " appeared at ", position_);
+    BaseClass::tileAdded();
+    DisplayLog::info("Token ", name(), " appeared at ", boardPosition());
 
     auto const AppearTokenTime = time::TimePoint_as_miliseconds(1000U);
     auto const nodeBox{node()->prop<render::BoxProperty>()().size() / 2.0F};
@@ -89,27 +89,25 @@ void Token::tileAdded(const BoardPositionType& position_)
     }
 }
 
-void Token::tileRemoved(const BoardPositionType& position_)
+void Token::tileRemoved()
 {
-    BaseClass::tileRemoved(position_);
+    BaseClass::tileRemoved();
     DisplayLog::info("Deleting token ", name(), " from scene at position ",
-                     position_);
+                     boardPosition());
 }
 
-void Token::tileChanged(const BoardPositionType& position_,
-                        const BoardTileData oldValue,
+void Token::tileChanged(const BoardTileData oldValue,
                         const BoardTileData newValue)
 {
-    BaseClass::tileChanged(position_, oldValue, newValue);
-    DisplayLog::info("Token at position ", position_, " changed from ",
+    BaseClass::tileChanged(oldValue, newValue);
+    DisplayLog::info("Token at position ", boardPosition(), " changed from ",
                      oldValue, " to ", newValue);
 }
 
-void Token::tileMoved(const BoardPositionType& source,
-                      const BoardPositionType& dest)
+void Token::tileMoved(const BoardPositionType& source)
 {
-    BaseClass::tileMoved(source, dest);
-    auto const destination{board2Scene(dest)};
+    BaseClass::tileMoved(source);
+    auto const destination{board2Scene(boardPosition())};
 
     auto property_animation_builder{
         animation_component_

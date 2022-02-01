@@ -132,7 +132,7 @@ public:
     }
     constexpr bool operator!=(const vector2d& right) const noexcept
     {
-        return !(*operator==(right));
+        return !(*this == right);
     }
 
     // Conversion operator

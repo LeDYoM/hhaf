@@ -73,7 +73,8 @@ bool BoardManager::setTile(vector2dst const& tPosition, SITilePointer newTile)
     if (tileEmpty(tPosition))
     {
         _setTile(tPosition, newTile);
-        newTile->tileAdded(tPosition);
+        newTile->board_position = tPosition;
+        newTile->tileAdded();
 
         if (actuator_)
         {
@@ -96,8 +97,9 @@ bool BoardManager::deleteTile(vector2dst const& position)
 
     if (!tileEmpty(position))
     {
-        SITilePointer current(getTile(position));
-        current->tileRemoved(position);
+        SITilePointer current{getTile(position)};
+        current->board_position = position;
+        current->tileRemoved();
 
         if (actuator_)
         {
@@ -110,7 +112,7 @@ bool BoardManager::deleteTile(vector2dst const& position)
 }
 
 bool BoardManager::changeTileData(vector2dst const& source,
-                                  BoardTileData const& nv)
+                                  BoardTileData const& new_value)
 {
     LogAsserter::log_assert(!tileEmpty(source),
                             "You can only change data in not empty tiles");
@@ -118,14 +120,14 @@ bool BoardManager::changeTileData(vector2dst const& source,
     if (!tileEmpty(source))
     {
         auto tile{getTile(source)};
-        BoardTileData ov{tile->value()};
+        BoardTileData old_value{tile->value()};
 
         if (actuator_)
         {
-            actuator_->tileChanged(source, tile, ov, nv);
+            actuator_->tileChanged(source, tile, old_value, new_value);
         }
-        tile->data_ = nv;
-        tile->tileChanged(source, ov, nv);
+        tile->data_ = new_value;
+        tile->tileChanged(old_value, new_value);
         return true;
     }
     return false;
@@ -148,7 +150,7 @@ bool BoardManager::swapTileData(vector2dst const& lhs, vector2dst const& rhs)
     return false;
 }
 
-bool BoardManager::moveTile(vector2dst const& source, vector2dst const& dest)
+bool BoardManager::moveTile(vector2dst const source, vector2dst const dest)
 {
     if (!tileEmpty(source))
     {
@@ -159,7 +161,7 @@ bool BoardManager::moveTile(vector2dst const& source, vector2dst const& dest)
         if (sourceTile)
         {
             // Check if we can move the tile sourceTile to its destination
-            if (!sourceTile->canBeMoved(dest))
+            if (!sourceTile->canBeMovedTo(dest))
             {
                 return false;
             }
@@ -173,12 +175,12 @@ bool BoardManager::moveTile(vector2dst const& source, vector2dst const& dest)
             {
                 _setTile(dest, sourceTile);
                 _setTile(source, SITilePointer());
-
+                sourceTile->board_position = dest;
                 if (actuator_)
                 {
                     actuator_->tileMoved(source, dest, sourceTile);
                 }
-                sourceTile->tileMoved(source, dest);
+                sourceTile->tileMoved(source);
                 return true;
             }
             else
@@ -217,7 +219,7 @@ str BoardManager::toStr()
         for (u32 x{0}; x < _size.x; ++x)
         {
             str chTemp;
-            SITilePointer lp_tile(getTile({x, y}));
+            SITilePointer lp_tile{getTile({x, y})};
             if (lp_tile)
             {
                 chTemp = str::to_str(lp_tile->value());
