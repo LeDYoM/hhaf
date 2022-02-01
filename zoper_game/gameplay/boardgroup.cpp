@@ -234,6 +234,11 @@ bool BoardGroup::moveTileInDirection(Direction const direction,
     return false;
 }
 
+void BoardGroup::movePlayer(Direction const& direction)
+{
+    player_->movePlayer(direction);
+}
+
 bool BoardGroup::moveTowardsCenter(Direction const direction,
                                    vector2dst const& position)
 {
