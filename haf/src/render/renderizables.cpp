@@ -70,9 +70,15 @@ size_type Renderizables::size() const
     return render_nodes_.size();
 }
 
-bool Renderizables::empty() const
+bool Renderizables::empty() const noexcept
 {
     return render_nodes_.empty();
+}
+
+types::rptr<scene::TransformableSceneNode const> Renderizables::sceneNode()
+    const noexcept
+{
+    return scene_node_;
 }
 
 }  // namespace haf::render

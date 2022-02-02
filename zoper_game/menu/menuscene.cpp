@@ -43,8 +43,7 @@ void MenuScene::onCreated()
     subSystem<ISceneMetrics>()->setViewRect(DefaultView);
 
     // Load the necessary resources
-    auto resources_configurator{
-        subSystem<res::IResourcesConfigurator>()};
+    auto resources_configurator{subSystem<res::IResourcesConfigurator>()};
     resources_configurator->setResourceConfigFile("resources.txt");
     resources_configurator->setResourcesDirectory("resources/");
     resources_configurator->loadSection("menu");
@@ -59,8 +58,7 @@ void MenuScene::onCreated()
         .name("mainLogo")
         .figType(FigType_t::Quad)
         .box(Rectf32{500.f, 150.f, 1000.f, 500.f})
-        .texture(subSystem<res::IResourceRetriever>()->getTexture(
-            MainMenuResources::LogoId))
+        .texture(MainMenuResources::LogoId)
         .create();
 
     createSceneNode<MainMenu>(MainMenu::StaticTypeName)

@@ -64,7 +64,9 @@ public:
         types::size_type const index) const noexcept;
 
     types::size_type size() const;
-    bool empty() const;
+    bool empty() const noexcept;
+
+    types::rptr<scene::TransformableSceneNode const> sceneNode() const noexcept;
 
 private:
     void addRenderizable(types::sptr<Renderizable> newElement);

@@ -1,7 +1,7 @@
 #include <haf/include/render/renderizable_builder.hpp>
 #include <haf/include/render/renderizables.hpp>
-
-#include <utility>
+#include <haf/include/resources/iresource_retriever.hpp>
+#include <haf/include/scene/transformable_scene_node.hpp>
 
 namespace haf::render
 {
@@ -63,6 +63,13 @@ RenderizableBuilder& RenderizableBuilder::texture(
 {
     data_.builder_data_.prop<TextureProperty>() = std::move(_texture);
     return *this;
+}
+
+RenderizableBuilder& RenderizableBuilder::texture(htps::str const texture_name)
+{
+    return texture(data_.renderizables_->sceneNode()
+        ->subSystem<res::IResourceRetriever>()
+        ->getTexture(texture_name));
 }
 
 RenderizableBuilder& RenderizableBuilder::colorModifier(
