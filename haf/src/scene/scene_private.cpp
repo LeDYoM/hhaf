@@ -24,4 +24,10 @@ void Scene::ScenePrivate::setSystemProvider(
         isystem_provider;
 }
 
+htps::rptr<sys::ISystemProvider> Scene::ScenePrivate::iSystemProvider()
+    const noexcept
+{
+    return isystem_provider_;
+}
+
 }  // namespace haf::scene

@@ -1,6 +1,7 @@
 #ifndef HAF_SCENE_SCENECONTROLLER_INCLUDE_HPP
 #define HAF_SCENE_SCENECONTROLLER_INCLUDE_HPP
 
+#include "haf_private.hpp"
 #include <htypes/include/types.hpp>
 #include <htypes/include/str.hpp>
 #include <htypes/include/vector.hpp>
@@ -22,7 +23,7 @@ class SceneManager;
  * This controller class manages the creation, destruction and maintenance of
  * the @b Scene instances.
  */
-class SceneController final
+class HAF_PRIVATE SceneController final
 {
 public:
     void setSceneManager(htps::rptr<SceneManager> scene_manager);

@@ -1,6 +1,7 @@
 #ifndef HAF_SCENE_SCENE_PRIVATE_INCLUDE_HPP
 #define HAF_SCENE_SCENE_PRIVATE_INCLUDE_HPP
 
+#include "haf_private.hpp"
 #include <htypes/include/types.hpp>
 #include <haf/include/scene/scene.hpp>
 
@@ -8,22 +9,19 @@ namespace haf::sys
 {
 class ISystemProvider;
 }
+
 namespace haf::scene
 {
 class SceneManager;
-class Scene;
 
-class Scene::ScenePrivate final
+class HAF_PRIVATE Scene::ScenePrivate final
 {
 public:
     explicit ScenePrivate(htps::rptr<Scene> _this) noexcept;
     void setSystemProvider(
         htps::rptr<sys::ISystemProvider> isystem_provider) noexcept;
 
-    htps::rptr<sys::ISystemProvider> iSystemProvider() const noexcept
-    {
-        return isystem_provider_;
-    }
+    htps::rptr<sys::ISystemProvider> iSystemProvider() const noexcept;
 
 private:
     htps::rptr<Scene> scene_;

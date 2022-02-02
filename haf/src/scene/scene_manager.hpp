@@ -1,6 +1,7 @@
 #ifndef HAF_SCENE_SCENEMANAGER_INCLUDE_HPP
 #define HAF_SCENE_SCENEMANAGER_INCLUDE_HPP
 
+#include "haf_private.hpp"
 #include <htypes/include/types.hpp>
 #include <htypes/include/rect.hpp>
 #include <haf/include/types/scene_types.hpp>
@@ -20,15 +21,15 @@ class SceneFactory;
 
 namespace haf::scene
 {
-class SceneManager final : public sys::SystemBase,
-                           public ISceneMetrics,
-                           public ISceneControl,
-                           public IAppInitializer,
-                           public IAppFinisher
+class HAF_PRIVATE SceneManager final : public sys::SystemBase,
+                                       public ISceneMetrics,
+                                       public ISceneControl,
+                                       public IAppInitializer,
+                                       public IAppFinisher
 {
 public:
     explicit SceneManager(sys::SystemProvider& system_provider);
-    ~SceneManager();
+    ~SceneManager() override;
 
     void start();
     void update();
