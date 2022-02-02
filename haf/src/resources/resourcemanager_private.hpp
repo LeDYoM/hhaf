@@ -35,18 +35,10 @@ inline sptr<T> loadResource(backend::IResourceFactory<V>& factory,
                             FileSystem& fileSystem,
                             const str& fileName)
 {
-    //    if constexpr (UseInternalFileSystem)
-    //    {
-    RawMemory data(fileSystem.loadBinaryFile(fileName));
+    RawMemory data{fileSystem.loadBinaryFile(fileName)};
 
     // Prototype / check
     return msptr<T>(factory.loadFromRawMemory(&data));
-    //! Old "load from disk" code. Maintained here just in case
-    //    }
-    //    else
-    //    {
-    //        return msptr<T>(factory.loadFromFile(fileName));
-    //    }
 }
 
 template <typename T>

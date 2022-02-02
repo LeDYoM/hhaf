@@ -36,10 +36,10 @@ IShader* ShaderFactory::loadFromFile(const str& file)
     if (::sf::Shader::isAvailable())
     {
         uptr<sf::Shader> shader;
-        const str vertex_file   = check_vertex_shader_file(file);
-        const str fragment_file = check_fragment_shader_file(file);
+        str const vertex_file{check_vertex_shader_file(file)};
+        str const fragment_file{check_fragment_shader_file(file)};
 
-        bool result = false;
+        bool result{false};
 
         if (!vertex_file.empty() || !fragment_file.empty())
         {
@@ -69,6 +69,12 @@ IShader* ShaderFactory::loadFromFile(const str& file)
             }
         }
     }
+    return nullptr;
+}
+
+IShader* ShaderFactory::loadFromRawMemory(htps::RawMemory* raw_memory)
+{
+    (void)(raw_memory);
     return nullptr;
 }
 
