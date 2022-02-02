@@ -33,6 +33,8 @@ public:
     backend::IRenderElement* createRenderElement();
     bool destroyRenderElement(backend::IRenderElement* render_element);
 
+    htps::sptr<RenderTarget> const& currentRenderTarget() const;
+
 private:
     htps::sptr<RenderTarget> render_target_;
 };

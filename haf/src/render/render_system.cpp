@@ -47,4 +47,9 @@ bool RenderSystem::destroyRenderElement(backend::IRenderElement* render_element)
     return render_target_->destroyRenderElement(render_element);
 }
 
+sptr<RenderTarget> const& RenderSystem::currentRenderTarget() const
+{
+    return render_target_;
+}
+
 }  // namespace haf::sys

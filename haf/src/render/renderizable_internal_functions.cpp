@@ -54,8 +54,8 @@ Rects32 textureFillQuad(sptr<res::ITexture const> const& texture) noexcept
 vector2df normalizeInBox(vector2df const& position,
                          RenderizableInternalData const& data) noexcept
 {
-    const f32 xratio{(position.x - data.box.left) / data.box.width};
-    const f32 yratio{(position.y - data.box.top) / data.box.height};
+    f32 const xratio{(position.x - data.box.left) / data.box.width};
+    f32 const yratio{(position.y - data.box.top) / data.box.height};
     return {(data.textureRect.left + (data.textureRect.width * xratio)),
             (data.textureRect.top + (data.textureRect.height * yratio))};
 }
