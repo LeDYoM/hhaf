@@ -120,24 +120,49 @@ public:
         return result;
     }
 
-    inline bool starts_with(const basic_str& prefix) const noexcept
+    bool starts_with(basic_str const& prefix) const noexcept
     {
-        if (size() < prefix.size())
-        {
-            return false;
-        }
-
-        return (substr(0, prefix.size()) == prefix);
+        return has_in(prefix, 0U);
     }
 
-    inline bool ends_with(const basic_str& prefix) const noexcept
+    bool ends_with(basic_str const& prefix) const noexcept
     {
-        if (size() < prefix.size())
+        return has_in(prefix, size() - prefix.size());
+    }
+
+    bool has_in(basic_str const& prefix,
+                       size_type const start_position) const noexcept
+    {
+        if (size() < prefix.size() || start_position > size())
         {
             return false;
         }
 
-        return (substr(size() - prefix.size()) == prefix);
+        return (substr(start_position, prefix.size()) == prefix);
+    }
+
+    size_type has(basic_str const& sub_str) const noexcept
+    {
+        if (size() < sub_str.size())
+        {
+            return npos;
+        }
+
+        if (sub_str.empty())
+        {
+            return 0U;
+        }
+
+        auto const size_to_check{size() - (sub_str.size() - 1U)};
+
+        for (size_type i{0U}; i < size_to_check; ++i)
+        {
+            if (has_in(sub_str, i))
+            {
+                return i;
+            }
+        }
+        return npos;
     }
 
     basic_str substr(size_type start, size_type len = npos) const
@@ -179,9 +204,9 @@ public:
     }
 
     template <size_type N>
-    constexpr basic_str& append(const char_type (&n)[N])
+    constexpr basic_str& append(char_type const (&n)[N])
     {
-        append(str(std::forward<const char_type(&)[N]>(n)));
+        append(str(std::forward<char_type const(&)[N]>(n)));
         return *this;
     }
 
@@ -262,27 +287,28 @@ public:
         return append(std::forward<T>(source));
     }
 
-    basic_str& operator+=(const basic_str& source) { return append(source); }
+    basic_str& operator+=(basic_str const& source) { return append(source); }
+
     basic_str operator+(basic_str<value_type> const& rhs) const
     {
         return basic_str<value_type>(*this).append(rhs);
     }
 
-    basic_str operator+(char_type const* rhs) const
+    basic_str operator+(char_type const* const rhs) const
     {
         return basic_str<value_type>(*this).append(rhs);
     }
 
     constexpr size_type size() const noexcept
     {
-        return data_.empty() ? 0 : data_.size() - 1;
+        return data_.empty() ? 0 : (data_.size() - 1U);
     }
 
-    inline void ltrim()
+    void ltrim()
     {
         if (!empty())
         {
-            for (size_type index = 0U; index < size(); ++index)
+            for (size_type index{0U}; index < size(); ++index)
             {
                 if (!std::isspace(static_cast<char_type>(data_[index])))
                 {
@@ -290,7 +316,7 @@ public:
                     return;
                 }
             }
-            *this = "";
+            data_.clear();
         }
     }
 
@@ -366,7 +392,7 @@ public:
     {
         const auto it{data_.find_first_of(chValue)};
         return (it == data_.cend()) ? basic_str::npos
-                                     : std::distance(cbegin(), it);
+                                    : std::distance(cbegin(), it);
     }
 
     template <typename T>
@@ -422,7 +448,7 @@ public:
     }
 
     template <typename T>
-    constexpr basic_str& operator<<(const T& n)
+    constexpr basic_str& operator<<(T const& n)
     {
         return append(n);
     }
@@ -465,7 +491,9 @@ constexpr bool operator!=(char_value const* const lhs,
 }
 
 template <typename char_value, typename T, typename... Args>
-constexpr void make_basic_str_internal(basic_str<char_value>& buffer, T&& arg, Args&&... args)
+constexpr void make_basic_str_internal(basic_str<char_value>& buffer,
+                                       T&& arg,
+                                       Args&&... args)
 {
     make_basic_str_internal(buffer, std::forward<T>(arg));
     make_basic_str_internal(buffer, std::forward<Args>(args)...);
