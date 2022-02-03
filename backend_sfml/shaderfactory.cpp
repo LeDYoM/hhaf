@@ -74,7 +74,8 @@ IShader* ShaderFactory::loadFromFile(const str& file)
 
 IShader* ShaderFactory::loadFromRawMemory(htps::RawMemory* raw_memory)
 {
-    (void)(raw_memory);
+    str shaders_code{reinterpret_cast<char const *>(raw_memory->data())};
+//    auto const vertex_shader_start{shaders_code.find()}
     return nullptr;
 }
 
