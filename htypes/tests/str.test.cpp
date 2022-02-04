@@ -251,8 +251,8 @@ TEST_CASE("str::has", "[str]")
     CHECK(tst_string.has("tring to test the has in function") == 1U);
     CHECK(tst_string.has("String to test the has in function ") == str::npos);
     CHECK(tst_string.has("function") == 26U);
-    CHECK_FALSE(tst_string.has("function ") == str::npos);
-    CHECK_FALSE(tst_string.has("") == 0U);
+    CHECK(tst_string.has("function ") == str::npos);
+    CHECK(tst_string.has("") == 0U);
 }
 
 TEST_CASE("str::has_in", "[str]")
