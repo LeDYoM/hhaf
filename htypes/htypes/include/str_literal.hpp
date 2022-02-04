@@ -130,6 +130,12 @@ using str_literal = basic_str_literal<char, N>;
 
 using str_literal_hash = size_type;
 
+template <size_type N>
+constexpr size_type basic_str_literal_size(char const (&str)[N]) noexcept
+{
+    return N - 1U;
+}
+
 }  // namespace htps
 
 #endif
