@@ -23,6 +23,7 @@ public:
     using iterator = char_type*;  //< Iterator value of the string;
     using const_iterator =
         char_type const*;  //< Const iterator type of the string
+    using size_type = vector<char_type>::size_type;
 
 private:
     vector<char_type> data_;
@@ -366,7 +367,7 @@ public:
     {
         const auto it{data_.find_first_of(chValue)};
         return (it == data_.cend()) ? basic_str::npos
-                                     : std::distance(cbegin(), it);
+                                    : std::distance(cbegin(), it);
     }
 
     template <typename T>
@@ -465,7 +466,9 @@ constexpr bool operator!=(char_value const* const lhs,
 }
 
 template <typename char_value, typename T, typename... Args>
-constexpr void make_basic_str_internal(basic_str<char_value>& buffer, T&& arg, Args&&... args)
+constexpr void make_basic_str_internal(basic_str<char_value>& buffer,
+                                       T&& arg,
+                                       Args&&... args)
 {
     make_basic_str_internal(buffer, std::forward<T>(arg));
     make_basic_str_internal(buffer, std::forward<Args>(args)...);

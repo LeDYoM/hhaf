@@ -36,6 +36,7 @@ public:
     using pointer         = T*;  //< Pointer to the contained data type
     using const_pointer =
         T const*;  //< Pointer to const to the contained data type
+    using size_type = htps::size_type;
 
     /**
      * @brief Default constructor.
