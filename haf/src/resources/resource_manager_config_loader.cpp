@@ -129,6 +129,10 @@ bool ResourceManagerConfigLoader::loadSection(
             {
                 local_result = resource_manager.loadBMPFont(name, element_file);
             }
+            else if (type.starts_with("shader"))
+            {
+                local_result = resource_manager.loadShader(name, element_file);
+            }
             else
             {
                 LogAsserter::log_assert(local_result,

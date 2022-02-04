@@ -241,6 +241,32 @@ TEST_CASE("str::convert", "[str]")
     CHECK(slongStr.convert(k));
 }
 
+TEST_CASE("str::has", "[str]")
+{
+    str tst_string{"String to test the has in function"};
+
+    CHECK(tst_string.has("to test") == 7U);
+    CHECK(tst_string.has("totest") == str::npos);
+    CHECK(tst_string.has("String to test the has in function") == 0U);
+    CHECK(tst_string.has("tring to test the has in function") == 1U);
+    CHECK(tst_string.has("String to test the has in function ") == str::npos);
+    CHECK(tst_string.has("function") == 26U);
+    CHECK(tst_string.has("function ") == str::npos);
+    CHECK(tst_string.has("") == 0U);
+}
+
+TEST_CASE("str::has_in", "[str]")
+{
+    str tst_string{"String to test the has in function"};
+
+    CHECK(tst_string.has_in("to test", 7U));
+    CHECK(tst_string.has_in("function", 26U));
+    CHECK_FALSE(tst_string.has_in("function ", 26U));
+    CHECK_FALSE(tst_string.has_in("function", 56U));
+    CHECK_FALSE(tst_string.has_in("", 156U));
+    CHECK(tst_string.has_in("", 15U));
+}
+
 TEST_CASE("str starts and ends with", "[str]")
 {
     str tst_string("String to test");
@@ -253,6 +279,7 @@ TEST_CASE("str starts and ends with", "[str]")
         CHECK_FALSE(tst_string.starts_with(" "));
         CHECK_FALSE(tst_string.starts_with("Stringt"));
         CHECK_FALSE(tst_string.starts_with("String to test "));
+        CHECK(tst_string.starts_with(""));
     }
 
     SECTION("Ends with")
@@ -263,6 +290,7 @@ TEST_CASE("str starts and ends with", "[str]")
         CHECK_FALSE(tst_string.ends_with(" "));
         CHECK_FALSE(tst_string.ends_with("ttest"));
         CHECK_FALSE(tst_string.ends_with("String to test "));
+        CHECK(tst_string.ends_with(""));
     }
 }
 
