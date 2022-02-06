@@ -115,9 +115,37 @@ IShader* ShaderFactory::loadFromRawMemory(htps::RawMemory* raw_memory)
     std::cout << vertex_shader_code.c_str() << "\n";
 
     uptr<sf::Shader> shader{muptr<sf::Shader>()};
-    bool const result{shader->loadFromMemory(vertex_shader_code.c_str(),
-                                       geometry_shader_code.c_str(),
-                                       fragment_shader_code.c_str())};
+
+    bool result{false};
+    if (!geometry_shader_code.empty() && !vertex_shader_code.empty() &&
+        !fragment_shader_code.empty())
+    {
+        // 3 shaders to load
+        result = shader->loadFromMemory(vertex_shader_code.c_str(),
+                                        geometry_shader_code.c_str(),
+                                        fragment_shader_code.c_str());
+    }
+    else if (geometry_shader_code.empty() && !vertex_shader_code.empty() &&
+             !fragment_shader_code.empty())
+    {
+        // vertex and fragment
+        result = shader->loadFromMemory(vertex_shader_code.c_str(),
+                                        fragment_shader_code.c_str());
+    }
+    else if (!vertex_shader_code.empty())
+    {
+        result = shader->loadFromMemory(vertex_shader_code.c_str(),
+                                        sf::Shader::Type::Vertex);
+    } else if (!fragment_shader_code.empty())
+    {
+        result = shader->loadFromMemory(fragment_shader_code.c_str(),
+                                        sf::Shader::Type::Fragment);
+    }
+    else if (!geometry_shader_code.empty())
+    {
+        result = shader->loadFromMemory(fragment_shader_code.c_str(),
+                                        sf::Shader::Type::Geometry);
+    }
 
     if (result)
     {

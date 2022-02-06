@@ -35,6 +35,9 @@ public:
     constexpr basic_str(const char_type (&a)[N]) : data_(a, N)
     {}
 
+    constexpr basic_str(size_type const size) : data_(size)
+    {}
+
     constexpr basic_str(const_iterator const n, size_type const N) :
         data_(n, N + 1)
     {}
