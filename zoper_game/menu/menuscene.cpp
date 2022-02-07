@@ -59,6 +59,7 @@ void MenuScene::onCreated()
         .figType(FigType_t::Quad)
         .box(Rectf32{500.f, 150.f, 1000.f, 500.f})
         .texture(MainMenuResources::LogoId)
+        .shader("shader1")
         .create();
 
     createSceneNode<MainMenu>(MainMenu::StaticTypeName)

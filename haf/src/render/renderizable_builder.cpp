@@ -58,6 +58,13 @@ RenderizableBuilder& RenderizableBuilder::shader(
     return *this;
 }
 
+RenderizableBuilder& RenderizableBuilder::shader(htps::str const& shader_name)
+{
+    return shader(data_.renderizables_->sceneNode()
+                      ->subSystem<res::IResourceRetriever>()
+                      ->getShader(shader_name));
+}
+
 RenderizableBuilder& RenderizableBuilder::texture(
     htps::sptr<res::ITexture> _texture)
 {
@@ -65,11 +72,11 @@ RenderizableBuilder& RenderizableBuilder::texture(
     return *this;
 }
 
-RenderizableBuilder& RenderizableBuilder::texture(htps::str const texture_name)
+RenderizableBuilder& RenderizableBuilder::texture(htps::str const& texture_name)
 {
     return texture(data_.renderizables_->sceneNode()
-        ->subSystem<res::IResourceRetriever>()
-        ->getTexture(texture_name));
+                       ->subSystem<res::IResourceRetriever>()
+                       ->getTexture(texture_name));
 }
 
 RenderizableBuilder& RenderizableBuilder::colorModifier(

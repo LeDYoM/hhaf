@@ -44,8 +44,9 @@ public:
     RenderizableBuilder& color(scene::Color const& _color);
     RenderizableBuilder& pointCount(htps::size_type const& point_count);
     RenderizableBuilder& shader(htps::sptr<res::IShader> _shader);
+    RenderizableBuilder& shader(htps::str const& shader_name);
     RenderizableBuilder& texture(htps::sptr<res::ITexture> _texture);
-    RenderizableBuilder& texture(htps::str const texture_name);
+    RenderizableBuilder& texture(htps::str const& texture_name);
     RenderizableBuilder& colorModifier(
         htps::function<scene::Color(const RenderizableModifierContext&)>
             color_modifier);
