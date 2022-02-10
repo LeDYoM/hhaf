@@ -110,7 +110,7 @@ set(sources
   ${src_dir}/scene/scene_private.cpp
   ${src_dir}/scene/scene_private.hpp
   ${src_dir}/scene/scene_render.cpp
-  ${src_dir}/scene/scene_render.hpp  
+  ${src_dir}/scene/scene_render.hpp
   ${src_dir}/scene/scene.cpp
   ${src_dir}/scene/scene_manager.cpp
   ${src_dir}/scene/scene_manager.hpp
@@ -267,6 +267,7 @@ set(headers
   ${inc_dir}/scene/hasname.hpp
   ${inc_dir}/scene/matrix4x4.hpp
   ${inc_dir}/scene/renderizables_scene_node.hpp
+  ${inc_dir}/scene/scene_render_context.hpp
   ${inc_dir}/scene/scene.hpp
   ${inc_dir}/scene/scenenode_cast.hpp
   ${inc_dir}/scene/scenenode_properties.hpp

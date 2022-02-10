@@ -10,7 +10,7 @@ using namespace htps;
 
 namespace haf::scene
 {
-void render(SceneNode& scene_node, bool parent_transformation_changed)
+void render(SceneNode& scene_node, SceneRenderContext scene_render_context)
 {
     if (scene_node.prop<Visible>().get())
     {
@@ -23,9 +23,9 @@ void render(SceneNode& scene_node, bool parent_transformation_changed)
                 dynamic_cast<TransformableSceneNode*>(&scene_node);
             transformable_scene_node != nullptr)
         {
-            parent_transformation_changed =
+            scene_render_context.parentTransformationChanged_ =
                 transformable_scene_node->updateTransformations(
-                    parent_transformation_changed,
+                    scene_render_context.parentTransformationChanged_,
                     scene_node.parentAs<TransformableSceneNode>()
                         ? scene_node.parentAs<TransformableSceneNode>()
                               ->globalTransform()
@@ -38,20 +38,20 @@ void render(SceneNode& scene_node, bool parent_transformation_changed)
             renderizable_scene_node != nullptr)
         {
             renderizable_scene_node->updateRenderizables(
-                parent_transformation_changed);
+                scene_render_context.parentTransformationChanged_);
         }
 
         // Render the nodes added to this node
         for (auto& group : scene_node.sceneNodes())
         {
-            render(*group, parent_transformation_changed);
+            render(*group, scene_render_context);
         }
     }
 }
 
-void render(Scene& scene, bool const parent_transformation_changed)
+void render(Scene& scene, SceneRenderContext scene_render_context)
 {
-    render(static_cast<SceneNode&>(scene), parent_transformation_changed);
+    render(static_cast<SceneNode&>(scene), scene_render_context);
 }
 
 }  // namespace haf::scene

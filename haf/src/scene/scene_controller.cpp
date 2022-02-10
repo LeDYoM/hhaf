@@ -3,7 +3,7 @@
 #include "scene_render.hpp"
 #include "scene_private.hpp"
 #include "system/system_provider.hpp"
-
+#include <haf/include/scene/matrix4x4.hpp>
 #include <haf/include/scene/scene.hpp>
 #include <haf/include/system/isystem_provider.hpp>
 
@@ -76,7 +76,8 @@ void SceneController::update()
 
     if (current_scene_ != nullptr)
     {
-        render(*current_scene_, false);
+        Matrix4x4 startMatrix{Matrix4x4::Identity};
+        render(*current_scene_, SceneRenderContext{false, startMatrix});
     }
 }
 

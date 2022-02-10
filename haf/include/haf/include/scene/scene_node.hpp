@@ -7,6 +7,7 @@
 #include <haf/include/scene/scenenode_properties.hpp>
 #include <haf/include/scene/scenenodes.hpp>
 #include <haf/include/scene/hasname.hpp>
+#include <haf/include/scene/scene_render_context.hpp>
 #include <haf/include/system/system_access.hpp>
 #include <haf/include/component/component_container.hpp>
 #include <haf/include/system/subsystem_view.hpp>

@@ -3,15 +3,16 @@
 
 #include <htypes/include/types.hpp>
 #include "haf_private.hpp"
+#include <haf/include/scene/scene_render_context.hpp>
 
 namespace haf::scene
 {
 class Scene;
 class SceneNode;
 
-void HAF_PRIVATE render(Scene& scene, bool const parent_transformation_changed);
+void HAF_PRIVATE render(Scene& scene, SceneRenderContext scene_render_context);
 void HAF_PRIVATE render(SceneNode& scene_node,
-                        bool parent_transformation_changed);
+                        SceneRenderContext scene_render_context);
 
 }  // namespace haf::scene
 
