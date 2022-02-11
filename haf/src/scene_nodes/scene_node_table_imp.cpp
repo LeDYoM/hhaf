@@ -44,7 +44,7 @@ void TableNodeImp::setTableSize(htps::vector2dst const ntableSize)
 {
     inner_nodes_.resize(ntableSize.x);
 
-    for (auto& nodeColumn : inner_nodes_)
+    for (auto&& nodeColumn : inner_nodes_)
     {
         nodeColumn.resize(ntableSize.y);
     }
