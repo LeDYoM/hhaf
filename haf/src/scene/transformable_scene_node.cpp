@@ -69,18 +69,25 @@ bool TransformableSceneNode::updateLocalTransformationsIfNecessary() noexcept
     return result;
 }
 
-bool TransformableSceneNode::updateTransformations(
-    bool const parentTransformationChanged,
-    Matrix4x4 const& parentTransformation) noexcept
+void TransformableSceneNode::postUpdate(SceneRenderContext& sceneRenderContext)
 {
+    BaseSceneNode::postUpdate(sceneRenderContext);
+
+    sceneRenderContext.currentTransformation =
+        parentAs<TransformableSceneNode>()
+        ? parentAs<TransformableSceneNode>()->globalTransform()
+        : Matrix4x4::Identity;
+
     bool const localTransformationChanged =
-        updateLocalTransformationsIfNecessary() || parentTransformationChanged;
+        updateLocalTransformationsIfNecessary() ||
+        sceneRenderContext.parentTransformationChanged_;
 
     if (localTransformationChanged)
     {
-        updateGlobalTransformation(parentTransformation);
+        updateGlobalTransformation(sceneRenderContext.currentTransformation);
     }
-    return localTransformationChanged;
+    sceneRenderContext.parentTransformationChanged_ =
+        localTransformationChanged;
 }
 
 Transformation& TransformableSceneNode::getTransformation(

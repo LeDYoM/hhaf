@@ -12,12 +12,13 @@ namespace haf::scene
 class HAF_API RenderizablesSceneNode : public TransformableSceneNode,
                                        public render::Renderizables
 {
-    using BaseClass = TransformableSceneNode;
+    using SceneNodeBaseClass = TransformableSceneNode;
 
 public:
-    using BaseClass::prop;
+    using SceneNodeBaseClass::prop;
 
     RenderizablesSceneNode(htps::rptr<SceneNode> parent, htps::str name);
+    void postUpdate(SceneRenderContext& sceneRenderContext) override;
 };
 
 }  // namespace haf::scene

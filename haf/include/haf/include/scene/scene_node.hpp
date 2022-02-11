@@ -76,6 +76,15 @@ public:
     virtual void update() {}
 
     /**
+     * @brief Method called every frame after update
+     * @param SceneRenderContext Current frame render context
+     */
+    virtual void postUpdate(SceneRenderContext& sceneRenderContext)
+    {
+        (void)(sceneRenderContext);
+    }
+
+    /**
      * @brief Clear all elements in this scene node
      */
     void clearAll();

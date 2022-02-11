@@ -112,8 +112,17 @@ TEST_CASE("haf::scene::Transformable remove transformations")
 
     SECTION("Global transformation")
     {
-        CHECK(transformable.updateTransformations(false, Matrix4x4{}));
-        CHECK_FALSE(transformable.updateTransformations(false, Matrix4x4{}));
+        Matrix4x4 matrix{Matrix4x4::Identity};
+        {
+            SceneRenderContext sceneRenderContext{false, matrix};
+            transformable.postUpdate(sceneRenderContext);
+            CHECK(sceneRenderContext.parentTransformationChanged_);
+        }
+        {
+            SceneRenderContext sceneRenderContext{false, matrix};
+            transformable.postUpdate(sceneRenderContext);
+            CHECK_FALSE(sceneRenderContext.parentTransformationChanged_);
+        }
     }
 }
 

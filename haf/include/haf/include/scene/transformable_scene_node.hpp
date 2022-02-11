@@ -6,6 +6,7 @@
 #include <haf/include/scene/transformation_properties.hpp>
 #include <haf/include/scene/transformation.hpp>
 #include <haf/include/scene/scene_node.hpp>
+#include <haf/include/scene/scene_render_context.hpp>
 #include <htypes/include/vector.hpp>
 #include <htypes/include/vector2d.hpp>
 #include <htypes/include/rect.hpp>
@@ -21,8 +22,10 @@ namespace haf::scene
  */
 class HAF_API TransformableSceneNode : public SceneNode, public Transformation
 {
+    using BaseSceneNode = SceneNode;
+
 public:
-    using SceneNode::prop;       ///< Export properties
+    using BaseSceneNode::prop;       ///< Export properties
     using Transformation::prop;  ///< Export properties
 
     using Scalar = Matrix4x4::Scalar;  ///< Type Scalar for this class
@@ -88,8 +91,7 @@ public:
      */
     Transformation& getTransformation(htps::size_type const index) noexcept;
 
-    bool updateTransformations(bool const parentTransformationChanged,
-                               Matrix4x4 const& parentTransformation) noexcept;
+    void postUpdate(SceneRenderContext& sceneRenderContext) override;
 
     bool updateLocalTransformationsIfNecessary() noexcept;
 

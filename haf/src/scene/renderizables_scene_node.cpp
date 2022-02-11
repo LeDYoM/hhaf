@@ -1,6 +1,4 @@
 #include <haf/include/scene/renderizables_scene_node.hpp>
-#include "scene_manager.hpp"
-#include "system/get_system.hpp"
 
 using namespace htps;
 using namespace haf::render;
@@ -10,7 +8,14 @@ namespace haf::scene
 
 RenderizablesSceneNode::RenderizablesSceneNode(rptr<SceneNode> parent,
                                                str name) :
-    BaseClass{parent, std::move(name)}, render::Renderizables{this}
+    SceneNodeBaseClass{parent, std::move(name)}, render::Renderizables{this}
 {}
+
+void RenderizablesSceneNode::postUpdate(SceneRenderContext& sceneRenderContext)
+{
+    SceneNodeBaseClass::postUpdate(sceneRenderContext);
+    Renderizables::updateRenderizables(
+        sceneRenderContext.parentTransformationChanged_);
+}
 
 }  // namespace haf::scene
