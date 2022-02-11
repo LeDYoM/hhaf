@@ -15,7 +15,7 @@
 #include <haf/include/scene_components/iscene_metrics.hpp>
 #include <haf/include/render/renderizables.hpp>
 #include <haf/include/render/renderizable_builder.hpp>
-#include <haf/include/scene/renderizables_scene_node.hpp>
+#include <haf/include/scene_nodes/renderizables_scene_node.hpp>
 
 using namespace htps;
 using namespace haf;

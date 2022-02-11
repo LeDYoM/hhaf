@@ -2,8 +2,6 @@
 
 #include <haf/include/scene/scene.hpp>
 #include <haf/include/scene/scene_node.hpp>
-#include <haf/include/scene/renderizables_scene_node.hpp>
-#include <haf/include/scene/transformable_scene_node.hpp>
 #include <haf/include/component/component_container.hpp>
 
 using namespace htps;

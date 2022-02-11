@@ -3,7 +3,7 @@
 
 #include <haf/include/types/basic_types.hpp> 
 #include <haf/include/render/renderizable_builder.hpp>
-#include <haf/include/scene/renderizables_scene_node.hpp>
+#include <haf/include/scene_nodes/renderizables_scene_node.hpp>
 
 namespace haf::render
 {

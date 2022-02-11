@@ -103,7 +103,6 @@ set(sources
   # Scene
   ${src_dir}/scene/color.cpp
   ${src_dir}/scene/matrix4x4.cpp
-  ${src_dir}/scene/renderizables_scene_node.cpp
   ${src_dir}/scene/scene_controller.cpp
   ${src_dir}/scene/scene_controller.hpp
   ${src_dir}/scene/scene_manager_subsystems_view.cpp
@@ -127,6 +126,7 @@ set(sources
 
   # Scene nodes
   ${src_dir}/scene_nodes/renderizable_scene_node.cpp
+  ${src_dir}/scene_nodes/renderizables_scene_node.cpp
   ${src_dir}/scene_nodes/scene_node_table_imp.cpp
   ${src_dir}/scene_nodes/scene_node_table_text.cpp
   ${src_dir}/scene_nodes/scene_node_text_quad.cpp
@@ -266,7 +266,6 @@ set(headers
   ${inc_dir}/scene/color.hpp
   ${inc_dir}/scene/hasname.hpp
   ${inc_dir}/scene/matrix4x4.hpp
-  ${inc_dir}/scene/renderizables_scene_node.hpp
   ${inc_dir}/scene/scene_render_context.hpp
   ${inc_dir}/scene/scene.hpp
   ${inc_dir}/scene/scenenode_cast.hpp
@@ -294,6 +293,7 @@ set(headers
 
   # Scene nodes
   ${inc_dir}/scene_nodes/renderizable_scene_node.hpp
+  ${inc_dir}/scene_nodes/renderizables_scene_node.hpp
   ${inc_dir}/scene_nodes/scene_node_size.hpp
   ${inc_dir}/scene_nodes/scene_node_table_imp.hpp
   ${inc_dir}/scene_nodes/scene_node_table_properties.hpp

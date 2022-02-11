@@ -1,4 +1,4 @@
-#include <haf/include/scene/renderizables_scene_node.hpp>
+#include <haf/include/scene_nodes/renderizables_scene_node.hpp>
 
 using namespace htps;
 using namespace haf::render;
