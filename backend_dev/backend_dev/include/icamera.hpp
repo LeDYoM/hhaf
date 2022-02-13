@@ -9,7 +9,7 @@ namespace haf::backend
 class ICamera
 {
 protected:
-    virtual ~ICamera() {}
+    virtual ~ICamera() = default;
 
 public:
     virtual void setPointOfView(htps::vector2df32 const& pov) = 0;

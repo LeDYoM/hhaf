@@ -13,7 +13,7 @@ class IShader;
 class IRenderElement
 {
 protected:
-    virtual ~IRenderElement() {}
+    virtual ~IRenderElement() = default;
 
 public:
     virtual void setPrimitiveType(iPrimitiveType const primitive_type) = 0;
