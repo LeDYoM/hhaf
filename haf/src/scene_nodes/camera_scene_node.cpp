@@ -12,14 +12,20 @@ struct CameraSceneNode::CameraSceneNodePrivate
 
 void CameraSceneNode::onCreated()
 {
-    
+    view     = decltype(view)::value_type{{0, 0}, {1000, 1000}};
+    viewPort = decltype(viewPort)::value_type{{0, 0}, {1, 1}};
 }
 
 void CameraSceneNode::update()
 {
-    if (near.hasChanged())
+    if (view.readResetHasChanged())
     {
+        p_->icamera_->setFarRect(view());
+    }
 
+    if (viewPort.readResetHasChanged())
+    {
+        p_->icamera_->setViewPort(viewPort());
     }
 }
 
