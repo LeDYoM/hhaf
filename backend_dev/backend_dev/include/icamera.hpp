@@ -13,6 +13,7 @@ protected:
 
 public:
     virtual void setPointOfView(htps::vector2df const& pov) = 0;
+    virtual void setViewPort(htps::Rectf32 const& vewPort) = 0;
     virtual void setNearRect(htps::Rectf32 const& nearRect) = 0;
     virtual void setFarRect(htps::Rectf32 const& nearRect) = 0;
 };
