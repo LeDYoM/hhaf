@@ -8,6 +8,7 @@ set(headers
     ${include_dir}/factory_types.hpp
     ${include_dir}/ibackendregister.hpp
     ${include_dir}/ibmpfont.hpp
+    ${include_dir}/icamera.hpp
     ${include_dir}/ifactory.hpp
     ${include_dir}/ifont.hpp
     ${include_dir}/iinputdriver.hpp

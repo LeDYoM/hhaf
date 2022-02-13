@@ -124,6 +124,7 @@ set(sources
   ${src_dir}/scene_components/visibility_selector_component.cpp
 
   # Scene nodes
+  ${src_dir}/scene_nodes/camera_scene_node.cpp
   ${src_dir}/scene_nodes/renderizable_scene_node.cpp
   ${src_dir}/scene_nodes/renderizables_scene_node.cpp
   ${src_dir}/scene_nodes/scene_node_table_imp.cpp
@@ -291,6 +292,7 @@ set(headers
   ${inc_dir}/scene_components/visibility_selector_component.hpp
 
   # Scene nodes
+  ${inc_dir}/scene_nodes/camera_scene_node.hpp
   ${inc_dir}/scene_nodes/renderizable_scene_node.hpp
   ${inc_dir}/scene_nodes/renderizables_scene_node.hpp
   ${inc_dir}/scene_nodes/scene_node_size.hpp

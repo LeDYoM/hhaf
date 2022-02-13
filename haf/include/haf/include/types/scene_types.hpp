@@ -10,6 +10,7 @@ namespace haf
 using SceneUnit        = htps::f32;
 using SceneCoordinates = htps::vector2d<SceneUnit>;
 using SceneBox         = htps::Rect<SceneUnit>;
+using SceneQuad        = htps::Rect<SceneUnit>;
 
 }  // namespace haf
 
