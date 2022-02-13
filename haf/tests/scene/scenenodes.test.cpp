@@ -4,7 +4,7 @@
 #include <htypes/include/str.hpp>
 #include <htypes/include/vector2d.hpp>
 #include <haf/include/scene/scene_node.hpp>
-#include <haf/include/scene/transformable_scene_node.hpp>
+#include <haf/include/scene_nodes/transformable_scene_node.hpp>
 #include <haf/include/scene/scenenodes.hpp>
 #include <haf/include/scene/scene.hpp>
 

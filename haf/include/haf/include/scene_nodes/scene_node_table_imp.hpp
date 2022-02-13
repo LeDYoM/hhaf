@@ -4,7 +4,7 @@
 #include <htypes/include/properties.hpp>
 #include <haf/include/haf_export.hpp>
 #include <haf/include/types/basic_types.hpp>
-#include <haf/include/scene/transformable_scene_node.hpp>
+#include <haf/include/scene_nodes/transformable_scene_node.hpp>
 #include <haf/include/scene_nodes/scene_node_table_properties.hpp>
 #include <hlog/include/hlog.hpp>
 

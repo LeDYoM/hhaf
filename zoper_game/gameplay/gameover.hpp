@@ -1,7 +1,7 @@
 #ifndef ZOPER_GAMEOVER_SCENENODE_INCLUDE_HPP
 #define ZOPER_GAMEOVER_SCENENODE_INCLUDE_HPP
 
-#include <haf/include/scene/transformable_scene_node.hpp>
+#include <haf/include/scene_nodes/transformable_scene_node.hpp>
 
 namespace zoper
 {

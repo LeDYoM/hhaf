@@ -1,4 +1,4 @@
-#include <haf/include/scene/transformable_scene_node.hpp>
+#include <haf/include/scene_nodes/transformable_scene_node.hpp>
 
 #include <hlog/include/hlog.hpp>
 

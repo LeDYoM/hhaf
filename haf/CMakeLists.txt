@@ -116,7 +116,6 @@ set(sources
   ${src_dir}/scene/scene_node.cpp
   ${src_dir}/scene/scenenodefactory.cpp
   ${src_dir}/scene/scenenodes.cpp
-  ${src_dir}/scene/transformable_scene_node.cpp
   ${src_dir}/scene/transformation.cpp
 
   # Scene components
@@ -131,6 +130,7 @@ set(sources
   ${src_dir}/scene_nodes/scene_node_table_text.cpp
   ${src_dir}/scene_nodes/scene_node_text_quad.cpp
   ${src_dir}/scene_nodes/scene_node_text.cpp
+  ${src_dir}/scene_nodes/transformable_scene_node.cpp
 
   # Shared data
   ${src_dir}/shareddata/address.cpp
@@ -274,7 +274,6 @@ set(headers
   ${inc_dir}/scene/scenenodefactory.hpp
   ${inc_dir}/scene/scenenodeparent.hpp
   ${inc_dir}/scene/scenenodes.hpp
-  ${inc_dir}/scene/transformable_scene_node.hpp
   ${inc_dir}/scene/transformation_properties.hpp
   ${inc_dir}/scene/transformation.hpp
 
@@ -302,6 +301,7 @@ set(headers
   ${inc_dir}/scene_nodes/scene_node_text_properties.hpp
   ${inc_dir}/scene_nodes/scene_node_text_quad.hpp
   ${inc_dir}/scene_nodes/scene_node_text.hpp
+  ${inc_dir}/scene_nodes/transformable_scene_node.hpp
 
   # Shared data
   ${inc_dir}/shareddata/address.hpp
