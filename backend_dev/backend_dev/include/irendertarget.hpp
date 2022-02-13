@@ -3,6 +3,7 @@
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/rect.hpp>
+#include "icamera.hpp"
 #include "iresourceinfo.hpp"
 
 namespace haf::backend
@@ -26,6 +27,8 @@ public:
 
     virtual void clear() = 0;
 
+    virtual ICamera* createCamera()                            = 0;
+    virtual bool destroyCamera(ICamera* camera)                = 0;
     virtual IRenderElement* createRenderElement()              = 0;
     virtual bool destroyRenderElement(IRenderElement* element) = 0;
 };

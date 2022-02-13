@@ -3,6 +3,7 @@
 
 #include <haf/include/haf_export.hpp>
 #include <haf/include/types/basic_types.hpp> 
+#include <htypes/include/p_impl_pointer.hpp>
 #include <haf/include/render/renderizable_builder.hpp>
 #include <haf/include/scene/scene_node.hpp>
 #include <haf/include/types/scene_types.hpp>
@@ -20,8 +21,14 @@ public:
 
     htps::PropertyState<SceneQuad> near;
     htps::PropertyState<SceneQuad> far;
+    htps::PropertyState<SceneCoordinates> pointOfView;
 
+    void onCreated() override;
     void update() override;
+private:
+    struct CameraSceneNodePrivate;
+    htps::PImplPointer<CameraSceneNodePrivate> p_;
+
 };
 }  // namespace haf::scene
 

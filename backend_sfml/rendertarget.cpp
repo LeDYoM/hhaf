@@ -73,6 +73,20 @@ sf::Vector2u RenderTarget::getSize() const
     return sf::Vector2u{};
 }
 
+ICamera* RenderTarget::createCamera()
+{
+    return nullptr;
+}
+
+bool RenderTarget::destroyCamera(ICamera* camera)
+{
+    if (camera != nullptr)
+    {
+        return true;
+    }
+    return false;
+}
+
 IRenderElement* RenderTarget::createRenderElement()
 {
     return new RenderElement();

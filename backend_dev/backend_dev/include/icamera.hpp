@@ -12,7 +12,7 @@ protected:
     virtual ~ICamera() = default;
 
 public:
-    virtual void setPointOfView(htps::vector2df32 const& pov) = 0;
+    virtual void setPointOfView(htps::vector2df const& pov) = 0;
     virtual void setNearRect(htps::Rectf32 const& nearRect) = 0;
     virtual void setFarRect(htps::Rectf32 const& nearRect) = 0;
 };
