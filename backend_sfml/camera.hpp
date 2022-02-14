@@ -10,7 +10,7 @@ class Camera : public ICamera
 {
 public:
     void setPointOfView(htps::vector2df const& pov) override;
-    void setViewPort(htps::Rectf32 const& vewPort) override;
+    void setViewPort(htps::Rectf32 const& viewPort) override;
     void setNearRect(htps::Rectf32 const& nearRect) override;
     void setFarRect(htps::Rectf32 const& nearRect) override;
 private:
