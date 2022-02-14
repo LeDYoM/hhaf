@@ -24,15 +24,7 @@ public:
     using SystemBase::SystemBase;
     void update();
 
-    void draw(backend::IRenderElement const* render_element);
-    void clear();
-
     void setRenderTarget(htps::sptr<RenderTarget> render_target);
-    void clearRenderQueue();
-
-    backend::IRenderElement* createRenderElement();
-    bool destroyRenderElement(backend::IRenderElement* render_element);
-
     htps::sptr<RenderTarget> const& currentRenderTarget() const;
 
 private:

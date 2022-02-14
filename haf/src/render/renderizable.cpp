@@ -28,7 +28,7 @@ Renderizable::Renderizable(rptr<TransformableSceneNode> parent,
         prop<TextureProperty>()().get(),
         prop<ShaderProperty>()().get(),
         this,
-        sys::getSystem<sys::RenderSystem>(parent))}
+        sys::getSystem<sys::RenderSystem>(parent).currentRenderTarget())}
 {
     prop<TextureRectProperty>().set(
         textureFillQuad(renderizable_data.prop<TextureProperty>()()));
@@ -51,11 +51,8 @@ void Renderizable::render(bool const parent_transformation_changed)
     if (visible())
     {
         update(parent_transformation_changed);
+        p_->render();
 
-        if (!p_->vertices_.empty())
-        {
-            p_->render_system_.draw(p_->render_element_);
-        }
     }
 }
 

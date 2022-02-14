@@ -10,7 +10,7 @@
 #include "renderizable_internal_functions.hpp"
 #include <backend_dev/include/irender_element.hpp>
 #include "render_data_conversion.hpp"
-#include "render_system.hpp"
+#include "render_target.hpp"
 #include "resources/texture.hpp"
 #include "resources/shader.hpp"
 
@@ -25,7 +25,7 @@ struct Renderizable::RenderizablePrivate
     rptr<TransformableSceneNode> parent_;
     VertexArray vertices_;
     rptr<Renderizable const> const i_this_;
-    sys::RenderSystem& render_system_;
+    sptr<sys::RenderTarget> render_target_;
     backend::IRenderElement* render_element_{nullptr};
 
     RenderizablePrivate(rptr<TransformableSceneNode> parent,
@@ -35,13 +35,13 @@ struct Renderizable::RenderizablePrivate
                         rptr<res::ITexture> texture,
                         rptr<res::IShader> shader,
                         rptr<Renderizable const> i_this,
-                        sys::RenderSystem& render_system) :
+                        sptr<sys::RenderTarget> render_target) :
         parent_{parent},
         vertices_{initDataVertexPerFigureAndNumPoints(figure_type,
                                                       initial_point_count)},
         i_this_{std::move(i_this)},
-        render_system_{render_system},
-        render_element_{render_system_.createRenderElement()}
+        render_target_{std::move(render_target)},
+        render_element_{render_target_->createRenderElement()}
     {
         render_element_->setPrimitiveType(
             to_backend(initDataVertexPerFigureAndNumPoints(figure_type,
@@ -57,7 +57,15 @@ struct Renderizable::RenderizablePrivate
 
     ~RenderizablePrivate()
     {
-        render_system_.destroyRenderElement(render_element_);
+        render_target_->destroyRenderElement(render_element_);
+    }
+
+    void render()
+    {
+        if (!vertices_.empty())
+        {
+            render_target_->draw(render_element_);
+        }
     }
 
     constexpr RenderizableInternalData getMomentumInternalData() const noexcept
