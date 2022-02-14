@@ -24,6 +24,7 @@ public:
     htps::Rectf32 viewPort() const override;
     void setViewRect(const htps::Rectf32& nviewRect) override;
     htps::Rectf32 viewRect() const override;
+    void updateCamera(ICamera*) override;
     void clear() override;
 
     htps::str info() const override;

@@ -1,7 +1,7 @@
 #include "rendertarget.hpp"
 #include "conversions.hpp"
 #include "render_element.hpp"
-#include <backend_dev/include/ivertex.hpp>
+#include "camera.hpp"
 
 #include <SFML/Config.hpp>
 
@@ -53,6 +53,16 @@ Rectf32 RenderTarget::viewRect() const
     sf::View currentView(getView());
     return rectFromCenterAndSize(from_sf_type(currentView.getCenter()),
                                  from_sf_type(currentView.getSize()));
+}
+
+void RenderTarget::updateCamera(ICamera* camera)
+{
+    Camera* camera_sf{to_sf_type(camera)};
+    if (camera_sf->updateRequired())
+    {
+        setView(camera_sf->getView());
+        camera_sf->resetUpdateRequired();
+    }
 }
 
 void RenderTarget::clear()

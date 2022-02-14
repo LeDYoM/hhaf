@@ -9,6 +9,7 @@
 namespace haf::scene
 {
 class SceneManager;
+class CameraComponent;
 
 class HAF_API Scene : public SceneNode
 {
@@ -20,6 +21,8 @@ public:
     virtual void onFinished();
 
     void installDebugUtils();
+
+    htps::sptr<CameraComponent> cameraComponent();
 
 private:
     class ScenePrivate;

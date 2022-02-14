@@ -3,8 +3,10 @@
 #include <backend_dev/include/ikey.hpp>
 #include <backend_dev/include/itexture.hpp>
 #include <backend_dev/include/ishader.hpp>
+#include <backend_dev/include/icamera.hpp>
 #include "texture.hpp"
 #include "shader.hpp"
+#include "camera.hpp"
 #include <SFML/Window.hpp>
 #include <SFML/System/String.hpp>
 
@@ -105,4 +107,10 @@ inline auto to_sf_type(htps::f32 const* const matrix,
                             to_sf_type(matrix), to_sf_type(texture),
                             to_sf_type(shader)};
 }
+
+inline Camera* to_sf_type(ICamera *camera)
+{
+    return dynamic_cast<Camera*>(camera);
+}
+
 }  // namespace haf::backend::sfmlb

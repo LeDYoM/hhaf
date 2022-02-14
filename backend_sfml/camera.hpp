@@ -13,8 +13,14 @@ public:
     void setViewPort(htps::Rectf32 const& viewPort) override;
     void setNearRect(htps::Rectf32 const& nearRect) override;
     void setFarRect(htps::Rectf32 const& nearRect) override;
+    void renderCamera() override;
+
+    bool updateRequired() const noexcept;
+    void resetUpdateRequired() noexcept;
+    sf::View const& getView() noexcept;
 private:
     sf::View view_;
+    bool updateRequired_{true};
 };
 }  // namespace haf::backend::sfmlb
 

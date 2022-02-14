@@ -2,8 +2,8 @@
 #include "scene_private.hpp"
 #include <haf/include/debug_utils/debug_actions.hpp>
 #include <haf/include/component/component_container.hpp>
-
 #include <haf/include/scene_components/iscene_metrics.hpp>
+#include <haf/include/scene_components/camera_component.hpp>
 
 using namespace htps;
 
@@ -21,7 +21,9 @@ str Scene::nextSceneName()
 }
 
 void Scene::onCreated()
-{}
+{
+    componentOfType<CameraComponent>();
+}
 
 void Scene::onFinished()
 {}

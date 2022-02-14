@@ -22,6 +22,11 @@ void RenderTarget::draw(
     render_element_container_.push_back(render_element);
 }
 
+void RenderTarget::draw(htps::rptr<backend::ICamera> camera)
+{
+    irender_target_->updateCamera(camera);
+}
+
 void RenderTarget::update()
 {
     irender_target_->render(render_element_container_.begin(),
@@ -66,6 +71,16 @@ backend::IRenderElement* RenderTarget::createRenderElement()
 bool RenderTarget::destroyRenderElement(backend::IRenderElement* render_element)
 {
     return irender_target_->destroyRenderElement(render_element);
+}
+
+backend::ICamera* RenderTarget::createCamera()
+{
+    return irender_target_->createCamera();
+}
+
+bool RenderTarget::destroyCamera(backend::ICamera* camera)
+{
+    return irender_target_->destroyCamera(camera);
 }
 
 }  // namespace haf::sys
