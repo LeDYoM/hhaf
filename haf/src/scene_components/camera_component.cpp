@@ -8,21 +8,34 @@ using namespace haf::types;
 
 namespace haf::scene
 {
-struct CameraComponent::CameraSceneNodePrivate
+struct CameraComponent::CameraComponentPrivate
 {
     htps::rptr<backend::ICamera> icamera_{nullptr};
+    htps::sptr<sys::RenderTarget> render_target_;
+
+    void draw()
+    {
+        render_target_->draw(icamera_);
+    }
 };
+
+CameraComponent::CameraComponent() : p_{make_pimplp<CameraComponentPrivate>()}
+{}
+
+CameraComponent::~CameraComponent() = default;
 
 void CameraComponent::onAttached()
 {
+    p_->render_target_ =
+        sys::getSystem<sys::RenderSystem>(attachedNode()).currentRenderTarget();
+    p_->icamera_ = p_->render_target_->createCamera();
+
     view     = decltype(view)::value_type{{0, 0}, {1000, 1000}};
     viewPort = decltype(viewPort)::value_type{{0, 0}, {1, 1}};
 }
 
 void CameraComponent::update()
 {
-    bool const is_dirty{view.hasChanged() || viewPort.hasChanged()};
-
     if (view.readResetHasChanged())
     {
         p_->icamera_->setFarRect(view());
@@ -33,12 +46,7 @@ void CameraComponent::update()
         p_->icamera_->setViewPort(viewPort());
     }
 
-    if (is_dirty)
-    {
-        sys::getSystem<sys::RenderSystem>(attachedNode())
-            .currentRenderTarget()
-            ->draw(p_->icamera_);
-    }
+    p_->draw();
 }
 
 }  // namespace haf::scene

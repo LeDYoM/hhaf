@@ -16,6 +16,8 @@ class HAF_API CameraComponent : public component::ComponentForType<Scene>
     using BaseClass = component::ComponentForType<Scene>;
 
 public:
+    explicit CameraComponent();
+    ~CameraComponent() override;
 
     htps::PropertyState<SceneBox> view;
     htps::PropertyState<SceneQuad> viewPort;
@@ -24,8 +26,8 @@ public:
     void update() override;
 
 private:
-    struct CameraSceneNodePrivate;
-    htps::PImplPointer<CameraSceneNodePrivate> p_;
+    struct CameraComponentPrivate;
+    htps::PImplPointer<CameraComponentPrivate> p_;
 };
 }  // namespace haf::scene
 

@@ -16,7 +16,7 @@ public:
     virtual void setViewPort(htps::Rectf32 const& vewPort) = 0;
     virtual void setNearRect(htps::Rectf32 const& nearRect) = 0;
     virtual void setFarRect(htps::Rectf32 const& nearRect) = 0;
-    virtual void renderCamera() = 0;
+    virtual bool updateRequired() const = 0;
 };
 }  // namespace haf::backend
 

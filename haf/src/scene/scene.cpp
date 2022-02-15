@@ -22,7 +22,7 @@ str Scene::nextSceneName()
 
 void Scene::onCreated()
 {
-    componentOfType<CameraComponent>();
+    (void)(component<CameraComponent>());
 }
 
 void Scene::onFinished()

@@ -13,6 +13,7 @@
 
 #include <haf/include/resources/iresource_configurator.hpp>
 #include <haf/include/scene_components/iscene_metrics.hpp>
+#include <haf/include/scene_components/camera_component.hpp>
 #include <haf/include/render/renderizables.hpp>
 #include <haf/include/render/renderizable_builder.hpp>
 #include <haf/include/scene_nodes/renderizables_scene_node.hpp>
@@ -40,8 +41,8 @@ void MenuScene::onCreated()
     BaseClass::onCreated();
 
     // Set the default view for this scene
-    subSystem<ISceneMetrics>()->setViewRect(DefaultView);
-
+//    subSystem<ISceneMetrics>()->setViewRect(DefaultView);
+    componentOfType<CameraComponent>()->view = DefaultView;
     // Load the necessary resources
     auto resources_configurator{subSystem<res::IResourcesConfigurator>()};
     resources_configurator->setResourceConfigFile("resources.txt");

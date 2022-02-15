@@ -57,9 +57,9 @@ Rectf32 RenderTarget::viewRect() const
 
 void RenderTarget::updateCamera(ICamera* camera)
 {
-    Camera* camera_sf{to_sf_type(camera)};
-    if (camera_sf->updateRequired())
+    if (camera->updateRequired())
     {
+        Camera* camera_sf{to_sf_type(camera)};
         setView(camera_sf->getView());
         camera_sf->resetUpdateRequired();
     }
@@ -85,7 +85,7 @@ sf::Vector2u RenderTarget::getSize() const
 
 ICamera* RenderTarget::createCamera()
 {
-    return nullptr;
+    return new Camera();
 }
 
 bool RenderTarget::destroyCamera(ICamera* camera)

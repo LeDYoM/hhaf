@@ -24,11 +24,12 @@ void RenderTarget::draw(
 
 void RenderTarget::draw(htps::rptr<backend::ICamera> camera)
 {
-    irender_target_->updateCamera(camera);
+    icamera_ = camera;
 }
 
 void RenderTarget::update()
 {
+    irender_target_->updateCamera(icamera_);
     irender_target_->render(render_element_container_.begin(),
                             render_element_container_.end());
 }
@@ -41,6 +42,7 @@ void RenderTarget::clear()
 void RenderTarget::clearRenderQueue()
 {
     render_element_container_.clear();
+    icamera_ = nullptr;
 }
 
 Rectf32 RenderTarget::viewPort() const

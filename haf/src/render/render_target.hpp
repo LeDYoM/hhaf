@@ -58,6 +58,7 @@ public:
 
 private:
     htps::rptr<backend::IRenderTarget> irender_target_;
+    htps::rptr<backend::ICamera> icamera_;
     htps::vector<htps::rptr<backend::IRenderElement const>>
         render_element_container_;
 };

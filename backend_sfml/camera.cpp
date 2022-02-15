@@ -27,14 +27,6 @@ void Camera::setFarRect(htps::Rectf32 const& nearRect)
     updateRequired_ = true;
 }
 
-void Camera::renderCamera()
-{
-    if (updateRequired_)
-    {
-        updateRequired_ = false;
-    }
-}
-
 bool Camera::updateRequired() const noexcept
 {
     return updateRequired_;
