@@ -35,6 +35,8 @@
 #include <haf/include/filesystem/ifile_serializer.hpp>
 #include <haf/include/render/renderizables.hpp>
 #include <haf/include/render/renderizable_builder.hpp>
+#include <haf/include/scene_components/camera_component.hpp>
+#include "../static_data.hpp"
 
 using namespace htps;
 using namespace haf;
@@ -61,6 +63,7 @@ str GameScene::nextSceneName()
 void GameScene::onCreated()
 {
     BaseClass::onCreated();
+    componentOfType<CameraComponent>()->view = DefaultView;
 
     LogAsserter::log_assert(p_ == nullptr,
                             "Private data pointer is not nullptr!");

@@ -45,9 +45,10 @@ void BoardGroup::configure(vector2dst size,
         for (size_type x{0U}; x < tableSize.x; ++x)
         {
             auto node = createNodeAt({x, y}, make_str("BoardGroupTile_", x, y));
-            node->prop<NodeSize>().set(tileBox);
+//            node->prop<NodeSize>().set(tileBox);
         }
     }
+//    update2();
 
     // Create and initialize the BoardManager
     auto board_model{component<board::BoardManager>()};
@@ -107,6 +108,27 @@ void BoardGroup::tileRemoved(const vector2dst, board::SITilePointer& tile)
     LogAsserter::log_assert(std::dynamic_pointer_cast<Token>(tile) != nullptr,
                             "Trying to delete invalid type from board");
     tokens_scene_node->removeSceneNode(std::dynamic_pointer_cast<Token>(tile));
+}
+
+void BoardGroup::update()
+{
+    bool const scene_node_size_has_changed{prop<SceneNodeSize>().hasChanged()};
+    BaseClass::update();
+    if (scene_node_size_has_changed)
+    {
+        auto const tableSize{prop<TableSize>().get()};
+        Rectf32 tileBox({}, cellSize());
+
+        // Create the nodes to render the tiles
+        for (size_type y{0U}; y < tableSize.y; ++y)
+        {
+            for (size_type x{0U}; x < tableSize.x; ++x)
+            {
+                auto node = nodeAt({x, y});
+                node->prop<NodeSize>().set(tileBox);
+            }
+        }
+    }
 }
 
 void BoardGroup::setLevel(const size_type level)
