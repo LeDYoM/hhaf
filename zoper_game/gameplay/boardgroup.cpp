@@ -45,10 +45,8 @@ void BoardGroup::configure(vector2dst size,
         for (size_type x{0U}; x < tableSize.x; ++x)
         {
             auto node = createNodeAt({x, y}, make_str("BoardGroupTile_", x, y));
-//            node->prop<NodeSize>().set(tileBox);
         }
     }
-//    update2();
 
     // Create and initialize the BoardManager
     auto board_model{component<board::BoardManager>()};
