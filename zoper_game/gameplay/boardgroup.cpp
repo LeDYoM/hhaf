@@ -37,7 +37,6 @@ void BoardGroup::configure(vector2dst size,
     prop<Position>() = textBox.leftTop();
     prop<SceneNodeSize>().set(textBox.size());
 
-    Rectf32 const bBox{textBox};
     Rectf32 tileBox({}, cellSize());
 
     // Create the nodes to render the tiles
