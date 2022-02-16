@@ -23,6 +23,8 @@ public:
 
     htps::rptr<sys::ISystemProvider> iSystemProvider() const noexcept;
 
+    htps::sptr<CameraComponent> camera_component_;
+
 private:
     htps::rptr<Scene> scene_;
     htps::rptr<sys::ISystemProvider> isystem_provider_{nullptr};

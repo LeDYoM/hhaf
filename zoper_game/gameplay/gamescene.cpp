@@ -36,7 +36,6 @@
 #include <haf/include/render/renderizables.hpp>
 #include <haf/include/render/renderizable_builder.hpp>
 #include <haf/include/scene_components/camera_component.hpp>
-#include <haf/include/scene_components/iscene_metrics_view.hpp>
 #include "../static_data.hpp"
 
 using namespace htps;
@@ -106,7 +105,7 @@ void GameScene::onCreated()
                                  scene_timer_component_);
 
     board_group_->configure(TokenZones::size, level_properties_);
-    Rectf32 textBox{subSystem<ISceneMetricsView>()->currentView()};
+    Rectf32 textBox{cameraComponent()->view()};
     board_group_->prop<Position>() = textBox.leftTop();
     board_group_->prop<SceneNodeSize>().set(textBox.size());
 

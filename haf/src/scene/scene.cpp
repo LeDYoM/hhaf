@@ -22,7 +22,14 @@ str Scene::nextSceneName()
 
 void Scene::onCreated()
 {
-    (void)(component<CameraComponent>());
+    p_->camera_component_ = component<CameraComponent>();
+    LogAsserter::log_assert(p_->camera_component_ != nullptr,
+                            "Cannot create camera component");
+}
+
+sptr<CameraComponent> const& Scene::cameraComponent()
+{
+    return p_->camera_component_;
 }
 
 void Scene::onFinished()
