@@ -3,6 +3,8 @@
 #include "../gameshareddata.hpp"
 #include <menu_paged/include/menu_page.hpp>
 #include <haf/include/scene/scene_node.hpp>
+#include <haf/include/scene/scene.hpp>
+#include <haf/include/scene_components/camera_component.hpp>
 #include <hlog/include/hlog.hpp>
 #include <haf/include/resources/iresource_retriever.hpp>
 #include <haf/include/resources/ittfont.hpp>
@@ -85,7 +87,7 @@ void MainMenu::onCreated()
     BaseClass::onCreated();
 
     Rectf32 textBox{
-        rectFromSize(subSystem<ISceneMetricsView>()->currentView().size())
+        rectFromSize(ancestor<Scene>()->cameraComponent()->view().size())
             .setLeftTop({0, 750})
             .setSize({2000, 4 * 150})};
     prop<Position>() = textBox.leftTop();

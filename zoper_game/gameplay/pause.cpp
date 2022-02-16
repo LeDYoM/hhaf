@@ -5,7 +5,9 @@
 #include <haf/include/scene/color.hpp>
 #include <haf/include/scene_nodes/scene_node_text.hpp>
 #include <haf/include/animation/animation_component.hpp>
-#include <haf/include/scene_components/iscene_metrics_view.hpp>
+
+#include <haf/include/scene_components/camera_component.hpp>
+#include <haf/include/scene/scene.hpp>
 #include <haf/include/component/component_container.hpp>
 
 #include <haf/include/resources/itexture.hpp>
@@ -28,13 +30,11 @@ void PauseSceneNode::onCreated()
     pause_text_ = createSceneNode<SceneNodeText>("pausetext");
     pause_text_->prop<SceneNodeTextProperties>()
         .put<Text>("PAUSE")
-        .put<Font>(
-                       subSystem<res::IResourceRetriever>()
+        .put<Font>(subSystem<res::IResourceRetriever>()
                        ->getTTFont(GameResources::ScoreFontId)
                        ->font(180U))
         .put<TextColor>(colors::White)
-        .put<AlignmentSize>(
-            subSystem<ISceneMetricsView>()->currentView().size())
+        .put<AlignmentSize>(ancestor<Scene>()->cameraComponent()->view().size())
         .put<AlignmentX>(AlignmentXModes::Center)
         .put<AlignmentY>(AlignmentYModes::Middle);
 

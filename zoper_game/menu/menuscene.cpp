@@ -41,7 +41,6 @@ void MenuScene::onCreated()
     BaseClass::onCreated();
 
     // Set the default view for this scene
-//    subSystem<ISceneMetrics>()->setViewRect(DefaultView);
     cameraComponent()->view = DefaultView;
     // Load the necessary resources
     auto resources_configurator{subSystem<res::IResourcesConfigurator>()};
