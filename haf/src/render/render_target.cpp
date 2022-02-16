@@ -29,7 +29,11 @@ void RenderTarget::draw(htps::rptr<backend::ICamera> camera)
 
 void RenderTarget::update()
 {
-    irender_target_->updateCamera(icamera_);
+    if (icamera_)
+    {
+        irender_target_->updateCamera(icamera_);
+    }
+
     irender_target_->render(render_element_container_.begin(),
                             render_element_container_.end());
 }

@@ -13,9 +13,15 @@ struct CameraComponent::CameraComponentPrivate
     htps::rptr<backend::ICamera> icamera_{nullptr};
     htps::sptr<sys::RenderTarget> render_target_;
 
-    void draw()
+    void draw() { render_target_->draw(icamera_); }
+
+    bool destroyCamera()
     {
-        render_target_->draw(icamera_);
+        if (render_target_ != nullptr && icamera_ != nullptr)
+        {
+            return render_target_->destroyCamera(icamera_);
+        }
+        return false;
     }
 };
 
@@ -24,7 +30,7 @@ CameraComponent::CameraComponent() : p_{make_pimplp<CameraComponentPrivate>()}
 
 CameraComponent::~CameraComponent()
 {
-    p_->render_target_->destroyCamera(p_->icamera_);
+    (void)(p_->destroyCamera());
 }
 
 void CameraComponent::onAttached()
