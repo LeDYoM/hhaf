@@ -15,8 +15,8 @@ class Player : public GameBaseTile
     using BaseClass = GameBaseTile;
 
 public:
-    using BoardTileData     = GameBaseTile::BoardTileData;
-    using BoardPositionType = GameBaseTile::BoardPositionType;
+    using BoardTileData     = BaseClass::BoardTileData;
+    using BoardPositionType = BaseClass::BoardPositionType;
 
     Player(haf::types::rptr<haf::scene::SceneNode> parent,
            haf::types::str name);
