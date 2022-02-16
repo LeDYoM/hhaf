@@ -27,9 +27,9 @@ class BoardGroup : public haf::scene::nodes::TableNode<BoardTileSceneNode>,
 
 private:
     using BaseClass = haf::scene::nodes::TableNode<BoardTileSceneNode>;
-    using BaseClass::prop;
 
 public:
+    using BaseClass::prop;
     using BoardTileData = haf::board::IBoardManagerActuator::BoardTileData;
     using BaseClass::BaseClass;
     constexpr static char const StaticName[] = "BoardGroup";

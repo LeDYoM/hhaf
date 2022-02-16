@@ -33,12 +33,6 @@ void BoardGroup::configure(vector2dst size,
     prop<TableSize>().set(size);
     auto const tableSize{prop<TableSize>().get()};
 
-    Rectf32 textBox{subSystem<ISceneMetricsView>()->currentView()};
-    prop<Position>() = textBox.leftTop();
-    prop<SceneNodeSize>().set(textBox.size());
-
-    Rectf32 tileBox({}, cellSize());
-
     // Create the nodes to render the tiles
     for (size_type y{0U}; y < tableSize.y; ++y)
     {
