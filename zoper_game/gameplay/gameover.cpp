@@ -4,11 +4,11 @@
 
 #include <haf/include/scene/scene.hpp>
 #include <haf/include/scene_nodes/scene_node_text.hpp>
-#include <haf/include/scene_components/iscene_metrics_view.hpp>
-
 #include <hlog/include/hlog.hpp>
 #include <haf/include/resources/ittfont.hpp>
 #include <haf/include/resources/iresource_retriever.hpp>
+#include <haf/include/scene/scene.hpp>
+#include <haf/include/scene_components/camera_component.hpp>
 
 using namespace htps;
 
@@ -23,8 +23,8 @@ GameOverSceneNode::GameOverSceneNode(scene::SceneNode* const parent, str name) :
 {
     game_over_rg_ = createSceneNode<TransformableSceneNode>("gameOverScreen");
 
-    vector2df gosize{
-        subSystem<ISceneMetricsView>()->currentView().width, 715};
+    vector2df game_over_size{ancestor<Scene>()->cameraComponent()->view().width,
+                             715};
     game_over_rg_->prop<Position>() = Position::value_type{0, 575};
 
     {
@@ -36,7 +36,7 @@ GameOverSceneNode::GameOverSceneNode(scene::SceneNode* const parent, str name) :
                            ->getTTFont(GameResources::ScoreFontId)
                            ->font(360))
             .put<TextColor>(colors::White)
-            .put<AlignmentSize>(gosize)
+            .put<AlignmentSize>(game_over_size)
             .put<AlignmentX>(AlignmentXModes::Center)
             .put<AlignmentY>(AlignmentYModes::Top);
     }
@@ -50,7 +50,7 @@ GameOverSceneNode::GameOverSceneNode(scene::SceneNode* const parent, str name) :
                            ->getTTFont(GameResources::ScoreFontId)
                            ->font(360))
             .put<TextColor>(colors::White)
-            .put<AlignmentSize>(gosize)
+            .put<AlignmentSize>(game_over_size)
             .put<AlignmentX>(AlignmentXModes::Center)
             .put<AlignmentY>(AlignmentYModes::Bottom);
     }
