@@ -6,13 +6,14 @@
 
 #include <haf/include/filesystem/ifile_serializer.hpp>
 #include <haf/include/scene_components/texteditorcomponent.hpp>
-#include <haf/include/scene_components/iscene_metrics_view.hpp>
 #include <haf/include/scene_nodes/scene_node_text_properties.hpp>
+#include <haf/include/scene/scene.hpp>
 #include <haf/include/resources/ittfont.hpp>
 #include <haf/include/resources/iresource_retriever.hpp>
 #include <haf/include/shareddata/ishared_data.hpp>
 #include <haf/include/shareddata/shared_data_viewer.hpp>
 #include <haf/include/input/input_component.hpp>
+#include <haf/include/scene_components/camera_component.hpp>
 #include <haf/include/component/component_container.hpp>
 
 using namespace htps;
@@ -50,7 +51,7 @@ void HighScoreTextController::onCreated()
                           .view(GameSharedData::address())
                           ->score;
     Rectf32 textBox{
-        rectFromSize(subSystem<ISceneMetricsView>()->currentView().size())
+        rectFromSize(ancestor<Scene>()->cameraComponent()->view().size())
             .setLeftTop({0, 250})
             .setSize({2000, 1500})};
     prop<haf::scene::Position>().set(textBox.leftTop());
