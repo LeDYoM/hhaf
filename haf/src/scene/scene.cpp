@@ -27,7 +27,7 @@ void Scene::onCreated()
                             "Cannot create camera component");
 }
 
-sptr<CameraComponent> const& Scene::cameraComponent()
+sptr<CameraComponent> const& Scene::cameraComponent() const
 {
     return p_->camera_component_;
 }

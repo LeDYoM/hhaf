@@ -22,7 +22,7 @@ public:
 
     void installDebugUtils();
 
-    htps::sptr<CameraComponent> const& cameraComponent();
+    htps::sptr<CameraComponent> const& cameraComponent() const;
 
 private:
     class ScenePrivate;

@@ -7,12 +7,14 @@
 #include "boardutils.hpp"
 
 #include <haf/include/scene/scene_node.hpp>
+#include <haf/include/scene/scene.hpp>
 #include <haf/include/scene_nodes/scene_node_table.hpp>
 #include <haf/include/scene_nodes/scene_node_size.hpp>
 #include <haf/include/scene_components/iscene_metrics_view.hpp>
 #include <haf/include/render/renderizable.hpp>
 #include <haf/include/scene/scenenode_cast.hpp>
 #include <haf/include/component/component_container.hpp>
+#include <haf/include/scene_components/camera_component.hpp>
 
 #include <boardmanager/include/boardmanager.hpp>
 #include <boardmanager/include/itile.hpp>
@@ -83,7 +85,7 @@ void BoardGroup::createNewToken(const BoardTileData data,
                      " with value ", data);
 
     // Create a new Tile instance
-    auto new_tile_token = tokens_scene_node->createSceneNode<Token>("tileNode");
+    auto new_tile_token{tokens_scene_node->createSceneNode<Token>("tileNode")};
 
     // Set the position in the scene depending on the board position
     new_tile_token->prop<Position>().set(board2Scene(board_position));
@@ -116,8 +118,7 @@ void BoardGroup::update()
         {
             for (size_type x{0U}; x < tableSize.x; ++x)
             {
-                auto node = nodeAt({x, y});
-                node->prop<NodeSize>().set(tileBox);
+                nodeAt({x, y})->prop<NodeSize>().set(tileBox);
             }
         }
     }
@@ -291,7 +292,7 @@ bool BoardGroup::moveTowardsCenter(Direction const direction,
 
 vector2df BoardGroup::board2SceneFactor() const
 {
-    return subSystem<ISceneMetricsView>()->currentView().size() /
+    return parentAs<Scene>()->cameraComponent()->view().size() /
         componentOfType<board::BoardManager>()->size();
 }
 

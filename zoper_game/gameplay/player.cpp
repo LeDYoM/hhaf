@@ -27,7 +27,6 @@ Player::Player(types::rptr<SceneNode> parent, types::str name) :
         .name("player_render_scene_node")
         .figType(FigType_t::Shape)
         .pointCount(3U)
-        .box(rectFromSize(board2Scene({1, 1})))
         .create();
 
     reserveExtraTransformations(4U);
@@ -52,6 +51,7 @@ void Player::update()
 
     if (currentDirection.readResetHasChanged())
     {
+        node()->prop<BoxProperty>() = rectFromSize(board2Scene({1, 1}));
         auto const direction{currentDirection()};
         auto const tile_center{board2SceneFactor() / 2.0F};
 
