@@ -92,7 +92,11 @@ bool RenderTarget::destroyCamera(ICamera* camera)
 {
     if (camera != nullptr)
     {
-        return true;
+        if (auto d_camera{ dynamic_cast<Camera*>(camera) }; d_camera != nullptr)
+        {
+            delete d_camera;
+            return true;
+        }
     }
     return false;
 }

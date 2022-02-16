@@ -22,7 +22,10 @@ struct CameraComponent::CameraComponentPrivate
 CameraComponent::CameraComponent() : p_{make_pimplp<CameraComponentPrivate>()}
 {}
 
-CameraComponent::~CameraComponent() = default;
+CameraComponent::~CameraComponent()
+{
+    p_->render_target_->destroyCamera(p_->icamera_);
+}
 
 void CameraComponent::onAttached()
 {
