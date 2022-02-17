@@ -10,7 +10,6 @@
 #include <haf/include/scene/scene.hpp>
 #include <haf/include/scene_nodes/scene_node_table.hpp>
 #include <haf/include/scene_nodes/scene_node_size.hpp>
-#include <haf/include/scene_components/iscene_metrics_view.hpp>
 #include <haf/include/render/renderizable.hpp>
 #include <haf/include/scene/scenenode_cast.hpp>
 #include <haf/include/component/component_container.hpp>

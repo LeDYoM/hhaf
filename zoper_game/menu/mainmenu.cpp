@@ -9,7 +9,6 @@
 #include <haf/include/resources/iresource_retriever.hpp>
 #include <haf/include/resources/ittfont.hpp>
 #include <haf/include/shareddata/ishared_data.hpp>
-#include <haf/include/scene_components/iscene_metrics_view.hpp>
 #include <htypes/include/function.hpp>
 #include <htypes/include/types.hpp>
 

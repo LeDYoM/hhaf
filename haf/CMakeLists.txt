@@ -284,8 +284,6 @@ set(headers
   ${inc_dir}/scene_components/iapp_finisher.hpp
   ${inc_dir}/scene_components/iapp_initializer.hpp
   ${inc_dir}/scene_components/iscene_control.hpp
-  ${inc_dir}/scene_components/iscene_metrics_view.hpp
-  ${inc_dir}/scene_components/iscene_metrics.hpp
   ${inc_dir}/scene_components/states_controller_component.hpp
   ${inc_dir}/scene_components/statescontrolleractuator_register.hpp
   ${inc_dir}/scene_components/statescontrolleractuator.hpp

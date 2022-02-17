@@ -12,7 +12,6 @@
 #include <haf/include/debug_utils/displayvar_console.hpp>
 
 #include <haf/include/resources/iresource_configurator.hpp>
-#include <haf/include/scene_components/iscene_metrics.hpp>
 #include <haf/include/scene_components/camera_component.hpp>
 #include <haf/include/render/renderizables.hpp>
 #include <haf/include/render/renderizable_builder.hpp>
