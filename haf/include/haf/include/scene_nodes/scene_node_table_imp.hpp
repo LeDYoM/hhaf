@@ -39,8 +39,11 @@ public:
     void update() override;
 
 protected:
+    ContainedType_t createInnerSceneNodeAt(htps::vector2dst const index,
+                                           htps::str const& name);
+
     void setInnerSceneNodeAt(htps::vector2dst const index,
-                             ContainedType_t scene_node);
+                             ContainedType_t& scene_node);
 
     void updateTableSizeIfNecessary();
     virtual void setTableSize(htps::vector2dst const ntableSize);

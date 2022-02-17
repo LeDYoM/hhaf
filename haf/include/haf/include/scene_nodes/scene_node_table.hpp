@@ -26,33 +26,22 @@ public:
     htps::sptr<T> createNodeAt(htps::vector2dst const& index,
                                htps::str const& name)
     {
-        using ContainedType_t = BaseClass::ContainedType_t;
-
-        ContainedType_t inner_node{createSceneNode<TransformableSceneNode>(
-            make_str(name, "_inner_node", index))};
-
-        htps::sptr<T> result{
-            inner_node->createSceneNode<T>("inner_inner_node")};
-
-        updateTableSizeIfNecessary();
-
-        BaseClass::setInnerSceneNodeAt(index, std::move(inner_node));
-        nodes_[index.x][index.y] = result;
-        return result;
+        return nodeAt(index) = createInnerSceneNodeAt(index, name)
+                                   ->createSceneNode<T>("inner_inner_node");
     }
 
-    constexpr htps::sptr<T> operator()(htps::vector2dst const& index) noexcept
+    constexpr htps::sptr<T>& operator()(htps::vector2dst const& index)
     {
-        return nodes_[index.x][index.y];
+        return nodeAt(index);
     }
 
     constexpr htps::sptr<T const> const operator()(
         htps::vector2dst const& index) const noexcept
     {
-        return nodes_[index.x][index.y];
+        return nodeAt(index);
     }
 
-    constexpr htps::sptr<T> nodeAt(htps::vector2dst const& index) noexcept
+    constexpr htps::sptr<T>& nodeAt(htps::vector2dst const& index)
     {
         return nodes_[index.x][index.y];
     }
@@ -94,12 +83,12 @@ public:
     }
 
     constexpr void for_each_tableSceneNode_in_y(
-        const htps::size_type y,
-        htps::function<void(const htps::size_type, const htps::sptr<T>&)> const
+        htps::size_type const y,
+        htps::function<void(htps::size_type const, htps::sptr<T> const&)> const
             action)
     {
-        for_each_tableSceneNode([&action, y](const htps::vector2dst& pos,
-                                             const htps::sptr<T>& node) {
+        for_each_tableSceneNode([&action, y](htps::vector2dst const& pos,
+                                             htps::sptr<T> const& node) {
             if (pos.y == y)
             {
                 action(pos.x, node);
@@ -118,12 +107,12 @@ public:
     }
 
 private:
-    void setTableSize(htps::vector2dst ntableSize) override
+    void setTableSize(htps::vector2dst const ntableSize) override
     {
         BaseClass::setTableSize(ntableSize);
         nodes_.resize(ntableSize.x);
 
-        for (auto& nodeColumn : nodes_)
+        for (auto&& nodeColumn : nodes_)
         {
             nodeColumn.resize(ntableSize.y);
         }

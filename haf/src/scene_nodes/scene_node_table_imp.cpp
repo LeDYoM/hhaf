@@ -1,5 +1,6 @@
 #include <htypes/include/types.hpp>
 #include <htypes/include/vector2d.hpp>
+#include <htypes/include/str.hpp>
 #include <haf/include/scene_nodes/scene_node_table_imp.hpp>
 
 namespace haf::scene::nodes
@@ -31,6 +32,18 @@ void TableNodeImp::update()
     }
 }
 
+TableNodeImp::ContainedType_t TableNodeImp::createInnerSceneNodeAt(
+    htps::vector2dst const index,
+    htps::str const& name)
+{
+    ContainedType_t inner_node{createSceneNode<TransformableSceneNode>(
+        make_str(name, "_inner_node", index))};
+
+    updateTableSizeIfNecessary();
+    setInnerSceneNodeAt(index, inner_node);
+    return inner_node;
+}
+
 void TableNodeImp::updateTableSizeIfNecessary()
 {
     if (prop<TableSize>().readResetHasChanged())
@@ -51,7 +64,7 @@ void TableNodeImp::setTableSize(htps::vector2dst const ntableSize)
 }
 
 void TableNodeImp::setInnerSceneNodeAt(htps::vector2dst const index,
-                                       ContainedType_t scene_node)
+                                       ContainedType_t& scene_node)
 {
     LogAsserter::log_assert(
         index.x < prop<TableSize>().get().x &&
@@ -59,7 +72,7 @@ void TableNodeImp::setInnerSceneNodeAt(htps::vector2dst const index,
         "TableSize::createNodeAt: Index ", index,
         " is out of bounds. Size: ", prop<TableSize>().get());
 
-    inner_nodes_[index.x][index.y] = std::move(scene_node);
+    inner_nodes_[index.x][index.y] = scene_node;
 }
 
 void TableNodeImp::for_each_table_innerSceneNode(
