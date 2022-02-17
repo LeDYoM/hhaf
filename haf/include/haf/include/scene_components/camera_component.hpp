@@ -22,6 +22,8 @@ public:
     htps::PropertyState<SceneBox> view;
     htps::PropertyState<SceneQuad> viewPort;
 
+    void moveView(SceneCoordinates const& delta);
+
     void onAttached() override;
     void update() override;
 

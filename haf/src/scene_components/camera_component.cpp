@@ -43,6 +43,11 @@ void CameraComponent::onAttached()
     viewPort = decltype(viewPort)::value_type{{0, 0}, {1, 1}};
 }
 
+void CameraComponent::moveView(SceneCoordinates const& delta)
+{
+    view = view() + delta;
+}
+
 void CameraComponent::update()
 {
     if (view.readResetHasChanged())
