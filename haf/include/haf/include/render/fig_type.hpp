@@ -9,7 +9,8 @@ enum class FigType_t : htps::u8
 {
     Quad,
     Shape,
-    EmptyQuad
+    EmptyQuad,
+    Sprite
 };
 }  // namespace haf::render
 
