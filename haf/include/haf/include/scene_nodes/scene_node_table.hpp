@@ -60,7 +60,7 @@ public:
         {
             for (htps::size_type y{0U}; y < nodes_[x].size(); ++y)
             {
-                if (htps::sptr<T> node = nodes_[x][y]; node)
+                if (htps::sptr<T>& node{nodes_[x][y]}; node)
                 {
                     action(htps::vector2dst{x, y}, node);
                 }
