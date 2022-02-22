@@ -101,71 +101,72 @@ void updateTextureCoordsAndColor(BasicVertexArray& vertices,
     }
 }
 
-void setQuad(BasicVertexArray& vertices)
+void setColor(BasicVertexArray& vertices, scene::Color const& color)
 {
-    static const vector2df quad_vertex_buffer_data[] = {
-        vector2df{-1.0f, -1.0f},                           // triangle 1 : begin
-        vector2df{-1.0f, -1.0f}, vector2df{-1.0f, 1.0f},   // triangle 1 : end
-        vector2df{1.0f, 1.0f},                             // triangle 2 : begin
-        vector2df{-1.0f, -1.0f}, vector2df{-1.0f, 1.0f}};  // triangle 2 : end
+    for(auto&& vertex : vertices)
+    {
+        vertex.color = color;
+    }
+}
 
-    vertices.resize(3 * 2);  // 3 vertex * 2 triangles
+void setTextureRect(BasicVertexArray& vertices, vector2df const& textureSize)
+{
+    auto const elementRect{calculateBox(vertices)};
+    for(auto&& vertex : vertices)
+    {
+        vertex.texCoords *= textureSize;
+    }
+}
+
+void setSize(BasicVertexArray vertices, vector2df const& size)
+{
+    vector2df const radius{size / 2.0F};
+    for(auto&& vertex : vertices)
+    {
+        vertex.position *= radius;
+    }
+}
+
+void setQuad(BasicVertexArray& vertices,
+             vector2df const& size)
+{
+    using namespace scene;
+    static Vertex quad_vertex_buffer[] = {
+        Vertex{vector2df{-0.5F, -0.5F}, colors::Black, vector2df{0.0F, 0.0F}},
+        Vertex{vector2df{-0.5F, -0.5F}, colors::Black, vector2df{0.0F, 0.0F}},
+        Vertex{vector2df{-0.5F, 0.5F}, colors::Black, vector2df{0.0F, 0.0F}},
+        Vertex{vector2df{0.5F, 0.5F}, colors::Black, vector2df{0.0F, 0.0F}},
+        Vertex{vector2df{-0.5F, -0.5F}, colors::Black, vector2df{0.0F, 0.0F}},
+        Vertex{vector2df{-0.5F, 0.5F}, colors::Black, vector2df{0.0F, 0.0F}}};
+
+    /*
+        static const vector2df quad_vertex_buffer_data[] = {
+            vector2df{-1.0f, -1.0f},                           // triangle 1 :
+       begin vector2df{-1.0f, -1.0f}, vector2df{-1.0f, 1.0f},   // triangle 1 :
+       end vector2df{1.0f, 1.0f},                             // triangle 2 :
+       begin vector2df{-1.0f, -1.0f}, vector2df{-1.0f, 1.0f}};  // triangle 2 :
+       end
+    */
+    constexpr fast_u32 kNumSizes{3U * 2U};  // 3 vertex * 2 triangles
+    vertices.resize(kNumSizes);
+    for (fast_u32 index{0U}; index < kNumSizes; ++index)
+    {
+        vertices[index].position = quad_vertex_buffer[index].position * size;
+    }
 }
 void updateGeometry2(BasicVertexArray& vertices,
                      RenderizableInternalData const& data)
 {
     if (data.pointCount > 0U)
     {
-        vector2df const radius{data.box.size() / 2.0F};
-
-        vertices.resize(
-            initDataVertexPerFigureAndNumPoints(data.figType, data.pointCount)
-                .second);
-        const auto baseAngle{PiM2Constant<f64> /
-                             static_cast<f64>(data.pointCount)};
-        const auto base_position{data.box.leftTop() + radius};
+        vector2df const size{data.box.size()};
 
         switch (data.figType)
         {
             case FigType_t::Sprite:
             case FigType_t::Shape:
             {
-                const auto vertices_iterator_begin = vertices.begin();
-                auto vertices_iterator_second{vertices_iterator_begin};
-                auto vertices_iterator{++vertices_iterator_second};
-                auto angle{0.0};
-
-                for (size_type i{0U}; i < data.pointCount;
-                     ++i, ++vertices_iterator)
-                {
-                    angle += baseAngle;
-                    vertices_iterator->position = base_position +
-                        static_cast<vector2df>(getPositionFromAngleAndRadius(
-                            data.figType, angle, radius));
-                    updateTextureCoordsAndColorForVertex(vertices_iterator,
-                                                         data);
-                }
-
-                vertices_iterator->position =
-                    vertices_iterator_second->position;
-                updateTextureCoordsAndColorForVertex(vertices_iterator, data);
-                vertices_iterator_begin->position = radius + data.box.leftTop();
-                updateTextureCoordsAndColorForVertex(vertices_iterator_begin,
-                                                     data);
-            }
-            break;
-            case FigType_t::EmptyQuad:
-            {
-                vertices[0U].position = data.box.leftTop();
-                updateTextureCoordsAndColorForVertex(&vertices[0U], data);
-                vertices[1U].position = data.box.rightTop();
-                updateTextureCoordsAndColorForVertex(&vertices[1U], data);
-                vertices[2U].position = data.box.rightBottom();
-                updateTextureCoordsAndColorForVertex(&vertices[2U], data);
-                vertices[3U].position = data.box.leftBottom();
-                updateTextureCoordsAndColorForVertex(&vertices[3U], data);
-                vertices[4U].position = data.box.leftTop();
-                updateTextureCoordsAndColorForVertex(&vertices[4U], data);
+                setQuad(vertices, size);
             }
             break;
         }
