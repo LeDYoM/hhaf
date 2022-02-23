@@ -124,10 +124,9 @@ void setTextureRect(BasicVertexArray& vertices, vector2df const& textureSize)
 
 void setSize(BasicVertexArray& vertices, vector2df const& size)
 {
-    vector2df const radius{size / 2.0F};
     for (auto&& vertex : vertices)
     {
-        vertex.position *= radius;
+        vertex.position *= size;
     }
 }
 
@@ -259,12 +258,14 @@ void updateGeometry(BasicVertexArray& vertices,
                     updateTextureCoordsAndColorForVertex(
                         vertices_iterator_begin, data);
 
-                    vertices[0U].position = vector2df{500.0F, 250.0F};
-                    vertices[1U].position = vector2df{1000.0F, 500.0F};
-                    vertices[2U].position = vector2df{0.0F, 500.0F};
-                    vertices[3U].position = vector2df{0.0F, 0.0F};
-                    vertices[4U].position = vector2df{1000.0F, 0.0F};
-                    vertices[5U].position = vector2df{1000.0F, 500.0F};
+                    auto size{data.box.size()};
+                    vertices[0U].position = vector2df{0.0F, 0.0F};
+                    vertices[1U].position = vector2df{0.5F, 0.5F};
+                    vertices[2U].position = vector2df{-0.5F, 0.5F};
+                    vertices[3U].position = vector2df{-0.5F, -0.5F};
+                    vertices[4U].position = vector2df{0.50F, -0.5F};
+                    vertices[5U].position = vector2df{0.5F, 0.5F};
+                    setSize(vertices, size);
                 }
                 break;
 

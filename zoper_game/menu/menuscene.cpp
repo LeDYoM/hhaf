@@ -55,7 +55,7 @@ void MenuScene::onCreated()
     // Create the logo
     auto main_menu_background_logo{
         createSceneNode<RenderizablesSceneNode>("main_menu_background_logo")};
-//    main_menu_background_logo->prop<Position>() = vector2df{500.0F, 150.0F};
+    main_menu_background_logo->prop<Position>() = vector2df{1000.0F, 300.0F};
     main_menu_background_logo->renderizableBuilder()
         .name("mainLogo")
         .figType(FigType_t::Sprite)
