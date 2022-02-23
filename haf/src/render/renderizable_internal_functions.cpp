@@ -44,7 +44,7 @@ pair<PrimitiveType const, size_type const> initDataVertexPerFigureAndNumPoints(
         break;
         case FigType_t::Sprite:
         {
-            return {PrimitiveType::TriangleFan, num_points + 2U};
+            return {PrimitiveType::Triangles, num_points + 2U};
         }
         break;
     }
@@ -130,30 +130,33 @@ void setSize(BasicVertexArray& vertices, vector2df const& size)
     }
 }
 
+constexpr vector2df defaultLeftBottomPosition{-0.5F, 0.5F};
+constexpr vector2df defaultRightBottomPosition{0.5F, 0.5F};
+constexpr vector2df defaultLeftTopPosition{-0.5F, -0.5F};
+constexpr vector2df defaultRightTopPosition{0.5F, -0.5F};
+
+constexpr vector2df defaultLeftBottomTexture{defaultLeftBottomPosition + vector2df{0.5F, 0.5F}};
+constexpr vector2df defaultRightBottomTexture{defaultRightBottomPosition + vector2df{0.5F, 0.5F}};
+constexpr vector2df defaultLeftTopTexture{defaultLeftTopPosition + vector2df{0.5F, 0.5F}};
+constexpr vector2df defaultRightTopTexture{defaultRightTopPosition + vector2df{0.5F, 0.5F}};
+
 void setQuad(BasicVertexArray& vertices)
 {
     using namespace scene;
     static Vertex quad_vertex_buffer[] = {
-        Vertex{vector2df{-0.5F, -0.5F}, colors::White, vector2df{0.0F, 0.0F}},
-        Vertex{vector2df{0.5F, -0.5F}, colors::White, vector2df{0.0F, 0.0F}},
-        Vertex{vector2df{-0.5F, 0.5F}, colors::White, vector2df{0.0F, 0.0F}},
-        Vertex{vector2df{-0.5F, 0.5F}, colors::White, vector2df{0.0F, 0.0F}},
-        Vertex{vector2df{0.5F, 0.5F}, colors::White, vector2df{0.0F, 0.0F}},
-        Vertex{vector2df{-0.5F, 0.5F}, colors::White, vector2df{0.0F, 0.0F}}};
+        Vertex{defaultLeftBottomPosition, colors::White, defaultLeftBottomTexture},
+        Vertex{defaultRightBottomPosition, colors::White, defaultRightBottomTexture},
+        Vertex{defaultLeftTopPosition, colors::White, defaultLeftTopTexture},
 
-    /*
-        static const vector2df quad_vertex_buffer_data[] = {
-            vector2df{-1.0f, -1.0f},                           // triangle 1 :
-       begin vector2df{-1.0f, -1.0f}, vector2df{-1.0f, 1.0f},   // triangle 1 :
-       end vector2df{1.0f, 1.0f},                             // triangle 2 :
-       begin vector2df{-1.0f, -1.0f}, vector2df{-1.0f, 1.0f}};  // triangle 2 :
-       end
-    */
+        Vertex{defaultLeftTopPosition, colors::White, defaultLeftTopTexture},
+        Vertex{defaultRightBottomPosition, colors::White, defaultRightBottomTexture},
+        Vertex{defaultRightTopPosition, colors::White, defaultRightTopTexture}};
+
     constexpr fast_u32 kNumSizes{3U * 2U};  // 3 vertex * 2 triangles
     vertices.resize(kNumSizes);
     for (fast_u32 index{0U}; index < kNumSizes; ++index)
     {
-        vertices[index].position = quad_vertex_buffer[index].position;
+        vertices[index] = quad_vertex_buffer[index];
     }
 }
 void updateGeometry2(BasicVertexArray& vertices,
@@ -231,41 +234,10 @@ void updateGeometry(BasicVertexArray& vertices,
                 break;
                 case FigType_t::Sprite:
                 {
-                    const auto vertices_iterator_begin = vertices.begin();
-                    auto vertices_iterator_second{vertices_iterator_begin};
-                    auto vertices_iterator{++vertices_iterator_second};
-                    auto angle{0.0};
-
-                    for (size_type i{0U}; i < data.pointCount;
-                         ++i, ++vertices_iterator)
-                    {
-                        angle += baseAngle;
-                        vertices_iterator->position =
-                            base_position +
-                            static_cast<vector2df>(
-                                getPositionFromAngleAndRadius(data.figType,
-                                                              angle, radius));
-                        updateTextureCoordsAndColorForVertex(vertices_iterator,
-                                                             data);
-                    }
-
-                    vertices_iterator->position =
-                        vertices_iterator_second->position;
-                    updateTextureCoordsAndColorForVertex(vertices_iterator,
-                                                         data);
-                    vertices_iterator_begin->position =
-                        radius + data.box.leftTop();
-                    updateTextureCoordsAndColorForVertex(
-                        vertices_iterator_begin, data);
-
                     auto size{data.box.size()};
-                    vertices[0U].position = vector2df{0.0F, 0.0F};
-                    vertices[1U].position = vector2df{0.5F, 0.5F};
-                    vertices[2U].position = vector2df{-0.5F, 0.5F};
-                    vertices[3U].position = vector2df{-0.5F, -0.5F};
-                    vertices[4U].position = vector2df{0.50F, -0.5F};
-                    vertices[5U].position = vector2df{0.5F, 0.5F};
+                    setQuad(vertices);
                     setSize(vertices, size);
+                    setTextureRect(vertices, static_cast<vector2df>(data.textureRect.size()));
                 }
                 break;
 
