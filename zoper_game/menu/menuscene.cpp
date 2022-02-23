@@ -53,9 +53,12 @@ void MenuScene::onCreated()
     createStandardBackground(main_menu_background->renderizableBuilder());
 
     // Create the logo
-    main_menu_background->renderizableBuilder()
+    auto main_menu_background_logo{
+        createSceneNode<RenderizablesSceneNode>("main_menu_background_logo")};
+//    main_menu_background_logo->prop<Position>() = vector2df{500.0F, 150.0F};
+    main_menu_background_logo->renderizableBuilder()
         .name("mainLogo")
-        .figType(FigType_t::Quad)
+        .figType(FigType_t::Sprite)
         .box(Rectf32{500.f, 150.f, 1000.f, 500.f})
         .texture(MainMenuResources::LogoId)
 //        .shader("shader1")
