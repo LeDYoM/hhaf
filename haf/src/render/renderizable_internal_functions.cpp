@@ -134,14 +134,6 @@ void setTextureRect(BasicVertexArray& vertices, Rectf32 const& texture_rect)
     }
 }
 
-void setSize(BasicVertexArray& vertices, vector2df const& size)
-{
-    for (auto&& vertex : vertices)
-    {
-        vertex.position *= size;
-    }
-}
-
 constexpr vector2df defaultLeftBottomPosition{-0.5F, 0.5F};
 constexpr vector2df defaultRightBottomPosition{0.5F, 0.5F};
 constexpr vector2df defaultLeftTopPosition{-0.5F, -0.5F};
@@ -224,9 +216,7 @@ void updateGeometry(BasicVertexArray& vertices,
             break;
             case FigType_t::Sprite:
             {
-                auto size{data.box.size()};
                 setQuad(vertices);
-                setSize(vertices, size);
                 setTextureRect(vertices, data.textureRect);
                 setColor(vertices, data.color);
             }

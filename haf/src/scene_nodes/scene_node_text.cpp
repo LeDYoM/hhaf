@@ -133,7 +133,7 @@ void SceneNodeText::update()
                 letterNode->prop<Position>().set(letterBox.leftTop() + letterBox.size() / 2.0F);
                 letterNode->node()->prop<render::ColorProperty>().set(
                     text_color);
-                letterNode->node()->prop<render::BoxProperty>().set(Rectf32{0,0, letterBox.size()});
+                letterNode->prop<Scale>().set(vector2df{letterBox.size()});
 
                 ++counter;
                 Rectf32 const textureUV{font->getTextureBounds(curChar)};

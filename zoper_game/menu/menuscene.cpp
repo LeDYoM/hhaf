@@ -56,10 +56,11 @@ void MenuScene::onCreated()
     auto main_menu_background_logo{
         createSceneNode<RenderizablesSceneNode>("main_menu_background_logo")};
     main_menu_background_logo->prop<Position>() = vector2df{1000.0F, 300.0F};
+    main_menu_background_logo->prop<Scale>() = vector2d{1000.0F, 500.0F};
     main_menu_background_logo->renderizableBuilder()
         .name("mainLogo")
         .figType(FigType_t::Sprite)
-        .box(Rectf32{500.f, 150.f, 1000.f, 500.f})
+        .box(Rectf32{0.0F, 0.0F, 1.F, 1.F})
         .texture(MainMenuResources::LogoId)
 //        .shader("shader1")
         .create();
