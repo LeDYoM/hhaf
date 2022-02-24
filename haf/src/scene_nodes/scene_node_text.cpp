@@ -119,10 +119,6 @@ void SceneNodeText::update()
                     letterNode =
                         std::dynamic_pointer_cast<RenderizableSceneNode>(
                             sceneNodes()[counter]);
-                    letterNode->node()->prop<render::ColorProperty>().set(
-                        text_color);
-                    letterNode->node()->prop<render::BoxProperty>().set(
-                        letterBox);
                 }
                 else
                 {
@@ -130,16 +126,21 @@ void SceneNodeText::update()
                         "text_" + str::to_str(counter));
                         letterNode->renderizableBuilder()
                             .name("text_" + str::to_str(counter))
-                            .figType(render::FigType_t::Quad)
-                            .box(letterBox)
-                            .color(text_color).create();
+                            .figType(render::FigType_t::Sprite)
+                            .create();
                 }
+
+                letterNode->prop<Position>().set(letterBox.leftTop() + letterBox.size() / 2.0F);
+                letterNode->node()->prop<render::ColorProperty>().set(
+                    text_color);
+                letterNode->node()->prop<render::BoxProperty>().set(Rectf32{0,0, letterBox.size()});
 
                 ++counter;
                 Rectf32 const textureUV{font->getTextureBounds(curChar)};
                 letterNode->node()->setTextureAndTextureRectFromTextureSize(
                     texture, textureUV);
 
+                letterNode->node()->render(false);
                 // Update the current bounds
                 {
                     using namespace std;
