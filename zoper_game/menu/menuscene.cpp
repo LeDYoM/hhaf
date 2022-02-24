@@ -49,8 +49,8 @@ void MenuScene::onCreated()
 
     // Create the background
     auto main_menu_background{
-        createSceneNode<RenderizablesSceneNode>("main_menu_background")};
-    createStandardBackground(main_menu_background->renderizableBuilder());
+        createSceneNode<RenderizableSceneNode>("main_menu_background")};
+    createStandardBackground(main_menu_background);
 
     // Create the logo
     auto main_menu_background_logo{
