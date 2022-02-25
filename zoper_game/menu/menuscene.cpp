@@ -60,7 +60,6 @@ void MenuScene::onCreated()
     main_menu_background_logo->renderizableBuilder()
         .name("mainLogo")
         .figType(FigType_t::Sprite)
-        .box(Rectf32{0.0F, 0.0F, 1.F, 1.F})
         .texture(MainMenuResources::LogoId)
 //        .shader("shader1")
         .create();
