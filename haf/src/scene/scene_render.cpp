@@ -12,6 +12,11 @@ void render(SceneNode& scene_node, SceneRenderContext scene_render_context)
 {
     if (scene_node.prop<Visible>().get())
     {
+        if (scene_node.name() == "main_menu_background_logo")
+        {
+            int a=0;
+            (void)(a);
+        }
         // Update the node components
         scene_node.updateComponents();
         scene_node.update();
