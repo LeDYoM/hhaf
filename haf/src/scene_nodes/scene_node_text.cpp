@@ -82,8 +82,9 @@ void SceneNodeText::update()
         ? font_utils.textSize(pr.get<Text>())
         : Rectf32{};
 
-    if (pr.hasChanged<Font>() || pr.hasChanged<Text>())
+    if (pr.hasChanged<Font>() || pr.hasChanged<Text>() || pr.hasChanged<BaseScale>())
     {
+        pr.readResetHasChanged<BaseScale>();
         pr.setChanged<AlignmentSize>();
         pr.readResetHasChanged<Font>();
         pr.readResetHasChanged<Text>();
@@ -108,9 +109,6 @@ void SceneNodeText::update()
 
             for (auto curChar : pr.get<Text>())
             {
-                Rectf32 letterBox{font->getBounds(curChar) + vector2df{x, y}};
-                letterBox = boxes[indexChar++];
-
                 sptr<RenderizableSceneNode> letterNode;
                 // In case we already have a node containing the letter,
                 // reuse it. If not, create a new one.
@@ -124,13 +122,15 @@ void SceneNodeText::update()
                 {
                     letterNode = createSceneNode<RenderizableSceneNode>(
                         "text_" + str::to_str(counter));
-                        letterNode->renderizableBuilder()
-                            .name("text_" + str::to_str(counter))
-                            .figType(render::FigType_t::Sprite)
-                            .create();
+                    letterNode->renderizableBuilder()
+                        .name("text_" + str::to_str(counter))
+                        .figType(render::FigType_t::Sprite)
+                        .create();
                 }
 
-                letterNode->prop<Position>().set(letterBox.leftTop() + letterBox.size() / 2.0F);
+                Rectf32 const letterBox{boxes[indexChar++]};
+//                letterNode->prop<Position>().set(letterBox.leftTop() +
+//                                                 letterBox.size() / 2.0F);
                 letterNode->node()->prop<render::ColorProperty>().set(
                     text_color);
                 letterNode->prop<Scale>().set(vector2df{letterBox.size()});
@@ -140,7 +140,6 @@ void SceneNodeText::update()
                 letterNode->node()->setTextureAndTextureRectFromTextureSize(
                     texture, textureUV);
 
-                letterNode->node()->render(false);
                 // Update the current bounds
                 {
                     using namespace std;
@@ -156,7 +155,7 @@ void SceneNodeText::update()
 
             // Remove the unused letters.
             // Get the current total size of the vector of scene nodes.
-            const auto scene_nodes_size{sceneNodes().size()};
+            auto const scene_nodes_size{sceneNodes().size()};
             // Iterate from the last one to one after counter
             // and delete them
             for (size_type index{(scene_nodes_size - 1U)}; index >= counter;
@@ -168,11 +167,8 @@ void SceneNodeText::update()
                 removeSceneNode(sceneNodes()[index]);
             }
 
-            // Force reposition if text size changed.
-            if (counter != old_counter)
-            {
-                pr.setChanged<AlignmentSize>();
-            }
+            // Force reposition if text changed
+            pr.setChanged<AlignmentSize>();
 
             // Force update color
             pr.readResetHasChanged<TextColor>();

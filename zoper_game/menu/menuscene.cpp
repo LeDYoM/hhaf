@@ -41,7 +41,7 @@ void MenuScene::onCreated()
 
     // Set the default view for this scene
 //    cameraComponent()->view = DefaultView;
-//    cameraComponent()->view = SceneBox{-1000.0F, -1000.0F, 2000.0F, 2000.0F};
+//    cameraComponent()->view = SceneBox{0.0F, 0.0F, 5000.0F, 5000.0F};
     cameraComponent()->view = SceneBox{-0.5F, -0.5F, 1.0F, 1.0F};
 
     // Load the necessary resources
