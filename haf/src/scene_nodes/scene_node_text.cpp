@@ -8,6 +8,8 @@
 #include <haf/include/render/vertex_array.hpp>
 #include <haf/include/scene_nodes/renderizable_scene_node.hpp>
 #include <haf/include/scene/scenenode_cast.hpp>
+#include <haf/include/scene/scene.hpp>
+#include <haf/include/scene_components/camera_component.hpp>
 #include <hlog/include/hlog.hpp>
 
 using namespace htps;
@@ -82,7 +84,8 @@ void SceneNodeText::update()
         ? font_utils.textSize(pr.get<Text>())
         : Rectf32{};
 
-    if (pr.hasChanged<Font>() || pr.hasChanged<Text>() || pr.hasChanged<BaseScale>())
+    if (pr.hasChanged<Font>() || pr.hasChanged<Text>() ||
+        pr.hasChanged<BaseScale>())
     {
         pr.readResetHasChanged<BaseScale>();
         pr.setChanged<AlignmentSize>();
@@ -128,25 +131,32 @@ void SceneNodeText::update()
                         .create();
                 }
 
-                Rectf32 const letterBox{boxes[indexChar++]};
-//                letterNode->prop<Position>().set(letterBox.leftTop() +
-//                                                 letterBox.size() / 2.0F);
-                letterNode->node()->prop<render::ColorProperty>().set(
-                    text_color);
-                letterNode->prop<Scale>().set(vector2df{letterBox.size()});
-
-                ++counter;
-                Rectf32 const textureUV{font->getTextureBounds(curChar)};
-                letterNode->node()->setTextureAndTextureRectFromTextureSize(
-                    texture, textureUV);
-
-                // Update the current bounds
                 {
-                    using namespace std;
-                    bounds = Rectf32{min(bounds.left, letterBox.left),
-                                     min(bounds.top, letterBox.top),
-                                     max(bounds.right(), letterBox.right()),
-                                     max(bounds.bottom(), letterBox.bottom())};
+                    Rectf32 letterBox{boxes[indexChar++]};
+                    if (prop<BaseScale>()() != vector2df{0.0F, 0.0F})
+                    {
+                        letterBox.scale(prop<BaseScale>()());
+                    }
+                    letterNode->prop<Position>().set(letterBox.leftTop() +
+                                                     letterBox.size() / 2.0F);
+                    letterNode->node()->prop<render::ColorProperty>().set(
+                        text_color);
+                    letterNode->prop<Scale>().set(vector2df{letterBox.size()});
+
+                    ++counter;
+                    Rectf32 const textureUV{font->getTextureBounds(curChar)};
+                    letterNode->node()->setTextureAndTextureRectFromTextureSize(
+                        texture, textureUV);
+
+                    // Update the current bounds
+                    {
+                        using namespace std;
+                        bounds =
+                            Rectf32{min(bounds.left, letterBox.left),
+                                    min(bounds.top, letterBox.top),
+                                    max(bounds.right(), letterBox.right()),
+                                    max(bounds.bottom(), letterBox.bottom())};
+                    }
                 }
 
                 // Advance to the next character
@@ -211,6 +221,12 @@ void SceneNodeText::update()
                 pr.get<AlignmentSize>());
         }
     }
+}
+
+vector2df SceneNodeText::setBaseScaleForChar(const char)
+{
+    return ancestor<Scene>()->cameraComponent()->view().size() /
+        vector2df{1000.0F, 1000.0F};
 }
 
 }  // namespace haf::scene::nodes

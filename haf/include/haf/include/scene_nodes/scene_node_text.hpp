@@ -31,10 +31,12 @@ public:
      */
     using SceneNodeTextProperties::prop;
 
+    htps::vector2df setBaseScaleForChar(const char ch);
 protected:
     void update() override final;
     htps::size_type inner_transformation_;
 };
+
 }  // namespace haf::scene::nodes
 
 #endif

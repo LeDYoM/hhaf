@@ -33,9 +33,6 @@ vector<Rectf32> FontUtils::getTextBoxes(str const& text) const
         prevChar = curChar;
 
         Rectf32 letterBox{font_->getBounds(curChar) + vector2df{x, y}};
-        // TODO: This is because the SFML bug printing at 0.
-        letterBox += vector2df{0.0F, 50.0F};
-
         result.emplace_back(std::move(letterBox));
 
         // Advance to the next character

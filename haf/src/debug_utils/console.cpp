@@ -27,8 +27,8 @@ void Console::onCreated()
             "console_font"));
 
 //    prop<Position>().set(vector2df{100.0F, 0.0F});
-prop<Scale>().set({1 / 2000.0F, 1 / 2000.0F});
-    prop<BaseScale>().set({1, 1});
+//    prop<Scale>().set({1 / 2000.0F, 1 / 2000.0F});
+    a->prop<BaseScale>().set(a->setBaseScaleForChar('A'));
     a->prop<Text>().set("1234 ABC abc");
     a->prop<TextColor>().set(colors::Red);
     //    a->prop<Scale>().set({1, 1});
