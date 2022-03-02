@@ -23,7 +23,7 @@ GameHudSceneNode::GameHudSceneNode(
 {
     Font::value_type font{subSystem<res::IResourceRetriever>()
                               ->getTTFont(GameResources::ScoreFontId)
-                              ->font(90U)};
+                              ->font(46U)};
     (score_quad_ = parent->createSceneNode<TextQuad>("score"))
         ->setTableNodeProperty<Font>(font)
         ->setTableNodeProperty<TextColor>(colors::White)
@@ -48,7 +48,7 @@ GameHudSceneNode::GameHudSceneNode(
     goal_quad_->text({0U, 0U})
         ->prop<SceneNodeTextProperties>()
         .put<TextColor>(colors::Blue)
-        .put<Text>("Current");
+        .put<Text>("Current:");
     goal_quad_->text({0U, 1U})
         ->prop<SceneNodeTextProperties>()
         .put<TextColor>(colors::Blue)
