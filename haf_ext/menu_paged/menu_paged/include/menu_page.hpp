@@ -15,9 +15,33 @@ namespace haf::scene
 class MenuPaged;
 class MenuPage : public scene::nodes::TableNode<nodes::SceneNodeText>
 {
-public:
+private:
     using BaseClass = scene::nodes::TableNode<nodes::SceneNodeText>;
-    using BaseClass::prop;
+public:
+    using BaseClass::BaseClass;
+    ~MenuPage() override;
+
+    void onCreated() override;
+    void configure(htps::vector<htps::sptr<MenuPagedOption>> options,
+                   PageOptions page_options = PageOptions{});
+    htps::size_type SelectedOptionAtRow(const htps::size_type row) const;
+
+    htps::emitter<const htps::s32> Forward;
+    htps::emitter<htps::vector<htps::s32>> Accepted;
+    htps::emitter<> Back;
+    htps::emitter<htps::vector<htps::s32>> Canceled;
+    htps::emitter<const htps::size_type, const htps::s32> Selection;
+protected:
+    using ContainedElement = BaseClass::ContainedElement;
+
+    htps::rptr<MenuPaged const> parentMenuPaged() const;
+
+    htps::sptr<res::IFont> normalFont() const;
+    Color normalColor() const;
+    Color selectedColor() const;
+
+    htps::size_type previously_selected_item_{0U};
+    htps::size_type selected_item_{0U};
 
 private:
     void standarizeText(const htps::sptr<ContainedElement>& ntext);
@@ -34,33 +58,6 @@ private:
     void updateSelection();
     void setColorToLine(const htps::size_type, const scene::Color&);
     htps::vector<htps::s32> optionsSelected() const;
-
-protected:
-    using ContainedElement = BaseClass::ContainedElement;
-
-    htps::rptr<MenuPaged const> parentMenuPaged() const;
-
-    htps::sptr<res::IFont> normalFont() const;
-    Color normalColor() const;
-    Color selectedColor() const;
-
-    htps::size_type previously_selected_item_{0U};
-    htps::size_type selected_item_{0U};
-
-public:
-    using BaseClass::BaseClass;
-    ~MenuPage() override;
-
-    void onCreated() override;
-    void configure(htps::vector<htps::sptr<MenuPagedOption>> options,
-                   PageOptions page_options = PageOptions{});
-    htps::size_type SelectedOptionAtRow(const htps::size_type row) const;
-
-    htps::emitter<const htps::s32> Forward;
-    htps::emitter<htps::vector<htps::s32>> Accepted;
-    htps::emitter<> Back;
-    htps::emitter<htps::vector<htps::s32>> Canceled;
-    htps::emitter<const htps::size_type, const htps::s32> Selection;
 };
 
 }  // namespace haf::scene

@@ -86,8 +86,8 @@ void MenuPage::configure(vector<sptr<MenuPagedOption>> options,
                                    ? 2U
                                    : 0U};
 
-        auto newOption(createNodeAt(vector2dst{title_column, counter},
-                                    make_str("label", counter)));
+        auto newOption{createNodeAt(vector2dst{title_column, counter},
+                                    make_str("label", counter))};
         standarizeText(newOption);
         newOption->prop<nodes::SceneNodeTextProperties>().set<nodes::Text>(
             option->title());

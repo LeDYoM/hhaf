@@ -94,7 +94,8 @@ void Renderizable::update(bool const parent_transformation_changed)
 
     if (ps_readResetHasAnyChanged(prop<PointCount>(),
                                   prop<FigureTypeProperty>(),
-                                  prop<BoxProperty>()))
+                                  prop<BoxProperty>(),
+                                  prop<TextureRectProperty>()))
     {
         updateGeometry(p_->vertices_.verticesArray(), mi_data);
         p_->render_element_->setVertexData(
