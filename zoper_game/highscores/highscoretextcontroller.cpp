@@ -24,16 +24,23 @@ namespace zoper
 {
 static constexpr char HighScoresFileName[] = "high_scores.txt";
 
-HighScoreTextController::HighScoreTextController(SceneNode* parent, str name) :
-    BaseClass{parent, std::move(name)}
-{}
-
-HighScoreTextController::~HighScoreTextController() = default;
-
 void HighScoreTextController::onCreated()
 {
     BaseClass::onCreated();
+    prop<TableSize>().set({3U, NumHighScore});
+    allElementsCreated +=
+        make_function(this, &HighScoreTextController::tableNodeCreated);
+    prop<MoveGroup>() = true;
+    prop<ScaleGroup>() = false;
+}
 
+void HighScoreTextController::update()
+{
+    BaseClass::update2();
+}
+
+void HighScoreTextController::tableNodeCreated()
+{
     normal_font_ = subSystem<res::IResourceRetriever>()
                        ->getTTFont(HighScoresResources::MenuFontId)
                        ->font(72);
@@ -50,14 +57,14 @@ void HighScoreTextController::onCreated()
                           subSystem<shdata::ISharedData>())
                           .view(GameSharedData::address())
                           ->score;
+/*
     Rectf32 textBox{
         rectFromSize(ancestor<Scene>()->cameraComponent()->view().size())
             .setLeftTop({0, 250})
             .setSize({2000, 1500})};
     prop<haf::scene::Position>().set(textBox.leftTop());
     prop<TableNodeProperties>().set<SceneNodeSize>(textBox.size());
-    prop<TableSize>().set({3U, NumHighScore});
-
+*/
     size_type positionInTable{0U};
     const bool isInserting{
         high_scores_data_.tryInsertHighScore(gameScore, positionInTable)};
@@ -84,16 +91,15 @@ void HighScoreTextController::addHighScoresLine(const size_type counter,
 {
     using namespace nodes;
 
-    auto label(
-        createNodeAt(vector2dst{0, counter}, make_str("label", 0, counter)));
+    auto label{text(vector2dst{0U, counter})};
     standarizeText(label);
     label->prop<SceneNodeTextProperties>().set<Text>(make_str(counter, "."));
 
-    label = createNodeAt(vector2dst{1, counter}, make_str("label", 1, counter));
+    label = text(vector2dst{1U, counter});
     standarizeText(label);
     label->prop<SceneNodeTextProperties>().set<Text>(make_str(element.score));
 
-    label = createNodeAt(vector2dst{2, counter}, make_str("label", 2, counter));
+    label = text(vector2dst{2U, counter});
     standarizeText(label);
 
     if (is_inserting)

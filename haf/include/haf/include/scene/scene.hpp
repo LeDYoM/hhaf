@@ -23,10 +23,12 @@ public:
     void installDebugUtils();
 
     htps::sptr<CameraComponent> const& cameraComponent() const;
+    htps::rptr<Scene> sceneParent() override;
+    htps::rptr<Scene const> sceneParent() const override;
 
 private:
     class ScenePrivate;
-    htps::PImplPointer<ScenePrivate> p_;    
+    htps::PImplPointer<ScenePrivate> p_;
     htps::rptr<ScenePrivate> scenePrivate();
     friend class SceneController;
 };

@@ -13,16 +13,27 @@ class GameHudSceneNode final : public haf::scene::TransformableSceneNode
     using BaseClass = haf::scene::TransformableSceneNode;
 
 public:
-    GameHudSceneNode(htps::rptr<haf::scene::SceneNode> const parent,
-                     htps::str name);
+    using BaseClass::BaseClass;
 
-    void setLevel(const htps::size_type level);
-    void setStayCounter(const htps::size_type stayCounter);
-    void setConsumedTokens(const htps::size_type consumedTokens);
-    void setEllapsedTimeInSeconds(const htps::u64 seconds);
-    void setScore(const htps::size_type score);
+    void update() override;
+
+    htps::PropertyState<htps::size_type> currentLevel;
+    htps::PropertyState<htps::size_type> currentScore;
+    htps::PropertyState<htps::size_type> currentConsumedTokens;
+    htps::PropertyState<htps::u64> currentEllapsedTimeInSeconds;
+    htps::PropertyState<htps::size_type> currentStayCounter;
+
+    void onCreated() override;
 
 private:
+    void onAllScoreElementsCreated();
+    void onAllGoalElementsCreated();
+    bool setLevel(const htps::size_type level);
+    bool setScore(htps::size_type const score);
+    bool setConsumedTokens(htps::size_type const consumedTokens);
+    bool setEllapsedTimeInSeconds(htps::u64 const seconds);
+    bool setStayCounter(htps::size_type const stayCounter);
+
     htps::sptr<haf::scene::nodes::TextQuad> score_quad_;
     htps::sptr<haf::scene::nodes::TextQuad> goal_quad_;
 };

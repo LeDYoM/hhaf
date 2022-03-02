@@ -24,6 +24,7 @@ public:
                    GameMode const gameMode,
                    htps::sptr<time::TimerComponent> scene_timer_component);
 
+    void onAttached() override;
     htps::size_type millisBetweenTokens() const;
     htps::size_type baseScore() const noexcept { return base_score_; }
     htps::size_type stayCounter() const noexcept { return stay_counter_; }

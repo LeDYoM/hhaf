@@ -9,7 +9,6 @@
 #include <haf/include/scene/scene_node.hpp>
 #include <haf/include/scene/scene.hpp>
 #include <haf/include/scene_nodes/scene_node_table.hpp>
-#include <haf/include/scene_nodes/scene_node_size.hpp>
 #include <haf/include/render/renderizable.hpp>
 #include <haf/include/scene/scenenode_cast.hpp>
 #include <haf/include/component/component_container.hpp>
@@ -34,15 +33,6 @@ void BoardGroup::configure(vector2dst size,
     prop<TableSize>().set(size);
     auto const tableSize{prop<TableSize>().get()};
 
-    // Create the nodes to render the tiles
-    for (size_type y{0U}; y < tableSize.y; ++y)
-    {
-        for (size_type x{0U}; x < tableSize.x; ++x)
-        {
-            auto node = createNodeAt({x, y}, make_str("BoardGroupTile_", x, y));
-        }
-    }
-
     // Create and initialize the BoardManager
     auto board_model{component<board::BoardManager>()};
     board_model->initialize(tableSize, this);
@@ -52,12 +42,22 @@ void BoardGroup::configure(vector2dst size,
             return ((TokenZones::pointInCenter(position)) ? (1) : (0));
         });
 
-    tokens_scene_node = createSceneNode("tokens_scene_node");
     setLevel(level_properties_->currentLevel());
     addPlayer();
 
     level_properties_->levelChanged.connect(
         make_function(this, &BoardGroup::setLevel));
+}
+
+void BoardGroup::onCreated()
+{
+    prop<MoveGroup>()  = true;
+    prop<ScaleGroup>() = true;
+    tokens_scene_node  = createSceneNode<haf::scene::TransformableSceneNode>(
+        "tokens_scene_node");
+
+    onNodeReady.connect(
+        htps::make_function(this, &BoardGroup::onTableNodeAdded));
 }
 
 void BoardGroup::addPlayer()
@@ -68,15 +68,15 @@ void BoardGroup::addPlayer()
 
     // Create the player instance
     player_ = tokens_scene_node->createSceneNode<Player>("playerNode");
+    player_->prop<Scale>() = tileSize();
 
     // Add it to the board and to the scene nodes
     componentOfType<board::BoardManager>()->setTile(
         TokenZones::centerRect.leftTop(), player_);
 }
 
-void BoardGroup::createNewToken(const BoardTileData data,
-                                const vector2dst& board_position,
-                                const vector2df& size)
+void BoardGroup::createNewToken(BoardTileData const data,
+                                vector2dst const& board_position)
 {
     using namespace haf::board;
 
@@ -88,7 +88,7 @@ void BoardGroup::createNewToken(const BoardTileData data,
 
     // Set the position in the scene depending on the board position
     new_tile_token->prop<Position>().set(board2Scene(board_position));
-    new_tile_token->setBox(rectFromSize(size));
+    new_tile_token->prop<Scale>() = tileSize();
 
     // Add it to the board
     auto board_model{componentOfType<board::BoardManager>()};
@@ -105,22 +105,12 @@ void BoardGroup::tileRemoved(const vector2dst, board::SITilePointer& tile)
 
 void BoardGroup::update()
 {
-    bool const scene_node_size_has_changed{prop<SceneNodeSize>().hasChanged()};
-    BaseClass::update();
-    if (scene_node_size_has_changed)
-    {
-        auto const tableSize{prop<TableSize>().get()};
-        Rectf32 tileBox({}, cellSize());
+    BaseClass::update2();
+}
 
-        // Create the nodes to render the tiles
-        for (size_type y{0U}; y < tableSize.y; ++y)
-        {
-            for (size_type x{0U}; x < tableSize.x; ++x)
-            {
-                nodeAt({x, y})->prop<NodeSize>().set(tileBox);
-            }
-        }
-    }
+void BoardGroup::onTableNodeAdded(htps::sptr<SceneNode> const&)
+{
+    moveToLastPosition(tokens_scene_node);
 }
 
 void BoardGroup::setLevel(const size_type level)
@@ -254,6 +244,7 @@ void BoardGroup::movePlayer(Direction const& direction)
     auto const nPosition{direction.applyToVector(player_->boardPosition())};
     componentOfType<board::BoardManager>()->moveTile(player_->boardPosition(),
                                                      nPosition);
+    player_->currentDirection = direction;
 }
 
 bool BoardGroup::moveTowardsCenter(Direction const direction,
@@ -297,12 +288,13 @@ vector2df BoardGroup::board2SceneFactor() const
 
 vector2df BoardGroup::board2Scene(const vector2dst& bPosition) const
 {
-    return board2SceneFactor() * bPosition;
+    return {vector2df{-0.5F, -0.5F} + (board2SceneFactor() / 2.0F) +
+            (board2SceneFactor() * bPosition)};
 }
 
 vector2df BoardGroup::tileSize() const
 {
-    return board2Scene({1, 1});
+    return board2SceneFactor();
 }
 
 htps::sptr<board::BoardManager> BoardGroup::boardManager() noexcept

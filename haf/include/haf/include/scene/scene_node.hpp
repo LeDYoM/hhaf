@@ -1,11 +1,16 @@
+#ifdef USE_PRAGMA_ONCE
+#pragma once
+#endif
+
 #ifndef HAF_SCENE_SCENENODE_INCLUDE_HPP
 #define HAF_SCENE_SCENENODE_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
 #include <haf/include/haf_export.hpp>
+#include <haf/include/types/scene_types.hpp>
 #include <haf/include/scene/scenenodeparent.hpp>
 #include <haf/include/scene/scenenode_properties.hpp>
-#include <haf/include/scene/scenenodes.hpp>
+#include <haf/include/scene/scene_nodes.hpp>
 #include <haf/include/scene/hasname.hpp>
 #include <haf/include/scene/scene_render_context.hpp>
 #include <haf/include/system/system_access.hpp>
@@ -14,6 +19,7 @@
 
 namespace haf::scene
 {
+class Scene;
 /**
  * @brief Main class representing all SceneNodes from a @b Scene.
  * This class serves as main entry point in the hierarchy of the scene.
@@ -73,21 +79,25 @@ public:
     /**
      * @brief Method called every frame
      */
-    virtual void update() {}
+    virtual void update();
 
     /**
      * @brief Method called every frame after update
      * @param SceneRenderContext Current frame render context
      */
-    virtual void postUpdate(SceneRenderContext& sceneRenderContext)
-    {
-        (void)(sceneRenderContext);
-    }
+    virtual void postUpdate(SceneRenderContext& sceneRenderContext);
+
+    virtual htps::rptr<Scene> sceneParent();
+    virtual htps::rptr<Scene const> sceneParent() const;
 
     /**
      * @brief Clear all elements in this scene node
      */
     void clearAll();
+
+    SceneBox sceneView() const;
+    SceneBox::vector_t sceneViewSize() const;
+
 };
 
 using SceneNodeSPtr = htps::sptr<SceneNode>;

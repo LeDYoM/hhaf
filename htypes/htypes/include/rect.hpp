@@ -9,6 +9,8 @@ namespace htps
 template <typename T>
 struct Rect
 {
+    using vector_t = vector2d<T>;
+
     T left{}, top{}, width{}, height{};
 
     constexpr Rect() noexcept = default;

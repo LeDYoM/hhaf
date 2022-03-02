@@ -4,45 +4,49 @@ using namespace htps;
 
 namespace haf::scene::nodes
 {
-
 void TextQuad::onCreated()
 {
-    prop<TableSize>().set({2U, 2U});
-    for (size_type count{0}; count < 4U; ++count)
-    {
-        auto node = createNodeAt({count % 2U, count / 2U},
-                                 name() + "node_" + make_str(count));
-    }
+    prop<MoveGroup>()  = true;
+    prop<ScaleGroup>() = false;
 
-    // First text is left aligned on top
+    onTableNodeCreated += make_function(this, &TextQuad::onElementCreated);
+    prop<TableSize>().set({2U, 2U});
+}
+
+void TextQuad::update()
+{
+    BaseClass::update2();
+}
+
+void TextQuad::onElementCreated(htps::vector2dst index,
+                                htps::sptr<SceneNodeText> const& node)
+{
+    if (index == vector2dst{0U, 0U})
     {
-        nodeAt({0U, 0U})
-            ->prop<SceneNodeTextProperties>()
+        // First text is left aligned on top
+        node->prop<SceneNodeTextProperties>()
             .put<AlignmentX>(AlignmentXModes::Left)
             .put<AlignmentY>(AlignmentYModes::Top);
     }
-
-    // Second text is right aligned op top
+    else if (index == vector2dst{1U, 0U})
     {
-        nodeAt({1U, 0U})
-            ->prop<SceneNodeTextProperties>()
-            .put<AlignmentX>(AlignmentXModes::Right)
+        // Second text is right aligned op top
+        node->prop<SceneNodeTextProperties>()
+            .put<AlignmentX>(AlignmentXModes::Left)
             .put<AlignmentY>(AlignmentYModes::Top);
     }
-
-    // Third text is left aligned on bottom
+    else if (index == vector2dst{0U, 1U})
     {
-        nodeAt({0U, 1U})
-            ->prop<SceneNodeTextProperties>()
+        // Third text is left aligned on bottom
+        node->prop<SceneNodeTextProperties>()
             .put<AlignmentX>(AlignmentXModes::Left)
             .put<AlignmentY>(AlignmentYModes::Bottom);
     }
-
-    // Fourth text is right aligned on bottom
+    else if (index == vector2dst{1U, 1U})
     {
-        nodeAt({1U, 1U})
-            ->prop<SceneNodeTextProperties>()
-            .put<AlignmentX>(AlignmentXModes::Right)
+        // Fourth text is right aligned on bottom
+        node->prop<SceneNodeTextProperties>()
+            .put<AlignmentX>(AlignmentXModes::Left)
             .put<AlignmentY>(AlignmentYModes::Bottom);
     }
 }

@@ -173,16 +173,34 @@ public:
         return *(storage_.at(size() - 1U));
     }
 
-    constexpr const T& back() const noexcept
+    constexpr T const& back() const noexcept
     {
         assert(size() > 0U);
         return *(storage_.at(size() - 1U));
     }
 
-    constexpr const T& cback() const noexcept
+    constexpr T const& cback() const noexcept
     {
         assert(size() > 0U);
         return *(storage_.cat(size() - 1U));
+    }
+
+    constexpr T& front() noexcept
+    {
+        assert(!empty());
+        return *(storage_.at(0U));
+    }
+
+    constexpr T const& front() const noexcept
+    {
+        assert(!empty());
+        return *(storage_.at(0U));
+    }
+
+    constexpr T const& cfront() const noexcept
+    {
+        assert(!empty());
+        return *(storage_.at(0U));
     }
 
     template <typename F>
@@ -480,12 +498,29 @@ public:
         return begin;
     }
 
-    constexpr const_iterator cfind(const T& element) const noexcept
+    constexpr iterator find(iterator begin,
+                                   iterator const end,
+                                   T const& element) noexcept
+    {
+        checkRange(begin);
+        checkRange(end);
+
+        for (; (begin != end && !(*begin == element)); ++begin)
+            ;
+        return begin;
+    }
+
+    constexpr iterator find(T const& element) noexcept
+    {
+        return find(begin(), end(), element);
+    }
+
+    constexpr const_iterator cfind(T const& element) const noexcept
     {
         return cfind(cbegin(), cend(), element);
     }
 
-    constexpr const_iterator find(const T& element) const noexcept
+    constexpr const_iterator find(T const& element) const noexcept
     {
         return cfind(element);
     }

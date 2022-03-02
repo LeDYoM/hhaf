@@ -25,15 +25,15 @@ Player::Player(types::rptr<SceneNode> parent, types::str name) :
 {
     renderizableBuilder()
         .name("player_render_scene_node")
-        .figType(FigType_t::Shape)
+        .figType(FigType_t::PolygonSprite)
         .pointCount(3U)
         .create();
 
-    reserveExtraTransformations(4U);
-    move_in_  = addTransformation();
+    reserveExtraTransformations(1U);
+//    move_in_  = addTransformation();
     rotator_  = addTransformation();
-    scalator_ = addTransformation();
-    move_out_ = addTransformation();
+//    scalator_ = addTransformation();
+//    move_out_ = addTransformation();
 }
 
 Player::~Player() = default;
@@ -51,21 +51,21 @@ void Player::update()
 
     if (currentDirection.readResetHasChanged())
     {
-        node()->prop<BoxProperty>() = rectFromSize(board2Scene({1, 1}));
+//        node()->prop<BoxProperty>() = rectFromSize(board2Scene({1, 1}));
         auto const direction{currentDirection()};
-        auto const tile_center{board2SceneFactor() / 2.0F};
+//        auto const tile_center{board2SceneFactor() / 2.0F};
 
-        getTransformation(move_in_).prop<Position>() = tile_center;
+//        getTransformation(move_in_).prop<Position>() = tile_center;
 
         getTransformation(rotator_).prop<Rotation>().set(direction.angle());
 
-        getTransformation(scalator_).prop<Scale>().set(
-            (direction.isVertical())
-                ? vector2df{board2SceneFactor().y / board2SceneFactor().x,
-                            board2SceneFactor().x / board2SceneFactor().y}
-                : vector2df{1.0F, 1.0F});
+//        getTransformation(scalator_).prop<Scale>().set(
+//            (direction.isVertical())
+//                ? vector2df{board2SceneFactor().y / board2SceneFactor().x,
+//                            board2SceneFactor().x / board2SceneFactor().y}
+//                : vector2df{1.0F, 1.0F});
 
-        getTransformation(move_out_).prop<Position>() = -tile_center;
+//        getTransformation(move_out_).prop<Position>() = -tile_center;
     }
 }
 

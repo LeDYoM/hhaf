@@ -5,7 +5,7 @@
 #include <htypes/include/vector2d.hpp>
 #include <haf/include/scene/scene_node.hpp>
 #include <haf/include/scene_nodes/transformable_scene_node.hpp>
-#include <haf/include/scene/scenenodes.hpp>
+#include <haf/include/scene/scene_nodes.hpp>
 #include <haf/include/scene/scene.hpp>
 
 using namespace htps;

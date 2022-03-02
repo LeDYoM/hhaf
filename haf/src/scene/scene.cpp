@@ -26,6 +26,16 @@ void Scene::onCreated()
                             "Cannot create camera component");
 }
 
+rptr<Scene> Scene::sceneParent()
+{
+    return this;
+}
+
+rptr<Scene const> Scene::sceneParent() const
+{
+    return this;
+}
+
 sptr<CameraComponent> const& Scene::cameraComponent() const
 {
     return p_->camera_component_;
@@ -42,17 +52,17 @@ rptr<Scene::ScenePrivate> Scene::scenePrivate()
 void Scene::installDebugUtils()
 {
     component<debug::DebugActions>()->addDebugAction(input::Key::I, [this]() {
-        cameraComponent()->moveView({0.0F, 100.0F});
+        cameraComponent()->moveView({0.0F, 0.1F});
     });
     component<debug::DebugActions>()->addDebugAction(input::Key::K, [this]() {
-        cameraComponent()->moveView({0.0F, -100.0F});
+        cameraComponent()->moveView({0.0F, -0.1F});
 
     });
     component<debug::DebugActions>()->addDebugAction(input::Key::J, [this]() {
-        cameraComponent()->moveView({100.0F, 0.0F});
+        cameraComponent()->moveView({0.1F, 0.0F});
     });
     component<debug::DebugActions>()->addDebugAction(input::Key::L, [this]() {
-        cameraComponent()->moveView({-100.0F, 0.0F});
+        cameraComponent()->moveView({-0.1F, 0.0F});
     });
 }
 

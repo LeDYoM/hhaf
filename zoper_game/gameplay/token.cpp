@@ -26,25 +26,23 @@ Token::Token(SceneNode* const parent, str name) :
         parent, name + str::to_str(tile_counter_) + str::to_str(tile_counter_)},
     animation_component_{component<anim::AnimationComponent>()}
 {
-    ++tile_counter_;
-    renderizableBuilder()
-        .name("Node" + str::to_str(tile_counter_))
-        .figType(FigType_t::Shape)
-        .pointCount(30U)
-        .create();
 }
 
 Token::~Token() = default;
 
-void Token::setBox(const Rectf32& box)
+void Token::onCreated()
 {
-    node()->prop<render::BoxProperty>() = box;
+    ++tile_counter_;
+    renderizableBuilder()
+        .name("Node" + str::to_str(tile_counter_))
+        .figType(FigType_t::PolygonSprite)
+        .pointCount(30U)
+        .create();
 }
 
 bool Token::canBeMovedTo(BoardPositionType const&) const
 {
     return true;
-    //    return !TokenZones::pointInCenter(dest_position);
 }
 
 void Token::resetTileCounter()
@@ -57,36 +55,34 @@ void Token::tileAdded()
     BaseClass::tileAdded();
     DisplayLog::info("Token ", name(), " appeared at ", boardPosition());
 
-    auto const AppearTokenTime = time::TimePoint_as_miliseconds(1000U);
-    auto const nodeBox{node()->prop<render::BoxProperty>()().size() / 2.0F};
+        auto const AppearTokenTime = time::TimePoint_as_miliseconds(1000U);
+        auto const endScale{prop<Scale>()()};
 
-    reserveExtraTransformations(2U);
-    auto const newTransformationPosition{addTransformation()};
-    auto const newTransformationScale{addTransformation()};
+        {
+            auto property_animation_builder{
+                animation_component_
+                    ->make_property_animation_builder<Scale, Transformation>(
+                        this)};
+            property_animation_builder.startValue(Scale::Zeros)
+                .endValue(endScale)
+                .duration(AppearTokenTime);
+            animation_component_->addAnimation(
+                std::move(property_animation_builder));
+        }
 
-    {
-        auto property_animation_builder{
-            animation_component_
-                ->make_property_animation_builder<Scale, Transformation>(
-                    &(getTransformation(newTransformationScale)))};
-        property_animation_builder.startValue(Scale::Zeros)
-            .endValue(Scale::Ones)
-            .duration(AppearTokenTime);
-        animation_component_->addAnimation(
-            std::move(property_animation_builder));
-    }
-
-    {
-        auto property_animation_builder{
-            animation_component_
-                ->make_property_animation_builder<Position, Transformation>(
-                    &(getTransformation(newTransformationPosition)))};
-        property_animation_builder.startValue(nodeBox)
-            .endValue(Position::value_type{0.0F, 0.0F})
-            .duration(AppearTokenTime);
-        animation_component_->addAnimation(
-            std::move(property_animation_builder));
-    }
+    /*
+        {
+            auto property_animation_builder{
+                animation_component_
+                    ->make_property_animation_builder<Position, Transformation>(
+                        &(getTransformation(newTransformationPosition)))};
+            property_animation_builder.startValue(nodeBox)
+                .endValue(Position::value_type{0.0F, 0.0F})
+                .duration(AppearTokenTime);
+            animation_component_->addAnimation(
+                std::move(property_animation_builder));
+        }
+    */
 }
 
 void Token::tileRemoved()

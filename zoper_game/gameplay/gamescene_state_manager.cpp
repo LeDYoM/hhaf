@@ -1,5 +1,5 @@
 #include "gamescene_state_manager.hpp"
-#include "pause.hpp"
+#include "pause_scene_node.hpp"
 #include "gameover.hpp"
 #include "gamescene_states.hpp"
 

@@ -17,10 +17,9 @@ public:
 
     void onCreated() override;
 
-    inline htps::sptr<SceneNodeText> text(htps::vector2dst index) noexcept
-    {
-        return nodeAt(std::move(index));
-    }
+    void update() override;
+    void onElementCreated(htps::vector2dst, htps::sptr<SceneNodeText> const&);
+
 };
 }  // namespace haf::scene::nodes
 

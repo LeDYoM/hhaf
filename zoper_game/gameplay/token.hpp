@@ -26,7 +26,7 @@ public:
     Token(htps::rptr<haf::scene::SceneNode> parent, htps::str name);
     ~Token() override;
 
-    void setBox(const htps::Rectf32& box);
+    void onCreated() override;
 
     static void resetTileCounter();
 

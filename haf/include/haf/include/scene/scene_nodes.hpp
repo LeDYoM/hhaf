@@ -4,7 +4,7 @@
 #include <htypes/include/types.hpp>
 #include <htypes/include/str.hpp>
 #include <htypes/include/vector.hpp>
-
+#include <htypes/include/connection.hpp>
 #include <haf/include/scene/scenenode_cast.hpp>
 
 namespace haf::scene
@@ -31,6 +31,7 @@ public:
     auto createSceneNode(htps::str name)
     {
         auto result{htps::msptr<T>(scene_node_, std::move(name))};
+        onNodeCreated(result);
         addSceneNode(result);
         return result;
     }
@@ -172,6 +173,13 @@ public:
         for_each_sceneNode_as<NodeType>(
             [&value](auto& node) { node->template prop<Tag>().set(value); });
     }
+
+    bool moveToLastPosition(htps::sptr<SceneNode> const& node);
+    bool moveToFirstPosition(htps::sptr<SceneNode> const& node);
+
+    htps::emitter<htps::sptr<SceneNode> const&> onNodeCreated;
+    htps::emitter<htps::sptr<SceneNode> const&> onNodeAdded;
+    htps::emitter<htps::sptr<SceneNode> const&> onNodeReady;
 
 protected:
     /**

@@ -13,6 +13,8 @@ class TextTableNode : public TableNode<SceneNodeText>
 public:
     using BaseClass::BaseClass;
     using BaseClass::prop;
+
+    htps::sptr<SceneNodeText> text(htps::vector2dst const& index);
 };
 }  // namespace haf::scene::nodes
 

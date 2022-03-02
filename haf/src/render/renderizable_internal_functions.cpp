@@ -21,6 +21,11 @@ vector2dd getPositionFromAngleAndRadius(FigType_t const fig_type,
         {
             return {std::cos(angle) * radius.x, std::sin(angle) * radius.y};
         }
+        break;
+        case FigType_t::PolygonSprite:
+        {
+            return {std::cos(angle) * radius.x, std::sin(angle) * radius.y};
+        }
     }
 }
 
@@ -45,6 +50,11 @@ pair<PrimitiveType const, size_type const> initDataVertexPerFigureAndNumPoints(
         case FigType_t::Sprite:
         {
             return {PrimitiveType::Triangles, num_points + 2U};
+        }
+        break;
+        case FigType_t::PolygonSprite:
+        {
+            return {PrimitiveType::Triangles, num_points * 3U};
         }
         break;
     }
@@ -113,16 +123,7 @@ void setColor(BasicVertexArray& vertices, scene::Color const& color)
         vertex.color = color;
     }
 }
-/*
-vector2df normalizeInBoxSprite(vector2df const& position,
-                         Rectf32 const& textureRect) noexcept
-{
-    f32 const xratio{(position.x - data.box.left) / data.box.width};
-    f32 const yratio{(position.y - data.box.top) / data.box.height};
-    return {(data.textureRect.left + (data.textureRect.width * xratio)),
-            (data.textureRect.top + (data.textureRect.height * yratio))};
-}
-*/
+
 void setTextureRect(BasicVertexArray& vertices, Rectf32 const& texture_rect)
 {
     vector2df const position{texture_rect.leftTop()};
@@ -151,7 +152,7 @@ constexpr vector2df defaultRightTopTexture{defaultRightTopPosition +
 void setQuad(BasicVertexArray& vertices)
 {
     using namespace scene;
-    static Vertex quad_vertex_buffer[] = {
+    static Vertex const quad_vertex_buffer[] = {
         Vertex{defaultLeftBottomPosition, colors::White,
                defaultLeftBottomTexture},
         Vertex{defaultRightBottomPosition, colors::White,
@@ -168,6 +169,58 @@ void setQuad(BasicVertexArray& vertices)
     for (fast_u32 index{0U}; index < kNumSizes; ++index)
     {
         vertices[index] = quad_vertex_buffer[index];
+    }
+}
+
+void setPolygon(BasicVertexArray& vertices, fast_u32 const numSides)
+{
+    using namespace scene;
+    static Vertex const quad_vertex_buffer[] = {
+        Vertex{defaultLeftBottomPosition, colors::White,
+               defaultLeftBottomTexture},
+        Vertex{defaultRightBottomPosition, colors::White,
+               defaultRightBottomTexture},
+        Vertex{defaultLeftTopPosition, colors::White, defaultLeftTopTexture},
+
+        Vertex{defaultLeftTopPosition, colors::White, defaultLeftTopTexture},
+        Vertex{defaultRightBottomPosition, colors::White,
+               defaultRightBottomTexture},
+        Vertex{defaultRightTopPosition, colors::White, defaultRightTopTexture}};
+
+    fast_u32 const kNumPoints{3U * numSides};  // 3 vertex * side
+    vertices.resize(kNumPoints);
+    Vertex const center{vector2df{0.0F, 0.0F}, colors::White,
+                        vector2df{0.5F, 0.5F}};
+    auto const baseAngle{PiM2Constant<f64> / static_cast<f64>(numSides)};
+
+    double angle{0.0};
+
+    for (fast_u32 index{0U}; index < numSides; ++index)
+    {
+        fast_u32 current_index{3U * index};
+        vertices[current_index++] = center;
+
+        {
+            vector2df current_position{
+                static_cast<vector2df>(getPositionFromAngleAndRadius(
+                    FigType_t::PolygonSprite, angle, vector2df{0.5F, 0.5F}))};
+            vertices[current_index].position = current_position;
+            vertices[current_index].texCoords =
+                vector2df{0.5F, 0.5F} + current_position;
+            vertices[current_index++].color = colors::White;
+        }
+
+        angle += baseAngle;
+
+        {
+            vector2df current_position{
+                static_cast<vector2df>(getPositionFromAngleAndRadius(
+                    FigType_t::PolygonSprite, angle, vector2df{0.5F, 0.5F}))};
+            vertices[current_index].position = current_position;
+            vertices[current_index].texCoords =
+                vector2df{0.5F, 0.5F} + current_position;
+            vertices[current_index++].color = colors::White;
+        }
     }
 }
 
@@ -217,6 +270,14 @@ void updateGeometry(BasicVertexArray& vertices,
             case FigType_t::Sprite:
             {
                 setQuad(vertices);
+                setTextureRect(vertices, data.textureRect);
+                setColor(vertices, data.color);
+            }
+            break;
+
+            case FigType_t::PolygonSprite:
+            {
+                setPolygon(vertices, data.pointCount);
                 setTextureRect(vertices, data.textureRect);
                 setColor(vertices, data.color);
             }

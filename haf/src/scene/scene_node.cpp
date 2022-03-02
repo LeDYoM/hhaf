@@ -1,4 +1,6 @@
 #include <haf/include/scene/scene_node.hpp>
+#include <haf/include/scene/scene.hpp>
+#include <haf/include/scene_components/camera_component.hpp>
 
 using namespace htps;
 
@@ -17,9 +19,36 @@ SceneNode::SceneNode(rptr<SceneNode> parent, str name) :
 
 SceneNode::~SceneNode() = default;
 
+void SceneNode::update()
+{}
+
+void SceneNode::postUpdate(SceneRenderContext& /*sceneRenderContext*/)
+{
+}
+
 void SceneNode::clearAll()
 {
     clearSceneNodes();
+}
+
+SceneBox SceneNode::sceneView() const
+{
+    return sceneParent()->cameraComponent()->view();
+}
+
+SceneBox::vector_t SceneNode::sceneViewSize() const
+{
+    return sceneView().size();
+}
+
+rptr<Scene> SceneNode::sceneParent()
+{
+    return ancestor<Scene>();
+}
+
+rptr<Scene const> SceneNode::sceneParent() const
+{
+    return cancestor<Scene>();
 }
 
 }  // namespace haf::scene

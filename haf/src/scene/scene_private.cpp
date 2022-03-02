@@ -14,6 +14,8 @@ Scene::ScenePrivate::ScenePrivate(htps::rptr<Scene> _this) noexcept :
     scene_{_this}
 {}
 
+Scene::ScenePrivate::~ScenePrivate() = default;
+
 void Scene::ScenePrivate::setSystemProvider(
     htps::rptr<sys::ISystemProvider> isystem_provider) noexcept
 {

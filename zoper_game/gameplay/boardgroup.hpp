@@ -38,9 +38,11 @@ public:
 
     void configure(htps::vector2dst size,
                    htps::sptr<LevelProperties> level_properties);
-    void createNewToken(const BoardTileData data,
-                        const htps::vector2dst& board_position,
-                        const htps::vector2df& size);
+
+    void onCreated() override;
+
+    void createNewToken(BoardTileData const data,
+                        htps::vector2dst const& board_position);
 
     void tileRemoved(const htps::vector2dst,
                      haf::board::SITilePointer&) override;
@@ -81,8 +83,9 @@ public:
     htps::vector2df tileSize() const;
 
 private:
+    void onTableNodeAdded(htps::sptr<SceneNode> const&);
     htps::sptr<Player> player_;
-    htps::sptr<haf::scene::SceneNode> tokens_scene_node;
+    htps::sptr<haf::scene::TransformableSceneNode> tokens_scene_node;
     htps::sptr<LevelProperties> level_properties_;
 
     void addPlayer();

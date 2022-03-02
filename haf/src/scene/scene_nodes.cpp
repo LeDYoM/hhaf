@@ -1,4 +1,4 @@
-#include <haf/include/scene/scenenodes.hpp>
+#include <haf/include/scene/scene_nodes.hpp>
 #include <haf/include/scene/scene_node.hpp>
 #include <hlog/include/hlog.hpp>
 
@@ -15,7 +15,9 @@ SceneNodes::~SceneNodes() = default;
 void SceneNodes::addSceneNode(sptr<SceneNode> node)
 {
     scene_nodes_.emplace_back(node);
+    onNodeAdded(node);
     node->onCreated();
+    onNodeReady(node);
 }
 
 sptr<SceneNode> SceneNodes::getByName(const str& name)
@@ -100,6 +102,46 @@ void SceneNodes::for_each_sceneNode(
     htps::function<void(htps::sptr<SceneNode const> const&)> action) const
 {
     std::for_each(sceneNodes().cbegin(), sceneNodes().cend(), action);
+}
+
+bool SceneNodes::moveToLastPosition(htps::sptr<SceneNode> const& node)
+{
+    // If the scene nodes list is not empty
+    if (!scene_nodes_.empty())
+    {
+        // Find the node in the scene nodes list
+        auto node_iterator{scene_nodes_.find(node)};
+
+        // If we found the node and it is not the last one
+        if (node_iterator != scene_nodes_.end() &&
+            *node_iterator != scene_nodes_.back())
+        {
+            std::swap(*node_iterator, scene_nodes_.back());
+            return true;
+        }
+    }
+
+    return false;
+}
+
+bool SceneNodes::moveToFirstPosition(htps::sptr<SceneNode> const& node)
+{
+    // If the scene nodes list is not empty
+    if (!scene_nodes_.empty())
+    {
+        // Find the node in the scene nodes list
+        auto node_iterator{scene_nodes_.find(node)};
+
+        // If we found the node and it is not the last one
+        if (node_iterator != scene_nodes_.end() &&
+            *node_iterator != scene_nodes_.front())
+        {
+            std::swap(*node_iterator, scene_nodes_.front());
+            return true;
+        }
+    }
+
+    return false;
 }
 
 }  // namespace haf::scene

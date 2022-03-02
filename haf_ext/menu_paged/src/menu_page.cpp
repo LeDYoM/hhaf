@@ -76,6 +76,7 @@ void MenuPage::configure(vector<sptr<MenuPagedOption>> options,
                          PageOptions page_options)
 {
     prop<TableSize>().set({5U, options.size()});
+    updateTableSizeIfNecessary();
 
     LogAsserter::log_assert(options.size() > 0U, "options cannot be empty");
     size_type counter{0U};

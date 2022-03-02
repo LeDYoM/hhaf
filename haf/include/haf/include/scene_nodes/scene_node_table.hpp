@@ -2,6 +2,7 @@
 #define HAF_SCENE_NODE_TABLE_INCLUDE_HPP
 
 #include <haf/include/haf_export.hpp>
+#include <htypes/include/connection.hpp>
 #include <haf/include/scene_nodes/scene_node_table_imp.hpp>
 #include <hlog/include/hlog.hpp>
 
@@ -23,11 +24,21 @@ public:
     using BaseClass::BaseClass;
     using BaseClass::prop;
 
+    htps::emitter<htps::vector2dst, htps::sptr<T> const&> onTableNodeCreated;
+
     htps::sptr<T> createNodeAt(htps::vector2dst const& index,
                                htps::str const& name)
     {
         return nodeAt(index) = createInnerSceneNodeAt(index, name)
                                    ->createSceneNode<T>("inner_inner_node");
+    }
+
+    void createNodeAtNoReturn(htps::vector2dst const& index,
+                              htps::str const& name) override
+    {
+        (void)(nodeAt(index) = createInnerSceneNodeAt(index, name)
+                                   ->createSceneNode<T>("inner_inner_node"));
+        onTableNodeCreated(index, nodeAt(index));
     }
 
     constexpr htps::sptr<T>& operator()(htps::vector2dst const& index)
@@ -60,7 +71,7 @@ public:
         {
             for (htps::size_type y{0U}; y < nodes_[x].size(); ++y)
             {
-                if (htps::sptr<T>& node{nodes_[x][y]}; node)
+                if (htps::sptr<T> & node{nodes_[x][y]}; node)
                 {
                     action(htps::vector2dst{x, y}, node);
                 }
