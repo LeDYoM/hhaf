@@ -90,10 +90,30 @@ struct Rect
         return *this;
     }
 
+    constexpr Rect& moveX(T const& relativePositionX) noexcept
+    {
+        left += relativePositionX;
+        return *this;
+    }
+
+    constexpr Rect& moveY(T const& relativePositionY) noexcept
+    {
+        top += relativePositionY;
+        return *this;
+    }
+
     constexpr Rect& move(vector2d<T> const& relativePosition) noexcept
     {
         left += relativePosition.x;
         top += relativePosition.y;
+        return *this;
+    }
+
+    constexpr Rect& move(T const& relativePositionX,
+                         T const& relativePositionY) noexcept
+    {
+        left += relativePositionX;
+        top += relativePositionY;
         return *this;
     }
 
@@ -158,7 +178,8 @@ struct Rect
         return Rect{left, top, width + sSize.x, height + sSize.y};
     }
 
-    [[nodiscard]] constexpr Rect setRadiusFromCenter(const vector2d<T>& radius) const noexcept
+    [[nodiscard]] constexpr Rect setRadiusFromCenter(
+        const vector2d<T>& radius) const noexcept
     {
         Rect temp{*this};
         temp.setRadiusFromCenter(radius);
