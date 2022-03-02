@@ -3,6 +3,7 @@
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/properties.hpp>
+#include <haf/include/types/basic_types.hpp>
 #include <haf/include/types/property_group.hpp>
 #include <haf/include/scene_nodes/scene_node_text_properties.hpp>
 #include <haf/include/scene_nodes/transformable_scene_node.hpp>
@@ -19,7 +20,9 @@ public:
     /**
      * @brief Constructor
      */
-    SceneNodeText(htps::rptr<SceneNode> parent, htps::str name);
+    SceneNodeText(types::rptr<SceneNode> parent, htps::str name);
+
+    void onCreated() override;
 
     /**
      * @brief Expose TransformableSceneNode properties
@@ -31,10 +34,11 @@ public:
      */
     using SceneNodeTextProperties::prop;
 
-    htps::vector2df setBaseScaleForChar(const char ch);
+    void setBaseScaleForCurrentView();
+
 protected:
     void update() override final;
-    htps::size_type inner_transformation_;
+    types::size_type inner_transformation_;
 };
 
 }  // namespace haf::scene::nodes

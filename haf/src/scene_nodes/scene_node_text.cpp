@@ -13,6 +13,7 @@
 #include <hlog/include/hlog.hpp>
 
 using namespace htps;
+using namespace haf::types;
 
 namespace haf::scene::nodes
 {
@@ -68,10 +69,15 @@ inline void updateAlignmentY(
 }
 }  // namespace
 
-SceneNodeText::SceneNodeText(rptr<SceneNode> parent, str name) :
+SceneNodeText::SceneNodeText(types::rptr<SceneNode> parent, str name) :
     BaseClass{parent, std::move(name)}
 {
     inner_transformation_ = addTransformation();
+}
+
+void SceneNodeText::onCreated()
+{
+    setBaseScaleForCurrentView();
 }
 
 void SceneNodeText::update()
@@ -110,9 +116,11 @@ void SceneNodeText::update()
             auto const boxes{font_utils.getTextBoxes(pr.get<Text>())};
             size_type indexChar{0U};
 
-            for (auto curChar : pr.get<Text>())
+            auto const& current_text{pr.get<Text>()};
+
+            for (auto curChar : current_text)
             {
-                sptr<RenderizableSceneNode> letterNode;
+                types::sptr<RenderizableSceneNode> letterNode;
                 // In case we already have a node containing the letter,
                 // reuse it. If not, create a new one.
                 if (counter < old_counter)
@@ -194,7 +202,7 @@ void SceneNodeText::update()
         Color const& text_color{pr.get<TextColor>()};
 
         for_each_sceneNode_as<RenderizableSceneNode>(
-            [&text_color](sptr<RenderizableSceneNode> const& sNode) {
+            [&text_color](types::sptr<RenderizableSceneNode> const& sNode) {
                 sNode->node()->prop<render::ColorProperty>() = text_color;
             });
     }
@@ -223,10 +231,11 @@ void SceneNodeText::update()
     }
 }
 
-vector2df SceneNodeText::setBaseScaleForChar(const char)
+void SceneNodeText::setBaseScaleForCurrentView()
 {
-    return ancestor<Scene>()->cameraComponent()->view().size() /
-        vector2df{1000.0F, 1000.0F};
+    prop<BaseScale>() = ancestor<Scene>()->cameraComponent()->view().size() /
+    //TODO: Here we have the screen size. Find a way to generalize.
+        vector2df{800.0F, 600.0F};
 }
 
 }  // namespace haf::scene::nodes

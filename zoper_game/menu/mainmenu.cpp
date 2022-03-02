@@ -85,11 +85,11 @@ void MainMenu::onCreated()
 {
     BaseClass::onCreated();
 
-    Rectf32 textBox{
-        rectFromSize(ancestor<Scene>()->cameraComponent()->view().size())
-            .setLeftTop({0, 750})
-            .setSize({2000, 4 * 150})};
-    prop<Position>() = textBox.leftTop();
+    Rectf32 textBox{};
+//        rectFromSize(ancestor<Scene>()->cameraComponent()->view().size())
+    textBox        .setLeftTop({0, 750})
+            .setSize({2000, 4 * 150});
+//    prop<Position>() = textBox.leftTop();
 
     prop<MenuPagedProperties>()
         .put<NormalTextFont>(
@@ -98,7 +98,7 @@ void MainMenu::onCreated()
 #else
             subSystem<res::IResourceRetriever>()
                 ->getTTFont(MainMenuResources::MenuFontId)
-                ->font(72)
+                ->font(30)
 #endif
                 )
         .put<NormalColor>(colors::Blue)
