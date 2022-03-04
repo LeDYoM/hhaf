@@ -28,9 +28,7 @@ void BoardTileSceneNode::updateBackgroundTile(vector2df const& tile_size)
     }
 
     // Size of the point in the middle of the tile
-    vector2df centerPointSize{sceneViewSize() / 20.0F};
-//    point_in_center_->prop<Position>().set(tile_size / 3.0F);
-    point_in_center_->prop<Scale>().set({0.5F, 0.5F});
+    point_in_center_->prop<Scale>().set({0.1F, 0.1F});
 
     if (background_tile_ == nullptr)
     {
