@@ -6,10 +6,15 @@
 
 namespace haf::scene
 {
-struct SceneNodeSize : PropertyStateBase<htps::vector2df> {};
-struct TableSize : PropertyStateBase<htps::vector2dst> {};
+struct SceneNodeSize : PropertyStateBase<htps::vector2df>
+{};
+struct TableSize : PropertyStateBase<htps::vector2dst>
+{};
+struct TableSizeForNodes : PropertyStateBase<htps::vector2df>
+{};
 
-using TableNodeProperties = types::PropertyGroup<TableSize, SceneNodeSize>;
+using TableNodeProperties =
+    types::PropertyGroup<TableSize, SceneNodeSize, TableSizeForNodes>;
 
 }  // namespace haf::scene
 

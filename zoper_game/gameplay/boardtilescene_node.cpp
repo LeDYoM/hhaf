@@ -1,4 +1,5 @@
 #include "boardtilescene_node.hpp"
+#include "boardgroup.hpp"
 #include <hlog/include/hlog.hpp>
 #include <haf/include/render/renderizables.hpp>
 
@@ -12,50 +13,47 @@ using namespace haf::render;
 
 BoardTileSceneNode::~BoardTileSceneNode() = default;
 
-void BoardTileSceneNode::createBackgroundTile(const htps::Rectf32& tileBox)
+void BoardTileSceneNode::updateBackgroundTile(vector2df const& tile_size)
 {
-    // Size of the point in the middle of the tile
-    static constexpr vector2df centerPointSize{15, 15};
-
-    const Rectf32 point_box{tileBox.center() - (centerPointSize / 2.0F),
-                            centerPointSize};
-
-    if (point_in_center_)
+    if (point_in_center_ == nullptr)
     {
-        auto const result = removeSceneNode(point_in_center_);
-        point_in_center_.reset();
-        LogAsserter::log_assert(result);
+        point_in_center_ =
+            createSceneNode<RenderizableSceneNode>("backgroundTilePoint");
+
+        point_in_center_->renderizableBuilder()
+            .name("backgroundTilePoint")
+            .figType(FigType_t::Sprite)
+            .color(colors::White)
+            .create();
     }
 
-    point_in_center_ =
-        createSceneNode<RenderizableSceneNode>("backgroundTilePoint");
+    // Size of the point in the middle of the tile
+    vector2df centerPointSize{sceneViewSize() / 20.0F};
+//    point_in_center_->prop<Position>().set(tile_size / 3.0F);
+    point_in_center_->prop<Scale>().set({0.5F, 0.5F});
 
-    point_in_center_->renderizableBuilder()
-        .name("backgroundTilePoint")
-        .figType(FigType_t::Quad)
-        .box(Rectf32{0, 0, point_box.width, point_box.height})
-        .color(colors::White)
-        .create();
+    if (background_tile_ == nullptr)
+    {
+        background_tile_ = renderizableBuilder()
+                               .name("backgroundTile")
+                               .figType(FigType_t::Sprite)
+                               .create();
+    }
 
-    point_in_center_->prop<Position>().set(point_box.leftTop());
-
-    background_tile_ = renderizableBuilder()
-                           .name("backgroundTile")
-                           .figType(FigType_t::Quad)
-                           .box(tileBox)
-                           .create();
+    prop<Scale>() = tile_size;
 }
 
 void BoardTileSceneNode::update()
 {
+    BaseClass::update();
+    if (ancestor<BoardGroup>()->prop<TableSizeForNodes>().hasChanged())
+    {
+        updateBackgroundTile(
+            ancestor<BoardGroup>()->prop<TableSizeForNodes>().get());
+    }
+
     if (prop<NodeSize>().readResetHasChanged())
     {
-        LogAsserter::log_assert(point_in_center_ == nullptr,
-                                "Point in center already initialized");
-        LogAsserter::log_assert(background_tile_ == nullptr,
-                                "Background tile already initialized");
-
-        createBackgroundTile(prop<NodeSize>().get());
         prop<BackgroundColor>().setChanged();
     }
 

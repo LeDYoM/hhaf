@@ -22,6 +22,7 @@ class BoardTileSceneNode : public haf::scene::RenderizablesSceneNode,
 
 public:
     using BoardTileSceneNodeProperties::prop;
+    using BaseClass::prop;
     using haf::scene::SceneNodeSizeProperties::prop;
 
     /**
@@ -37,7 +38,7 @@ public:
     void update() override;
 
 private:
-    void createBackgroundTile(const htps::Rectf32& tileBox);
+    void updateBackgroundTile(htps::vector2df const& tile_size);
 
     htps::sptr<haf::render::Renderizable> background_tile_;
     htps::sptr<haf::scene::RenderizableSceneNode> point_in_center_;

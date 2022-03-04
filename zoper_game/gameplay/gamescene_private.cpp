@@ -5,6 +5,7 @@
 #include <haf/include/animation/animation_component.hpp>
 #include <haf/include/random/randomnumberscomponent.hpp>
 #include <haf/include/render/fig_type.hpp>
+#include <haf/include/scene_components/camera_component.hpp>
 
 using namespace haf::scene;
 using namespace haf::render;
@@ -18,17 +19,19 @@ void GameScene::GameScenePrivate::createScoreIncrementPoints(
     SceneNode& main_node,
     vector2df const& lastTokenPosition)
 {
-    auto pointsToScoreSceneNode =
+    auto pointsToScoreSceneNode{
         main_node.createSceneNode<RenderizablesSceneNode>(
-            "pointIncrementScore_SceneNode");
+            "pointIncrementScore_SceneNode")};
 
-    auto node = pointsToScoreSceneNode->renderizableBuilder()
+    auto size{main_node.sceneParent()->cameraComponent()->view().size()};
+    size /= 100.0F;
+    auto node{pointsToScoreSceneNode->renderizableBuilder()
                     .name("pointIncrementScore")
                     .figType(FigType_t::Shape)
-                    .box(rectFromSize(15.0F, 15.0F))
+                    .box(rectFromSize(size))
                     .color(colors::White)
                     .pointCount(30U)
-                    .create();
+                    .create()};
 
     using namespace gameplay::constants;
 

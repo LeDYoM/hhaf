@@ -105,11 +105,16 @@ void BoardGroup::tileRemoved(const vector2dst, board::SITilePointer& tile)
 
 void BoardGroup::update()
 {
+    prop<TableSizeForNodes>().resetHasChanged();
+
     bool const scene_node_size_has_changed{prop<SceneNodeSize>().hasChanged()};
+
     BaseClass::update();
     if (scene_node_size_has_changed)
     {
         auto const tableSize{prop<TableSize>().get()};
+        prop<TableSizeForNodes>() = cellSize();
+        prop<TableSizeForNodes>().setChanged();
         Rectf32 tileBox({}, cellSize());
 
         // Create the nodes to render the tiles

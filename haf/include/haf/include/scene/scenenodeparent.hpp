@@ -6,6 +6,8 @@
 
 namespace haf::scene
 {
+class Scene;
+
 /**
  * @brief Class encapsulating the functionallity related to the parent and
  * ancestors management.
@@ -122,6 +124,11 @@ public:
     constexpr htps::rptr<T const> const cancestor() const noexcept
     {
         return ancestor<T>();
+    }
+
+    constexpr htps::rptr<Scene> sceneParent() noexcept
+    {
+        return ancestor<Scene>();
     }
 
     /**
