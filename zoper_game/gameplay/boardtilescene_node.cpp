@@ -50,11 +50,6 @@ void BoardTileSceneNode::update()
             ancestor<BoardGroup>()->prop<TableSizeForNodes>().get());
     }
 
-    if (prop<NodeSize>().readResetHasChanged())
-    {
-        prop<BackgroundColor>().setChanged();
-    }
-
     if (prop<BackgroundColor>().readResetHasChanged())
     {
         background_tile_->prop<ColorProperty>() =

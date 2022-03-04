@@ -48,7 +48,6 @@ using namespace haf::anim;
 namespace zoper
 {
 constexpr u32 NumTokens   = 5U;
-constexpr u32 PlayerToken = NumTokens;
 
 GameScene::GameScene() : Scene{StaticTypeName}
 {}
@@ -75,11 +74,6 @@ void GameScene::onCreated()
     resources_configurator->setResourceConfigFile("resources.txt");
     resources_configurator->loadSection("game");
 
-    using namespace haf::board;
-
-    LogAsserter::log_assert(!board_group_, "board_group_ is not empty");
-    board_group_ = createSceneNode<BoardGroup>("BoardGroup");
-
     next_token_part_ = 0U;
 
     // Create the general timer component for the scene.
@@ -105,6 +99,11 @@ void GameScene::onCreated()
 
     level_properties_->configure(start_level, game_mode,
                                  scene_timer_component_);
+
+    using namespace haf::board;
+
+    LogAsserter::log_assert(!board_group_, "board_group_ is not empty");
+    board_group_ = createSceneNode<BoardGroup>("BoardGroup");
 
     board_group_->configure(TokenZones::size, level_properties_);
     Rectf32 textBox{cameraComponent()->view()};

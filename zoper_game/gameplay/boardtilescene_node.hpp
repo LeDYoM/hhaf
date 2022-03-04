@@ -4,18 +4,15 @@
 #include <htypes/include/types.hpp>
 #include <haf/include/types/property_group.hpp>
 #include <haf/include/scene/scene_node.hpp>
-#include <haf/include/scene_nodes/scene_node_size.hpp>
 #include <haf/include/scene/color.hpp>
 #include <haf/include/render/renderizable.hpp>
 #include <haf/include/scene_nodes/renderizables_scene_node.hpp>
 #include <haf/include/scene_nodes/renderizable_scene_node.hpp>
-#include <haf/include/scene_nodes/scene_node_size.hpp>
 #include "boardtile_scene_node_properties.hpp"
 
 namespace zoper
 {
 class BoardTileSceneNode : public haf::scene::RenderizablesSceneNode,
-                           public haf::scene::SceneNodeSizeProperties,
                            public BoardTileSceneNodeProperties
 {
     using BaseClass = haf::scene::RenderizablesSceneNode;
@@ -23,7 +20,6 @@ class BoardTileSceneNode : public haf::scene::RenderizablesSceneNode,
 public:
     using BoardTileSceneNodeProperties::prop;
     using BaseClass::prop;
-    using haf::scene::SceneNodeSizeProperties::prop;
 
     /**
      * @brief Inherit SceneNode constructors.

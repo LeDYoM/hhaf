@@ -293,7 +293,6 @@ set(headers
   # Scene nodes
   ${inc_dir}/scene_nodes/renderizable_scene_node.hpp
   ${inc_dir}/scene_nodes/renderizables_scene_node.hpp
-  ${inc_dir}/scene_nodes/scene_node_size.hpp
   ${inc_dir}/scene_nodes/scene_node_table_imp.hpp
   ${inc_dir}/scene_nodes/scene_node_table_properties.hpp
   ${inc_dir}/scene_nodes/scene_node_table_text.hpp

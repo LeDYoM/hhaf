@@ -9,7 +9,6 @@
 #include <haf/include/scene/scene_node.hpp>
 #include <haf/include/scene/scene.hpp>
 #include <haf/include/scene_nodes/scene_node_table.hpp>
-#include <haf/include/scene_nodes/scene_node_size.hpp>
 #include <haf/include/render/renderizable.hpp>
 #include <haf/include/scene/scenenode_cast.hpp>
 #include <haf/include/component/component_container.hpp>
@@ -112,19 +111,7 @@ void BoardGroup::update()
     BaseClass::update();
     if (scene_node_size_has_changed)
     {
-        auto const tableSize{prop<TableSize>().get()};
         prop<TableSizeForNodes>() = cellSize();
-        prop<TableSizeForNodes>().setChanged();
-        Rectf32 tileBox({}, cellSize());
-
-        // Create the nodes to render the tiles
-        for (size_type y{0U}; y < tableSize.y; ++y)
-        {
-            for (size_type x{0U}; x < tableSize.x; ++x)
-            {
-                nodeAt({x, y})->prop<NodeSize>().set(tileBox);
-            }
-        }
     }
 }
 
