@@ -4,51 +4,38 @@
 #include <haf/include/render/renderizables.hpp>
 
 using namespace htps;
-
-namespace zoper
-{
 using namespace haf;
 using namespace haf::scene;
 using namespace haf::render;
 
+namespace zoper
+{
 BoardTileSceneNode::~BoardTileSceneNode() = default;
 
-void BoardTileSceneNode::updateBackgroundTile(vector2df const& tile_size)
+void BoardTileSceneNode::onCreated()
 {
-    if (point_in_center_ == nullptr)
-    {
-        point_in_center_ =
-            createSceneNode<RenderizableSceneNode>("backgroundTilePoint");
+    /*
+    point_in_center_ =
+        createSceneNode<RenderizableSceneNode>("backgroundTilePoint");
 
-        point_in_center_->renderizableBuilder()
-            .name("backgroundTilePoint")
-            .figType(FigType_t::Sprite)
-            .color(colors::White)
-            .create();
-    }
+    point_in_center_->renderizableBuilder()
+        .name("backgroundTilePoint")
+        .figType(FigType_t::Sprite)
+        .color(colors::White)
+        .create();
 
     // Size of the point in the middle of the tile
     point_in_center_->prop<Scale>().set({0.1F, 0.1F});
-
-    if (background_tile_ == nullptr)
-    {
-        background_tile_ = renderizableBuilder()
-                               .name("backgroundTile")
-                               .figType(FigType_t::Sprite)
-                               .create();
-    }
-
-    prop<Scale>() = tile_size;
+*/
+    background_tile_ = renderizableBuilder()
+                            .name("backgroundTile")
+                            .figType(FigType_t::Sprite)
+                            .create();
 }
 
 void BoardTileSceneNode::update()
 {
     BaseClass::update();
-    if (ancestor<BoardGroup>()->prop<TableSizeForNodes>().hasChanged())
-    {
-        updateBackgroundTile(
-            ancestor<BoardGroup>()->prop<TableSizeForNodes>().get());
-    }
 
     if (prop<BackgroundColor>().readResetHasChanged())
     {

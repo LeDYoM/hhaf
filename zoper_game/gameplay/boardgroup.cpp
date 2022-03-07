@@ -104,14 +104,20 @@ void BoardGroup::tileRemoved(const vector2dst, board::SITilePointer& tile)
 
 void BoardGroup::update()
 {
-    prop<TableSizeForNodes>().resetHasChanged();
+    updateTableSizeIfNecessary();
 
-    bool const scene_node_size_has_changed{prop<SceneNodeSize>().hasChanged()};
-
-    BaseClass::update();
-    if (scene_node_size_has_changed)
+    // Update row and column size
+    if (prop<SceneNodeSize>().readResetHasChanged())
     {
-        prop<TableSizeForNodes>() = cellSize();
+        htps::vector2df const& cell_size{cellSize()};
+        for_each_tableSceneNode(
+            [this, cell_size](htps::vector2dst const& p,
+                              const htps::sptr<BoardTileSceneNode>& node) {
+                node->prop<Scale>().set(cell_size);
+//                node->prop<Position>().set({-0.5F, -0.5F});
+                node->prop<Position>().set(vector2df{-0.5F, -0.5F} + (cell_size / 2) + (cell_size *
+                                           static_cast<htps::vector2df>(p)));
+            });
     }
 }
 

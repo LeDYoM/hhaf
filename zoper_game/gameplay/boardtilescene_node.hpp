@@ -26,6 +26,8 @@ public:
      */
     using BaseClass::BaseClass;
 
+    void onCreated() override;
+
     /**
      * @brief Destroy the Board Tile Scene Node object
      */
@@ -34,8 +36,6 @@ public:
     void update() override;
 
 private:
-    void updateBackgroundTile(htps::vector2df const& tile_size);
-
     htps::sptr<haf::render::Renderizable> background_tile_;
     htps::sptr<haf::scene::RenderizableSceneNode> point_in_center_;
 };

@@ -8,9 +8,13 @@ namespace haf::scene::nodes
 
 htps::vector2df TableNodeImp::cellSize() const
 {
+/*
     return htps::vector2df{
         prop<SceneNodeSize>().get() /
         static_cast<htps::vector2df>(prop<TableSize>().get())};
+*/
+    return htps::vector2df{1.0F / static_cast<htps::vector2df>(prop<TableSize>().get())};
+
 }
 
 void TableNodeImp::update()

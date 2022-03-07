@@ -85,6 +85,11 @@ void Renderizable::setTextureFill(sptr<res::ITexture> texture_)
 
 void Renderizable::update(bool const parent_transformation_changed)
 {
+    if (name() == "backgroundTile")
+    {
+        int a= 4;
+        (void)a;
+    }
     if (parent_transformation_changed)
     {
         p_->render_element_->setModelViewMatrix(

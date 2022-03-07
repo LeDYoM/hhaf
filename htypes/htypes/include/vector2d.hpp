@@ -112,12 +112,13 @@ public:
 
     constexpr vector2d operator/(const vector2d& right) const noexcept
     {
-        return (vector2d(*this) /= right);
+        return vector2d{*this} /= right;
     }
     constexpr vector2d operator/(const T& right) const noexcept
     {
-        return (vector2d(*this) /= right);
+        return vector2d{*this} /= right;
     }
+
     template <typename V,
               typename = std::enable_if_t<
                   !std::is_same_v<std::decay_t<T>, std::decay_t<V>>>>
@@ -151,6 +152,12 @@ constexpr vector2d<T> operator/(const vector2d<T>& lhs,
                                 const vector2d<T>& rhs) noexcept
 {
     return lhs / rhs;
+}
+
+template <typename T>
+constexpr vector2d<T> operator/(const T& lhs, const vector2d<T>& rhs) noexcept
+{
+    return vector2d<T>{lhs, lhs} / rhs;
 }
 
 template <typename T>

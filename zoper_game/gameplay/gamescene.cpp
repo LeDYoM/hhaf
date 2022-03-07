@@ -62,9 +62,9 @@ str GameScene::nextSceneName()
 void GameScene::onCreated()
 {
     BaseClass::onCreated();
-    componentOfType<CameraComponent>()->view = DefaultView;
+//    componentOfType<CameraComponent>()->view = DefaultView;
         cameraComponent()->view = SceneBox{-0.5F, -0.5F, 1.0F, 1.0F};
-    cameraComponent()->view = SceneBox{-250.0F, -250.0F, 500.0F, 500.0F};
+//    cameraComponent()->view = SceneBox{-250.0F, -250.0F, 500.0F, 500.0F};
 
     LogAsserter::log_assert(p_ == nullptr,
                             "Private data pointer is not nullptr!");
@@ -107,8 +107,8 @@ void GameScene::onCreated()
 
     board_group_->configure(TokenZones::size, level_properties_);
     Rectf32 textBox{cameraComponent()->view()};
-    board_group_->prop<Position>() = textBox.leftTop();
-    board_group_->prop<SceneNodeSize>().set(textBox.size());
+//S    board_group_->prop<Position>() = textBox.leftTop();
+//    board_group_->prop<SceneNodeSize>().set(textBox.size());
 
 #ifdef USE_DEBUG_ACTIONS
     component<debug::DebugActions>()->addDebugAction(
