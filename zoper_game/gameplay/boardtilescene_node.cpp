@@ -14,7 +14,6 @@ BoardTileSceneNode::~BoardTileSceneNode() = default;
 
 void BoardTileSceneNode::onCreated()
 {
-    /*
     point_in_center_ =
         createSceneNode<RenderizableSceneNode>("backgroundTilePoint");
 
@@ -26,7 +25,7 @@ void BoardTileSceneNode::onCreated()
 
     // Size of the point in the middle of the tile
     point_in_center_->prop<Scale>().set({0.1F, 0.1F});
-*/
+
     background_tile_ = renderizableBuilder()
                             .name("backgroundTile")
                             .figType(FigType_t::Sprite)

@@ -43,14 +43,13 @@ TableNodeImp::ContainedType_t TableNodeImp::createInnerSceneNodeAt(
     ContainedType_t inner_node{createSceneNode<TransformableSceneNode>(
         make_str(name, "_inner_node", index))};
 
-    updateTableSizeIfNecessary();
     setInnerSceneNodeAt(index, inner_node);
     return inner_node;
 }
 
 void TableNodeImp::updateTableSizeIfNecessary()
 {
-    if (prop<TableSize>().readResetHasChanged())
+    if (prop<TableSize>().hasChanged())
     {
         setTableSize(prop<TableSize>().get());
         prop<SceneNodeSize>().setChanged();

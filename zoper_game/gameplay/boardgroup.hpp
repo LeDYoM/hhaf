@@ -38,6 +38,9 @@ public:
 
     void configure(htps::vector2dst size,
                    htps::sptr<LevelProperties> level_properties);
+
+    void onCreated() override;
+
     void createNewToken(const BoardTileData data,
                         const htps::vector2dst& board_position,
                         const htps::vector2df& size);

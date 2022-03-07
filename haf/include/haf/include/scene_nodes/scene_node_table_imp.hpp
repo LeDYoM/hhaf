@@ -48,7 +48,7 @@ protected:
     void updateTableSizeIfNecessary();
     virtual void setTableSize(htps::vector2dst const ntableSize);
 
-private:
+//private:
     void for_each_table_innerSceneNode(
         htps::function<void(const htps::vector2dst&, ContainedType_t&)> action);
 

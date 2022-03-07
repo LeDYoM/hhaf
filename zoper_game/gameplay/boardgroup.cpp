@@ -33,15 +33,6 @@ void BoardGroup::configure(vector2dst size,
     prop<TableSize>().set(size);
     auto const tableSize{prop<TableSize>().get()};
 
-    // Create the nodes to render the tiles
-    for (size_type y{0U}; y < tableSize.y; ++y)
-    {
-        for (size_type x{0U}; x < tableSize.x; ++x)
-        {
-            auto node = createNodeAt({x, y}, make_str("BoardGroupTile_", x, y));
-        }
-    }
-
     // Create and initialize the BoardManager
     auto board_model{component<board::BoardManager>()};
     board_model->initialize(tableSize, this);
@@ -51,12 +42,19 @@ void BoardGroup::configure(vector2dst size,
             return ((TokenZones::pointInCenter(position)) ? (1) : (0));
         });
 
-    tokens_scene_node = createSceneNode("tokens_scene_node");
     setLevel(level_properties_->currentLevel());
     addPlayer();
 
     level_properties_->levelChanged.connect(
         make_function(this, &BoardGroup::setLevel));
+}
+
+void BoardGroup::onCreated()
+{
+    prop<MoveGroup>() = true;
+    prop<ScaleGroup>() = true;
+    tokens_scene_node = createSceneNode("tokens_scene_node");
+
 }
 
 void BoardGroup::addPlayer()
@@ -107,16 +105,42 @@ void BoardGroup::update()
     updateTableSizeIfNecessary();
 
     // Update row and column size
-    if (prop<SceneNodeSize>().readResetHasChanged())
+    if (prop<TableSize>().readResetHasChanged())
     {
-        htps::vector2df const& cell_size{cellSize()};
-        for_each_tableSceneNode(
-            [this, cell_size](htps::vector2dst const& p,
-                              const htps::sptr<BoardTileSceneNode>& node) {
-                node->prop<Scale>().set(cell_size);
-//                node->prop<Position>().set({-0.5F, -0.5F});
-                node->prop<Position>().set(vector2df{-0.5F, -0.5F} + (cell_size / 2) + (cell_size *
-                                           static_cast<htps::vector2df>(p)));
+        auto const tableSize{prop<TableSize>().get()};
+
+        // Create the nodes to render the tiles
+        for (size_type y{0U}; y < tableSize.y; ++y)
+        {
+            for (size_type x{0U}; x < tableSize.x; ++x)
+            {
+                if (nodeAt({x, y}) == nullptr)
+                {
+                    (void)(createNodeAt({x, y},
+                                        make_str("BoardGroupTile_", x, y)));
+                }
+            }
+        }
+
+        auto const& cell_size{cellSize()};
+        auto const half_cell_size{cell_size / 2.0F};
+        auto const left_top{sceneView().leftTop()};
+        auto const left_top_plus_half_size{left_top + half_cell_size};
+        for_each_table_innerSceneNode(
+            [this, &cell_size, &left_top_plus_half_size](
+                htps::vector2dst const& p,
+                const htps::sptr<TransformableSceneNode>& node) {
+                if (prop<ScaleGroup>()())
+                {
+                    node->prop<Scale>().set(cell_size);
+                }
+
+                if (prop<MoveGroup>()())
+                {
+                    node->prop<Position>().set(
+                        left_top_plus_half_size +
+                        (cell_size * static_cast<htps::vector2df>(p)));
+                }
             });
     }
 }

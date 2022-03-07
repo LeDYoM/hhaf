@@ -8,6 +8,7 @@ namespace haf::scene::nodes
 void TextQuad::onCreated()
 {
     prop<TableSize>().set({2U, 2U});
+    updateTableSizeIfNecessary();
     for (size_type count{0}; count < 4U; ++count)
     {
         auto node = createNodeAt({count % 2U, count / 2U},
