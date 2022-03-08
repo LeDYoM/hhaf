@@ -116,11 +116,8 @@ void BoardGroup::update()
         {
             for (size_type x{0U}; x < tableSize.x; ++x)
             {
-                if (nodeAt({x, y}) == nullptr)
-                {
-                    (void)(createNodeAt({x, y},
-                                        make_str("BoardGroupTile_", x, y)));
-                }
+                (void)(createInnerSceneNodeAt({x, y},
+                                              make_str("inner_node_", x, y)));
             }
         }
 
@@ -132,6 +129,12 @@ void BoardGroup::update()
             [this, &cell_size, &left_top_plus_half_size](
                 htps::vector2dst const& p,
                 const htps::sptr<TransformableSceneNode>& node) {
+                if (node->sceneNodes().empty())
+                {
+                    createNodeAtNoReturn({p.x, p.y},
+                                         make_str("BoardGroupTile_", p.x, p.y));
+                }
+
                 if (prop<ScaleGroup>()())
                 {
                     node->prop<Scale>().set(cell_size);

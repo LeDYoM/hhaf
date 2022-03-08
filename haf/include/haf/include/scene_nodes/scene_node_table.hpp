@@ -30,6 +30,13 @@ public:
                                    ->createSceneNode<T>("inner_inner_node");
     }
 
+    void createNodeAtNoReturn(htps::vector2dst const& index,
+                                       htps::str const& name) override
+    {
+        (void)(nodeAt(index) = createInnerSceneNodeAt(index, name)
+                                   ->createSceneNode<T>("inner_inner_node"));
+    }
+
     constexpr htps::sptr<T>& operator()(htps::vector2dst const& index)
     {
         return nodeAt(index);
@@ -60,7 +67,7 @@ public:
         {
             for (htps::size_type y{0U}; y < nodes_[x].size(); ++y)
             {
-                if (htps::sptr<T>& node{nodes_[x][y]}; node)
+                if (htps::sptr<T> & node{nodes_[x][y]}; node)
                 {
                     action(htps::vector2dst{x, y}, node);
                 }

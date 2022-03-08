@@ -38,6 +38,9 @@ public:
      */
     void update() override;
 
+    virtual void createNodeAtNoReturn(htps::vector2dst const& index,
+                                       htps::str const& name) = 0;
+
 protected:
     ContainedType_t createInnerSceneNodeAt(htps::vector2dst const index,
                                            htps::str const& name);
