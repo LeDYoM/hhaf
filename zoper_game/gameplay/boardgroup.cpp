@@ -51,9 +51,12 @@ void BoardGroup::configure(vector2dst size,
 
 void BoardGroup::onCreated()
 {
-    prop<MoveGroup>() = true;
+    prop<MoveGroup>()  = true;
     prop<ScaleGroup>() = true;
-    tokens_scene_node = createSceneNode("tokens_scene_node");
+    tokens_scene_node  = createSceneNode("tokens_scene_node");
+
+    onNodeReady.connect(
+        htps::make_function(this, &BoardGroup::onTableNodeAdded));
 }
 
 void BoardGroup::addPlayer()
@@ -142,6 +145,10 @@ void BoardGroup::update()
                 }
             });
     }
+}
+
+void BoardGroup::onTableNodeAdded(htps::sptr<SceneNode> const&)
+{
     moveToLastPosition(tokens_scene_node);
 }
 

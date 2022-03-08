@@ -84,6 +84,7 @@ public:
     htps::vector2df tileSize() const;
 
 private:
+    void onTableNodeAdded(htps::sptr<SceneNode> const&);
     htps::sptr<Player> player_;
     htps::sptr<haf::scene::SceneNode> tokens_scene_node;
     htps::sptr<LevelProperties> level_properties_;

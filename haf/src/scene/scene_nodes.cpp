@@ -15,7 +15,9 @@ SceneNodes::~SceneNodes() = default;
 void SceneNodes::addSceneNode(sptr<SceneNode> node)
 {
     scene_nodes_.emplace_back(node);
+    onNodeAdded(node);
     node->onCreated();
+    onNodeReady(node);
 }
 
 sptr<SceneNode> SceneNodes::getByName(const str& name)
