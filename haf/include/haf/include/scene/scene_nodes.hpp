@@ -185,6 +185,8 @@ protected:
      */
     void addSceneNode(htps::sptr<SceneNode> node);
 
+    bool moveToLastPosition(htps::sptr<SceneNode> const& node);
+
 private:
     /**
      * @brief @b SceneNode that owns this group

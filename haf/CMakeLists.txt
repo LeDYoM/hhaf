@@ -114,8 +114,8 @@ set(sources
   ${src_dir}/scene/scene_manager.cpp
   ${src_dir}/scene/scene_manager.hpp
   ${src_dir}/scene/scene_node.cpp
+  ${src_dir}/scene/scene_nodes.cpp
   ${src_dir}/scene/scenenodefactory.cpp
-  ${src_dir}/scene/scenenodes.cpp
   ${src_dir}/scene/transformation.cpp
 
   # Scene components
@@ -272,9 +272,9 @@ set(headers
   ${inc_dir}/scene/scenenode_cast.hpp
   ${inc_dir}/scene/scenenode_properties.hpp
   ${inc_dir}/scene/scene_node.hpp
+  ${inc_dir}/scene/scene_nodes.hpp
   ${inc_dir}/scene/scenenodefactory.hpp
   ${inc_dir}/scene/scenenodeparent.hpp
-  ${inc_dir}/scene/scenenodes.hpp
   ${inc_dir}/scene/transformation_properties.hpp
   ${inc_dir}/scene/transformation.hpp
 

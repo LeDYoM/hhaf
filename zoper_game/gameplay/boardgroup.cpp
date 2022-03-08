@@ -54,7 +54,6 @@ void BoardGroup::onCreated()
     prop<MoveGroup>() = true;
     prop<ScaleGroup>() = true;
     tokens_scene_node = createSceneNode("tokens_scene_node");
-
 }
 
 void BoardGroup::addPlayer()
@@ -143,6 +142,7 @@ void BoardGroup::update()
                 }
             });
     }
+    moveToLastPosition(tokens_scene_node);
 }
 
 void BoardGroup::setLevel(const size_type level)

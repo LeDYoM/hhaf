@@ -10,7 +10,7 @@
 #include <haf/include/types/scene_types.hpp>
 #include <haf/include/scene/scenenodeparent.hpp>
 #include <haf/include/scene/scenenode_properties.hpp>
-#include <haf/include/scene/scenenodes.hpp>
+#include <haf/include/scene/scene_nodes.hpp>
 #include <haf/include/scene/hasname.hpp>
 #include <haf/include/scene/scene_render_context.hpp>
 #include <haf/include/system/system_access.hpp>
