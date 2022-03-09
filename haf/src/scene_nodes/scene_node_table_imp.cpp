@@ -3,9 +3,10 @@
 #include <htypes/include/str.hpp>
 #include <haf/include/scene_nodes/scene_node_table_imp.hpp>
 
+using namespace htps;
+
 namespace haf::scene::nodes
 {
-
 htps::vector2df TableNodeImp::cellSize() const
 {
 /*
@@ -36,6 +37,54 @@ void TableNodeImp::update()
     }
 }
 
+void TableNodeImp::update2()
+{
+    updateTableSizeIfNecessary();
+
+    // Update row and column size
+    if (prop<TableSize>().readResetHasChanged())
+    {
+        auto const tableSize{prop<TableSize>().get()};
+
+        // Create the nodes to render the tiles
+        for (size_type y{0U}; y < tableSize.y; ++y)
+        {
+            for (size_type x{0U}; x < tableSize.x; ++x)
+            {
+                (void)(createInnerSceneNodeAt({x, y},
+                                              make_str("inner_node_", x, y)));
+            }
+        }
+
+        auto const& cell_size{cellSize()};
+        auto const half_cell_size{cell_size / 2.0F};
+        auto const left_top{sceneView().leftTop()};
+        auto const left_top_plus_half_size{left_top + half_cell_size};
+        for_each_table_innerSceneNode(
+            [this, &cell_size, &left_top_plus_half_size](
+                htps::vector2dst const& p,
+                const htps::sptr<TransformableSceneNode>& node) {
+                if (node->sceneNodes().empty())
+                {
+                    createNodeAtNoReturn({p.x, p.y},
+                                         make_str(name(), "_", p.x, p.y));
+                }
+
+                if (prop<ScaleGroup>()())
+                {
+                    node->prop<Scale>().set(cell_size);
+                }
+
+                if (prop<MoveGroup>()())
+                {
+                    node->prop<Position>().set(
+                        left_top_plus_half_size +
+                        (cell_size * static_cast<htps::vector2df>(p)));
+                }
+            });
+    }
+}
+
 TableNodeImp::ContainedType_t TableNodeImp::createInnerSceneNodeAt(
     htps::vector2dst const index,
     htps::str const& name)
@@ -44,6 +93,7 @@ TableNodeImp::ContainedType_t TableNodeImp::createInnerSceneNodeAt(
         make_str(name, "_inner_node", index))};
 
     setInnerSceneNodeAt(index, inner_node);
+    onInnerNodeCreated(index, inner_node);
     return inner_node;
 }
 

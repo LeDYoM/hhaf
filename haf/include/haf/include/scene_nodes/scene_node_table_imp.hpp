@@ -3,6 +3,7 @@
 
 #include <htypes/include/properties.hpp>
 #include <haf/include/haf_export.hpp>
+#include <htypes/include/connection.hpp>
 #include <haf/include/types/basic_types.hpp>
 #include <haf/include/scene_nodes/transformable_scene_node.hpp>
 #include <haf/include/scene_nodes/scene_node_table_properties.hpp>
@@ -26,6 +27,8 @@ public:
 
     using ContainedType_t = htps::sptr<TransformableSceneNode>;
 
+    htps::emitter<htps::vector2dst, ContainedType_t const&> onInnerNodeCreated;
+
     /**
      * @brief Get the size of each cell.
      * @note It might change when new size for the table is set
@@ -37,9 +40,10 @@ public:
      * @brief Update the node
      */
     void update() override;
+    void update2();
 
     virtual void createNodeAtNoReturn(htps::vector2dst const& index,
-                                       htps::str const& name) = 0;
+                                      htps::str const& name) = 0;
 
 protected:
     ContainedType_t createInnerSceneNodeAt(htps::vector2dst const index,
@@ -51,7 +55,7 @@ protected:
     void updateTableSizeIfNecessary();
     virtual void setTableSize(htps::vector2dst const ntableSize);
 
-//private:
+    // private:
     void for_each_table_innerSceneNode(
         htps::function<void(const htps::vector2dst&, ContainedType_t&)> action);
 

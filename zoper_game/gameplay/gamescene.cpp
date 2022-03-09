@@ -47,7 +47,7 @@ using namespace haf::anim;
 
 namespace zoper
 {
-constexpr u32 NumTokens   = 5U;
+constexpr u32 NumTokens = 5U;
 
 GameScene::GameScene() : Scene{StaticTypeName}
 {}
@@ -62,9 +62,11 @@ str GameScene::nextSceneName()
 void GameScene::onCreated()
 {
     BaseClass::onCreated();
-//    componentOfType<CameraComponent>()->view = DefaultView;
-        cameraComponent()->view = SceneBox{-0.5F, -0.5F, 1.0F, 1.0F};
-//    cameraComponent()->view = SceneBox{-250.0F, -250.0F, 500.0F, 500.0F};
+    //    componentOfType<CameraComponent>()->view = DefaultView;
+    cameraComponent()->view = SceneBox{-0.5F, -0.5F, 1.0F, 1.0F};
+    //    cameraComponent()->view = SceneBox{-250.0F, -250.0F, 500.0F, 500.0F};
+    //    cameraComponent()->view = SceneBox{-1000.0F, -1000.0F, 1000.0F,
+    //    1000.0F};
 
     LogAsserter::log_assert(p_ == nullptr,
                             "Private data pointer is not nullptr!");
@@ -90,8 +92,8 @@ void GameScene::onCreated()
 
     {
         auto game_shared_data{shdata::SharedDataViewer<GameSharedData>(
-                                    subSystem<shdata::ISharedData>())
-                                    .view(GameSharedData::address())};
+                                  subSystem<shdata::ISharedData>())
+                                  .view(GameSharedData::address())};
 
         start_level = game_shared_data->startLevel;
         game_mode   = game_shared_data->gameMode;
@@ -107,8 +109,8 @@ void GameScene::onCreated()
 
     board_group_->configure(TokenZones::size, level_properties_);
     Rectf32 textBox{cameraComponent()->view()};
-//S    board_group_->prop<Position>() = textBox.leftTop();
-//    board_group_->prop<SceneNodeSize>().set(textBox.size());
+    // S    board_group_->prop<Position>() = textBox.leftTop();
+    //    board_group_->prop<SceneNodeSize>().set(textBox.size());
 
 #ifdef USE_DEBUG_ACTIONS
     component<debug::DebugActions>()->addDebugAction(

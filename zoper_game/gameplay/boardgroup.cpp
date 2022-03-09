@@ -57,6 +57,7 @@ void BoardGroup::onCreated()
 
     onNodeReady.connect(
         htps::make_function(this, &BoardGroup::onTableNodeAdded));
+    prop<Visible>() = false;
 }
 
 void BoardGroup::addPlayer()
@@ -104,50 +105,7 @@ void BoardGroup::tileRemoved(const vector2dst, board::SITilePointer& tile)
 
 void BoardGroup::update()
 {
-    updateTableSizeIfNecessary();
-
-    // Update row and column size
-    if (prop<TableSize>().readResetHasChanged())
-    {
-        auto const tableSize{prop<TableSize>().get()};
-
-        // Create the nodes to render the tiles
-        for (size_type y{0U}; y < tableSize.y; ++y)
-        {
-            for (size_type x{0U}; x < tableSize.x; ++x)
-            {
-                (void)(createInnerSceneNodeAt({x, y},
-                                              make_str("inner_node_", x, y)));
-            }
-        }
-
-        auto const& cell_size{cellSize()};
-        auto const half_cell_size{cell_size / 2.0F};
-        auto const left_top{sceneView().leftTop()};
-        auto const left_top_plus_half_size{left_top + half_cell_size};
-        for_each_table_innerSceneNode(
-            [this, &cell_size, &left_top_plus_half_size](
-                htps::vector2dst const& p,
-                const htps::sptr<TransformableSceneNode>& node) {
-                if (node->sceneNodes().empty())
-                {
-                    createNodeAtNoReturn({p.x, p.y},
-                                         make_str("BoardGroupTile_", p.x, p.y));
-                }
-
-                if (prop<ScaleGroup>()())
-                {
-                    node->prop<Scale>().set(cell_size);
-                }
-
-                if (prop<MoveGroup>()())
-                {
-                    node->prop<Position>().set(
-                        left_top_plus_half_size +
-                        (cell_size * static_cast<htps::vector2df>(p)));
-                }
-            });
-    }
+    BaseClass::update2();
 }
 
 void BoardGroup::onTableNodeAdded(htps::sptr<SceneNode> const&)

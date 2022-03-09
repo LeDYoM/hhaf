@@ -16,6 +16,7 @@ public:
     GameHudSceneNode(htps::rptr<haf::scene::SceneNode> const parent,
                      htps::str name);
 
+    void onCreated() override;
     void setLevel(const htps::size_type level);
     void setStayCounter(const htps::size_type stayCounter);
     void setConsumedTokens(const htps::size_type consumedTokens);
@@ -23,6 +24,8 @@ public:
     void setScore(const htps::size_type score);
 
 private:
+    void onAllScoreElementsCreated();
+    void onAllGoalElementsCreated();
     htps::sptr<haf::scene::nodes::TextQuad> score_quad_;
     htps::sptr<haf::scene::nodes::TextQuad> goal_quad_;
 };
