@@ -7,7 +7,7 @@ namespace haf::scene::nodes
 
 void TextQuad::onCreated()
 {
-    prop<MoveGroup>()  = false;
+    prop<MoveGroup>()  = true;
     prop<ScaleGroup>() = false;
 
     onTableNodeCreated += make_function(this, &TextQuad::onElementCreated);

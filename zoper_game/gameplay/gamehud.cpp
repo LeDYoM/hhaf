@@ -37,7 +37,7 @@ void GameHudSceneNode::onAllScoreElementsCreated()
         ->setTableNodeProperty<TextColor>(colors::White)
         ->setTableNodeProperty<AlignmentSize>(vector2df{0.1F, 0.1F});
 
-//    score_quad_->prop<Position>() = Position::value_type{50, 150};
+    score_quad_->prop<Position>() = Position::value_type{-0.25F, 0.0F};
     score_quad_->text(vector2dst{0U, 0U})
         ->prop<SceneNodeTextProperties>()
         .put<Text>("Level:")
