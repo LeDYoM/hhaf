@@ -13,8 +13,7 @@ class GameHudSceneNode final : public haf::scene::TransformableSceneNode
     using BaseClass = haf::scene::TransformableSceneNode;
 
 public:
-    GameHudSceneNode(htps::rptr<haf::scene::SceneNode> const parent,
-                     htps::str name);
+    using BaseClass::BaseClass;
 
     void onCreated() override;
     void setLevel(const htps::size_type level);

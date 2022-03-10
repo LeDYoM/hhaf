@@ -65,8 +65,8 @@ void GameScene::onCreated()
     //    componentOfType<CameraComponent>()->view = DefaultView;
     cameraComponent()->view = SceneBox{-0.5F, -0.5F, 1.0F, 1.0F};
     //    cameraComponent()->view = SceneBox{-250.0F, -250.0F, 500.0F, 500.0F};
-    //    cameraComponent()->view = SceneBox{-1000.0F, -1000.0F, 1000.0F,
-    //    1000.0F};
+//        cameraComponent()->view = SceneBox{-1000.0F, -1000.0F, 2000.0F,
+//        2000.0F};
 
     LogAsserter::log_assert(p_ == nullptr,
                             "Private data pointer is not nullptr!");

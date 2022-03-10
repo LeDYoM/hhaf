@@ -82,7 +82,14 @@ void SceneNodeText::onCreated()
 
 void SceneNodeText::update()
 {
-    BaseClass::update();
+    // TODO: Delete
+    auto const& current_text2{prop<SceneNodeTextProperties>().prop<Text>()()};
+
+    if (current_text2 == "Score:")
+    {
+        int a = 0;
+        (void)(a);
+    }
 
     auto& pr = prop<SceneNodeTextProperties>();
     res::FontUtils const font_utils{pr.get<Font>().get()};
@@ -97,6 +104,10 @@ void SceneNodeText::update()
         pr.setChanged<AlignmentSize>();
         pr.readResetHasChanged<Font>();
         pr.readResetHasChanged<Text>();
+
+        // TODO: Delete
+        auto a = pr.get<Font>();
+        (void)a;
 
         if (pr.get<Font>() && !(pr.get<Text>().empty()))
         {
@@ -223,10 +234,13 @@ void SceneNodeText::update()
 
         if (as_rr_hasChanged || align_y)
         {
+            // TODO: Reenable alignment Y
+            /*
             updateAlignmentY(
                 getTransformation(inner_transformation_).prop<Position>(),
                 prop<AlignmentY>().get(), textSize.height,
                 pr.get<AlignmentSize>());
+                */
         }
     }
 }
@@ -234,7 +248,7 @@ void SceneNodeText::update()
 void SceneNodeText::setBaseScaleForCurrentView()
 {
     prop<BaseScale>() = ancestor<Scene>()->cameraComponent()->view().size() /
-    //TODO: Here we have the screen size. Find a way to generalize.
+        // TODO: Here we have the screen size. Find a way to generalize.
         vector2df{800.0F, 600.0F};
 }
 
