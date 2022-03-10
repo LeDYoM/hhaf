@@ -31,13 +31,13 @@ void GameHudSceneNode::onAllScoreElementsCreated()
 {
     Font::value_type font{subSystem<res::IResourceRetriever>()
                               ->getTTFont(GameResources::ScoreFontId)
-                              ->font(46U)};
+                              ->font(200U)};
 
     score_quad_->setTableNodeProperty<Font>(font)
         ->setTableNodeProperty<TextColor>(colors::White)
         ->setTableNodeProperty<AlignmentSize>(vector2df{0.1F, 0.1F});
 
-    score_quad_->prop<Position>() = Position::value_type{-0.25F, 0.0F};
+    score_quad_->prop<Position>() = Position::value_type{-0.45F, -0.33F};
     score_quad_->text(vector2dst{0U, 0U})
         ->prop<SceneNodeTextProperties>()
         .put<Text>("Level:")
@@ -47,7 +47,19 @@ void GameHudSceneNode::onAllScoreElementsCreated()
         .put<Text>("Score:")
         .put<TextColor>(colors::Blue);
 
-//    score_quad_->prop<Scale>() = vector2df{1.0F, 0.1F};
+    score_quad_->prop<Scale>() = vector2df{0.15F, 0.25F};
+}
+
+void GameHudSceneNode::update()
+{
+    BaseClass::update();
+    if (currentLevel.hasChanged())
+    {
+        if (setLevel(currentLevel()))
+        {
+            currentLevel.resetHasChanged();
+        }
+    }
 }
 
 void GameHudSceneNode::onAllGoalElementsCreated()
@@ -76,9 +88,14 @@ void GameHudSceneNode::onAllGoalElementsCreated()
     //            "Look here: ");
 }
 
-void GameHudSceneNode::setLevel(const size_type /*level*/)
+bool GameHudSceneNode::setLevel(const size_type level)
 {
-    //    score_quad_->text({1U, 0U})->prop<Text>().set(make_str(level + 1U));
+    if (score_quad_->nodeTableCreated({1U, 0U}))
+    {
+        score_quad_->text({1U, 0U})->prop<Text>().set(make_str(level + 1U));
+        return true;
+    }
+    return false;
 }
 
 void GameHudSceneNode::setStayCounter(const size_type /*stayCounter*/)

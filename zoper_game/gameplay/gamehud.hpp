@@ -15,8 +15,10 @@ class GameHudSceneNode final : public haf::scene::TransformableSceneNode
 public:
     using BaseClass::BaseClass;
 
+    void update() override;
+
+    htps::PropertyState<htps::size_type> currentLevel;
     void onCreated() override;
-    void setLevel(const htps::size_type level);
     void setStayCounter(const htps::size_type stayCounter);
     void setConsumedTokens(const htps::size_type consumedTokens);
     void setEllapsedTimeInSeconds(const htps::u64 seconds);
@@ -25,6 +27,8 @@ public:
 private:
     void onAllScoreElementsCreated();
     void onAllGoalElementsCreated();
+    bool setLevel(const htps::size_type level);
+
     htps::sptr<haf::scene::nodes::TextQuad> score_quad_;
     htps::sptr<haf::scene::nodes::TextQuad> goal_quad_;
 };

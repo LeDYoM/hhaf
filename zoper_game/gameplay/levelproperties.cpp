@@ -126,7 +126,7 @@ void LevelProperties::tokenConsumed()
 
 void LevelProperties::updateGoals()
 {
-    game_hud_->setLevel(current_level_);
+    game_hud_->currentLevel = current_level_;
     game_hud_->setStayCounter(stay_counter_);
 }
 

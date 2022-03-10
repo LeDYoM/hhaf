@@ -4,19 +4,23 @@ using namespace htps;
 
 namespace haf::scene::nodes
 {
-
 void TextQuad::onCreated()
 {
     prop<MoveGroup>()  = true;
     prop<ScaleGroup>() = false;
 
     onTableNodeCreated += make_function(this, &TextQuad::onElementCreated);
-    prop<TableSize>().set({2U,2U});
+    prop<TableSize>().set({2U, 2U});
 }
 
 void TextQuad::update()
 {
     BaseClass::update2();
+}
+
+sptr<SceneNodeText> TextQuad::text(vector2dst const& index)
+{
+    return nodeAt(index);
 }
 
 void TextQuad::onElementCreated(htps::vector2dst index,
@@ -34,7 +38,7 @@ void TextQuad::onElementCreated(htps::vector2dst index,
     {
         // Second text is right aligned op top
         node->prop<SceneNodeTextProperties>()
-            .put<AlignmentX>(AlignmentXModes::Right)
+            .put<AlignmentX>(AlignmentXModes::Left)
             .put<AlignmentY>(AlignmentYModes::Top);
         ++elements_created;
     }
@@ -50,7 +54,7 @@ void TextQuad::onElementCreated(htps::vector2dst index,
     {
         // Fourth text is right aligned on bottom
         node->prop<SceneNodeTextProperties>()
-            .put<AlignmentX>(AlignmentXModes::Right)
+            .put<AlignmentX>(AlignmentXModes::Left)
             .put<AlignmentY>(AlignmentYModes::Bottom);
         ++elements_created;
     }

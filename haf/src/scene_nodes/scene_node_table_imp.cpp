@@ -9,13 +9,13 @@ namespace haf::scene::nodes
 {
 htps::vector2df TableNodeImp::cellSize() const
 {
-/*
+    /*
+        return htps::vector2df{
+            prop<SceneNodeSize>().get() /
+            static_cast<htps::vector2df>(prop<TableSize>().get())};
+    */
     return htps::vector2df{
-        prop<SceneNodeSize>().get() /
-        static_cast<htps::vector2df>(prop<TableSize>().get())};
-*/
-    return htps::vector2df{1.0F / static_cast<htps::vector2df>(prop<TableSize>().get())};
-
+        1.0F / static_cast<htps::vector2df>(prop<TableSize>().get())};
 }
 
 void TableNodeImp::update()
@@ -37,11 +37,17 @@ void TableNodeImp::update()
     }
 }
 
+bool TableNodeImp::nodeTableCreated(vector2dst const& index) const
+{
+    return inner_nodes_.size() > index.x &&
+        inner_nodes_[index.x].size() > index.y;
+}
+
 void TableNodeImp::update2()
 {
     if (name() == "score")
     {
-        int a=0;
+        int a = 0;
         (void)a;
     }
     updateTableSizeIfNecessary();
@@ -64,7 +70,8 @@ void TableNodeImp::update2()
         auto const& cell_size{cellSize()};
         auto const half_cell_size{cell_size / 2.0F};
         auto const left_top{sceneView().leftTop()};
-        auto const left_top_plus_half_size{vector2df{-0.5F, -0.5F} + half_cell_size};
+        auto const left_top_plus_half_size{vector2df{-0.5F, -0.5F} +
+                                           half_cell_size};
         for_each_table_innerSceneNode(
             [this, &cell_size, &left_top_plus_half_size](
                 htps::vector2dst const& p,
