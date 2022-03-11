@@ -175,6 +175,7 @@ public:
     }
 
     bool moveToLastPosition(htps::sptr<SceneNode> const& node);
+    bool moveToFirstPosition(htps::sptr<SceneNode> const& node);
 
     htps::emitter<htps::sptr<SceneNode> const&> onNodeCreated;
     htps::emitter<htps::sptr<SceneNode> const&> onNodeAdded;

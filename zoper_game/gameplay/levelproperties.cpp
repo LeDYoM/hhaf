@@ -65,10 +65,9 @@ void LevelProperties::setScore(size_type const new_score)
         }
     }
     game_hud_->currentScore = current_score_;
-    attachedNode()->moveToLastPosition(game_hud_);
 }
 
-htps::size_type LevelProperties::millisBetweenTokens() const
+size_type LevelProperties::millisBetweenTokens() const
 {
     return millis_between_tokens_;
 }

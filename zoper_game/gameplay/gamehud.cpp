@@ -18,8 +18,8 @@ namespace zoper
 {
 void GameHudSceneNode::onCreated()
 {
-    score_quad_ = parent()->createSceneNode<TextQuad>("score");
-    goal_quad_  = parent()->createSceneNode<TextQuad>("goal");
+    score_quad_ = createSceneNode<TextQuad>("score");
+    goal_quad_  = createSceneNode<TextQuad>("goal");
 
     score_quad_->allElementsCreated +=
         make_function(this, &GameHudSceneNode::onAllScoreElementsCreated);

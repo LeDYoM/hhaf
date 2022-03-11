@@ -173,16 +173,34 @@ public:
         return *(storage_.at(size() - 1U));
     }
 
-    constexpr const T& back() const noexcept
+    constexpr T const& back() const noexcept
     {
         assert(size() > 0U);
         return *(storage_.at(size() - 1U));
     }
 
-    constexpr const T& cback() const noexcept
+    constexpr T const& cback() const noexcept
     {
         assert(size() > 0U);
         return *(storage_.cat(size() - 1U));
+    }
+
+    constexpr T& front() noexcept
+    {
+        assert(!empty());
+        return *(storage_.at(0U));
+    }
+
+    constexpr T const& front() const noexcept
+    {
+        assert(!empty());
+        return *(storage_.at(0U));
+    }
+
+    constexpr T const& cfront() const noexcept
+    {
+        assert(!empty());
+        return *(storage_.at(0U));
     }
 
     template <typename F>

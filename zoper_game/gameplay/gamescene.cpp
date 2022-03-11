@@ -111,6 +111,7 @@ void GameScene::onCreated()
     // S    board_group_->prop<Position>() = textBox.leftTop();
     //    board_group_->prop<SceneNodeSize>().set(textBox.size());
 
+    moveToFirstPosition(board_group_);
 #ifdef USE_DEBUG_ACTIONS
     component<debug::DebugActions>()->addDebugAction(
         input::Key::Num2,

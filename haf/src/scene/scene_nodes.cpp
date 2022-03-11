@@ -124,4 +124,24 @@ bool SceneNodes::moveToLastPosition(htps::sptr<SceneNode> const& node)
     return false;
 }
 
+bool SceneNodes::moveToFirstPosition(htps::sptr<SceneNode> const& node)
+{
+    // If the scene nodes list is not empty
+    if (!scene_nodes_.empty())
+    {
+        // Find the node in the scene nodes list
+        auto node_iterator{scene_nodes_.find(node)};
+
+        // If we found the node and it is not the last one
+        if (node_iterator != scene_nodes_.end() &&
+            *node_iterator != scene_nodes_.front())
+        {
+            std::swap(*node_iterator, scene_nodes_.front());
+            return true;
+        }
+    }
+
+    return false;
+}
+
 }  // namespace haf::scene
