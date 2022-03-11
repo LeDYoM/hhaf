@@ -6,12 +6,16 @@
 #include <haf/include/time/timer_component.hpp>
 
 using namespace htps;
-
-namespace zoper
-{
 using namespace haf;
 using namespace haf::scene;
 using namespace haf::sys;
+
+namespace zoper
+{
+void LevelProperties::onAttached()
+{
+    game_hud_ = attachedNode()->createSceneNode<GameHudSceneNode>("hud");
+}
 
 void LevelProperties::configure(
     size_type const currentLevel,
@@ -35,8 +39,6 @@ void LevelProperties::configure(
     update_level_data_timer_ = scene_timer_component_->addTimer(
         TimerType::Continuous, TimePoint_as_miliseconds(120U),
         [this](TimePoint /*realEllapsed*/) { updateLevelData(); });
-
-    game_hud_ = attachedNode()->createSceneNode<GameHudSceneNode>("hud");
 
     setScore(0U);
     setLevel(currentLevel);
@@ -63,6 +65,7 @@ void LevelProperties::setScore(size_type const new_score)
         }
     }
     game_hud_->currentScore = current_score_;
+    attachedNode()->moveToLastPosition(game_hud_);
 }
 
 htps::size_type LevelProperties::millisBetweenTokens() const
@@ -126,8 +129,8 @@ void LevelProperties::tokenConsumed()
 
 void LevelProperties::updateGoals()
 {
-    game_hud_->currentLevel = current_level_;
-    game_hud_->setStayCounter(stay_counter_);
+    game_hud_->currentLevel       = current_level_;
+    game_hud_->currentStayCounter = stay_counter_;
 }
 
 void LevelProperties::updateLevelData()
@@ -136,7 +139,7 @@ void LevelProperties::updateLevelData()
     {
         default:
         case GameMode::Token:
-            game_hud_->setConsumedTokens(consumed_tokens_);
+            game_hud_->currentConsumedTokens = consumed_tokens_;
 
             if (consumed_tokens_ >= stay_counter_)
             {
@@ -145,8 +148,8 @@ void LevelProperties::updateLevelData()
             break;
 
         case GameMode::Time:
-            game_hud_->setEllapsedTimeInSeconds(
-                level_timer_->ellapsed().seconds());
+            game_hud_->currentEllapsedTimeInSeconds =
+                level_timer_->ellapsed().seconds();
 
             if (level_timer_->ellapsed().seconds() >= stay_counter_)
             {

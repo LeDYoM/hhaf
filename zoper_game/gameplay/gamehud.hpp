@@ -19,16 +19,20 @@ public:
 
     htps::PropertyState<htps::size_type> currentLevel;
     htps::PropertyState<htps::size_type> currentScore;
+    htps::PropertyState<htps::size_type> currentConsumedTokens;
+    htps::PropertyState<htps::u64> currentEllapsedTimeInSeconds;
+    htps::PropertyState<htps::size_type> currentStayCounter;
+
     void onCreated() override;
-    void setStayCounter(htps::size_type const stayCounter);
-    void setConsumedTokens(htps::size_type const consumedTokens);
-    void setEllapsedTimeInSeconds(htps::u64 const seconds);
 
 private:
     void onAllScoreElementsCreated();
     void onAllGoalElementsCreated();
     bool setLevel(const htps::size_type level);
     bool setScore(htps::size_type const score);
+    bool setConsumedTokens(htps::size_type const consumedTokens);
+    bool setEllapsedTimeInSeconds(htps::u64 const seconds);
+    bool setStayCounter(htps::size_type const stayCounter);
 
     htps::sptr<haf::scene::nodes::TextQuad> score_quad_;
     htps::sptr<haf::scene::nodes::TextQuad> goal_quad_;

@@ -1,5 +1,4 @@
 #include "boardtilescene_node.hpp"
-#include "boardgroup.hpp"
 #include <hlog/include/hlog.hpp>
 #include <haf/include/render/renderizables.hpp>
 

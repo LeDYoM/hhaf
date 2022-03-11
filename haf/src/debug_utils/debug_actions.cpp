@@ -1,9 +1,11 @@
 #include <haf/include/debug_utils/debug_actions.hpp>
-
 #include <haf/include/types/vector.hpp>
+#include <haf/include/scene/scene_node.hpp>
+
 #include <hlog/include/hlog.hpp>
 
 using namespace haf::input;
+using namespace htps;
 
 namespace haf::debug
 {
@@ -39,6 +41,30 @@ void DebugActions::onKeyPressed(Key const& key)
     if (element.first)
     {
         element.second->second();
+    }
+}
+
+void DebugActions::logSceneNodeTree()
+{
+    DisplayLog::debug("---------------------------------------------------");
+    logSceneNodeTree(attachedNode(), 0U);
+    DisplayLog::debug("---------------------------------------------------");
+}
+
+void DebugActions::logSceneNodeTree(rptr<scene::SceneNode const> scene_node,
+                                    size_type level)
+{
+    str complete(level * 4U);
+    for (size_type i{0U}; i<level; ++i)
+    {
+        complete += "    ";
+    }
+    complete += scene_node->name();
+    DisplayLog::debug(complete);
+
+    for (auto&& node : scene_node->sceneNodes())
+    {
+        logSceneNodeTree(node.get(), level + 1U);
     }
 }
 

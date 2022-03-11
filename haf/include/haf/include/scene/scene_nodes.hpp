@@ -174,6 +174,8 @@ public:
             [&value](auto& node) { node->template prop<Tag>().set(value); });
     }
 
+    bool moveToLastPosition(htps::sptr<SceneNode> const& node);
+
     htps::emitter<htps::sptr<SceneNode> const&> onNodeCreated;
     htps::emitter<htps::sptr<SceneNode> const&> onNodeAdded;
     htps::emitter<htps::sptr<SceneNode> const&> onNodeReady;
@@ -189,8 +191,6 @@ protected:
      * @param node Node to add
      */
     void addSceneNode(htps::sptr<SceneNode> node);
-
-    bool moveToLastPosition(htps::sptr<SceneNode> const& node);
 
 private:
     /**

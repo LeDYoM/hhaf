@@ -5,7 +5,6 @@
 #include "player.hpp"
 #include "constants.hpp"
 #include "gameover.hpp"
-#include "gamehud.hpp"
 #include "pause.hpp"
 #include "boardutils.hpp"
 #include "scoreutils.hpp"
@@ -65,8 +64,8 @@ void GameScene::onCreated()
     //    componentOfType<CameraComponent>()->view = DefaultView;
     cameraComponent()->view = SceneBox{-0.5F, -0.5F, 1.0F, 1.0F};
     //    cameraComponent()->view = SceneBox{-250.0F, -250.0F, 500.0F, 500.0F};
-//        cameraComponent()->view = SceneBox{-1000.0F, -1000.0F, 2000.0F,
-//        2000.0F};
+    //        cameraComponent()->view = SceneBox{-1000.0F, -1000.0F, 2000.0F,
+    //        2000.0F};
 
     LogAsserter::log_assert(p_ == nullptr,
                             "Private data pointer is not nullptr!");
@@ -113,6 +112,9 @@ void GameScene::onCreated()
     //    board_group_->prop<SceneNodeSize>().set(textBox.size());
 
 #ifdef USE_DEBUG_ACTIONS
+    component<debug::DebugActions>()->addDebugAction(
+        input::Key::Num2,
+        [this]() { component<debug::DebugActions>()->logSceneNodeTree(); });
     component<debug::DebugActions>()->addDebugAction(
         input::Key::Num1, [this]() { levelProperties()->increaseScore(100U); });
     component<debug::DebugActions>()->addDebugAction(
