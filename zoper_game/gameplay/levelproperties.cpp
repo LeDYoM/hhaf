@@ -62,7 +62,7 @@ void LevelProperties::setScore(size_type const new_score)
             game_shared_data->score = current_score_;
         }
     }
-    game_hud_->setScore(current_score_);
+    game_hud_->currentScore = current_score_;
 }
 
 htps::size_type LevelProperties::millisBetweenTokens() const

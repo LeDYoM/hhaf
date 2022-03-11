@@ -53,11 +53,20 @@ void GameHudSceneNode::onAllScoreElementsCreated()
 void GameHudSceneNode::update()
 {
     BaseClass::update();
+
     if (currentLevel.hasChanged())
     {
         if (setLevel(currentLevel()))
         {
             currentLevel.resetHasChanged();
+        }
+    }
+
+    if (currentScore.hasChanged())
+    {
+        if (setScore(currentScore()))
+        {
+            currentScore.resetHasChanged();
         }
     }
 }
@@ -88,29 +97,31 @@ void GameHudSceneNode::onAllGoalElementsCreated()
     //            "Look here: ");
 }
 
-bool GameHudSceneNode::setLevel(const size_type level)
+bool GameHudSceneNode::setLevel(size_type const level)
 {
     if (score_quad_->nodeTableCreated({1U, 0U}))
     {
         score_quad_->text({1U, 0U})->prop<Text>().set(make_str(level + 1U));
+        // TODO: Big nyapa
+        score_quad_->text({1U, 0U})->prop<Position>().set({1.0F, 0.0F});
         return true;
     }
     return false;
 }
 
-void GameHudSceneNode::setStayCounter(const size_type /*stayCounter*/)
+void GameHudSceneNode::setStayCounter(size_type const /*stayCounter*/)
 {
     //    goal_quad_->text({1U, 1U})->prop<Text>().set(make_str(stayCounter));
 }
 
-void GameHudSceneNode::setConsumedTokens(const size_type /*consumedTokens*/)
+void GameHudSceneNode::setConsumedTokens(size_type const /*consumedTokens*/)
 {
     //    goal_quad_->text(vector2dst{1U, 0U})
     //        ->prop<Text>()
     //        .set(str::to_str(consumedTokens));
 }
 
-void GameHudSceneNode::setEllapsedTimeInSeconds(const u64 /*seconds*/)
+void GameHudSceneNode::setEllapsedTimeInSeconds(u64 const /*seconds*/)
 {
     //    goal_quad_->text({1U, 0U})->prop<Text>().set(
     //        str::to_str(static_cast<u16>(seconds)));
@@ -118,11 +129,20 @@ void GameHudSceneNode::setEllapsedTimeInSeconds(const u64 /*seconds*/)
 
 constexpr u8 scoreSize = 5;
 
-void GameHudSceneNode::setScore(const size_type score)
+bool GameHudSceneNode::setScore(size_type const score)
 {
-    str result(str::to_str(score));
-    while (result.size() < scoreSize)
-        result = "0" + result;
-    //    score_quad_->text({1U, 1U})->prop<Text>().set(result);
+    if (score_quad_->nodeTableCreated({1U, 1U}))
+    {
+        str result(str::to_str(score));
+        while (result.size() < scoreSize)
+        {
+            result = "0" + result;
+        }
+        score_quad_->text({1U, 1U})->prop<Text>().set(result);
+        // TODO: Big nyapa
+        score_quad_->text({1U, 1U})->prop<Position>().set({1.0F, 0.0F});
+        return true;
+    }
+    return false;
 }
 }  // namespace zoper
