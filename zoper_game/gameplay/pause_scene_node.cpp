@@ -1,4 +1,4 @@
-#include "pause.hpp"
+#include "pause_scene_node.hpp"
 
 #include "../loaders/gameresources.hpp"
 

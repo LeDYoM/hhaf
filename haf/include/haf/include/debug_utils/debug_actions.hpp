@@ -19,6 +19,7 @@ public:
     using DebugAction = function<void()>;
 
     DebugActions();
+    ~DebugActions() override;
     void addDebugAction(input::Key const, DebugAction);
     void logSceneNodeTree();
     void logSceneNodeTree(htps::rptr<scene::SceneNode const> scene_node,

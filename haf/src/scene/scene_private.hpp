@@ -18,6 +18,7 @@ class HAF_PRIVATE Scene::ScenePrivate final
 {
 public:
     explicit ScenePrivate(htps::rptr<Scene> _this) noexcept;
+    ~ScenePrivate();
     void setSystemProvider(
         htps::rptr<sys::ISystemProvider> isystem_provider) noexcept;
 

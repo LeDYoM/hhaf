@@ -5,7 +5,7 @@
 #include "player.hpp"
 #include "constants.hpp"
 #include "gameover.hpp"
-#include "pause.hpp"
+#include "pause_scene_node.hpp"
 #include "boardutils.hpp"
 #include "scoreutils.hpp"
 #include "next_token.hpp"

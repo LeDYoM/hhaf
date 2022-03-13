@@ -9,12 +9,15 @@ using namespace htps;
 
 namespace haf::debug
 {
-struct DebugActions::DebugActionsPrivate
+struct DebugActions::DebugActionsPrivate final
 {
     using DebugActionVectorType = haf::vector<
         haf::types::pair<haf::input::Key, DebugActions::DebugAction>>;
     using DebugActionVectorTypeIterator = DebugActionVectorType::iterator;
     DebugActionVectorType debug_actions_;
+
+    DebugActionsPrivate() = default;
+    ~DebugActionsPrivate() = default;
 
     auto find(Key const key)
     {
@@ -28,6 +31,8 @@ struct DebugActions::DebugActionsPrivate
 
 DebugActions::DebugActions() : p_{types::make_pimplp<DebugActionsPrivate>()}
 {}
+
+DebugActions::~DebugActions() = default;
 
 void DebugActions::addDebugAction(haf::input::Key const key,
                                   DebugAction debug_action)
