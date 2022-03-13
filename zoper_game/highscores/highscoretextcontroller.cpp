@@ -24,12 +24,6 @@ namespace zoper
 {
 static constexpr char HighScoresFileName[] = "high_scores.txt";
 
-HighScoreTextController::HighScoreTextController(SceneNode* parent, str name) :
-    BaseClass{parent, std::move(name)}
-{}
-
-HighScoreTextController::~HighScoreTextController() = default;
-
 void HighScoreTextController::onCreated()
 {
     BaseClass::onCreated();
