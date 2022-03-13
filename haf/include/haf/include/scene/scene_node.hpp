@@ -79,16 +79,16 @@ public:
     /**
      * @brief Method called every frame
      */
-    virtual void update() {}
+    virtual void update();
 
     /**
      * @brief Method called every frame after update
      * @param SceneRenderContext Current frame render context
      */
-    virtual void postUpdate(SceneRenderContext& sceneRenderContext)
-    {
-        (void)(sceneRenderContext);
-    }
+    virtual void postUpdate(SceneRenderContext& sceneRenderContext);
+
+    virtual htps::rptr<Scene> sceneParent();
+    virtual htps::rptr<Scene const> sceneParent() const;
 
     /**
      * @brief Clear all elements in this scene node

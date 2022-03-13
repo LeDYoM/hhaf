@@ -20,19 +20,17 @@ void GameScene::GameScenePrivate::createScoreIncrementPoints(
     vector2df const& lastTokenPosition)
 {
     auto pointsToScoreSceneNode{
-        main_node.createSceneNode<RenderizablesSceneNode>(
+        main_node.createSceneNode<RenderizableSceneNode>(
             "pointIncrementScore_SceneNode")};
 
-    auto size{main_node.sceneParent()->cameraComponent()->view().size()};
-    size /= 100.0F;
     auto node{pointsToScoreSceneNode->renderizableBuilder()
                     .name("pointIncrementScore")
-                    .figType(FigType_t::Shape)
-                    .box(rectFromSize(size))
+                    .figType(FigType_t::Sprite)
                     .color(colors::White)
-                    .pointCount(30U)
+//                    .pointCount(30U)
                     .create()};
 
+    pointsToScoreSceneNode->prop<Scale>() = vector2df{0.01F, 0.01F};
     using namespace gameplay::constants;
 
     DisplayLog::info("Creating animation for points to score");
@@ -46,6 +44,8 @@ void GameScene::GameScenePrivate::createScoreIncrementPoints(
         .actionWhenFinished([pointsToScoreSceneNode]() {
             pointsToScoreSceneNode->autoRemove();
         });
+
+    pointsToScoreSceneNode->prop<Position>() = EndPositionPointsToScore;
 
     scene_animation_component_->addAnimation(
         std::move(property_animation_builder));

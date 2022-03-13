@@ -19,6 +19,13 @@ SceneNode::SceneNode(rptr<SceneNode> parent, str name) :
 
 SceneNode::~SceneNode() = default;
 
+void SceneNode::update()
+{}
+
+void SceneNode::postUpdate(SceneRenderContext& /*sceneRenderContext*/)
+{
+}
+
 void SceneNode::clearAll()
 {
     clearSceneNodes();
@@ -26,12 +33,22 @@ void SceneNode::clearAll()
 
 SceneBox SceneNode::sceneView() const
 {
-    return ancestor<Scene>()->cameraComponent()->view();
+    return sceneParent()->cameraComponent()->view();
 }
 
 SceneBox::vector_t SceneNode::sceneViewSize() const
 {
     return sceneView().size();
+}
+
+rptr<Scene> SceneNode::sceneParent()
+{
+    return ancestor<Scene>();
+}
+
+rptr<Scene const> SceneNode::sceneParent() const
+{
+    return cancestor<Scene>();
 }
 
 }  // namespace haf::scene

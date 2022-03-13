@@ -235,7 +235,7 @@ void GameScene::launchPlayer()
 
 void GameScene::tokenHitAnimation(board::BoardPositionType const& pos)
 {
-    auto const lastTokenPosition = board_group_->board2Scene(pos);
+    auto const lastTokenPosition = board_group_->board2Scene2(pos);
     p_->createScoreIncrementPoints(*this, lastTokenPosition);
 }
 

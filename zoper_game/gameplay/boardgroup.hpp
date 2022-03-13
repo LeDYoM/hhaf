@@ -41,9 +41,9 @@ public:
 
     void onCreated() override;
 
-    void createNewToken(const BoardTileData data,
-                        const htps::vector2dst& board_position,
-                        const htps::vector2df& size);
+    void createNewToken(BoardTileData const data,
+                        htps::vector2dst const& board_position,
+                        htps::vector2df const& size);
 
     void tileRemoved(const htps::vector2dst,
                      haf::board::SITilePointer&) override;
@@ -81,12 +81,13 @@ public:
     void update() override;
     htps::vector2df board2SceneFactor() const;
     htps::vector2df board2Scene(const htps::vector2dst& bPosition) const;
+    htps::vector2df board2Scene2(const htps::vector2dst& bPosition) const;
     htps::vector2df tileSize() const;
 
 private:
     void onTableNodeAdded(htps::sptr<SceneNode> const&);
     htps::sptr<Player> player_;
-    htps::sptr<haf::scene::SceneNode> tokens_scene_node;
+    htps::sptr<haf::scene::TransformableSceneNode> tokens_scene_node;
     htps::sptr<LevelProperties> level_properties_;
 
     void addPlayer();

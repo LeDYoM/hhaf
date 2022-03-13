@@ -53,11 +53,13 @@ void BoardGroup::onCreated()
 {
     prop<MoveGroup>()  = true;
     prop<ScaleGroup>() = true;
-    tokens_scene_node  = createSceneNode("tokens_scene_node");
+    tokens_scene_node  = createSceneNode<haf::scene::TransformableSceneNode>(
+        "tokens_scene_node");
+    tokens_scene_node->prop<Position>() = vector2df{-0.5F, -0.5F};
 
     onNodeReady.connect(
         htps::make_function(this, &BoardGroup::onTableNodeAdded));
-//    prop<Visible>() = false;
+    //    prop<Visible>() = false;
 }
 
 void BoardGroup::addPlayer()
@@ -74,9 +76,9 @@ void BoardGroup::addPlayer()
         TokenZones::centerRect.leftTop(), player_);
 }
 
-void BoardGroup::createNewToken(const BoardTileData data,
-                                const vector2dst& board_position,
-                                const vector2df& size)
+void BoardGroup::createNewToken(BoardTileData const data,
+                                vector2dst const& board_position,
+                                vector2df const& size)
 {
     using namespace haf::board;
 
@@ -287,7 +289,12 @@ vector2df BoardGroup::board2SceneFactor() const
 
 vector2df BoardGroup::board2Scene(const vector2dst& bPosition) const
 {
-    return board2SceneFactor() * bPosition;
+    return (board2SceneFactor() * bPosition);
+}
+
+vector2df BoardGroup::board2Scene2(const vector2dst& bPosition) const
+{
+    return {vector2df{-0.5F, -0.5F} + (board2SceneFactor() * bPosition)};
 }
 
 vector2df BoardGroup::tileSize() const

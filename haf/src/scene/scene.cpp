@@ -26,6 +26,16 @@ void Scene::onCreated()
                             "Cannot create camera component");
 }
 
+rptr<Scene> Scene::sceneParent()
+{
+    return this;
+}
+
+rptr<Scene const> Scene::sceneParent() const
+{
+    return this;
+}
+
 sptr<CameraComponent> const& Scene::cameraComponent() const
 {
     return p_->camera_component_;
