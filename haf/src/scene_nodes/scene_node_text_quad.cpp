@@ -18,11 +18,6 @@ void TextQuad::update()
     BaseClass::update2();
 }
 
-sptr<SceneNodeText> TextQuad::text(vector2dst const& index)
-{
-    return nodeAt(index);
-}
-
 void TextQuad::onElementCreated(htps::vector2dst index,
                                 htps::sptr<SceneNodeText> const& node)
 {

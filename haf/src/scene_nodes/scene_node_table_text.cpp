@@ -4,4 +4,9 @@
 using namespace htps;
 
 namespace haf::scene::nodes
-{}  // namespace haf::scene::nodes
+{
+sptr<SceneNodeText> TextTableNode::text(vector2dst const& index)
+{
+    return nodeAt(index);
+}
+}  // namespace haf::scene::nodes
