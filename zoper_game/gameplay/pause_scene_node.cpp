@@ -32,11 +32,11 @@ void PauseSceneNode::onCreated()
         .put<Text>("PAUSE")
         .put<Font>(subSystem<res::IResourceRetriever>()
                        ->getTTFont(GameResources::ScoreFontId)
-                       ->font(180U))
-        .put<TextColor>(colors::White)
-        .put<AlignmentSize>(ancestor<Scene>()->cameraComponent()->view().size())
-        .put<AlignmentX>(AlignmentXModes::Center)
-        .put<AlignmentY>(AlignmentYModes::Middle);
+                       ->font(100U))
+        .put<TextColor>(colors::White);
+//        .put<AlignmentSize>(ancestor<Scene>()->cameraComponent()->view().size())
+//        .put<AlignmentX>(AlignmentXModes::Center)
+//        .put<AlignmentY>(AlignmentYModes::Middle);
 
     prop<Visible>().set(false);
 }

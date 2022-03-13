@@ -59,7 +59,6 @@ void BoardGroup::onCreated()
 
     onNodeReady.connect(
         htps::make_function(this, &BoardGroup::onTableNodeAdded));
-    //    prop<Visible>() = false;
 }
 
 void BoardGroup::addPlayer()

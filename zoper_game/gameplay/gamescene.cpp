@@ -137,7 +137,6 @@ void GameScene::onCreated()
     {
         auto game_over_scene_node =
             createSceneNode<GameOverSceneNode>("gameOverSceneNode");
-        game_over_scene_node->prop<Visible>().set(false);
 
         p_->states_manager_ = muptr<GameSceneStateManager>(
             scene_timer_component_,

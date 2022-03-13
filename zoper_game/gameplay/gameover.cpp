@@ -23,9 +23,9 @@ GameOverSceneNode::GameOverSceneNode(scene::SceneNode* const parent, str name) :
 {
     game_over_rg_ = createSceneNode<TransformableSceneNode>("gameOverScreen");
 
-    vector2df game_over_size{ancestor<Scene>()->cameraComponent()->view().width,
-                             715};
-    game_over_rg_->prop<Position>() = Position::value_type{0, 575};
+//    vector2df game_over_size{ancestor<Scene>()->cameraComponent()->view().width,
+//                             715};
+//    game_over_rg_->prop<Position>() = Position::value_type{0, 575};
 
     {
         auto gameText(
@@ -34,11 +34,11 @@ GameOverSceneNode::GameOverSceneNode(scene::SceneNode* const parent, str name) :
             .put<Text>("GAME")
             .put<Font>(subSystem<res::IResourceRetriever>()
                            ->getTTFont(GameResources::ScoreFontId)
-                           ->font(360))
-            .put<TextColor>(colors::White)
-            .put<AlignmentSize>(game_over_size)
-            .put<AlignmentX>(AlignmentXModes::Center)
-            .put<AlignmentY>(AlignmentYModes::Top);
+                           ->font(100))
+            .put<TextColor>(colors::White);
+//            .put<AlignmentSize>(game_over_size)
+//            .put<AlignmentX>(AlignmentXModes::Center)
+//            .put<AlignmentY>(AlignmentYModes::Top);
     }
 
     {
@@ -48,14 +48,14 @@ GameOverSceneNode::GameOverSceneNode(scene::SceneNode* const parent, str name) :
             .put<Text>("OVER")
             .put<Font>(subSystem<res::IResourceRetriever>()
                            ->getTTFont(GameResources::ScoreFontId)
-                           ->font(360))
-            .put<TextColor>(colors::White)
-            .put<AlignmentSize>(game_over_size)
-            .put<AlignmentX>(AlignmentXModes::Center)
-            .put<AlignmentY>(AlignmentYModes::Bottom);
+                           ->font(100))
+            .put<TextColor>(colors::White);
+//            .put<AlignmentSize>(game_over_size)
+//            .put<AlignmentX>(AlignmentXModes::Center)
+//            .put<AlignmentY>(AlignmentYModes::Bottom);
     }
 
-    prop<Visible>().set(false);
+//    prop<Visible>().set(false);
 }
 
 }  // namespace zoper
