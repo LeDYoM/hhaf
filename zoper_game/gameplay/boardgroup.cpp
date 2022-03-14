@@ -88,7 +88,7 @@ void BoardGroup::createNewToken(BoardTileData const data,
 
     // Set the position in the scene depending on the board position
     new_tile_token->prop<Position>().set(board2Scene(board_position));
-//    new_tile_token->setInnerScale(size);
+    //    new_tile_token->setInnerScale(size);
     new_tile_token->prop<Scale>() = size;
     (void)size;
     // Add it to the board
@@ -245,6 +245,7 @@ void BoardGroup::movePlayer(Direction const& direction)
     auto const nPosition{direction.applyToVector(player_->boardPosition())};
     componentOfType<board::BoardManager>()->moveTile(player_->boardPosition(),
                                                      nPosition);
+    player_->currentDirection = direction;
 }
 
 bool BoardGroup::moveTowardsCenter(Direction const direction,

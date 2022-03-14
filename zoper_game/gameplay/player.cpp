@@ -25,7 +25,7 @@ Player::Player(types::rptr<SceneNode> parent, types::str name) :
 {
     renderizableBuilder()
         .name("player_render_scene_node")
-        .figType(FigType_t::Shape)
+        .figType(FigType_t::PolygonSprite)
         .pointCount(3U)
         .create();
 
