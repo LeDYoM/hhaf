@@ -55,7 +55,6 @@ void BoardGroup::onCreated()
     prop<ScaleGroup>() = true;
     tokens_scene_node  = createSceneNode<haf::scene::TransformableSceneNode>(
         "tokens_scene_node");
-    tokens_scene_node->prop<Position>() = vector2df{-0.5F, -0.5F};
 
     onNodeReady.connect(
         htps::make_function(this, &BoardGroup::onTableNodeAdded));
@@ -88,9 +87,10 @@ void BoardGroup::createNewToken(BoardTileData const data,
     auto new_tile_token{tokens_scene_node->createSceneNode<Token>("tileNode")};
 
     // Set the position in the scene depending on the board position
-    new_tile_token->prop<Position>().set(board2Scene(board_position));
-    new_tile_token->setBox(rectFromSize(size));
-
+    new_tile_token->prop<Position>().set(board2Scene2(board_position));
+    new_tile_token->setInnerScale(size);
+//    new_tile_token->prop<Scale>() = size;
+    (void)size;
     // Add it to the board
     auto board_model{componentOfType<board::BoardManager>()};
     board_model->setTile(board_position, new_tile_token);
@@ -293,7 +293,8 @@ vector2df BoardGroup::board2Scene(const vector2dst& bPosition) const
 
 vector2df BoardGroup::board2Scene2(const vector2dst& bPosition) const
 {
-    return {vector2df{-0.5F, -0.5F} + (board2SceneFactor() * bPosition)};
+    return {vector2df{-0.5F, -0.5F} + (board2SceneFactor() / 2.0F) +
+            (board2SceneFactor() * bPosition)};
 }
 
 vector2df BoardGroup::tileSize() const
