@@ -81,7 +81,6 @@ public:
     void update() override;
     htps::vector2df board2SceneFactor() const;
     htps::vector2df board2Scene(const htps::vector2dst& bPosition) const;
-    htps::vector2df board2Scene2(const htps::vector2dst& bPosition) const;
     htps::vector2df tileSize() const;
 
 private:

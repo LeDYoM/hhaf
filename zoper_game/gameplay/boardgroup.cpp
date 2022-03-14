@@ -87,9 +87,9 @@ void BoardGroup::createNewToken(BoardTileData const data,
     auto new_tile_token{tokens_scene_node->createSceneNode<Token>("tileNode")};
 
     // Set the position in the scene depending on the board position
-    new_tile_token->prop<Position>().set(board2Scene2(board_position));
-    new_tile_token->setInnerScale(size);
-//    new_tile_token->prop<Scale>() = size;
+    new_tile_token->prop<Position>().set(board2Scene(board_position));
+//    new_tile_token->setInnerScale(size);
+    new_tile_token->prop<Scale>() = size;
     (void)size;
     // Add it to the board
     auto board_model{componentOfType<board::BoardManager>()};
@@ -288,18 +288,13 @@ vector2df BoardGroup::board2SceneFactor() const
 
 vector2df BoardGroup::board2Scene(const vector2dst& bPosition) const
 {
-    return (board2SceneFactor() * bPosition);
-}
-
-vector2df BoardGroup::board2Scene2(const vector2dst& bPosition) const
-{
     return {vector2df{-0.5F, -0.5F} + (board2SceneFactor() / 2.0F) +
             (board2SceneFactor() * bPosition)};
 }
 
 vector2df BoardGroup::tileSize() const
 {
-    return board2Scene({1, 1});
+    return board2SceneFactor();
 }
 
 htps::sptr<board::BoardManager> BoardGroup::boardManager() noexcept

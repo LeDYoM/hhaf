@@ -28,7 +28,6 @@ public:
 
     void onCreated() override;
 
-    void setInnerScale(htps::vector2df const& innerScale);
     static void resetTileCounter();
 
     bool canBeMovedTo(BoardPositionType const& dest_position) const override;
@@ -40,7 +39,6 @@ public:
 
 private:
     static htps::u32 tile_counter_;
-    htps::size_type inner_scale_transformation;
     htps::vector2df board2SceneFactor_;
     htps::sptr<haf::anim::AnimationComponent> animation_component_;
 };

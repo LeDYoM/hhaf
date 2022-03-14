@@ -26,20 +26,18 @@ Token::Token(SceneNode* const parent, str name) :
         parent, name + str::to_str(tile_counter_) + str::to_str(tile_counter_)},
     animation_component_{component<anim::AnimationComponent>()}
 {
-    ++tile_counter_;
-    renderizableBuilder()
-        .name("Node" + str::to_str(tile_counter_))
-        .figType(FigType_t::PolygonSprite)
-        .pointCount(30U)
-        .create();
 }
 
 Token::~Token() = default;
 
 void Token::onCreated()
 {
-    reserveExtraTransformations(1U);
-    inner_scale_transformation = addTransformation();
+    ++tile_counter_;
+    renderizableBuilder()
+        .name("Node" + str::to_str(tile_counter_))
+        .figType(FigType_t::PolygonSprite)
+        .pointCount(30U)
+        .create();
 }
 
 bool Token::canBeMovedTo(BoardPositionType const&) const
@@ -52,17 +50,11 @@ void Token::resetTileCounter()
     tile_counter_ = 0U;
 }
 
-void Token::setInnerScale(htps::vector2df const& innerScale)
-{
-    getTransformation(inner_scale_transformation).prop<Scale>() = innerScale;
-}
-
 void Token::tileAdded()
 {
     BaseClass::tileAdded();
     DisplayLog::info("Token ", name(), " appeared at ", boardPosition());
 
-    /*
         auto const AppearTokenTime = time::TimePoint_as_miliseconds(1000U);
         auto const endScale{prop<Scale>()()};
 
@@ -77,7 +69,7 @@ void Token::tileAdded()
             animation_component_->addAnimation(
                 std::move(property_animation_builder));
         }
-    */
+
     /*
         {
             auto property_animation_builder{
