@@ -44,7 +44,6 @@ void Token::setBox(const Rectf32& box)
 bool Token::canBeMovedTo(BoardPositionType const&) const
 {
     return true;
-    //    return !TokenZones::pointInCenter(dest_position);
 }
 
 void Token::resetTileCounter()
