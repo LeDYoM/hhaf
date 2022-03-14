@@ -151,7 +151,7 @@ constexpr vector2df defaultRightTopTexture{defaultRightTopPosition +
 void setQuad(BasicVertexArray& vertices)
 {
     using namespace scene;
-    static Vertex quad_vertex_buffer[] = {
+    static Vertex const quad_vertex_buffer[] = {
         Vertex{defaultLeftBottomPosition, colors::White,
                defaultLeftBottomTexture},
         Vertex{defaultRightBottomPosition, colors::White,
