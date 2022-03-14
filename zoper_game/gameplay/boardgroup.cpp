@@ -68,6 +68,7 @@ void BoardGroup::addPlayer()
 
     // Create the player instance
     player_ = tokens_scene_node->createSceneNode<Player>("playerNode");
+    player_->prop<Scale>() = tileSize();
 
     // Add it to the board and to the scene nodes
     componentOfType<board::BoardManager>()->setTile(
@@ -75,8 +76,7 @@ void BoardGroup::addPlayer()
 }
 
 void BoardGroup::createNewToken(BoardTileData const data,
-                                vector2dst const& board_position,
-                                vector2df const& size)
+                                vector2dst const& board_position)
 {
     using namespace haf::board;
 
@@ -88,9 +88,8 @@ void BoardGroup::createNewToken(BoardTileData const data,
 
     // Set the position in the scene depending on the board position
     new_tile_token->prop<Position>().set(board2Scene(board_position));
-    //    new_tile_token->setInnerScale(size);
-    new_tile_token->prop<Scale>() = size;
-    (void)size;
+    new_tile_token->prop<Scale>() = tileSize();
+
     // Add it to the board
     auto board_model{componentOfType<board::BoardManager>()};
     board_model->setTile(board_position, new_tile_token);

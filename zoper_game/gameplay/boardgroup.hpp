@@ -42,8 +42,7 @@ public:
     void onCreated() override;
 
     void createNewToken(BoardTileData const data,
-                        htps::vector2dst const& board_position,
-                        htps::vector2df const& size);
+                        htps::vector2dst const& board_position);
 
     void tileRemoved(const htps::vector2dst,
                      haf::board::SITilePointer&) override;

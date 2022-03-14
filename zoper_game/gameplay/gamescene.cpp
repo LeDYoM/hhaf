@@ -203,8 +203,7 @@ void GameScene::generateNextToken()
 
     // Set the new token
     board_group_->createNewToken(
-        static_cast<BoardGroup::BoardTileData>(newToken), new_position,
-        board_group_->tileSize());
+        static_cast<BoardGroup::BoardTileData>(newToken), new_position);
 
     // Select the next token zone.
     next_token_part_ = ((next_token_part_ + 1U) % NumWays);
