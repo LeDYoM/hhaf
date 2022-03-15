@@ -15,6 +15,8 @@ public:
     using BaseClass::BaseClass;
     void onCreated() override;
 
+    void update() override;
+
     void setText(str const& text);
 };
 }  // namespace haf

@@ -4,7 +4,7 @@
 #include <htypes/include/types.hpp>
 #include <menu_paged/include/menu_paged_option.hpp>
 #include <haf/include/scene/scene_node.hpp>
-#include <haf/include/scene_nodes/scene_node_table.hpp>
+#include <haf/include/scene_nodes/scene_node_table_text.hpp>
 #include <haf/include/scene_nodes/scene_node_text.hpp>
 
 #include <htypes/include/connection.hpp>
@@ -13,10 +13,10 @@
 namespace haf::scene
 {
 class MenuPaged;
-class MenuPage : public scene::nodes::TableNode<nodes::SceneNodeText>
+class MenuPage : public scene::nodes::TextTableNode
 {
 private:
-    using BaseClass = scene::nodes::TableNode<nodes::SceneNodeText>;
+    using BaseClass = scene::nodes::TextTableNode;
 public:
     using BaseClass::BaseClass;
     ~MenuPage() override;
@@ -24,7 +24,11 @@ public:
     void onCreated() override;
     void configure(htps::vector<htps::sptr<MenuPagedOption>> options,
                    PageOptions page_options = PageOptions{});
+    void update() override;
     htps::size_type SelectedOptionAtRow(const htps::size_type row) const;
+
+    htps::PropertyState<htps::vector<htps::sptr<MenuPagedOption>>> menu_options;
+    htps::PropertyState<PageOptions> page_options_;
 
     htps::emitter<const htps::s32> Forward;
     htps::emitter<htps::vector<htps::s32>> Accepted;

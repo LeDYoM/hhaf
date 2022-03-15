@@ -72,6 +72,11 @@ size_type MenuPage::SelectedOptionAtRow(const size_type row) const
     return static_cast<size_type>(-1);
 }
 
+void MenuPage::update()
+{
+    BaseClass::update2();
+}
+
 void MenuPage::configure(vector<sptr<MenuPagedOption>> options,
                          PageOptions page_options)
 {
