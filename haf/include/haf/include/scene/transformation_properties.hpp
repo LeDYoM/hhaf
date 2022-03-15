@@ -8,9 +8,6 @@
 namespace haf::scene
 {
 template <typename Scalar>
-struct OriginScalar : PropertyStateBase<htps::vector2d<Scalar>> {};
-
-template <typename Scalar>
 struct RotationScalar : PropertyStateBase<Scalar> {};
 
 template <typename Scalar>
@@ -25,13 +22,12 @@ struct ScaleScalar : PropertyStateBase<htps::vector2d<Scalar>>
 template <typename Scalar>
 struct PositionScalar : PropertyStateBase<htps::vector2d<Scalar>> {};
 
-using Origin   = OriginScalar<Matrix4x4::Scalar>;
 using Rotation = RotationScalar<Matrix4x4::Scalar>;
 using Scale    = ScaleScalar<Matrix4x4::Scalar>;
 using Position = PositionScalar<Matrix4x4::Scalar>;
 
 using TransformationProperties =
-    types::PropertyGroup<Origin, Rotation, Scale, Position>;
+    types::PropertyGroup<Rotation, Scale, Position>;
 
 }  // namespace haf::scene
 

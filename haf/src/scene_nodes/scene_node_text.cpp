@@ -1,6 +1,7 @@
 #include <haf/include/scene_nodes/scene_node_text.hpp>
 #include <haf/include/render/renderizables.hpp>
 
+#include "scene_node_letter.hpp"
 #include "resources/font_utils.hpp"
 
 #include <haf/include/resources/ifont.hpp>
@@ -67,82 +68,102 @@ inline void updateAlignmentY(
 
     position.set(vector2df{position.get().x, newPosY});
 }
-}  // namespace
 
-SceneNodeText::SceneNodeText(types::rptr<SceneNode> parent, str name) :
-    BaseClass{parent, std::move(name)}
+inline TextBaseSize updateTextRenderData(res::FontUtils const& font_utils,
+                                         TextBaseSize const& text_base_size)
 {
-    inner_transformation_ = addTransformation();
+    if (!text_base_size.text().empty())
+    {
+        return {text_base_size.text(),
+                font_utils.getTextRenderData(text_base_size.text()).text_size};
+    }
+
+    return text_base_size.value();
 }
+
+}  // namespace
 
 void SceneNodeText::onCreated()
 {
-    setBaseScaleForCurrentView();
+    BaseClass::onCreated();
+    inner_scale_    = addTransformation();
+    inner_position_ = addTransformation();
 }
 
 void SceneNodeText::update()
 {
-    // TODO: Delete
-    auto const& current_text2{prop<SceneNodeTextProperties>().prop<Text>()()};
-
-    if (current_text2 == "0.")
+    BaseClass::update();
+    if (ps_readResetHasAnyChanged(prop<Font>(), prop<Text>(),
+                                  prop<TextBaseSizeProperty>()))
     {
-        int a = 0;
-        (void)(a);
-    }
-
-    auto& pr = prop<SceneNodeTextProperties>();
-    res::FontUtils const font_utils{pr.get<Font>().get()};
-    auto const textSize = pr.get<Font>() != nullptr
-        ? font_utils.textSize(pr.get<Text>())
-        : Rectf32{};
-
-    if (pr.hasChanged<Font>() || pr.hasChanged<Text>() ||
-        pr.hasChanged<BaseScale>())
-    {
-        pr.readResetHasChanged<BaseScale>();
-        pr.setChanged<AlignmentSize>();
-        pr.readResetHasChanged<Font>();
-        pr.readResetHasChanged<Text>();
-
-        // TODO: Delete
-        auto a = pr.get<Font>();
-        (void)a;
-
-        if (pr.get<Font>() && !(pr.get<Text>().empty()))
+        if (prop<Font>()() != nullptr && !(prop<Text>()().empty()))
         {
-            auto font(pr.get<Font>());
-            auto texture(pr.get<Font>()->getTexture());
+            auto font{prop<Font>()()};
+            auto texture{prop<Font>()()->getTexture()};
 
-            f32 x{0.F};
-            f32 y{0.F};
+            // Initialize counter of characters
+            types::size_type counter{0U};
 
-            // Create one quad for each character
-            using counter_t = decltype(sceneNodes().size());
+            // Get the counter of letters in the previous text set
+            types::size_type const old_counter{sceneNodes().size()};
 
-            Rectf32 bounds{x, y, 0.0F, 0.0F};
-            counter_t counter{0U};
-            counter_t const old_counter{sceneNodes().size()};
-            auto const& text_color{pr.get<TextColor>()};
-            auto const boxes{font_utils.getTextBoxes(pr.get<Text>())};
+            // Get the text to render
+            auto const& current_text{prop<Text>()()};
+
+            // Get The text color for each character
+            auto const text_color{prop<TextColor>()()};
+
+            // Initialize the index of the current character
             size_type indexChar{0U};
 
-            auto const& current_text{pr.get<Text>()};
+            // Initialize the node for each letter we are going to use
+            types::sptr<SceneNodeLetter> letterNode;
+
+            // Prepare the text render data
+
+            // Create the font utils to use
+            res::FontUtils const font_utils{prop<Font>()().get()};
+
+            // Update the text base size property. If it contains a text, it
+            // has preference, but prepare the size value of these text and
+            // update the property accordinly.
+            prop<TextBaseSizeProperty>() = updateTextRenderData(
+                font_utils, prop<TextBaseSizeProperty>()());
+
+            // This was an internal change. Forget it happened.
+            prop<TextBaseSizeProperty>().resetHasChanged();
+
+            auto const text_render_data{
+                font_utils.getTextRenderData(current_text)};
+
+            auto const text_base_size{prop<TextBaseSizeProperty>()()};
+
+            vector2df const text_render_size{
+                text_base_size.value().x == htps::f32{}
+                    ? text_render_data.text_size.x
+                    : text_base_size.value().x,
+                text_base_size.value().y == htps::f32{}
+                    ? text_render_data.text_size.y
+                    : text_base_size.value().y};
+
+            getTransformation(inner_scale_).prop<Scale>() =
+                vector2df{1.0F / text_render_size};
+
+            getTransformation(inner_position_).prop<Position>() =
+                -(text_render_size / 2.0F);
 
             for (auto curChar : current_text)
             {
-                types::sptr<RenderizableSceneNode> letterNode;
                 // In case we already have a node containing the letter,
                 // reuse it. If not, create a new one.
                 if (counter < old_counter)
                 {
-                    letterNode =
-                        std::dynamic_pointer_cast<RenderizableSceneNode>(
-                            sceneNodes()[counter]);
+                    letterNode = std::dynamic_pointer_cast<SceneNodeLetter>(
+                        sceneNodes()[counter]);
                 }
                 else
                 {
-                    letterNode = createSceneNode<RenderizableSceneNode>(
+                    letterNode = createSceneNode<SceneNodeLetter>(
                         "text_" + str::to_str(counter));
                     letterNode->renderizableBuilder()
                         .name("text_" + str::to_str(counter))
@@ -150,36 +171,20 @@ void SceneNodeText::update()
                         .create();
                 }
 
-                {
-                    Rectf32 letterBox{boxes[indexChar++]};
-                    if (prop<BaseScale>()() != vector2df{0.0F, 0.0F})
-                    {
-                        letterBox.scale(prop<BaseScale>()());
-                    }
-                    letterNode->prop<Position>().set(letterBox.leftTop() +
-                                                     letterBox.size() / 2.0F);
-                    letterNode->node()->prop<render::ColorProperty>().set(
-                        text_color);
-                    letterNode->prop<Scale>().set(vector2df{letterBox.size()});
+                auto const& ch_data{
+                    text_render_data.character_render_data[indexChar]};
 
-                    ++counter;
-                    Rectf32 const textureUV{font->getTextureBounds(curChar)};
-                    letterNode->node()->setTextureAndTextureRectFromTextureSize(
-                        texture, textureUV);
+                letterNode->prop<Position>() = ch_data.character_position;
+                letterNode->prop<Scale>()    = ch_data.character_size;
 
-                    // Update the current bounds
-                    {
-                        using namespace std;
-                        bounds =
-                            Rectf32{min(bounds.left, letterBox.left),
-                                    min(bounds.top, letterBox.top),
-                                    max(bounds.right(), letterBox.right()),
-                                    max(bounds.bottom(), letterBox.bottom())};
-                    }
-                }
+                letterNode->node()->prop<render::ColorProperty>().set(
+                    text_color);
 
-                // Advance to the next character
-                x += font->getAdvance(curChar);
+                letterNode->setCharacterTextureData(
+                    texture, font->getTextureBounds(curChar));
+
+                ++counter;
+                ++indexChar;
             }
 
             // Remove the unused letters.
@@ -196,11 +201,8 @@ void SceneNodeText::update()
                 removeSceneNode(sceneNodes()[index]);
             }
 
-            // Force reposition if text changed
-            pr.setChanged<AlignmentSize>();
-
             // Force update color
-            pr.readResetHasChanged<TextColor>();
+            prop<TextColor>().resetHasChanged();
         }
         else
         {
@@ -208,48 +210,15 @@ void SceneNodeText::update()
         }
     }
 
-    if (pr.readResetHasChanged<TextColor>())
+    if (prop<TextColor>().readResetHasChanged())
     {
-        Color const& text_color{pr.get<TextColor>()};
+        Color const& text_color{prop<TextColor>()()};
 
         for_each_sceneNode_as<RenderizableSceneNode>(
             [&text_color](types::sptr<RenderizableSceneNode> const& sNode) {
                 sNode->node()->prop<render::ColorProperty>() = text_color;
             });
     }
-
-    if (pr.get<Font>() != nullptr)
-    {
-        bool const as_rr_hasChanged{pr.readResetHasChanged<AlignmentSize>()};
-        bool const align_x{pr.readResetHasChanged<AlignmentX>()};
-        bool const align_y{pr.readResetHasChanged<AlignmentY>()};
-
-        if (as_rr_hasChanged || align_x)
-        {
-            updateAlignmentX(
-                getTransformation(inner_transformation_).prop<Position>(),
-                prop<AlignmentX>().get(), textSize.width,
-                pr.get<AlignmentSize>());
-        }
-
-        if (as_rr_hasChanged || align_y)
-        {
-            // TODO: Reenable alignment Y
-            /*
-            updateAlignmentY(
-                getTransformation(inner_transformation_).prop<Position>(),
-                prop<AlignmentY>().get(), textSize.height,
-                pr.get<AlignmentSize>());
-                */
-        }
-    }
-}
-
-void SceneNodeText::setBaseScaleForCurrentView()
-{
-    prop<BaseScale>() = ancestor<Scene>()->cameraComponent()->view().size() /
-        // TODO: Here we have the screen size. Find a way to generalize.
-        vector2df{800.0F, 600.0F};
 }
 
 }  // namespace haf::scene::nodes

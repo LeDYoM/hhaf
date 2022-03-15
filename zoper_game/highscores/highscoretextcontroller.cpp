@@ -15,10 +15,12 @@
 #include <haf/include/input/input_component.hpp>
 #include <haf/include/scene_components/camera_component.hpp>
 #include <haf/include/component/component_container.hpp>
+#include <haf/include/scene_nodes/scene_node_text_properties.hpp>
 
 using namespace htps;
 using namespace haf;
 using namespace haf::scene;
+using namespace haf::scene::nodes;
 
 namespace zoper
 {
@@ -28,19 +30,14 @@ void HighScoreTextController::onCreated()
 {
     BaseClass::onCreated();
     prop<TableSize>().set({3U, NumHighScore});
-    allElementsCreated +=
-        make_function(this, &HighScoreTextController::tableNodeCreated);
-    prop<MoveGroup>() = true;
-    prop<ScaleGroup>() = false;
 }
 
-void HighScoreTextController::update()
+void HighScoreTextController::onAllTableElementsCreated(htps::vector2dst const)
 {
-    BaseClass::update2();
-}
+//    prop<Scale>() = {0.5F, 0.5F};
+    set_property_for_each_tableSceneNode<TextBaseSizeProperty>(
+        TextBaseSize{'A', 8U});
 
-void HighScoreTextController::tableNodeCreated()
-{
     normal_font_ = subSystem<res::IResourceRetriever>()
                        ->getTTFont(HighScoresResources::MenuFontId)
                        ->font(72);
@@ -57,14 +54,7 @@ void HighScoreTextController::tableNodeCreated()
                           subSystem<shdata::ISharedData>())
                           .view(GameSharedData::address())
                           ->score;
-/*
-    Rectf32 textBox{
-        rectFromSize(ancestor<Scene>()->cameraComponent()->view().size())
-            .setLeftTop({0, 250})
-            .setSize({2000, 1500})};
-    prop<haf::scene::Position>().set(textBox.leftTop());
-    prop<TableNodeProperties>().set<SceneNodeSize>(textBox.size());
-*/
+
     size_type positionInTable{0U};
     const bool isInserting{
         high_scores_data_.tryInsertHighScore(gameScore, positionInTable)};

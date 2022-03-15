@@ -1,3 +1,7 @@
+#ifdef USE_PRAGMA_ONCE
+#pragma once
+#endif
+
 #ifndef HAF_SCENE_NODES_SCENE_NODE_TEXT_INCLUDE_HPP
 #define HAF_SCENE_NODES_SCENE_NODE_TEXT_INCLUDE_HPP
 
@@ -20,7 +24,7 @@ public:
     /**
      * @brief Constructor
      */
-    SceneNodeText(types::rptr<SceneNode> parent, htps::str name);
+    using BaseClass::BaseClass;
 
     void onCreated() override;
 
@@ -34,11 +38,10 @@ public:
      */
     using SceneNodeTextProperties::prop;
 
-    void setBaseScaleForCurrentView();
-
 protected:
     void update() override final;
-    types::size_type inner_transformation_;
+    types::size_type inner_scale_;
+    types::size_type inner_position_;
 };
 
 }  // namespace haf::scene::nodes

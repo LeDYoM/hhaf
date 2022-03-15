@@ -8,7 +8,7 @@ using namespace htps;
 namespace haf::sys
 {
 RenderTarget::RenderTarget(rptr<haf::backend::IRenderTarget> renderTarget) :
-    irender_target_{std::move(renderTarget)}
+    irender_target_{std::move(renderTarget)}, icamera_{nullptr}
 {
     LogAsserter::log_assert(renderTarget != nullptr,
                             "renderTarget parameter is nullptr");
@@ -36,6 +36,7 @@ void RenderTarget::update()
 
     irender_target_->render(render_element_container_.begin(),
                             render_element_container_.end());
+    icamera_ = nullptr;
 }
 
 void RenderTarget::clear()
@@ -47,26 +48,6 @@ void RenderTarget::clearRenderQueue()
 {
     render_element_container_.clear();
     icamera_ = nullptr;
-}
-
-Rectf32 RenderTarget::viewPort() const
-{
-    return irender_target_->viewPort();
-}
-
-void RenderTarget::setViewPort(const Rectf32& nViewPort)
-{
-    irender_target_->setViewPort(nViewPort);
-}
-
-Rectf32 RenderTarget::viewRect() const
-{
-    return irender_target_->viewRect();
-}
-
-void RenderTarget::setViewRect(const Rectf32& nViewRect)
-{
-    irender_target_->setViewRect(nViewRect);
 }
 
 backend::IRenderElement* RenderTarget::createRenderElement()

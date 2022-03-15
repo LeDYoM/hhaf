@@ -51,9 +51,7 @@ void BoardGroup::configure(vector2dst size,
 
 void BoardGroup::onCreated()
 {
-    prop<MoveGroup>()  = true;
-    prop<ScaleGroup>() = true;
-    tokens_scene_node  = createSceneNode<haf::scene::TransformableSceneNode>(
+    tokens_scene_node = createSceneNode<haf::scene::TransformableSceneNode>(
         "tokens_scene_node");
 
     onNodeReady.connect(
@@ -101,11 +99,6 @@ void BoardGroup::tileRemoved(const vector2dst, board::SITilePointer& tile)
     LogAsserter::log_assert(std::dynamic_pointer_cast<Token>(tile) != nullptr,
                             "Trying to delete invalid type from board");
     tokens_scene_node->removeSceneNode(std::dynamic_pointer_cast<Token>(tile));
-}
-
-void BoardGroup::update()
-{
-    BaseClass::update2();
 }
 
 void BoardGroup::onTableNodeAdded(htps::sptr<SceneNode> const&)

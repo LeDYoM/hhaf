@@ -1,3 +1,7 @@
+#ifdef USE_PRAGMA_ONCE
+#pragma once
+#endif
+
 #ifndef HAF_SCENE_NODE_TEXT_PROPERTIES_INCLUDE_HPP
 #define HAF_SCENE_NODE_TEXT_PROPERTIES_INCLUDE_HPP
 
@@ -8,6 +12,7 @@
 #include <haf/include/resources/ifont.hpp>
 #include <haf/include/scene/scene_node.hpp>
 #include <haf/include/scene/color.hpp>
+#include <haf/include/scene_nodes/text_base_size.hpp>
 
 namespace haf::scene::nodes
 {
@@ -35,6 +40,9 @@ struct Font : PropertyStateBase<htps::sptr<res::IFont>>
 struct TextColor : PropertyStateBase<Color>
 {};
 
+struct TextBaseSizeProperty : PropertyStateBase<TextBaseSize>
+{};
+
 struct AlignmentX : PropertyStateBase<AlignmentXModes>
 {};
 
@@ -44,16 +52,13 @@ struct AlignmentY : PropertyStateBase<AlignmentYModes>
 struct AlignmentSize : PropertyStateBase<htps::vector2df>
 {};
 
-struct BaseScale : PropertyStateBase<htps::vector2df>
-{};
-
 using SceneNodeTextProperties = types::PropertyGroup<Text,
                                                      Font,
                                                      TextColor,
+                                                     TextBaseSizeProperty,
                                                      AlignmentX,
                                                      AlignmentY,
-                                                     AlignmentSize,
-                                                     BaseScale>;
+                                                     AlignmentSize>;
 
 }  // namespace haf::scene::nodes
 

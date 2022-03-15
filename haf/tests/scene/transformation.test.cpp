@@ -17,11 +17,6 @@ TEST_CASE("haf::scene::Transformation", "[haf][scene][Transformation]")
     CHECK(transformation.updateTransformIfNecessary());
     CHECK_FALSE(transformation.updateTransformIfNecessary());
 
-    transformation.prop<Origin>() = {2.0F, 4.0F};
-
-    CHECK(transformation.updateTransformIfNecessary());
-    CHECK_FALSE(transformation.updateTransformIfNecessary());
-
     transformation.prop<Scale>() = {2.0F, 4.0F};
 
     CHECK(transformation.updateTransformIfNecessary());

@@ -14,14 +14,11 @@ struct NormalColor : PropertyStateBase<Color> {};
 
 struct SelectedColor : PropertyStateBase<Color> {};
 
-struct SceneNodeSizeForPages : PropertyStateBase<htps::vector2df> {};
-
 struct FinishSceneAtEnd : PropertyStateBase<bool> {};
 
 using MenuPagedProperties = types::PropertyGroup<NormalTextFont,
                                                 NormalColor,
                                                 SelectedColor,
-                                                SceneNodeSizeForPages,
                                                 FinishSceneAtEnd>;
 
 }  // namespace haf::scene

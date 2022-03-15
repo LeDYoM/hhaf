@@ -39,7 +39,7 @@ void CameraComponent::onAttached()
         sys::getSystem<sys::RenderSystem>(attachedNode()).currentRenderTarget();
     p_->icamera_ = p_->render_target_->createCamera();
 
-    view     = decltype(view)::value_type{{0, 0}, {1000, 1000}};
+    view     = decltype(view)::value_type{{-0.5F, -0.5F}, {1.0F, 1.0F}};
     viewPort = decltype(viewPort)::value_type{{0, 0}, {1, 1}};
 }
 

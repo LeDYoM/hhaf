@@ -10,7 +10,9 @@ class GameOverSceneNode : public haf::scene::TransformableSceneNode
     using BaseClass = haf::scene::TransformableSceneNode;
 
 public:
-    GameOverSceneNode(haf::scene::SceneNode* const parent, htps::str name);
+    using BaseClass::BaseClass;
+
+    void onCreated() override;
 
 private:
     htps::sptr<haf::scene::TransformableSceneNode> game_over_rg_;

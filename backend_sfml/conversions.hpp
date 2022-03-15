@@ -108,7 +108,7 @@ inline auto to_sf_type(htps::f32 const* const matrix,
                             to_sf_type(shader)};
 }
 
-inline Camera* to_sf_type(ICamera *camera)
+inline Camera* to_sf_type(ICamera * const camera)
 {
     return dynamic_cast<Camera*>(camera);
 }

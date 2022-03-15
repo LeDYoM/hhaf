@@ -85,9 +85,6 @@ void MainMenu::onCreated()
 {
     BaseClass::onCreated();
 
-    Rectf32 textBox{ancestor<Scene>()->cameraComponent()->view()};
-    textBox.height = textBox.height / 4;
-
     prop<MenuPagedProperties>()
         .put<NormalTextFont>(
 #ifdef TEST_BMP_FONT
@@ -99,47 +96,45 @@ void MainMenu::onCreated()
 #endif
                 )
         .put<NormalColor>(colors::Blue)
-        .put<SelectedColor>(colors::Red)
-        .put<SceneNodeSizeForPages>(textBox.size());
+        .put<SelectedColor>(colors::Red);
 
-    textBox.moveY(0.5F);
-    prop<Position>() = textBox.leftTop();
     vector_shared_pointers<scene::MenuPage> menu_steps;
+    prop<Scale>() = Scale::value_type{1.0F, 0.3F};
 
     // Create and register menu pages
     {
         PageOptions main_page_options{true};
-        auto menuPageMain{createAndConfigureMenuPage(
-            "menuPageMain",
-            vector_shared_pointers<MenuPagedOption>{
-                make_option("Play Token mode", RangeOption(), 1),
-                make_option("Play Time mode", RangeOption(), 2),
-                make_option("Options", RangeOption(), 3),
-                make_option("Exit", RangeOption(), MenuPagedOption::GoBack)},
-            main_page_options)};
+        auto menuPageMain{createMenuPage("menuPageMain")};
+        menuPageMain->menu_options = vector_shared_pointers<MenuPagedOption>{
+            make_option("Play Token mode", RangeOption(), 1),
+            make_option("Play Time mode", RangeOption(), 2),
+            make_option("Options", RangeOption(), 3),
+            make_option("Exit", RangeOption(), MenuPagedOption::GoBack)};
+        //        menuPageMain->menu_page_options = main_page_options;
+
+        menuPageMain->onTableNodeCreated +=
+            make_function(this, &MainMenu::onTableNodeCreated);
 
         menu_steps.emplace_back(std::move(menuPageMain));
     }
 
     {
-        auto menuPageByToken{createAndConfigureMenuPage(
-            "menuPageByToken",
-            vector_shared_pointers<MenuPagedOption>{
-                make_option("Start level Token Mode", RangeOption(1U, 10U)),
-                make_option("Play", RangeOption(), MenuPagedOption::Accept),
-                make_option("Back", RangeOption(), MenuPagedOption::GoBack)})};
+        auto menuPageByToken{createMenuPage("menuPageByToken")};
+        menuPageByToken->menu_options = vector_shared_pointers<MenuPagedOption>{
+            make_option("Start level Token Mode", RangeOption(1U, 10U)),
+            make_option("Play", RangeOption(), MenuPagedOption::Accept),
+            make_option("Back", RangeOption(), MenuPagedOption::GoBack)};
 
         menu_steps.emplace_back(std::move(menuPageByToken));
     }
     menu_steps.back()->Accepted.connect(
         make_function(this, &MainMenu::goTokenGame));
     {
-        auto menuPageByTime{createAndConfigureMenuPage(
-            "menuPageByTime",
-            vector_shared_pointers<MenuPagedOption>{
-                make_option("Start level Time Mode", RangeOption(1U, 10U)),
-                make_option("Play", RangeOption(), MenuPagedOption::Accept),
-                make_option("Back", RangeOption(), MenuPagedOption::GoBack)})};
+        auto menuPageByTime{createMenuPage("menuPageByTime")};
+        menuPageByTime->menu_options = vector_shared_pointers<MenuPagedOption>{
+            make_option("Start level Time Mode", RangeOption(1U, 10U)),
+            make_option("Play", RangeOption(), MenuPagedOption::Accept),
+            make_option("Back", RangeOption(), MenuPagedOption::GoBack)};
 
         menu_steps.emplace_back(std::move(menuPageByTime));
     }
@@ -148,20 +143,17 @@ void MainMenu::onCreated()
         make_function(this, &MainMenu::goTimeGame));
 
     {
-        auto menuPageOptions{createAndConfigureMenuPage(
-            "menuPageOptions",
-            vector_shared_pointers<MenuPagedOption>{
-                make_option("Antialiasing", RangeOption{Antialiasing{}}),
-                make_option("Resolution",
-                            RangeOption(string_vector{"Worst", "Bad", "Normal",
-                                                      "Good", "Best"})),
-                make_option("Fullscreen",
-                            RangeOption(string_vector{"No", "Yes"})),
-                make_option("VSync", RangeOption(string_vector{"No", "Yes"})),
-                make_option("Redefine keyboard", RangeOption()),
-                make_option("Accept", RangeOption(), MenuPagedOption::GoBack),
-                make_option("Cancel", RangeOption(),
-                            MenuPagedOption::GoBack)})};
+        auto menuPageOptions{createMenuPage("menuPageOptions")};
+        menuPageOptions->menu_options = vector_shared_pointers<MenuPagedOption>{
+            make_option("Antialiasing", RangeOption{Antialiasing{}}),
+            make_option("Resolution",
+                        RangeOption(string_vector{"Worst", "Bad", "Normal",
+                                                  "Good", "Best"})),
+            make_option("Fullscreen", RangeOption(string_vector{"No", "Yes"})),
+            make_option("VSync", RangeOption(string_vector{"No", "Yes"})),
+            make_option("Redefine keyboard", RangeOption()),
+            make_option("Accept", RangeOption(), MenuPagedOption::GoBack),
+            make_option("Cancel", RangeOption(), MenuPagedOption::GoBack)};
 
         menu_steps.emplace_back(std::move(menuPageOptions));
     }
@@ -169,6 +161,12 @@ void MainMenu::onCreated()
     configure_menu(std::move(menu_steps));
 
     prop<FinishSceneAtEnd>() = true;
+}
+
+void MainMenu::onTableNodeCreated(htps::vector2dst,
+                                  htps::sptr<SceneNodeText> const& node)
+{
+    node->prop<TextBaseSizeProperty>() = TextBaseSize{'A', 8U};
 }
 
 }  // namespace zoper

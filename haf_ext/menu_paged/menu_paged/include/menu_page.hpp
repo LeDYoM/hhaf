@@ -22,13 +22,12 @@ public:
     ~MenuPage() override;
 
     void onCreated() override;
-    void configure(htps::vector<htps::sptr<MenuPagedOption>> options,
-                   PageOptions page_options = PageOptions{});
     void update() override;
-    htps::size_type SelectedOptionAtRow(const htps::size_type row) const;
 
     htps::PropertyState<htps::vector<htps::sptr<MenuPagedOption>>> menu_options;
-    htps::PropertyState<PageOptions> page_options_;
+    htps::PropertyState<PageOptions> menu_page_options;
+
+    htps::size_type SelectedOptionAtRow(const htps::size_type row) const;
 
     htps::emitter<const htps::s32> Forward;
     htps::emitter<htps::vector<htps::s32>> Accepted;
@@ -48,6 +47,7 @@ protected:
     htps::size_type selected_item_{0U};
 
 private:
+    void onAllTableElementsCreated(htps::vector2dst const) override;
     void standarizeText(const htps::sptr<ContainedElement>& ntext);
     void goDown();
     void goUp();

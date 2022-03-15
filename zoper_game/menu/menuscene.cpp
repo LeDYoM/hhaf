@@ -12,7 +12,6 @@
 #include <haf/include/debug_utils/displayvar_console.hpp>
 
 #include <haf/include/resources/iresource_configurator.hpp>
-#include <haf/include/scene_components/camera_component.hpp>
 #include <haf/include/render/renderizables.hpp>
 #include <haf/include/render/renderizable_builder.hpp>
 #include <haf/include/scene_nodes/renderizables_scene_node.hpp>
@@ -39,11 +38,6 @@ void MenuScene::onCreated()
 {
     BaseClass::onCreated();
 
-    // Set the default view for this scene
-//    cameraComponent()->view = DefaultView;
-    cameraComponent()->view = SceneBox{-0.5F, -0.5F, 1.0F, 1.0F};
-//    cameraComponent()->view = SceneBox{-0.5F, -0.5F, 1.0F, 1.0F};
-
     // Load the necessary resources
     auto resources_configurator{subSystem<res::IResourcesConfigurator>()};
     resources_configurator->setResourceConfigFile("resources.txt");
@@ -59,7 +53,7 @@ void MenuScene::onCreated()
     auto main_menu_background_logo{
         createSceneNode<RenderizableSceneNode>("main_menu_background_logo")};
     main_menu_background_logo->prop<Position>() = vector2df{0.F, -0.28F};
-    main_menu_background_logo->prop<Scale>() = vector2d{0.5F, 0.4F};
+    main_menu_background_logo->prop<Scale>() = vector2df{0.5F, 0.4F};
     main_menu_background_logo->renderizableBuilder()
         .name("mainLogo")
         .figType(FigType_t::Sprite)

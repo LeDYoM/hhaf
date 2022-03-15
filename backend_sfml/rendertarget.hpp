@@ -22,9 +22,8 @@ public:
 
     void setViewPort(const htps::Rectf32& nviewport) override;
     htps::Rectf32 viewPort() const override;
-    void setViewRect(const htps::Rectf32& nviewRect) override;
-    htps::Rectf32 viewRect() const override;
-    void updateCamera(ICamera*) override;
+
+    void updateCamera(ICamera* const) override;
     void clear() override;
 
     htps::str info() const override;
@@ -35,6 +34,8 @@ public:
 
     IRenderElement* createRenderElement() override;
     bool destroyRenderElement(IRenderElement* render_element) override;
+private:
+    void drawDebugQuad(IRenderElement const* const irender_element);
 };
 }  // namespace haf::backend::sfmlb
 

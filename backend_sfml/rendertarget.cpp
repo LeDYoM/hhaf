@@ -16,14 +16,38 @@ void RenderTarget::initialize()
     sf::RenderTarget::initialize();
 }
 
+void RenderTarget::drawDebugQuad([
+    [maybe_unused]] IRenderElement const* const irender_element)
+{
+#ifdef DRAW_DEBUG_QUAD
+    auto const* const render_element{
+        static_cast<RenderElement const* const>(irender_element)};
+
+    using namespace ::sf;
+    VertexArray nva(sf::PrimitiveType::LineStrip, 5U);
+    auto const bounds{render_element->nativeVertexArray().getBounds()};
+    nva[0U] = {{bounds.left, bounds.top}, Color::Green};
+    nva[1U] = {{bounds.left + bounds.width, bounds.top}, Color::Green};
+    nva[2U] = {{bounds.left + bounds.width, bounds.top + bounds.width},
+               Color::Green};
+    nva[3U] = {{bounds.left, bounds.top + bounds.width}, Color::Green};
+    nva[4U] = {{bounds.left, bounds.top}, sf::Color::Green};
+    RenderTarget::draw(nva, render_element->nativeRenderStates().transform);
+#endif
+}
+
 void RenderTarget::render(IRenderElement const** render_element_begin,
                           IRenderElement const** const render_element_end)
 {
     while (render_element_begin != render_element_end)
     {
-        auto const* const r{
+        auto const* const render_element{
             static_cast<RenderElement const* const>(*render_element_begin++)};
-        sf::RenderTarget::draw(r->nativeVertexArray(), r->nativeRenderStates());
+        sf::RenderTarget::draw(render_element->nativeVertexArray(),
+                               render_element->nativeRenderStates());
+#ifdef DRAW_DEBUG_QUAD
+        drawDebugQuad(render_element);
+#endif
     }
 }
 
@@ -40,26 +64,11 @@ Rectf32 RenderTarget::viewPort() const
     return from_sf_type(currentView.getViewport());
 }
 
-void RenderTarget::setViewRect(const Rectf32& nviewRect)
-{
-    sf::View currentView(getView());
-    currentView.setCenter(to_sf_type(nviewRect.center()));
-    currentView.setSize(to_sf_type(nviewRect.size()));
-    setView(currentView);
-}
-
-Rectf32 RenderTarget::viewRect() const
-{
-    sf::View currentView(getView());
-    return rectFromCenterAndSize(from_sf_type(currentView.getCenter()),
-                                 from_sf_type(currentView.getSize()));
-}
-
-void RenderTarget::updateCamera(ICamera* camera)
+void RenderTarget::updateCamera(ICamera* const camera)
 {
     if (camera->updateRequired())
     {
-        Camera* camera_sf{to_sf_type(camera)};
+        Camera* const camera_sf{to_sf_type(camera)};
         setView(camera_sf->getView());
         camera_sf->resetUpdateRequired();
     }
@@ -92,7 +101,7 @@ bool RenderTarget::destroyCamera(ICamera* camera)
 {
     if (camera != nullptr)
     {
-        if (auto d_camera{ dynamic_cast<Camera*>(camera) }; d_camera != nullptr)
+        if (auto d_camera{dynamic_cast<Camera*>(camera)}; d_camera != nullptr)
         {
             delete d_camera;
             return true;

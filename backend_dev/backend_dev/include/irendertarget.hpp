@@ -22,10 +22,9 @@ public:
 
     virtual void setViewPort(const htps::Rectf32& nviewport) = 0;
     virtual htps::Rectf32 viewPort() const                   = 0;
-    virtual void setViewRect(const htps::Rectf32& nviewRect) = 0;
-    virtual htps::Rectf32 viewRect() const                   = 0;
-    virtual void updateCamera(ICamera*)                      = 0;
-    virtual void clear()                                     = 0;
+
+    virtual void updateCamera(ICamera* const) = 0;
+    virtual void clear()                      = 0;
 
     virtual ICamera* createCamera()                            = 0;
     virtual bool destroyCamera(ICamera* camera)                = 0;

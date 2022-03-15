@@ -28,14 +28,14 @@ void Console::onCreated()
 
 //    prop<Position>().set(vector2df{100.0F, 0.0F});
 //    prop<Scale>().set({1 / 2000.0F, 1 / 2000.0F});
-    a->prop<Text>().set("1234 ABC abc");
+//    a->prop<Text>().set("234 ABC abc");
+    a->prop<Text>().set("AYi2_+q");
     a->prop<TextColor>().set(colors::Red);
-//    a->prop<Scale>().set({1, 1});
-}
-
-void Console::update()
-{
-    BaseClass::update2();
+    a->setLeftTopPositionScale({0.5F, 0.1F});
+    a->prop<TextBaseSizeProperty>() = TextBaseSize{'A', 0U};
+//    a->setBaseSizeFromText('A', 10U);
+//    a->prop<Position>().set({-0.250F, -0.25F});
+//    a->prop<Scale>().set({0.5F, 0.5F});
 }
 
 void Console::setText(str const& text)

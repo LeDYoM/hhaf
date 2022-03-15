@@ -14,7 +14,7 @@ set(src_dir src)
 set(sources
   # Global
   ${src_dir}/haf_private.hpp
-  ${src_dir}/main.cpp 
+  ${src_dir}/main.cpp
   ${src_dir}/systemprovider_init.cpp
 
   # Animation
@@ -79,6 +79,7 @@ set(sources
   ${src_dir}/resources/bmpfont.hpp
   ${src_dir}/resources/bmpfontfactory.cpp
   ${src_dir}/resources/bmpfontfactory.hpp
+  ${src_dir}/resources/character_render_data.hpp
   ${src_dir}/resources/font_utils.cpp
   ${src_dir}/resources/font_utils.hpp
   ${src_dir}/resources/resource_manager_config_loader.cpp
@@ -93,6 +94,7 @@ set(sources
   ${src_dir}/resources/resources_config_data.hpp
   ${src_dir}/resources/shader.cpp
   ${src_dir}/resources/shader.hpp
+  ${src_dir}/resources/text_render_data.hpp
   ${src_dir}/resources/texture.cpp
   ${src_dir}/resources/texture.hpp
   ${src_dir}/resources/ttfont.cpp
@@ -127,10 +129,13 @@ set(sources
   # Scene nodes
   ${src_dir}/scene_nodes/renderizable_scene_node.cpp
   ${src_dir}/scene_nodes/renderizables_scene_node.cpp
+  ${src_dir}/scene_nodes/scene_node_letter.cpp
+  ${src_dir}/scene_nodes/scene_node_letter.hpp
   ${src_dir}/scene_nodes/scene_node_table_imp.cpp
   ${src_dir}/scene_nodes/scene_node_table_text.cpp
   ${src_dir}/scene_nodes/scene_node_text_quad.cpp
   ${src_dir}/scene_nodes/scene_node_text.cpp
+  ${src_dir}/scene_nodes/text_base_size.cpp
   ${src_dir}/scene_nodes/transformable_scene_node.cpp
 
   # Shared data
@@ -300,6 +305,7 @@ set(headers
   ${inc_dir}/scene_nodes/scene_node_text_properties.hpp
   ${inc_dir}/scene_nodes/scene_node_text_quad.hpp
   ${inc_dir}/scene_nodes/scene_node_text.hpp
+  ${inc_dir}/scene_nodes/text_base_size.hpp
   ${inc_dir}/scene_nodes/transformable_scene_node.hpp
 
   # Shared data

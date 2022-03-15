@@ -26,21 +26,6 @@ public:
 
     htps::emitter<htps::vector2dst, htps::sptr<T> const&> onTableNodeCreated;
 
-    htps::sptr<T> createNodeAt(htps::vector2dst const& index,
-                               htps::str const& name)
-    {
-        return nodeAt(index) = createInnerSceneNodeAt(index, name)
-                                   ->createSceneNode<T>("inner_inner_node");
-    }
-
-    void createNodeAtNoReturn(htps::vector2dst const& index,
-                              htps::str const& name) override
-    {
-        (void)(nodeAt(index) = createInnerSceneNodeAt(index, name)
-                                   ->createSceneNode<T>("inner_inner_node"));
-        onTableNodeCreated(index, nodeAt(index));
-    }
-
     constexpr htps::sptr<T>& operator()(htps::vector2dst const& index)
     {
         return nodeAt(index);
@@ -77,6 +62,15 @@ public:
                 }
             }
         }
+    }
+
+    template <typename Tag, typename ValueType_t>
+    void set_property_for_each_tableSceneNode(ValueType_t const& value)
+    {
+        for_each_tableSceneNode(
+            [&value](htps::vector2dst const&, htps::sptr<T> const& node) {
+                node->template prop<Tag>().set(value);
+            });
     }
 
     constexpr void for_each_tableSceneNode_in_x(
@@ -118,7 +112,18 @@ public:
     }
 
 private:
-    void setTableSize(htps::vector2dst const ntableSize) override
+    virtual void tableNodeCreated(htps::vector2dst, htps::sptr<T> const&) {}
+
+    void createNodeAt(htps::vector2dst const& index) override final
+    {
+        auto createdNode{
+            innerSceneNodeAt(index)->createSceneNode<T>("inner_inner_node")};
+        nodeAt(index) = createdNode;
+        onTableNodeCreated(index, nodeAt(index));
+        tableNodeCreated(index, nodeAt(index));
+    }
+
+    void setTableSize(htps::vector2dst const ntableSize) override final
     {
         BaseClass::setTableSize(ntableSize);
         nodes_.resize(ntableSize.x);

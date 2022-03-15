@@ -34,7 +34,6 @@
 #include <haf/include/filesystem/ifile_serializer.hpp>
 #include <haf/include/render/renderizables.hpp>
 #include <haf/include/render/renderizable_builder.hpp>
-#include <haf/include/scene_components/camera_component.hpp>
 #include "../static_data.hpp"
 
 using namespace htps;
@@ -61,12 +60,6 @@ str GameScene::nextSceneName()
 void GameScene::onCreated()
 {
     BaseClass::onCreated();
-    //    componentOfType<CameraComponent>()->view = DefaultView;
-    cameraComponent()->view = SceneBox{-0.5F, -0.5F, 1.0F, 1.0F};
-    //    cameraComponent()->view = SceneBox{-250.0F, -250.0F, 500.0F, 500.0F};
-    //        cameraComponent()->view = SceneBox{-1000.0F, -1000.0F, 2000.0F,
-    //        2000.0F};
-
     LogAsserter::log_assert(p_ == nullptr,
                             "Private data pointer is not nullptr!");
     p_ = muptr<GameScenePrivate>();
@@ -107,9 +100,6 @@ void GameScene::onCreated()
     board_group_ = createSceneNode<BoardGroup>("BoardGroup");
 
     board_group_->configure(TokenZones::size, level_properties_);
-    Rectf32 textBox{cameraComponent()->view()};
-    // S    board_group_->prop<Position>() = textBox.leftTop();
-    //    board_group_->prop<SceneNodeSize>().set(textBox.size());
 
     moveToFirstPosition(board_group_);
 #ifdef USE_DEBUG_ACTIONS
@@ -133,16 +123,9 @@ void GameScene::onCreated()
                       &LevelProperties::millisBetweenTokens),
         [this]() { generateNextToken(); });
 
-    // Prepare the game over text
-    {
-        auto game_over_scene_node =
-            createSceneNode<GameOverSceneNode>("gameOverSceneNode");
-
-        p_->states_manager_ = muptr<GameSceneStateManager>(
-            scene_timer_component_,
-            createSceneNode<PauseSceneNode>("PauseNode"),
-            std::move(game_over_scene_node));
-    }
+    p_->states_manager_ = muptr<GameSceneStateManager>(
+        scene_timer_component_, createSceneNode<PauseSceneNode>("PauseNode"),
+        createSceneNode<GameOverSceneNode>("gameOverSceneNode"));
 
     // Set state control.
     {

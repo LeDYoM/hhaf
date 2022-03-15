@@ -24,13 +24,15 @@ public:
     Transformation() noexcept;
     virtual ~Transformation();
     Transformation(Transformation const&) = delete;
-    Transformation& operator=(Transformation const&) = delete;
-    Transformation(Transformation&&) noexcept        = default;
-    Transformation& operator=(Transformation&&) noexcept = default;
+    Transformation& operator=(Transformation const&)    = delete;
+    constexpr Transformation(Transformation&&) noexcept = default;
+    constexpr Transformation& operator=(Transformation&&) noexcept = default;
 
+    void setLeftTopPositionScale(VectorScalar const& vector);
+    void setRightTopPositionScale(VectorScalar const& vector);
     bool updateTransformIfNecessary() noexcept;
 
-    Matrix4x4 const& matrix() noexcept { return transform_; }
+    Matrix4x4 const& matrix() noexcept;
 
 private:
     void updateTransform();

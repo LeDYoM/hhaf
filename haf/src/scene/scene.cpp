@@ -19,13 +19,6 @@ str Scene::nextSceneName()
     return "";
 }
 
-void Scene::onCreated()
-{
-    p_->camera_component_ = component<CameraComponent>();
-    LogAsserter::log_assert(p_->camera_component_ != nullptr,
-                            "Cannot create camera component");
-}
-
 rptr<Scene> Scene::sceneParent()
 {
     return this;
@@ -34,6 +27,21 @@ rptr<Scene> Scene::sceneParent()
 rptr<Scene const> Scene::sceneParent() const
 {
     return this;
+}
+
+void Scene::onCreated()
+{
+    if (p_->camera_component_ == nullptr)
+    {
+        p_->camera_component_ = component<CameraComponent>();
+        LogAsserter::log_assert(p_->camera_component_ != nullptr,
+                                "Cannot create camera component");
+    }
+}
+
+sptr<CameraComponent> const& Scene::cameraComponent()
+{
+    return p_->camera_component_;
 }
 
 sptr<CameraComponent> const& Scene::cameraComponent() const
@@ -56,7 +64,6 @@ void Scene::installDebugUtils()
     });
     component<debug::DebugActions>()->addDebugAction(input::Key::K, [this]() {
         cameraComponent()->moveView({0.0F, -0.1F});
-
     });
     component<debug::DebugActions>()->addDebugAction(input::Key::J, [this]() {
         cameraComponent()->moveView({0.1F, 0.0F});
