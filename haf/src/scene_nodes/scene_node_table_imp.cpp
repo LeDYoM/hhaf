@@ -94,6 +94,7 @@ void TableNodeImp::update2()
                         (cell_size * static_cast<htps::vector2df>(p)));
                 }
             });
+        allElementsCreated();
     }
 }
 

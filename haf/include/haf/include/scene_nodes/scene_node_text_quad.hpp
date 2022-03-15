@@ -19,9 +19,7 @@ public:
 
     void update() override;
     void onElementCreated(htps::vector2dst, htps::sptr<SceneNodeText> const&);
-    htps::emitter<> allElementsCreated;
-private:
-    htps::size_type elements_created{0U};
+
 };
 }  // namespace haf::scene::nodes
 

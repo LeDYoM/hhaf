@@ -27,7 +27,6 @@ void TextQuad::onElementCreated(htps::vector2dst index,
         node->prop<SceneNodeTextProperties>()
             .put<AlignmentX>(AlignmentXModes::Left)
             .put<AlignmentY>(AlignmentYModes::Top);
-        ++elements_created;
     }
     else if (index == vector2dst{1U, 0U})
     {
@@ -35,7 +34,6 @@ void TextQuad::onElementCreated(htps::vector2dst index,
         node->prop<SceneNodeTextProperties>()
             .put<AlignmentX>(AlignmentXModes::Left)
             .put<AlignmentY>(AlignmentYModes::Top);
-        ++elements_created;
     }
     else if (index == vector2dst{0U, 1U})
     {
@@ -43,7 +41,6 @@ void TextQuad::onElementCreated(htps::vector2dst index,
         node->prop<SceneNodeTextProperties>()
             .put<AlignmentX>(AlignmentXModes::Left)
             .put<AlignmentY>(AlignmentYModes::Bottom);
-        ++elements_created;
     }
     else if (index == vector2dst{1U, 1U})
     {
@@ -51,12 +48,6 @@ void TextQuad::onElementCreated(htps::vector2dst index,
         node->prop<SceneNodeTextProperties>()
             .put<AlignmentX>(AlignmentXModes::Left)
             .put<AlignmentY>(AlignmentYModes::Bottom);
-        ++elements_created;
-    }
-
-    if (elements_created == (2U * 2U))
-    {
-        allElementsCreated();
     }
 }
 
