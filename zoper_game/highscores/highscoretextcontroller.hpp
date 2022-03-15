@@ -22,11 +22,13 @@ public:
     using BaseClass::BaseClass;
     using BaseClass::prop;
 
-    virtual void onCreated() override;
+    void onCreated() override;
 
     htps::emitter<> Finished;
+    void update() override;
 
 private:
+    void tableNodeCreated();
     void standarizeText(
         const htps::sptr<haf::scene::nodes::SceneNodeText>& ntext);
     void saveHighScores();
