@@ -26,13 +26,6 @@ public:
 
     htps::emitter<htps::vector2dst, htps::sptr<T> const&> onTableNodeCreated;
 
-    htps::sptr<T> createNodeAt(htps::vector2dst const& index,
-                               htps::str const& name)
-    {
-        return nodeAt(index) = createInnerSceneNodeAt(index, name)
-                                   ->createSceneNode<T>("inner_inner_node");
-    }
-
     void createNodeAtNoReturn(htps::vector2dst const& index,
                               htps::str const& name) override
     {

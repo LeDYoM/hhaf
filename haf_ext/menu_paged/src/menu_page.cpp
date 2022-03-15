@@ -18,6 +18,8 @@ MenuPage::~MenuPage() = default;
 void MenuPage::onCreated()
 {
     BaseClass::onCreated();
+    allElementsCreated += make_function(this, &MenuPage::elementsCreated);
+    prop<TableSize>() = {0U, 0U};
 
     auto input{component<MenuPageInputComponent>()};
     input->Up.connect({this, &MenuPage::goUp});
@@ -25,6 +27,68 @@ void MenuPage::onCreated()
     input->Left.connect({this, &MenuPage::goLeft});
     input->Right.connect({this, &MenuPage::goRight});
     input->Selected.connect({this, &MenuPage::goSelected});
+}
+
+constexpr size_type columnForOptions{4U};
+
+void MenuPage::elementsCreated()
+{
+    auto const table_size{prop<TableSize>()()};
+    if (table_size.x != 0U && table_size.y != 0U)
+    {
+        auto const& options{menu_options()};
+        auto const& page_options{page_options_()};
+
+        LogAsserter::log_assert(options.size() > 0U, "options cannot be empty");
+        size_type counter{0U};
+        for (auto&& option : options)
+        {
+            size_type title_column{(page_options.centered_empty_option &&
+                                    option->option().options().empty())
+                                       ? 2U
+                                       : 0U};
+
+            auto newOption{nodeAt(vector2dst{title_column, counter})};
+            standarizeText(newOption);
+            newOption->prop<nodes::SceneNodeTextProperties>().set<nodes::Text>(
+                option->title());
+
+            if (!option->option().options().empty())
+            {
+                auto discreteTextLabel{
+                    nodeAt(vector2dst{columnForOptions, counter})};
+                standarizeText(discreteTextLabel);
+                auto discreteTextComponent{
+                    discreteTextLabel->component<DiscreteTextComponent>()};
+                discreteTextComponent->data.set(option->option().options());
+            }
+
+            ++counter;
+        }
+        setSelectedItem(0U);
+
+        Selection.connect(
+            [this, options](const size_type index, const s32 /*selection*/) {
+                LogAsserter::log_assert(index <= options.size(),
+                                        "Logical error: Received invalid "
+                                        "index in Selection");
+
+                const auto option = options[index];
+                if (option->onSelected() > MenuPagedOption::NoAction)
+                {
+                    if (option->onSelected() == MenuPagedOption::GoBack)
+                    {
+                        Canceled(optionsSelected());
+                        Back();
+                    }
+                    else
+                    {
+                        Accepted(optionsSelected());
+                        Forward(option->onSelected());
+                    }
+                }
+            });
+    }
 }
 
 rptr<MenuPaged const> MenuPage::parentMenuPaged() const
@@ -47,15 +111,12 @@ Color MenuPage::selectedColor() const
     return parentMenuPaged()->prop<MenuPagedProperties>().get<SelectedColor>();
 }
 
-constexpr size_type columnForOptions = 4U;
-
 size_type MenuPage::SelectedOptionAtRow(const size_type row) const
 {
     if (row < prop<TableSize>().get().y)
     {
         auto node(nodeAt({columnForOptions, row}));
-        if (auto discreteText =
-                node->componentOfType<DiscreteTextComponent>())
+        if (auto discreteText = node->componentOfType<DiscreteTextComponent>())
         {
             return discreteText->index();
         }
@@ -75,65 +136,20 @@ size_type MenuPage::SelectedOptionAtRow(const size_type row) const
 void MenuPage::update()
 {
     BaseClass::update2();
+    if (menu_options.readResetHasChanged())
+    {
+        if (!menu_options().empty())
+        {
+            prop<TableSize>().set({5U, menu_options().size()});
+        }
+    }
 }
 
 void MenuPage::configure(vector<sptr<MenuPagedOption>> options,
                          PageOptions page_options)
 {
-    prop<TableSize>().set({5U, options.size()});
-    updateTableSizeIfNecessary();
-
-    LogAsserter::log_assert(options.size() > 0U, "options cannot be empty");
-    size_type counter{0U};
-    for (auto&& option : options)
-    {
-        size_type title_column{(page_options.centered_empty_option &&
-                                option->option().options().empty())
-                                   ? 2U
-                                   : 0U};
-
-        auto newOption{createNodeAt(vector2dst{title_column, counter},
-                                    make_str("label", counter))};
-        standarizeText(newOption);
-        newOption->prop<nodes::SceneNodeTextProperties>().set<nodes::Text>(
-            option->title());
-
-        if (!option->option().options().empty())
-        {
-            auto discreteTextLabel(
-                createNodeAt(vector2dst{columnForOptions, counter},
-                             make_str("option", counter)));
-            standarizeText(discreteTextLabel);
-            auto discreteTextComponent(
-                discreteTextLabel->component<DiscreteTextComponent>());
-            discreteTextComponent->data.set(option->option().options());
-        }
-
-        ++counter;
-    }
-    setSelectedItem(0U);
-
-    Selection.connect(
-        [this, options](const size_type index, const s32 /*selection*/) {
-            LogAsserter::log_assert(index <= options.size(),
-                                    "Logical error: Received invalid "
-                                    "index in Selection");
-
-            const auto option = options[index];
-            if (option->onSelected() > MenuPagedOption::NoAction)
-            {
-                if (option->onSelected() == MenuPagedOption::GoBack)
-                {
-                    Canceled(optionsSelected());
-                    Back();
-                }
-                else
-                {
-                    Accepted(optionsSelected());
-                    Forward(option->onSelected());
-                }
-            }
-        });
+    menu_options  = std::move(options);
+    page_options_ = std::move(page_options);
 }
 
 vector<s32> MenuPage::optionsSelected() const
@@ -153,7 +169,7 @@ vector<s32> MenuPage::optionsSelected() const
 void MenuPage::setSelectedItem(const size_type index)
 {
     previously_selected_item_ = selected_item_;
-    selected_item_           = index;
+    selected_item_            = index;
     updateSelection();
 }
 

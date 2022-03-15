@@ -48,6 +48,7 @@ protected:
     htps::size_type selected_item_{0U};
 
 private:
+    void elementsCreated();
     void standarizeText(const htps::sptr<ContainedElement>& ntext);
     void goDown();
     void goUp();
