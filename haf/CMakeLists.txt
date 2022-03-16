@@ -14,7 +14,7 @@ set(src_dir src)
 set(sources
   # Global
   ${src_dir}/haf_private.hpp
-  ${src_dir}/main.cpp 
+  ${src_dir}/main.cpp
   ${src_dir}/systemprovider_init.cpp
 
   # Animation
@@ -127,6 +127,7 @@ set(sources
   # Scene nodes
   ${src_dir}/scene_nodes/renderizable_scene_node.cpp
   ${src_dir}/scene_nodes/renderizables_scene_node.cpp
+  ${src_dir}/scene_nodes/scene_node_letter.cpp
   ${src_dir}/scene_nodes/scene_node_table_imp.cpp
   ${src_dir}/scene_nodes/scene_node_table_text.cpp
   ${src_dir}/scene_nodes/scene_node_text_quad.cpp
@@ -293,6 +294,7 @@ set(headers
   # Scene nodes
   ${inc_dir}/scene_nodes/renderizable_scene_node.hpp
   ${inc_dir}/scene_nodes/renderizables_scene_node.hpp
+  ${inc_dir}/scene_nodes/scene_node_letter.hpp
   ${inc_dir}/scene_nodes/scene_node_table_imp.hpp
   ${inc_dir}/scene_nodes/scene_node_table_properties.hpp
   ${inc_dir}/scene_nodes/scene_node_table_text.hpp

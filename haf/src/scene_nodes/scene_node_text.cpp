@@ -1,4 +1,5 @@
 #include <haf/include/scene_nodes/scene_node_text.hpp>
+#include <haf/include/scene_nodes/scene_node_letter.hpp>
 #include <haf/include/render/renderizables.hpp>
 
 #include "resources/font_utils.hpp"
@@ -137,12 +138,12 @@ void SceneNodeText::update()
                 if (counter < old_counter)
                 {
                     letterNode =
-                        std::dynamic_pointer_cast<RenderizableSceneNode>(
+                        std::dynamic_pointer_cast<SceneNodeLetter>(
                             sceneNodes()[counter]);
                 }
                 else
                 {
-                    letterNode = createSceneNode<RenderizableSceneNode>(
+                    letterNode = createSceneNode<SceneNodeLetter>(
                         "text_" + str::to_str(counter));
                     letterNode->renderizableBuilder()
                         .name("text_" + str::to_str(counter))
