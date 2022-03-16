@@ -13,11 +13,6 @@ void TextQuad::onCreated()
     prop<TableSize>().set({2U, 2U});
 }
 
-void TextQuad::update()
-{
-    BaseClass::update2();
-}
-
 void TextQuad::onElementCreated(htps::vector2dst index,
                                 htps::sptr<SceneNodeText> const& node)
 {

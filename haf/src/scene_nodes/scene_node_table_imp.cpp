@@ -9,11 +9,6 @@ namespace haf::scene::nodes
 {
 htps::vector2df TableNodeImp::cellSize() const
 {
-    /*
-        return htps::vector2df{
-            prop<SceneNodeSize>().get() /
-            static_cast<htps::vector2df>(prop<TableSize>().get())};
-    */
     return htps::vector2df{
         1.0F / static_cast<htps::vector2df>(prop<TableSize>().get())};
 }
@@ -21,35 +16,6 @@ htps::vector2df TableNodeImp::cellSize() const
 void TableNodeImp::update()
 {
     BaseClass::update();
-
-    updateTableSizeIfNecessary();
-
-    // Update row and column size
-    if (prop<SceneNodeSize>().readResetHasChanged())
-    {
-        htps::vector2df const& cell_size{cellSize()};
-        for_each_table_innerSceneNode(
-            [this, cell_size](htps::vector2dst const& p,
-                              ContainedType_t& node) {
-                node->prop<Position>().set(cell_size *
-                                           static_cast<htps::vector2df>(p));
-            });
-    }
-}
-
-bool TableNodeImp::nodeTableCreated(vector2dst const& index) const
-{
-    return inner_nodes_.size() > index.x &&
-        inner_nodes_[index.x].size() > index.y;
-}
-
-void TableNodeImp::update2()
-{
-    if (name() == "score")
-    {
-        int a = 0;
-        (void)a;
-    }
     updateTableSizeIfNecessary();
 
     // Update row and column size
@@ -96,6 +62,12 @@ void TableNodeImp::update2()
             });
         allElementsCreated();
     }
+}
+
+bool TableNodeImp::nodeTableCreated(vector2dst const& index) const
+{
+    return inner_nodes_.size() > index.x &&
+        inner_nodes_[index.x].size() > index.y;
 }
 
 TableNodeImp::ContainedType_t TableNodeImp::createInnerSceneNodeAt(

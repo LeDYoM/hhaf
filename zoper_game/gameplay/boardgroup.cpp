@@ -103,11 +103,6 @@ void BoardGroup::tileRemoved(const vector2dst, board::SITilePointer& tile)
     tokens_scene_node->removeSceneNode(std::dynamic_pointer_cast<Token>(tile));
 }
 
-void BoardGroup::update()
-{
-    BaseClass::update2();
-}
-
 void BoardGroup::onTableNodeAdded(htps::sptr<SceneNode> const&)
 {
     moveToLastPosition(tokens_scene_node);

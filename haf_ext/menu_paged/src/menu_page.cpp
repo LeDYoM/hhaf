@@ -136,7 +136,7 @@ size_type MenuPage::SelectedOptionAtRow(const size_type row) const
 
 void MenuPage::update()
 {
-    BaseClass::update2();
+    BaseClass::update();
     if (menu_options.readResetHasChanged())
     {
         if (!menu_options().empty())

@@ -40,7 +40,6 @@ public:
      * @brief Update the node
      */
     void update() override;
-    void update2();
 
     bool nodeTableCreated(htps::vector2dst const& index) const;
     virtual void createNodeAtNoReturn(htps::vector2dst const& index,

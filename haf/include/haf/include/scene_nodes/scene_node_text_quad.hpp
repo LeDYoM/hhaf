@@ -17,7 +17,6 @@ public:
 
     void onCreated() override;
 
-    void update() override;
     void onElementCreated(htps::vector2dst, htps::sptr<SceneNodeText> const&);
 
 };

@@ -25,7 +25,6 @@ public:
     void onCreated() override;
 
     htps::emitter<> Finished;
-    void update() override;
 
 private:
     void tableNodeCreated();

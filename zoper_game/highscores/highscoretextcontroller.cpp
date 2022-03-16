@@ -34,11 +34,6 @@ void HighScoreTextController::onCreated()
     prop<ScaleGroup>() = false;
 }
 
-void HighScoreTextController::update()
-{
-    BaseClass::update2();
-}
-
 void HighScoreTextController::tableNodeCreated()
 {
     normal_font_ = subSystem<res::IResourceRetriever>()
