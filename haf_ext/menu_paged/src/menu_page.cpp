@@ -19,7 +19,6 @@ void MenuPage::onCreated()
 {
     BaseClass::onCreated();
     prop<MoveGroup>() = true;
-    allElementsCreated += make_function(this, &MenuPage::elementsCreated);
     prop<TableSize>() = {0U, 0U};
 
     auto input{component<MenuPageInputComponent>()};
@@ -32,8 +31,9 @@ void MenuPage::onCreated()
 
 constexpr size_type columnForOptions{4U};
 
-void MenuPage::elementsCreated()
+void MenuPage::onAllElementsCreated()
 {
+    BaseClass::onAllElementsCreated();
     auto const table_size{prop<TableSize>()()};
     if (table_size.x != 0U && table_size.y != 0U)
     {

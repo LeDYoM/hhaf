@@ -85,9 +85,6 @@ void MainMenu::onCreated()
 {
     BaseClass::onCreated();
 
-    Rectf32 textBox{ancestor<Scene>()->cameraComponent()->view()};
-    textBox.height = textBox.height / 4;
-
     prop<MenuPagedProperties>()
         .put<NormalTextFont>(
 #ifdef TEST_BMP_FONT
@@ -99,11 +96,8 @@ void MainMenu::onCreated()
 #endif
                 )
         .put<NormalColor>(colors::Blue)
-        .put<SelectedColor>(colors::Red)
-        .put<SceneNodeSizeForPages>(textBox.size());
+        .put<SelectedColor>(colors::Red);
 
-//    textBox.moveY(0.5F);
-//    prop<Position>() = textBox.leftTop();
     vector_shared_pointers<scene::MenuPage> menu_steps;
 
     // Create and register menu pages

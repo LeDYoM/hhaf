@@ -107,9 +107,6 @@ void GameScene::onCreated()
     board_group_ = createSceneNode<BoardGroup>("BoardGroup");
 
     board_group_->configure(TokenZones::size, level_properties_);
-    Rectf32 textBox{cameraComponent()->view()};
-    // S    board_group_->prop<Position>() = textBox.leftTop();
-    //    board_group_->prop<SceneNodeSize>().set(textBox.size());
 
     moveToFirstPosition(board_group_);
 #ifdef USE_DEBUG_ACTIONS

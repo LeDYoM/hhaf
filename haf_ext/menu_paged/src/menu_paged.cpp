@@ -13,15 +13,6 @@ namespace haf::scene
 
 MenuPaged::~MenuPaged() = default;
 
-void MenuPaged::update()
-{
-    if (prop<SceneNodeSizeForPages>().readResetHasChanged())
-    {
-        auto const size{prop<SceneNodeSizeForPages>()()};
-        set_property_for_each_sceneNode_as<MenuPage, SceneNodeSize>(size);
-    }
-}
-
 void MenuPaged::setMenuPagedStatus(MenuFinishedStatus const status)
 {
     status_ = status;

@@ -44,6 +44,8 @@ public:
     bool nodeTableCreated(htps::vector2dst const& index) const;
     virtual void createNodeAtNoReturn(htps::vector2dst const& index,
                                       htps::str const& name) = 0;
+
+    virtual void onAllElementsCreated();
     htps::emitter<> allElementsCreated;
 
 protected:

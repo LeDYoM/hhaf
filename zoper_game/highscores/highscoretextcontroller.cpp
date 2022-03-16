@@ -28,13 +28,11 @@ void HighScoreTextController::onCreated()
 {
     BaseClass::onCreated();
     prop<TableSize>().set({3U, NumHighScore});
-    allElementsCreated +=
-        make_function(this, &HighScoreTextController::tableNodeCreated);
     prop<MoveGroup>() = true;
     prop<ScaleGroup>() = false;
 }
 
-void HighScoreTextController::tableNodeCreated()
+void HighScoreTextController::onAllElementsCreated()
 {
     normal_font_ = subSystem<res::IResourceRetriever>()
                        ->getTTFont(HighScoresResources::MenuFontId)
@@ -52,14 +50,7 @@ void HighScoreTextController::tableNodeCreated()
                           subSystem<shdata::ISharedData>())
                           .view(GameSharedData::address())
                           ->score;
-/*
-    Rectf32 textBox{
-        rectFromSize(ancestor<Scene>()->cameraComponent()->view().size())
-            .setLeftTop({0, 250})
-            .setSize({2000, 1500})};
-    prop<haf::scene::Position>().set(textBox.leftTop());
-    prop<TableNodeProperties>().set<SceneNodeSize>(textBox.size());
-*/
+
     size_type positionInTable{0U};
     const bool isInserting{
         high_scores_data_.tryInsertHighScore(gameScore, positionInTable)};

@@ -60,6 +60,7 @@ void TableNodeImp::update()
                         (cell_size * static_cast<htps::vector2df>(p)));
                 }
             });
+        onAllElementsCreated();
         allElementsCreated();
     }
 }
@@ -87,9 +88,11 @@ void TableNodeImp::updateTableSizeIfNecessary()
     if (prop<TableSize>().hasChanged())
     {
         setTableSize(prop<TableSize>().get());
-        prop<SceneNodeSize>().setChanged();
     }
 }
+
+void TableNodeImp::onAllElementsCreated()
+{}
 
 void TableNodeImp::setTableSize(htps::vector2dst const ntableSize)
 {

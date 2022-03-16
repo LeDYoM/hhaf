@@ -27,7 +27,7 @@ public:
     htps::emitter<> Finished;
 
 private:
-    void tableNodeCreated();
+    void onAllElementsCreated() override;
     void standarizeText(
         const htps::sptr<haf::scene::nodes::SceneNodeText>& ntext);
     void saveHighScores();

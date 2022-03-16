@@ -40,8 +40,6 @@ public:
 
     htps::emitter<const MenuFinishedStatus> MenuFinished;
 
-    void update() override;
-
 protected:
     htps::sptr<MenuPage> createMenuPage(htps::str name);
     void configure_menu(htps::vector_shared_pointers<MenuPage> menu_steps);
