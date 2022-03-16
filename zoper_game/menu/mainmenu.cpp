@@ -102,8 +102,8 @@ void MainMenu::onCreated()
         .put<SelectedColor>(colors::Red)
         .put<SceneNodeSizeForPages>(textBox.size());
 
-    textBox.moveY(0.5F);
-    prop<Position>() = textBox.leftTop();
+//    textBox.moveY(0.5F);
+//    prop<Position>() = textBox.leftTop();
     vector_shared_pointers<scene::MenuPage> menu_steps;
 
     // Create and register menu pages

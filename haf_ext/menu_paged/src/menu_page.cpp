@@ -18,6 +18,7 @@ MenuPage::~MenuPage() = default;
 void MenuPage::onCreated()
 {
     BaseClass::onCreated();
+    prop<MoveGroup>() = true;
     allElementsCreated += make_function(this, &MenuPage::elementsCreated);
     prop<TableSize>() = {0U, 0U};
 

@@ -85,7 +85,7 @@ void SceneNodeText::update()
     // TODO: Delete
     auto const& current_text2{prop<SceneNodeTextProperties>().prop<Text>()()};
 
-    if (current_text2 == "0.")
+    if (current_text2 == "Start level Token Mode")
     {
         int a = 0;
         (void)(a);
