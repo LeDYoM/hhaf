@@ -10,7 +10,7 @@ namespace haf::res
 FontUtils::FontUtils(IFont* const font) : font_{font}
 {}
 
-vector<Rectf32> FontUtils::getTextBoxes(str const& text) const
+vector<CharacterRenderData> FontUtils::getTextRenderData(str const& text) const
 {
     if (text.empty())
     {
@@ -24,16 +24,20 @@ vector<Rectf32> FontUtils::getTextBoxes(str const& text) const
 
     // Create one quad for each character
     u32 prevChar{0U};
-    vector<Rectf32> result(text.size());
+    vector<CharacterRenderData> result(text.size());
 
     for (auto curChar : text)
     {
+        CharacterRenderData character_render_data{};
+
         // Apply the kerning offset
         x += font_->getKerning(prevChar, curChar);
         prevChar = curChar;
 
-        Rectf32 letterBox{font_->getBounds(curChar) + vector2df{x, y}};
-        result.emplace_back(std::move(letterBox));
+        character_render_data.characterBounds = font_->getBounds(curChar);
+        character_render_data.characterBox =
+            character_render_data.characterBounds + vector2df{x, y};
+        result.emplace_back(std::move(character_render_data));
 
         // Advance to the next character
         x += font_->getAdvance(curChar);
@@ -43,14 +47,14 @@ vector<Rectf32> FontUtils::getTextBoxes(str const& text) const
 
 Rectf32 FontUtils::textSize(htps::str const& text) const
 {
-    auto const boxes{getTextBoxes(text)};
+    auto const text_render_data{getTextRenderData(text)};
     Rectf32 result{};
-    for (auto const& box : boxes)
+    for (auto&& chrd : text_render_data)
     {
-        result.left = std::min(result.left, box.left);
-        result.setRight(std::max(result.right(), box.right()));
-        result.top = std::min(result.top, box.top);
-        result.setBottom(std::max(result.bottom(), box.bottom()));
+        result.left = std::min(result.left, chrd.characterBox.left);
+        result.setRight(std::max(result.right(), chrd.characterBox.right()));
+        result.top = std::min(result.top, chrd.characterBox.top);
+        result.setBottom(std::max(result.bottom(), chrd.characterBox.bottom()));
     }
     return result;
 }

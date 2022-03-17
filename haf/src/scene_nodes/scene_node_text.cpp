@@ -94,9 +94,9 @@ void SceneNodeText::update()
 
     auto& pr = prop<SceneNodeTextProperties>();
     res::FontUtils const font_utils{pr.get<Font>().get()};
-    auto const textSize = pr.get<Font>() != nullptr
-        ? font_utils.textSize(pr.get<Text>())
-        : Rectf32{};
+    auto const textSize{pr.get<Font>() != nullptr
+                            ? font_utils.textSize(pr.get<Text>())
+                            : decltype(font_utils.textSize(pr.get<Text>())){}};
 
     if (pr.hasChanged<Font>() || pr.hasChanged<Text>() ||
         pr.hasChanged<BaseScale>())
@@ -129,7 +129,7 @@ void SceneNodeText::update()
             counter_t counter{0U};
             counter_t const old_counter{sceneNodes().size()};
             auto const& text_color{pr.get<TextColor>()};
-            auto const boxes{font_utils.getTextBoxes(pr.get<Text>())};
+            auto const boxes{font_utils.getTextRenderData(pr.get<Text>())};
             size_type indexChar{0U};
 
             auto const& current_text{pr.get<Text>()};
@@ -155,27 +155,33 @@ void SceneNodeText::update()
                 }
 
                 {
-                    Rectf32 letterBox{boxes[indexChar++]};
+                    auto character_render_data{boxes[indexChar++]};
 
-                    letterNode->prop<Position>().set(letterBox.leftTop() +
-                                                     letterBox.size() / 2.0F);
+                    letterNode->prop<Position>().set(
+                        character_render_data.characterBox.leftTop() +
+                        character_render_data.characterBox.size() / 2.0F);
                     letterNode->node()->prop<render::ColorProperty>().set(
                         text_color);
-                    letterNode->prop<Scale>().set(vector2df{letterBox.size()});
+                    letterNode->prop<Scale>().set(
+                        vector2df{character_render_data.characterBox.size()});
 
                     ++counter;
                     Rectf32 const textureUV{font->getTextureBounds(curChar)};
-                    letterNode->node()->setTextureAndTextureRectFromTextureSize(
-                        texture, textureUV);
+                    letterNode->node()->prop<render::TextureProperty>() = texture;
+                    letterNode->node()->prop<render::TextureRectProperty>() = textureUV;
 
                     // Update the current bounds
                     {
                         using namespace std;
-                        bounds =
-                            Rectf32{min(bounds.left, letterBox.left),
-                                    min(bounds.top, letterBox.top),
-                                    max(bounds.right(), letterBox.right()),
-                                    max(bounds.bottom(), letterBox.bottom())};
+                        bounds = Rectf32{
+                            min(bounds.left,
+                                character_render_data.characterBox.left),
+                            min(bounds.top,
+                                character_render_data.characterBox.top),
+                            max(bounds.right(),
+                                character_render_data.characterBox.right()),
+                            max(bounds.bottom(),
+                                character_render_data.characterBox.bottom())};
                     }
                 }
 

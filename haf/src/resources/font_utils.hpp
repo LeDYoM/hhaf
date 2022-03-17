@@ -13,11 +13,17 @@ class IFont;
 
 namespace haf::res
 {
+struct CharacterRenderData
+{
+    htps::Rectf32 characterBounds;
+    htps::Rectf32 characterBox;
+};
+
 class FontUtils
 {
 public:
     FontUtils(res::IFont* const font);
-    htps::vector<htps::Rectf32> getTextBoxes(htps::str const& text) const;
+    htps::vector<CharacterRenderData> getTextRenderData(htps::str const& text) const;
     htps::Rectf32 textSize(htps::str const& text) const;
 
 private:
