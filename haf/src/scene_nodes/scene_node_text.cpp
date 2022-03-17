@@ -86,7 +86,7 @@ void SceneNodeText::update()
     // TODO: Delete
     auto const& current_text2{prop<SceneNodeTextProperties>().prop<Text>()()};
 
-    if (current_text2 == "Start level Token Mode")
+    if (current_text2 == "1234 ABC abc")
     {
         int a = 0;
         (void)(a);
@@ -112,6 +112,10 @@ void SceneNodeText::update()
 
         if (pr.get<Font>() && !(pr.get<Text>().empty()))
         {
+            auto const b = ancestor<Scene>()->cameraComponent()->view().size() /
+                vector2df{800.0F, 600.0F};
+            prop<Scale>() = b;
+
             auto font(pr.get<Font>());
             auto texture(pr.get<Font>()->getTexture());
 
@@ -137,9 +141,8 @@ void SceneNodeText::update()
                 // reuse it. If not, create a new one.
                 if (counter < old_counter)
                 {
-                    letterNode =
-                        std::dynamic_pointer_cast<SceneNodeLetter>(
-                            sceneNodes()[counter]);
+                    letterNode = std::dynamic_pointer_cast<SceneNodeLetter>(
+                        sceneNodes()[counter]);
                 }
                 else
                 {
@@ -153,10 +156,7 @@ void SceneNodeText::update()
 
                 {
                     Rectf32 letterBox{boxes[indexChar++]};
-                    if (prop<BaseScale>()() != vector2df{0.0F, 0.0F})
-                    {
-                        letterBox.scale(prop<BaseScale>()());
-                    }
+
                     letterNode->prop<Position>().set(letterBox.leftTop() +
                                                      letterBox.size() / 2.0F);
                     letterNode->node()->prop<render::ColorProperty>().set(
@@ -227,10 +227,10 @@ void SceneNodeText::update()
 
         if (as_rr_hasChanged || align_x)
         {
-            updateAlignmentX(
-                getTransformation(inner_transformation_).prop<Position>(),
-                prop<AlignmentX>().get(), textSize.width,
-                pr.get<AlignmentSize>());
+            //            updateAlignmentX(
+            //                getTransformation(inner_transformation_).prop<Position>(),
+            //                prop<AlignmentX>().get(), textSize.width,
+            //                pr.get<AlignmentSize>());
         }
 
         if (as_rr_hasChanged || align_y)
@@ -250,7 +250,7 @@ void SceneNodeText::setBaseScaleForCurrentView()
 {
     prop<BaseScale>() = ancestor<Scene>()->cameraComponent()->view().size() /
         // TODO: Here we have the screen size. Find a way to generalize.
-        vector2df{800.0F, 600.0F};
+        vector2df{80.0F, 60.0F};
 }
 
 }  // namespace haf::scene::nodes
