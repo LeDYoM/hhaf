@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef HAF_TYPES_VECTOR_INCLUDE_HPP
 #define HAF_TYPES_VECTOR_INCLUDE_HPP
 

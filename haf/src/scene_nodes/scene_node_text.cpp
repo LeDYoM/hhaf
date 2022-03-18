@@ -104,9 +104,10 @@ void SceneNodeText::update()
 
         if (pr.get<Font>() && !(pr.get<Text>().empty()))
         {
-//            auto const b = ancestor<Scene>()->cameraComponent()->view().size() /
-//                vector2df{200.0F, 150.0F};
-//            prop<Scale>() = b;
+            //            auto const b =
+            //            ancestor<Scene>()->cameraComponent()->view().size() /
+            //                vector2df{200.0F, 150.0F};
+            //            prop<Scale>() = b;
 
             auto font(pr.get<Font>());
             auto texture(pr.get<Font>()->getTexture());
@@ -144,17 +145,17 @@ void SceneNodeText::update()
 
                 if (curChar == '2')
                 {
-                    int c=0;
+                    int c = 0;
                     (void)c;
                 }
 
                 {
                     auto character_render_data{boxes[indexChar++]};
 
-//                    letterNode->prop<Position>().set(
-//                        character_render_data.characterBox.leftTop());
-//                    letterNode->prop<Scale>().set(
-//                        character_render_data.characterBox.size());
+                    //                    letterNode->prop<Position>().set(
+                    //                        character_render_data.characterBox.leftTop());
+                    //                    letterNode->prop<Scale>().set(
+                    //                        character_render_data.characterBox.size());
 
                     //                    letterNode->setCharacterBox(
                     //                        character_render_data.characterBox);

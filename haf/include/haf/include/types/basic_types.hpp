@@ -1,4 +1,6 @@
+#ifdef USE_PRAGMA_ONCE
 #pragma once
+#endif
 
 #ifndef HAF_TYPES_BASIC_TYPES_INCLUDE_HPP
 #define HAF_TYPES_BASIC_TYPES_INCLUDE_HPP
