@@ -1,7 +1,7 @@
 #include <haf/include/scene_nodes/scene_node_text.hpp>
-#include <haf/include/scene_nodes/scene_node_letter.hpp>
 #include <haf/include/render/renderizables.hpp>
 
+#include "scene_node_letter.hpp"
 #include "resources/font_utils.hpp"
 
 #include <haf/include/resources/ifont.hpp>
@@ -147,6 +147,7 @@ void SceneNodeText::update()
                     int c=0;
                     (void)c;
                 }
+
                 {
                     auto character_render_data{boxes[indexChar++]};
 

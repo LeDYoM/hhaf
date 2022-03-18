@@ -1,8 +1,6 @@
-#include <haf/include/scene_nodes/scene_node_letter.hpp>
+#include "scene_node_letter.hpp"
 #include <haf/include/scene/transformation_properties.hpp>
 #include <haf/include/render/renderizables.hpp>
-
-#include <hlog/include/hlog.hpp>
 
 using namespace htps;
 
