@@ -106,10 +106,6 @@ void SceneNodeText::update()
         pr.readResetHasChanged<Font>();
         pr.readResetHasChanged<Text>();
 
-        // TODO: Delete
-        auto a = pr.get<Font>();
-        (void)a;
-
         if (pr.get<Font>() && !(pr.get<Text>().empty()))
         {
             auto const b = ancestor<Scene>()->cameraComponent()->view().size() /
@@ -119,13 +115,9 @@ void SceneNodeText::update()
             auto font(pr.get<Font>());
             auto texture(pr.get<Font>()->getTexture());
 
-            f32 x{0.F};
-            f32 y{0.F};
-
             // Create one quad for each character
             using counter_t = decltype(sceneNodes().size());
 
-            Rectf32 bounds{x, y, 0.0F, 0.0F};
             counter_t counter{0U};
             counter_t const old_counter{sceneNodes().size()};
             auto const& text_color{pr.get<TextColor>()};
@@ -133,10 +125,10 @@ void SceneNodeText::update()
             size_type indexChar{0U};
 
             auto const& current_text{pr.get<Text>()};
+            types::sptr<SceneNodeLetter> letterNode;
 
             for (auto curChar : current_text)
             {
-                types::sptr<RenderizableSceneNode> letterNode;
                 // In case we already have a node containing the letter,
                 // reuse it. If not, create a new one.
                 if (counter < old_counter)
@@ -157,36 +149,17 @@ void SceneNodeText::update()
                 {
                     auto character_render_data{boxes[indexChar++]};
 
-                    letterNode->prop<Position>().set(
-                        character_render_data.characterBox.leftTop() +
-                        character_render_data.characterBox.size() / 2.0F);
+                    letterNode->setCharacterBox(
+                        character_render_data.characterBox,
+                        character_render_data.characterBounds.size());
+
                     letterNode->node()->prop<render::ColorProperty>().set(
                         text_color);
-                    letterNode->prop<Scale>().set(
-                        vector2df{character_render_data.characterBox.size()});
 
                     ++counter;
-                    Rectf32 const textureUV{font->getTextureBounds(curChar)};
-                    letterNode->node()->prop<render::TextureProperty>() = texture;
-                    letterNode->node()->prop<render::TextureRectProperty>() = textureUV;
-
-                    // Update the current bounds
-                    {
-                        using namespace std;
-                        bounds = Rectf32{
-                            min(bounds.left,
-                                character_render_data.characterBox.left),
-                            min(bounds.top,
-                                character_render_data.characterBox.top),
-                            max(bounds.right(),
-                                character_render_data.characterBox.right()),
-                            max(bounds.bottom(),
-                                character_render_data.characterBox.bottom())};
-                    }
+                    letterNode->setCharacterTextureData(
+                        texture, font->getTextureBounds(curChar));
                 }
-
-                // Advance to the next character
-                x += font->getAdvance(curChar);
             }
 
             // Remove the unused letters.

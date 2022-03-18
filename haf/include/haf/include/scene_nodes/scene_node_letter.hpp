@@ -18,6 +18,11 @@ public:
      * @brief Expose TransformableSceneNode properties
      */
     using TransformableSceneNode::prop;
+
+    void setCharacterBox(htps::Rectf32 const& characterBox,
+                         htps::vector2df const& characterSize);
+    void setCharacterTextureData(htps::sptr<haf::res::ITexture> texture,
+                                 htps::Rectf32 const& textureUV);
 };
 
 }  // namespace haf::scene::nodes

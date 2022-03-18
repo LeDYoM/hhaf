@@ -19,7 +19,7 @@ vector<CharacterRenderData> FontUtils::getTextRenderData(str const& text) const
 
     // Take it into account for multilines
     //    const f32 vspace{font_->getLineSpacing()};
-    f32 x{0.f};
+    f32 x{0.0F};
     f32 y{0.0F};  // static_cast<f32>(characterSize)};
 
     // Create one quad for each character
