@@ -1,10 +1,15 @@
-#ifndef HAF_FRESOURCES_FOUNTUTILS_IMCLUDE_HPP
-#define HAF_FRESOURCES_FOUNTUTILS_IMCLUDE_HPP
+#ifdef USE_PRAGMA_ONCE
+#pragma once
+#endif
+
+#ifndef HAF_FRESOURCES_FONTUTILS_INCLUDE_HPP
+#define HAF_FRESOURCES_FONTUTILS_INCLUDE_HPP
 
 #include <haf/include/resources/ifont.hpp>
 #include <htypes/include/vector.hpp>
 #include <htypes/include/rect.hpp>
 #include <htypes/include/str.hpp>
+#include "character_render_data.hpp"
 
 namespace haf::res
 {
@@ -13,12 +18,6 @@ class IFont;
 
 namespace haf::res
 {
-struct CharacterRenderData
-{
-    htps::Rectf32 characterBounds;
-    htps::Rectf32 characterBox;
-};
-
 class FontUtils
 {
 public:

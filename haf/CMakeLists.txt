@@ -79,6 +79,7 @@ set(sources
   ${src_dir}/resources/bmpfont.hpp
   ${src_dir}/resources/bmpfontfactory.cpp
   ${src_dir}/resources/bmpfontfactory.hpp
+  ${src_dir}/resources/character_render_data.hpp
   ${src_dir}/resources/font_utils.cpp
   ${src_dir}/resources/font_utils.hpp
   ${src_dir}/resources/resource_manager_config_loader.cpp

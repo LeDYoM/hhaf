@@ -8,6 +8,7 @@
 #include <htypes/include/types.hpp>
 #include <htypes/include/properties.hpp>
 #include <haf/include/scene_nodes/renderizable_scene_node.hpp>
+#include "resources/character_render_data.hpp"
 
 namespace haf::scene::nodes
 {
@@ -23,7 +24,7 @@ public:
      */
     using TransformableSceneNode::prop;
 
-    void setCharacterBox(htps::Rectf32 const& characterBox);
+    htps::PropertyState<res::CharacterRenderData> character_render_data;
     void setCharacterTextureData(htps::sptr<haf::res::ITexture> texture,
                                  htps::Rectf32 const& textureUV);
 };
