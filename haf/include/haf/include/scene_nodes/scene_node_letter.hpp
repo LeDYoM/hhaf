@@ -19,8 +19,7 @@ public:
      */
     using TransformableSceneNode::prop;
 
-    void setCharacterBox(htps::Rectf32 const& characterBox,
-                         htps::vector2df const& characterSize);
+    void setCharacterBox(htps::Rectf32 const& characterBox);
     void setCharacterTextureData(htps::sptr<haf::res::ITexture> texture,
                                  htps::Rectf32 const& textureUV);
 };

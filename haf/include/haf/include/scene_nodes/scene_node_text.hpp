@@ -34,8 +34,6 @@ public:
      */
     using SceneNodeTextProperties::prop;
 
-    void setBaseScaleForCurrentView();
-
 protected:
     void update() override final;
     types::size_type inner_transformation_;

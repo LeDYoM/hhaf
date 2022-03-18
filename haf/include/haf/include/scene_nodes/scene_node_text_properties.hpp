@@ -44,16 +44,12 @@ struct AlignmentY : PropertyStateBase<AlignmentYModes>
 struct AlignmentSize : PropertyStateBase<htps::vector2df>
 {};
 
-struct BaseScale : PropertyStateBase<htps::vector2df>
-{};
-
 using SceneNodeTextProperties = types::PropertyGroup<Text,
                                                      Font,
                                                      TextColor,
                                                      AlignmentX,
                                                      AlignmentY,
-                                                     AlignmentSize,
-                                                     BaseScale>;
+                                                     AlignmentSize>;
 
 }  // namespace haf::scene::nodes
 

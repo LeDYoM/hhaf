@@ -77,9 +77,7 @@ SceneNodeText::SceneNodeText(types::rptr<SceneNode> parent, str name) :
 }
 
 void SceneNodeText::onCreated()
-{
-    setBaseScaleForCurrentView();
-}
+{}
 
 void SceneNodeText::update()
 {
@@ -98,19 +96,17 @@ void SceneNodeText::update()
                             ? font_utils.textSize(pr.get<Text>())
                             : decltype(font_utils.textSize(pr.get<Text>())){}};
 
-    if (pr.hasChanged<Font>() || pr.hasChanged<Text>() ||
-        pr.hasChanged<BaseScale>())
+    if (pr.hasChanged<Font>() || pr.hasChanged<Text>())
     {
-        pr.readResetHasChanged<BaseScale>();
         pr.setChanged<AlignmentSize>();
         pr.readResetHasChanged<Font>();
         pr.readResetHasChanged<Text>();
 
         if (pr.get<Font>() && !(pr.get<Text>().empty()))
         {
-            auto const b = ancestor<Scene>()->cameraComponent()->view().size() /
-                vector2df{800.0F, 600.0F};
-            prop<Scale>() = b;
+//            auto const b = ancestor<Scene>()->cameraComponent()->view().size() /
+//                vector2df{200.0F, 150.0F};
+//            prop<Scale>() = b;
 
             auto font(pr.get<Font>());
             auto texture(pr.get<Font>()->getTexture());
@@ -146,12 +142,21 @@ void SceneNodeText::update()
                         .create();
                 }
 
+                if (curChar == '2')
+                {
+                    int c=0;
+                    (void)c;
+                }
                 {
                     auto character_render_data{boxes[indexChar++]};
 
-                    letterNode->setCharacterBox(
-                        character_render_data.characterBox,
-                        character_render_data.characterBounds.size());
+//                    letterNode->prop<Position>().set(
+//                        character_render_data.characterBox.leftTop());
+//                    letterNode->prop<Scale>().set(
+//                        character_render_data.characterBox.size());
+
+                    //                    letterNode->setCharacterBox(
+                    //                        character_render_data.characterBox);
 
                     letterNode->node()->prop<render::ColorProperty>().set(
                         text_color);
@@ -223,13 +228,6 @@ void SceneNodeText::update()
                 */
         }
     }
-}
-
-void SceneNodeText::setBaseScaleForCurrentView()
-{
-    prop<BaseScale>() = ancestor<Scene>()->cameraComponent()->view().size() /
-        // TODO: Here we have the screen size. Find a way to generalize.
-        vector2df{80.0F, 60.0F};
 }
 
 }  // namespace haf::scene::nodes
