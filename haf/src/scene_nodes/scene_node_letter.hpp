@@ -25,6 +25,7 @@ public:
     using TransformableSceneNode::prop;
 
     htps::PropertyState<res::CharacterRenderData> character_render_data;
+    void update() override;
     void setCharacterTextureData(htps::sptr<haf::res::ITexture> texture,
                                  htps::Rectf32 const& textureUV);
 };

@@ -10,52 +10,45 @@ namespace haf::res
 FontUtils::FontUtils(IFont* const font) : font_{font}
 {}
 
-vector<CharacterRenderData> FontUtils::getTextRenderData(str const& text) const
+TextRenderData FontUtils::getTextRenderData(str const& text) const
 {
     if (text.empty())
     {
         return {};
     }
 
-    // Take it into account for multilines
-    //    const f32 vspace{font_->getLineSpacing()};
-    f32 x{0.0F};
-    f32 y{0.0F};  // static_cast<f32>(characterSize)};
-
     // Create one quad for each character
     u32 prevChar{0U};
-    vector<CharacterRenderData> result(text.size());
+    TextRenderData result(text.size());
 
     for (auto curChar : text)
     {
         CharacterRenderData character_render_data{};
 
         // Apply the kerning offset
-        x += font_->getKerning(prevChar, curChar);
-        prevChar = curChar;
+        //        x += font_->getKerning(prevChar, curChar);
+        prevChar                               = curChar;
+        character_render_data.characterBounds  = font_->getBounds(curChar);
+        character_render_data.characterAdvance = font_->getAdvance(curChar);
+        result.character_render_data.emplace_back(
+            std::move(character_render_data));
 
-        character_render_data.characterBounds = font_->getBounds(curChar);
-        character_render_data.characterBox =
-            character_render_data.characterBounds + vector2df{x, y};
-        result.emplace_back(std::move(character_render_data));
+        if (character_render_data.characterAdvance > result.maxCharacterSize.x)
+        {
+            result.maxCharacterSize.x = character_render_data.characterAdvance;
+        }
 
-        // Advance to the next character
-        x += font_->getAdvance(curChar);
+        if (character_render_data.characterBounds.size().y >
+            result.maxCharacterSize.y)
+        {
+            result.maxCharacterSize.y =
+                character_render_data.characterBounds.size().y;
+        }
+
+        result.text_size.x += character_render_data.characterAdvance;
     }
-    return result;
-}
 
-Rectf32 FontUtils::textSize(htps::str const& text) const
-{
-    auto const text_render_data{getTextRenderData(text)};
-    Rectf32 result{};
-    for (auto&& chrd : text_render_data)
-    {
-        result.left = std::min(result.left, chrd.characterBox.left);
-        result.setRight(std::max(result.right(), chrd.characterBox.right()));
-        result.top = std::min(result.top, chrd.characterBox.top);
-        result.setBottom(std::max(result.bottom(), chrd.characterBox.bottom()));
-    }
+    result.text_size.y = result.maxCharacterSize.y;
     return result;
 }
 

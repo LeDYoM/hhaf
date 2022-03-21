@@ -92,10 +92,6 @@ void SceneNodeText::update()
 
     auto& pr = prop<SceneNodeTextProperties>();
     res::FontUtils const font_utils{pr.get<Font>().get()};
-    auto const textSize{pr.get<Font>() != nullptr
-                            ? font_utils.textSize(pr.get<Text>())
-                            : decltype(font_utils.textSize(pr.get<Text>())){}};
-
     if (pr.hasChanged<Font>() || pr.hasChanged<Text>())
     {
         pr.setChanged<AlignmentSize>();
@@ -104,11 +100,6 @@ void SceneNodeText::update()
 
         if (pr.get<Font>() && !(pr.get<Text>().empty()))
         {
-            //            auto const b =
-            //            ancestor<Scene>()->cameraComponent()->view().size() /
-            //                vector2df{200.0F, 150.0F};
-            //            prop<Scale>() = b;
-
             auto font(pr.get<Font>());
             auto texture(pr.get<Font>()->getTexture());
 
@@ -118,7 +109,9 @@ void SceneNodeText::update()
             counter_t counter{0U};
             counter_t const old_counter{sceneNodes().size()};
             auto const& text_color{pr.get<TextColor>()};
-            auto const boxes{font_utils.getTextRenderData(pr.get<Text>())};
+            auto const text_render_data{
+                font_utils.getTextRenderData(pr.get<Text>())};
+            vector2df current_text_position{};
             size_type indexChar{0U};
 
             auto const& current_text{pr.get<Text>()};
@@ -143,27 +136,26 @@ void SceneNodeText::update()
                         .create();
                 }
 
-                if (curChar == '2')
+                prop<Scale>() = vector2df{1.0F/10.0F, 1.0F / 12.0F};
+                if (curChar == 'i')
                 {
                     int c = 0;
                     (void)c;
                 }
 
                 {
-                    auto character_render_data{boxes[indexChar++]};
+                    auto character_render_data{
+                        text_render_data.character_render_data[indexChar]};
 
-                    //                    letterNode->prop<Position>().set(
-                    //                        character_render_data.characterBox.leftTop());
-                    //                    letterNode->prop<Scale>().set(
-                    //                        character_render_data.characterBox.size());
-
-                    //                    letterNode->setCharacterBox(
-                    //                        character_render_data.characterBox);
+                    letterNode->prop<Position>() = current_text_position;
+                    current_text_position.x +=
+                        text_render_data.getProportionSize(indexChar);
 
                     letterNode->node()->prop<render::ColorProperty>().set(
                         text_color);
 
                     ++counter;
+                    ++indexChar;
                     letterNode->setCharacterTextureData(
                         texture, font->getTextureBounds(curChar));
                 }

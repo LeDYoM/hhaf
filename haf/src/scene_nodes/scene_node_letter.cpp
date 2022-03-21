@@ -13,6 +13,16 @@ void SceneNodeLetter::setCharacterBox(Rectf32 const& characterBox)
     prop<Scale>().set(characterBox.size());
 }
 */
+
+void SceneNodeLetter::update()
+{
+    BaseClass::update();
+    if (character_render_data.readResetHasChanged())
+    {
+        
+    }
+}
+
 void SceneNodeLetter::setCharacterTextureData(sptr<res::ITexture> texture,
                                               Rectf32 const& textureUV)
 {

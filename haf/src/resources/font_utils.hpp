@@ -22,8 +22,7 @@ class FontUtils
 {
 public:
     FontUtils(res::IFont* const font);
-    htps::vector<CharacterRenderData> getTextRenderData(htps::str const& text) const;
-    htps::Rectf32 textSize(htps::str const& text) const;
+    TextRenderData getTextRenderData(htps::str const& text) const;
 
 private:
     res::IFont* const font_;
