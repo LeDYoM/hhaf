@@ -136,7 +136,7 @@ void SceneNodeText::update()
                 }
 
                 getTransformation(inner_transformation_).prop<Scale>() =
-                    vector2df{1.0F / 512.0F, 1.0F / 512.0F};
+                    vector2df{1.0F / text_render_data.text_size};
 
                 {
                     auto const& character_render_data{
