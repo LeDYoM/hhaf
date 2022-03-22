@@ -27,7 +27,8 @@ TextRenderData FontUtils::getTextRenderData(str const& text) const
         CharacterRenderData character_render_data{};
 
         // Apply the kerning offset
-        //        x += font_->getKerning(prevChar, curChar);
+        current_character_position.x += font_->getKerning(prevChar, curChar);
+
         prevChar                               = curChar;
         character_render_data.characterBounds  = font_->getBounds(curChar);
         character_render_data.characterAdvance = font_->getAdvance(curChar);
@@ -41,6 +42,12 @@ TextRenderData FontUtils::getTextRenderData(str const& text) const
         character_render_data.character_position = current_character_position;
         character_render_data.character_size =
             character_render_data.characterBounds.size();
+
+        character_render_data.character_position.y =
+            character_render_data.characterBounds.height / 2.0F;
+
+        current_character_position.y =
+            character_render_data.character_position.y;
         result.character_render_data.push_back(character_render_data);
 
         current_character_position.x -=
@@ -49,6 +56,11 @@ TextRenderData FontUtils::getTextRenderData(str const& text) const
         current_character_position.x += character_render_data.characterAdvance;
 
         result.text_size.x += character_render_data.characterAdvance;
+
+        if (result.text_size.y < character_render_data.characterBounds.height)
+        {
+            result.text_size.y = character_render_data.characterBounds.height;
+        }
     }
 
     return result;

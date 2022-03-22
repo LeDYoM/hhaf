@@ -135,15 +135,20 @@ void SceneNodeText::update()
                         .create();
                 }
 
-                prop<Scale>() = vector2df{1.0F / 100.0F, 1.0F / 75.0F};
+                getTransformation(inner_transformation_).prop<Scale>() =
+                    vector2df{1.0F / 512.0F, 1.0F / 512.0F};
 
                 {
-                    auto character_render_data{
+                    auto const& character_render_data{
                         text_render_data.character_render_data[indexChar]};
 
-                    letterNode->prop<Position>() =
-                        character_render_data.character_position;
+                    vector2df new_position{
+                        character_render_data.character_position.x -
+                            (text_render_data.text_size.x / 2.0F),
+                        character_render_data.character_position.y -
+                            (text_render_data.text_size.y / 2.0F)};
 
+                    letterNode->prop<Position>() = new_position;
                     letterNode->prop<Scale>() =
                         character_render_data.character_size;
 
