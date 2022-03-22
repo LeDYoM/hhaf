@@ -94,6 +94,7 @@ set(sources
   ${src_dir}/resources/resources_config_data.hpp
   ${src_dir}/resources/shader.cpp
   ${src_dir}/resources/shader.hpp
+  ${src_dir}/resources/text_render_data.hpp
   ${src_dir}/resources/texture.cpp
   ${src_dir}/resources/texture.hpp
   ${src_dir}/resources/ttfont.cpp

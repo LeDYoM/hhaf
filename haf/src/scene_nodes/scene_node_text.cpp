@@ -136,7 +136,7 @@ void SceneNodeText::update()
                         .create();
                 }
 
-                prop<Scale>() = vector2df{1.0F / 200.0F, 1.0F / 150.0F};
+                prop<Scale>() = vector2df{1.0F / 100.0F, 1.0F / 75.0F};
 //                prop<Scale>() = vector2df{1.0F / 200.0F, 1.0F / 150.0F};
 
                 if (curChar == 'i')
@@ -158,7 +158,14 @@ void SceneNodeText::update()
                     current_text_position.x +=
                         character_render_data.characterBounds.left;
 
+                    current_text_position.x +=
+                        character_render_data.characterBounds.width / 2.0F;
+
                     letterNode->prop<Position>() = current_text_position;
+
+                    current_text_position.x -=
+                        character_render_data.characterBounds.width / 2.0F;
+
                     letterNode->prop<Scale>()    = {
                         character_render_data.characterBounds.width,
                         character_render_data.characterBounds.height};

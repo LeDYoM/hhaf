@@ -24,6 +24,18 @@ void RenderTarget::render(IRenderElement const** render_element_begin,
         auto const* const r{
             static_cast<RenderElement const* const>(*render_element_begin++)};
         sf::RenderTarget::draw(r->nativeVertexArray(), r->nativeRenderStates());
+#ifndef DRAW_DEBUG_QUAD
+        sf::VertexArray nva(sf::PrimitiveType::LineStrip);
+        auto const bounds = r->nativeVertexArray().getBounds();
+        nva.append(sf::Vertex{sf::Vector2f{bounds.left, bounds.top}, sf::Color::Green});
+        nva.append(sf::Vertex{sf::Vector2f{bounds.left + bounds.width, bounds.top}, sf::Color::Green});
+        nva.append(sf::Vertex{sf::Vector2f{bounds.left + bounds.width, bounds.top + bounds.width}, sf::Color::Green});
+        nva.append(sf::Vertex{sf::Vector2f{bounds.left, bounds.top + bounds.width}, sf::Color::Green});
+        nva.append(sf::Vertex{sf::Vector2f{bounds.left, bounds.top}, sf::Color::Green});
+        sf::RenderStates states;
+        states.transform = r->nativeRenderStates().transform;
+        sf::RenderTarget::draw(nva, states);
+#endif
     }
 }
 

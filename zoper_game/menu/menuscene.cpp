@@ -54,6 +54,7 @@ void MenuScene::onCreated()
     auto main_menu_background{
         createSceneNode<RenderizableSceneNode>("main_menu_background")};
     createStandardBackground(main_menu_background);
+    main_menu_background->prop<Visible>() = false;
 
     // Create the logo
     auto main_menu_background_logo{
@@ -66,6 +67,7 @@ void MenuScene::onCreated()
         .texture(MainMenuResources::LogoId)
 //        .shader("shader1")
         .create();
+    main_menu_background_logo->prop<Visible>() = false;
 
     createSceneNode<MainMenu>(MainMenu::StaticTypeName)
         ->MenuFinished.connect([this](MenuFinishedStatus const status) {
