@@ -136,7 +136,9 @@ void SceneNodeText::update()
                         .create();
                 }
 
-                prop<Scale>() = vector2df{1.0F/10.0F, 1.0F / 12.0F};
+                prop<Scale>() = vector2df{1.0F / 200.0F, 1.0F / 150.0F};
+//                prop<Scale>() = vector2df{1.0F / 200.0F, 1.0F / 150.0F};
+
                 if (curChar == 'i')
                 {
                     int c = 0;
@@ -147,15 +149,29 @@ void SceneNodeText::update()
                     auto character_render_data{
                         text_render_data.character_render_data[indexChar]};
 
-                    letterNode->prop<Position>() = current_text_position;
+                    auto prev_character_render_data{
+                        indexChar > 0U
+                            ? text_render_data
+                                  .character_render_data[indexChar - 1U]
+                            : res::CharacterRenderData{}};
+
                     current_text_position.x +=
-                        text_render_data.getProportionSize(indexChar);
+                        character_render_data.characterBounds.left;
+
+                    letterNode->prop<Position>() = current_text_position;
+                    letterNode->prop<Scale>()    = {
+                        character_render_data.characterBounds.width,
+                        character_render_data.characterBounds.height};
+
+                    current_text_position.x +=
+                        character_render_data.characterAdvance;
 
                     letterNode->node()->prop<render::ColorProperty>().set(
                         text_color);
 
                     ++counter;
                     ++indexChar;
+
                     letterNode->setCharacterTextureData(
                         texture, font->getTextureBounds(curChar));
                 }
