@@ -12,13 +12,17 @@ namespace haf::res
 {
 struct CharacterRenderData
 {
-    htps::Rectf32 characterBounds;
-    htps::f32 characterAdvance;
+    htps::Rectf32 characterBounds{0.0F, 0.0F, 0.0F, 0.0F};
+    htps::f32 characterAdvance{0.0F};
+    htps::vector2df character_position{0.0F, 0.0F};
+    htps::vector2df character_size{0.0F, 0.0F};
 
     bool operator==(CharacterRenderData const& rhs) const noexcept
     {
         return characterBounds == rhs.characterBounds &&
-            characterAdvance == rhs.characterAdvance;
+            characterAdvance == rhs.characterAdvance &&
+            character_position == rhs.character_position &&
+            character_size == rhs.character_size;
     }
 };
 

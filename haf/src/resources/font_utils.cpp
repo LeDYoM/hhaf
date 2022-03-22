@@ -20,6 +20,7 @@ TextRenderData FontUtils::getTextRenderData(str const& text) const
     // Create one quad for each character
     u32 prevChar{0U};
     TextRenderData result(text.size());
+    vector2df current_character_position{0.0F, 0.0F};
 
     for (auto curChar : text)
     {
@@ -30,25 +31,26 @@ TextRenderData FontUtils::getTextRenderData(str const& text) const
         prevChar                               = curChar;
         character_render_data.characterBounds  = font_->getBounds(curChar);
         character_render_data.characterAdvance = font_->getAdvance(curChar);
-        result.character_render_data.emplace_back(
-            std::move(character_render_data));
 
-        if (character_render_data.characterAdvance > result.maxCharacterSize.x)
-        {
-            result.maxCharacterSize.x = character_render_data.characterAdvance;
-        }
+        current_character_position.x +=
+            character_render_data.characterBounds.left;
 
-        if (character_render_data.characterBounds.size().y >
-            result.maxCharacterSize.y)
-        {
-            result.maxCharacterSize.y =
-                character_render_data.characterBounds.size().y;
-        }
+        current_character_position.x +=
+            character_render_data.characterBounds.width / 2.0F;
+
+        character_render_data.character_position = current_character_position;
+        character_render_data.character_size =
+            character_render_data.characterBounds.size();
+        result.character_render_data.push_back(character_render_data);
+
+        current_character_position.x -=
+            character_render_data.characterBounds.width / 2.0F;
+
+        current_character_position.x += character_render_data.characterAdvance;
 
         result.text_size.x += character_render_data.characterAdvance;
     }
 
-    result.text_size.y = result.maxCharacterSize.y;
     return result;
 }
 

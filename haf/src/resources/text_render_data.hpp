@@ -15,7 +15,6 @@ struct TextRenderData
 {
     htps::vector<CharacterRenderData> character_render_data;
     htps::vector2df text_size{};
-    htps::vector2df maxCharacterSize;
 
     TextRenderData() = default;
     explicit TextRenderData(htps::size_type const size) :
@@ -26,12 +25,6 @@ struct TextRenderData
     {
         return character_render_data == rhs.character_render_data &&
             text_size == rhs.text_size;
-    }
-
-    htps::f32 getProportionSize(htps::size_type const index_char) const
-    {
-        return character_render_data[index_char].characterAdvance /
-            maxCharacterSize.x;
     }
 };
 

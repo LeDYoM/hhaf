@@ -29,7 +29,7 @@ void Console::onCreated()
 //    prop<Position>().set(vector2df{100.0F, 0.0F});
 //    prop<Scale>().set({1 / 2000.0F, 1 / 2000.0F});
 //    a->prop<Text>().set("234 ABC abc");
-    a->prop<Text>().set("2iii0AabB56y_+q");
+    a->prop<Text>().set("i2iii0AabB56y_+q");
     a->prop<TextColor>().set(colors::Red);
 //    a->prop<Scale>().set({1, 1});
 }
