@@ -24,7 +24,7 @@ public:
     /**
      * @brief Constructor
      */
-    SceneNodeText(types::rptr<SceneNode> parent, htps::str name);
+    using BaseClass::BaseClass;
 
     void onCreated() override;
 

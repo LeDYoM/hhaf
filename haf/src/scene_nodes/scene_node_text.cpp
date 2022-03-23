@@ -70,50 +70,42 @@ inline void updateAlignmentY(
 }
 }  // namespace
 
-SceneNodeText::SceneNodeText(types::rptr<SceneNode> parent, str name) :
-    BaseClass{parent, std::move(name)}
+void SceneNodeText::onCreated()
 {
     inner_transformation_ = addTransformation();
 }
 
-void SceneNodeText::onCreated()
-{}
-
 void SceneNodeText::update()
 {
-    // TODO: Delete
-    auto const& current_text2{prop<SceneNodeTextProperties>().prop<Text>()()};
+    res::FontUtils const font_utils{prop<Font>()().get()};
 
-    if (current_text2 == "1234 ABC abc")
+    if (ps_readResetHasAnyChanged(prop<Font>(), prop<Text>()))
     {
-        int a = 0;
-        (void)(a);
-    }
-
-    auto& pr = prop<SceneNodeTextProperties>();
-    res::FontUtils const font_utils{pr.get<Font>().get()};
-    if (pr.hasChanged<Font>() || pr.hasChanged<Text>())
-    {
-        pr.setChanged<AlignmentSize>();
-        pr.readResetHasChanged<Font>();
-        pr.readResetHasChanged<Text>();
-
-        if (pr.get<Font>() && !(pr.get<Text>().empty()))
+        if (prop<Font>()() != nullptr && !(prop<Text>()().empty()))
         {
-            auto font(pr.get<Font>());
-            auto texture(pr.get<Font>()->getTexture());
+            auto font{prop<Font>()()};
+            auto texture{prop<Font>()()->getTexture()};
 
-            // Create one quad for each character
-            using counter_t = decltype(sceneNodes().size());
+            // Initialize counter of characters
+            types::size_type counter{0U};
 
-            counter_t counter{0U};
-            counter_t const old_counter{sceneNodes().size()};
-            auto const& text_color{pr.get<TextColor>()};
+            // Get the counter of letters in the previous text set
+            types::size_type const old_counter{sceneNodes().size()};
+
+            // Get the text to render
+            auto const& current_text{prop<Text>()()};
+
+            // Get The text color for each character
+            auto const text_color{prop<TextColor>()()};
+
+            // Prepare the text render data
             auto const text_render_data{
-                font_utils.getTextRenderData(pr.get<Text>())};
+                font_utils.getTextRenderData(current_text)};
+
+            // Initialize the index of the current character
             size_type indexChar{0U};
 
-            auto const& current_text{pr.get<Text>()};
+            // Initialize the node for each letter we are going to use
             types::sptr<SceneNodeLetter> letterNode;
 
             for (auto curChar : current_text)
@@ -138,29 +130,27 @@ void SceneNodeText::update()
                 getTransformation(inner_transformation_).prop<Scale>() =
                     vector2df{1.0F / text_render_data.text_size};
 
-                {
-                    auto const& character_render_data{
-                        text_render_data.character_render_data[indexChar]};
+                auto const& character_render_data{
+                    text_render_data.character_render_data[indexChar]};
 
-                    vector2df new_position{
-                        character_render_data.character_position.x -
-                            (text_render_data.text_size.x / 2.0F),
-                        character_render_data.character_position.y -
-                            (text_render_data.text_size.y / 2.0F)};
+                vector2df new_position{
+                    character_render_data.character_position.x -
+                        (text_render_data.text_size.x / 2.0F),
+                    character_render_data.character_position.y -
+                        (text_render_data.text_size.y / 2.0F)};
 
-                    letterNode->prop<Position>() = new_position;
-                    letterNode->prop<Scale>() =
-                        character_render_data.character_size;
+                letterNode->prop<Position>() = new_position;
+                letterNode->prop<Scale>() =
+                    character_render_data.character_size;
 
-                    letterNode->node()->prop<render::ColorProperty>().set(
-                        text_color);
+                letterNode->node()->prop<render::ColorProperty>().set(
+                    text_color);
 
-                    letterNode->setCharacterTextureData(
-                        texture, font->getTextureBounds(curChar));
+                letterNode->setCharacterTextureData(
+                    texture, font->getTextureBounds(curChar));
 
-                    ++counter;
-                    ++indexChar;
-                }
+                ++counter;
+                ++indexChar;
             }
 
             // Remove the unused letters.
@@ -177,11 +167,8 @@ void SceneNodeText::update()
                 removeSceneNode(sceneNodes()[index]);
             }
 
-            // Force reposition if text changed
-            pr.setChanged<AlignmentSize>();
-
             // Force update color
-            pr.readResetHasChanged<TextColor>();
+            prop<TextColor>().resetHasChanged();
         }
         else
         {
@@ -189,40 +176,14 @@ void SceneNodeText::update()
         }
     }
 
-    if (pr.readResetHasChanged<TextColor>())
+    if (prop<TextColor>().readResetHasChanged())
     {
-        Color const& text_color{pr.get<TextColor>()};
+        Color const& text_color{prop<TextColor>()()};
 
         for_each_sceneNode_as<RenderizableSceneNode>(
             [&text_color](types::sptr<RenderizableSceneNode> const& sNode) {
                 sNode->node()->prop<render::ColorProperty>() = text_color;
             });
-    }
-
-    if (pr.get<Font>() != nullptr)
-    {
-        bool const as_rr_hasChanged{pr.readResetHasChanged<AlignmentSize>()};
-        bool const align_x{pr.readResetHasChanged<AlignmentX>()};
-        bool const align_y{pr.readResetHasChanged<AlignmentY>()};
-
-        if (as_rr_hasChanged || align_x)
-        {
-            //            updateAlignmentX(
-            //                getTransformation(inner_transformation_).prop<Position>(),
-            //                prop<AlignmentX>().get(), textSize.width,
-            //                pr.get<AlignmentSize>());
-        }
-
-        if (as_rr_hasChanged || align_y)
-        {
-            // TODO: Reenable alignment Y
-            /*
-            updateAlignmentY(
-                getTransformation(inner_transformation_).prop<Position>(),
-                prop<AlignmentY>().get(), textSize.height,
-                pr.get<AlignmentSize>());
-                */
-        }
     }
 }
 
