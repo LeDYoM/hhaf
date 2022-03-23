@@ -31,7 +31,9 @@ void Console::onCreated()
 //    a->prop<Text>().set("234 ABC abc");
     a->prop<Text>().set("AYi2_+q");
     a->prop<TextColor>().set(colors::Red);
-//    a->prop<Scale>().set({1, 1});
+    a->setLeftTopPositionScale({0.5F, 0.1F});
+//    a->prop<Position>().set({-0.250F, -0.25F});
+//    a->prop<Scale>().set({0.5F, 0.5F});
 }
 
 void Console::setText(str const& text)
