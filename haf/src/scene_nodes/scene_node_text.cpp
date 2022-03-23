@@ -72,13 +72,14 @@ inline void updateAlignmentY(
 
 void SceneNodeText::onCreated()
 {
-    inner_transformation_ = addTransformation();
+    BaseClass::onCreated();
+    inner_scale_    = addTransformation();
+    inner_position_ = addTransformation();
 }
 
 void SceneNodeText::update()
 {
-    res::FontUtils const font_utils{prop<Font>()().get()};
-
+    BaseClass::update();
     if (ps_readResetHasAnyChanged(prop<Font>(), prop<Text>()))
     {
         if (prop<Font>()() != nullptr && !(prop<Text>()().empty()))
@@ -98,15 +99,23 @@ void SceneNodeText::update()
             // Get The text color for each character
             auto const text_color{prop<TextColor>()()};
 
-            // Prepare the text render data
-            auto const text_render_data{
-                font_utils.getTextRenderData(current_text)};
-
             // Initialize the index of the current character
             size_type indexChar{0U};
 
             // Initialize the node for each letter we are going to use
             types::sptr<SceneNodeLetter> letterNode;
+
+            // Prepare the text render data
+            res::FontUtils const font_utils{prop<Font>()().get()};
+
+            auto const text_render_data{
+                font_utils.getTextRenderData(current_text)};
+
+            getTransformation(inner_scale_).prop<Scale>() =
+                vector2df{1.0F / text_render_data.text_size};
+
+            getTransformation(inner_position_).prop<Position>() =
+                -(text_render_data.text_size / 2.0F);
 
             for (auto curChar : current_text)
             {
@@ -127,21 +136,11 @@ void SceneNodeText::update()
                         .create();
                 }
 
-                getTransformation(inner_transformation_).prop<Scale>() =
-                    vector2df{1.0F / text_render_data.text_size};
-
-                auto const& character_render_data{
+                auto const& ch_data{
                     text_render_data.character_render_data[indexChar]};
 
-                vector2df new_position{
-                    character_render_data.character_position.x -
-                        (text_render_data.text_size.x / 2.0F),
-                    character_render_data.character_position.y -
-                        (text_render_data.text_size.y / 2.0F)};
-
-                letterNode->prop<Position>() = new_position;
-                letterNode->prop<Scale>() =
-                    character_render_data.character_size;
+                letterNode->prop<Position>() = ch_data.character_position;
+                letterNode->prop<Scale>()    = ch_data.character_size;
 
                 letterNode->node()->prop<render::ColorProperty>().set(
                     text_color);

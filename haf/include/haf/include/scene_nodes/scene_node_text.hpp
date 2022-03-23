@@ -40,7 +40,8 @@ public:
 
 protected:
     void update() override final;
-    types::size_type inner_transformation_;
+    types::size_type inner_scale_;
+    types::size_type inner_position_;
 };
 
 }  // namespace haf::scene::nodes
