@@ -36,8 +36,6 @@ void createStandardBackground(
     haf::types::sptr<haf::scene::RenderizableSceneNode> const&
         renderizable_scene_node)
 {
-//    renderizable_scene_node->prop<Position>().set(vector2df{1000.0F, 1000.0F});
-    renderizable_scene_node->prop<Scale>().set(vector2df{2000.0F, 2000.0F});
     auto background{
         renderizable_scene_node->renderizableBuilder()
             .name("background")

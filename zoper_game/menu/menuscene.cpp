@@ -54,20 +54,18 @@ void MenuScene::onCreated()
     auto main_menu_background{
         createSceneNode<RenderizableSceneNode>("main_menu_background")};
     createStandardBackground(main_menu_background);
-    main_menu_background->prop<Visible>() = false;
 
     // Create the logo
     auto main_menu_background_logo{
         createSceneNode<RenderizableSceneNode>("main_menu_background_logo")};
     main_menu_background_logo->prop<Position>() = vector2df{0.F, -0.28F};
-    main_menu_background_logo->prop<Scale>() = vector2d{0.5F, 0.4F};
+    main_menu_background_logo->prop<Scale>() = vector2df{0.5F, 0.4F};
     main_menu_background_logo->renderizableBuilder()
         .name("mainLogo")
         .figType(FigType_t::Sprite)
         .texture(MainMenuResources::LogoId)
 //        .shader("shader1")
         .create();
-    main_menu_background_logo->prop<Visible>() = false;
 
     createSceneNode<MainMenu>(MainMenu::StaticTypeName)
         ->MenuFinished.connect([this](MenuFinishedStatus const status) {

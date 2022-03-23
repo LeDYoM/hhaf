@@ -84,7 +84,6 @@ void MainMenu::goTokenGame(vector<s32> menu_data)
 void MainMenu::onCreated()
 {
     BaseClass::onCreated();
-    prop<Visible>() = false;
 
     prop<MenuPagedProperties>()
         .put<NormalTextFont>(
