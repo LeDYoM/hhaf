@@ -16,12 +16,12 @@ class HAF_API Scene : public SceneNode
 public:
     explicit Scene(htps::str name);
     ~Scene() override;
-    void onCreated();
     virtual htps::str nextSceneName();
     virtual void onFinished();
 
     void installDebugUtils();
 
+    htps::sptr<CameraComponent> const& cameraComponent();
     htps::sptr<CameraComponent> const& cameraComponent() const;
     htps::rptr<Scene> sceneParent() override;
     htps::rptr<Scene const> sceneParent() const override;

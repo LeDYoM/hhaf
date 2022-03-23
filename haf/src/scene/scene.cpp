@@ -19,13 +19,6 @@ str Scene::nextSceneName()
     return "";
 }
 
-void Scene::onCreated()
-{
-    p_->camera_component_ = component<CameraComponent>();
-    LogAsserter::log_assert(p_->camera_component_ != nullptr,
-                            "Cannot create camera component");
-}
-
 rptr<Scene> Scene::sceneParent()
 {
     return this;
@@ -34,6 +27,18 @@ rptr<Scene> Scene::sceneParent()
 rptr<Scene const> Scene::sceneParent() const
 {
     return this;
+}
+
+sptr<CameraComponent> const& Scene::cameraComponent()
+{
+    if (p_->camera_component_ == nullptr)
+    {
+        p_->camera_component_ = component<CameraComponent>();
+        LogAsserter::log_assert(p_->camera_component_ != nullptr,
+                                "Cannot create camera component");
+    }
+
+    return p_->camera_component_;
 }
 
 sptr<CameraComponent> const& Scene::cameraComponent() const
