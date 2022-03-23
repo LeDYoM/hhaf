@@ -112,7 +112,7 @@ void MainMenu::onCreated()
                 make_option("Play Time mode", RangeOption(), 2),
                 make_option("Options", RangeOption(), 3),
                 make_option("Exit", RangeOption(), MenuPagedOption::GoBack)};
-        menuPageMain->menu_page_options = main_page_options;
+//        menuPageMain->menu_page_options = main_page_options;
 
         menu_steps.emplace_back(std::move(menuPageMain));
     }

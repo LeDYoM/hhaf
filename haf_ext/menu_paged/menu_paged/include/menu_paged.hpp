@@ -7,6 +7,9 @@
 #include <haf/include/scene_nodes/transformable_scene_node.hpp>
 #include <haf/include/scene/color.hpp>
 #include <haf/include/resources/ifont.hpp>
+#include <haf/include/scene_components/states_controller_component.hpp>
+#include <haf/include/scene_components/visibility_selector_component.hpp>
+
 #include "menu_paged_properties.hpp"
 #include "menu_page.hpp"
 
@@ -31,6 +34,7 @@ public:
     using TransformableSceneNode::prop;
     using MenuPagedProperties::prop;
 
+    void onCreated() override;
     ~MenuPaged() override;
 
     void setMenuPagedStatus(MenuFinishedStatus const status);
@@ -45,6 +49,8 @@ protected:
     void configure_menu(htps::vector_shared_pointers<MenuPage> menu_steps);
 
 private:
+    htps::sptr<VisibilitySelectorComponent> visibilitySelectorComponent_;
+    htps::sptr<StatesControllerComponent<htps::s32>> statesControllerComponent_;
     htps::vector_shared_pointers<MenuPage> menu_steps_;
     MenuFinishedStatus status_{MenuFinishedStatus::Backward};
 };

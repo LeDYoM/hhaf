@@ -1,8 +1,6 @@
 #include <menu_paged/include/menu_paged.hpp>
 #include <menu_paged/include/menu_page.hpp>
 
-#include <haf/include/scene_components/states_controller_component.hpp>
-#include <haf/include/scene_components/visibility_selector_component.hpp>
 #include <haf/include/component/component_container.hpp>
 #include <haf/include/scene_components/iscene_control.hpp>
 
@@ -12,6 +10,27 @@ namespace haf::scene
 {
 
 MenuPaged::~MenuPaged() = default;
+
+void MenuPaged::onCreated()
+{
+    visibilitySelectorComponent_ = component<VisibilitySelectorComponent>();
+    statesControllerComponent_   = component<StatesControllerComponent<s32>>();
+
+    statesControllerComponent_->StatePushed.connect(
+        [this](const s32 menu_page) {
+            visibilitySelectorComponent_->visible_index.set(
+                static_cast<size_type>(menu_page));
+        });
+
+    statesControllerComponent_->StateResumed.connect(
+        [this](const s32 menu_page) {
+            visibilitySelectorComponent_->visible_index.set(
+                static_cast<size_type>(menu_page));
+        });
+
+    statesControllerComponent_->AfterFinish.connect(
+        [this]() { terminate(status_); });
+}
 
 void MenuPaged::setMenuPagedStatus(MenuFinishedStatus const status)
 {
@@ -31,46 +50,27 @@ sptr<MenuPage> MenuPaged::createMenuPage(str name)
 void MenuPaged::configure_menu(
     vector_shared_pointers<scene::MenuPage> menu_steps)
 {
-    auto visibility_selector =
-        component<VisibilitySelectorComponent>();
-    auto statesController =
-        component<StatesControllerComponent<s32>>();
     menu_steps_ = std::move(menu_steps);
 
     for (auto&& menu_page : menu_steps_)
     {
-        menu_page->Forward.connect(
-            [this, statesController](const s32 selectedIndex) {
-                if (selectedIndex > -1)
-                {
-                    statesController->push_state(selectedIndex);
-                }
-                else
-                {
-                    statesController->pop_state();
-                }
-            });
+        menu_page->Forward.connect([this](const s32 selectedIndex) {
+            if (selectedIndex > -1)
+            {
+                statesControllerComponent_->push_state(selectedIndex);
+            }
+            else
+            {
+                statesControllerComponent_->pop_state();
+            }
+        });
 
         menu_page->Back.connect(
-            [statesController]() { statesController->pop_state(); });
+            [this]() { statesControllerComponent_->pop_state(); });
     }
 
-    statesController->StatePushed.connect(
-        [visibility_selector](const s32 menu_page) {
-            visibility_selector->visible_index.set(
-                static_cast<size_type>(menu_page));
-        });
-
-    statesController->StateResumed.connect(
-        [visibility_selector](const s32 menu_page) {
-            visibility_selector->visible_index.set(
-                static_cast<size_type>(menu_page));
-        });
-
-    statesController->AfterFinish.connect([this]() { terminate(status_); });
-
-    statesController->start(0);
-    visibility_selector->visible_index.set(0U);
+    statesControllerComponent_->start(0);
+    visibilitySelectorComponent_->visible_index.set(0U);
 }
 
 void MenuPaged::terminate(MenuFinishedStatus const status)
