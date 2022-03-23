@@ -104,37 +104,40 @@ void MainMenu::onCreated()
     // Create and register menu pages
     {
         PageOptions main_page_options{true};
-        auto menuPageMain{createAndConfigureMenuPage(
-            "menuPageMain",
+        auto menuPageMain{createMenuPage(
+            "menuPageMain")};
+        menuPageMain->menu_options =
             vector_shared_pointers<MenuPagedOption>{
                 make_option("Play Token mode", RangeOption(), 1),
                 make_option("Play Time mode", RangeOption(), 2),
                 make_option("Options", RangeOption(), 3),
-                make_option("Exit", RangeOption(), MenuPagedOption::GoBack)},
-            main_page_options)};
+                make_option("Exit", RangeOption(), MenuPagedOption::GoBack)};
+        menuPageMain->menu_page_options = main_page_options;
 
         menu_steps.emplace_back(std::move(menuPageMain));
     }
 
     {
-        auto menuPageByToken{createAndConfigureMenuPage(
-            "menuPageByToken",
+        auto menuPageByToken{createMenuPage(
+            "menuPageByToken")};
+        menuPageByToken->menu_options =
             vector_shared_pointers<MenuPagedOption>{
                 make_option("Start level Token Mode", RangeOption(1U, 10U)),
                 make_option("Play", RangeOption(), MenuPagedOption::Accept),
-                make_option("Back", RangeOption(), MenuPagedOption::GoBack)})};
+                make_option("Back", RangeOption(), MenuPagedOption::GoBack)};
 
         menu_steps.emplace_back(std::move(menuPageByToken));
     }
     menu_steps.back()->Accepted.connect(
         make_function(this, &MainMenu::goTokenGame));
     {
-        auto menuPageByTime{createAndConfigureMenuPage(
-            "menuPageByTime",
+        auto menuPageByTime{createMenuPage(
+            "menuPageByTime")};
+            menuPageByTime->menu_options =
             vector_shared_pointers<MenuPagedOption>{
                 make_option("Start level Time Mode", RangeOption(1U, 10U)),
                 make_option("Play", RangeOption(), MenuPagedOption::Accept),
-                make_option("Back", RangeOption(), MenuPagedOption::GoBack)})};
+                make_option("Back", RangeOption(), MenuPagedOption::GoBack)};
 
         menu_steps.emplace_back(std::move(menuPageByTime));
     }
@@ -143,9 +146,9 @@ void MainMenu::onCreated()
         make_function(this, &MainMenu::goTimeGame));
 
     {
-        auto menuPageOptions{createAndConfigureMenuPage(
-            "menuPageOptions",
-            vector_shared_pointers<MenuPagedOption>{
+        auto menuPageOptions{createMenuPage(
+            "menuPageOptions")};
+            menuPageOptions->menu_options = vector_shared_pointers<MenuPagedOption>{
                 make_option("Antialiasing", RangeOption{Antialiasing{}}),
                 make_option("Resolution",
                             RangeOption(string_vector{"Worst", "Bad", "Normal",
@@ -156,7 +159,7 @@ void MainMenu::onCreated()
                 make_option("Redefine keyboard", RangeOption()),
                 make_option("Accept", RangeOption(), MenuPagedOption::GoBack),
                 make_option("Cancel", RangeOption(),
-                            MenuPagedOption::GoBack)})};
+                            MenuPagedOption::GoBack)};
 
         menu_steps.emplace_back(std::move(menuPageOptions));
     }

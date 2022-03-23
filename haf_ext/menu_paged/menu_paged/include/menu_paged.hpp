@@ -44,15 +44,6 @@ protected:
     htps::sptr<MenuPage> createMenuPage(htps::str name);
     void configure_menu(htps::vector_shared_pointers<MenuPage> menu_steps);
 
-    template <typename... Args>
-    htps::sptr<MenuPage> createAndConfigureMenuPage(htps::str name,
-                                                    Args&&... args)
-    {
-        auto node{createMenuPage(std::move(name))};
-        node->configure(std::forward<Args>(args)...);
-        return node;
-    }
-
 private:
     htps::vector_shared_pointers<MenuPage> menu_steps_;
     MenuFinishedStatus status_{MenuFinishedStatus::Backward};

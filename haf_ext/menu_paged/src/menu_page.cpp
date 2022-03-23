@@ -39,7 +39,7 @@ void MenuPage::onAllElementsCreated()
     if (table_size.x != 0U && table_size.y != 0U)
     {
         auto const& options{menu_options()};
-        auto const& page_options{page_options_()};
+        auto const& page_options{menu_page_options()};
 
         LogAsserter::log_assert(options.size() > 0U, "options cannot be empty");
         size_type counter{0U};
@@ -145,13 +145,6 @@ void MenuPage::update()
             prop<TableSize>().set({5U, menu_options().size()});
         }
     }
-}
-
-void MenuPage::configure(vector<sptr<MenuPagedOption>> options,
-                         PageOptions page_options)
-{
-    menu_options  = std::move(options);
-    page_options_ = std::move(page_options);
 }
 
 vector<s32> MenuPage::optionsSelected() const
