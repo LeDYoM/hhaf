@@ -99,6 +99,7 @@ void MainMenu::onCreated()
         .put<SelectedColor>(colors::Red);
 
     vector_shared_pointers<scene::MenuPage> menu_steps;
+    prop<Scale>() = Scale::value_type{1.0F, 0.3F};
 
     // Create and register menu pages
     {

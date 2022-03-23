@@ -77,7 +77,7 @@ void MenuPaged::terminate(MenuFinishedStatus const status)
 {
     setMenuPagedStatus(status);
     MenuFinished(status_);
-    
+
     if (prop<FinishSceneAtEnd>()())
     {
         subSystem<ISceneControl>()->switchToNextScene();
