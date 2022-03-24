@@ -28,8 +28,11 @@ void TableNodeImp::update()
         {
             for (size_type x{0U}; x < tableSize.x; ++x)
             {
-                (void)(createInnerSceneNodeAt({x, y},
-                                              make_str("inner_node_", x, y)));
+                if (inner_nodes_[x][y] == nullptr)
+                {
+                    (void)(createInnerSceneNodeAt(
+                        {x, y}, make_str("inner_node_", x, y)));
+                }
             }
         }
 
@@ -44,8 +47,7 @@ void TableNodeImp::update()
                 const htps::sptr<TransformableSceneNode>& node) {
                 if (node->sceneNodes().empty())
                 {
-                    createNodeAtNoReturn({p.x, p.y},
-                                         make_str(name(), "_", p.x, p.y));
+                    createNodeAt({p.x, p.y});
                 }
 
                 node->prop<Scale>().set(cell_size);
@@ -69,12 +71,20 @@ TableNodeImp::ContainedType_t TableNodeImp::createInnerSceneNodeAt(
     htps::vector2dst const index,
     htps::str const& name)
 {
+    LogAsserter::log_assert(inner_nodes_[index.x][index.y] == nullptr,
+                            "Node already created");
     ContainedType_t inner_node{createSceneNode<TransformableSceneNode>(
         make_str(name, "_inner_node", index))};
 
     setInnerSceneNodeAt(index, inner_node);
     onInnerNodeCreated(index, inner_node);
     return inner_node;
+}
+
+TableNodeImp::ContainedType_t TableNodeImp::innerSceneNodeAt(
+    htps::vector2dst const index) const
+{
+    return inner_nodes_[index.x][index.y];
 }
 
 void TableNodeImp::updateTableSizeIfNecessary()

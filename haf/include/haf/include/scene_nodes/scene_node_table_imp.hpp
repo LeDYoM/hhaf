@@ -42,13 +42,16 @@ public:
     void update() override;
 
     bool nodeTableCreated(htps::vector2dst const& index) const;
-    virtual void createNodeAtNoReturn(htps::vector2dst const& index,
-                                      htps::str const& name) = 0;
 
     virtual void onAllElementsCreated();
     htps::emitter<> allElementsCreated;
 
 protected:
+    ContainedType_t innerSceneNodeAt(htps::vector2dst const index) const;
+
+    virtual void setTableSize(htps::vector2dst const ntableSize);
+
+private:
     ContainedType_t createInnerSceneNodeAt(htps::vector2dst const index,
                                            htps::str const& name);
 
@@ -56,11 +59,11 @@ protected:
                              ContainedType_t& scene_node);
 
     void updateTableSizeIfNecessary();
-    virtual void setTableSize(htps::vector2dst const ntableSize);
 
-    // private:
     void for_each_table_innerSceneNode(
         htps::function<void(const htps::vector2dst&, ContainedType_t&)> action);
+
+    virtual void createNodeAt(htps::vector2dst const& index) = 0;
 
     htps::vector<htps::vector<ContainedType_t>> inner_nodes_;
 };
