@@ -48,17 +48,11 @@ void TableNodeImp::update()
                                          make_str(name(), "_", p.x, p.y));
                 }
 
-                if (prop<ScaleGroup>()())
-                {
-                    node->prop<Scale>().set(cell_size);
-                }
+                node->prop<Scale>().set(cell_size);
 
-                if (prop<MoveGroup>()())
-                {
-                    node->prop<Position>().set(
-                        left_top_plus_half_size +
-                        (cell_size * static_cast<htps::vector2df>(p)));
-                }
+                node->prop<Position>().set(
+                    left_top_plus_half_size +
+                    (cell_size * static_cast<htps::vector2df>(p)));
             });
         onAllElementsCreated();
         allElementsCreated();

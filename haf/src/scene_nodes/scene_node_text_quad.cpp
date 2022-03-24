@@ -6,9 +6,6 @@ namespace haf::scene::nodes
 {
 void TextQuad::onCreated()
 {
-    prop<MoveGroup>()  = true;
-    prop<ScaleGroup>() = false;
-
     onTableNodeCreated += make_function(this, &TextQuad::onElementCreated);
     prop<TableSize>().set({2U, 2U});
 }

@@ -111,11 +111,26 @@ void SceneNodeText::update()
             auto const text_render_data{
                 font_utils.getTextRenderData(current_text)};
 
+            if (!prop<BaseText>()().empty())
+            {
+                auto const text_render_data_for_base_text{
+                    font_utils.getTextRenderData(prop<BaseText>()())};
+                prop<BaseSize>() = text_render_data_for_base_text.text_size;
+            }
+            auto const base_size{prop<BaseSize>()()};
+            prop<BaseSize>().resetHasChanged();
+
+            vector2df const text_render_size{
+                base_size.x == htps::f32{} ? text_render_data.text_size.x
+                                           : base_size.x,
+                base_size.y == htps::f32{} ? text_render_data.text_size.y
+                                           : base_size.y};
+
             getTransformation(inner_scale_).prop<Scale>() =
-                vector2df{1.0F / text_render_data.text_size};
+                vector2df{1.0F / text_render_size};
 
             getTransformation(inner_position_).prop<Position>() =
-                -(text_render_data.text_size / 2.0F);
+                -(text_render_size / 2.0F);
 
             for (auto curChar : current_text)
             {

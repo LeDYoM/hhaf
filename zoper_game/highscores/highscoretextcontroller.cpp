@@ -28,8 +28,6 @@ void HighScoreTextController::onCreated()
 {
     BaseClass::onCreated();
     prop<TableSize>().set({3U, NumHighScore});
-    prop<MoveGroup>() = true;
-    prop<ScaleGroup>() = false;
 }
 
 void HighScoreTextController::onAllElementsCreated()

@@ -18,8 +18,6 @@ MenuPage::~MenuPage() = default;
 void MenuPage::onCreated()
 {
     BaseClass::onCreated();
-    prop<MoveGroup>() = true;
-    prop<ScaleGroup>() = true;
     prop<TableSize>() = {0U, 0U};
 
     auto input{component<MenuPageInputComponent>()};
