@@ -38,6 +38,9 @@ public:
      */
     using SceneNodeTextProperties::prop;
 
+    void setBaseSizeFromText(types::str const& text);
+    void setBaseSizeFromText(char const character, types::size_type const size);
+
 protected:
     void update() override final;
     types::size_type inner_scale_;

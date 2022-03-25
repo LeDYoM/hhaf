@@ -38,9 +38,6 @@ struct TextColor : PropertyStateBase<Color>
 struct BaseSize : PropertyStateBase<htps::vector2df>
 {};
 
-struct BaseText : PropertyStateBase<htps::str>
-{};
-
 struct AlignmentX : PropertyStateBase<AlignmentXModes>
 {};
 
@@ -54,7 +51,6 @@ using SceneNodeTextProperties = types::PropertyGroup<Text,
                                                      Font,
                                                      TextColor,
                                                      BaseSize,
-                                                     BaseText,
                                                      AlignmentX,
                                                      AlignmentY,
                                                      AlignmentSize>;

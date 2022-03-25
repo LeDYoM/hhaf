@@ -111,14 +111,7 @@ void SceneNodeText::update()
             auto const text_render_data{
                 font_utils.getTextRenderData(current_text)};
 
-            if (!prop<BaseText>()().empty())
-            {
-                auto const text_render_data_for_base_text{
-                    font_utils.getTextRenderData(prop<BaseText>()())};
-                prop<BaseSize>() = text_render_data_for_base_text.text_size;
-            }
             auto const base_size{prop<BaseSize>()()};
-            prop<BaseSize>().resetHasChanged();
 
             vector2df const text_render_size{
                 base_size.x == htps::f32{} ? text_render_data.text_size.x
@@ -199,6 +192,21 @@ void SceneNodeText::update()
                 sNode->node()->prop<render::ColorProperty>() = text_color;
             });
     }
+}
+
+void SceneNodeText::setBaseSizeFromText(types::str const& text)
+{
+    prop<BaseSize>() =
+        res::FontUtils{prop<Font>()().get()}.getTextRenderData(text).text_size;
+}
+
+void SceneNodeText::setBaseSizeFromText(char const character,
+                                        size_type const size)
+{
+    prop<BaseSize>() =
+        res::FontUtils{prop<Font>()().get()}
+            .getTextRenderData(str::fromCharAndSize(character, size))
+            .text_size;
 }
 
 }  // namespace haf::scene::nodes

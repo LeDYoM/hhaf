@@ -323,3 +323,24 @@ TEST_CASE("str::c_str", "[str]")
         CHECK(0 == std::strcmp("", test.c_str()));
     }
 }
+
+TEST_CASE("str::fromCharAndSize", "[str]")
+{
+    str text0{str::fromCharAndSize('A',5U)};
+    str text1{str::fromCharAndSize('A',5U)};
+    CHECK(text0 == "AAAAA");
+    CHECK("AAAAA" == text0);
+    CHECK(text0 == text1);
+    CHECK(text1 == text0);
+
+    str text2{str::fromCharAndSize('A',4U)};
+    CHECK(text0 != text2);
+    CHECK_FALSE(text0 == text2);
+
+    str text3{str::fromCharAndSize(' ', 0U)};
+    str text4{str::fromCharAndSize('A', 0U)};
+
+    CHECK(text3.empty());
+    CHECK(text4.empty());
+    CHECK(text3 == text4);
+}

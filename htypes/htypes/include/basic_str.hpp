@@ -64,6 +64,16 @@ public:
 
     void swap(basic_str& other) { data_.swap(other.data_); }
 
+    static basic_str fromCharAndSize(char_type const ch, size_type const size)
+    {
+        basic_str result(size + 1U);
+        for (size_type i{0U}; i < size; ++i)
+        {
+            result.push_back(ch);
+        }
+        return result;
+    }
+
     static basic_str to_str(u64 const n)
     {
         return basic_str{std::to_string(n).c_str()};
@@ -420,7 +430,7 @@ public:
         }
     }
 
-    static const size_type npos = static_cast<size_type>(-1);
+    static constexpr size_type npos{static_cast<size_type>(-1)};
 
     constexpr bool operator==(basic_str const& rhs) const noexcept
     {
