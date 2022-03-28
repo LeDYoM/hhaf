@@ -135,6 +135,7 @@ set(sources
   ${src_dir}/scene_nodes/scene_node_table_text.cpp
   ${src_dir}/scene_nodes/scene_node_text_quad.cpp
   ${src_dir}/scene_nodes/scene_node_text.cpp
+  ${src_dir}/scene_nodes/text_base_size.cpp
   ${src_dir}/scene_nodes/transformable_scene_node.cpp
 
   # Shared data
@@ -304,6 +305,7 @@ set(headers
   ${inc_dir}/scene_nodes/scene_node_text_properties.hpp
   ${inc_dir}/scene_nodes/scene_node_text_quad.hpp
   ${inc_dir}/scene_nodes/scene_node_text.hpp
+  ${inc_dir}/scene_nodes/text_base_size.hpp
   ${inc_dir}/scene_nodes/transformable_scene_node.hpp
 
   # Shared data

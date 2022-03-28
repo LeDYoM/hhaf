@@ -68,6 +68,19 @@ inline void updateAlignmentY(
 
     position.set(vector2df{position.get().x, newPosY});
 }
+
+inline TextBaseSize updateTextRenderData(res::FontUtils const& font_utils,
+                                         TextBaseSize const& text_base_size)
+{
+    if (!text_base_size.text().empty())
+    {
+        return {text_base_size.text(),
+                font_utils.getTextRenderData(text_base_size.text()).text_size};
+    }
+
+    return text_base_size.value();
+}
+
 }  // namespace
 
 void SceneNodeText::onCreated()
@@ -80,7 +93,8 @@ void SceneNodeText::onCreated()
 void SceneNodeText::update()
 {
     BaseClass::update();
-    if (ps_readResetHasAnyChanged(prop<Font>(), prop<Text>()))
+    if (ps_readResetHasAnyChanged(prop<Font>(), prop<Text>(),
+                                  prop<TextBaseSizeProperty>()))
     {
         if (prop<Font>()() != nullptr && !(prop<Text>()().empty()))
         {
@@ -106,18 +120,33 @@ void SceneNodeText::update()
             types::sptr<SceneNodeLetter> letterNode;
 
             // Prepare the text render data
+
+            // Create the font utils to use
             res::FontUtils const font_utils{prop<Font>()().get()};
+
+            // Update the text base size property. If it contains a text, it
+            // has preference, but prepare the size value of these text and
+            // update the property accordinly.
+            prop<TextBaseSizeProperty>() = updateTextRenderData(
+                font_utils, prop<TextBaseSizeProperty>()());
+
+            // This was an internal change. Forget it happened.
+            prop<TextBaseSizeProperty>().resetHasChanged();
 
             auto const text_render_data{
                 font_utils.getTextRenderData(current_text)};
 
-            auto const base_size{prop<BaseSize>()()};
+            auto const text_base_size{prop<TextBaseSizeProperty>()()};
 
+            auto const new_text_base_size{
+                updateTextRenderData(font_utils, text_base_size)};
             vector2df const text_render_size{
-                base_size.x == htps::f32{} ? text_render_data.text_size.x
-                                           : base_size.x,
-                base_size.y == htps::f32{} ? text_render_data.text_size.y
-                                           : base_size.y};
+                text_base_size.value().x == htps::f32{}
+                    ? text_render_data.text_size.x
+                    : text_base_size.value().x,
+                text_base_size.value().y == htps::f32{}
+                    ? text_render_data.text_size.y
+                    : text_base_size.value().y};
 
             getTransformation(inner_scale_).prop<Scale>() =
                 vector2df{1.0F / text_render_size};
@@ -192,21 +221,6 @@ void SceneNodeText::update()
                 sNode->node()->prop<render::ColorProperty>() = text_color;
             });
     }
-}
-
-void SceneNodeText::setBaseSizeFromText(types::str const& text)
-{
-    prop<BaseSize>() =
-        res::FontUtils{prop<Font>()().get()}.getTextRenderData(text).text_size;
-}
-
-void SceneNodeText::setBaseSizeFromText(char const character,
-                                        size_type const size)
-{
-    prop<BaseSize>() =
-        res::FontUtils{prop<Font>()().get()}
-            .getTextRenderData(str::fromCharAndSize(character, size))
-            .text_size;
 }
 
 }  // namespace haf::scene::nodes

@@ -7,8 +7,6 @@
 #include <hlog/include/hlog.hpp>
 #include <haf/include/resources/ittfont.hpp>
 #include <haf/include/resources/iresource_retriever.hpp>
-#include <haf/include/scene/scene.hpp>
-#include <haf/include/scene_components/camera_component.hpp>
 
 using namespace htps;
 
@@ -18,13 +16,10 @@ using namespace haf;
 using namespace haf::scene;
 using namespace haf::scene::nodes;
 
-GameOverSceneNode::GameOverSceneNode(scene::SceneNode* const parent, str name) :
-    BaseClass{parent, std::move(name)}
+void GameOverSceneNode::onCreated()
 {
     game_over_rg_ = createSceneNode<TransformableSceneNode>("gameOverScreen");
 
-//    vector2df game_over_size{ancestor<Scene>()->cameraComponent()->view().width,
-//                             715};
 //    game_over_rg_->prop<Position>() = Position::value_type{0, 575};
 
     {

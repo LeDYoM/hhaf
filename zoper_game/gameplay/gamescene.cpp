@@ -130,16 +130,9 @@ void GameScene::onCreated()
                       &LevelProperties::millisBetweenTokens),
         [this]() { generateNextToken(); });
 
-    // Prepare the game over text
-    {
-        auto game_over_scene_node =
-            createSceneNode<GameOverSceneNode>("gameOverSceneNode");
-
-        p_->states_manager_ = muptr<GameSceneStateManager>(
-            scene_timer_component_,
-            createSceneNode<PauseSceneNode>("PauseNode"),
-            std::move(game_over_scene_node));
-    }
+    p_->states_manager_ = muptr<GameSceneStateManager>(
+        scene_timer_component_, createSceneNode<PauseSceneNode>("PauseNode"),
+        createSceneNode<GameOverSceneNode>("gameOverSceneNode"));
 
     // Set state control.
     {
