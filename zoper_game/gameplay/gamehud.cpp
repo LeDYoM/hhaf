@@ -80,10 +80,10 @@ void GameHudSceneNode::onAllScoreElementsCreated()
                               ->font(200U)};
 
     score_quad_->setTableNodeProperty<Font>(font)
-        ->setTableNodeProperty<TextColor>(colors::White)
-        ->setTableNodeProperty<AlignmentSize>(vector2df{0.1F, 0.1F});
+        ->setTableNodeProperty<TextColor>(colors::White);
+//        ->setTableNodeProperty<AlignmentSize>(vector2df{0.1F, 0.1F});
 
-    score_quad_->prop<Position>() = Position::value_type{-0.45F, -0.33F};
+//    score_quad_->prop<Position>() = Position::value_type{-0.45F, -0.33F};
     score_quad_->text(vector2dst{0U, 0U})
         ->prop<SceneNodeTextProperties>()
         .put<Text>("Level:")
@@ -93,7 +93,7 @@ void GameHudSceneNode::onAllScoreElementsCreated()
         .put<Text>("Score:")
         .put<TextColor>(colors::Blue);
 
-    score_quad_->prop<Scale>() = vector2df{0.15F, 0.25F};
+//    score_quad_->prop<Scale>() = vector2df{0.25F, 0.25F};
 }
 
 void GameHudSceneNode::onAllGoalElementsCreated()
