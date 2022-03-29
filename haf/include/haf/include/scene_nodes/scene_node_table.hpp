@@ -103,12 +103,17 @@ public:
     }
 
 private:
+    virtual void tableNodeCreated(htps::vector2dst,
+                                  htps::sptr<T> const&)
+    {}
+
     void createNodeAt(htps::vector2dst const& index) override final
     {
         auto createdNode{
             innerSceneNodeAt(index)->createSceneNode<T>("inner_inner_node")};
         nodeAt(index) = createdNode;
         onTableNodeCreated(index, nodeAt(index));
+        tableNodeCreated(index, nodeAt(index));
     }
 
     void setTableSize(htps::vector2dst const ntableSize) override final

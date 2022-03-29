@@ -112,6 +112,9 @@ void MainMenu::onCreated()
             make_option("Exit", RangeOption(), MenuPagedOption::GoBack)};
         //        menuPageMain->menu_page_options = main_page_options;
 
+        menuPageMain->onTableNodeCreated +=
+            make_function(this, &MainMenu::onTableNodeCreated);
+
         menu_steps.emplace_back(std::move(menuPageMain));
     }
 
@@ -158,6 +161,12 @@ void MainMenu::onCreated()
     configure_menu(std::move(menu_steps));
 
     prop<FinishSceneAtEnd>() = true;
+}
+
+void MainMenu::onTableNodeCreated(htps::vector2dst,
+                                  htps::sptr<SceneNodeText> const& node)
+{
+    node->prop<TextBaseSizeProperty>() = TextBaseSize{'A', 8U};
 }
 
 }  // namespace zoper
