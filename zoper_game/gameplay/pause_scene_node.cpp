@@ -34,10 +34,8 @@ void PauseSceneNode::onCreated()
                        ->getTTFont(GameResources::ScoreFontId)
                        ->font(100U))
         .put<TextColor>(colors::White);
-//        .put<AlignmentSize>(ancestor<Scene>()->cameraComponent()->view().size())
-//        .put<AlignmentX>(AlignmentXModes::Center)
-//        .put<AlignmentY>(AlignmentYModes::Middle);
 
+    pause_text_->prop<Scale>() = {0.5F, 0.5F};
     prop<Visible>().set(false);
 }
 

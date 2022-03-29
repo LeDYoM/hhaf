@@ -20,8 +20,6 @@ void GameOverSceneNode::onCreated()
 {
     game_over_rg_ = createSceneNode<TransformableSceneNode>("gameOverScreen");
 
-//    game_over_rg_->prop<Position>() = Position::value_type{0, 575};
-
     {
         auto gameText(
             game_over_rg_->createSceneNode<SceneNodeText>("gameovergame"));
@@ -31,9 +29,9 @@ void GameOverSceneNode::onCreated()
                            ->getTTFont(GameResources::ScoreFontId)
                            ->font(100))
             .put<TextColor>(colors::White);
-//            .put<AlignmentSize>(game_over_size)
-//            .put<AlignmentX>(AlignmentXModes::Center)
-//            .put<AlignmentY>(AlignmentYModes::Top);
+        gameText->prop<TransformationProperties>()
+            .put<Scale>({0.3F, 0.3F})
+            .put<Position>({0.0F, -0.15F});
     }
 
     {
@@ -45,12 +43,12 @@ void GameOverSceneNode::onCreated()
                            ->getTTFont(GameResources::ScoreFontId)
                            ->font(100))
             .put<TextColor>(colors::White);
-//            .put<AlignmentSize>(game_over_size)
-//            .put<AlignmentX>(AlignmentXModes::Center)
-//            .put<AlignmentY>(AlignmentYModes::Bottom);
+        overText->prop<TransformationProperties>()
+            .put<Scale>({0.3F, 0.3F})
+            .put<Position>({0.0F, 0.15F});
     }
 
-//    prop<Visible>().set(false);
+    prop<Visible>().set(false);
 }
 
 }  // namespace zoper
