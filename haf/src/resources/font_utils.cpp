@@ -50,14 +50,14 @@ TextRenderData FontUtils::getTextRenderData(str const& text) const
         current_character_position_x += character_render_data.characterAdvance;
 
         ++current_index;
-//        if (current_index == text.size())
-//        {
-//            result.text_size.x += character_render_data.characterBounds.width;
-//        }
-//        else
-//        {
+        if (current_index == text.size())
+        {
+            result.text_size.x += character_render_data.characterBounds.width;
+        }
+        else
+        {
             result.text_size.x += character_render_data.characterAdvance;
-//        }
+        }
 
         if (result.text_size.y < character_render_data.characterBounds.height)
         {
