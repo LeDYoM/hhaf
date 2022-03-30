@@ -29,6 +29,7 @@ public:
     constexpr Transformation& operator=(Transformation&&) noexcept = default;
 
     void setLeftTopPositionScale(VectorScalar const& vector);
+    void setRightTopPositionScale(VectorScalar const& vector);
     bool updateTransformIfNecessary() noexcept;
 
     Matrix4x4 const& matrix() noexcept;

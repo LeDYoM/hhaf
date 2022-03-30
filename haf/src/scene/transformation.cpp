@@ -48,4 +48,13 @@ void Transformation::setLeftTopPositionScale(VectorScalar const& vector)
     prop<Scale>().set(vector);
 }
 
+void Transformation::setRightTopPositionScale(VectorScalar const& vector)
+{
+    VectorScalar origin{0.5F, -0.5F};
+    origin.x -= vector.x / 2.0F;
+    origin.y += vector.y / 2.0F;
+    prop<Position>().set(std::move(origin));
+    prop<Scale>().set(vector);
+}
+
 }  // namespace haf::scene

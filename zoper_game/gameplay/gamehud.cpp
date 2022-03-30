@@ -70,7 +70,6 @@ void GameHudSceneNode::update()
             currentStayCounter.resetHasChanged();
         }
     }
-
 }
 
 void GameHudSceneNode::onAllScoreElementsCreated()
@@ -81,9 +80,8 @@ void GameHudSceneNode::onAllScoreElementsCreated()
 
     score_quad_->setTableNodeProperty<Font>(font)
         ->setTableNodeProperty<TextColor>(colors::White);
-//        ->setTableNodeProperty<AlignmentSize>(vector2df{0.1F, 0.1F});
+    //        ->setTableNodeProperty<AlignmentSize>(vector2df{0.1F, 0.1F});
 
-//    score_quad_->prop<Position>() = Position::value_type{-0.45F, -0.33F};
     score_quad_->text(vector2dst{0U, 0U})
         ->prop<SceneNodeTextProperties>()
         .put<Text>("Level:")
@@ -93,7 +91,11 @@ void GameHudSceneNode::onAllScoreElementsCreated()
         .put<Text>("Score:")
         .put<TextColor>(colors::Blue);
 
-//    score_quad_->prop<Scale>() = vector2df{0.25F, 0.25F};
+    score_quad_->setLeftTopPositionScale({0.35F, 0.32F});
+    score_quad_->for_each_tableSceneNode([](auto const&, auto const& node)
+    {
+        node->prop<TextBaseSizeProperty>() = TextBaseSize{'A', 6U};
+    });
 }
 
 void GameHudSceneNode::onAllGoalElementsCreated()
@@ -103,10 +105,8 @@ void GameHudSceneNode::onAllGoalElementsCreated()
                               ->font(200U)};
 
     goal_quad_->setTableNodeProperty<Font>(font)
-        ->setTableNodeProperty<TextColor>(colors::White)
-        ->setTableNodeProperty<AlignmentSize>(vector2df{0.1F, 0.1F});
+        ->setTableNodeProperty<TextColor>(colors::White);
 
-    goal_quad_->prop<Position>() = Position::value_type{0.2F, -0.33F};
     goal_quad_->text(vector2dst{0U, 0U})
         ->prop<SceneNodeTextProperties>()
         .put<Text>("Current:")
@@ -116,7 +116,11 @@ void GameHudSceneNode::onAllGoalElementsCreated()
         .put<Text>("Goal:")
         .put<TextColor>(colors::Blue);
 
-    goal_quad_->prop<Scale>() = vector2df{0.15F, 0.25F};
+    goal_quad_->setRightTopPositionScale({0.35F, 0.32F});
+    goal_quad_->for_each_tableSceneNode([](auto const&, auto const& node)
+    {
+        node->prop<TextBaseSizeProperty>() = TextBaseSize{'A', 8U};
+    });
 }
 
 bool GameHudSceneNode::setLevel(size_type const level)
@@ -124,8 +128,6 @@ bool GameHudSceneNode::setLevel(size_type const level)
     if (score_quad_->nodeTableCreated({1U, 0U}))
     {
         score_quad_->text({1U, 0U})->prop<Text>().set(make_str(level + 1U));
-        // TODO: Big nyapa
-//        score_quad_->text({1U, 0U})->prop<Position>().set({1.0F, 0.0F});
         return true;
     }
     return false;
@@ -136,8 +138,6 @@ bool GameHudSceneNode::setStayCounter(size_type const stayCounter)
     if (goal_quad_->nodeTableCreated({1U, 1U}))
     {
         goal_quad_->text({1U, 1U})->prop<Text>().set(make_str(stayCounter));
-        // TODO: Big nyapa
-//        goal_quad_->text({1U, 1U})->prop<Position>().set({1.0F, 0.0F});
         return true;
     }
     return false;
@@ -150,8 +150,6 @@ bool GameHudSceneNode::setConsumedTokens(size_type const consumedTokens)
         goal_quad_->text(vector2dst{1U, 0U})
             ->prop<Text>()
             .set(str::to_str(consumedTokens));
-        // TODO: Big nyapa
-        goal_quad_->text({1U, 0U})->prop<Position>().set({1.0F, 0.0F});
 
         return true;
     }
@@ -164,15 +162,13 @@ bool GameHudSceneNode::setEllapsedTimeInSeconds(u64 const seconds)
     {
         goal_quad_->text({1U, 0U})->prop<Text>().set(
             str::to_str(static_cast<u16>(seconds)));
-        // TODO: Big nyapa
-        goal_quad_->text({1U, 0U})->prop<Position>().set({1.0F, 0.0F});
 
         return true;
     }
     return false;
 }
 
-constexpr u8 scoreSize = 3;
+constexpr fast_u8 scoreSize{3U};
 
 bool GameHudSceneNode::setScore(size_type const score)
 {
@@ -184,8 +180,6 @@ bool GameHudSceneNode::setScore(size_type const score)
             result = "0" + result;
         }
         score_quad_->text({1U, 1U})->prop<Text>().set(result);
-        // TODO: Big nyapa
-//        score_quad_->text({1U, 1U})->prop<Position>().set({1.0F, 0.0F});
         return true;
     }
     return false;
