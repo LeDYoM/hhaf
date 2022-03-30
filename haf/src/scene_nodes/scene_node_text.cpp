@@ -98,11 +98,6 @@ void SceneNodeText::update()
     {
         if (prop<Font>()() != nullptr && !(prop<Text>()().empty()))
         {
-            if (prop<Text>()() == "1")
-            {
-                int a=0;
-                (void)a;
-            }
             auto font{prop<Font>()()};
             auto texture{prop<Font>()()->getTexture()};
 
