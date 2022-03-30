@@ -98,7 +98,7 @@ void SceneNodeText::update()
     {
         if (prop<Font>()() != nullptr && !(prop<Text>()().empty()))
         {
-            if (prop<Text>()() == "Level:")
+            if (prop<Text>()() == "1")
             {
                 int a=0;
                 (void)a;
@@ -143,8 +143,6 @@ void SceneNodeText::update()
 
             auto const text_base_size{prop<TextBaseSizeProperty>()()};
 
-            auto const new_text_base_size{
-                updateTextRenderData(font_utils, text_base_size)};
             vector2df const text_render_size{
                 text_base_size.value().x == htps::f32{}
                     ? text_render_data.text_size.x

@@ -21,6 +21,7 @@ TextRenderData FontUtils::getTextRenderData(str const& text) const
     u32 prevChar{0U};
     TextRenderData result(text.size());
     f32 current_character_position_x{0.0F};
+    size_t current_index{0U};
 
     for (auto curChar : text)
     {
@@ -32,9 +33,6 @@ TextRenderData FontUtils::getTextRenderData(str const& text) const
         prevChar                               = curChar;
         character_render_data.characterBounds  = font_->getBounds(curChar);
         character_render_data.characterAdvance = font_->getAdvance(curChar);
-
-        current_character_position_x +=
-            character_render_data.characterBounds.left;
 
         current_character_position_x +=
             character_render_data.characterBounds.width / 2.0F;
@@ -51,7 +49,15 @@ TextRenderData FontUtils::getTextRenderData(str const& text) const
 
         current_character_position_x += character_render_data.characterAdvance;
 
-        result.text_size.x += character_render_data.characterAdvance;
+        ++current_index;
+//        if (current_index == text.size())
+//        {
+//            result.text_size.x += character_render_data.characterBounds.width;
+//        }
+//        else
+//        {
+            result.text_size.x += character_render_data.characterAdvance;
+//        }
 
         if (result.text_size.y < character_render_data.characterBounds.height)
         {

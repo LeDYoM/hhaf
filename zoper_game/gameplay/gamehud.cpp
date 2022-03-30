@@ -125,7 +125,7 @@ bool GameHudSceneNode::setLevel(size_type const level)
     {
         score_quad_->text({1U, 0U})->prop<Text>().set(make_str(level + 1U));
         // TODO: Big nyapa
-        score_quad_->text({1U, 0U})->prop<Position>().set({1.0F, 0.0F});
+//        score_quad_->text({1U, 0U})->prop<Position>().set({1.0F, 0.0F});
         return true;
     }
     return false;
@@ -137,7 +137,7 @@ bool GameHudSceneNode::setStayCounter(size_type const stayCounter)
     {
         goal_quad_->text({1U, 1U})->prop<Text>().set(make_str(stayCounter));
         // TODO: Big nyapa
-        goal_quad_->text({1U, 1U})->prop<Position>().set({1.0F, 0.0F});
+//        goal_quad_->text({1U, 1U})->prop<Position>().set({1.0F, 0.0F});
         return true;
     }
     return false;
@@ -172,7 +172,7 @@ bool GameHudSceneNode::setEllapsedTimeInSeconds(u64 const seconds)
     return false;
 }
 
-constexpr u8 scoreSize = 5;
+constexpr u8 scoreSize = 3;
 
 bool GameHudSceneNode::setScore(size_type const score)
 {
@@ -185,7 +185,7 @@ bool GameHudSceneNode::setScore(size_type const score)
         }
         score_quad_->text({1U, 1U})->prop<Text>().set(result);
         // TODO: Big nyapa
-        score_quad_->text({1U, 1U})->prop<Position>().set({1.0F, 0.0F});
+//        score_quad_->text({1U, 1U})->prop<Position>().set({1.0F, 0.0F});
         return true;
     }
     return false;
