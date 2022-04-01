@@ -38,7 +38,6 @@ void TableNodeImp::update()
 
         auto const& cell_size{cellSize()};
         auto const half_cell_size{cell_size / 2.0F};
-        auto const left_top{sceneView().leftTop()};
         auto const left_top_plus_half_size{vector2df{-0.5F, -0.5F} +
                                            half_cell_size};
         for_each_table_innerSceneNode(
