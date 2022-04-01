@@ -36,6 +36,7 @@ void RenderTarget::update()
 
     irender_target_->render(render_element_container_.begin(),
                             render_element_container_.end());
+    icamera_ = nullptr;
 }
 
 void RenderTarget::clear()

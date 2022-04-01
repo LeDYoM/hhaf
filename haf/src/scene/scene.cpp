@@ -29,7 +29,7 @@ rptr<Scene const> Scene::sceneParent() const
     return this;
 }
 
-sptr<CameraComponent> const& Scene::cameraComponent()
+void Scene::onCreated()
 {
     if (p_->camera_component_ == nullptr)
     {
@@ -37,7 +37,10 @@ sptr<CameraComponent> const& Scene::cameraComponent()
         LogAsserter::log_assert(p_->camera_component_ != nullptr,
                                 "Cannot create camera component");
     }
+}
 
+sptr<CameraComponent> const& Scene::cameraComponent()
+{
     return p_->camera_component_;
 }
 
@@ -61,7 +64,6 @@ void Scene::installDebugUtils()
     });
     component<debug::DebugActions>()->addDebugAction(input::Key::K, [this]() {
         cameraComponent()->moveView({0.0F, -0.1F});
-
     });
     component<debug::DebugActions>()->addDebugAction(input::Key::J, [this]() {
         cameraComponent()->moveView({0.1F, 0.0F});

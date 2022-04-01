@@ -16,6 +16,7 @@ class HAF_API Scene : public SceneNode
 public:
     explicit Scene(htps::str name);
     ~Scene() override;
+    void onCreated() override;
     virtual htps::str nextSceneName();
     virtual void onFinished();
 
