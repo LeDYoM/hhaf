@@ -28,9 +28,10 @@ void HighScoreTextController::onCreated()
 {
     BaseClass::onCreated();
     prop<TableSize>().set({3U, NumHighScore});
+    prop<Scale>() = {0.5F, 0.5F};
 }
 
-void HighScoreTextController::onAllElementsCreated()
+void HighScoreTextController::onAllTableElementsCreated(htps::vector2dst const)
 {
     normal_font_ = subSystem<res::IResourceRetriever>()
                        ->getTTFont(HighScoresResources::MenuFontId)

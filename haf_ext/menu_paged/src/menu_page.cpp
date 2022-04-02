@@ -30,10 +30,10 @@ void MenuPage::onCreated()
 
 constexpr size_type columnForOptions{4U};
 
-void MenuPage::onAllElementsCreated()
+void MenuPage::onAllTableElementsCreated(htps::vector2dst const table_size)
 {
-    BaseClass::onAllElementsCreated();
-    auto const table_size{prop<TableSize>()()};
+    BaseClass::onAllTableElementsCreated(table_size);
+
     if (table_size.x != 0U && table_size.y != 0U)
     {
         auto const& options{menu_options()};

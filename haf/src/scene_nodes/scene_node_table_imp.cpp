@@ -55,8 +55,8 @@ void TableNodeImp::update()
                     left_top_plus_half_size +
                     (cell_size * static_cast<htps::vector2df>(p)));
             });
-        onAllElementsCreated();
-        allElementsCreated();
+        onAllTableElementsCreated(prop<TableSize>()());
+        allTableElementsCreated(prop<TableSize>()());
     }
 }
 
@@ -94,7 +94,7 @@ void TableNodeImp::updateTableSizeIfNecessary()
     }
 }
 
-void TableNodeImp::onAllElementsCreated()
+void TableNodeImp::onAllTableElementsCreated(htps::vector2dst const)
 {}
 
 void TableNodeImp::setTableSize(htps::vector2dst const ntableSize)

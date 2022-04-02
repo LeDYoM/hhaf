@@ -43,8 +43,8 @@ public:
 
     bool nodeTableCreated(htps::vector2dst const& index) const;
 
-    virtual void onAllElementsCreated();
-    htps::emitter<> allElementsCreated;
+    virtual void onAllTableElementsCreated(htps::vector2dst const);
+    htps::emitter<htps::vector2dst const> allTableElementsCreated;
 
 protected:
     ContainedType_t innerSceneNodeAt(htps::vector2dst const index) const;

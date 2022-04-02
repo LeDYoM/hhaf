@@ -21,9 +21,9 @@ void GameHudSceneNode::onCreated()
     score_quad_ = createSceneNode<TextQuad>("score");
     goal_quad_  = createSceneNode<TextQuad>("goal");
 
-    score_quad_->allElementsCreated +=
+    score_quad_->allTableElementsCreated +=
         make_function(this, &GameHudSceneNode::onAllScoreElementsCreated);
-    goal_quad_->allElementsCreated +=
+    goal_quad_->allTableElementsCreated +=
         make_function(this, &GameHudSceneNode::onAllGoalElementsCreated);
 }
 
@@ -72,7 +72,7 @@ void GameHudSceneNode::update()
     }
 }
 
-void GameHudSceneNode::onAllScoreElementsCreated()
+void GameHudSceneNode::onAllScoreElementsCreated(htps::vector2dst const)
 {
     Font::value_type font{subSystem<res::IResourceRetriever>()
                               ->getTTFont(GameResources::ScoreFontId)
@@ -98,7 +98,7 @@ void GameHudSceneNode::onAllScoreElementsCreated()
     });
 }
 
-void GameHudSceneNode::onAllGoalElementsCreated()
+void GameHudSceneNode::onAllGoalElementsCreated(htps::vector2dst const)
 {
     Font::value_type font{subSystem<res::IResourceRetriever>()
                               ->getTTFont(GameResources::ScoreFontId)
