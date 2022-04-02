@@ -34,6 +34,8 @@ public:
 
     IRenderElement* createRenderElement() override;
     bool destroyRenderElement(IRenderElement* render_element) override;
+private:
+    void drawDebugQuad(IRenderElement const* const irender_element);
 };
 }  // namespace haf::backend::sfmlb
 

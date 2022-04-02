@@ -16,25 +16,34 @@ void RenderTarget::initialize()
     sf::RenderTarget::initialize();
 }
 
+void RenderTarget::drawDebugQuad(IRenderElement const* const irender_element)
+{
+    auto const* const render_element{
+        static_cast<RenderElement const* const>(irender_element)};
+
+    using namespace ::sf;
+    VertexArray nva(sf::PrimitiveType::LineStrip, 5U);
+    auto const bounds{render_element->nativeVertexArray().getBounds()};
+    nva[0U] = {{bounds.left, bounds.top}, Color::Green};
+    nva[1U] = {{bounds.left + bounds.width, bounds.top}, Color::Green};
+    nva[2U] = {{bounds.left + bounds.width, bounds.top + bounds.width},
+               Color::Green};
+    nva[3U] = {{bounds.left, bounds.top + bounds.width}, Color::Green};
+    nva[4U] = {{bounds.left, bounds.top}, sf::Color::Green};
+    RenderTarget::draw(nva, render_element->nativeRenderStates().transform);
+}
+
 void RenderTarget::render(IRenderElement const** render_element_begin,
                           IRenderElement const** const render_element_end)
 {
     while (render_element_begin != render_element_end)
     {
-        auto const* const r{
+        auto const* const render_element{
             static_cast<RenderElement const* const>(*render_element_begin++)};
-        sf::RenderTarget::draw(r->nativeVertexArray(), r->nativeRenderStates());
-#ifndef DRAW_DEBUG_QUAD
-        sf::VertexArray nva(sf::PrimitiveType::LineStrip);
-        auto const bounds = r->nativeVertexArray().getBounds();
-        nva.append(sf::Vertex{sf::Vector2f{bounds.left, bounds.top}, sf::Color::Green});
-        nva.append(sf::Vertex{sf::Vector2f{bounds.left + bounds.width, bounds.top}, sf::Color::Green});
-        nva.append(sf::Vertex{sf::Vector2f{bounds.left + bounds.width, bounds.top + bounds.width}, sf::Color::Green});
-        nva.append(sf::Vertex{sf::Vector2f{bounds.left, bounds.top + bounds.width}, sf::Color::Green});
-        nva.append(sf::Vertex{sf::Vector2f{bounds.left, bounds.top}, sf::Color::Green});
-        sf::RenderStates states;
-        states.transform = r->nativeRenderStates().transform;
-        sf::RenderTarget::draw(nva, states);
+        sf::RenderTarget::draw(render_element->nativeVertexArray(),
+                               render_element->nativeRenderStates());
+#ifdef DRAW_DEBUG_QUAD
+        drawDebugQuad(render_element);
 #endif
     }
 }
@@ -89,7 +98,7 @@ bool RenderTarget::destroyCamera(ICamera* camera)
 {
     if (camera != nullptr)
     {
-        if (auto d_camera{ dynamic_cast<Camera*>(camera) }; d_camera != nullptr)
+        if (auto d_camera{dynamic_cast<Camera*>(camera)}; d_camera != nullptr)
         {
             delete d_camera;
             return true;
