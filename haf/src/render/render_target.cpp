@@ -50,26 +50,6 @@ void RenderTarget::clearRenderQueue()
     icamera_ = nullptr;
 }
 
-Rectf32 RenderTarget::viewPort() const
-{
-    return irender_target_->viewPort();
-}
-
-void RenderTarget::setViewPort(const Rectf32& nViewPort)
-{
-    irender_target_->setViewPort(nViewPort);
-}
-
-Rectf32 RenderTarget::viewRect() const
-{
-    return irender_target_->viewRect();
-}
-
-void RenderTarget::setViewRect(const Rectf32& nViewRect)
-{
-    irender_target_->setViewRect(nViewRect);
-}
-
 backend::IRenderElement* RenderTarget::createRenderElement()
 {
     return irender_target_->createRenderElement();

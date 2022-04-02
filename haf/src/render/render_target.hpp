@@ -39,11 +39,6 @@ public:
      */
     ~RenderTarget();
 
-    void setViewPort(const htps::Rectf32& nviewport);
-    htps::Rectf32 viewPort() const;
-    void setViewRect(const htps::Rectf32& nviewRect);
-    htps::Rectf32 viewRect() const;
-
     void draw(htps::rptr<backend::ICamera> camera);
     void draw(htps::rptr<backend::IRenderElement const> render_element);
     void update();

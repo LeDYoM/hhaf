@@ -52,26 +52,11 @@ Rectf32 RenderTarget::viewPort() const
     return from_sf_type(currentView.getViewport());
 }
 
-void RenderTarget::setViewRect(const Rectf32& nviewRect)
-{
-    sf::View currentView(getView());
-    currentView.setCenter(to_sf_type(nviewRect.center()));
-    currentView.setSize(to_sf_type(nviewRect.size()));
-    setView(currentView);
-}
-
-Rectf32 RenderTarget::viewRect() const
-{
-    sf::View currentView(getView());
-    return rectFromCenterAndSize(from_sf_type(currentView.getCenter()),
-                                 from_sf_type(currentView.getSize()));
-}
-
-void RenderTarget::updateCamera(ICamera* camera)
+void RenderTarget::updateCamera(ICamera* const camera)
 {
     if (camera->updateRequired())
     {
-        Camera* camera_sf{to_sf_type(camera)};
+        Camera* const camera_sf{to_sf_type(camera)};
         setView(camera_sf->getView());
         camera_sf->resetUpdateRequired();
     }
