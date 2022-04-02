@@ -64,6 +64,15 @@ public:
         }
     }
 
+    template <typename Tag, typename ValueType_t>
+    void set_property_for_each_tableSceneNode(ValueType_t const& value)
+    {
+        for_each_tableSceneNode(
+            [&value](htps::vector2dst const&, htps::sptr<T> const& node) {
+                node->template prop<Tag>().set(value);
+            });
+    }
+
     constexpr void for_each_tableSceneNode_in_x(
         htps::size_type const x,
         htps::function<void(const htps::size_type, htps::sptr<T> const&)> const
@@ -103,9 +112,7 @@ public:
     }
 
 private:
-    virtual void tableNodeCreated(htps::vector2dst,
-                                  htps::sptr<T> const&)
-    {}
+    virtual void tableNodeCreated(htps::vector2dst, htps::sptr<T> const&) {}
 
     void createNodeAt(htps::vector2dst const& index) override final
     {

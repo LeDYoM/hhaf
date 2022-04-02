@@ -15,10 +15,12 @@
 #include <haf/include/input/input_component.hpp>
 #include <haf/include/scene_components/camera_component.hpp>
 #include <haf/include/component/component_container.hpp>
+#include <haf/include/scene_nodes/scene_node_text_properties.hpp>
 
 using namespace htps;
 using namespace haf;
 using namespace haf::scene;
+using namespace haf::scene::nodes;
 
 namespace zoper
 {
@@ -28,11 +30,14 @@ void HighScoreTextController::onCreated()
 {
     BaseClass::onCreated();
     prop<TableSize>().set({3U, NumHighScore});
-    prop<Scale>() = {0.5F, 0.5F};
 }
 
 void HighScoreTextController::onAllTableElementsCreated(htps::vector2dst const)
 {
+//    prop<Scale>() = {0.5F, 0.5F};
+    set_property_for_each_tableSceneNode<TextBaseSizeProperty>(
+        TextBaseSize{'A', 8U});
+
     normal_font_ = subSystem<res::IResourceRetriever>()
                        ->getTTFont(HighScoresResources::MenuFontId)
                        ->font(72);
