@@ -16,8 +16,10 @@ void RenderTarget::initialize()
     sf::RenderTarget::initialize();
 }
 
-void RenderTarget::drawDebugQuad(IRenderElement const* const irender_element)
+void RenderTarget::drawDebugQuad([
+    [maybe_unused]] IRenderElement const* const irender_element)
 {
+#ifdef DRAW_DEBUG_QUAD
     auto const* const render_element{
         static_cast<RenderElement const* const>(irender_element)};
 
@@ -31,6 +33,7 @@ void RenderTarget::drawDebugQuad(IRenderElement const* const irender_element)
     nva[3U] = {{bounds.left, bounds.top + bounds.width}, Color::Green};
     nva[4U] = {{bounds.left, bounds.top}, sf::Color::Green};
     RenderTarget::draw(nva, render_element->nativeRenderStates().transform);
+#endif
 }
 
 void RenderTarget::render(IRenderElement const** render_element_begin,
