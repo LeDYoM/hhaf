@@ -70,7 +70,6 @@ set(sources
   ${src_dir}/render/renderizable_private.hpp
   ${src_dir}/render/renderizable.cpp
   ${src_dir}/render/renderizables.cpp
-  ${src_dir}/render/vertex_array.cpp
 
   # Resources
   ${src_dir}/resources/bmpfont_private.cpp
@@ -249,17 +248,16 @@ set(headers
 
   # Render
   ${inc_dir}/render/fig_type.hpp
-  ${inc_dir}/render/primitive_type.hpp
   ${inc_dir}/render/renderizable_builder_data.hpp
   ${inc_dir}/render/renderizable_builder.hpp
   ${inc_dir}/render/renderizable_data.hpp
-  ${inc_dir}/render/renderizable_modifier_context.hpp
+  ${inc_dir}/render/renderizable_object_data.hpp
   ${inc_dir}/render/renderizable.hpp
   ${inc_dir}/render/renderizables.hpp
   ${inc_dir}/render/vertex.hpp
-  ${inc_dir}/render/vertex_array.hpp
 
   # Resources
+  ${inc_dir}/resources/idefault_resources_retriever.hpp
   ${inc_dir}/resources/ifont.hpp
   ${inc_dir}/resources/iresource_configurator.hpp
   ${inc_dir}/resources/iresource_retriever.hpp

@@ -21,6 +21,11 @@ ResourceManager::ResourceManager(sys::SystemProvider& system_provider) :
 
 ResourceManager::~ResourceManager() noexcept = default;
 
+void ResourceManager::init()
+{
+    loadEmbeddedResources();
+}
+
 types::sptr<ITTFont> ResourceManager::getTTFont(const str& rid) const
 {
     return get_or_default(p_->ttf_fonts_, rid);
@@ -127,6 +132,19 @@ SetResourceConfigFileResult ResourceManager::setResourceConfigFile(
 bool ResourceManager::loadSection(str const& section_name)
 {
     return config_loader_.loadSection(section_name, *this);
+}
+
+types::sptr<res::IShader> ResourceManager::getDefaultShader() const
+{
+    return get_or_default(p_->shaders_, "defaultShader");
+}
+
+bool ResourceManager::loadEmbeddedResources()
+{
+    bool resources_loaded{true};
+    resources_loaded &= loadShader("defaultShader", "shader0.txt");
+
+    return resources_loaded;
 }
 
 }  // namespace haf::sys

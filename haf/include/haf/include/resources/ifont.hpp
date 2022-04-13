@@ -13,8 +13,9 @@ namespace haf::res
 /// of its type
 class IFont
 {
+protected:
+    ~IFont() = default;
 public:
-    virtual ~IFont() {}
     virtual htps::Rectf32 getBounds(const htps::u32 codePoint) const        = 0;
     virtual htps::Rectf32 getTextureBounds(const htps::u32 codePoint) const = 0;
     virtual htps::f32 getAdvance(const htps::u32 codePoint) const           = 0;

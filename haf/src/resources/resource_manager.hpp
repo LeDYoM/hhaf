@@ -3,6 +3,7 @@
 
 #include <haf/include/types/basic_types.hpp>
 
+#include <haf/include/resources/idefault_resources_retriever.hpp>
 #include <haf/include/resources/iresource_retriever.hpp>
 #include <haf/include/resources/iresource_configurator.hpp>
 #include "system/system_base.hpp"
@@ -22,12 +23,14 @@ namespace haf::sys
 {
 class ResourceManager final : public SystemBase,
                               public res::IResourceRetriever,
-                              public res::IResourcesConfigurator
+                              public res::IResourcesConfigurator,
+                              public res::IDefaultResourcesRetriever
 {
 public:
     explicit ResourceManager(sys::SystemProvider& system_provider);
-    ~ResourceManager() override;
+    ~ResourceManager();
 
+    void init();
     types::sptr<res::ITTFont> getTTFont(types::str const& rid) const override;
     types::sptr<res::ITexture> getTexture(types::str const& rid) const override;
     types::sptr<res::IShader> getShader(types::str const& rid) const override;
@@ -46,7 +49,10 @@ public:
     bool loadSection(types::str const& section_name) override;
     void setResourcesDirectory(types::str const& directory) override;
 
+    types::sptr<res::IShader> getDefaultShader() const override;
 private:
+    bool loadEmbeddedResources();
+
     struct ResourceManagerPrivate;
     htps::uptr<ResourceManagerPrivate> p_;
     res::ResourceManagerConfigLoader config_loader_;

@@ -11,8 +11,9 @@ namespace haf::res
 {
 class ITTFont
 {
+protected:
+    ~ITTFont() = default;
 public:
-    virtual ~ITTFont() {}
     virtual htps::Rectf32 getBounds(const htps::u32 codePoint,
                                     const htps::u32 characterSize) const = 0;
     virtual htps::Rectf32 getTextureBounds(

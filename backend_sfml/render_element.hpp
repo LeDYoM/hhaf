@@ -10,9 +10,11 @@ namespace haf::backend::sfmlb
 class RenderElement : public IRenderElement
 {
 public:
-    void setPrimitiveType(iPrimitiveType const primitive_type) override;
     void setSize(htps::size_type const size) override;
-    void setVertexData(iVertex const* const vertex_data) override;
+    void setPositions(iPosition const* const positions) override;
+    void setColors(iColor const* const colors) override;
+    void setTexturecoordinates(
+        iTextureCoordinates const* const texture_coordinates) override;
     void setTexture(ITexture const* const texture) override;
     void setModelViewMatrix(htps::f32 const* const model_view_matrix) override;
     void setProjectionMatrix(htps::f32 const* const projection_matrix) override;
@@ -23,13 +25,14 @@ public:
     {
         return vertex_array_;
     }
+
     constexpr sf::RenderStates const& nativeRenderStates() const noexcept
     {
         return render_states_;
     }
 
 private:
-    sf::VertexArray vertex_array_;
+    sf::VertexArray vertex_array_{sf::PrimitiveType::Triangles};
     sf::RenderStates render_states_ = sf::RenderStates::Default;
 };
 }  // namespace haf::backend::sfmlb

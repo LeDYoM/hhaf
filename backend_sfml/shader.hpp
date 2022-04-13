@@ -14,8 +14,9 @@ public:
     Shader(htps::uptr<sf::Shader> shader);
     ~Shader() override;
 
-    void setUniform(const htps::str& name, htps::vector2df v) override;
-    void setUniform(const htps::str& name, ITexture* texture) override;
+    void setUniform(htps::str const& name, bool const& v) override;
+    void setUniform(htps::str const& name, htps::vector2df const& v) override;
+    void setUniform(htps::str const& name, ITexture const* texture) override;
 
     const sf::Shader& backEndShader() const { return *priv_; }
 

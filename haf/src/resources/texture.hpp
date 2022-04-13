@@ -16,7 +16,7 @@ class Texture final : public ITexture
 {
 public:
     Texture(backend::ITexture* texture);
-    ~Texture() override;
+    ~Texture();
 
     htps::vector2du32 size() const override;
 

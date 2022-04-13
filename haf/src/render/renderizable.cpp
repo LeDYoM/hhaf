@@ -9,7 +9,7 @@
 #include <haf/include/render/renderizable_builder.hpp>
 #include <haf/include/resources/itexture.hpp>
 #include <haf/include/resources/ishader.hpp>
-#include <haf/include/render/vertex_array.hpp>
+#include <haf/include/resources/idefault_resources_retriever.hpp>
 
 using namespace htps;
 using namespace haf::scene;
@@ -19,31 +19,37 @@ namespace haf::render
 Renderizable::Renderizable(rptr<TransformableSceneNode> parent,
                            RenderizableData&& renderizable_data) :
     sys::HasName{std::move(renderizable_data.prop<RenderizableName>()())},
-    RenderizableData{std::move(renderizable_data)},
+    parent_{std::move(parent)},
     p_{make_pimplp<RenderizablePrivate>(
-        parent,
-        prop<FigureTypeProperty>()(),
-        prop<PointCount>()(),
-        parent->globalTransform(),
-        prop<TextureProperty>()().get(),
-        prop<ShaderProperty>()().get(),
         this,
+        renderizable_data.prop<PointCount>()(),
+        renderizable_data.prop<FigureTypeProperty>()(),
         sys::getSystem<sys::RenderSystem>(parent).currentRenderTarget())}
 {
-    prop<TextureRectProperty>().set(
-        textureFillQuad(renderizable_data.prop<TextureProperty>()()));
+    put<TextureProperty>(renderizable_data.prop<TextureProperty>()())
+        .put<TextureRectProperty>(
+            renderizable_data.prop<TextureRectProperty>()())
+        .put<ShaderProperty>(renderizable_data.prop<ShaderProperty>()())
+        .put<ColorProperty>(renderizable_data.prop<ColorProperty>()());
+
+    if (prop<ShaderProperty>()() == nullptr)
+    {
+        prop<ShaderProperty>() =
+            parent_->subSystem<res::IDefaultResourcesRetriever>()
+                ->getDefaultShader();
+    }
 }
 
 Renderizable::~Renderizable() = default;
 
 rptr<TransformableSceneNode> Renderizable::parent() noexcept
 {
-    return p_->parent_;
+    return parent_;
 }
 
 rptr<TransformableSceneNode const> Renderizable::parent() const noexcept
 {
-    return p_->parent_;
+    return parent_;
 }
 
 void Renderizable::render(bool const parent_transformation_changed)
@@ -52,77 +58,25 @@ void Renderizable::render(bool const parent_transformation_changed)
     {
         update(parent_transformation_changed);
         p_->render();
-
     }
-}
-
-void Renderizable::setTextureAndTextureRectFromTextureSize(
-    sptr<res::ITexture> texture_,
-    Rects32 const& textRect) noexcept
-{
-    prop<TextureRectProperty>().set(textRect);
-    prop<TextureProperty>().set(std::move(texture_));
-}
-
-void Renderizable::setTextureAndTextureRectNormalizedRect(
-    sptr<res::ITexture> texture_,
-    Rectf32 const& textRect) noexcept
-{
-    // Generate a copy of the texture rect
-    auto dest_textureRect{textRect};
-    // Scale it according to the size of the current texture
-    dest_textureRect.scale(texture_->size());
-    // Use it as a new texture rect
-    setTextureAndTextureRectFromTextureSize(std::move(texture_),
-                                            dest_textureRect);
-}
-
-void Renderizable::setTextureFill(sptr<res::ITexture> texture_)
-{
-    setTextureAndTextureRectFromTextureSize(std::move(texture_),
-                                            textureFillQuad(texture_));
 }
 
 void Renderizable::update(bool const parent_transformation_changed)
 {
-    if (name() == "backgroundTile")
-    {
-        int a= 4;
-        (void)a;
-    }
     if (parent_transformation_changed)
     {
         p_->render_element_->setModelViewMatrix(
             parent()->globalTransform().getMatrix());
     }
-    auto const& mi_data{p_->getMomentumInternalData()};
 
-    if (ps_readResetHasAnyChanged(prop<PointCount>(),
-                                  prop<FigureTypeProperty>(),
-                                  prop<BoxProperty>(),
-                                  prop<TextureRectProperty>()))
+    if (ps_readResetHasAnyChanged(prop<TextureRectProperty>()))
     {
-        updateGeometry(p_->vertices_.verticesArray(), mi_data);
-        p_->render_element_->setVertexData(
-            to_backend(p_->vertices_.verticesArray().cbegin()));
-        prop<TextureRectProperty>().resetHasChanged();
-        prop<ColorProperty>().resetHasChanged();
-        prop<ColorModifierProperty>().resetHasChanged();
+        p_->updateTextureRect();
     }
-    else if (prop<TextureRectProperty>().readResetHasChanged())
+
+    if (ps_readResetHasAnyChanged(prop<ColorProperty>()))
     {
-        updateTextureCoordsAndColor(p_->vertices_.verticesArray(), mi_data);
-        p_->render_element_->setVertexData(
-            to_backend(p_->vertices_.verticesArray().cbegin()));
-        prop<ColorProperty>().resetHasChanged();
-        prop<ColorModifierProperty>().resetHasChanged();
-    }
-    else if (ps_readResetHasAnyChanged(prop<ColorProperty>(),
-                                       prop<ColorModifierProperty>()))
-    {
-        updateColors(p_->vertices_.verticesArray(), mi_data);
-        p_->render_element_->setVertexData(
-            to_backend(p_->vertices_.verticesArray().cbegin()));
+        p_->updateColors();
     }
 
     if (prop<TextureProperty>().readResetHasChanged())
@@ -133,6 +87,22 @@ void Renderizable::update(bool const parent_transformation_changed)
 
     if (prop<ShaderProperty>().readResetHasChanged())
     {
+/*        if (prop<ShaderProperty>()() != nullptr)
+        {
+            types::sptr<res::IShader> const& shader{
+                prop<ShaderProperty>()()};
+
+            if (prop<TextureProperty>()() != nullptr)
+            {
+                shader->setUniform("has_texture", true);
+                shader->setUniform("texture", prop<TextureProperty>()().get());
+            }
+            else
+            {
+                shader->setUniform("has_texture", false);
+            }
+        }
+*/
         p_->render_element_->setShader(
             to_backend(prop<ShaderProperty>()().get()));
     }

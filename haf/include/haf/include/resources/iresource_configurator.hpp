@@ -22,6 +22,8 @@ enum class SetResourceConfigFileResult : types::u8
  */
 class IResourcesConfigurator
 {
+protected:
+    ~IResourcesConfigurator() = default;
 public:
     /**
      * @brief Set the directory where the resources will be loaded.

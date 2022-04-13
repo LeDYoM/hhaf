@@ -17,7 +17,6 @@ class ITexture;
 
 namespace haf::render
 {
-struct RenderizableModifierContext;
 class Renderizable;
 class Renderizables;
 enum class FigType_t : htps::u8;
@@ -40,16 +39,12 @@ public:
 
     RenderizableBuilder& name(types::str const& _name);
     RenderizableBuilder& figType(FigType_t const& fig_type);
-    RenderizableBuilder& box(SceneBox const& _box);
     RenderizableBuilder& color(scene::Color const& _color);
     RenderizableBuilder& pointCount(htps::size_type const& point_count);
     RenderizableBuilder& shader(htps::sptr<res::IShader> _shader);
     RenderizableBuilder& shader(htps::str const& shader_name);
     RenderizableBuilder& texture(htps::sptr<res::ITexture> _texture);
     RenderizableBuilder& texture(htps::str const& texture_name);
-    RenderizableBuilder& colorModifier(
-        htps::function<scene::Color(const RenderizableModifierContext&)>
-            color_modifier);
 private:
     RenderizableBuilderData data_;
 };

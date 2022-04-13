@@ -136,7 +136,8 @@ IShader* ShaderFactory::loadFromRawMemory(htps::RawMemory* raw_memory)
     {
         result = shader->loadFromMemory(vertex_shader_code.c_str(),
                                         sf::Shader::Type::Vertex);
-    } else if (!fragment_shader_code.empty())
+    }
+    else if (!fragment_shader_code.empty())
     {
         result = shader->loadFromMemory(fragment_shader_code.c_str(),
                                         sf::Shader::Type::Fragment);

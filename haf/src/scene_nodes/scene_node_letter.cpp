@@ -6,23 +6,6 @@ using namespace htps;
 
 namespace haf::scene::nodes
 {
-/*
-void SceneNodeLetter::setCharacterBox(Rectf32 const& characterBox)
-{
-    prop<Position>().set(characterBox.leftTop() - (characterBox.size() / 2.0F));
-    prop<Scale>().set(characterBox.size());
-}
-*/
-
-void SceneNodeLetter::update()
-{
-    BaseClass::update();
-    if (character_render_data.readResetHasChanged())
-    {
-        
-    }
-}
-
 void SceneNodeLetter::setCharacterTextureData(sptr<res::ITexture> texture,
                                               Rectf32 const& textureUV)
 {

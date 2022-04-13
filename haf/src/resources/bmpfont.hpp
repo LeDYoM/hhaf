@@ -16,7 +16,7 @@ class BMPFont : public IFont
 {
 public:
     explicit BMPFont(const htps::str& file_name);
-    ~BMPFont() override;
+    ~BMPFont();
 
     htps::Rectf32 getBounds(const htps::u32 codePoint) const override;
     htps::Rectf32 getTextureBounds(const htps::u32 codePoint) const override;

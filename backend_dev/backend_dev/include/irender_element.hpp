@@ -2,8 +2,8 @@
 #define HAF_BACKEND_DEV_IRENDER_ELEMENT_TYPE_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
+#include <htypes/include/vector.hpp>
 #include "ivertex.hpp"
-#include "iprimitive_type.hpp"
 
 namespace haf::backend
 {
@@ -16,10 +16,12 @@ protected:
     virtual ~IRenderElement() = default;
 
 public:
-    virtual void setPrimitiveType(iPrimitiveType const primitive_type) = 0;
-    virtual void setSize(htps::size_type const size)                   = 0;
-    virtual void setVertexData(iVertex const* const vertex_data)       = 0;
-    virtual void setTexture(ITexture const* const texture)             = 0;
+    virtual void setSize(htps::size_type const size)            = 0;
+    virtual void setPositions(iPosition const* const positions) = 0;
+    virtual void setColors(iColor const* const colors)          = 0;
+    virtual void setTexturecoordinates(
+        iTextureCoordinates const* const texture_coordinates) = 0;
+    virtual void setTexture(ITexture const* const texture)    = 0;
     virtual void setModelViewMatrix(
         htps::f32 const* const model_view_matrix) = 0;
     virtual void setProjectionMatrix(

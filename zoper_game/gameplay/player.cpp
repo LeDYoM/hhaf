@@ -51,21 +51,8 @@ void Player::update()
 
     if (currentDirection.readResetHasChanged())
     {
-//        node()->prop<BoxProperty>() = rectFromSize(board2Scene({1, 1}));
         auto const direction{currentDirection()};
-//        auto const tile_center{board2SceneFactor() / 2.0F};
-
-//        getTransformation(move_in_).prop<Position>() = tile_center;
-
         getTransformation(rotator_).prop<Rotation>().set(direction.angle());
-
-//        getTransformation(scalator_).prop<Scale>().set(
-//            (direction.isVertical())
-//                ? vector2df{board2SceneFactor().y / board2SceneFactor().x,
-//                            board2SceneFactor().x / board2SceneFactor().y}
-//                : vector2df{1.0F, 1.0F});
-
-//        getTransformation(move_out_).prop<Position>() = -tile_center;
     }
 }
 

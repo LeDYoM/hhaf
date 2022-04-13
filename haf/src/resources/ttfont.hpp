@@ -17,8 +17,8 @@ namespace haf::res
 class TTFont final : public ITTFont
 {
 public:
-    TTFont(backend::ITTFont* font);
-    ~TTFont() override;
+    TTFont(backend::ITTFont* const font);
+    ~TTFont();
     htps::Rectf32 getBounds(const htps::u32 codePoint,
                             const htps::u32 characterSize) const override;
     htps::Rectf32 getTextureBounds(

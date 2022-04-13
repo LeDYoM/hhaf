@@ -12,9 +12,9 @@ class IShader;
 
 class IResourceRetriever
 {
+protected:
+    ~IResourceRetriever() = default;
 public:
-    virtual ~IResourceRetriever() = default;
-
     virtual types::sptr<ITTFont> getTTFont(types::str const& rid) const = 0;
     virtual types::sptr<ITexture> getTexture(types::str const& rid) const = 0;
     virtual types::sptr<IShader> getShader(types::str const& rid) const = 0;

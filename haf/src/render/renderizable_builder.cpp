@@ -10,7 +10,7 @@ RenderizableBuilder::RenderizableBuilder(
     htps::rptr<Renderizables> renderizables) noexcept :
     data_{RenderizableBuilderData{std::move(renderizables), {}}}
 {
-    data_.builder_data_.prop<FigureTypeProperty>() = FigType_t::Shape;
+    data_.builder_data_.prop<FigureTypeProperty>() = FigType_t::Sprite;
     data_.builder_data_.prop<ColorProperty>()      = scene::colors::White;
     data_.builder_data_.prop<PointCount>()         = 4U;
 }
@@ -29,12 +29,7 @@ RenderizableBuilder& RenderizableBuilder::name(types::str const& _name)
 RenderizableBuilder& RenderizableBuilder::figType(FigType_t const& fig_type)
 {
     data_.builder_data_.prop<FigureTypeProperty>() = fig_type;
-    return *this;
-}
-
-RenderizableBuilder& RenderizableBuilder::box(SceneBox const& _box)
-{
-    data_.builder_data_.prop<BoxProperty>() = _box;
+    data_.builder_data_.prop<PointCount>() = 6U;
     return *this;
 }
 
@@ -47,7 +42,7 @@ RenderizableBuilder& RenderizableBuilder::color(scene::Color const& _color)
 RenderizableBuilder& RenderizableBuilder::pointCount(
     htps::size_type const& point_count)
 {
-    data_.builder_data_.prop<PointCount>() = point_count;
+    data_.builder_data_.prop<PointCount>() = point_count * 3U;
     return *this;
 }
 
@@ -68,6 +63,11 @@ RenderizableBuilder& RenderizableBuilder::shader(htps::str const& shader_name)
 RenderizableBuilder& RenderizableBuilder::texture(
     htps::sptr<res::ITexture> _texture)
 {
+    if (_texture != nullptr)
+    {
+        data_.builder_data_.prop<TextureRectProperty>().set(htps::Rects32{
+            0, 0, static_cast<htps::vector2ds32>(_texture->size())});
+    }
     data_.builder_data_.prop<TextureProperty>() = std::move(_texture);
     return *this;
 }
@@ -77,15 +77,6 @@ RenderizableBuilder& RenderizableBuilder::texture(htps::str const& texture_name)
     return texture(data_.renderizables_->sceneNode()
                        ->subSystem<res::IResourceRetriever>()
                        ->getTexture(texture_name));
-}
-
-RenderizableBuilder& RenderizableBuilder::colorModifier(
-    htps::function<scene::Color(const RenderizableModifierContext&)>
-        color_modifier)
-{
-    data_.builder_data_.prop<ColorModifierProperty>() =
-        std::move(color_modifier);
-    return *this;
 }
 
 }  // namespace haf::render

@@ -43,6 +43,21 @@ void RenderTarget::render(IRenderElement const** render_element_begin,
     {
         auto const* const render_element{
             static_cast<RenderElement const* const>(*render_element_begin++)};
+        if (render_element->nativeRenderStates().shader != nullptr)
+        {
+            sf::Shader* const shader{const_cast<sf::Shader*>(
+                render_element->nativeRenderStates().shader)};
+            if (render_element->nativeRenderStates().texture != nullptr)
+            {
+                shader->setUniform("has_texture", true);
+                shader->setUniform("texture", sf::Shader::CurrentTexture);
+            }
+            else
+            {
+                shader->setUniform("has_texture", false);
+//                shader->setUniform("texture", nullptr);
+            }
+        }
         sf::RenderTarget::draw(render_element->nativeVertexArray(),
                                render_element->nativeRenderStates());
 #ifdef DRAW_DEBUG_QUAD

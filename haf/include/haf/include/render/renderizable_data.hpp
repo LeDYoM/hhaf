@@ -17,7 +17,6 @@ class ITexture;
 
 namespace haf::render
 {
-struct RenderizableModifierContext;
 enum class FigType_t : htps::u8;
 class Renderizables;
 }  // namespace haf::render
@@ -28,9 +27,6 @@ struct RenderizableName : BasicPropertyBase<types::str>
 {};
 
 struct FigureTypeProperty : PropertyStateBase<FigType_t>
-{};
-
-struct BoxProperty : PropertyStateBase<SceneBox>
 {};
 
 struct ColorProperty : PropertyStateBase<scene::Color>
@@ -48,20 +44,13 @@ struct TextureProperty : PropertyStateBase<types::sptr<res::ITexture>>
 struct TextureRectProperty : PropertyStateBase<htps::Rects32>
 {};
 
-struct ColorModifierProperty
-    : PropertyStateBase<
-          function<scene::Color(const RenderizableModifierContext&)>>
-{};
-
 using RenderizableData = types::PropertyGroup<RenderizableName,
                                               FigureTypeProperty,
-                                              BoxProperty,
                                               ColorProperty,
                                               PointCount,
                                               ShaderProperty,
                                               TextureProperty,
-                                              TextureRectProperty,
-                                              ColorModifierProperty>;
+                                              TextureRectProperty>;
 }  // namespace haf::render
 
 #endif

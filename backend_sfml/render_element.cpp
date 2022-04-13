@@ -5,24 +5,40 @@ namespace haf::backend::sfmlb
 {
 RenderElement::~RenderElement() = default;
 
-void RenderElement::setPrimitiveType(iPrimitiveType const primitive_type)
+void RenderElement::setPositions(iPosition const* const positions)
 {
-    vertex_array_.setPrimitiveType(to_sf_type(primitive_type));
+    iPosition const* vtemp{positions};
+    for (auto i{0U}; i < vertex_array_.getVertexCount(); ++i)
+    {
+        vertex_array_[i].position = to_sf_type(*vtemp);
+        ++vtemp;
+    }
+}
+
+void RenderElement::setColors(iColor const* const colors)
+{
+    iColor const* vtemp{colors};
+    for (auto i{0U}; i < vertex_array_.getVertexCount(); ++i)
+    {
+        vertex_array_[i].color = to_sf_type(*vtemp);
+        ++vtemp;
+    }
+}
+
+void RenderElement::setTexturecoordinates(
+    iTextureCoordinates const* const texture_coordinates)
+{
+    iTextureCoordinates const* vtemp{texture_coordinates};
+    for (auto i{0U}; i < vertex_array_.getVertexCount(); ++i)
+    {
+        vertex_array_[i].texCoords = to_sf_type(*vtemp);
+        ++vtemp;
+    }
 }
 
 void RenderElement::setSize(htps::size_type const size)
 {
     vertex_array_.resize(static_cast<std::size_t>(size));
-}
-
-void RenderElement::setVertexData(iVertex const* const vertex_data)
-{
-    iVertex const* vtemp{vertex_data};
-    for (auto i{0U}; i < vertex_array_.getVertexCount(); ++i)
-    {
-        vertex_array_[i] = to_sf_type(*vtemp);
-        ++vtemp;
-    }
 }
 
 void RenderElement::setTexture(ITexture const* const texture)

@@ -15,7 +15,12 @@ class Shader final : public IShader
 {
 public:
     Shader(backend::IShader* shader);
-    ~Shader() override;
+    ~Shader();
+
+    void setUniform(htps::str const& name, bool const& value) override;
+    void setUniform(htps::str const& name,
+                    htps::vector2df const& value) override;
+    void setUniform(htps::str const& name, ITexture* value) override;
 
     backend::IShader const* backEndShader() const noexcept;
 

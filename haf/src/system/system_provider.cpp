@@ -206,6 +206,11 @@ void SystemProvider::initializeSystems(
                 p_->window_->inputDriverWrapper());
         }
     }
+
+    if (init_system_options.init_resource_manager)
+    {
+        p_->resource_manager_->init();
+    }
 }
 
 void SystemProvider::setBackend(

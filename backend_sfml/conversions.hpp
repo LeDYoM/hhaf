@@ -82,11 +82,6 @@ constexpr sf::Shader const* to_sf_type(IShader const* const shader) noexcept
     return nullptr;
 }
 
-constexpr auto to_sf_type(iPrimitiveType const primitive_type) noexcept
-{
-    return static_cast<sf::PrimitiveType>(primitive_type);
-}
-
 inline auto to_sf_type(iVertex const* const vertex) noexcept
 {
     return reinterpret_cast<sf::Vertex const* const>(vertex);
@@ -97,6 +92,11 @@ inline auto to_sf_type(iVertex const vertex) noexcept
     return sf::Vertex{sf::Vector2f{vertex.pos_x, vertex.pos_y},
                       sf::Color{vertex.r, vertex.g, vertex.b, vertex.a},
                       sf::Vector2f{vertex.tc_x, vertex.tc_y}};
+}
+
+inline auto to_sf_type(iColor const& color) noexcept
+{
+    return sf::Color{color.r, color.g, color.b, color.a};
 }
 
 inline auto to_sf_type(htps::f32 const* const matrix,

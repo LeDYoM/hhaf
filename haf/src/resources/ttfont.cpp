@@ -17,7 +17,7 @@ struct TTFont::FontPrivate
     std::map<u32, sptr<TTFontInstance>> font_map_;
 };
 
-TTFont::TTFont(backend::ITTFont* font) : priv_{muptr<FontPrivate>(font)}
+TTFont::TTFont(backend::ITTFont* const font) : priv_{muptr<FontPrivate>(font)}
 {}
 
 TTFont::~TTFont() = default;

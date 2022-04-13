@@ -8,8 +8,9 @@ namespace haf::res
 {
 class ITexture
 {
+protected:
+    ~ITexture() {}
 public:
-    virtual ~ITexture() {}
     virtual htps::vector2du32 size() const = 0;
 };
 }  // namespace haf::res
