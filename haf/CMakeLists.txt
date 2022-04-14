@@ -103,6 +103,7 @@ set(sources
 
   # Scene
   ${src_dir}/scene/color.cpp
+  ${src_dir}/scene/material.cpp
   ${src_dir}/scene/matrix4x4.cpp
   ${src_dir}/scene/scene_controller.cpp
   ${src_dir}/scene/scene_controller.hpp
@@ -269,6 +270,7 @@ set(headers
   ${inc_dir}/scene/color_imp.hpp
   ${inc_dir}/scene/color.hpp
   ${inc_dir}/scene/hasname.hpp
+  ${inc_dir}/scene/material.hpp
   ${inc_dir}/scene/matrix4x4.hpp
   ${inc_dir}/scene/scene_render_context.hpp
   ${inc_dir}/scene/scene.hpp

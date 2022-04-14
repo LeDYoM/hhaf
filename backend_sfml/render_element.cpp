@@ -59,4 +59,25 @@ void RenderElement::setShader(IShader const* const shader)
 {
     render_states_.shader = to_sf_type(shader);
 }
+
+void RenderElement::render(sf::RenderTarget& target) const
+{
+    if (render_states_.shader != nullptr)
+    {
+        sf::Shader *shader{const_cast<sf::Shader*>(render_states_.shader)};
+        if (render_states_.texture != nullptr)
+        {
+            shader->setUniform("has_texture", true);
+            shader->setUniform("texture", sf::Shader::CurrentTexture);
+        }
+        else
+        {
+            shader->setUniform("has_texture", false);
+//                shader->setUniform("texture", nullptr);
+        }
+    }
+
+    target.draw(vertex_array_, render_states_);
+}
+
 }  // namespace haf::backend::sfmlb

@@ -36,34 +36,28 @@ void RenderTarget::drawDebugQuad([
 #endif
 }
 
+void RenderTarget::render(IRenderElement const* const render_element)
+{
+    renderImpl(static_cast<RenderElement const*const>(render_element));
+}
+
 void RenderTarget::render(IRenderElement const** render_element_begin,
                           IRenderElement const** const render_element_end)
 {
     while (render_element_begin != render_element_end)
     {
         auto const* const render_element{
-            static_cast<RenderElement const* const>(*render_element_begin++)};
-        if (render_element->nativeRenderStates().shader != nullptr)
-        {
-            sf::Shader* const shader{const_cast<sf::Shader*>(
-                render_element->nativeRenderStates().shader)};
-            if (render_element->nativeRenderStates().texture != nullptr)
-            {
-                shader->setUniform("has_texture", true);
-                shader->setUniform("texture", sf::Shader::CurrentTexture);
-            }
-            else
-            {
-                shader->setUniform("has_texture", false);
-//                shader->setUniform("texture", nullptr);
-            }
-        }
-        sf::RenderTarget::draw(render_element->nativeVertexArray(),
-                               render_element->nativeRenderStates());
+            static_cast<IRenderElement const* const>(*render_element_begin++)};
+        render(render_element);
+    }
+}
+
+void RenderTarget::renderImpl(RenderElement const* render_element)
+{
+        render_element->render(*this);
 #ifdef DRAW_DEBUG_QUAD
         drawDebugQuad(render_element);
 #endif
-    }
 }
 
 void RenderTarget::setViewPort(const Rectf32& nviewport)

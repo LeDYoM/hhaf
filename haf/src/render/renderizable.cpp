@@ -34,9 +34,9 @@ Renderizable::Renderizable(rptr<TransformableSceneNode> parent,
 
     if (prop<ShaderProperty>()() == nullptr)
     {
-        prop<ShaderProperty>() =
-            parent_->subSystem<res::IDefaultResourcesRetriever>()
-                ->getDefaultShader();
+//        prop<ShaderProperty>() =
+//            parent_->subSystem<res::IDefaultResourcesRetriever>()
+//                ->getDefaultShader();
     }
 }
 
