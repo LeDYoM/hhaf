@@ -12,7 +12,6 @@ namespace haf::backend::sfmlb
 class TTFontFactory : public ITTFontFactory
 {
 public:
-    virtual ITTFont* loadFromFile(const htps::str& file) override;
     ITTFont* loadFromRawMemory(htps::RawMemory* raw_memory) override;
     ~TTFontFactory() override;
 

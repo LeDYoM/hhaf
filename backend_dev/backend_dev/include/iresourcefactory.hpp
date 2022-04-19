@@ -10,7 +10,6 @@ template <typename T>
 class IResourceFactory
 {
 public:
-    virtual T* loadFromFile(const htps::str&) { return nullptr; }
     virtual T* loadFromRawMemory(htps::RawMemory*) { return nullptr; }
     virtual ~IResourceFactory() {}
 };

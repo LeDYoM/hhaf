@@ -7,15 +7,6 @@ using namespace htps;
 
 namespace haf::backend::sfmlb
 {
-ITTFont* TTFontFactory::loadFromFile(const str& file)
-{
-    uptr<sf::Font> font(muptr<sf::Font>());
-    font->loadFromFile(file.c_str());
-    uptr<TTFont> t{muptr<TTFont>(std::move(font), RawMemory{})};
-    font_cache_.push_back(std::move(t));
-    return (*(font_cache_.end() - 1)).get();
-}
-
 ITTFont* TTFontFactory::loadFromRawMemory(RawMemory* raw_memory)
 {
     uptr<sf::Font> font(muptr<sf::Font>());

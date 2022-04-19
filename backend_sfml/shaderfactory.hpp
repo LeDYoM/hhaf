@@ -12,7 +12,6 @@ namespace haf::backend::sfmlb
 class ShaderFactory : public IShaderFactory
 {
 public:
-    IShader* loadFromFile(const htps::str& file) override;
     IShader* loadFromRawMemory(htps::RawMemory*) override;
     ~ShaderFactory() override;
 
