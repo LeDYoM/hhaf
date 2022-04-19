@@ -62,7 +62,8 @@ s32 CharDescriptor::GetKerningPair(const htps::u32 second) const
 
 bool BMPFont::BMFontPrivate::ParseFont(const str& fontfile)
 {
-    std::ifstream font_file_stream{fontfile.c_str()};
+    std::ifstream font_file_stream_{fontfile.c_str()};
+    std::istream& font_file_stream{font_file_stream_};
     std::size_t i{0U};
     u32 first{0U};
     u32 second{0U};
@@ -74,7 +75,7 @@ bool BMPFont::BMFontPrivate::ParseFont(const str& fontfile)
     {
         std::string line;
         std::string read;
-        std::string key;
+        str key;
         std::string value;
 
         std::stringstream line_stream;
@@ -91,7 +92,7 @@ bool BMPFont::BMFontPrivate::ParseFont(const str& fontfile)
                 std::stringstream converter;
                 line_stream >> read;
                 i     = read.find('=');
-                key   = read.substr(0, i);
+                key   = read.substr(0, i).c_str();
                 value = read.substr(i + 1).c_str();
 
                 // assign the correct value
@@ -130,8 +131,8 @@ bool BMPFont::BMFontPrivate::ParseFont(const str& fontfile)
                 std::stringstream converter;
                 line_stream >> read;
                 i     = read.find('=');
-                key   = read.substr(0, i);
-                value = read.substr(i + 1);
+                key   = read.substr(0, i).c_str();
+                value = read.substr(i + 1).c_str();
                 u32 id{0U};
 
                 filterStr(line_stream, value);
@@ -157,8 +158,8 @@ bool BMPFont::BMFontPrivate::ParseFont(const str& fontfile)
                 std::stringstream converter;
                 line_stream >> read;
                 i     = read.find('=');
-                key   = read.substr(0, i);
-                value = read.substr(i + 1);
+                key   = read.substr(0, i).c_str();
+                value = read.substr(i + 1).c_str();
 
                 filterStr(line_stream, value);
                 converter << value;
@@ -234,8 +235,8 @@ bool BMPFont::BMFontPrivate::ParseFont(const str& fontfile)
                 std::stringstream converter;
                 line_stream >> read;
                 i     = read.find('=');
-                key   = read.substr(0, i);
-                value = read.substr(i + 1);
+                key   = read.substr(0, i).c_str();
+                value = read.substr(i + 1).c_str();
 
                 // Assign the correct value
                 converter << value;
@@ -293,8 +294,8 @@ bool BMPFont::BMFontPrivate::ParseFont(const str& fontfile)
                 std::stringstream converter;
                 line_stream >> read;
                 i     = read.find('=');
-                key   = read.substr(0, i);
-                value = read.substr(i + 1);
+                key   = read.substr(0, i).c_str();
+                value = read.substr(i + 1).c_str();
 
                 // assign the correct value
                 converter << value;
@@ -310,8 +311,8 @@ bool BMPFont::BMFontPrivate::ParseFont(const str& fontfile)
                 std::stringstream converter;
                 line_stream >> read;
                 i     = read.find('=');
-                key   = read.substr(0, i);
-                value = read.substr(i + 1);
+                key   = read.substr(0, i).c_str();
+                value = read.substr(i + 1).c_str();
 
                 converter << value;
                 if (key == "first")
