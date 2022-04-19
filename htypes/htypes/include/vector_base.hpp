@@ -410,17 +410,24 @@ public:
     }
 
     constexpr const_iterator find_first_of(
+        T const& other) const noexcept
+    {
+        return cfind(other);
+    }
+
+    constexpr const_iterator find_first_of(
         vector_base const& other) const noexcept
     {
-        for (auto it(begin()); it != cend(); ++it)
+        for (auto&& it : other)
         {
-            if (other.find(*it) != other.cend())
+            if (auto inner_it{cfind(it)}; inner_it != cend())
             {
-                return it;
+                return inner_it;
             }
         }
-        return end();
+        return cend();
     }
+
 
     constexpr iterator find(iterator begin,
                             const iterator end,

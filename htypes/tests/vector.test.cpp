@@ -7,132 +7,129 @@ using namespace htps;
 
 TEST_CASE("vector::vector", "[vector]")
 {
-    SECTION("Default Constructor")
+    vector<u32> m;
+
+    CHECK(m.size() == 0);
+    CHECK(m.empty());
+    CHECK(m.capacity() == 0);
+
+    SECTION("Check errorneous operations")
     {
-        vector<u32> m;
-
-        CHECK(m.size() == 0);
+        m.pop_back();
+        CHECK(m.size() == 0U);
         CHECK(m.empty());
-        CHECK(m.capacity() == 0);
+        CHECK(m.capacity() == 0U);
 
-        SECTION("Check errorneous operations")
+        m.clear();
+        CHECK(m.size() == 0U);
+        CHECK(m.empty());
+        CHECK(m.capacity() == 0U);
+
+        SECTION("Copy empty")
         {
-            m.pop_back();
-            CHECK(m.size() == 0U);
-            CHECK(m.empty());
-            CHECK(m.capacity() == 0U);
+            vector_shared_pointers<s32> empty_vector;
+            CHECK(empty_vector.capacity() == 0U);
+            CHECK(empty_vector.size() == 0U);
 
-            m.clear();
-            CHECK(m.size() == 0U);
-            CHECK(m.empty());
-            CHECK(m.capacity() == 0U);
-
-            SECTION("Copy empty")
-            {
-                vector_shared_pointers<s32> empty_vector;
-                CHECK(empty_vector.capacity() == 0U);
-                CHECK(empty_vector.size() == 0U);
-
-                vector_shared_pointers<s32> copy_empty(empty_vector);
-                CHECK(copy_empty.capacity() == 0U);
-                CHECK(copy_empty.size() == 0U);
-            }
+            vector_shared_pointers<s32> copy_empty(empty_vector);
+            CHECK(copy_empty.capacity() == 0U);
+            CHECK(copy_empty.size() == 0U);
         }
     }
+}
 
-    SECTION("Constructor with reserved")
+TEST_CASE("vector::vector(size)", "[vector]")
+{
+    vector<s32> m(2U);
+    CHECK(m.size() == 0);
+    CHECK(m.empty());
+    CHECK(m.capacity() == 2U);
+
+    m.push_back(0);
+    m.push_back(1);
+    CHECK(m.size() == 2U);
+    CHECK_FALSE(m.empty());
+    CHECK(m.capacity() == 2U);
+
+    CHECK(m[0] == 0);
+    CHECK(m[1] == 1);
+}
+
+TEST_CASE("vector::vector(vector)", "[vector]")
+{
+    vector<s32> m;
+
+    m.push_back(5);
+
+    vector<s32> m2(m);
+    CHECK(m.size() == m2.size());
+
+    m.reserve(10U);
+    CHECK(m.size() == 1U);
+
+    vector<s32> m3(m);
+    CHECK(m3.capacity() <= m.capacity());
+    CHECK(m3.size() <= m.size());
+    CHECK(m3[0U] == 5);
+}
+
+TEST_CASE("vector::vector(iterator)", "[vector]")
+{
+    const u32 data[] = {0U, 1U, 2U, 3U, 4U};
+    vector<u32> v(data, data + 5);
+    CHECK(v.size() == 5U);
+    CHECK(v == vector<u32>{0U, 1U, 2U, 3U, 4U});
+    CHECK(0U == v[0]);
+    CHECK(1U == v[1]);
+    CHECK(2U == v[2]);
+    CHECK(3U == v[3]);
+    CHECK(4U == v[4]);
+}
+
+TEST_CASE("vector::vector(std::initialization_list)", "[vector]")
+{
+    vector<u32> m;
+    m = {1, 9, 8, 7, 6, 5, 4, 3, 2, 0, 1};
+    CHECK(m == vector<u32>{1, 9, 8, 7, 6, 5, 4, 3, 2, 0, 1});
+
+    SECTION("Copy and move constructor")
     {
-        vector<s32> m(2U);
-        CHECK(m.size() == 0);
-        CHECK(m.empty());
-        CHECK(m.capacity() == 2U);
-
-        m.push_back(0);
-        m.push_back(1);
-        CHECK(m.size() == 2U);
-        CHECK_FALSE(m.empty());
-        CHECK(m.capacity() == 2U);
-
-        CHECK(m[0] == 0);
-        CHECK(m[1] == 1);
-    }
-
-    SECTION("Copy constructor")
-    {
-        vector<s32> m;
-
-        m.push_back(5);
-
-        vector<s32> m2(m);
+        auto m2(m);
+        CHECK(m == m2);
         CHECK(m.size() == m2.size());
+        CHECK(m.capacity() == m2.capacity());
 
-        m.reserve(10U);
-        CHECK(m.size() == 1U);
-
-        vector<s32> m3(m);
-        CHECK(m3.capacity() <= m.capacity());
-        CHECK(m3.size() <= m.size());
-        CHECK(m3[0U] == 5);
+        auto m3(std::move(m));
+        CHECK(m.empty());
+        CHECK(m2 == m3);
     }
+}
 
-    SECTION("Iterators constructor")
+TEST_CASE("vector::vector(iterator,size)", "[vector]")
+{
+    SECTION("With sizeof")
     {
-        const u32 data[] = {0U, 1U, 2U, 3U, 4U};
-        vector<u32> v(data, data + 5);
-        CHECK(v.size() == 5U);
-        CHECK(v == vector<u32>{0U, 1U, 2U, 3U, 4U});
-        CHECK(0U == v[0]);
-        CHECK(1U == v[1]);
-        CHECK(2U == v[2]);
-        CHECK(3U == v[3]);
-        CHECK(4U == v[4]);
+        const u32 arr[] = {4, 3, 2, 1};
+        vector<u32> v(arr, sizeof(arr) / sizeof(u32));
+        CHECK(v.size() == 4U);
     }
 
-    SECTION("Initializer list constructor")
+    SECTION("With sizeof")
     {
-        vector<u32> m;
-        m = {1, 9, 8, 7, 6, 5, 4, 3, 2, 0, 1};
-        CHECK(m == vector<u32>{1, 9, 8, 7, 6, 5, 4, 3, 2, 0, 1});
-
-        SECTION("Copy and move constructor")
-        {
-            auto m2(m);
-            CHECK(m == m2);
-            CHECK(m.size() == m2.size());
-            CHECK(m.capacity() == m2.capacity());
-
-            auto m3(std::move(m));
-            CHECK(m.empty());
-            CHECK(m2 == m3);
-        }
+        const u32 arr[] = {4, 3, 2, 1};
+        vector<u32> v(std::cbegin(arr), std::cend(arr));
+        CHECK(v.size() == 4U);
     }
+}
 
-    SECTION("Construct from address and size")
-    {
-        SECTION("With sizeof")
-        {
-            const u32 arr[] = {4, 3, 2, 1};
-            vector<u32> v(arr, sizeof(arr) / sizeof(u32));
-            CHECK(v.size() == 4U);
-        }
+TEST_CASE("vector::emplace", "[vector]")
+{
+    vector<u32> v;
 
-        SECTION("With sizeof")
-        {
-            const u32 arr[] = {4, 3, 2, 1};
-            vector<u32> v(std::cbegin(arr), std::cend(arr));
-            CHECK(v.size() == 4U);
-        }
-    }
-
-    SECTION("Emplace")
-    {
-        vector<u32> v;
-
-        v.emplace_back(0);
-        CHECK(v.size() == 1U);
-        v.pop_back();
-        CHECK(v.empty());
-    }
+    v.emplace_back(0);
+    CHECK(v.size() == 1U);
+    v.pop_back();
+    CHECK(v.empty());
 }
 
 class A
@@ -164,6 +161,7 @@ TEST_CASE("vector of shared pointers", "[vector]")
         vector_shared_pointers<A> empty_vector;
         CHECK(empty_vector.capacity() == 0U);
         CHECK(empty_vector.size() == 0U);
+        CHECK(empty_vector.empty());
 
         vector_shared_pointers<A> copy_empty(empty_vector);
         CHECK(copy_empty.capacity() == 0U);

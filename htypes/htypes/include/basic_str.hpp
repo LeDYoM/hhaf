@@ -409,6 +409,23 @@ public:
                                     : std::distance(cbegin(), it);
     }
 
+    constexpr auto find_first_of(
+        char_type const chValue) const noexcept
+    {
+        const auto it{data_.find_first_of(chValue)};
+        return (it == data_.cend()) ? basic_str::npos
+                                    : std::distance(cbegin(), it);
+    }
+
+    constexpr auto find_first_of(
+        basic_str const value) const noexcept
+    {
+        const auto it{data_.find_first_of(value.data_)};
+        auto const ret_value{(it == data_.cend()) ? basic_str::npos
+                                    : std::distance(cbegin(), it)};
+        return ((ret_value >= size()) ? basic_str::npos : ret_value);
+    }
+
     template <typename T>
     constexpr bool operator>>(T& n) const
     {

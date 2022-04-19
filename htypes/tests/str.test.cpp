@@ -102,13 +102,22 @@ TEST_CASE("str::find_first_of", "[str]")
 {
     str test("Try to=test! some parsing&&now");
 
-    CHECK(test.find(' ') == 3);
-    CHECK(test.find('=') == 6);
-    CHECK(test.find('!') == 11);
-    CHECK(test.find('&') == 25);
-    test[25] = '/';
-    CHECK(test.find('/') == 25);
-    CHECK(test.find('&') == 26);
+    CHECK(test.find_first_of(' ') == 3U);
+    CHECK(test.find_first_of('=') == 6U);
+    CHECK(test.find_first_of('!') == 11U);
+    CHECK(test.find_first_of('&') == 25U);
+    test[25U] = '/';
+    CHECK(test.find_first_of('/') == 25U);
+    CHECK(test.find_first_of('&') == 26U);
+    CHECK(test.find_first_of('w') == 29U);
+    CHECK(test.find_first_of('0') == str::npos);
+
+    CHECK(test.find_first_of("/") == 25U);
+    CHECK(test.find_first_of("&") == 26U);
+    CHECK(test.find_first_of("w") == 29U);
+    CHECK(test.find_first_of("0") == str::npos);
+    CHECK(test.find_first_of("//") == 25U);
+    CHECK(test.find_first_of("012345678900") == str::npos);
 }
 
 TEST_CASE("str conversions", "[str]")
