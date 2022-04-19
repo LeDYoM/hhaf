@@ -36,12 +36,14 @@ std::string getStr(const std::string& read)
 
 void filterStr(std::stringstream& line_stream, std::string& value)
 {
-    bool doNext = true;
+    bool doNext{true};
+
     do
     {
-        auto const first_ = value.find_first_of('\"');
-        auto const last_  = value.find_last_of('\"');
-        doNext            = (static_cast<s32>(first_) > -1 && first_ == last_);
+        auto const first_{value.find_first_of('\"')};
+        auto const last_{value.find_last_of('\"')};
+        doNext = (static_cast<s32>(first_) > -1 && first_ == last_);
+
         if (doNext)
         {
             std::string readTemp;
