@@ -117,7 +117,35 @@ TEST_CASE("str::find_first_of", "[str]")
     CHECK(test.find_first_of("w") == 29U);
     CHECK(test.find_first_of("0") == str::npos);
     CHECK(test.find_first_of("//") == 25U);
+    CHECK(test.find_first_of("rT") == 0U);
     CHECK(test.find_first_of("012345678900") == str::npos);
+    CHECK(test.find_first_of("") == str::npos);
+    CHECK(str{""}.find_first_of("") == str::npos);
+}
+
+TEST_CASE("str::find_last_of", "[str]")
+{
+    str test("Try to=test! some parsing&&now");
+
+    CHECK(test.find_last_of(' ') == 17U);
+    CHECK(test.find_last_of('=') == 6U);
+    CHECK(test.find_last_of('!') == 11U);
+    CHECK(test.find_last_of('&') == 26U);
+    test[25U] = '/';
+    CHECK(test.find_last_of('/') == 25U);
+    CHECK(test.find_last_of('&') == 26U);
+    CHECK(test.find_last_of('w') == 29U);
+    CHECK(test.find_last_of('0') == str::npos);
+
+    CHECK(test.find_last_of("/") == 25U);
+    CHECK(test.find_last_of("&") == 26U);
+    CHECK(test.find_last_of("w") == 29U);
+    CHECK(test.find_last_of("0") == str::npos);
+    CHECK(test.find_last_of("//") == 25U);
+    CHECK(test.find_last_of("s w") == 29U);
+    CHECK(test.find_last_of("012345678900") == str::npos);
+    CHECK(test.find_last_of("") == str::npos);
+    CHECK(str{""}.find_last_of("") == str::npos);
 }
 
 TEST_CASE("str conversions", "[str]")

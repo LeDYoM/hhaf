@@ -35,8 +35,7 @@ public:
     constexpr basic_str(const char_type (&a)[N]) : data_(a, N)
     {}
 
-    constexpr basic_str(size_type const size) : data_(size)
-    {}
+    constexpr basic_str(size_type const size) : data_(size) {}
 
     constexpr basic_str(const_iterator const n, size_type const N) :
         data_(n, N + 1)
@@ -145,7 +144,7 @@ public:
     }
 
     bool has_in(basic_str const& prefix,
-                       size_type const start_position) const noexcept
+                size_type const start_position) const noexcept
     {
         if (size() < prefix.size() || start_position > size())
         {
@@ -404,26 +403,48 @@ public:
     constexpr auto find_first_of(
         vector<char_type> const& chValue) const noexcept
     {
-        const auto it{data_.find_first_of(chValue)};
+        auto const it{data_.cfind_first_of(chValue)};
         return (it == data_.cend()) ? basic_str::npos
                                     : std::distance(cbegin(), it);
     }
 
-    constexpr auto find_first_of(
-        char_type const chValue) const noexcept
+    constexpr auto find_first_of(char_type const chValue) const noexcept
     {
-        const auto it{data_.find_first_of(chValue)};
+        auto const it{data_.find_first_of(chValue)};
         return (it == data_.cend()) ? basic_str::npos
                                     : std::distance(cbegin(), it);
     }
 
-    constexpr auto find_first_of(
-        basic_str const value) const noexcept
+    constexpr auto find_first_of(basic_str const value) const noexcept
     {
-        const auto it{data_.find_first_of(value.data_)};
-        auto const ret_value{(it == data_.cend()) ? basic_str::npos
-                                    : std::distance(cbegin(), it)};
-        return ((ret_value >= size()) ? basic_str::npos : ret_value);
+        auto value_data_copy{value.data_};
+        value_data_copy.pop_back();
+        auto const it{data_.find_first_of(value_data_copy)};
+        return (it == data_.cend()) ? basic_str::npos
+                                    : std::distance(cbegin(), it);
+    }
+
+    constexpr auto find_last_of(vector<char_type> const& chValue) const noexcept
+    {
+        auto const it{data_.find_last_of(chValue)};
+        return (it == data_.cend()) ? basic_str::npos
+                                    : std::distance(cbegin(), it);
+    }
+
+    constexpr auto find_last_of(char_type const chValue) const noexcept
+    {
+        auto const it{data_.find_last_of(chValue)};
+        return (it == data_.cend()) ? basic_str::npos
+                                    : std::distance(cbegin(), it);
+    }
+
+    constexpr auto find_last_of(basic_str const value) const noexcept
+    {
+        auto value_data_copy{value.data_};
+        value_data_copy.pop_back();
+        auto const it{data_.find_last_of(value_data_copy)};
+        return (it == data_.cend()) ? basic_str::npos
+                                    : std::distance(cbegin(), it);
     }
 
     template <typename T>

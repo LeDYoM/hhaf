@@ -409,8 +409,7 @@ public:
         return erase_all_if<discard_order>(std::move(condition), begin());
     }
 
-    constexpr const_iterator find_first_of(
-        T const& other) const noexcept
+    constexpr const_iterator find_first_of(T const& other) const noexcept
     {
         return cfind(other);
     }
@@ -418,16 +417,41 @@ public:
     constexpr const_iterator find_first_of(
         vector_base const& other) const noexcept
     {
+        auto result{cend()};
         for (auto&& it : other)
         {
-            if (auto inner_it{cfind(it)}; inner_it != cend())
+            if (auto const inner_it{cfind(it)}; inner_it != cend())
             {
-                return inner_it;
+                if (inner_it < result)
+                {
+                    result = inner_it;
+                }
             }
         }
-        return cend();
+        return result;
     }
 
+    constexpr const_iterator find_last_of(T const& other) const noexcept
+    {
+        return cfind_backwards(other);
+    }
+
+    constexpr const_iterator find_last_of(
+        vector_base const& other) const noexcept
+    {
+        auto result{cbegin() - 1};
+        for (auto&& it : other)
+        {
+            if (auto const inner_it{cfind_backwards(it)}; inner_it != cend())
+            {
+                if (inner_it > result)
+                {
+                    result = inner_it;
+                }
+            }
+        }
+        return ((result == cbegin() - 1) ? cend() : result);
+    }
 
     constexpr iterator find(iterator begin,
                             const iterator end,
@@ -494,8 +518,8 @@ public:
     }
 
     constexpr const_iterator cfind(const_iterator begin,
-                                   const const_iterator end,
-                                   const T& element) const noexcept
+                                   const_iterator const end,
+                                   T const& element) const noexcept
     {
         checkRange(begin);
         checkRange(end);
@@ -506,8 +530,8 @@ public:
     }
 
     constexpr iterator find(iterator begin,
-                                   iterator const end,
-                                   T const& element) noexcept
+                            iterator const end,
+                            T const& element) noexcept
     {
         checkRange(begin);
         checkRange(end);
@@ -530,6 +554,54 @@ public:
     constexpr const_iterator find(T const& element) const noexcept
     {
         return cfind(element);
+    }
+
+    constexpr const_iterator cfind_backwards(const_iterator const begin,
+                                             const_iterator end,
+                                             T const& element) const noexcept
+    {
+        checkRange(begin);
+        --end;
+        checkRange(end);
+
+        for (; (end >= begin && !(*end == element)); --end)
+            ;
+        return (end == begin - 1) ? cend() : end;
+    }
+
+    constexpr iterator find_backwards(iterator const begin,
+                            iterator end,
+                            T const& element) noexcept
+    {
+        checkRange(begin);
+        --end;
+        checkRange(end);
+
+        for (; (end >= begin && !(*end == element)); --end)
+            ;
+        return (end == begin - 1) ? this->end() : end;
+    }
+
+    constexpr iterator find_backwards(iterator const begin,
+                            iterator end,
+                            T const& element) const noexcept
+    {
+        return cfind_backwards(begin, end, element);
+    }
+
+    constexpr iterator find_backwards(T const& element) noexcept
+    {
+        return find_backwards(begin(), end(), element);
+    }
+
+    constexpr const_iterator cfind_backwards(T const& element) const noexcept
+    {
+        return cfind_backwards(cbegin(), cend(), element);
+    }
+
+    constexpr const_iterator find_backwards(T const& element) const noexcept
+    {
+        return cfind_backwards(element);
     }
 
     constexpr void shrink_to_fit() { storage_.shrink_to_fit(); }
