@@ -20,7 +20,7 @@ s16 my_stoi(std::string const& data)
     return 0;
 }
 
-std::string getStr(const std::string& read)
+str getStr(const std::string& read)
 {
     std::string result;
 
@@ -31,26 +31,7 @@ std::string getStr(const std::string& read)
             result.push_back(ch);
         }
     }
-    return result;
-}
-
-void filterStr(std::stringstream& line_stream, std::string& value)
-{
-    bool doNext{true};
-
-    do
-    {
-        auto const first_{value.find_first_of('\"')};
-        auto const last_{value.find_last_of('\"')};
-        doNext = (static_cast<s32>(first_) > -1 && first_ == last_);
-
-        if (doNext)
-        {
-            std::string readTemp;
-            line_stream >> readTemp;
-            value += " " + readTemp;
-        }
-    } while (doNext);
+    return result.c_str();
 }
 
 s32 CharDescriptor::GetKerningPair(const htps::u32 second) const
@@ -98,7 +79,7 @@ bool BMPFont::BMFontPrivate::ParseFont(const str& fontfile)
                 value = read.substr(i + 1).c_str();
 
                 // assign the correct value
-                converter << value;
+                converter << value.c_str();
                 if (key == "lineHeight")
                 {
                     converter >> lineHeight;
@@ -137,10 +118,8 @@ bool BMPFont::BMFontPrivate::ParseFont(const str& fontfile)
                 value = read.substr(i + 1).c_str();
                 u32 id{0U};
 
-                filterStr(line_stream, value);
-
                 // assign the correct value
-                converter << value;
+                converter << value.c_str();
                 if (key == "id")
                 {
                     converter >> id;
@@ -148,7 +127,7 @@ bool BMPFont::BMFontPrivate::ParseFont(const str& fontfile)
                 }
                 else if (key == "file")
                 {
-                    pagesData_[id].file = str(getStr(value).c_str());
+                    pagesData_[id].file = getStr(value);
                 }
             }
         }
@@ -163,11 +142,10 @@ bool BMPFont::BMFontPrivate::ParseFont(const str& fontfile)
                 key   = read.substr(0, i).c_str();
                 value = read.substr(i + 1).c_str();
 
-                filterStr(line_stream, value);
-                converter << value;
+                converter << value.c_str();
                 if (key == "face")
                 {
-                    fInfo.face = getStr(value).c_str();
+                    fInfo.face = getStr(value);
                 }
                 else if (key == "size")
                 {
@@ -183,7 +161,7 @@ bool BMPFont::BMFontPrivate::ParseFont(const str& fontfile)
                 }
                 else if (key == "charset")
                 {
-                    fInfo.charset = getStr(value).c_str();
+                    fInfo.charset = getStr(value);
                 }
                 else if (key == "unicode")
                 {
@@ -241,7 +219,7 @@ bool BMPFont::BMFontPrivate::ParseFont(const str& fontfile)
                 value = read.substr(i + 1).c_str();
 
                 // Assign the correct value
-                converter << value;
+                converter << value.c_str();
                 if (key == "id")
                 {
                     converter >> char_id;
@@ -300,7 +278,7 @@ bool BMPFont::BMFontPrivate::ParseFont(const str& fontfile)
                 value = read.substr(i + 1).c_str();
 
                 // assign the correct value
-                converter << value;
+                converter << value.c_str();
                 //      if( key == "count" )
                 //          {converter >> KernCount; }
             }
@@ -316,7 +294,7 @@ bool BMPFont::BMFontPrivate::ParseFont(const str& fontfile)
                 key   = read.substr(0, i).c_str();
                 value = read.substr(i + 1).c_str();
 
-                converter << value;
+                converter << value.c_str();
                 if (key == "first")
                 {
                     converter >> first;
