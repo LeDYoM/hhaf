@@ -225,7 +225,7 @@ public:
 
     basic_str& append(char_type const* const n)
     {
-        append(basic_str(n));
+        append(basic_str{n});
         return *this;
     }
 
