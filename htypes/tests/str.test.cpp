@@ -52,9 +52,9 @@ TEST_CASE("str::str Copy", "[str]")
     CHECK_FALSE("" == test);
 }
 
-TEST_CASE("str::operator= copy","[str]")
+TEST_CASE("str::operator= copy", "[str]")
 {
-    str test = "Long enought string";
+    str test  = "Long enought string";
     str test2 = "abc";
     auto const capacity_now_test{test.capacity()};
 
@@ -73,17 +73,48 @@ TEST_CASE("str::Increment", "[str]")
 
 TEST_CASE("str::find", "[str]")
 {
-    str test("Lets play this");
-    auto sep{test.find(' ')};
-    CHECK(sep == 4U);
-    str sub{test.substr(sep + 1)};
-    CHECK(sub == "play this");
-    str sub2{sub.substr(sub.find('z'))};
-    CHECK(sub2 == "");
-    str sub3{sub.substr(sub.find(' '))};
-    CHECK(sub3 == " this");
-    sub3 += make_str(3U);
-    CHECK(sub3 == " this3");
+    SECTION("One char find")
+    {
+        str test("Lets play this");
+        auto sep{test.find(' ')};
+        CHECK(sep == 4U);
+        str sub{test.substr(sep + 1)};
+        CHECK(sub == "play this");
+        str sub2{sub.substr(sub.find('z'))};
+        CHECK(sub2 == "");
+        str sub3{sub.substr(sub.find(' '))};
+        CHECK(sub3 == " this");
+        sub3 += make_str(3U);
+        CHECK(sub3 == " this3");
+        CHECK(test.find(0) == str::npos);
+        CHECK(str{}.find(0) == str::npos);
+        CHECK(str{""}.find(0) == str::npos);
+        CHECK(str{""}.find(' ') == str::npos);
+    }
+
+    SECTION("str find")
+    {
+        size_type sep{0U};
+        str test("Lets play this");
+        sep = test.find("L");
+        CHECK(sep == 0U);
+        sep = test.find("Lets");
+        CHECK(sep == 0U);
+        sep = test.find("Lets play this");
+        CHECK(sep == 0U);
+        sep = test.find("Lets play this ");
+        CHECK(sep == str::npos);
+        sep = test.find("ets play thiq");
+        CHECK(sep == str::npos);
+        sep = test.find("hiqasd");
+        CHECK(sep == str::npos);
+        sep = test.find("hi");
+        CHECK(sep == 11U);
+        sep = test.find("");
+        CHECK(sep == str::npos);
+        CHECK(str{}.find("") == str::npos);
+        CHECK(str{""}.find(" ") == str::npos);
+    }
 }
 
 TEST_CASE("str::substr", "[str]")
@@ -180,19 +211,27 @@ TEST_CASE("str operations", "[str]")
 
 TEST_CASE("str::split", "[str]")
 {
-    str foo("hello. This. To Split string. Lets see.");
-    auto strSplitted = foo.split('.');
-    CHECK(strSplitted.size() == 5);
-    CHECK(strSplitted[0U] == "hello");
-    CHECK(strSplitted[1U] == " This");
-    CHECK(strSplitted[2U] == " To Split string");
-    CHECK(strSplitted[3U] == " Lets see");
-    CHECK(strSplitted[4U] == "");
+    SECTION("One char separator")
+    {
+        str foo("hello. This. To Split string. Lets see.");
+        auto strSplitted = foo.split('.');
+        CHECK(strSplitted.size() == 5);
+        CHECK(strSplitted[0U] == "hello");
+        CHECK(strSplitted[1U] == " This");
+        CHECK(strSplitted[2U] == " To Split string");
+        CHECK(strSplitted[3U] == " Lets see");
+        CHECK(strSplitted[4U] == "");
 
-    auto moreSplitted(strSplitted[2].substr(4).split('s'));
-    CHECK(moreSplitted.size() == 2);
-    CHECK(moreSplitted[0U] == "Split ");
-    CHECK(moreSplitted[1U] == "tring");
+        auto moreSplitted(strSplitted[2].substr(4).split('s'));
+        CHECK(moreSplitted.size() == 2U);
+        CHECK(moreSplitted[0U] == "Split ");
+        CHECK(moreSplitted[1U] == "tring");
+    }
+
+    SECTION("str separator")
+    {
+        //        str foo("hello. This. To Split string. Lets see.");
+    }
 }
 
 TEST_CASE("str trims", "[str]")
@@ -363,14 +402,14 @@ TEST_CASE("str::c_str", "[str]")
 
 TEST_CASE("str::fromCharAndSize", "[str]")
 {
-    str text0{str::fromCharAndSize('A',5U)};
-    str text1{str::fromCharAndSize('A',5U)};
+    str text0{str::fromCharAndSize('A', 5U)};
+    str text1{str::fromCharAndSize('A', 5U)};
     CHECK(text0 == "AAAAA");
     CHECK("AAAAA" == text0);
     CHECK(text0 == text1);
     CHECK(text1 == text0);
 
-    str text2{str::fromCharAndSize('A',4U)};
+    str text2{str::fromCharAndSize('A', 4U)};
     CHECK(text0 != text2);
     CHECK_FALSE(text0 == text2);
 

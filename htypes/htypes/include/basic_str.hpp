@@ -114,22 +114,25 @@ public:
     {
         vector<basic_str> result;
 
-        basic_str tok;
-
-        for (auto const it : *this)
+        if (!empty())
         {
-            if (it == separator)
-            {
-                result.emplace_back(std::move(tok));
-                tok = basic_str();
-            }
-            else
-            {
-                tok.push_back(it);
-            }
-        }
+            basic_str tok;
 
-        result.emplace_back(std::move(tok));
+            for (auto const it : *this)
+            {
+                if (it == separator)
+                {
+                    result.emplace_back(std::move(tok));
+                    tok = basic_str();
+                }
+                else
+                {
+                    tok.push_back(it);
+                }
+            }
+
+            result.emplace_back(std::move(tok));
+        }
         return result;
     }
 
@@ -333,10 +336,49 @@ public:
         }
     }
 
-    constexpr size_type find(char_type const ch) const noexcept
+    constexpr size_type cfind(char_type const ch) const noexcept
     {
         const auto it(data_.cfind(ch));
         return ((it == data_.cend()) ? npos : std::distance(cbegin(), it));
+    }
+
+    constexpr size_type cfind(basic_str const& other) const noexcept
+    {
+        if (!other.empty() && !empty() && other.size() <= size())
+        {
+            auto const it_start{data_.cfind(*other.begin())};
+            if (it_start != cend())
+            {
+                auto it_end{it_start + 1};
+                for (size_type i{1U}; i < other.size(); ++i, ++it_end)
+                {
+                    if (it_end == cend() || *it_end != other[i])
+                    {
+                        return npos;
+                    }
+                }
+            }
+            return std::distance(cbegin(), it_start);
+        }
+        return npos;
+    }
+
+    constexpr size_type find(char_type const ch) const noexcept
+    {
+        if (data_.empty())
+        {
+            return npos;
+        }
+        else
+        {
+            auto const it{data_.cfind(data_.cbegin(), &(data_.back()), ch)};
+            return ((it == &data_.back()) ? npos : std::distance(cbegin(), it));
+        }
+    }
+
+    constexpr size_type find(basic_str const& other) const noexcept
+    {
+        return cfind(other);
     }
 
     // trim from end (in place)
