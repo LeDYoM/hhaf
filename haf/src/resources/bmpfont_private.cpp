@@ -20,9 +20,9 @@ s16 my_stoi(std::string const& data)
     return 0;
 }
 
-str getStr(const std::string& read)
+str getStr(str const& read)
 {
-    std::string result;
+    str result;
 
     for (char ch : read)
     {
@@ -31,7 +31,7 @@ str getStr(const std::string& read)
             result.push_back(ch);
         }
     }
-    return result.c_str();
+    return result;
 }
 
 s32 CharDescriptor::GetKerningPair(const htps::u32 second) const
@@ -59,7 +59,7 @@ bool BMPFont::BMFontPrivate::ParseFont(const str& fontfile)
         std::string line;
         std::string read;
         str key;
-        std::string value;
+        str value;
 
         std::stringstream line_stream;
         std::getline(font_file_stream, line);
