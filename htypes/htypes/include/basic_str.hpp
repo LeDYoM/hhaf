@@ -110,28 +110,35 @@ public:
         return convert(temp);
     }
 
-    vector<basic_str> split(char_type const separator) const
+    vector<basic_str> split(basic_str::char_type const& separator) const
+    {
+        basic_str temp;
+        temp.push_back(separator);
+        return split(temp);
+    }
+
+    vector<basic_str> split(basic_str const& separator) const
     {
         vector<basic_str> result;
+        auto _this{*this};
 
-        if (!empty())
+        if (!empty() && !separator.empty())
         {
-            basic_str tok;
-
-            for (auto const it : *this)
+            do
             {
-                if (it == separator)
+                size_type position{_this.cfind(separator)};
+                if (position == npos)
                 {
-                    result.emplace_back(std::move(tok));
-                    tok = basic_str();
+                    result.push_back(std::move(_this));
+                    _this.clear();
                 }
                 else
                 {
-                    tok.push_back(it);
+                    result.push_back(_this.substr(0U, position));
+                    _this = _this.substr(position + separator.size());
                 }
-            }
 
-            result.emplace_back(std::move(tok));
+            } while (!_this.empty());
         }
         return result;
     }
@@ -336,6 +343,8 @@ public:
         }
     }
 
+    constexpr void clear() noexcept { data_.clear(); }
+
     constexpr size_type cfind(char_type const ch) const noexcept
     {
         const auto it(data_.cfind(ch));
@@ -346,19 +355,38 @@ public:
     {
         if (!other.empty() && !empty() && other.size() <= size())
         {
-            auto const it_start{data_.cfind(*other.begin())};
-            if (it_start != cend())
+            auto next_start{cbegin()};
+            while (next_start != cend())
             {
-                auto it_end{it_start + 1};
-                for (size_type i{1U}; i < other.size(); ++i, ++it_end)
+                auto const it_start{
+                    data_.cfind(next_start, data_.cend(), *other.begin())};
+                bool continue_inner{it_start != data_.cend()};
+                if (continue_inner)
                 {
-                    if (it_end == cend() || *it_end != other[i])
+                    auto it_end{it_start + 1};
+                    for (size_type i{1U}; i < other.size() && continue_inner;
+                         ++i, ++it_end)
                     {
-                        return npos;
+                        if (it_end == cend())
+                        {
+                            return npos;
+                        }
+                        else if (*it_end != other[i])
+                        {
+                            continue_inner = false;
+                            ++next_start;
+                        }
                     }
                 }
+                else
+                {
+                    next_start = cend();
+                }
+                if (continue_inner)
+                {
+                    return std::distance(cbegin(), it_start);
+                }
             }
-            return std::distance(cbegin(), it_start);
         }
         return npos;
     }
