@@ -12,6 +12,13 @@
 
 namespace htps
 {
+/**
+ * @brief Template class containing a string like class dependant on the
+ * character type. It provides functions for adding stream and making
+ * search of characters, substrings and other useful operations.
+ *
+ * @tparam char_type Character type to be used
+ */
 template <typename char_type>
 class basic_str
 {
@@ -41,7 +48,7 @@ public:
         data_(n, N + 1)
     {}
 
-    constexpr basic_str(char_type const* const n) :
+    constexpr explicit basic_str(char_type const* const n) :
         basic_str(n, detail::_str_len(n))
     {}
 

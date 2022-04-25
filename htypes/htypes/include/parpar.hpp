@@ -396,7 +396,7 @@ inline ParametersParser create(int const argc, char const* const argv[])
     vector_t<str> params(argc);
     for (int i = 0; i < argc; ++i)
     {
-        params.push_back(argv[i]);
+        params.push_back(str{argv[i]});
     }
     return create(std::move(params));
 }
