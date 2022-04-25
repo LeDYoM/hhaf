@@ -9,11 +9,11 @@ using namespace htps;
 
 namespace haf::res
 {
-s16 my_stoi(std::string const& data)
+s16 my_stoi(str const& data)
 {
     try
     {
-        return static_cast<s16>(std::stoi(data));
+        return static_cast<s16>(std::stoi(data.c_str()));
     }
     catch (...)
     {}
@@ -36,9 +36,9 @@ str getStr(str const& read)
 
 s32 CharDescriptor::GetKerningPair(const htps::u32 second) const
 {
-    const auto iterator(kearn.cfind_if([second](const auto& this_kearn) {
+    const auto iterator{kearn.cfind_if([second](const auto& this_kearn) {
         return this_kearn.second == second;
-    }));
+    })};
 
     return iterator == kearn.cend() ? 0 : iterator->amount;
 }
@@ -183,21 +183,21 @@ bool BMPFont::BMFontPrivate::ParseFont(const str& fontfile)
                 {
                     std::string temp;
                     std::getline(converter, temp, ',');
-                    fInfo.padding.left = my_stoi(temp);
+                    fInfo.padding.left = my_stoi(str{temp.c_str()});
                     std::getline(converter, temp, ',');
-                    fInfo.padding.top = my_stoi(temp);
+                    fInfo.padding.top = my_stoi(str{temp.c_str()});
                     std::getline(converter, temp, ',');
-                    fInfo.padding.setRight(my_stoi(temp));
+                    fInfo.padding.setRight(my_stoi(str{temp.c_str()}));
                     std::getline(converter, temp, ',');
-                    fInfo.padding.setBottom(my_stoi(temp));
+                    fInfo.padding.setBottom(my_stoi(str{temp.c_str()}));
                 }
                 else if (key == "spacing")
                 {
                     std::string temp;
                     std::getline(converter, temp, ',');
-                    fInfo.spacing.x = my_stoi(temp);
+                    fInfo.spacing.x = my_stoi(str{temp.c_str()});
                     std::getline(converter, temp, ',');
-                    fInfo.spacing.y = my_stoi(temp);
+                    fInfo.spacing.y = my_stoi(str{temp.c_str()});
                 }
                 else if (key == "outline")
                 {

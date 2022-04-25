@@ -78,7 +78,7 @@ str FileSystem::loadTextFile(const Path& file_name)
         buf = detail::readBuffer(std::move(buf), file_name, file_size);
 
         buf[file_size] = static_cast<str::value_type>(0);
-        return {buf.get()};
+        return str{buf.get()};
     }
     return str{};
 }
