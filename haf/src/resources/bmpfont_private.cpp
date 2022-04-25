@@ -11,13 +11,7 @@ namespace haf::res
 {
 s16 my_stoi(str const& data)
 {
-    try
-    {
-        return static_cast<s16>(std::stoi(data.c_str()));
-    }
-    catch (...)
-    {}
-    return 0;
+    return data.convertOrDefault<s16>();
 }
 
 str getStr(str const& read)

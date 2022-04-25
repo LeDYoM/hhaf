@@ -219,11 +219,12 @@ TEST_CASE("str::split", "[str]")
     SECTION("One char separator")
     {
         auto str_splitted{foo.split('.')};
-        CHECK(str_splitted.size() == 4U);
+        CHECK(str_splitted.size() == 5U);
         CHECK(str_splitted[0U] == "hello");
         CHECK(str_splitted[1U] == " This");
         CHECK(str_splitted[2U] == " To Split string");
         CHECK(str_splitted[3U] == " Lets see");
+        CHECK(str_splitted[4U] == "");
 
         str_splitted = str_splitted[2U].substr(4U).split('s');
         CHECK(str_splitted.size() == 2U);
@@ -231,22 +232,29 @@ TEST_CASE("str::split", "[str]")
         CHECK(str_splitted[1U] == "tring");
 
         str_splitted = foo.split(0);
-        CHECK(str_splitted.size() == 0U);
-        CHECK(str_splitted.empty());
+        CHECK(str_splitted.size() == 1U);
+        CHECK(str_splitted[0U] == foo);
 
         str_splitted = foo.split('z');
         CHECK(str_splitted.size() == 1U);
         CHECK(str_splitted[0U] == foo);
+
+        CHECK(str{""}.split('/').size() == 1U);
+        CHECK(str{""}.split('/')[0U] == "");
+
+        CHECK(str{"A"}.split('/').size() == 1U);
+        CHECK(str{"A"}.split('/')[0U] == "A");
     }
 
     SECTION("str separator of one")
     {
         auto str_splitted{foo.split(".")};
-        CHECK(str_splitted.size() == 4U);
+        CHECK(str_splitted.size() == 5U);
         CHECK(str_splitted[0U] == "hello");
         CHECK(str_splitted[1U] == " This");
         CHECK(str_splitted[2U] == " To Split string");
         CHECK(str_splitted[3U] == " Lets see");
+        CHECK(str_splitted[4U] == "");
 
         str_splitted = str_splitted[2U].substr(4U).split("s");
         CHECK(str_splitted.size() == 2U);
@@ -254,12 +262,24 @@ TEST_CASE("str::split", "[str]")
         CHECK(str_splitted[1U] == "tring");
 
         str_splitted = foo.split("");
-        CHECK(str_splitted.size() == 0U);
-        CHECK(str_splitted.empty());
+        CHECK(str_splitted.size() == 1U);
+        CHECK(str_splitted[0U] == foo);
 
         str_splitted = foo.split("z");
         CHECK(str_splitted.size() == 1U);
         CHECK(str_splitted[0U] == foo);
+
+        CHECK(str{""}.split("/").size() == 1U);
+        CHECK(str{""}.split("/")[0U] == "");
+
+        CHECK(str{"A"}.split("/").size() == 1U);
+        CHECK(str{"A"}.split("/")[0U] == "A");
+
+        CHECK(str{""}.split("").size() == 1U);
+        CHECK(str{""}.split("")[0U] == "");
+
+        CHECK(str{"A"}.split("").size() == 1U);
+        CHECK(str{"A"}.split("")[0U] == "A");
     }
 
 //    str const foo{"hello. This. To Split string. Lets see."};
@@ -278,9 +298,10 @@ TEST_CASE("str::split", "[str]")
         CHECK(str_splitted[1U] == ". Lets see.");
 
         str_splitted = str_splitted[1U].split(".");
-        CHECK(str_splitted.size() == 2U);
+        CHECK(str_splitted.size() == 3U);
         CHECK(str_splitted[0U] == "");
         CHECK(str_splitted[1U] == " Lets see");
+        CHECK(str_splitted[2U] == "");
     }
 }
 

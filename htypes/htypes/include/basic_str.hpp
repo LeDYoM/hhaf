@@ -129,7 +129,7 @@ public:
         vector<basic_str> result;
         auto _this{*this};
 
-        if (!empty() && !separator.empty())
+        if (!separator.empty())
         {
             do
             {
@@ -143,9 +143,17 @@ public:
                 {
                     result.push_back(_this.substr(0U, position));
                     _this = _this.substr(position + separator.size());
+                    if (_this.empty())
+                    {
+                        result.push_back("");
+                    }
                 }
 
             } while (!_this.empty());
+        }
+        else
+        {
+            result.push_back(std::move(_this));
         }
         return result;
     }
