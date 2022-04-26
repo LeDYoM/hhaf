@@ -14,10 +14,6 @@ namespace haf::res
 {
 struct KearningInfo
 {
-    KearningInfo(const htps::u32 second_, const htps::s32 amount_) :
-        second{second_}, amount{amount_}
-    {}
-    KearningInfo() = default;
     htps::u32 second;
     htps::s32 amount;
 };

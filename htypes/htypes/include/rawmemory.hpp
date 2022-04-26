@@ -21,7 +21,7 @@ public:
         data_{std::move(data)}, size_{size}
     {}
 
-    RawMemory(const RawMemory& rhs) :
+    RawMemory(RawMemory const& rhs) :
         data_{uptr<std::byte[]>(new std::byte[rhs.size_])}, size_{rhs.size_}
     {
         std::memcpy(data_.get(), rhs.data_.get(), size_);
@@ -34,7 +34,8 @@ public:
     {
         return (data_ != nullptr) ? size_ : 0U;
     }
-    const std::byte* data() const noexcept { return data_.get(); }
+
+    std::byte const* data() const noexcept { return data_.get(); }
 
 private:
     uptr<std::byte[]> data_;

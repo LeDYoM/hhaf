@@ -2,6 +2,7 @@
 #define HAF_SCENE_RESOURCES_BMPFONT_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
+#include <htypes/include/rawmemory.hpp>
 
 #include <haf/include/resources/ifont.hpp>
 #include <haf/include/resources/itexture.hpp>
@@ -16,6 +17,7 @@ class BMPFont : public IFont
 {
 public:
     explicit BMPFont(const htps::str& file_name);
+    explicit BMPFont(htps::RawMemory* data);
     ~BMPFont();
 
     htps::Rectf32 getBounds(const htps::u32 codePoint) const override;

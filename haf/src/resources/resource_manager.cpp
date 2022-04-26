@@ -68,6 +68,21 @@ bool ResourceManager::loadShader(const str& rid, const str& fileName)
 
 bool ResourceManager::loadBMPFont(const str& rid, const str& fileName)
 {
+/*
+    backend::IResourceFactory<types::sptr<BMPFont>>& factory = p_->bmp_font_factory_;
+
+    return get_or_add(p_->bmp_font_factory_,
+                      p_->bmp_fonts_, systemProvider().system<FileSystem>(), rid,
+                      fileName) != nullptr;
+
+    auto b = get_or_add(p_->bmp_font_factory_,
+                      p_->bmp_fonts_, systemProvider().system<FileSystem>(), rid,
+                      fileName);
+
+    types::sptr<BMPFont> bmp_font{get_or_add(p_->bmp_font_factory_,
+                      p_->bmp_fonts_, systemProvider().system<FileSystem>(), rid,
+                      fileName)};
+*/
     types::sptr<BMPFont> bmp_font{p_->bmp_font_factory_.loadFromFile(fileName)};
     return loadBmpFontTextures(bmp_font, rid, fileName);
 }

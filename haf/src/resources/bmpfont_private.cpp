@@ -28,9 +28,9 @@ str getStr(str const& read)
     return result;
 }
 
-s32 CharDescriptor::GetKerningPair(const htps::u32 second) const
+s32 CharDescriptor::GetKerningPair(u32 const second) const
 {
-    const auto iterator{kearn.cfind_if([second](const auto& this_kearn) {
+    auto const iterator{kearn.cfind_if([second](const auto& this_kearn) {
         return this_kearn.second == second;
     })};
 

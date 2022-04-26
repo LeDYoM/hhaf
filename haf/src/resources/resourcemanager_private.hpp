@@ -54,8 +54,8 @@ inline auto get_or_default(ResourceList<sptr<T>> const& container,
 }
 
 template <typename V, typename T>
-sptr<T> get_or_add(backend::IResourceFactory<V>& factory,
-                   ResourceList<sptr<T>>& container,
+types::sptr<T> get_or_add(backend::IResourceFactory<V>& factory,
+                   ResourceList<types::sptr<T>>& container,
                    FileSystem& fileSystem,
                    const str& rid,
                    const str& fileName)
@@ -81,10 +81,10 @@ sptr<T> get_or_add(backend::IResourceFactory<V>& factory,
 
 struct ResourceManager::ResourceManagerPrivate
 {
-    ResourceList<sptr<TTFont>> ttf_fonts_;
-    ResourceList<sptr<Texture>> textures_;
-    ResourceList<sptr<Shader>> shaders_;
-    ResourceList<sptr<BMPFont>> bmp_fonts_;
+    ResourceList<types::sptr<TTFont>> ttf_fonts_;
+    ResourceList<types::sptr<Texture>> textures_;
+    ResourceList<types::sptr<Shader>> shaders_;
+    ResourceList<types::sptr<BMPFont>> bmp_fonts_;
 
     BMPFontFactory bmp_font_factory_;
 };

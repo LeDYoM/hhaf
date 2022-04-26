@@ -30,6 +30,28 @@ BMPFont::BMPFont(const str& file_name) : p_{muptr<BMFontPrivate>()}
     DisplayLog::info("Loading pages. Number of pages: ", p_->pagesData_.size());
 }
 
+BMPFont::BMPFont(htps::RawMemory* data) : p_{muptr<BMFontPrivate>()}
+{
+    p_->chars_.resize(256U);
+    str temp{
+        reinterpret_cast<str::value_type const*>(data->data()),
+        reinterpret_cast<str::value_type const*>(data->data() + data->size())};
+//    p_->ParseFont(fontfile);
+//    DisplayLog::info("Finished Parsing Font ", fontfile);
+    DisplayLog::info("Calculating some metrics");
+    p_->adv = 1.0F / static_cast<f32>(size().x);
+
+    for (auto& charDescriptor : p_->chars_)
+    {
+        charDescriptor.offsetedPosition =
+            Rectf32{static_cast<vector2df>(charDescriptor.offset),
+                    static_cast<vector2df>(charDescriptor.position.size())};
+    }
+
+//    DisplayLog::info("Finished Parsing Font ", fontfile);
+    DisplayLog::info("Loading pages. Number of pages: ", p_->pagesData_.size());
+}
+
 vector<str> BMPFont::textureFileNames() const
 {
     vector<str> texture_file_names(p_->pagesData_.size());
