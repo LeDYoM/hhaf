@@ -258,6 +258,7 @@ set(headers
   ${inc_dir}/render/vertex.hpp
 
   # Resources
+  ${inc_dir}/resources/ibmpfont.hpp
   ${inc_dir}/resources/idefault_resources_retriever.hpp
   ${inc_dir}/resources/ifont.hpp
   ${inc_dir}/resources/iresource_configurator.hpp

@@ -12,9 +12,10 @@ sptr<BMPFont> BMPFontFactory::loadFromFile(const str& file)
     return font;
 }
 
-sptr<BMPFont> BMPFontFactory::loadFromRawMemory(RawMemory*)
+backend::IFont* BMPFontFactory::loadFromRawMemory(RawMemory*)
 {
-    sptr<BMPFont> font(msptr<BMPFont>(""));
-    return font;
+    return nullptr;
+//    BMPFont* font = new BMPFont("");
+//    return font;
 }
 }  // namespace haf::res
