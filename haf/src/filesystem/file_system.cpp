@@ -67,18 +67,14 @@ bool FileSystem::fileExists(Path const& path)
 
 str FileSystem::loadTextFile(const Path& file_name)
 {
-    if (fileExists(file_name))
+    RawMemory raw_memory{loadBinaryFile(file_name)};
+    if (!raw_memory.empty())
     {
-        // Note: function returns size_max. size_type is maximum 4GB for a file.
-        auto const file_size{detail::fileSize(file_name)};
-        debug::MemoryDataInitializer mdi{
-            subSystemViewer().subSystem<debug::IMemoryDataViewer>()};
-
-        auto buf{muptr<str::value_type[]>(file_size + 1U)};
-        buf = detail::readBuffer(std::move(buf), file_name, file_size);
-
-        buf[file_size] = static_cast<str::value_type>(0);
-        return str{buf.get()};
+        str result{
+            reinterpret_cast<str::value_type const*>(raw_memory.cbegin()),
+            reinterpret_cast<str::value_type const*>(raw_memory.cend() - 1)};
+        result.push_back(0);
+        return result;
     }
     return str{};
 }

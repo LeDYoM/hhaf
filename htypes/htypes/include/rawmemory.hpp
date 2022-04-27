@@ -14,15 +14,17 @@ namespace htps
 class RawMemory
 {
 public:
+    using inner_type = std::byte;
+
     /// Default constructor.
     constexpr RawMemory() noexcept : data_{nullptr}, size_{0U} {}
 
-    RawMemory(uptr<std::byte[]> data, const size_type size) :
+    RawMemory(uptr<inner_type[]> data, size_type const size) :
         data_{std::move(data)}, size_{size}
     {}
 
     RawMemory(RawMemory const& rhs) :
-        data_{uptr<std::byte[]>(new std::byte[rhs.size_])}, size_{rhs.size_}
+        data_{uptr<inner_type[]>(new inner_type[rhs.size_])}, size_{rhs.size_}
     {
         std::memcpy(data_.get(), rhs.data_.get(), size_);
     }
@@ -30,15 +32,23 @@ public:
     RawMemory(RawMemory&&) noexcept = default;
     RawMemory& operator=(RawMemory&&) noexcept = default;
 
-    inline size_type size() const noexcept
+    inner_type const* cbegin() const noexcept { return data_.get(); }
+    inner_type const* cend() const noexcept
+    {
+        return data_.get() + size();
+    }
+
+    size_type size() const noexcept
     {
         return (data_ != nullptr) ? size_ : 0U;
     }
 
-    std::byte const* data() const noexcept { return data_.get(); }
+    bool empty() const noexcept { return size() == 0U; }
+
+    inner_type const* data() const noexcept { return data_.get(); }
 
 private:
-    uptr<std::byte[]> data_;
+    uptr<inner_type[]> data_;
     size_type size_;
 };
 }  // namespace htps

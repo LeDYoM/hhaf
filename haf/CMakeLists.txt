@@ -230,8 +230,9 @@ set(headers
   ${inc_dir}/data/ideserializable.hpp
   ${inc_dir}/data/ifullserializable.hpp
   ${inc_dir}/data/iserializable.hpp
-  
+
   # File system
+  ${inc_dir}/filesystem/ibinary_file_reader.hpp
   ${inc_dir}/filesystem/ifile_serializer.hpp
   ${inc_dir}/filesystem/path.hpp
 
