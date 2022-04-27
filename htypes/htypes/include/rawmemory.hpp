@@ -3,6 +3,7 @@
 
 #include <htypes/include/types.hpp>
 #include <cstring>
+#include <htypes/include/str.hpp>
 
 namespace htps
 {
@@ -33,24 +34,31 @@ public:
     RawMemory& operator=(RawMemory&&) noexcept = default;
 
     inner_type const* cbegin() const noexcept { return data_.get(); }
-    inner_type const* cend() const noexcept
-    {
-        return data_.get() + size();
-    }
+    inner_type const* cend() const noexcept { return data_.get() + size(); }
 
-    size_type size() const noexcept
-    {
-        return (data_ != nullptr) ? size_ : 0U;
-    }
+    size_type size() const noexcept { return (data_ != nullptr) ? size_ : 0U; }
 
     bool empty() const noexcept { return size() == 0U; }
 
     inner_type const* data() const noexcept { return data_.get(); }
 
+    str to_str() const
+    {
+        if (!empty())
+        {
+            str result{reinterpret_cast<str::value_type const*>(cbegin()),
+                       reinterpret_cast<str::value_type const*>(cend() - 1)};
+            result.push_back(0);
+            return result;
+        }
+        return str{};
+    }
+
 private:
     uptr<inner_type[]> data_;
     size_type size_;
 };
+
 }  // namespace htps
 
 #endif

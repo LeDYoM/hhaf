@@ -67,16 +67,7 @@ bool FileSystem::fileExists(Path const& path)
 
 str FileSystem::loadTextFile(const Path& file_name)
 {
-    RawMemory raw_memory{loadBinaryFile(file_name)};
-    if (!raw_memory.empty())
-    {
-        str result{
-            reinterpret_cast<str::value_type const*>(raw_memory.cbegin()),
-            reinterpret_cast<str::value_type const*>(raw_memory.cend() - 1)};
-        result.push_back(0);
-        return result;
-    }
-    return str{};
+    return RawMemory{loadBinaryFile(file_name)}.to_str();
 }
 
 bool FileSystem::saveTextFile(const Path& file_name, const str& data)
