@@ -17,6 +17,8 @@ class BMPFontFactory final : public backend::IBMPFontFactory
 public:
     htps::sptr<BMPFont> loadFromFile(const htps::str& file);
     backend::IFont* loadFromRawMemory(htps::RawMemory* raw_memory) override;
+private:
+    htps::vector<htps::sptr<BMPFont>> bmpfont_cache_;
 };
 }  // namespace haf::res
 

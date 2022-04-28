@@ -30,8 +30,18 @@ using ResourceList = htps::Dictionary<T>;
 
 namespace
 {
+inline types::sptr<BMPFont> loadResource(backend::IResourceFactory<backend::IFont>& /*factory*/,
+                            FileSystem& fileSystem,
+                            const str& fileName)
+{
+    RawMemory data{fileSystem.loadBinaryFile(fileName)};
+
+    // Prototype / check
+    return nullptr;
+}
+
 template <typename T, typename V>
-inline sptr<T> loadResource(backend::IResourceFactory<V>& factory,
+inline types::sptr<T> loadResource(backend::IResourceFactory<V>& factory,
                             FileSystem& fileSystem,
                             const str& fileName)
 {
@@ -42,7 +52,7 @@ inline sptr<T> loadResource(backend::IResourceFactory<V>& factory,
 }
 
 template <typename T>
-inline auto get_or_default(ResourceList<sptr<T>> const& container,
+inline auto get_or_default(ResourceList<types::sptr<T>> const& container,
                            const str& rid)
 {
     auto iterator(

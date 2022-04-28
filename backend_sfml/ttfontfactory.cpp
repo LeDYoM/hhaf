@@ -9,8 +9,8 @@ namespace haf::backend::sfmlb
 {
 ITTFont* TTFontFactory::loadFromRawMemory(RawMemory* raw_memory)
 {
-    uptr<sf::Font> font(muptr<sf::Font>());
-    RawMemory internal_raw_memory(*raw_memory);
+    uptr<sf::Font> font{muptr<sf::Font>()};
+    RawMemory internal_raw_memory{*raw_memory};
     font->loadFromMemory(internal_raw_memory.data(),
                          internal_raw_memory.size());
     uptr<TTFont> t{

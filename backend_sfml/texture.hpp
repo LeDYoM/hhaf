@@ -13,12 +13,12 @@ namespace haf::backend::sfmlb
 class Texture : public ITexture
 {
 public:
-    Texture(const sf::Texture* const texture, const bool owned);
+    Texture(sf::Texture const* const texture, bool const owned);
     ~Texture() override;
 
     virtual htps::vector2du32 size() const override;
 
-    const sf::Texture& backEndTexture() const { return *priv_; }
+    sf::Texture const& backEndTexture() const { return *priv_; }
     htps::str info() const;
 
 private:
