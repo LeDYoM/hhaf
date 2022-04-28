@@ -64,7 +64,7 @@ constexpr sf::Texture const* to_sf_type(ITexture const* texture) noexcept
     {
         if (auto const sf_texture{htps::d_cast<Texture const*>(texture)})
         {
-            return &(sf_texture->backEndTexture());
+            return sf_texture->backEndTexture();
         }
     }
     return nullptr;
@@ -76,7 +76,7 @@ constexpr sf::Shader const* to_sf_type(IShader const* const shader) noexcept
     {
         if (auto const sf_shader{htps::d_cast<Shader const*>(shader)})
         {
-            return &(sf_shader->backEndShader());
+            return sf_shader->backEndShader();
         }
     }
     return nullptr;

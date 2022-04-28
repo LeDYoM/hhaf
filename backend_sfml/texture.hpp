@@ -18,12 +18,12 @@ public:
 
     virtual htps::vector2du32 size() const override;
 
-    sf::Texture const& backEndTexture() const { return *priv_; }
+    sf::Texture const* backEndTexture() const noexcept { return priv_; }
     htps::str info() const;
 
 private:
-    const sf::Texture* const priv_;
-    const bool owned_;
+    sf::Texture const* const priv_;
+    bool const owned_;
 };
 }  // namespace haf::backend::sfmlb
 
