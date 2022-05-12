@@ -1,3 +1,4 @@
+HTPS_PRAGMA_ONCE
 #ifndef HAF_ANIM_IPROPERTY_ANIMATION_INCLUDE_HPP
 #define HAF_ANIM_IPROPERTY_ANIMATION_INCLUDE_HPP
 
@@ -44,8 +45,8 @@ public:
      */
     PropertyAnimation(PropertyAnimationData<PropertyTag, SceneNodeType>&&
                           property_animation_data) :
-        BaseClass{std::move(property_animation_data)},
-        data_{std::move(property_animation_data)},
+        BaseClass{htps::move(property_animation_data)},
+        data_{htps::move(property_animation_data)},
         deltaValue_{AT{data_.prop<EndValue<PropertyTag>>()()} -
                     AT{data_.prop<StartValue<PropertyTag>>()()}}
     {}

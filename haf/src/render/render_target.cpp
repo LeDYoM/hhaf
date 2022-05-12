@@ -8,7 +8,7 @@ using namespace htps;
 namespace haf::sys
 {
 RenderTarget::RenderTarget(rptr<haf::backend::IRenderTarget> renderTarget) :
-    irender_target_{std::move(renderTarget)}, icamera_{nullptr}
+    irender_target_{htps::move(renderTarget)}, icamera_{nullptr}
 {
     LogAsserter::log_assert(renderTarget != nullptr,
                             "renderTarget parameter is nullptr");

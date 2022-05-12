@@ -1,5 +1,5 @@
 #include <haf/include/debug_utils/debug_actions.hpp>
-#include <haf/include/types/vector.hpp>
+#include <htypes/include/vector.hpp>
 #include <haf/include/scene/scene_node.hpp>
 
 #include <hlog/include/hlog.hpp>
@@ -11,8 +11,8 @@ namespace haf::debug
 {
 struct DebugActions::DebugActionsPrivate final
 {
-    using DebugActionVectorType = haf::vector<
-        haf::types::pair<haf::input::Key, DebugActions::DebugAction>>;
+    using DebugActionVectorType = vector<
+        pair<input::Key, DebugActions::DebugAction>>;
     using DebugActionVectorTypeIterator = DebugActionVectorType::iterator;
     DebugActionVectorType debug_actions_;
 
@@ -29,7 +29,7 @@ struct DebugActions::DebugActionsPrivate final
     }
 };
 
-DebugActions::DebugActions() : p_{types::make_pimplp<DebugActionsPrivate>()}
+DebugActions::DebugActions() : p_{make_pimplp<DebugActionsPrivate>()}
 {}
 
 DebugActions::~DebugActions() = default;
@@ -37,7 +37,7 @@ DebugActions::~DebugActions() = default;
 void DebugActions::addDebugAction(haf::input::Key const key,
                                   DebugAction debug_action)
 {
-    p_->debug_actions_.push_back({key, std::move(debug_action)});
+    p_->debug_actions_.push_back({key, htps::move(debug_action)});
 }
 
 void DebugActions::onKeyPressed(Key const& key)

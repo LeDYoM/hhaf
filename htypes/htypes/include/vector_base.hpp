@@ -1,3 +1,4 @@
+HTPS_PRAGMA_ONCE
 #ifndef HTYPES_VECTOR_BASE_INCLUDE_HPP
 #define HTYPES_VECTOR_BASE_INCLUDE_HPP
 
@@ -51,7 +52,7 @@ public:
      *
      * @param size Expected size of the inner container
      */
-    explicit constexpr vector_base(const size_type size) : storage_(size) {}
+    explicit constexpr vector_base(size_type const size) : storage_{size} {}
 
     /**
      * @brief Constructor with reserved memory and copy from source.
@@ -64,7 +65,6 @@ public:
     constexpr vector_base(const_iterator const source, size_type const count) :
         storage_{count}
     {
-        reserve(count);
         auto iterator{source};
         auto const end{source + count};
         while (iterator != end)
@@ -109,7 +109,7 @@ public:
      * @param other Object to move from
      */
     constexpr vector_base(vector_base&& other) noexcept :
-        storage_{std::move(other.storage_)}
+        storage_{htps::move(other.storage_)}
     {}
 
     /**
@@ -263,7 +263,7 @@ public:
         if (cbegin() != cend())
         {
             // Find a node with the specified value
-            iterator where_it_was{find(start, end(), std::forward<U>(v))};
+            iterator where_it_was{find(start, end(), htps::forward<U>(v))};
 
             // If such a node is found erase it, if not,
             // return end() (result from find(...)).
@@ -310,7 +310,7 @@ public:
         {
             // Find a node with the specified value
             return erase_iterator<discard_order>(
-                find_if(start, end(), std::move(condition)), end());
+                find_if(start, end(), htps::move(condition)), end());
         }
         return end();
     }
@@ -387,7 +387,7 @@ public:
     template <bool discard_order = true>
     constexpr iterator erase_if(Predicate_t condition)
     {
-        return erase_if<discard_order>(std::move(condition), begin());
+        return erase_if<discard_order>(htps::move(condition), begin());
     }
 
     template <bool discard_order = true>
@@ -406,7 +406,7 @@ public:
     template <bool discard_order = true>
     constexpr iterator erase_all_if(Predicate_t condition)
     {
-        return erase_all_if<discard_order>(std::move(condition), begin());
+        return erase_all_if<discard_order>(htps::move(condition), begin());
     }
 
     constexpr const_iterator find_first_of(T const& other) const noexcept
@@ -473,7 +473,7 @@ public:
         checkRange(begin);
         checkRange(end);
 
-        for (; (begin != end && !(std::forward<F>(f)(*begin))); ++begin)
+        for (; (begin != end && !(htps::forward<F>(f)(*begin))); ++begin)
             ;
         return begin;
     }
@@ -481,7 +481,7 @@ public:
     template <typename F>
     constexpr const_iterator cfind_if(F&& f) const noexcept
     {
-        return cfind_if(cbegin(), cend(), std::forward<F>(f));
+        return cfind_if(cbegin(), cend(), htps::forward<F>(f));
     }
 
     template <typename F>
@@ -492,7 +492,7 @@ public:
         checkRange(begin);
         checkRange(end);
 
-        for (; (begin != end && !(std::forward<F>(f)(*begin))); ++begin)
+        for (; (begin != end && !(htps::forward<F>(f)(*begin))); ++begin)
             ;
         return begin;
     }
@@ -500,7 +500,7 @@ public:
     template <typename F>
     constexpr iterator find_if(F&& f) noexcept
     {
-        return find_if(begin(), cend(), std::forward<F>(f));
+        return find_if(begin(), cend(), htps::forward<F>(f));
     }
 
     template <typename F>
@@ -508,13 +508,13 @@ public:
                                      const const_iterator end,
                                      F&& f) const noexcept
     {
-        return cfind_if(begin, end, std::forward<F>(f));
+        return cfind_if(begin, end, htps::forward<F>(f));
     }
 
     template <typename F>
     constexpr const_iterator find_if(F&& f) const noexcept
     {
-        return cfind_if(cbegin(), cend(), std::forward<F>(f));
+        return cfind_if(cbegin(), cend(), htps::forward<F>(f));
     }
 
     constexpr const_iterator cfind(const_iterator begin,
@@ -610,13 +610,13 @@ public:
 
     constexpr void push_back(T&& value)
     {
-        storage_.push_back(std::move(value));
+        storage_.push_back(htps::move(value));
     }
 
     template <typename... Args>
     constexpr void emplace_back(Args&&... args)
     {
-        storage_.emplace_back(std::forward<Args>(args)...);
+        storage_.emplace_back(htps::forward<Args>(args)...);
     }
 
     constexpr void insert(vector_base const& other)
@@ -626,7 +626,7 @@ public:
             reserve(size() + other.size());
             for (auto&& element : other)
             {
-                push_back(std::forward<decltype(element)>(element));
+                push_back(htps::forward<decltype(element)>(element));
             }
         }
     }
@@ -634,9 +634,9 @@ public:
     constexpr void insert(vector_base&& other)
     {
         reserve(size() + other.size());
-        for (auto&& element : std::move(other))
+        for (auto&& element : htps::move(other))
         {
-            emplace_back(std::move(element));
+            emplace_back(htps::move(element));
         }
     }
 
@@ -648,7 +648,7 @@ public:
 
     constexpr vector_base& operator+=(vector_base&& other)
     {
-        insert(std::move(other));
+        insert(htps::move(other));
         return *this;
     }
 

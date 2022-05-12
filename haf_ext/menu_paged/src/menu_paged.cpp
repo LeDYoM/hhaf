@@ -44,13 +44,13 @@ MenuFinishedStatus MenuPaged::status() const
 
 sptr<MenuPage> MenuPaged::createMenuPage(str name)
 {
-    return createSceneNode<MenuPage>(std::move(name));
+    return createSceneNode<MenuPage>(htps::move(name));
 }
 
 void MenuPaged::configure_menu(
     vector_shared_pointers<scene::MenuPage> menu_steps)
 {
-    menu_steps_ = std::move(menu_steps);
+    menu_steps_ = htps::move(menu_steps);
 
     for (auto&& menu_page : menu_steps_)
     {

@@ -1,12 +1,14 @@
+HTPS_PRAGMA_ONCE
 #ifndef HAF_SCENE_TRANSFORMATION_INCLUDE_HPP
 #define HAF_SCENE_TRANSFORMATION_INCLUDE_HPP
 
-#include <haf/include/types/basic_types.hpp>
-#include "matrix4x4.hpp"
-#include "transformation_properties.hpp"
+#include <htypes/include/types.hpp>
 #include <htypes/include/vector2d.hpp>
 #include <htypes/include/rect.hpp>
 #include <htypes/include/propertystate.hpp>
+
+#include <haf/include/scene/matrix4x4.hpp>
+#include <haf/include/scene/transformation_properties.hpp>
 
 namespace haf::scene
 {

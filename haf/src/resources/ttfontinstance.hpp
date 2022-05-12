@@ -1,9 +1,10 @@
+HTPS_PRAGMA_ONCE
 #ifndef HAF_SCENE_TTFONTINSTANCE_INCLUDE_HPP
 #define HAF_SCENE_TTFONTINSTANCE_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
 
-#include "texture.hpp"
+#include <haf/include/resources/itexture.hpp>
 #include <haf/include/resources/ifont.hpp>
 
 namespace haf::res
@@ -19,7 +20,7 @@ public:
     htps::f32 getLineSpacing() const override;
     htps::f32 getKerning(const htps::u32 first,
                          const htps::u32 second) const override;
-    htps::sptr<ITexture> getTexture() const override;
+    htps::sptr<ITexture> getTexture() override;
     ~TTFontInstance();
     TTFontInstance(const TTFont& parent, const htps::u32 characterSize);
 

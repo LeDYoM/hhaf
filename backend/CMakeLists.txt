@@ -3,19 +3,19 @@ project(backend)
 
 set(CURRENT_TARGET ${PROJECT_NAME})
 
-set(SOURCES 
-    src/backend_creator.cpp 
+set(SOURCES
+    src/backend_creator.cpp
     src/backend_factory_utils.hpp
-    src/backendfactory.cpp
-    src/backendregister.cpp
+    src/backend_factory.cpp
+    src/backend_register.cpp
 )
 
 set(include_dir ${PROJECT_NAME}/include)
 
 set(headers
     ${include_dir}/backend_creator.hpp
-    ${include_dir}/backendfactory.hpp
-    ${include_dir}/backendregister.hpp
+    ${include_dir}/backend_factory.hpp
+    ${include_dir}/backend_register.hpp
 )
 build_lib_component(EXPORT_ALL HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}" SOURCES
                     "${SOURCES}" HEADERS "${headers}")

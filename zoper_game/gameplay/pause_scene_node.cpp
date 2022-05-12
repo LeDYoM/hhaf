@@ -51,7 +51,7 @@ void PauseSceneNode::enterPause()
         .endValue(Color{colors::White, Color::Opaque})
         .duration(TimePoint_as_miliseconds(1000U));
 
-    animation_component_->addAnimation(std::move(builder));
+    animation_component_->addAnimation(htps::move(builder));
 }
 
 void PauseSceneNode::exitPause()

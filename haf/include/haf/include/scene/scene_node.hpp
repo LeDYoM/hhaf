@@ -1,7 +1,4 @@
-#ifdef USE_PRAGMA_ONCE
-#pragma once
-#endif
-
+HTPS_PRAGMA_ONCE
 #ifndef HAF_SCENE_SCENENODE_INCLUDE_HPP
 #define HAF_SCENE_SCENENODE_INCLUDE_HPP
 
@@ -63,7 +60,7 @@ public:
      * @param parent Parent of this element.
      * @param name Name of this element.
      */
-    SceneNode(types::rptr<SceneNode> parent, types::str name);
+    SceneNode(htps::rptr<SceneNode> parent, htps::str name);
 
     /**
      * @brief Destroy the Scene Node object.

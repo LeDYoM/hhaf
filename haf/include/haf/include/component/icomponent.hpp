@@ -1,7 +1,8 @@
+HTPS_PRAGMA_ONCE
 #ifndef HAF_COMPONENT_ICOMPONENT_INCLUDE_HPP
 #define HAF_COMPONENT_ICOMPONENT_INCLUDE_HPP
 
-#include <haf/include/types/basic_types.hpp>
+#include <htypes/include/types.hpp>
 #include <haf/include/component/icomponent_attached_node.hpp>
 
 namespace haf::scene

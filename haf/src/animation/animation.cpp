@@ -6,7 +6,7 @@ using namespace htps;
 namespace haf::anim
 {
 Animation::Animation(AnimationProperties&& animation_data) noexcept :
-    animation_data_{std::move(animation_data)},
+    animation_data_{htps::move(animation_data)},
     current_direction_{animation_data_.prop<AnimationDirectionProperty>()()},
     current_time_{},
     raw_delta_{static_cast<AnimationDeltaType>(0.0)},

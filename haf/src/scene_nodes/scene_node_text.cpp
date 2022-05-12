@@ -13,7 +13,6 @@
 #include <hlog/include/hlog.hpp>
 
 using namespace htps;
-using namespace haf::types;
 
 namespace haf::scene::nodes
 {
@@ -101,10 +100,10 @@ void SceneNodeText::update()
             auto texture{prop<Font>()()->getTexture()};
 
             // Initialize counter of characters
-            types::size_type counter{0U};
+            size_type counter{0U};
 
             // Get the counter of letters in the previous text set
-            types::size_type const old_counter{sceneNodes().size()};
+            size_type const old_counter{sceneNodes().size()};
 
             // Get the text to render
             auto const& current_text{prop<Text>()()};
@@ -116,7 +115,7 @@ void SceneNodeText::update()
             size_type indexChar{0U};
 
             // Initialize the node for each letter we are going to use
-            types::sptr<SceneNodeLetter> letterNode;
+            sptr<SceneNodeLetter> letterNode;
 
             // Prepare the text render data
 
@@ -214,7 +213,7 @@ void SceneNodeText::update()
         Color const& text_color{prop<TextColor>()()};
 
         for_each_sceneNode_as<RenderizableSceneNode>(
-            [&text_color](types::sptr<RenderizableSceneNode> const& sNode) {
+            [&text_color](sptr<RenderizableSceneNode> const& sNode) {
                 sNode->node()->prop<render::ColorProperty>() = text_color;
             });
     }

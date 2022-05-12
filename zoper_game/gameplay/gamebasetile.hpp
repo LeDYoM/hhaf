@@ -2,7 +2,6 @@
 #define ZOPER_GAMEBASETILE_HPP
 
 #include <htypes/include/types.hpp>
-#include <haf/include/types/basic_types.hpp>
 #include <haf/include/render/renderizable.hpp>
 #include <boardmanager/include/itile.hpp>
 #include "boardgroup.hpp"

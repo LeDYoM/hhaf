@@ -569,7 +569,7 @@ auto createTestTransformableSceneNodes(sptr<haf::scene::Scene> scene)
             make_str("SceneNode_test_", index))};
         if (index == 0U)
         {
-            node_test = std::move(result);
+            node_test = htps::move(result);
         }
     }
     return node_test;

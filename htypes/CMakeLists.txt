@@ -10,9 +10,9 @@ project("HAF Types"
 
 set(CURRENT_TARGET htypes)
 
-set(sources 
+set(sources
     src/types.cpp
-    )
+)
 
 set(include_dir htypes/include)
 set(headers
@@ -31,8 +31,6 @@ set(headers
     ${include_dir}/debug_internal.hpp
     ${include_dir}/dictionary.hpp
     ${include_dir}/function.hpp
-    ${include_dir}/grouping_property_impl.hpp
-    ${include_dir}/grouping_property.hpp
     ${include_dir}/growpolicy.hpp
     ${include_dir}/lockablevector.hpp
     ${include_dir}/menum.hpp
@@ -41,6 +39,8 @@ set(headers
     ${include_dir}/p_impl_pointer.hpp
     ${include_dir}/parpar.hpp
     ${include_dir}/properties.hpp
+    ${include_dir}/property_group_impl.hpp
+    ${include_dir}/property_group.hpp
     ${include_dir}/propertystate.hpp
     ${include_dir}/rawmemory.hpp
     ${include_dir}/rect.hpp
@@ -60,7 +60,17 @@ set(headers
 build_lib_component(EXPORT_ALL HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}" SOURCES
                     ${sources} HEADERS ${headers})
 
+#define compile time constants
 target_compile_definitions(${CURRENT_TARGET} PRIVATE htypes_EXPORTS)
+
+set(use_pragma_once 1)
+if (DEFINED use_pragma_once)
+  message("Setting pragma once for htps")
+  target_compile_definitions(${CURRENT_TARGET} PUBLIC HTPS_PRAGMA_ONCE=_Pragma\(\"once\"\))
+else()
+  message("Not Setting pragma once for htps")
+  target_compile_definitions(${CURRENT_TARGET} PUBLIC HTPS_PRAGMA_ONCE=)
+endif()
 
 # Use Memmamanger
 target_compile_definitions(${CURRENT_TARGET} PUBLIC USER_MEM_MANAGER)

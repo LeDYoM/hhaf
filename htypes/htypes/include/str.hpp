@@ -1,3 +1,4 @@
+HTPS_PRAGMA_ONCE
 #ifndef HTPS_STR_INCLUDE_HPP
 #define HTPS_STR_INCLUDE_HPP
 
@@ -11,7 +12,7 @@ template <typename... Args>
 constexpr str make_str(Args&&... args)
 {
     return make_basic_str<typename str::value_type>(
-        std::forward<Args>(args)...);
+        htps::forward<Args>(args)...);
 }
 
 static_assert(std::is_move_constructible_v<str>, "str must be movable");

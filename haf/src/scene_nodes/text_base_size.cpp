@@ -11,14 +11,14 @@ TextBaseSize::TextBaseSize(char const ch, size_type const size) :
     text_{str::fromCharAndSize(ch, size)}, value_{}
 {}
 
-TextBaseSize::TextBaseSize(str text) : text_{std::move(text)}, value_{}
+TextBaseSize::TextBaseSize(str text) : text_{htps::move(text)}, value_{}
 {}
 
-TextBaseSize::TextBaseSize(vector2df size) : text_{}, value_{std::move(size)}
+TextBaseSize::TextBaseSize(vector2df size) : text_{}, value_{htps::move(size)}
 {}
 
 TextBaseSize::TextBaseSize(str text, vector2df size) :
-    text_{std::move(text)}, value_{std::move(size)}
+    text_{htps::move(text)}, value_{htps::move(size)}
 {}
 
 bool TextBaseSize::operator==(TextBaseSize const& rhs) const noexcept

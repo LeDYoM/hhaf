@@ -1,8 +1,8 @@
 #include "host_internal.hpp"
 #include "host_connector.hpp"
 #include "host_connectorimpl.hpp"
-
-#include <backend/include/backendfactory.hpp>
+#include "host_log.hpp"
+#include <backend/include/backend_factory.hpp>
 
 using namespace htps;
 
@@ -20,8 +20,9 @@ bool HostInternal::initializeBackend()
 {
     // Initialize and create the backend factory
     backend_factory_ =
-        uptr<backend::BackendFactory, void (*)(haf::backend::BackendFactory*)>(
+        uptr<backend::BackendFactory, void (*)(backend::BackendFactory*)>(
             createBackendFactory(), destroyBackendFactory);
+    backend_factory_->loadBackendFile("bsfml");
 
     return backend_factory_ != nullptr;
 }
@@ -31,7 +32,7 @@ bool HostInternal::initializeHaf()
     auto const result_load_functions = system_loader_.loadFunctions();
     if (result_load_functions != SystemControllerLoader::ResultType::Success)
     {
-        DisplayLog::error("Cannot load haf system!");
+        HostLogDisplayer::error("Cannot load haf system!");
     }
     return result_load_functions == SystemControllerLoader::ResultType::Success;
 }
@@ -87,7 +88,7 @@ bool HostInternal::updateApp(HostedApplication& app)
             break;
         case AppState::ReadyToStart:
         {
-            DisplayLog::info("Starting initialization of new App...");
+            HostLogDisplayer::info("Starting initialization of new App...");
             app.app_state = AppState::Executing;
         }
         break;
@@ -96,13 +97,13 @@ bool HostInternal::updateApp(HostedApplication& app)
             if (app.app_system_controller->update())
             {
                 app.app_state = AppState::ReadyToTerminate;
-                DisplayLog::info(appDisplayNameAndVersion(app),
+                HostLogDisplayer::info(appDisplayNameAndVersion(app),
                                  ": is now ready to terminate");
             }
         }
         break;
         case AppState::ReadyToTerminate:
-            DisplayLog::info(appDisplayNameAndVersion(app),
+            HostLogDisplayer::info(appDisplayNameAndVersion(app),
                              ": ready to terminate");
             app.app_state = AppState::Terminated;
             return true;
@@ -119,16 +120,16 @@ bool HostInternal::updateApp(HostedApplication& app)
 bool HostInternal::addApplication(ManagedApp managed_app, htps::str name)
 {
     auto host_connector_impl = muptr<HostConnectorImpl>(*this);
-    auto host_connector = muptr<HostConnector>(std::move(host_connector_impl));
-    return app_group_.try_add_app(std::move(managed_app), std::move(name),
-                                  std::move(host_connector));
+    auto host_connector = muptr<HostConnector>(htps::move(host_connector_impl));
+    return app_group_.try_add_app(htps::move(managed_app), htps::move(name),
+                                  htps::move(host_connector));
 }
 
 bool HostInternal::loadApplication(htps::str const& app_name)
 {
     ManagedApp managed_app = app_loader.loadApp(app_name);
     bool const result_add{managed_app.app != nullptr
-                              ? addApplication(std::move(managed_app), app_name)
+                              ? addApplication(htps::move(managed_app), app_name)
                               : false};
 
     if (result_add)
@@ -144,7 +145,7 @@ bool HostInternal::loadApplication(htps::str const& app_name)
         else
         {
             auto& app                 = app_group_.back();
-            app.app_system_controller = std::move(app_system_controller);
+            app.app_system_controller = htps::move(app_system_controller);
             app.app_system_controller->init(app.managed_app_.app, nullptr,
                                             backend_factory_.get(), argc_,
                                             argv_);

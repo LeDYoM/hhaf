@@ -1,16 +1,18 @@
+HTPS_PRAGMA_ONCE
 #ifndef HAF_SCENE_TRANSFORMABLE_INCLUDE_HPP
 #define HAF_SCENE_TRANSFORMABLE_INCLUDE_HPP
 
-#include <haf/include/types/basic_types.hpp>
+#include <htypes/include/types.hpp>
+#include <htypes/include/vector.hpp>
+#include <htypes/include/vector2d.hpp>
+#include <htypes/include/rect.hpp>
+#include <htypes/include/propertystate.hpp>
+
 #include <haf/include/scene/matrix4x4.hpp>
 #include <haf/include/scene/transformation_properties.hpp>
 #include <haf/include/scene/transformation.hpp>
 #include <haf/include/scene/scene_node.hpp>
 #include <haf/include/scene/scene_render_context.hpp>
-#include <htypes/include/vector.hpp>
-#include <htypes/include/vector2d.hpp>
-#include <htypes/include/rect.hpp>
-#include <htypes/include/propertystate.hpp>
 
 namespace haf::scene
 {
@@ -101,7 +103,7 @@ public:
      * is not necessary to be used, but decreases allocations.
      * @param minimum_size Minimum number of transformations you will use.
      */
-    void reserveExtraTransformations(types::size_type const minimum_size);
+    void reserveExtraTransformations(htps::size_type const minimum_size);
 
 private:
     void updateGlobalTransformation(Matrix4x4 const&) noexcept;

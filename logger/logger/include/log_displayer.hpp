@@ -5,15 +5,32 @@
 
 namespace logger
 {
+static constexpr char const EmptyString[] = "";
+
+template <auto Message>
+struct DefaultMessageLogOptions
+{
+    static constexpr char const* const BaseMessage = Message;
+};
+
+struct DefaultLogOptions : DefaultMessageLogOptions<EmptyString>
+{};
+
 /**
  * @brief Helper class to forward the log calls to a Logger. It makes some
  * assumptions about the @b SeverityType.
  *
  * @tparam LogClass Log class capable of displaying logs.
  */
-template <typename LogClass, typename SeverityType>
+template <typename LogClass,
+          typename SeverityType,
+          typename LogOptions = DefaultLogOptions>
 struct LogDisplayer
 {
+    using LogClass_t     = LogClass;
+    using SeverityType_t = SeverityType;
+    using LogOptions_t   = LogOptions;
+
 private:
     /**
      * @brief Private alias for the type of a log severity
@@ -34,7 +51,7 @@ private:
     {
         LogClass::template log_if_ce<
             SeverityType::template ShowSeverity<severity_type>>(
-            std::forward<Args>(args)...);
+            LogOptions_t::BaseMessage, std::forward<Args>(args)...);
     }
 
 public:

@@ -1,18 +1,19 @@
+HTPS_PRAGMA_ONCE
 #ifndef HAF_SYSTEM_SYSTEM_INTERFACE_INCLUDE_HPP
 #define HAF_SYSTEM_SYSTEM_INTERFACE_INCLUDE_HPP
 
-#include <haf/include/types/basic_types.hpp>
+#include <htypes/include/types.hpp>
 #include <haf/include/system/isystem_provider.hpp>
 
 namespace haf::sys
 {
 template <typename SystemInterface_t>
-types::rptr<SystemInterface_t> subSystemInterface(
-    types::rptr<ISystemProvider> const system_provider);
+htps::rptr<SystemInterface_t> subSystemInterface(
+    htps::rptr<ISystemProvider> const system_provider);
 
 template <typename SystemInterface_t>
-types::rptr<SystemInterface_t const> subSystemInterface(
-    types::rptr<ISystemProvider const> const system_provider);
+htps::rptr<SystemInterface_t const> subSystemInterface(
+    htps::rptr<ISystemProvider const> const system_provider);
 
 }  // namespace haf::sys
 

@@ -24,7 +24,7 @@ bool FileSystem::processResult(IFileSerializer::Result const result,
         {
             DisplayLog::debug(pre_message, file, " not found");
             LogAsserter::log_assert(!assert_on_error, pre_message, file,
-                                    " no found");
+                                    " not found");
         }
         else if (result == IFileSerializer::Result::ParsingError)
         {
@@ -54,8 +54,8 @@ RawMemory FileSystem::loadBinaryFile(const Path& file_name)
         auto const file_size{detail::fileSize(file_name)};
 
         uptr<std::byte[]> buf{muptr<std::byte[]>(file_size)};
-        buf = detail::readBuffer(std::move(buf), file_name, file_size);
-        return RawMemory{std::move(buf), file_size};
+        buf = detail::readBuffer(htps::move(buf), file_name, file_size);
+        return RawMemory{htps::move(buf), file_size};
     }
     return RawMemory{};
 }
@@ -134,7 +134,7 @@ IFileSerializer::Result FileSystem::serializeToFile(
         htps::str data_str;
         data_str << obj;
 
-        return ((saveTextFile(file_name, std::move(data_str)))
+        return ((saveTextFile(file_name, htps::move(data_str)))
                     ? Result::Success
                     : Result::FileIOError);
     }

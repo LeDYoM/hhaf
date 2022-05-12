@@ -7,7 +7,7 @@ using namespace htps;
 namespace haf::scene
 {
 SceneNode::SceneNode(rptr<SceneNode> parent, str name) :
-    sys::HasName{std::move(name)},
+    sys::HasName{htps::move(name)},
     SceneNodeParent{parent},
     SceneNodes{this},
     sys::SystemAccess{parent != nullptr ? &(parent->isystemProvider())

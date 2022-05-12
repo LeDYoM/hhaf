@@ -1,17 +1,19 @@
+HTPS_PRAGMA_ONCE
 #ifndef HAF_ANIMATION_ANIMATION_DATA_INCLUDE_HPP
 #define HAF_ANIMATION_ANIMATION_DATA_INCLUDE_HPP
 
+#include <htypes/include/types.hpp>
+#include <htypes/include/property_group.hpp>
+
 #include <haf/include/time/time_point.hpp>
 #include <haf/include/time/timer_connector.hpp>
-#include <haf/include/types/basic_types.hpp>
-#include <haf/include/types/property_group.hpp>
 
 namespace haf::anim
 {
 /**
  * @brief Type to represent an animation
  */
-struct ActionWhenFinished : BasicPropertyBase<htps::function<void()>>
+struct ActionWhenFinished : htps::BasicPropertyBase<htps::function<void()>>
 {};
 
 enum class AnimationDirection : htps::u8
@@ -23,40 +25,39 @@ enum class AnimationDirection : htps::u8
 /**
  * @brief Direction of the animation
  */
-struct AnimationDirectionProperty : BasicPropertyBase<AnimationDirection>
+struct AnimationDirectionProperty : htps::BasicPropertyBase<AnimationDirection>
 {};
 
 /**
  * @brief Timer to use in the animation
  */
-struct TimerProperty : BasicPropertyBase<time::TimerConnectorSPtr>
+struct TimerProperty : htps::BasicPropertyBase<time::TimerConnectorSPtr>
 {};
 
 /**
  * @brief Time computing the duration of the animation
  */
-struct Duration : BasicPropertyBase<time::TimePoint>
+struct Duration : htps::BasicPropertyBase<time::TimePoint>
 {};
 
 /**
  * @brief Number of times to perform the animation
- *
  */
-struct Times : BasicPropertyBase<types::s32>
+struct Times : htps::BasicPropertyBase<htps::s32>
 {};
 
 /**
  * @brief Switch between forward and backward
  */
-struct Switch : BasicPropertyBase<bool>
+struct Switch : htps::BasicPropertyBase<bool>
 {};
 
-using AnimationProperties = types::PropertyGroup<TimerProperty,
-                                                 Duration,
-                                                 ActionWhenFinished,
-                                                 AnimationDirectionProperty,
-                                                 Times,
-                                                 Switch>;
+using AnimationProperties = htps::PropertyGroup<TimerProperty,
+                                                Duration,
+                                                ActionWhenFinished,
+                                                AnimationDirectionProperty,
+                                                Times,
+                                                Switch>;
 }  // namespace haf::anim
 
 #endif

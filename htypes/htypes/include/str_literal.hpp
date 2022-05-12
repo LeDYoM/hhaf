@@ -1,3 +1,4 @@
+HTPS_PRAGMA_ONCE
 #ifndef MTPS_CESTR_INCLUDE_HPP
 #define MTPS_CESTR_INCLUDE_HPP
 
@@ -95,7 +96,7 @@ struct basic_str_literal
 
     constexpr bool operator!=(basic_str_literal&& rhs) const noexcept
     {
-        return !(*this == std::move(rhs));
+        return !(*this == htps::move(rhs));
     }
 
     template <size_type N2>
@@ -116,7 +117,7 @@ struct basic_str_literal
     constexpr bool operator!=(
         basic_str_literal<char_type, N2>&& rhs) const noexcept
     {
-        return !(*this == std::move(rhs));
+        return !(*this == htps::move(rhs));
     }
 
     constexpr size_type hash() const noexcept { return value[0]; }

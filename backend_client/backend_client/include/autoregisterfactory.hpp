@@ -23,11 +23,11 @@ class AutoRegisterFactory : public IAutoRegisterFactory
 public:
     constexpr AutoRegisterFactory() noexcept : factory_{} {}
 
-    void create(htps::uptr<IFactoryOf<T>> f) { factory_ = std::move(f); }
+    void create(htps::uptr<IFactoryOf<T>> f) { factory_ = htps::move(f); }
 
     void setFactory(IBackendRegister* const backend_register) noexcept override
     {
-        backend_register->setFactory(std::move(factory_));
+        backend_register->setFactory(htps::move(factory_));
     }
 
     void resetFactory(

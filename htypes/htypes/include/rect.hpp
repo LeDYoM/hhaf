@@ -1,3 +1,4 @@
+HTPS_PRAGMA_ONCE
 #ifndef MTPS_HTYPES_RECT_INCLUDE_HPP
 #define MTPS_HTYPES_RECT_INCLUDE_HPP
 
@@ -18,10 +19,10 @@ struct Rect
                    T const rectTop,
                    T const rectWidth,
                    T const rectHeight) noexcept :
-        left{std::move(rectLeft)},
-        top{std::move(rectTop)},
-        width{std::move(rectWidth)},
-        height{std::move(rectHeight)}
+        left{htps::move(rectLeft)},
+        top{htps::move(rectTop)},
+        width{htps::move(rectWidth)},
+        height{htps::move(rectHeight)}
     {}
 
     constexpr Rect(vector2d<T> const& position,
@@ -32,13 +33,13 @@ struct Rect
     constexpr Rect(vector2d<T> const& position,
                    T const sizeX,
                    T const sizeY) noexcept :
-        Rect{position.x, position.y, std::move(sizeX), std::move(sizeY)}
+        Rect{position.x, position.y, htps::move(sizeX), htps::move(sizeY)}
     {}
 
     constexpr Rect(T const positionX,
                    T const positionY,
                    vector2d<T> const& size) noexcept :
-        Rect{std::move(positionX), std::move(positionY), size.x, size.y}
+        Rect{htps::move(positionX), htps::move(positionY), size.x, size.y}
     {}
 
     constexpr Rect(Rect const&) noexcept = default;

@@ -1,3 +1,4 @@
+HTPS_PRAGMA_ONCE
 #ifndef HAF_RENDER_RENDERIZABLE_PRIVATE_INCLUDE_HPP
 #define HAF_RENDER_RENDERIZABLE_PRIVATE_INCLUDE_HPP
 
@@ -38,7 +39,7 @@ struct Renderizable::RenderizablePrivate
         i_this_{i_this},
         num_vertex_{num_vertex},
         figure_type_{figure_type},
-        render_target_{std::move(render_target)},
+        render_target_{htps::move(render_target)},
         render_element_{render_target_->createRenderElement()}
     {
         positions_.resize(num_vertex_);

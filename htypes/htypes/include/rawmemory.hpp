@@ -1,3 +1,4 @@
+HTPS_PRAGMA_ONCE
 #ifndef MTPS_HTYPES_RAWMEMORY_INCLUDE_HPP
 #define MTPS_HTYPES_RAWMEMORY_INCLUDE_HPP
 
@@ -21,7 +22,7 @@ public:
     constexpr RawMemory() noexcept : data_{nullptr}, size_{0U} {}
 
     RawMemory(uptr<inner_type[]> data, size_type const size) :
-        data_{std::move(data)}, size_{size}
+        data_{htps::move(data)}, size_{size}
     {}
 
     RawMemory(RawMemory const& rhs) :

@@ -73,12 +73,12 @@ void MainMenu::goGame(GameMode const game_mode, vector<s32> menu_data)
 
 void MainMenu::goTimeGame(vector<s32> menu_data)
 {
-    goGame(GameMode::Time, std::move(menu_data));
+    goGame(GameMode::Time, htps::move(menu_data));
 }
 
 void MainMenu::goTokenGame(vector<s32> menu_data)
 {
-    goGame(GameMode::Token, std::move(menu_data));
+    goGame(GameMode::Token, htps::move(menu_data));
 }
 
 void MainMenu::onCreated()
@@ -115,7 +115,7 @@ void MainMenu::onCreated()
         menuPageMain->onTableNodeCreated +=
             make_function(this, &MainMenu::onTableNodeCreated);
 
-        menu_steps.emplace_back(std::move(menuPageMain));
+        menu_steps.emplace_back(htps::move(menuPageMain));
     }
 
     {
@@ -125,7 +125,7 @@ void MainMenu::onCreated()
             make_option("Play", RangeOption(), MenuPagedOption::Accept),
             make_option("Back", RangeOption(), MenuPagedOption::GoBack)};
 
-        menu_steps.emplace_back(std::move(menuPageByToken));
+        menu_steps.emplace_back(htps::move(menuPageByToken));
     }
     menu_steps.back()->Accepted.connect(
         make_function(this, &MainMenu::goTokenGame));
@@ -136,7 +136,7 @@ void MainMenu::onCreated()
             make_option("Play", RangeOption(), MenuPagedOption::Accept),
             make_option("Back", RangeOption(), MenuPagedOption::GoBack)};
 
-        menu_steps.emplace_back(std::move(menuPageByTime));
+        menu_steps.emplace_back(htps::move(menuPageByTime));
     }
 
     menu_steps.back()->Accepted.connect(
@@ -155,10 +155,10 @@ void MainMenu::onCreated()
             make_option("Accept", RangeOption(), MenuPagedOption::GoBack),
             make_option("Cancel", RangeOption(), MenuPagedOption::GoBack)};
 
-        menu_steps.emplace_back(std::move(menuPageOptions));
+        menu_steps.emplace_back(htps::move(menuPageOptions));
     }
 
-    configure_menu(std::move(menu_steps));
+    configure_menu(htps::move(menu_steps));
 
     prop<FinishSceneAtEnd>() = true;
 }

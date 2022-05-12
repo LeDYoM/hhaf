@@ -1,3 +1,4 @@
+HTPS_PRAGMA_ONCE
 #ifndef HTYPES_VECTOR_STORAGE_INCLUDE_HPP
 #define HTYPES_VECTOR_STORAGE_INCLUDE_HPP
 
@@ -123,27 +124,6 @@ public:
         std::swap(capacity_, other.capacity_);
     }
 
-    constexpr void shrink_to_fit()
-    {
-        if (size_ < capacity_)
-        {
-            auto old_buffer{buffer_};
-            auto old_capacity{capacity_};
-            capacity_ = size_;
-
-            buffer_ = size_ > 0U ? Allocator::allocate(size_) : nullptr;
-            auto buffer_iterator{buffer_};
-            auto const old_end{old_buffer + size_};
-
-            for (auto it{old_buffer}; it != old_end; ++it)
-            {
-                Allocator::construct(buffer_iterator++, std::move(*it));
-                Allocator::destruct(it);
-            }
-            Allocator::deallocate_with_size(old_buffer, old_capacity);
-        }
-    }
-
     constexpr void push_back(const T& value)
     {
         reserve(GrowPolicy::growSize(size_));
@@ -154,7 +134,7 @@ public:
     {
         reserve(GrowPolicy::growSize(size_));
         Allocator::construct(static_cast<T*>(buffer_ + size_++),
-                             std::move(value));
+                             htps::move(value));
     }
 
     template <typename... Args>
@@ -162,7 +142,7 @@ public:
     {
         reserve(GrowPolicy::growSize(size_));
         Allocator::construct(static_cast<T*>(buffer_ + size_++),
-                             std::forward<Args>(args)...);
+                             htps::forward<Args>(args)...);
     }
 
     constexpr void pop_back() noexcept
@@ -183,10 +163,26 @@ public:
 
             for (auto&& iterator : *this)
             {
-                new_vector.push_back(std::move(iterator));
+                new_vector.push_back(htps::move(iterator));
             }
 
-            *this = std::move(new_vector);
+            *this = htps::move(new_vector);
+        }
+    }
+
+    constexpr void shrink_to_fit()
+    {
+        if (size_ < capacity_)
+        {
+            vector_storage new_vector{
+                vector_storage{static_cast<size_type>(size_)}};
+
+            for (size_type index{0U}; index < size_; ++index)
+            {
+                new_vector.push_back(htps::move(*at(index)));
+            }
+
+            *this = htps::move(new_vector);
         }
     }
 };

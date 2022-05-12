@@ -19,7 +19,7 @@ void RenderSystem::setRenderTarget(sptr<RenderTarget> render_target)
     LogAsserter::log_assert(render_target_ == nullptr,
                             "Render target was already set");
 
-    render_target_ = std::move(render_target);
+    render_target_ = htps::move(render_target);
 }
 
 sptr<RenderTarget> const& RenderSystem::currentRenderTarget() const

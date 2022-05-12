@@ -7,9 +7,9 @@ namespace haf::scene
 MenuPagedOption::MenuPagedOption(str title,
                                  RangeOption range_options,
                                  s32 on_selected) :
-    title_{std::move(title)},
+    title_{htps::move(title)},
     on_selected_{on_selected},
-    option_{std::move(range_options)}
+    option_{htps::move(range_options)}
 {}
 
 s32 MenuPagedOption::onSelected() const noexcept

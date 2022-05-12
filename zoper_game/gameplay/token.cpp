@@ -67,7 +67,7 @@ void Token::tileAdded()
                 .endValue(endScale)
                 .duration(AppearTokenTime);
             animation_component_->addAnimation(
-                std::move(property_animation_builder));
+                htps::move(property_animation_builder));
         }
 
     /*
@@ -80,7 +80,7 @@ void Token::tileAdded()
                 .endValue(Position::value_type{0.0F, 0.0F})
                 .duration(AppearTokenTime);
             animation_component_->addAnimation(
-                std::move(property_animation_builder));
+                htps::move(property_animation_builder));
         }
     */
 }
@@ -111,6 +111,6 @@ void Token::tileMoved(const BoardPositionType& source)
     property_animation_builder.startValueIsCurrent()
         .endValue(destination)
         .duration(time::TimePoint_as_miliseconds(1000U));
-    animation_component_->addAnimation(std::move(property_animation_builder));
+    animation_component_->addAnimation(htps::move(property_animation_builder));
 }
 }  // namespace zoper

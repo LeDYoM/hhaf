@@ -1,7 +1,7 @@
 #ifndef HAF_BOARD_ITILE_HPP
 #define HAF_BOARD_ITILE_HPP
 
-#include <haf/include/types/basic_types.hpp>
+#include <htypes/include/types.hpp>
 #include <haf/include/types/scene_types.hpp>
 #include <boardmanager/include/board_types.hpp>
 
@@ -14,7 +14,7 @@ namespace haf::board
 class ITile
 {
 public:
-    using BoardTileData     = types::s32;
+    using BoardTileData     = htps::s32;
     using BoardPositionType = BoardPositionType;
 
     constexpr ITile() noexcept = default;

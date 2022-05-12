@@ -1,7 +1,9 @@
+HTPS_PRAGMA_ONCE
 #ifndef HAF_SCENE_RENDERIZABLE_SCENENODE_INCLUDE_HPP
 #define HAF_SCENE_RENDERIZABLE_SCENENODE_INCLUDE_HPP
 
-#include <haf/include/types/basic_types.hpp> 
+#include <htypes/include/types.hpp>
+
 #include <haf/include/render/renderizable_builder.hpp>
 #include <haf/include/scene_nodes/renderizables_scene_node.hpp>
 
@@ -20,7 +22,7 @@ public:
     using BaseClass::BaseClass;
     using BaseClass::prop;
 
-    types::sptr<render::Renderizable> const& node() const noexcept;
+    htps::sptr<render::Renderizable> const& node() const noexcept;
 };
 }  // namespace haf::scene
 

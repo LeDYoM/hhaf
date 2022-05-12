@@ -1,3 +1,4 @@
+HTPS_PRAGMA_ONCE
 #ifndef MTPS_HTYPES_OBJECT_UTILS_INCLUDE_HPP
 #define MTPS_HTYPES_OBJECT_UTILS_INCLUDE_HPP
 
@@ -64,7 +65,7 @@ public:
         error_.type       = ErrorType::ExpectedTokenType;
         error_.error_data = static_cast<u8>(expected);
 
-        errors_.push_back(std::move(error_));
+        errors_.push_back(htps::move(error_));
     }
 
     void unterminatedString(const Token& token)
@@ -74,7 +75,7 @@ public:
         error_.type       = ErrorType::UnterminatedString;
         error_.error_data = 0U;
 
-        errors_.push_back(std::move(error_));
+        errors_.push_back(htps::move(error_));
     }
 
     void invalidCharacter(const Token& token, const str::value_type ch)
@@ -84,7 +85,7 @@ public:
         error_.type       = ErrorType::InvalidCharacter;
         error_.error_data = static_cast<decltype(Error::error_data)>(ch);
 
-        errors_.emplace_back(std::move(error_));
+        errors_.emplace_back(htps::move(error_));
     }
 
     const vector<Error>& errors() const noexcept { return errors_; }
@@ -271,7 +272,7 @@ public:
             LOG("Token found: " << int(t.token_type)
                                 << "\t: " << t.value.c_str());
 #endif
-            tokens_.push_back(std::move(t));
+            tokens_.push_back(htps::move(t));
         }
 
         LOG("Scanner completed---------------------------------------");
@@ -537,7 +538,7 @@ class Parser : public InternalParserInterface
 public:
     Parser(vector<Token> tokens) :
         InternalParserInterface{tokens.cbegin(), tokens.cend()},
-        global_tokens_{std::move(tokens)}
+        global_tokens_{htps::move(tokens)}
     {}
 
     void parse() override
@@ -556,7 +557,7 @@ class ObjectCompiler
 public:
     constexpr ObjectCompiler(const str& input) noexcept : input_{input} {}
 
-    constexpr ObjectCompiler(str&& input) noexcept : input_{std::move(input)} {}
+    constexpr ObjectCompiler(str&& input) noexcept : input_{htps::move(input)} {}
 
     bool compile()
     {

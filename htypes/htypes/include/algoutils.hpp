@@ -1,3 +1,4 @@
+HTPS_PRAGMA_ONCE
 #ifndef HTYPES_ALGO_UTILS_INCLUDE_HPP
 #define HTYPES_ALGO_UTILS_INCLUDE_HPP
 
@@ -9,14 +10,14 @@ template <typename Container, typename F>
 void for_each_all(const Container& container, F&& function) noexcept
 {
     std::for_each(std::begin(container), std::end(container),
-                  std::forward<F>(function));
+                  htps::forward<F>(function));
 }
 
 template <typename Container, typename F>
 void for_each_all(Container& container, F&& function) noexcept
 {
     std::for_each(std::begin(container), std::end(container),
-                  std::forward<F>(function));
+                  htps::forward<F>(function));
 }
 }  // namespace htps
 

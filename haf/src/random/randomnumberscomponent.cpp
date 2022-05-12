@@ -24,7 +24,7 @@ public:
     ~RandomNumbersComponentPrivate() = default;
 
     const str& name() const noexcept { return name_; }
-    void setName(str name) { name_ = std::move(name); }
+    void setName(str name) { name_ = htps::move(name); }
 
     sys::RandomSystem& randomsystem() noexcept { return random_system_; }
 
@@ -40,7 +40,7 @@ RandomNumbersComponent::~RandomNumbersComponent() = default;
 
 void RandomNumbersComponent::setName(str new_name)
 {
-    priv_->setName(std::move(new_name));
+    priv_->setName(htps::move(new_name));
 }
 
 const str& RandomNumbersComponent::name() const noexcept

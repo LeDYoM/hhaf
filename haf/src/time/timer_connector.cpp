@@ -6,9 +6,9 @@ TimerConnector::TimerConnector(htps::uptr<Timer> timer,
                                TimerType timerType,
                                TimePoint timeOut,
                                timer_callback_t emitter) :
-    timer_{std::move(timer)},
-    time_out_{std::move(timeOut)},
-    emitter_{std::move(emitter)},
+    timer_{htps::move(timer)},
+    time_out_{htps::move(timeOut)},
+    emitter_{htps::move(emitter)},
     timer_type_{timerType}
 {}
 

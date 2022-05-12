@@ -4,14 +4,14 @@
 #include "render/render_target.hpp"
 #include "system/get_system.hpp"
 
-using namespace haf::types;
+using namespace htps;
 
 namespace haf::scene
 {
 struct CameraComponent::CameraComponentPrivate
 {
-    htps::rptr<backend::ICamera> icamera_{nullptr};
-    htps::sptr<sys::RenderTarget> render_target_;
+    rptr<backend::ICamera> icamera_{nullptr};
+    sptr<sys::RenderTarget> render_target_;
 
     void draw() { render_target_->draw(icamera_); }
 

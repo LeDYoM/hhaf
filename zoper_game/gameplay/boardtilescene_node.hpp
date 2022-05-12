@@ -2,7 +2,8 @@
 #define ZOPER_BOARD_TILE_SCENENODE_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
-#include <haf/include/types/property_group.hpp>
+#include <htypes/include/property_group.hpp>
+
 #include <haf/include/scene/scene_node.hpp>
 #include <haf/include/scene/color.hpp>
 #include <haf/include/render/renderizable.hpp>

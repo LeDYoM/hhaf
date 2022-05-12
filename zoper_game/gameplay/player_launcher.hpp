@@ -1,6 +1,8 @@
 #ifndef ZOOPER_PLAYER_LAUNCHER__INCLUDE_HPP
 #define ZOOPER_PLAYER_LAUNCHER__INCLUDE_HPP
 
+#include <htypes/include/types.hpp>
+
 #include "direction.hpp"
 #include "levelproperties.hpp"
 #include "boardgroup.hpp"
@@ -9,7 +11,6 @@
 
 #include "player.hpp"
 
-#include <haf/include/types/basic_types.hpp>
 #include <boardmanager/include/board_types.hpp>
 
 namespace zoper
@@ -22,8 +23,8 @@ class PlayerLauncher
 {
 public:
     void operator()(ScoreIncrementer& score_incrementer,
-                    haf::types::sptr<BoardGroup> board_group,
-                    haf::function<void(haf::board::BoardPositionType)>
+                    htps::sptr<BoardGroup> board_group,
+                    htps::function<void(haf::board::BoardPositionType)>
                         createScoreIncrementPoints);
 };
 }  // namespace zoper

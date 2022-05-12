@@ -1,17 +1,18 @@
+HTPS_PRAGMA_ONCE
 #ifndef HAF_SCENE_TRANSFORMATION_PROPERTIES_INCLUDE_HPP
 #define HAF_SCENE_TRANSFORMATION_PROPERTIES_INCLUDE_HPP
 
-#include <haf/include/types/property_group.hpp>
+#include <htypes/include/property_group.hpp>
 #include <htypes/include/vector2d.hpp>
 #include <haf/include/scene/matrix4x4.hpp>
 
 namespace haf::scene
 {
 template <typename Scalar>
-struct RotationScalar : PropertyStateBase<Scalar> {};
+struct RotationScalar : htps::PropertyStateBase<Scalar> {};
 
 template <typename Scalar>
-struct ScaleScalar : PropertyStateBase<htps::vector2d<Scalar>>
+struct ScaleScalar : htps::PropertyStateBase<htps::vector2d<Scalar>>
 {
     static constexpr auto Ones =
         htps::vector2d<Scalar>{static_cast<Scalar>(1), static_cast<Scalar>(1)};
@@ -20,14 +21,14 @@ struct ScaleScalar : PropertyStateBase<htps::vector2d<Scalar>>
 };
 
 template <typename Scalar>
-struct PositionScalar : PropertyStateBase<htps::vector2d<Scalar>> {};
+struct PositionScalar : htps::PropertyStateBase<htps::vector2d<Scalar>> {};
 
 using Rotation = RotationScalar<Matrix4x4::Scalar>;
 using Scale    = ScaleScalar<Matrix4x4::Scalar>;
 using Position = PositionScalar<Matrix4x4::Scalar>;
 
 using TransformationProperties =
-    types::PropertyGroup<Rotation, Scale, Position>;
+    htps::PropertyGroup<Rotation, Scale, Position>;
 
 }  // namespace haf::scene
 

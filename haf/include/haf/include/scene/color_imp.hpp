@@ -1,3 +1,4 @@
+HTPS_PRAGMA_ONCE
 #ifndef HAF_SCENE_COLOR_IMP_INCLUDE_HPP
 #define HAF_SCENE_COLOR_IMP_INCLUDE_HPP
 
@@ -72,7 +73,7 @@ struct ColorImp
     template <typename Source>
     static constexpr value_type ensureLimits(Source source) noexcept
     {
-        return detail::ensureLimits<value_type, Source>(std::move(source));
+        return detail::ensureLimits<value_type, Source>(htps::move(source));
     }
 
     /**

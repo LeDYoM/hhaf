@@ -1,3 +1,4 @@
+HTPS_PRAGMA_ONCE
 #ifndef HAF_DATA_IDESERIALIZABLE_INCLUDE_HPP
 #define HAF_DATA_IDESERIALIZABLE_INCLUDE_HPP
 
@@ -26,7 +27,7 @@ public:
         {
             T element_data;
             element_data.deserialize(element.second);
-            elements_.add(element.first, std::move(element_data));
+            elements_.add(element.first, htps::move(element_data));
         }
         return true;
     }
@@ -50,7 +51,7 @@ public:
         {
             T element_data;
             element_data.deserialize(element.second);
-            elements_.push_back(std::move(element_data));
+            elements_.push_back(htps::move(element_data));
         }
         return true;
     }

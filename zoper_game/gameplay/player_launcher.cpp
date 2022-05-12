@@ -17,8 +17,8 @@ namespace zoper
 {
 void PlayerLauncher::operator()(
     ScoreIncrementer& score_incrementer,
-    types::sptr<BoardGroup> board_group,
-    haf::function<void(board::BoardPositionType)> createScoreIncrementPoints)
+    sptr<BoardGroup> board_group,
+    htps::function<void(board::BoardPositionType)> createScoreIncrementPoints)
 {
     DisplayLog::info("Launching player");
     haf::SceneCoordinates lastTokenPosition{};

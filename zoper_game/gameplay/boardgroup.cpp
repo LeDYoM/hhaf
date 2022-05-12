@@ -29,7 +29,7 @@ BoardGroup::~BoardGroup() = default;
 void BoardGroup::configure(vector2dst size,
                            sptr<LevelProperties> level_properties)
 {
-    level_properties_ = std::move(level_properties);
+    level_properties_ = htps::move(level_properties);
     prop<TableSize>().set(size);
     auto const tableSize{prop<TableSize>().get()};
 

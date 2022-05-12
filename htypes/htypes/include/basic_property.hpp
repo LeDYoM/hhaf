@@ -1,3 +1,4 @@
+HTPS_PRAGMA_ONCE
 #ifndef MTPS_BASIC_PROPERTY_INCLUDE_HPP
 #define MTPS_BASIC_PROPERTY_INCLUDE_HPP
 
@@ -33,7 +34,7 @@ public:
 
     constexpr BasicProperty(T&& iv) noexcept(
         std::is_nothrow_move_constructible_v<T>) :
-        value_{std::move(iv)}
+        value_{htps::move(iv)}
     {}
     constexpr BasicProperty(const T& iv) noexcept(
         std::is_nothrow_copy_constructible_v<T>) :
@@ -46,7 +47,7 @@ public:
     constexpr void operator=(T&& v) noexcept(
         std::is_nothrow_move_assignable_v<T>)
     {
-        set(std::move(v));
+        set(htps::move(v));
     }
 
     constexpr const T& get() const noexcept override final { return value_; }
@@ -60,11 +61,11 @@ public:
         return false;
     }
 
-    inline bool set(T&& v) noexcept(noexcept(Base::set(std::move(v)))) override
+    inline bool set(T&& v) noexcept(noexcept(Base::set(htps::move(v)))) override
     {
-        if (!(value_ == std::forward<T>(v)))
+        if (!(value_ == htps::forward<T>(v)))
         {
-            value_ = std::move(v);
+            value_ = htps::move(v);
             return true;
         }
         return false;

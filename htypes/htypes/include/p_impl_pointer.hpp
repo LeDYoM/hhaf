@@ -1,3 +1,4 @@
+HTPS_PRAGMA_ONCE
 #ifndef MTPS_P_IMPL_POINTER_INCLUDE_HPP
 #define MTPS_P_IMPL_POINTER_INCLUDE_HPP
 
@@ -53,7 +54,7 @@ private:
 template <typename T, typename... Args>
 PImplPointer<T> make_pimplp(Args&&... args)
 {
-    T* p = new T(std::forward<Args>(args)...);
+    T* p = new T(htps::forward<Args>(args)...);
     return PImplPointer<T>(p);
 }
 

@@ -1,13 +1,13 @@
 #include "next_token.hpp"
 #include <hlog/include/hlog.hpp>
 
-using namespace haf;
-using namespace haf::types;
+using namespace htps;
+using namespace haf::time;
 
 namespace zoper
 {
-NextToken::NextToken(wptr<time::TimerComponent> timer_component) :
-    timer_component_{std::move(timer_component)}
+NextToken::NextToken(wptr<TimerComponent> timer_component) :
+    timer_component_{htps::move(timer_component)}
 {}
 
 void NextToken::prepareNextToken(function<htps::size_type()> nextTokenTime,
@@ -22,11 +22,10 @@ void NextToken::prepareNextToken(function<htps::size_type()> nextTokenTime,
 void NextToken::prepareNextTokenImpl()
 {
     timer_ = timer_component_.lock()->addTimer(
-        time::TimerType::OneShot,
-        time::TimePoint_as_miliseconds(time_point_getter_()),
-        [this](time::TimePoint realEllapsed) {
-            DisplayLog::info("Elapsed between tokens: ",
-                             realEllapsed.milliseconds());
+        TimerType::OneShot, TimePoint_as_miliseconds(time_point_getter_()),
+        [this](TimePoint realEllapsed) {
+            haf::DisplayLog::info("Elapsed between tokens: ",
+                                  realEllapsed.milliseconds());
             // New token
             action_();
             prepareNextTokenImpl();

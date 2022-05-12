@@ -1,3 +1,4 @@
+HTPS_PRAGMA_ONCE
 #ifndef HAF_SCENE_SCENENODEPARENT_INCLUDE_HPP
 #define HAF_SCENE_SCENENODEPARENT_INCLUDE_HPP
 
@@ -19,7 +20,7 @@ public:
      * @param[in] parent       The parent of this node.
      */
     constexpr SceneNodeParent(htps::rptr<CRTP> parent) noexcept :
-        parent_{std::move(parent)}
+        parent_{htps::move(parent)}
     {}
 
     /**

@@ -1,3 +1,4 @@
+HTPS_PRAGMA_ONCE
 #ifndef HAF_RENDER_VERTEX_INCLUDE_HPP
 #define HAF_RENDER_VERTEX_INCLUDE_HPP
 
@@ -11,11 +12,11 @@ struct Vertex final
     constexpr Vertex(htps::vector2df p,
                      scene::Color c,
                      htps::vector2df tc) noexcept :
-        position{std::move(p)}, color{std::move(c)}, texCoords{std::move(tc)}
+        position{htps::move(p)}, color{htps::move(c)}, texCoords{htps::move(tc)}
     {}
 
     constexpr Vertex(htps::vector2df p, htps::vector2df tc) noexcept :
-        position{std::move(p)}, color{}, texCoords{std::move(tc)}
+        position{htps::move(p)}, color{}, texCoords{htps::move(tc)}
     {}
 
     constexpr Vertex() noexcept         = default;

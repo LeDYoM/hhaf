@@ -1,3 +1,4 @@
+HTPS_PRAGMA_ONCE
 #ifndef HTPS_BASIC_STR_INCLUDE_HPP
 #define HTPS_BASIC_STR_INCLUDE_HPP
 
@@ -136,7 +137,7 @@ public:
                 size_type position{_this.cfind(separator)};
                 if (position == npos)
                 {
-                    result.push_back(std::move(_this));
+                    result.push_back(htps::move(_this));
                     _this.clear();
                 }
                 else
@@ -153,7 +154,7 @@ public:
         }
         else
         {
-            result.push_back(std::move(_this));
+            result.push_back(htps::move(_this));
         }
         return result;
     }
@@ -237,14 +238,14 @@ public:
     basic_str& append(basic_str&& n)
     {
         data_.pop_back();
-        data_.insert(std::move(n.data_));
+        data_.insert(htps::move(n.data_));
         return *this;
     }
 
     template <size_type N>
     constexpr basic_str& append(char_type const (&n)[N])
     {
-        append(str(std::forward<char_type const(&)[N]>(n)));
+        append(str(htps::forward<char_type const(&)[N]>(n)));
         return *this;
     }
 
@@ -293,7 +294,7 @@ public:
     basic_str& push_back(char_type const n)
     {
         char_type const temp[2U] = {n, 0U};
-        return append(std::move(temp));
+        return append(htps::move(temp));
     }
 
     template <typename T>
@@ -322,7 +323,7 @@ public:
     template <typename T>
     basic_str& operator+=(T&& source)
     {
-        return append(std::forward<T>(source));
+        return append(htps::forward<T>(source));
     }
 
     basic_str& operator+=(basic_str const& source) { return append(source); }
@@ -610,7 +611,7 @@ public:
 template <typename T, typename value_type>
 basic_str<value_type> operator+(T&& lhs, basic_str<value_type> const& rhs)
 {
-    return basic_str<value_type>(std::forward<T>(lhs)).append(rhs);
+    return basic_str<value_type>(htps::forward<T>(lhs)).append(rhs);
 }
 
 template <typename char_value>
@@ -632,21 +633,21 @@ constexpr void make_basic_str_internal(basic_str<char_value>& buffer,
                                        T&& arg,
                                        Args&&... args)
 {
-    make_basic_str_internal(buffer, std::forward<T>(arg));
-    make_basic_str_internal(buffer, std::forward<Args>(args)...);
+    make_basic_str_internal(buffer, htps::forward<T>(arg));
+    make_basic_str_internal(buffer, htps::forward<Args>(args)...);
 }
 
 template <typename char_value, typename T>
 constexpr void make_basic_str_internal(basic_str<char_value>& buffer, T&& arg)
 {
-    buffer << std::forward<T>(arg);
+    buffer << htps::forward<T>(arg);
 }
 
 template <typename char_value, typename... Args>
 constexpr basic_str<char_value> make_basic_str(Args&&... args)
 {
     basic_str<char_value> t;
-    make_basic_str_internal(t, std::forward<Args>(args)...);
+    make_basic_str_internal(t, htps::forward<Args>(args)...);
     return t;
 }
 
@@ -654,44 +655,44 @@ template <typename char_value, typename T>
 constexpr basic_str<char_value> make_basic_str(T&& arg)
 {
     basic_str<char_value> t;
-    make_basic_str_internal(t, std::forward<T>(arg));
+    make_basic_str_internal(t, htps::forward<T>(arg));
     return t;
 }
 
 template <typename char_value>
 inline basic_str<char_value> make_basic_str(u64&& n)
 {
-    return basic_str<char_value>::to_str(std::move(n));
+    return basic_str<char_value>::to_str(htps::move(n));
 }
 
 template <typename char_value>
 inline basic_str<char_value> make_basic_str(s64&& n)
 {
-    return basic_str<char_value>::to_str(std::move(n));
+    return basic_str<char_value>::to_str(htps::move(n));
 }
 
 template <typename char_value>
 inline basic_str<char_value> make_basic_str(u32&& n)
 {
-    return basic_str<char_value>::to_str(std::move(n));
+    return basic_str<char_value>::to_str(htps::move(n));
 }
 
 template <typename char_value>
 inline basic_str<char_value> make_basic_str(s32&& n)
 {
-    return basic_str<char_value>::to_str(std::move(n));
+    return basic_str<char_value>::to_str(htps::move(n));
 }
 
 template <typename char_value>
 inline basic_str<char_value> make_basic_str(f32&& n)
 {
-    return basic_str<char_value>::to_str(std::move(n));
+    return basic_str<char_value>::to_str(htps::move(n));
 }
 
 template <typename char_value>
 inline basic_str<char_value> make_basic_str(f64&& n)
 {
-    return basic_str<char_value>::to_str(std::move(n));
+    return basic_str<char_value>::to_str(htps::move(n));
 }
 
 }  // namespace htps

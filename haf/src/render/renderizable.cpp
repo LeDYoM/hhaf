@@ -18,8 +18,8 @@ namespace haf::render
 {
 Renderizable::Renderizable(rptr<TransformableSceneNode> parent,
                            RenderizableData&& renderizable_data) :
-    sys::HasName{std::move(renderizable_data.prop<RenderizableName>()())},
-    parent_{std::move(parent)},
+    sys::HasName{htps::move(renderizable_data.prop<RenderizableName>()())},
+    parent_{htps::move(parent)},
     p_{make_pimplp<RenderizablePrivate>(
         this,
         renderizable_data.prop<PointCount>()(),

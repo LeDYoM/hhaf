@@ -1,14 +1,14 @@
 #ifndef ZOPER_DIRECTION_INCLUDE_HPP
 #define ZOPER_DIRECTION_INCLUDE_HPP
 
+#include <htypes/include/types.hpp>
 #include <htypes/include/vector2d.hpp>
-#include <haf/include/types/basic_types.hpp>
 
 namespace zoper
 {
 class Direction
 {
-    using DirectionDataUnderlying = haf::types::u8;
+    using DirectionDataUnderlying = htps::u8;
 
 public:
     enum class DirectionData : DirectionDataUnderlying

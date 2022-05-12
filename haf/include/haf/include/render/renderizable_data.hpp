@@ -1,9 +1,11 @@
+HTPS_PRAGMA_ONCE
 #ifndef HAF_RENDERIZABLE_DATA_INCLUDE_HPP
 #define HAF_RENDERIZABLE_DATA_INCLUDE_HPP
 
-#include <haf/include/types/basic_types.hpp>
+#include <htypes/include/types.hpp>
+#include <htypes/include/property_group.hpp>
+
 #include <haf/include/types/scene_types.hpp>
-#include <haf/include/types/property_group.hpp>
 #include <htypes/include/rect.hpp>
 #include <htypes/include/str.hpp>
 
@@ -23,34 +25,34 @@ class Renderizables;
 
 namespace haf::render
 {
-struct RenderizableName : BasicPropertyBase<types::str>
+struct RenderizableName : htps::BasicPropertyBase<htps::str>
 {};
 
-struct FigureTypeProperty : PropertyStateBase<FigType_t>
+struct FigureTypeProperty : htps::PropertyStateBase<FigType_t>
 {};
 
-struct ColorProperty : PropertyStateBase<scene::Color>
+struct ColorProperty : htps::PropertyStateBase<scene::Color>
 {};
 
-struct PointCount : PropertyStateBase<types::size_type>
+struct PointCount : htps::PropertyStateBase<htps::size_type>
 {};
 
-struct ShaderProperty : PropertyStateBase<types::sptr<res::IShader>>
+struct ShaderProperty : htps::PropertyStateBase<htps::sptr<res::IShader>>
 {};
 
-struct TextureProperty : PropertyStateBase<types::sptr<res::ITexture>>
+struct TextureProperty : htps::PropertyStateBase<htps::sptr<res::ITexture>>
 {};
 
-struct TextureRectProperty : PropertyStateBase<htps::Rects32>
+struct TextureRectProperty : htps::PropertyStateBase<htps::Rects32>
 {};
 
-using RenderizableData = types::PropertyGroup<RenderizableName,
-                                              FigureTypeProperty,
-                                              ColorProperty,
-                                              PointCount,
-                                              ShaderProperty,
-                                              TextureProperty,
-                                              TextureRectProperty>;
+using RenderizableData = htps::PropertyGroup<RenderizableName,
+                                             FigureTypeProperty,
+                                             ColorProperty,
+                                             PointCount,
+                                             ShaderProperty,
+                                             TextureProperty,
+                                             TextureRectProperty>;
 }  // namespace haf::render
 
 #endif

@@ -1,7 +1,8 @@
+HTPS_PRAGMA_ONCE
 #ifndef HAF_RENDERIZABLE_BUILDER_INCLUDE_HPP
 #define HAF_RENDERIZABLE_BUILDER_INCLUDE_HPP
 
-#include <haf/include/types/basic_types.hpp>
+#include <htypes/include/types.hpp>
 #include <htypes/include/rect.hpp>
 #include <htypes/include/str.hpp>
 #include <htypes/include/function.hpp>
@@ -37,7 +38,7 @@ public:
 
     htps::sptr<Renderizable> create();
 
-    RenderizableBuilder& name(types::str const& _name);
+    RenderizableBuilder& name(htps::str const& _name);
     RenderizableBuilder& figType(FigType_t const& fig_type);
     RenderizableBuilder& color(scene::Color const& _color);
     RenderizableBuilder& pointCount(htps::size_type const& point_count);

@@ -22,7 +22,7 @@ TEST_CASE("PropertyState", "[htypes][property][state]")
     CHECK(b.readResetHasChanged());
     CHECK_FALSE(b.readResetHasChanged());
 
-    b.set(std::move(t));
+    b.set(htps::move(t));
     CHECK(t.get() == nullptr);
     CHECK(*(b.get()) == 10);
 

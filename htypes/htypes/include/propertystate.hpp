@@ -1,3 +1,4 @@
+HTPS_PRAGMA_ONCE
 #ifndef MTPS_PROPERTY_STATE_INCLUDE_HPP
 #define MTPS_PROPERTY_STATE_INCLUDE_HPP
 
@@ -43,7 +44,7 @@ public:
     {}
     constexpr PropertyState(T&& iv) noexcept(
         std::is_nothrow_move_constructible_v<T>) :
-        BaseClass{std::move(iv)}
+        BaseClass{htps::move(iv)}
     {}
 
     PropertyState(const PropertyState&) noexcept(
@@ -63,7 +64,7 @@ public:
     constexpr T const& operator=(T&& v) noexcept(
         std::is_nothrow_move_assignable_v<T>)
     {
-        set(std::move(v));
+        set(htps::move(v));
         return v;
     }
 
@@ -88,9 +89,9 @@ public:
         return is_different;
     }
 
-    bool set(T&& v) noexcept(noexcept(BaseClass::set(std::move(v)))) override
+    bool set(T&& v) noexcept(noexcept(BaseClass::set(htps::move(v)))) override
     {
-        const bool is_different{BaseClass::set(std::move(v))};
+        const bool is_different{BaseClass::set(htps::move(v))};
 
         if (is_different)
         {
@@ -104,7 +105,7 @@ template <typename T, typename... Args>
 constexpr bool ps_hasChanged(const PropertyState<T>& arg,
                              Args&&... args) noexcept
 {
-    return arg.hasChanged() || ps_hasChanged(std::forward<Args>(args)...);
+    return arg.hasChanged() || ps_hasChanged(htps::forward<Args>(args)...);
 }
 
 template <typename T>
@@ -118,7 +119,7 @@ constexpr void ps_resetHasChanged(PropertyState<T>& arg,
                                   Args&&... args) noexcept
 {
     arg.resetHasChanged();
-    ps_resetHasChanged(std::forward<Args>(args)...);
+    ps_resetHasChanged(htps::forward<Args>(args)...);
 }
 
 template <typename T, typename Tag>
@@ -136,13 +137,13 @@ constexpr bool ps_readResetHasAnyChanged(PropertyState<T, Tag>& arg,
     if constexpr (sizeof...(Args) > 1U)
     {
         const bool result_rest{
-            ps_readResetHasAnyChanged(std::forward<Args>(args)...)};
+            ps_readResetHasAnyChanged(htps::forward<Args>(args)...)};
         return result_unary || result_rest;
     }
     else if constexpr (sizeof...(Args) > 0U)
     {
         const bool result_rest{
-            ps_readResetHasChanged(std::forward<Args>(args)...)};
+            ps_readResetHasChanged(htps::forward<Args>(args)...)};
         return result_unary || result_rest;
     }
     else
@@ -160,13 +161,13 @@ constexpr bool ps_readResetHasAllChanged(PropertyState<T>& arg,
     if constexpr (sizeof...(Args) > 1U)
     {
         const bool result_rest{
-            ps_readResetHasAllChanged(std::forward<Args>(args)...)};
+            ps_readResetHasAllChanged(htps::forward<Args>(args)...)};
         return result_unary && result_rest;
     }
     else if constexpr (sizeof...(Args) > 0U)
     {
         const bool result_rest{
-            ps_readResetHasChanged(std::forward<Args>(args)...)};
+            ps_readResetHasChanged(htps::forward<Args>(args)...)};
         return result_unary && result_rest;
     }
     else

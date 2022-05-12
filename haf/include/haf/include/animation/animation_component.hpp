@@ -1,3 +1,4 @@
+HTPS_PRAGMA_ONCE
 #ifndef HAF_ANIMATION_ANIMATION_COMPONENT_INCLUDE_HPP
 #define HAF_ANIMATION_ANIMATION_COMPONENT_INCLUDE_HPP
 
@@ -32,7 +33,7 @@ public:
     void addAnimation(PropertyAnimationData<PropertyTag, SceneNodeType>&& data)
     {
         addAnimation(htps::muptr<PropertyAnimation<PropertyTag, SceneNodeType>>(
-            std::move(data)));
+            htps::move(data)));
     }
 
     template <typename PropertyTag, typename SceneNodeType>
@@ -43,7 +44,7 @@ public:
     }
 
     template <typename PropertyTag, typename PropertyContainer>
-    auto make_property_animation_data(types::rptr<PropertyContainer> scene_node)
+    auto make_property_animation_data(htps::rptr<PropertyContainer> scene_node)
     {
         auto builder{PropertyAnimationData<PropertyTag, PropertyContainer>()};
         builder
@@ -60,7 +61,7 @@ public:
     }
 
     template <typename PropertyTag, typename PropertyContainer>
-    auto make_property_animation_data(types::sptr<PropertyContainer> scene_node)
+    auto make_property_animation_data(htps::sptr<PropertyContainer> scene_node)
     {
         return make_property_animation_data<PropertyTag, PropertyContainer>(
             scene_node.get());
@@ -75,16 +76,16 @@ public:
 
     template <typename PropertyTag, typename PropertyContainer>
     auto make_property_animation_builder(
-        types::rptr<PropertyContainer> scene_node)
+        htps::rptr<PropertyContainer> scene_node)
     {
         return PropertyAnimationBuilder<PropertyTag, PropertyContainer>{
             make_property_animation_data<PropertyTag, PropertyContainer>(
-                std::move(scene_node))};
+                htps::move(scene_node))};
     }
 
     template <typename PropertyTag, typename PropertyContainer>
     auto make_property_animation_builder(
-        types::sptr<PropertyContainer> scene_node)
+        htps::sptr<PropertyContainer> scene_node)
     {
         return make_property_animation_builder<PropertyTag, PropertyContainer>(
             scene_node.get());

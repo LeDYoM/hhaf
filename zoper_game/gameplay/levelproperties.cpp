@@ -30,7 +30,7 @@ void LevelProperties::configure(
                             "m_sceneNodeComponent already contains a value");
 
     game_mode_             = gameMode;
-    scene_timer_component_ = std::move(scene_timer_component);
+    scene_timer_component_ = htps::move(scene_timer_component);
 
     LogAsserter::log_assert(level_timer_ == nullptr,
                             "LevelProperties already has a timer!");

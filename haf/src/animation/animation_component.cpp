@@ -21,7 +21,7 @@ AnimationComponent::~AnimationComponent() = default;
 
 void AnimationComponent::addAnimation(uptr<Animation> nanimation)
 {
-    p_->animations_.emplace_back(std::move(nanimation));
+    p_->animations_.emplace_back(htps::move(nanimation));
 }
 
 void AnimationComponent::update()

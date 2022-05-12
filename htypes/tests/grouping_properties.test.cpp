@@ -1,7 +1,7 @@
 #include "catch.hpp"
 
 #include <htypes/include/types.hpp>
-#include <htypes/include/grouping_property.hpp>
+#include <htypes/include/property_group.hpp>
 #include <htypes/include/str.hpp>
 
 #include <type_traits>

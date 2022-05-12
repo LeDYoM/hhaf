@@ -138,7 +138,7 @@ void HighScoreTextController::addEditAnimation(const size_type line_index)
                 .continuous();
 
             animation_component_->addAnimation(
-                std::move(property_animation_builder));
+                htps::move(property_animation_builder));
         });
 }
 

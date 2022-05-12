@@ -1,3 +1,4 @@
+HTPS_PRAGMA_ONCE
 #ifndef HTYPES_LOCKABLE_VECTOR_CONTAINER_INCLUDE_HPP
 #define HTYPES_LOCKABLE_VECTOR_CONTAINER_INCLUDE_HPP
 
@@ -42,7 +43,7 @@ public:
      */
     constexpr void push_back(T&& element)
     {
-        addingCache_.push_back(std::move(element));
+        addingCache_.push_back(htps::move(element));
     }
 
     /**
@@ -54,7 +55,7 @@ public:
     template <typename... Args>
     constexpr void emplace_back(Args&&... args)
     {
-        addingCache_.emplace_back(std::forward<Args>(args)...);
+        addingCache_.emplace_back(htps::forward<Args>(args)...);
     }
 
     /**
@@ -72,7 +73,7 @@ public:
      */
     constexpr void erase_value(T&& element)
     {
-        remove_cache_.push_back(std::move(element));
+        remove_cache_.push_back(htps::move(element));
     }
 
     /**

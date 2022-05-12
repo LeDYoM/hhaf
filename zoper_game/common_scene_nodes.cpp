@@ -7,8 +7,7 @@
 #include <haf/include/scene/scene_node.hpp>
 #include <haf/include/render/renderizables.hpp>
 
-using namespace haf;
-using namespace haf::types;
+using namespace htps;
 using namespace haf::scene;
 using namespace haf::render;
 

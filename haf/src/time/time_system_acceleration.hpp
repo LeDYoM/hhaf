@@ -1,3 +1,4 @@
+HTPS_PRAGMA_ONCE
 #ifndef HAF_SYSTEM_TIMESYSTEM_ACCELERATION_INCLUDE_HPP
 #define HAF_SYSTEM_TIMESYSTEM_ACCELERATION_INCLUDE_HPP
 
@@ -35,11 +36,11 @@ public:
     {
         if (use_acceleration)
         {
-            return std::move(time_point * acceleration_);
+            return htps::move(time_point * acceleration_);
         }
         else
         {
-            return std::move(time_point);
+            return htps::move(time_point);
         }
     }
 
@@ -60,7 +61,7 @@ public:
     constexpr time::TimePoint&& accelerate(
         time::TimePoint&& time_point) const noexcept
     {
-        return std::move(time_point);
+        return htps::move(time_point);
     }
 };
 

@@ -181,7 +181,7 @@ TEST_CASE("BoardManager control with actuator", "[board_manager]")
         {
             auto tile = msptr<ITile>();
             CHECK(tile->value() == 0);
-            board_manager_component.setTile(vector2dst{x, y}, std::move(tile));
+            board_manager_component.setTile(vector2dst{x, y}, htps::move(tile));
         }
     }
 

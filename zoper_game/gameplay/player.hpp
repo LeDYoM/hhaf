@@ -4,7 +4,7 @@
 #include "gamebasetile.hpp"
 #include "direction.hpp"
 
-#include <haf/include/types/basic_types.hpp>
+#include <htypes/include/types.hpp>
 #include <haf/include/animation/animation_component.hpp>
 
 namespace zoper
@@ -18,8 +18,8 @@ public:
     using BoardTileData     = BaseClass::BoardTileData;
     using BoardPositionType = BaseClass::BoardPositionType;
 
-    Player(haf::types::rptr<haf::scene::SceneNode> parent,
-           haf::types::str name);
+    Player(htps::rptr<haf::scene::SceneNode> parent,
+           htps::str name);
     ~Player() override;
 
     htps::PropertyState<BoardPositionType> player_board_position;
@@ -43,7 +43,7 @@ private:
     htps::size_type scalator_;
     htps::size_type move_out_;
     void launchAnimationBack(haf::SceneCoordinates const& toWhere);
-    haf::types::sptr<haf::anim::AnimationComponent> animation_component_;
+    htps::sptr<haf::anim::AnimationComponent> animation_component_;
 };
 }  // namespace zoper
 

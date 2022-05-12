@@ -145,7 +145,7 @@ void SimulationSystem::setSimulationActions(
 void SimulationSystem::setSimulateRandomDataBuffer(
     SimulateRandomDataBuffer simulated_data_buffer)
 {
-    priv_->setSimulateRandomDataBuffer(std::move(simulated_data_buffer));
+    priv_->setSimulateRandomDataBuffer(htps::move(simulated_data_buffer));
 }
 
 void SimulationSystem::updateSimulationInput()
@@ -213,7 +213,7 @@ void SimulationSystem::updateSimulationOutput()
                 SimulationActionType::KeyPressed,
                 (current_time_point - priv_->next_last_checked_point_),
                 pressedKey};
-            priv_->addSimulationAction(std::move(simulation_action));
+            priv_->addSimulationAction(htps::move(simulation_action));
         }
 
         for (const auto& releasedKey : input_system.releasedKeys())
@@ -222,7 +222,7 @@ void SimulationSystem::updateSimulationOutput()
                 SimulationActionType::KeyReleased,
                 (current_time_point - priv_->next_last_checked_point_),
                 releasedKey};
-            priv_->addSimulationAction(std::move(simulation_action));
+            priv_->addSimulationAction(htps::move(simulation_action));
         }
 
         // Update the time of the last update.

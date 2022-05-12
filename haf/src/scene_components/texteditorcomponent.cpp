@@ -41,7 +41,7 @@ void TextEditorComponent::onKeyPressed(const input::Key& key)
             {
                 str new_text{text_prop.get<Text>()};
                 new_text.push_back(c_ascii);
-                text_prop.set<Text>(std::move(new_text));
+                text_prop.set<Text>(htps::move(new_text));
             }
         }
         else if (key == Key::BackSpace && !text_prop.get<Text>().empty())

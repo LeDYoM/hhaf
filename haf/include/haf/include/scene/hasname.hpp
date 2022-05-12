@@ -1,3 +1,4 @@
+HTPS_PRAGMA_ONCE
 #ifndef HAF_SCENE_HASNAME_HPP
 #define HAF_SCENE_HASNAME_HPP
 
@@ -10,7 +11,7 @@ class HAF_API HasName
 {
 public:
     constexpr HasName(htps::str const& name) : name_{name} {}
-    constexpr HasName(htps::str&& name) noexcept : name_{std::move(name)} {}
+    constexpr HasName(htps::str&& name) noexcept : name_{htps::move(name)} {}
     constexpr HasName(HasName&& other) noexcept = default;
     constexpr HasName(HasName const& other)     = default;
     constexpr HasName& operator=(HasName&& other) noexcept = default;

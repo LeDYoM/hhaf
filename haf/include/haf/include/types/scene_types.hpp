@@ -1,11 +1,11 @@
-#ifdef USE_PRAGMA_ONCE
-#pragma once
-#endif
-
+HTPS_PRAGMA_ONCE
 #ifndef HAF_TYPES_SCENE_TYPES_INCLUDE_HPP
 #define HAF_TYPES_SCENE_TYPES_INCLUDE_HPP
 
-#include <haf/include/types/basic_types.hpp>
+#include <htypes/include/types.hpp>
+#include <htypes/include/vector2d.hpp>
+#include <htypes/include/rect.hpp>
+#include <haf/include/types/scene_types.hpp>
 
 namespace haf
 {

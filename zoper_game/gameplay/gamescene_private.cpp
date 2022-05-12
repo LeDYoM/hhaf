@@ -48,6 +48,6 @@ void GameScene::GameScenePrivate::createScoreIncrementPoints(
     pointsToScoreSceneNode->prop<Position>() = EndPositionPointsToScore;
 
     scene_animation_component_->addAnimation(
-        std::move(property_animation_builder));
+        htps::move(property_animation_builder));
 }
 }  // namespace zoper

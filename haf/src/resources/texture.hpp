@@ -1,3 +1,4 @@
+HTPS_PRAGMA_ONCE
 #ifndef HAF_SCENE_TEXTURE_INCLUDE_HPP
 #define HAF_SCENE_TEXTURE_INCLUDE_HPP
 
@@ -15,7 +16,7 @@ namespace haf::res
 class Texture final : public ITexture
 {
 public:
-    Texture(backend::ITexture* texture);
+    Texture(backend::ITexture const* texture);
     ~Texture();
 
     htps::vector2du32 size() const override;
@@ -23,7 +24,7 @@ public:
     backend::ITexture const* backEndTexture() const noexcept;
 
 private:
-    backend::ITexture* priv_;
+    backend::ITexture const* priv_;
 };
 
 }  // namespace haf::res

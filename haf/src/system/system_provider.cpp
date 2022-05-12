@@ -2,7 +2,7 @@
 #include "system_provider_configuration.hpp"
 #include "init_system_options.hpp"
 
-#include <backend/include/backendfactory.hpp>
+#include <backend/include/backend_factory.hpp>
 #include <backend/include/backend_creator.hpp>
 #include "debug_utils/debug_system.hpp"
 #include "filesystem/file_system.hpp"
@@ -73,7 +73,7 @@ struct SystemProvider::SystemProviderPrivate final
         if (!haf_configuration_file_.empty())
         {
             system_provdier_configuration_.loadConfiguration(
-                std::move(sub_system_viewer), haf_configuration_file_);
+                htps::move(sub_system_viewer), haf_configuration_file_);
         }
     }
 };

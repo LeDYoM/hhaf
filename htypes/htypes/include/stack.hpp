@@ -1,3 +1,4 @@
+HTPS_PRAGMA_ONCE
 #ifndef HTYPES_STACK_INCLUDE_HPP
 #define HTYPES_STACK_INCLUDE_HPP
 
@@ -36,14 +37,14 @@ public:
     template <typename... Args>
     constexpr void emplace_back(Args&&... args)
     {
-        data_.emplace_back(std::forward<Args>(args)...);
+        data_.emplace_back(htps::forward<Args>(args)...);
     }
 
     constexpr void shrink_to_fit() { data_.shrink_to_fit(); }
 
     constexpr void push_back(const T& value) { data_.push_back(value); }
 
-    constexpr void push_back(T&& value) { data_.push_back(std::move(value)); }
+    constexpr void push_back(T&& value) { data_.push_back(htps::move(value)); }
 
     constexpr void pop_back() noexcept { data_.pop_back(); }
 

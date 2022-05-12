@@ -1,3 +1,4 @@
+HTPS_PRAGMA_ONCE
 #ifndef HAF_SCENE_ITEXTURE_INTERFACE_INCLUDE_HPP
 #define HAF_SCENE_ITEXTURE_INTERFACE_INCLUDE_HPP
 
@@ -9,7 +10,7 @@ namespace haf::res
 class ITexture
 {
 protected:
-    ~ITexture() {}
+    ~ITexture() = default;
 public:
     virtual htps::vector2du32 size() const = 0;
 };

@@ -8,7 +8,7 @@ namespace haf::scene
 {
 TransformableSceneNode::TransformableSceneNode(htps::rptr<SceneNode> parent,
                                                htps::str name) :
-    SceneNode{std::move(parent), std::move(name)},
+    SceneNode{htps::move(parent), htps::move(name)},
     Transformation(),
     local_transform_{},
     global_transform_{},
@@ -107,7 +107,7 @@ void TransformableSceneNode::updateGlobalTransformation(
 }
 
 void TransformableSceneNode::reserveExtraTransformations(
-    types::size_type const minimum_size)
+    size_type const minimum_size)
 {
     extra_transformations_.reserve(minimum_size);
 }

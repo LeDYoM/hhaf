@@ -26,7 +26,7 @@ void SystemController::init(
     (void)(host_connector);
     LogAsserter::log_assert(
         iapp != nullptr, "Cannot create a SystemProvider with a nullptr app");
-    SystemProvider::init(std::move(iapp), backend_factory, argc, argv);
+    SystemProvider::init(htps::move(iapp), backend_factory, argc, argv);
 }
 
 void SystemController::terminate()

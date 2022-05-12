@@ -19,8 +19,8 @@ GameSceneStateManager::GameSceneStateManager(
     sptr<PauseSceneNode> pause_scene_node,
     sptr<GameOverSceneNode> game_over_scene_node) :
     scene_timer_component_{scene_timer_component},
-    pause_node_{std::move(pause_scene_node)},
-    game_over_scene_node_{std::move(game_over_scene_node)}
+    pause_node_{htps::move(pause_scene_node)},
+    game_over_scene_node_{htps::move(game_over_scene_node)}
 {}
 
 void GameSceneStateManager::onEnterState(GameSceneStates const& state)

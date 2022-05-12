@@ -10,7 +10,7 @@ using namespace haf::scene;
 namespace haf::render
 {
 Renderizables::Renderizables(rptr<TransformableSceneNode> scene_node) noexcept :
-    scene_node_{std::move(scene_node)}
+    scene_node_{htps::move(scene_node)}
 {}
 
 sptr<Renderizable> Renderizables::createRenderizable(
@@ -51,12 +51,12 @@ void Renderizables::clearRenderizables()
 void Renderizables::for_each_node(
     function<void(const sptr<Renderizable>&)> action) const
 {
-    render_nodes_.cfor_each(std::move(action));
+    render_nodes_.cfor_each(htps::move(action));
 }
 
 void Renderizables::addRenderizable(sptr<Renderizable> newElement)
 {
-    render_nodes_.push_back(std::move(newElement));
+    render_nodes_.push_back(htps::move(newElement));
 }
 
 sptr<Renderizable> const& Renderizables::operator[](
@@ -75,7 +75,7 @@ bool Renderizables::empty() const noexcept
     return render_nodes_.empty();
 }
 
-types::rptr<scene::TransformableSceneNode const> Renderizables::sceneNode()
+rptr<scene::TransformableSceneNode const> Renderizables::sceneNode()
     const noexcept
 {
     return scene_node_;

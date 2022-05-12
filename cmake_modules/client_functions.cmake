@@ -32,7 +32,7 @@ function(build_client_library)
       COMMAND ${CMAKE_COMMAND} -E echo "Post build command. Copy directory"
       COMMAND ${CMAKE_COMMAND} -E echo "Copy from ${CL_BUILD_DATA_SOURCE}"
       COMMAND ${CMAKE_COMMAND} -E echo "to $<TARGET_FILE_DIR:${CURRENT_TARGET}>/${CL_BUILD_DATA_DEST}"
-    
+
       COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:${CURRENT_TARGET}>/${CL_BUILD_DATA_DEST}"
       COMMAND ${CMAKE_COMMAND} -E copy_directory ${CL_BUILD_DATA_SOURCE}
               "$<TARGET_FILE_DIR:${CURRENT_TARGET}>/${CL_BUILD_DATA_DEST}")

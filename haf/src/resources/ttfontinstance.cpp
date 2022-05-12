@@ -40,7 +40,7 @@ f32 TTFontInstance::getKerning(const u32 first, const u32 second) const
     return parent_instance_.getKerning(first, second, character_size_);
 }
 
-sptr<ITexture> TTFontInstance::getTexture() const
+sptr<ITexture> TTFontInstance::getTexture()
 {
     return std::dynamic_pointer_cast<ITexture>(
         parent_instance_.getTexture(character_size_));

@@ -1,7 +1,10 @@
+HTPS_PRAGMA_ONCE
 #ifndef HAF_RESOURCEMANAGER_CONFIG_LOADER_INCLUDE_HPP
 #define HAF_RESOURCEMANAGER_CONFIG_LOADER_INCLUDE_HPP
 
+#include <htypes/include/types.hpp>
 #include "resources_config_data.hpp"
+#include "resource_loaders/iresource_loader.hpp"
 #include <haf/include/resources/iresource_configurator.hpp>
 
 namespace haf::sys
@@ -16,11 +19,11 @@ class ResourceManagerConfigLoader final
 {
 public:
     res::SetResourceConfigFileResult setResourceConfigFile(
-        types::str const& config_file_name,
+        htps::str const& config_file_name,
         sys::SubSystemViewer sub_system_viewer);
-    bool loadSection(types::str const& section_name,
-                     sys::ResourceManager& resource_manager);
-    void setResourcesDirectory(types::str const& directory);
+    bool loadSection(htps::str const& section_name,
+                     IResourceLoader& resource_loader);
+    void setResourcesDirectory(htps::str const& directory);
 
     htps::str const& configDirectory() const noexcept
     {

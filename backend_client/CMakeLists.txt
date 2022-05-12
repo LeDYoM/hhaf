@@ -9,15 +9,16 @@ project(
 set (CURRENT_TARGET ${PROJECT_NAME})
 
 set(include_dir backend_client/include)
-set(headers 
+set(headers
   ${include_dir}/autoregisterfactory.hpp
   ${include_dir}/backend_client_exports.hpp
+  ${include_dir}/backend_exporter.hpp
   ${include_dir}/default_backend_manager.hpp
   ${include_dir}/default_factory.hpp
   ${include_dir}/ibackendmanager.hpp
   )
 
-set(sources 
+set(sources
     src/default_backend_manager.cpp
     src/default_functions.cpp
     )

@@ -8,7 +8,7 @@ namespace haf::scene
 
 RenderizablesSceneNode::RenderizablesSceneNode(rptr<SceneNode> parent,
                                                str name) :
-    SceneNodeBaseClass{parent, std::move(name)}, render::Renderizables{this}
+    SceneNodeBaseClass{parent, htps::move(name)}, render::Renderizables{this}
 {}
 
 void RenderizablesSceneNode::postUpdate(SceneRenderContext& sceneRenderContext)

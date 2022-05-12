@@ -12,14 +12,13 @@
 namespace zoper
 {
 using namespace htps;
-using namespace haf;
 using namespace haf::scene;
 using namespace haf::render;
 using namespace haf::time;
 using namespace haf::anim;
 
-Player::Player(types::rptr<SceneNode> parent, types::str name) :
-    BaseClass{std::move(parent), std::move(name)},
+Player::Player(rptr<SceneNode> parent, str name) :
+    BaseClass{htps::move(parent), htps::move(name)},
     player_board_position{},
     currentDirection{Direction{Direction::DirectionData::Up}}
 {
@@ -30,10 +29,10 @@ Player::Player(types::rptr<SceneNode> parent, types::str name) :
         .create();
 
     reserveExtraTransformations(1U);
-//    move_in_  = addTransformation();
-    rotator_  = addTransformation();
-//    scalator_ = addTransformation();
-//    move_out_ = addTransformation();
+    //    move_in_  = addTransformation();
+    rotator_ = addTransformation();
+    //    scalator_ = addTransformation();
+    //    move_out_ = addTransformation();
 }
 
 Player::~Player() = default;
@@ -72,7 +71,7 @@ void Player::tileMoved(BoardPositionType const& source)
     DisplayLog::info("Player scene position: ", prop<Position>().get());
 
     player_board_position = boardPosition();
-    currentDirection = fromPositions(source, boardPosition());
+    currentDirection      = fromPositions(source, boardPosition());
 }
 
 void Player::launchPlayerAnimation(vector2df const& toWhere)
@@ -89,7 +88,7 @@ void Player::launchPlayerAnimation(vector2df const& toWhere)
         .actionWhenFinished([this, currentPosition = prop<Position>()()]() {
             launchAnimationBack(currentPosition);
         });
-    animation_component_->addAnimation(std::move(property_animation_builder));
+    animation_component_->addAnimation(htps::move(property_animation_builder));
 }
 
 void Player::launchAnimationBack(SceneCoordinates const& toWhere)
@@ -104,7 +103,7 @@ void Player::launchAnimationBack(SceneCoordinates const& toWhere)
     property_animation_builder.startValueIsCurrent().endValue(toWhere).duration(
         TimePoint_as_miliseconds(
             gameplay::constants::MillisAnimationLaunchPlayerStep));
-    animation_component_->addAnimation(std::move(property_animation_builder));
+    animation_component_->addAnimation(htps::move(property_animation_builder));
 }
 
 void Player::tileAdded()

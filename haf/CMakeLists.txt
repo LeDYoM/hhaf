@@ -72,21 +72,27 @@ set(sources
   ${src_dir}/render/renderizables.cpp
 
   # Resources
-  ${src_dir}/resources/bmpfont_private.cpp
-  ${src_dir}/resources/bmpfont_private.hpp
-  ${src_dir}/resources/bmpfont.cpp
-  ${src_dir}/resources/bmpfont.hpp
-  ${src_dir}/resources/bmpfontfactory.cpp
-  ${src_dir}/resources/bmpfontfactory.hpp
+  # Default resources
+  ${src_dir}/resources/resource_loaders/default_resources/default_bmp_font_private.cpp
+  ${src_dir}/resources/resource_loaders/default_resources/default_bmp_font_private.hpp
+  ${src_dir}/resources/resource_loaders/default_resources/default_bmp_font.cpp
+  ${src_dir}/resources/resource_loaders/default_resources/default_bmp_font.hpp
+  ${src_dir}/resources/resource_loaders/iresource_loader.hpp
+
+  ${src_dir}/resources/bmp_font.cpp
+  ${src_dir}/resources/bmp_font.hpp
   ${src_dir}/resources/character_render_data.hpp
+  ${src_dir}/resources/default_bmp_font_factory.cpp
+  ${src_dir}/resources/default_bmp_font_factory.hpp
   ${src_dir}/resources/font_utils.cpp
   ${src_dir}/resources/font_utils.hpp
+  ${src_dir}/resources/resource_data_description_names.hpp
   ${src_dir}/resources/resource_manager_config_loader.cpp
   ${src_dir}/resources/resource_manager_config_loader.hpp
   ${src_dir}/resources/resource_manager_subsystems_view.cpp
+  ${src_dir}/resources/resource_manager_private.hpp
   ${src_dir}/resources/resource_manager.cpp
   ${src_dir}/resources/resource_manager.hpp
-  ${src_dir}/resources/resourcemanager_private.hpp
   ${src_dir}/resources/resources_config_data_element.cpp
   ${src_dir}/resources/resources_config_data_element.hpp
   ${src_dir}/resources/resources_config_data.cpp
@@ -174,18 +180,15 @@ set(sources
   ${src_dir}/time/time_system_acceleration.hpp
   ${src_dir}/time/time_system_subsystems_view.cpp
   ${src_dir}/time/time_system.cpp
-  ${src_dir}/time/time_system.hpp 
+  ${src_dir}/time/time_system.hpp
   ${src_dir}/time/timer.cpp
   ${src_dir}/time/timer_component.cpp
   ${src_dir}/time/timer_connector.cpp
 
-  # Types
-  ${src_dir}/types/str.cpp
-
   # Utils
   ${src_dir}/utils/compile_time_constants.hpp
   ${src_dir}/utils/type_data.cpp
-  
+
   # Window
   ${src_dir}/window/fps_counter.cpp
   ${src_dir}/window/fps_counter.hpp
@@ -259,7 +262,7 @@ set(headers
   ${inc_dir}/render/vertex.hpp
 
   # Resources
-  ${inc_dir}/resources/ibmpfont.hpp
+  ${inc_dir}/resources/ibmp_font.hpp
   ${inc_dir}/resources/idefault_resources_retriever.hpp
   ${inc_dir}/resources/ifont.hpp
   ${inc_dir}/resources/iresource_configurator.hpp
@@ -267,6 +270,7 @@ set(headers
   ${inc_dir}/resources/ishader.hpp
   ${inc_dir}/resources/itexture.hpp
   ${inc_dir}/resources/ittfont.hpp
+  ${inc_dir}/resources/resource_descriptor.hpp
 
   # Scene
   ${inc_dir}/scene/color_imp.hpp
@@ -339,11 +343,7 @@ set(headers
   ${inc_dir}/time/timer.hpp
 
   # Types
-  ${inc_dir}/types/basic_types.hpp
-  ${inc_dir}/types/property_group.hpp
   ${inc_dir}/types/scene_types.hpp
-  ${inc_dir}/types/str.hpp
-  ${inc_dir}/types/vector.hpp
 
   # Utils
   ${inc_dir}/utils/object_factory.hpp
@@ -358,10 +358,9 @@ set(HAF_PUBLIC_INCLUDE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/)
 
 set(HAF_PRIVATE_INCLUDE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
-build_lib_component(EXPORT_ALL HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}/include" 
+build_lib_component(EXPORT_ALL HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}/include"
   SOURCES ${sources} HEADERS ${headers})
 
-#define compile time constants
 target_compile_definitions(${CURRENT_TARGET} PRIVATE HAF_ALLOW_ACCELERATION)
 target_compile_definitions(${CURRENT_TARGET} PRIVATE HAF_SHOW_FPS)
 
@@ -375,8 +374,6 @@ target_link_libraries(${CURRENT_TARGET} PUBLIC log_and_types)
 # TODO: Fix it
 target_include_directories(${CURRENT_TARGET}
                            PUBLIC ${HAF_PRIVATE_INCLUDE_DIRECTORY})
-
-include (cmake/haf_functions.cmake)
 
 # TODO: Investigate some day if(MSVC) set_target_properties(${CURRENT_TARGET}
 # PROPERTIES LINK_FLAGS "${LINK_FLAGS} /NODEFAULTLIB") endif()

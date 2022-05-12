@@ -1,3 +1,4 @@
+HTPS_PRAGMA_ONCE
 #ifndef MTPS_PROPERTIES_INCLUDE_HPP
 #define MTPS_PROPERTIES_INCLUDE_HPP
 
@@ -97,7 +98,7 @@ public:
 
     bool set(T&& v) noexcept(std::is_nothrow_move_assignable_v<T>) override
     {
-        value_ = std::move(v);
+        value_ = htps::move(v);
         return true;
     }
 

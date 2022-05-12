@@ -9,9 +9,9 @@ TEST_CASE("vector::vector", "[vector]")
 {
     vector<u32> m;
 
-    CHECK(m.size() == 0);
+    CHECK(m.size() == 0U);
     CHECK(m.empty());
-    CHECK(m.capacity() == 0);
+    CHECK(m.capacity() == 0U);
 
     SECTION("Check errorneous operations")
     {
@@ -99,7 +99,7 @@ TEST_CASE("vector::vector(std::initialization_list)", "[vector]")
         CHECK(m.size() == m2.size());
         CHECK(m.capacity() == m2.capacity());
 
-        auto m3(std::move(m));
+        auto m3(htps::move(m));
         CHECK(m.empty());
         CHECK(m2 == m3);
     }
@@ -235,14 +235,14 @@ TEST_CASE("vector of shared pointers::move", "[vector]")
     vector_shared_pointers<A> test_vector1(init_vector_shared_pointers_A());
     CHECK(test_vector1.size() == 10U);
 
-    vector_shared_pointers<A> test_vector2 = std::move(test_vector1);
+    vector_shared_pointers<A> test_vector2 = htps::move(test_vector1);
     CHECK(test_vector1.empty());
     CHECK(test_vector1.capacity() == 0U);
 
     CHECK(test_vector2.size() == 10U);
 
     vector_shared_pointers<A> test_vector3;
-    test_vector3 = std::move(test_vector2);
+    test_vector3 = htps::move(test_vector2);
     CHECK(test_vector2.empty());
     CHECK(test_vector2.capacity() == 0U);
 
@@ -254,14 +254,14 @@ TEST_CASE("vector of shared pointers::add move add", "[vector]")
     vector_shared_pointers<A> test_vector1(init_vector_shared_pointers_A());
     CHECK(test_vector1.size() == 10U);
 
-    vector_shared_pointers<A> test_vector2 = std::move(test_vector1);
+    vector_shared_pointers<A> test_vector2 = htps::move(test_vector1);
     CHECK(test_vector1.empty());
     CHECK(test_vector1.capacity() == 0U);
 
     CHECK(test_vector2.size() == 10U);
 
     vector_shared_pointers<A> test_vector3;
-    test_vector3 = std::move(test_vector2);
+    test_vector3 = htps::move(test_vector2);
     CHECK(test_vector2.empty());
     CHECK(test_vector2.capacity() == 0U);
 
@@ -328,7 +328,7 @@ TEST_CASE("vector of shared pointers::remove", "[vector]")
     {
         sptr<A> temp = msptr<A>(A{42});
         wptr<A> weak = temp;
-        test_vector1.push_back(std::move(temp));
+        test_vector1.push_back(htps::move(temp));
         CHECK(test_vector1.size() == 9U);
         CHECK_FALSE(weak.lock() == nullptr);
         test_vector1.pop_back();
@@ -340,7 +340,7 @@ TEST_CASE("vector of shared pointers::remove", "[vector]")
     {
         sptr<A> temp = msptr<A>(A{42});
         wptr<A> weak = temp;
-        test_vector1.push_back(std::move(temp));
+        test_vector1.push_back(htps::move(temp));
         CHECK(test_vector1.size() == 9U);
         CHECK_FALSE(weak.lock() == nullptr);
         test_vector1.erase_if(
@@ -368,7 +368,7 @@ TEST_CASE("vector of shared pointers::clear", "[vector]")
 
     sptr<A> temp = msptr<A>(A{42});
     wptr<A> weak = temp;
-    test_vector1.push_back(std::move(temp));
+    test_vector1.push_back(htps::move(temp));
     CHECK_FALSE(weak.lock() == nullptr);
     test_vector1.clear();
     CHECK(weak.lock() == nullptr);
@@ -431,6 +431,8 @@ TEST_CASE("vector::Unique ptr", "[vector]")
 
     CHECK(test_vector1.capacity() == 2U);
     CHECK(test_vector1.capacity() == 2U);
+
+    CHECK((*test_vector1[1U]) == (*test_vector2[1U]));
 
     test_vector1.clear();
     test_vector2.clear();
@@ -517,7 +519,7 @@ TEST_CASE("vector::Movable only objects", "[vector]")
     CHECK(5 == v[0U].get());
     CHECK(4 == v[1U].get());
 
-    vector<MoveOnly> v2 = std::move(v);
+    vector<MoveOnly> v2 = htps::move(v);
     CHECK(5 == v2[0U].get());
     CHECK(4 == v2[1U].get());
 

@@ -1,7 +1,8 @@
+HTPS_PRAGMA_ONCE
 #ifndef HAF_ANIMATION_PROPERTY_ANIMATION_BUILDER_INCLUDE_HPP
 #define HAF_ANIMATION_PROPERTY_ANIMATION_BUILDER_INCLUDE_HPP
 
-#include <haf/include/types/basic_types.hpp>
+#include <htypes/include/types.hpp>
 #include <haf/include/animation/property_animation_data.hpp>
 
 namespace haf::anim
@@ -23,7 +24,7 @@ public:
      */
     explicit PropertyAnimationBuilder(
         PropertyAnimationData<PropertyTag, SceneNodeT> data) :
-        data_{std::move(data)}
+        data_{htps::move(data)}
     {}
 
     PropertyAnimationBuilder& startValue(
@@ -99,7 +100,7 @@ public:
 
     PropertyAnimationData<PropertyTag, SceneNodeT>&& extract() noexcept
     {
-        return std::move(data_);
+        return htps::move(data_);
     }
 
 private:

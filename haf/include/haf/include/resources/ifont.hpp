@@ -1,3 +1,4 @@
+HTPS_PRAGMA_ONCE
 #ifndef HAF_SCENE_FONT_INTERFACE_INCLUDE_HPP
 #define HAF_SCENE_FONT_INTERFACE_INCLUDE_HPP
 
@@ -15,6 +16,7 @@ class IFont
 {
 protected:
     ~IFont() = default;
+
 public:
     virtual htps::Rectf32 getBounds(const htps::u32 codePoint) const        = 0;
     virtual htps::Rectf32 getTextureBounds(const htps::u32 codePoint) const = 0;
@@ -22,7 +24,7 @@ public:
     virtual htps::f32 getLineSpacing() const                                = 0;
     virtual htps::f32 getKerning(const htps::u32 first,
                                  const htps::u32 second) const              = 0;
-    virtual htps::sptr<ITexture> getTexture() const                         = 0;
+    virtual htps::sptr<ITexture> getTexture()                               = 0;
 };
 }  // namespace haf::res
 

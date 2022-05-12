@@ -159,19 +159,10 @@ function(build_lib_ext)
 
 endfunction()
 
-# Function to build different components from the project in an unified way.
-function(build_concrete_backend)
-
-  cmake_parse_arguments(LC_BUILD "" "" "SOURCES" ${ARGN})
-
-  add_library(${CURRENT_TARGET} SHARED ${SOURCES})
-  target_link_libraries(${CURRENT_TARGET} PRIVATE log_and_types backend_dev backend_client)
-endfunction()
-
 function(build_docs module_list)
   set(DOXYGEN_GENERATE_HTML YES)
   set(DOXYGEN_EXCLUDE build;tests)
-  set(DOXYGEN_EXCLUDE_PATTERNS 
+  set(DOXYGEN_EXCLUDE_PATTERNS
     */.git/*
     */build/*
   */tests/*)

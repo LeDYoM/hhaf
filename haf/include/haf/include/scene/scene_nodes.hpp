@@ -1,3 +1,4 @@
+HTPS_PRAGMA_ONCE
 #ifndef HAF_SCENE_SCENENODES_INCLUDE_HPP
 #define HAF_SCENE_SCENENODES_INCLUDE_HPP
 
@@ -30,7 +31,7 @@ public:
     template <typename T = SceneNode>
     auto createSceneNode(htps::str name)
     {
-        auto result{htps::msptr<T>(scene_node_, std::move(name))};
+        auto result{htps::msptr<T>(scene_node_, htps::move(name))};
         onNodeCreated(result);
         addSceneNode(result);
         return result;

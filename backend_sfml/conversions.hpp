@@ -4,8 +4,8 @@
 #include <backend_dev/include/itexture.hpp>
 #include <backend_dev/include/ishader.hpp>
 #include <backend_dev/include/icamera.hpp>
-#include "texture.hpp"
-#include "shader.hpp"
+#include "sfml_texture.hpp"
+#include "sfml_shader.hpp"
 #include "camera.hpp"
 #include <SFML/Window.hpp>
 #include <SFML/System/String.hpp>
@@ -62,7 +62,7 @@ constexpr sf::Texture const* to_sf_type(ITexture const* texture) noexcept
 {
     if (texture != nullptr)
     {
-        if (auto const sf_texture{htps::d_cast<Texture const*>(texture)})
+        if (auto const sf_texture{htps::d_cast<SFMLTexture const*>(texture)})
         {
             return sf_texture->backEndTexture();
         }
@@ -74,7 +74,7 @@ constexpr sf::Shader const* to_sf_type(IShader const* const shader) noexcept
 {
     if (shader != nullptr)
     {
-        if (auto const sf_shader{htps::d_cast<Shader const*>(shader)})
+        if (auto const sf_shader{htps::d_cast<SFMLShader const*>(shader)})
         {
             return sf_shader->backEndShader();
         }

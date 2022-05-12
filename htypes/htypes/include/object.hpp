@@ -1,3 +1,4 @@
+HTPS_PRAGMA_ONCE
 #ifndef HTYPES_OBJECT_INCLUDE_HPP
 #define HTYPES_OBJECT_INCLUDE_HPP
 
@@ -40,26 +41,26 @@ public:
 
     inline Object(std::initializer_list<KeyValueStr> iListValues)
     {
-        set(std::move(iListValues));
+        set(htps::move(iListValues));
     }
 
     inline Object(std::initializer_list<KeyValueObject> iListObjects)
     {
-        set(std::move(iListObjects));
+        set(htps::move(iListObjects));
     }
 
     inline Object(std::initializer_list<KeyValueObject> iListObjects,
                   std::initializer_list<KeyValueStr> iListValues)
     {
-        set(std::move(iListObjects));
-        set(std::move(iListValues));
+        set(htps::move(iListObjects));
+        set(htps::move(iListValues));
     }
 
     inline Object(std::initializer_list<KeyValueStr> iListValues,
                   std::initializer_list<KeyValueObject> iListObjects)
     {
-        set(std::move(iListValues));
-        set(std::move(iListObjects));
+        set(htps::move(iListValues));
+        set(htps::move(iListObjects));
     }
 
     constexpr bool operator==(const Object& obj) const noexcept
@@ -380,17 +381,17 @@ public:
 
     bool set(str key, Object obj)
     {
-        return set({std::make_pair(std::move(key), std::move(obj))});
+        return set({std::make_pair(htps::move(key), htps::move(obj))});
     }
 
     bool set(str key, str value)
     {
-        return set({std::make_pair(std::move(key), std::move(value))});
+        return set({std::make_pair(htps::move(key), htps::move(value))});
     }
 
     bool set(str key, Value value)
     {
-        return set({std::make_pair(std::move(key), std::move(value))});
+        return set({std::make_pair(htps::move(key), htps::move(value))});
     }
 
     template <typename T,
@@ -401,36 +402,36 @@ public:
     {
         if constexpr (std::is_enum_v<TD>)
         {
-            return set(std::move(key),
+            return set(htps::move(key),
                        str::to_str(static_cast<std::underlying_type_t<TD>>(
-                           std::forward<T>(value))));
+                           htps::forward<T>(value))));
         }
         else if constexpr (std::is_floating_point_v<TD>)
         {
-            return set(std::move(key),
-                       str::to_str(static_cast<f64>(std::forward<T>(value))));
+            return set(htps::move(key),
+                       str::to_str(static_cast<f64>(htps::forward<T>(value))));
         }
         else if constexpr (std::is_signed_v<TD>)
         {
-            return set(std::move(key),
-                       str::to_str(static_cast<s64>(std::forward<T>(value))));
+            return set(htps::move(key),
+                       str::to_str(static_cast<s64>(htps::forward<T>(value))));
         }
         else
         {
-            return set(std::move(key),
-                       str::to_str(static_cast<u64>(std::forward<T>(value))));
+            return set(htps::move(key),
+                       str::to_str(static_cast<u64>(htps::forward<T>(value))));
         }
     }
 
     bool set(size_t index, str value)
     {
         return set({std::make_pair(str(arraySeparator) + str::to_str(index),
-                                   std::move(value))});
+                                   htps::move(value))});
     }
 
     bool set(size_t index, Object value)
     {
-        return set(str(arraySeparator) + str::to_str(index), std::move(value));
+        return set(str(arraySeparator) + str::to_str(index), htps::move(value));
     }
 
     template <typename T,
@@ -441,17 +442,17 @@ public:
         if constexpr (std::is_floating_point_v<TD>)
         {
             return set(index,
-                       str::to_str(static_cast<f64>(std::forward<T>(value))));
+                       str::to_str(static_cast<f64>(htps::forward<T>(value))));
         }
         else if constexpr (std::is_signed_v<TD>)
         {
             return set(index,
-                       str::to_str(static_cast<s64>(std::forward<T>(value))));
+                       str::to_str(static_cast<s64>(htps::forward<T>(value))));
         }
         else
         {
             return set(index,
-                       str::to_str(static_cast<u64>(std::forward<T>(value))));
+                       str::to_str(static_cast<u64>(htps::forward<T>(value))));
         }
     }
 
@@ -559,7 +560,7 @@ constexpr const Object& operator>>(const Object& obj, vector<T>& data)
             {
                 value.getObject() >> internal_data;
             }
-            data.push_back(std::move(internal_data));
+            data.push_back(htps::move(internal_data));
         }
     }
     return obj;

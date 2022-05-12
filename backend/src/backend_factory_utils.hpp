@@ -2,7 +2,7 @@
 #define HAF_BACKEND_BACKEND_FACTORY_UTILS_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
-#include <backend/include/backendregister.hpp>
+#include <backend/include/backend_register.hpp>
 
 namespace haf::backend
 {
@@ -10,7 +10,7 @@ template <typename FactoryType>
 bool fillFactory(htps::uptr<BackendRegister> const& backend_register,
                  FactoryType** factory_to_fill)
 {
-    if (auto factory(backend_register->getFactory<IFactoryOf<FactoryType>>());
+    if (auto factory{backend_register->getFactory<IFactoryOf<FactoryType>>()};
         factory != nullptr)
     {
         (*factory_to_fill) = factory->create();
@@ -24,7 +24,7 @@ bool fillFactories(htps::uptr<BackendRegister> const& backend_register,
                    FactoryType factory_to_fill,
                    FactoryTypes... factories_to_fill)
 {
-    bool result = fillFactory(backend_register, factory_to_fill);
+    bool result{fillFactory(backend_register, factory_to_fill)};
 
     if constexpr (sizeof...(FactoryTypes) > 0U)
     {

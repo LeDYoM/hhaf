@@ -36,7 +36,7 @@ public:
     htps::size_type size() const noexcept;
     HostedApplication& front();
     HostedApplication& back();
-    
+
     auto begin() const noexcept { return app_.begin(); }
 
     auto begin() noexcept { return app_.begin(); }

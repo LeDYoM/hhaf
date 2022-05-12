@@ -5,7 +5,7 @@ namespace haf::host
 {
 HostConnector::HostConnector(
     htps::uptr<HostConnectorImpl> host_connector_impl) :
-    host_connector_impl_{std::move(host_connector_impl)}
+    host_connector_impl_{htps::move(host_connector_impl)}
 {}
 
 HostConnector::~HostConnector() = default;

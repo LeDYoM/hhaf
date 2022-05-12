@@ -41,7 +41,7 @@ void BoardManager::initializeTileMatrix(htps::vector2dst const& size)
 BoardManager::BackgroundFunction BoardManager::setBackgroundFunction(
     BoardManager::BackgroundFunction background_function)
 {
-    return std::exchange(background_function_, std::move(background_function));
+    return std::exchange(background_function_, htps::move(background_function));
 }
 
 BoardManager::BackgroundData BoardManager::backgroundData(
@@ -253,6 +253,6 @@ str BoardManager::toStr()
 void BoardManager::_setTile(BoardPositionType const& position,
                             SITilePointer newTile)
 {
-    tiles_[position.x][position.y] = std::move(newTile);
+    tiles_[position.x][position.y] = htps::move(newTile);
 }
 }  // namespace haf::board

@@ -8,7 +8,7 @@ project(
 
 set(CURRENT_TARGET host)
 
-set(sources 
+set(sources
   src/app_loader.cpp
   src/app_loader.hpp
   src/app_state.hpp
@@ -20,6 +20,8 @@ set(sources
   src/host_export.hpp
   src/host_internal.cpp
   src/host_internal.hpp
+  src/host_log.cpp
+  src/host_log.hpp
   src/host.cpp
   src/host.hpp
   src/hosted_app_group.cpp

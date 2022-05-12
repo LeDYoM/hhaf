@@ -16,8 +16,8 @@ void RenderTarget::initialize()
     sf::RenderTarget::initialize();
 }
 
-void RenderTarget::drawDebugQuad([
-    [maybe_unused]] IRenderElement const* const irender_element)
+void RenderTarget::drawDebugQuad(
+    [[maybe_unused]] IRenderElement const* const irender_element)
 {
 #ifdef DRAW_DEBUG_QUAD
     auto const* const render_element{
@@ -38,7 +38,7 @@ void RenderTarget::drawDebugQuad([
 
 void RenderTarget::render(IRenderElement const* const render_element)
 {
-    renderImpl(static_cast<RenderElement const*const>(render_element));
+    renderImpl(static_cast<RenderElement const* const>(render_element));
 }
 
 void RenderTarget::render(IRenderElement const** render_element_begin,
@@ -54,9 +54,9 @@ void RenderTarget::render(IRenderElement const** render_element_begin,
 
 void RenderTarget::renderImpl(RenderElement const* render_element)
 {
-        render_element->render(*this);
+    render_element->render(*this);
 #ifdef DRAW_DEBUG_QUAD
-        drawDebugQuad(render_element);
+    drawDebugQuad(render_element);
 #endif
 }
 

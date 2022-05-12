@@ -1,3 +1,4 @@
+HTPS_PRAGMA_ONCE
 #ifndef HAF_TIME_TIME_POINT_INCLUDE_HPP
 #define HAF_TIME_TIME_POINT_INCLUDE_HPP
 
@@ -14,7 +15,7 @@ namespace haf::time
 class HAF_API TimePoint final
 {
 public:
-    using Rep = htps::u64;  //<! Type to internally represent the data.
+    using Rep = htps::u64;  //< Type to internally represent the data.
 
     constexpr TimePoint() noexcept : nanoseconds_{Rep{0U}} {}
 
@@ -23,7 +24,7 @@ public:
      * @param nanoseconds Data to initialize the time point
      */
     constexpr explicit TimePoint(Rep nanoseconds) noexcept :
-        nanoseconds_{std::move(nanoseconds)}
+        nanoseconds_{htps::move(nanoseconds)}
     {}
 
     /**
