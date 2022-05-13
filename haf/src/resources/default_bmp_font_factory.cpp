@@ -17,17 +17,4 @@ backend::IBMPFont* DefaultBMPFontFactory::loadFromRawMemory(
     return bmpfont_cache_.back().get();
 }
 
-vector<str> DefaultBMPFontFactory::textureFileNames(
-    sptr<DefaultBMPFont> font) const
-{
-    return font->textureFileNames();
-}
-
-void DefaultBMPFontFactory::setTexturePages(
-    sptr<DefaultBMPFont> font,
-    vector<backend::ITexture const*> const& texture_pages)
-{
-    font->setTexturePages(texture_pages);
-}
-
 }  // namespace haf::res

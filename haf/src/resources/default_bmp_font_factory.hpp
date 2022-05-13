@@ -17,12 +17,7 @@ class DefaultBMPFontFactory final : public backend::IBMPFontFactory
 {
 public:
     backend::IBMPFont* loadFromRawMemory(htps::RawMemory* raw_memory) override;
-    htps::vector<htps::str> textureFileNames(
-        htps::sptr<DefaultBMPFont> font) const;
-    void setTexturePages(
-        htps::sptr<DefaultBMPFont> font,
-        htps::vector<backend::ITexture const*> const& texture_pages);
-
+ 
 private:
     htps::vector<htps::sptr<DefaultBMPFont>> bmpfont_cache_;
 };
