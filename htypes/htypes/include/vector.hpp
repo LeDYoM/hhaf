@@ -1,4 +1,5 @@
 HTPS_PRAGMA_ONCE
+HTPS_PRAGMA_ONCE
 #ifndef HTYPES_VECTOR_INCLUDE_HPP
 #define HTYPES_VECTOR_INCLUDE_HPP
 
@@ -9,8 +10,8 @@ HTPS_PRAGMA_ONCE
 
 namespace htps
 {
-template <typename T>
-using vector = vector_base<T, AllocatorType<T>, GrowPolicyUnary>;
+template <typename T, typename Allocator = AllocatorType<T>, typename GrowPolicy = GrowPolicyUnary>
+using vector = vector_base<T, Allocator, GrowPolicy>;
 
 template <typename T>
 using vector_shared_pointers = vector<sptr<T>>;

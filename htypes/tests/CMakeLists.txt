@@ -18,10 +18,11 @@ set(SOURCE_TESTS
     properties
     propertystate
     rect
-    str
     str_literal
-    vector
+    str
     vector_view
+    vector
+    vector2d
 )
 
 add_test_executable(SOURCE_TESTS ${SOURCE_TESTS})
