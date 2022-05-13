@@ -33,7 +33,7 @@ public:
     htps::f32 getKerning(const htps::u32 first,
                          const htps::u32 second) const override;
     htps::sptr<ITexture> getTexture() override;
-    htps::vector<htps::str> textureFileNames() const override;
+    htps::vector<htps::pair<htps::str, htps::str>> texturesToLoad() const override;
     void setTexturePages(htps::vector<backend::ITexture const*> const&
                              texture_pages) override;
 

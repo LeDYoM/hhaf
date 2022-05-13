@@ -44,9 +44,9 @@ sptr<ITexture> BMPFont::getTexture()
         msptr<Texture>(ifont_->getTexture()));
 }
 
-vector<str> BMPFont::textureFileNames() const
+vector<pair<str,str>> BMPFont::texturesToLoad() const
 {
-    return ifont_->textureFileNames();
+    return ifont_->texturesToLoad();
 }
 
 void BMPFont::setTexturePages(

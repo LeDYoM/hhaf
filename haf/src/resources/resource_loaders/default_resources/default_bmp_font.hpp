@@ -30,7 +30,7 @@ public:
     backend::ITexture const* getTexture() override;
     const htps::vector2du32& size() const;
 
-    htps::vector<htps::str> textureFileNames() const;
+    htps::vector<htps::pair<htps::str, htps::str>> texturesToLoad() const;
     void setTexturePages(
         const htps::vector<backend::ITexture const*>& texture_pages);
 

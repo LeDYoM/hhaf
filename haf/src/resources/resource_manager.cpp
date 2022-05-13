@@ -84,7 +84,7 @@ bool ResourceManager::loadBmpFontTextures(htps::sptr<res::BMPFont> bmp_font,
     if (bmp_font)
     {
         DisplayLog::debug("Loading font textures");
-        const auto& texture_file_names{bmp_font->textureFileNames()};
+        const auto& texture_file_names{bmp_font->texturesToLoad()};
         DisplayLog::debug("Number of textures to load: ",
                           texture_file_names.size());
         vector<backend::ITexture const*> textures(texture_file_names.size());
@@ -96,17 +96,17 @@ bool ResourceManager::loadBmpFontTextures(htps::sptr<res::BMPFont> bmp_font,
             bmp_font.reset();
         }
 
-        for (auto&& file_name : texture_file_names)
+        for (auto&& file_name_and_resource_id : texture_file_names)
         {
-            auto const rid_for_resource{rid + "_" + file_name};
+            auto const& [file_name, resource_id] = file_name_and_resource_id;
             ResourceDescriptor resource_descriptor{
-                rid_for_resource, kResourceTexture,
+                resource_id, kResourceTexture,
                 config_loader_.configDirectory() + file_name};
             bool const texture_available{loadResource(resource_descriptor)};
 
             if (texture_available)
             {
-                sptr<res::ITexture> texture{getTexture(rid_for_resource)};
+                sptr<res::ITexture> texture{getTexture(resource_id)};
                 sptr<res::Texture> t{
                     texture != nullptr
                         ? std::dynamic_pointer_cast<res::Texture>(texture)

@@ -12,10 +12,12 @@ class IBMPFont : public IFont
 {
 protected:
     ~IBMPFont() = default;
+
 public:
-    virtual htps::vector<htps::str> textureFileNames() const = 0;
+    virtual htps::vector<htps::pair<htps::str, htps::str>> texturesToLoad()
+        const = 0;
     virtual void setTexturePages(
-            const htps::vector<ITexture const*>& texture_pages) = 0;
+        const htps::vector<ITexture const*>& texture_pages) = 0;
 };
 }  // namespace haf::backend
 

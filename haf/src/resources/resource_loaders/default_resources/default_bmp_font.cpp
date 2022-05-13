@@ -29,15 +29,15 @@ void DefaultBMPFont::loadFromMemory(htps::RawMemory* data)
     DisplayLog::info("Loading pages. Number of pages: ", p_->pagesData_.size());
 }
 
-vector<str> DefaultBMPFont::textureFileNames() const
+vector<pair<str, str>> DefaultBMPFont::texturesToLoad() const
 {
-    vector<str> texture_file_names(p_->pagesData_.size());
+    vector<pair<str,str>> textures_to_load(p_->pagesData_.size());
     for (const auto& page_data : p_->pagesData_)
     {
-        texture_file_names.emplace_back(page_data.file);
+        textures_to_load.emplace_back(page_data.file, page_data.file);
     }
 
-    return texture_file_names;
+    return textures_to_load;
 }
 
 void DefaultBMPFont::setTexturePages(
