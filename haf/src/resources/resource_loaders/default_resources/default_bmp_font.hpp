@@ -27,7 +27,7 @@ public:
     htps::f32 getLineSpacing() const override;
     htps::f32 getKerning(const htps::u32 first,
                          const htps::u32 second) const override;
-    backend::ITexture const* getTexture() override;
+    backend::ITexture const* getTexture(char const character) override;
     const htps::vector2du32& size() const;
 
     htps::vector<htps::pair<htps::str, htps::str>> texturesToLoad() const;

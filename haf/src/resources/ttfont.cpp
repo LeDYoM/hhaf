@@ -50,10 +50,10 @@ f32 TTFont::getKerning(const u32 first,
     return priv_->font_->getKerning(first, second, characterSize);
 }
 
-sptr<ITexture> TTFont::getTexture(const u32 characterSize) const
+sptr<ITexture> TTFont::getTexture(const u32 characterSize, char const character) const
 {
     return std::dynamic_pointer_cast<ITexture>(
-        msptr<Texture>(priv_->font_->getTexture(characterSize)));
+        msptr<Texture>(priv_->font_->getTexture(characterSize, character)));
 }
 
 sptr<IFont> TTFont::font(const u32 charactersize)

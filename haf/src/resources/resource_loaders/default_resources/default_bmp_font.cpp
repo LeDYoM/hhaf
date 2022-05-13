@@ -88,7 +88,7 @@ f32 DefaultBMPFont::getKerning(const u32 first, const u32 second) const
     return static_cast<f32>(p_->chars_[first].GetKerningPair(second));
 }
 
-backend::ITexture const* DefaultBMPFont::getTexture()
+backend::ITexture const* DefaultBMPFont::getTexture(char const /*character*/)
 {
     return p_->pagesData_[0U].texture;
 }

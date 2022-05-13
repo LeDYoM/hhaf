@@ -38,10 +38,10 @@ f32 BMPFont::getKerning(u32 const first, u32 const second) const
     return ifont_->getKerning(first, second);
 }
 
-sptr<ITexture> BMPFont::getTexture()
+sptr<ITexture> BMPFont::getTexture(char const character)
 {
     return std::dynamic_pointer_cast<ITexture>(
-        msptr<Texture>(ifont_->getTexture()));
+        msptr<Texture>(ifont_->getTexture(character)));
 }
 
 vector<pair<str,str>> BMPFont::texturesToLoad() const

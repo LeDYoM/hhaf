@@ -11,7 +11,7 @@
 
 namespace sf
 {
-    class Font;
+class Font;
 }
 namespace haf::backend::sfmlb
 {
@@ -33,7 +33,8 @@ public:
     htps::f32 getKerning(const htps::u32 first,
                          const htps::u32 second,
                          const htps::u32 characterSize) const override;
-    ITexture* getTexture(const htps::u32 characterSize) override;
+    ITexture* getTexture(const htps::u32 characterSize,
+                         char const character) override;
 
 private:
     htps::uptr<sf::Font> font_;

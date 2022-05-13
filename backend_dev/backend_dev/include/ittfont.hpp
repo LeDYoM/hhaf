@@ -24,7 +24,8 @@ public:
     virtual htps::f32 getKerning(htps::u32 const first,
                                  htps::u32 const second,
                                  htps::u32 const characterSize) const     = 0;
-    virtual ITexture* getTexture(htps::u32 const characterSize)           = 0;
+    virtual ITexture* getTexture(
+        htps::u32 const characterSize, char const character) = 0;
 };
 }  // namespace haf::backend
 

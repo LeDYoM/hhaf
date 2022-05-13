@@ -20,7 +20,7 @@ public:
     htps::f32 getLineSpacing() const override;
     htps::f32 getKerning(const htps::u32 first,
                          const htps::u32 second) const override;
-    htps::sptr<ITexture> getTexture() override;
+    htps::sptr<ITexture> getTexture(char const character) override;
     ~TTFontInstance();
     TTFontInstance(const TTFont& parent, const htps::u32 characterSize);
 

@@ -97,7 +97,8 @@ void SceneNodeText::update()
         if (prop<Font>()() != nullptr && !(prop<Text>()().empty()))
         {
             auto font{prop<Font>()()};
-            auto texture{prop<Font>()()->getTexture()};
+            // TODO: Select texture for character
+            auto texture{prop<Font>()()->getTexture(0)};
 
             // Initialize counter of characters
             size_type counter{0U};
