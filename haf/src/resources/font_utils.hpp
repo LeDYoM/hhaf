@@ -22,7 +22,7 @@ public:
     TextRenderData getTextRenderData(htps::str const& text) const;
 
 private:
-    res::IFont* const font_;
+    res::IFont const* const font_;
 };
 
 }  // namespace haf::res

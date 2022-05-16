@@ -96,9 +96,9 @@ void SceneNodeText::update()
     {
         if (prop<Font>()() != nullptr && !(prop<Text>()().empty()))
         {
-            auto font{prop<Font>()()};
+            auto font{prop<Font>()().get()};
             // TODO: Select texture for character
-            auto texture{prop<Font>()()->getTexture(0)};
+            auto texture{font->getTexture(0)};
 
             // Initialize counter of characters
             size_type counter{0U};
@@ -121,7 +121,7 @@ void SceneNodeText::update()
             // Prepare the text render data
 
             // Create the font utils to use
-            res::FontUtils const font_utils{prop<Font>()().get()};
+            res::FontUtils const font_utils{font};
 
             // Update the text base size property. If it contains a text, it
             // has preference, but prepare the size value of these text and
