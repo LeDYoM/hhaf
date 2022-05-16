@@ -115,9 +115,6 @@ void SceneNodeText::update()
             // Initialize the index of the current character
             size_type indexChar{0U};
 
-            // Initialize the node for each letter we are going to use
-            sptr<SceneNodeLetter> letterNode;
-
             // Prepare the text render data
 
             // Create the font utils to use
@@ -150,6 +147,9 @@ void SceneNodeText::update()
 
             getTransformation(inner_position_).prop<Position>() =
                 -(text_render_size / 2.0F);
+
+            // Initialize the node for each letter we are going to use
+            sptr<SceneNodeLetter> letterNode;
 
             for (auto curChar : current_text)
             {
