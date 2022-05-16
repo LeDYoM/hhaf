@@ -3,9 +3,9 @@
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/rect.hpp>
+#include <htypes/include/str.hpp>
 #include <htypes/include/rawmemory.hpp>
 #include <backend_dev/include/ittfont.hpp>
-#include <backend_dev/include/itexture.hpp>
 
 #include <map>
 
@@ -33,7 +33,7 @@ public:
     htps::f32 getKerning(const htps::u32 first,
                          const htps::u32 second,
                          const htps::u32 characterSize) const override;
-    ITexture* getTexture(const htps::u32 characterSize,
+    htps::str getTexture(const htps::u32 characterSize,
                          char const character) override;
 
 private:

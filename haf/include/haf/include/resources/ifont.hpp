@@ -4,9 +4,7 @@ HTPS_PRAGMA_ONCE
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/rect.hpp>
-
-// TO be removed
-#include "itexture.hpp"
+#include <htypes/include/str.hpp>
 
 namespace haf::res
 {
@@ -24,7 +22,7 @@ public:
     virtual htps::f32 getLineSpacing() const                                = 0;
     virtual htps::f32 getKerning(const htps::u32 first,
                                  const htps::u32 second) const              = 0;
-    virtual htps::sptr<ITexture> getTexture(char const character)           = 0;
+    virtual htps::str getTexture(char const character)                      = 0;
 };
 }  // namespace haf::res
 

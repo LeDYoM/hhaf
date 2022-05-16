@@ -44,8 +44,9 @@ f32 SFMLTTFont::getKerning(const u32 first,
     return font_->getKerning(first, second, characterSize);
 }
 
-ITexture* SFMLTTFont::getTexture(const u32 characterSize, char const /*character*/)
+str SFMLTTFont::getTexture(const u32 /*characterSize*/, char const /*character*/)
 {
+/*
     if (auto iterator(font_textures_cache_.find(characterSize));
         iterator != font_textures_cache_.end())
     {
@@ -63,5 +64,7 @@ ITexture* SFMLTTFont::getTexture(const u32 characterSize, char const /*character
 
     font_textures_cache_[characterSize] = nTexture;
     return nTexture.get();
+*/
+return "";
 }
 }  // namespace haf::backend::sfmlb

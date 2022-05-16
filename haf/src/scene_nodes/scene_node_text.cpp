@@ -10,6 +10,7 @@
 #include <haf/include/scene/scenenode_cast.hpp>
 #include <haf/include/scene/scene.hpp>
 #include <haf/include/scene_components/camera_component.hpp>
+#include <haf/include/resources/iresource_retriever.hpp>
 #include <hlog/include/hlog.hpp>
 
 using namespace htps;
@@ -98,8 +99,9 @@ void SceneNodeText::update()
         {
             auto font{prop<Font>()().get()};
             // TODO: Select texture for character
-            auto texture{font->getTexture(0)};
-
+            auto texture_str{font->getTexture(0)};
+            auto texture{
+                subSystem<res::IResourceRetriever>()->getTexture(texture_str)};
             // Initialize counter of characters
             size_type counter{0U};
 

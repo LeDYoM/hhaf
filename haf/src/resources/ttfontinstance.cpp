@@ -40,10 +40,9 @@ f32 TTFontInstance::getKerning(const u32 first, const u32 second) const
     return parent_instance_.getKerning(first, second, character_size_);
 }
 
-sptr<ITexture> TTFontInstance::getTexture(char const character)
+str TTFontInstance::getTexture(char const character)
 {
-    return std::dynamic_pointer_cast<ITexture>(
-        parent_instance_.getTexture(character_size_, character));
+    return parent_instance_.getTexture(character_size_, character);
 }
 
 }  // namespace haf::res

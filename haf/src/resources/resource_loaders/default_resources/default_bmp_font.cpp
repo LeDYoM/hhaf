@@ -29,12 +29,17 @@ void DefaultBMPFont::loadFromMemory(htps::RawMemory* data)
     DisplayLog::info("Loading pages. Number of pages: ", p_->pagesData_.size());
 }
 
+str textureId(str const& texture_file_name)
+{
+    return texture_file_name;
+}
+
 vector<pair<str, str>> DefaultBMPFont::texturesToLoad() const
 {
     vector<pair<str,str>> textures_to_load(p_->pagesData_.size());
     for (const auto& page_data : p_->pagesData_)
     {
-        textures_to_load.emplace_back(page_data.file, page_data.file);
+        textures_to_load.emplace_back(textureId(page_data.file), page_data.file);
     }
 
     return textures_to_load;
@@ -88,9 +93,9 @@ f32 DefaultBMPFont::getKerning(const u32 first, const u32 second) const
     return static_cast<f32>(p_->chars_[first].GetKerningPair(second));
 }
 
-backend::ITexture const* DefaultBMPFont::getTexture(char const /*character*/)
+str DefaultBMPFont::getTexture(char const /*character*/)
 {
-    return p_->pagesData_[0U].texture;
+    return textureId(p_->pagesData_[0U].file);
 }
 
 }  // namespace haf::res

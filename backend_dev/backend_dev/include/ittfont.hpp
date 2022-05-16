@@ -3,7 +3,7 @@
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/rect.hpp>
-#include "itexture.hpp"
+#include <htypes/include/str.hpp>
 
 namespace haf::backend
 {
@@ -24,7 +24,7 @@ public:
     virtual htps::f32 getKerning(htps::u32 const first,
                                  htps::u32 const second,
                                  htps::u32 const characterSize) const     = 0;
-    virtual ITexture* getTexture(
+    virtual htps::str getTexture(
         htps::u32 const characterSize, char const character) = 0;
 };
 }  // namespace haf::backend

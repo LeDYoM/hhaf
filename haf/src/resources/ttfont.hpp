@@ -31,7 +31,7 @@ public:
     htps::f32 getKerning(const htps::u32 first,
                          const htps::u32 second,
                          const htps::u32 characterSize) const override;
-    htps::sptr<ITexture> getTexture(const htps::u32 characterSize,
+    htps::str getTexture(const htps::u32 characterSize,
                                     char const character) const override;
     htps::sptr<IFont> font(const htps::u32 charactersize) override;
 
