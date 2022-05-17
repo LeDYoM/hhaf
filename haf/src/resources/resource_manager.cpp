@@ -136,6 +136,12 @@ bool ResourceManager::loadResource(
     return loadResourceForResource(to_backend(resource_descriptor));
 }
 
+bool ResourceManager::setExternalTexture(htps::str const& rid,
+                                         backend::ITexture const* texture)
+{
+    return set_resource(p_->textures_, rid, texture);
+}
+
 bool ResourceManager::loadResourceForResource(
     backend::IResourceDescriptor const& resource_descriptor)
 {

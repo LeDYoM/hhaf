@@ -33,8 +33,8 @@ namespace
 {
 template <typename T, typename V>
 inline sptr<T> loadResource(backend::IResourceFactory<V>& factory,
-                                   FileSystem& fileSystem,
-                                   str const& fileName)
+                            FileSystem& fileSystem,
+                            str const& fileName)
 {
     RawMemory data{fileSystem.loadBinaryFile(fileName)};
     return msptr<T>(factory.loadFromRawMemory(&data));
@@ -52,12 +52,26 @@ inline auto get_or_default(ResourceList<sptr<T>> const& container,
                                          : sptr<T>(nullptr);
 }
 
+template <typename T, typename V>
+inline auto set_resource(ResourceList<sptr<T>>& container,
+                         str const& rid,
+                         V const* element)
+{
+    auto const result{get_or_default(container, rid)};
+
+    if (result == nullptr)
+    {
+        return container.add(rid, msptr<T>(element));
+    }
+    return false;
+}
+
 template <typename V, typename T>
 sptr<T> get_or_add(backend::IResourceFactory<V>& factory,
-                          ResourceList<sptr<T>>& container,
-                          FileSystem& fileSystem,
-                          const str& rid,
-                          const str& fileName)
+                   ResourceList<sptr<T>>& container,
+                   FileSystem& fileSystem,
+                   const str& rid,
+                   const str& fileName)
 {
     auto internal_resource(get_or_default(container, rid));
 

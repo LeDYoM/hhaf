@@ -45,6 +45,8 @@ public:
 
     bool loadResourceForResource(
         backend::IResourceDescriptor const& resource_descriptor) override;
+    bool setExternalTexture(htps::str const& rid,
+                            backend::ITexture const* texture) override;
 
     bool loadResource(
         res::ResourceDescriptor const& resource_descriptor) override;

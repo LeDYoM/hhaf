@@ -15,9 +15,10 @@ protected:
 
 public:
     virtual bool loadResourceForResource(
-        IResourceDescriptor const& resource_descriptor) = 0;
-//    virtual bool addExternalTexture(htps::rptr<ITexture const> texture) = 0;
+        IResourceDescriptor const& resource_descriptor)               = 0;
+    virtual bool setExternalTexture(htps::str const& rid,
+                                    backend::ITexture const* texture) = 0;
 };
-}  // namespace haf::res
+}  // namespace haf::backend
 
 #endif
