@@ -4,7 +4,7 @@ cmake_minimum_required (VERSION 3.11)
 set (CURRENT_TARGET ${PROJECT_NAME})
 
 set(include_dir ${PROJECT_SOURCE_DIR}/backend_dev/include)
-set(headers 
+set(headers
     ${include_dir}/factory_types.hpp
     ${include_dir}/ibackendregister.hpp
     ${include_dir}/ibmp_font.hpp
@@ -15,6 +15,8 @@ set(headers
     ${include_dir}/ikey.hpp
     ${include_dir}/irender_element.hpp
     ${include_dir}/irendertarget.hpp
+    ${include_dir}/iresource_descriptor.hpp
+    ${include_dir}/iresource_manager.hpp
     ${include_dir}/iresourcefactories.hpp
     ${include_dir}/iresourcefactory.hpp
     ${include_dir}/iresourceinfo.hpp

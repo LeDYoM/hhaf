@@ -133,6 +133,12 @@ bool ResourceManager::loadBmpFontTextures(htps::sptr<res::BMPFont> bmp_font,
 bool ResourceManager::loadResource(
     res::ResourceDescriptor const& resource_descriptor)
 {
+    return loadResourceForResource(to_backend(resource_descriptor));
+}
+
+bool ResourceManager::loadResourceForResource(
+    backend::IResourceDescriptor const& resource_descriptor)
+{
     bool result{false};
 
     if (resource_descriptor.type == kResourceTTFont)

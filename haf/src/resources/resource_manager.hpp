@@ -7,6 +7,9 @@ HTPS_PRAGMA_ONCE
 #include <haf/include/resources/iresource_retriever.hpp>
 #include <haf/include/resources/iresource_configurator.hpp>
 #include <haf/include/resources/resource_descriptor.hpp>
+#include <backend_dev/include/iresource_manager.hpp>
+#include <backend_dev/include/iresource_descriptor.hpp>
+
 #include "system/system_base.hpp"
 #include "resources_config_data.hpp"
 #include "resource_manager_config_loader.hpp"
@@ -27,7 +30,8 @@ class ResourceManager final : public SystemBase,
                               public res::IResourceRetriever,
                               public res::IResourcesConfigurator,
                               public res::IDefaultResourcesRetriever,
-                              public res::IResourceLoader
+                              public res::IResourceLoader,
+                              public backend::IResourceManager
 {
 public:
     explicit ResourceManager(sys::SystemProvider& system_provider);
@@ -38,6 +42,9 @@ public:
     htps::sptr<res::ITexture> getTexture(htps::str const& rid) const override;
     htps::sptr<res::IShader> getShader(htps::str const& rid) const override;
     htps::sptr<res::IFont> getBMPFont(htps::str const& rid) const override;
+
+    bool loadResourceForResource(
+        backend::IResourceDescriptor const& resource_descriptor) override;
 
     bool loadResource(
         res::ResourceDescriptor const& resource_descriptor) override;
