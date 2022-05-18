@@ -6,7 +6,8 @@ using namespace htps;
 
 namespace haf::backend::sfmlb
 {
-ITTFont* SFMLTTFontFactory::loadFromRawMemory(RawMemory* raw_memory)
+ITTFont* SFMLTTFontFactory::loadFromRawMemory(RawMemory* raw_memory,
+                                              IResourceManager*)
 {
     uptr<sf::Font> font{muptr<sf::Font>()};
     RawMemory internal_raw_memory{*raw_memory};

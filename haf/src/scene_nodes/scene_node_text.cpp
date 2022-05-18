@@ -100,110 +100,113 @@ void SceneNodeText::update()
             auto font{prop<Font>()().get()};
             // TODO: Select texture for character
             auto texture_str{font->getTexture(0)};
-            auto texture{
-                subSystem<res::IResourceRetriever>()->getTexture(texture_str)};
-            // Initialize counter of characters
-            size_type counter{0U};
-
-            // Get the counter of letters in the previous text set
-            size_type const old_counter{sceneNodes().size()};
-
-            // Get the text to render
-            auto const& current_text{prop<Text>()()};
-
-            // Get The text color for each character
-            auto const text_color{prop<TextColor>()()};
-
-            // Initialize the index of the current character
-            size_type indexChar{0U};
-
-            // Prepare the text render data
-
-            // Create the font utils to use
-            res::FontUtils const font_utils{font};
-
-            // Update the text base size property. If it contains a text, it
-            // has preference, but prepare the size value of these text and
-            // update the property accordinly.
-            prop<TextBaseSizeProperty>() = updateTextRenderData(
-                font_utils, prop<TextBaseSizeProperty>()());
-
-            // This was an internal change. Forget it happened.
-            prop<TextBaseSizeProperty>().resetHasChanged();
-
-            auto const text_render_data{
-                font_utils.getTextRenderData(current_text)};
-
-            auto const text_base_size{prop<TextBaseSizeProperty>()()};
-
-            vector2df const text_render_size{
-                text_base_size.value().x == htps::f32{}
-                    ? text_render_data.text_size.x
-                    : text_base_size.value().x,
-                text_base_size.value().y == htps::f32{}
-                    ? text_render_data.text_size.y
-                    : text_base_size.value().y};
-
-            getTransformation(inner_scale_).prop<Scale>() =
-                vector2df{1.0F / text_render_size};
-
-            getTransformation(inner_position_).prop<Position>() =
-                -(text_render_size / 2.0F);
-
-            // Initialize the node for each letter we are going to use
-            sptr<SceneNodeLetter> letterNode;
-
-            for (auto curChar : current_text)
+            if (!texture_str.empty())
             {
-                // In case we already have a node containing the letter,
-                // reuse it. If not, create a new one.
-                if (counter < old_counter)
+                auto texture{subSystem<res::IResourceRetriever>()->getTexture(
+                    texture_str)};
+                // Initialize counter of characters
+                size_type counter{0U};
+
+                // Get the counter of letters in the previous text set
+                size_type const old_counter{sceneNodes().size()};
+
+                // Get the text to render
+                auto const& current_text{prop<Text>()()};
+
+                // Get The text color for each character
+                auto const text_color{prop<TextColor>()()};
+
+                // Initialize the index of the current character
+                size_type indexChar{0U};
+
+                // Prepare the text render data
+
+                // Create the font utils to use
+                res::FontUtils const font_utils{font};
+
+                // Update the text base size property. If it contains a text, it
+                // has preference, but prepare the size value of these text and
+                // update the property accordinly.
+                prop<TextBaseSizeProperty>() = updateTextRenderData(
+                    font_utils, prop<TextBaseSizeProperty>()());
+
+                // This was an internal change. Forget it happened.
+                prop<TextBaseSizeProperty>().resetHasChanged();
+
+                auto const text_render_data{
+                    font_utils.getTextRenderData(current_text)};
+
+                auto const text_base_size{prop<TextBaseSizeProperty>()()};
+
+                vector2df const text_render_size{
+                    text_base_size.value().x == htps::f32{}
+                        ? text_render_data.text_size.x
+                        : text_base_size.value().x,
+                    text_base_size.value().y == htps::f32{}
+                        ? text_render_data.text_size.y
+                        : text_base_size.value().y};
+
+                getTransformation(inner_scale_).prop<Scale>() =
+                    vector2df{1.0F / text_render_size};
+
+                getTransformation(inner_position_).prop<Position>() =
+                    -(text_render_size / 2.0F);
+
+                // Initialize the node for each letter we are going to use
+                sptr<SceneNodeLetter> letterNode;
+
+                for (auto curChar : current_text)
                 {
-                    letterNode = std::dynamic_pointer_cast<SceneNodeLetter>(
-                        sceneNodes()[counter]);
+                    // In case we already have a node containing the letter,
+                    // reuse it. If not, create a new one.
+                    if (counter < old_counter)
+                    {
+                        letterNode = std::dynamic_pointer_cast<SceneNodeLetter>(
+                            sceneNodes()[counter]);
+                    }
+                    else
+                    {
+                        letterNode = createSceneNode<SceneNodeLetter>(
+                            "text_" + str::to_str(counter));
+                        letterNode->renderizableBuilder()
+                            .name("text_" + str::to_str(counter))
+                            .figType(render::FigType_t::Sprite)
+                            .create();
+                    }
+
+                    auto const& ch_data{
+                        text_render_data.character_render_data[indexChar]};
+
+                    letterNode->prop<Position>() = ch_data.character_position;
+                    letterNode->prop<Scale>()    = ch_data.character_size;
+
+                    letterNode->node()->prop<render::ColorProperty>().set(
+                        text_color);
+
+                    letterNode->setCharacterTextureData(
+                        texture, font->getTextureBounds(curChar));
+
+                    ++counter;
+                    ++indexChar;
                 }
-                else
+
+                // Remove the unused letters.
+                // Get the current total size of the vector of scene nodes.
+                auto const scene_nodes_size{sceneNodes().size()};
+                // Iterate from the last one to one after counter
+                // and delete them
+                for (size_type index{(scene_nodes_size - 1U)}; index >= counter;
+                     --index)
                 {
-                    letterNode = createSceneNode<SceneNodeLetter>(
-                        "text_" + str::to_str(counter));
-                    letterNode->renderizableBuilder()
-                        .name("text_" + str::to_str(counter))
-                        .figType(render::FigType_t::Sprite)
-                        .create();
+                    // Assert we are removing always the last one.
+                    LogAsserter::log_assert(sceneNodes()[index] ==
+                                            *(sceneNodes().end() - 1U));
+                    removeSceneNode(sceneNodes()[index]);
                 }
 
-                auto const& ch_data{
-                    text_render_data.character_render_data[indexChar]};
-
-                letterNode->prop<Position>() = ch_data.character_position;
-                letterNode->prop<Scale>()    = ch_data.character_size;
-
-                letterNode->node()->prop<render::ColorProperty>().set(
-                    text_color);
-
-                letterNode->setCharacterTextureData(
-                    texture, font->getTextureBounds(curChar));
-
-                ++counter;
-                ++indexChar;
+                // Force update color
+                prop<TextColor>().resetHasChanged();
             }
-
-            // Remove the unused letters.
-            // Get the current total size of the vector of scene nodes.
-            auto const scene_nodes_size{sceneNodes().size()};
-            // Iterate from the last one to one after counter
-            // and delete them
-            for (size_type index{(scene_nodes_size - 1U)}; index >= counter;
-                 --index)
-            {
-                // Assert we are removing always the last one.
-                LogAsserter::log_assert(sceneNodes()[index] ==
-                                        *(sceneNodes().end() - 1U));
-                removeSceneNode(sceneNodes()[index]);
-            }
-
-            // Force update color
-            prop<TextColor>().resetHasChanged();
         }
         else
         {

@@ -49,7 +49,7 @@ sptr<IFont> ResourceManager::getBMPFont(const str& rid) const
 
 bool ResourceManager::loadTTFont(const str& rid, const str& fileName)
 {
-    return get_or_add(systemProvider().backendFactory().ttfontFactory(),
+    return get_or_add(this, systemProvider().backendFactory().ttfontFactory(),
                       p_->ttf_fonts_, systemProvider().system<FileSystem>(),
                       rid, fileName) != nullptr;
 }
@@ -69,65 +69,9 @@ bool ResourceManager::loadShader(const str& rid, const str& fileName)
 
 bool ResourceManager::loadBMPFont(const str& rid, const str& fileName)
 {
-    if (get_or_add(p_->bmp_font_factory_, p_->bmp_fonts_,
-                   systemProvider().system<FileSystem>(), rid,
-                   fileName) != nullptr)
-    {
-        return loadBmpFontTextures(get_or_default(p_->bmp_fonts_, rid), rid);
-    }
-    return false;
-}
-
-bool ResourceManager::loadBmpFontTextures(htps::sptr<res::BMPFont> bmp_font,
-                                          const htps::str& rid)
-{
-    if (bmp_font)
-    {
-        DisplayLog::debug("Loading font textures");
-        const auto& texture_file_names{bmp_font->texturesToLoad()};
-        DisplayLog::debug("Number of textures to load: ",
-                          texture_file_names.size());
-        vector<backend::ITexture const*> textures(texture_file_names.size());
-
-        // If no textures in the font, the font is invalid
-        if (texture_file_names.empty())
-        {
-            DisplayLog::error("Invalid font. It has no textures");
-            bmp_font.reset();
-        }
-
-        for (auto&& file_name_and_resource_id : texture_file_names)
-        {
-            auto const& [file_name, resource_id] = file_name_and_resource_id;
-            ResourceDescriptor resource_descriptor{
-                resource_id, kResourceTexture,
-                config_loader_.configDirectory() + file_name};
-            bool const texture_available{loadResource(resource_descriptor)};
-
-            if (texture_available)
-            {
-                sptr<res::ITexture> texture{getTexture(resource_id)};
-                sptr<res::Texture> t{
-                    texture != nullptr
-                        ? std::dynamic_pointer_cast<res::Texture>(texture)
-                        : nullptr};
-                textures.push_back(t != nullptr ? t->backEndTexture()
-                                                : nullptr);
-            }
-            else
-            {
-                textures.push_back(nullptr);
-            }
-        }
-
-        bmp_font->setTexturePages(textures);
-        p_->bmp_fonts_.add(rid, bmp_font);
-    }
-    else
-    {
-        DisplayLog::debug("Cannot load bmp font");
-    }
-    return bmp_font != nullptr;
+    return get_or_add(this, p_->bmp_font_factory_, p_->bmp_fonts_,
+                      systemProvider().system<FileSystem>(), rid,
+                      fileName) != nullptr;
 }
 
 bool ResourceManager::loadResource(

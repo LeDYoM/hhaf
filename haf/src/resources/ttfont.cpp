@@ -52,7 +52,9 @@ f32 TTFont::getKerning(const u32 first,
 
 str TTFont::getTexture(const u32 characterSize, char const character) const
 {
-    return priv_->font_->getTexture(characterSize, character);
+    return (priv_->font_ != nullptr)
+        ? priv_->font_->getTexture(characterSize, character)
+        : "";
 }
 
 sptr<IFont> TTFont::font(const u32 charactersize)
