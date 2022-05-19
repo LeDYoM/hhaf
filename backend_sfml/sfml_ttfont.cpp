@@ -57,9 +57,6 @@ str SFMLTTFont::getTexture(const u32 characterSize, char const /*character*/)
     }
     else
     {
-        auto* new_texture{
-            new SFMLTexture{&font_->getTexture(characterSize), true}};
-
         // That is needed here is to force the load of the font surface
         // TODO: Check if it is still needed
         for (u32 i{0U}; i < 0xFF; ++i)
@@ -67,11 +64,16 @@ str SFMLTTFont::getTexture(const u32 characterSize, char const /*character*/)
             (void)(getTextureBounds(i, characterSize));
         }
 
-        str returned_id{iresource_manager_->setExternalTexture(new_texture)};
-        textures_ids_cache_[characterSize] = returned_id;
-//        return nTexture.get();
-    }
+//        auto* new_texture{
+//            new SFMLTexture{&font_->getTexture(characterSize), true}};
 
-    return "";
+        auto new_texture{
+            msptr<SFMLTexture>(&font_->getTexture(characterSize), false)};
+
+        str returned_id{iresource_manager_->setExternalTexture(new_texture.get())};
+        textures_ids_cache_[characterSize] = returned_id;
+        font_textures_cache_[characterSize] = new_texture;
+        return returned_id;
+    }
 }
 }  // namespace haf::backend::sfmlb
