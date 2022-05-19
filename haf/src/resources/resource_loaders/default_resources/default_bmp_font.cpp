@@ -45,22 +45,6 @@ vector<pair<str, str>> DefaultBMPFont::texturesToLoad() const
     return textures_to_load;
 }
 
-void DefaultBMPFont::setTexturePages(
-    const vector<backend::ITexture const*>& texture_pages)
-{
-    LogAsserter::log_assert(
-        texture_pages.size() <= p_->pagesData_.size(),
-        "The number of textures to add should be lower or equal that "
-        "the number of pages.");
-
-    size_type count{0U};
-
-    for (backend::ITexture const* texture : texture_pages)
-    {
-        p_->pagesData_[count].texture = texture;
-    }
-}
-
 DefaultBMPFont::~DefaultBMPFont() = default;
 
 const vector2du32& DefaultBMPFont::size() const

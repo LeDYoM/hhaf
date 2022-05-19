@@ -3,22 +3,21 @@ HTPS_PRAGMA_ONCE
 #define HAF_SCENE_RESOURCES_BMPFONT_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
+#include <htypes/include/str.hpp>
 #include <htypes/include/rawmemory.hpp>
 
 #include <haf/include/resources/ibmp_font.hpp>
-#include <backend_dev/include/ibmp_font.hpp>
-#include <backend_dev/include/itexture.hpp>
 
 namespace haf::backend
 {
 class IFont;
+class IBMPFont;
 }
 
 namespace haf::res
 {
 /**
  * @brief Class implementing a font loaded from a bitmap file
- *
  */
 class BMPFont : public IBMPFont
 {
@@ -33,9 +32,6 @@ public:
     htps::f32 getKerning(const htps::u32 first,
                          const htps::u32 second) const override;
     htps::str getTexture(char const character) override;
-    htps::vector<htps::pair<htps::str, htps::str>> texturesToLoad() const override;
-    void setTexturePages(htps::vector<backend::ITexture const*> const&
-                             texture_pages) override;
 
 private:
     backend::IBMPFont* ifont_;

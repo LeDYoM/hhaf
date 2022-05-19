@@ -31,8 +31,6 @@ public:
     const htps::vector2du32& size() const;
 
     htps::vector<htps::pair<htps::str, htps::str>> texturesToLoad() const;
-    void setTexturePages(
-        const htps::vector<backend::ITexture const*>& texture_pages);
 
 private:
     class DefaultBMFontPrivate;

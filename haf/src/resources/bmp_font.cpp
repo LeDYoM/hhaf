@@ -2,6 +2,7 @@
 
 #include <hlog/include/hlog.hpp>
 #include <backend_dev/include/ifont.hpp>
+#include <backend_dev/include/ibmp_font.hpp>
 #include "texture.hpp"
 
 using namespace htps;
@@ -41,17 +42,6 @@ f32 BMPFont::getKerning(u32 const first, u32 const second) const
 str BMPFont::getTexture(char const character)
 {
     return ifont_->getTexture(character);
-}
-
-vector<pair<str,str>> BMPFont::texturesToLoad() const
-{
-    return ifont_->texturesToLoad();
-}
-
-void BMPFont::setTexturePages(
-    vector<backend::ITexture const*> const& texture_pages)
-{
-    ifont_->setTexturePages(texture_pages);
 }
 
 }  // namespace haf::res
