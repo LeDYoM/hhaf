@@ -10,8 +10,7 @@ namespace haf::backend
 class ITTFont
 {
 public:
-    ITTFont() {}
-    virtual ~ITTFont() {}
+    virtual ~ITTFont() = default;
 
     virtual htps::Rectf32 getBounds(htps::u32 const codePoint,
                                     htps::u32 const characterSize) const = 0;

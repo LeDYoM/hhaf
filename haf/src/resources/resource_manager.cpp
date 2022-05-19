@@ -80,10 +80,18 @@ bool ResourceManager::loadResource(
     return loadResourceForResource(to_backend(resource_descriptor));
 }
 
-bool ResourceManager::setExternalTexture(htps::str const& rid,
-                                         backend::ITexture const* texture)
+str getTextureId()
 {
-    return set_resource(p_->textures_, rid, texture);
+    static int id{0};
+    ++id;
+    return make_str("ttfont_", id);
+}
+
+str ResourceManager::setExternalTexture(backend::ITexture const* texture)
+{
+    str const id{getTextureId()};
+    set_resource(p_->textures_, id, texture);
+    return id;
 }
 
 bool ResourceManager::loadResourceForResource(

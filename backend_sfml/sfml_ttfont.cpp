@@ -6,8 +6,12 @@ using namespace htps;
 
 namespace haf::backend::sfmlb
 {
-SFMLTTFont::SFMLTTFont(uptr<sf::Font> font, RawMemory raw_memory) :
-    font_{htps::move(font)}, raw_memory_{htps::move(raw_memory)}
+SFMLTTFont::SFMLTTFont(uptr<sf::Font> font,
+                       RawMemory raw_memory,
+                       IResourceManager* iresource_manager) :
+    font_{htps::move(font)},
+    raw_memory_{htps::move(raw_memory)},
+    iresource_manager_{iresource_manager}
 {}
 
 SFMLTTFont::~SFMLTTFont() = default;
@@ -44,27 +48,30 @@ f32 SFMLTTFont::getKerning(const u32 first,
     return font_->getKerning(first, second, characterSize);
 }
 
-str SFMLTTFont::getTexture(const u32 /*characterSize*/, char const /*character*/)
+str SFMLTTFont::getTexture(const u32 characterSize, char const /*character*/)
 {
-/*
-    if (auto iterator(font_textures_cache_.find(characterSize));
-        iterator != font_textures_cache_.end())
+    if (auto iterator{textures_ids_cache_.find(characterSize)};
+        iterator != textures_ids_cache_.end())
     {
-        return iterator->second.get();
+        return iterator->second;
+    }
+    else
+    {
+        auto* new_texture{
+            new SFMLTexture{&font_->getTexture(characterSize), true}};
+
+        // That is needed here is to force the load of the font surface
+        // TODO: Check if it is still needed
+        for (u32 i{0U}; i < 0xFF; ++i)
+        {
+            (void)(getTextureBounds(i, characterSize));
+        }
+
+        str returned_id{iresource_manager_->setExternalTexture(new_texture)};
+        textures_ids_cache_[characterSize] = returned_id;
+//        return nTexture.get();
     }
 
-    auto nTexture{msptr<SFMLTexture>(&font_->getTexture(characterSize), false)};
-
-    // That is needed here is to force the load of the font surface
-    // TODO: Check if it is still needed
-    for (u32 i{0U}; i < 0xFF; ++i)
-    {
-        (void)(getTextureBounds(i, characterSize));
-    }
-
-    font_textures_cache_[characterSize] = nTexture;
-    return nTexture.get();
-*/
-return "";
+    return "";
 }
 }  // namespace haf::backend::sfmlb

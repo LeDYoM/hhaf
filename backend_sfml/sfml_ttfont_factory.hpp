@@ -13,7 +13,7 @@ class SFMLTTFontFactory : public ITTFontFactory
 {
 public:
     ITTFont* loadFromRawMemory(htps::RawMemory* raw_memory,
-                               IResourceManager*) override;
+                               IResourceManager* iresource_manager) override;
     ~SFMLTTFontFactory() override;
 
 private:

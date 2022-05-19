@@ -62,8 +62,8 @@ sptr<IFont> TTFont::font(const u32 charactersize)
     if (auto iterator = priv_->font_map_.find(charactersize);
         iterator == priv_->font_map_.end())
     {
-        sptr<TTFontInstance> newFont{
-            msptr<TTFontInstance>(*this, charactersize)};
+        sptr<TTFontInstance> newFont{msptr<TTFontInstance>(
+            *this, charactersize)};
         return priv_->font_map_[charactersize] = newFont;
     }
     else
