@@ -64,14 +64,12 @@ str SFMLTTFont::getTexture(const u32 characterSize, char const /*character*/)
             (void)(getTextureBounds(i, characterSize));
         }
 
-//        auto* new_texture{
-//            new SFMLTexture{&font_->getTexture(characterSize), true}};
-
         auto new_texture{
             msptr<SFMLTexture>(&font_->getTexture(characterSize), false)};
 
-        str returned_id{iresource_manager_->setExternalTexture(new_texture.get())};
-        textures_ids_cache_[characterSize] = returned_id;
+        str returned_id{
+            iresource_manager_->setExternalTexture(new_texture.get())};
+        textures_ids_cache_[characterSize]  = returned_id;
         font_textures_cache_[characterSize] = new_texture;
         return returned_id;
     }
