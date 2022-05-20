@@ -25,6 +25,7 @@ set(headers
     ${include_dir}/ittfont.hpp
     ${include_dir}/ivertex.hpp
     ${include_dir}/iwindow.hpp
+    ${include_dir}/resource_load_parameters.hpp
 )
 
 build_lib_component(HEADERS_ONLY
