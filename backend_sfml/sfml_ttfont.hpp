@@ -7,7 +7,7 @@
 #include <htypes/include/rawmemory.hpp>
 #include <backend_dev/include/ittfont.hpp>
 #include <backend_dev/include/iresource_manager.hpp>
-
+#include <backend_dev/include/resource_load_parameters.hpp>
 #include <map>
 
 namespace sf
@@ -21,8 +21,7 @@ class SFMLTTFont : public ITTFont
 {
 public:
     SFMLTTFont(htps::uptr<sf::Font> f,
-               htps::RawMemory raw_memory,
-               IResourceManager* iresource_factory);
+               ResourceLoadParameters&& resource_load_parameters);
     ~SFMLTTFont() override;
 
     htps::Rectf32 getBounds(const htps::u32 codePoint,
@@ -44,6 +43,7 @@ private:
     // We need the raw memory of the loaded font to be kept in memory.
     htps::RawMemory raw_memory_;
     IResourceManager* iresource_manager_;
+    htps::str resource_id_;
     std::map<htps::u32, htps::sptr<SFMLTexture>> font_textures_cache_;
     std::map<htps::u32, htps::str> textures_ids_cache_;
 };

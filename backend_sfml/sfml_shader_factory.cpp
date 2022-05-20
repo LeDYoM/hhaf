@@ -40,7 +40,7 @@ IShader* SFMLShaderFactory::loadFromRawMemory(
     static constexpr char kGeometryShaderEnd[] = "</geometry_shader>";
 
     str shaders_code{reinterpret_cast<char const*>(
-        resource_load_parameters.raw_memory->data())};
+        resource_load_parameters.raw_memory.data())};
 
     str vertex_shader_code{extractShader(str{kVertexShaderStr},
                                          str{kVertexShaderEnd}, shaders_code)};

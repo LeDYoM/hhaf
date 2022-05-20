@@ -9,21 +9,10 @@ using namespace htps;
 
 namespace haf::res
 {
-/*
-backend::IBMPFont* DefaultBMPFontFactory::loadFromRawMemory(
-    RawMemory* raw_memory)
-{
-    sptr<DefaultBMPFont> font{msptr<DefaultBMPFont>()};
-    font->loadFromMemory(raw_memory);
-    bmpfont_cache_.push_back(htps::move(font));
-    return bmpfont_cache_.back().get();
-}
-*/
 backend::IBMPFont* DefaultBMPFontFactory::loadFromRawMemory(
     backend::ResourceLoadParameters const& resource_load_parameters)
 {
-    sptr<DefaultBMPFont> font{msptr<DefaultBMPFont>()};
-    font->loadFromMemory(resource_load_parameters.raw_memory);
+    sptr<DefaultBMPFont> font{msptr<DefaultBMPFont>(resource_load_parameters)};
 
     DisplayLog::debug("Loading font textures");
     const auto& texture_file_names{font->texturesToLoad()};

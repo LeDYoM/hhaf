@@ -40,8 +40,8 @@ inline sptr<T> loadResource(backend::IResourceManager* iresource_manager,
                             str const& fileName)
 {
     RawMemory data{fileSystem.loadBinaryFile(fileName)};
-    backend::ResourceLoadParameters resource_load_parameters{resource_id, &data,
-                                                             iresource_manager};
+    backend::ResourceLoadParameters resource_load_parameters{
+        resource_id, htps::move(data), iresource_manager};
     return msptr<T>(factory.loadFromRawMemory(resource_load_parameters));
 }
 

@@ -13,7 +13,7 @@ namespace haf::backend
 struct ResourceLoadParameters
 {
     htps::str resource_id;
-    htps::rptr<htps::RawMemory> raw_memory;
+    htps::RawMemory raw_memory;
     htps::rptr<IResourceManager> iresource_manager;
 };
 

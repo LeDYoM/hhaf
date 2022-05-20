@@ -7,13 +7,12 @@ using namespace htps;
 
 namespace haf::res
 {
-DefaultBMPFont::DefaultBMPFont() : p_{muptr<DefaultBMFontPrivate>()}
-{}
-
-void DefaultBMPFont::loadFromMemory(htps::RawMemory* data)
+DefaultBMPFont::DefaultBMPFont(
+    backend::ResourceLoadParameters const& resource_load_parameters) :
+    p_{muptr<DefaultBMFontPrivate>()}
 {
     p_->chars_.resize(256U);
-    str temp{data->to_str()};
+    str temp{resource_load_parameters.raw_memory.to_str()};
     p_->ParseFont(temp);
     DisplayLog::info("Calculating some metrics");
     p_->adv = 1.0F / static_cast<f32>(size().x);
@@ -36,10 +35,11 @@ str textureId(str const& texture_file_name)
 
 vector<pair<str, str>> DefaultBMPFont::texturesToLoad() const
 {
-    vector<pair<str,str>> textures_to_load(p_->pagesData_.size());
+    vector<pair<str, str>> textures_to_load(p_->pagesData_.size());
     for (const auto& page_data : p_->pagesData_)
     {
-        textures_to_load.emplace_back(textureId(page_data.file), page_data.file);
+        textures_to_load.emplace_back(textureId(page_data.file),
+                                      page_data.file);
     }
 
     return textures_to_load;

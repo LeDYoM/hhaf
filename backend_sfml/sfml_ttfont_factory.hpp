@@ -14,7 +14,6 @@ class SFMLTTFontFactory : public ITTFontFactory
 public:
     ITTFont* loadFromRawMemory(
         ResourceLoadParameters const& resource_load_parameters) override;
-
     ~SFMLTTFontFactory() override;
 
 private:

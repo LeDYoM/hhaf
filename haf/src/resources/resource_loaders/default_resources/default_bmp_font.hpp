@@ -7,20 +7,20 @@ HTPS_PRAGMA_ONCE
 
 #include <backend_dev/include/itexture.hpp>
 #include <backend_dev/include/ibmp_font.hpp>
+#include <backend_dev/include/resource_load_parameters.hpp>
 
 namespace haf::res
 {
 /**
  * @brief Class implementing a font loaded from a bitmap file
- *
  */
 class DefaultBMPFont : public backend::IBMPFont
 {
 public:
-    DefaultBMPFont();
+    DefaultBMPFont(
+        backend::ResourceLoadParameters const& resource_load_parameters);
     ~DefaultBMPFont();
 
-    void loadFromMemory(htps::RawMemory* data);
     htps::Rectf32 getBounds(const htps::u32 codePoint) const override;
     htps::Rectf32 getTextureBounds(const htps::u32 codePoint) const override;
     htps::f32 getAdvance(const htps::u32 codePoint) const override;

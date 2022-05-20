@@ -7,11 +7,11 @@ using namespace htps;
 namespace haf::backend::sfmlb
 {
 SFMLTTFont::SFMLTTFont(uptr<sf::Font> font,
-                       RawMemory raw_memory,
-                       IResourceManager* iresource_manager) :
+                       ResourceLoadParameters&& resource_load_parameters) :
     font_{htps::move(font)},
-    raw_memory_{htps::move(raw_memory)},
-    iresource_manager_{iresource_manager}
+    raw_memory_{htps::move(resource_load_parameters.raw_memory)},
+    iresource_manager_{htps::move(resource_load_parameters.iresource_manager)},
+    resource_id_{htps::move(resource_load_parameters.resource_id)}
 {}
 
 SFMLTTFont::~SFMLTTFont() = default;
@@ -67,11 +67,16 @@ str SFMLTTFont::getTexture(const u32 characterSize, char const /*character*/)
         auto new_texture{
             msptr<SFMLTexture>(&font_->getTexture(characterSize), false)};
 
-        str returned_id{
-            iresource_manager_->setExternalTexture(new_texture.get())};
-        textures_ids_cache_[characterSize]  = returned_id;
-        font_textures_cache_[characterSize] = new_texture;
-        return returned_id;
+        str complete_resource_id{make_str(resource_id_, characterSize)};
+        bool result{
+            iresource_manager_->setExternalTexture(complete_resource_id, new_texture.get())};
+        if (result)
+        {
+            textures_ids_cache_[characterSize]  = complete_resource_id;
+            font_textures_cache_[characterSize] = new_texture;
+            return complete_resource_id;
+        }
     }
+    return "";
 }
 }  // namespace haf::backend::sfmlb
