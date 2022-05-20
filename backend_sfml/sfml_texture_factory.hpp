@@ -2,8 +2,8 @@
 #define HAF_BACKEND_SFML_TEXTUREFACTORY_HPP
 
 #include <htypes/include/rawmemory.hpp>
-
 #include <backend_dev/include/iresourcefactories.hpp>
+#include <backend_dev/include/resource_load_parameters.hpp>
 
 namespace haf::backend::sfmlb
 {
@@ -11,7 +11,8 @@ class SFMLTexture;
 class SFMLTextureFactory : public ITextureFactory
 {
 public:
-    ITexture* loadFromRawMemory(htps::RawMemory* raw_memory) override;
+    ITexture* loadFromRawMemory(
+        ResourceLoadParameters const& resource_load_parameters) override;
     ~SFMLTextureFactory() override;
 
 private:

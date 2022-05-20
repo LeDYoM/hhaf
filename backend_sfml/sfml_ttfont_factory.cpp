@@ -7,15 +7,15 @@ using namespace htps;
 namespace haf::backend::sfmlb
 {
 ITTFont* SFMLTTFontFactory::loadFromRawMemory(
-    RawMemory* raw_memory,
-    IResourceManager* iresource_manager)
+    ResourceLoadParameters const& resource_load_parameters)
 {
     uptr<sf::Font> font{muptr<sf::Font>()};
-    RawMemory internal_raw_memory{*raw_memory};
+    RawMemory internal_raw_memory{*(resource_load_parameters.raw_memory)};
     font->loadFromMemory(internal_raw_memory.data(),
                          internal_raw_memory.size());
-    sptr<SFMLTTFont> t{msptr<SFMLTTFont>(
-        htps::move(font), htps::move(internal_raw_memory), iresource_manager)};
+    sptr<SFMLTTFont> t{
+        msptr<SFMLTTFont>(htps::move(font), htps::move(internal_raw_memory),
+                          resource_load_parameters.iresource_manager)};
     font_cache_.push_back(htps::move(t));
     return (*(font_cache_.end() - 1)).get();
 }

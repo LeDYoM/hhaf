@@ -29,7 +29,8 @@ str extractShader(str const& start_token,
 }
 }  // namespace
 
-IShader* SFMLShaderFactory::loadFromRawMemory(htps::RawMemory* raw_memory)
+IShader* SFMLShaderFactory::loadFromRawMemory(
+    ResourceLoadParameters const& resource_load_parameters)
 {
     static constexpr char kVertexShaderStr[]   = "<vertex_shader>";
     static constexpr char kFragmentShaderStr[] = "<fragment_shader>";
@@ -38,7 +39,8 @@ IShader* SFMLShaderFactory::loadFromRawMemory(htps::RawMemory* raw_memory)
     static constexpr char kFragmentShaderEnd[] = "</fragment_shader>";
     static constexpr char kGeometryShaderEnd[] = "</geometry_shader>";
 
-    str shaders_code{reinterpret_cast<char const*>(raw_memory->data())};
+    str shaders_code{reinterpret_cast<char const*>(
+        resource_load_parameters.raw_memory->data())};
 
     str vertex_shader_code{extractShader(str{kVertexShaderStr},
                                          str{kVertexShaderEnd}, shaders_code)};

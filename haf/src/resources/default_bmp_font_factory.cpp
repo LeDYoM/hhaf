@@ -9,6 +9,7 @@ using namespace htps;
 
 namespace haf::res
 {
+/*
 backend::IBMPFont* DefaultBMPFontFactory::loadFromRawMemory(
     RawMemory* raw_memory)
 {
@@ -17,13 +18,12 @@ backend::IBMPFont* DefaultBMPFontFactory::loadFromRawMemory(
     bmpfont_cache_.push_back(htps::move(font));
     return bmpfont_cache_.back().get();
 }
-
+*/
 backend::IBMPFont* DefaultBMPFontFactory::loadFromRawMemory(
-    RawMemory* raw_memory,
-    backend::IResourceManager* iresource_manager)
+    backend::ResourceLoadParameters const& resource_load_parameters)
 {
     sptr<DefaultBMPFont> font{msptr<DefaultBMPFont>()};
-    font->loadFromMemory(raw_memory);
+    font->loadFromMemory(resource_load_parameters.raw_memory);
 
     DisplayLog::debug("Loading font textures");
     const auto& texture_file_names{font->texturesToLoad()};
@@ -45,7 +45,8 @@ backend::IBMPFont* DefaultBMPFontFactory::loadFromRawMemory(
             resource_id, backend::kResourceTexture,
             "resources/" + /*config_loader_.configDirectory() +*/ file_name};
         bool const texture_available{
-            iresource_manager->loadResourceForResource(resource_descriptor)};
+            resource_load_parameters.iresource_manager->loadResourceForResource(
+                resource_descriptor)};
         if (!texture_available)
         {
             font.reset();

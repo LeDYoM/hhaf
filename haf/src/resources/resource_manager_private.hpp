@@ -16,6 +16,7 @@
 #include <haf/include/resources/ishader.hpp>
 
 #include <backend/include/backend_factory.hpp>
+#include <backend_dev/include/resource_load_parameters.hpp>
 
 #include <htypes/include/object.hpp>
 #include <htypes/include/object_utils.hpp>
@@ -35,19 +36,13 @@ template <typename T, typename V>
 inline sptr<T> loadResource(backend::IResourceManager* iresource_manager,
                             backend::IResourceFactory<V>& factory,
                             FileSystem& fileSystem,
+                            str const& resource_id,
                             str const& fileName)
 {
     RawMemory data{fileSystem.loadBinaryFile(fileName)};
-    return msptr<T>(factory.loadFromRawMemory(&data, iresource_manager));
-}
-
-template <typename T, typename V>
-inline sptr<T> loadResource(backend::IResourceFactory<V>& factory,
-                            FileSystem& fileSystem,
-                            str const& fileName)
-{
-    RawMemory data{fileSystem.loadBinaryFile(fileName)};
-    return msptr<T>(factory.loadFromRawMemory(&data));
+    backend::ResourceLoadParameters resource_load_parameters{resource_id, &data,
+                                                             iresource_manager};
+    return msptr<T>(factory.loadFromRawMemory(resource_load_parameters));
 }
 
 template <typename T>
@@ -96,8 +91,8 @@ sptr<T> get_or_add(backend::IResourceManager* iresource_manager,
         // Not found, try to load it.
         DisplayLog::info(rid, " not found on resource list.");
         DisplayLog::info("Going to load file: ", fileName);
-        sptr<T> resource{
-            loadResource<T>(iresource_manager, factory, fileSystem, fileName)};
+        sptr<T> resource{loadResource<T>(iresource_manager, factory, fileSystem,
+                                         rid, fileName)};
         container.add(rid, resource);
         return resource;
     }
@@ -122,7 +117,7 @@ sptr<T> get_or_add(backend::IResourceFactory<V>& factory,
         // Not found, try to load it.
         DisplayLog::info(rid, " not found on resource list.");
         DisplayLog::info("Going to load file: ", fileName);
-        sptr<T> resource{loadResource<T>(factory, fileSystem, fileName)};
+        sptr<T> resource{loadResource<T>(factory, fileSystem, rid, fileName)};
         container.add(rid, resource);
         return resource;
     }

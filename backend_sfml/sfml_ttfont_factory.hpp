@@ -3,8 +3,8 @@
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/vector2d.hpp>
-
 #include <backend_dev/include/iresourcefactories.hpp>
+#include <backend_dev/include/resource_load_parameters.hpp>
 
 namespace haf::backend::sfmlb
 {
@@ -12,8 +12,9 @@ class SFMLTTFont;
 class SFMLTTFontFactory : public ITTFontFactory
 {
 public:
-    ITTFont* loadFromRawMemory(htps::RawMemory* raw_memory,
-                               IResourceManager* iresource_manager) override;
+    ITTFont* loadFromRawMemory(
+        ResourceLoadParameters const& resource_load_parameters) override;
+
     ~SFMLTTFontFactory() override;
 
 private:

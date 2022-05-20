@@ -11,12 +11,10 @@ template <typename T>
 class IResourceFactory
 {
 public:
-    virtual T* loadFromRawMemory(htps::RawMemory*, IResourceManager*)
-    {
-        return nullptr;
-    }
-    virtual T* loadFromRawMemory(htps::RawMemory*) { return nullptr; }
-    virtual ~IResourceFactory() {}
+    virtual ~IResourceFactory() = default;
+
+    virtual T* loadFromRawMemory(
+        ResourceLoadParameters const& resource_load_parameters) = 0;
 };
 }  // namespace haf::backend
 
