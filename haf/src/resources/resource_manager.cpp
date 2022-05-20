@@ -55,14 +55,14 @@ bool ResourceManager::loadTTFont(const str& rid, const str& fileName)
 }
 bool ResourceManager::loadTexture(const str& rid, const str& fileName)
 {
-    return get_or_add(systemProvider().backendFactory().textureFactory(),
+    return get_or_add(this, systemProvider().backendFactory().textureFactory(),
                       p_->textures_, systemProvider().system<FileSystem>(), rid,
                       fileName) != nullptr;
 }
 
 bool ResourceManager::loadShader(const str& rid, const str& fileName)
 {
-    return get_or_add(systemProvider().backendFactory().shaderFactory(),
+    return get_or_add(this, systemProvider().backendFactory().shaderFactory(),
                       p_->shaders_, systemProvider().system<FileSystem>(), rid,
                       fileName) != nullptr;
 }

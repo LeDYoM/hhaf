@@ -98,31 +98,6 @@ sptr<T> get_or_add(backend::IResourceManager* iresource_manager,
     }
 }
 
-template <typename V, typename T>
-sptr<T> get_or_add(backend::IResourceFactory<V>& factory,
-                   ResourceList<sptr<T>>& container,
-                   FileSystem& fileSystem,
-                   const str& rid,
-                   const str& fileName)
-{
-    auto internal_resource(get_or_default(container, rid));
-
-    if (internal_resource != nullptr)
-    {
-        DisplayLog::info(rid, " found on resource list. Returning instance.");
-        return internal_resource;
-    }
-    else
-    {
-        // Not found, try to load it.
-        DisplayLog::info(rid, " not found on resource list.");
-        DisplayLog::info("Going to load file: ", fileName);
-        sptr<T> resource{loadResource<T>(factory, fileSystem, rid, fileName)};
-        container.add(rid, resource);
-        return resource;
-    }
-}
-
 }  // namespace
 
 struct ResourceManager::ResourceManagerPrivate
