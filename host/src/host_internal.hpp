@@ -62,6 +62,7 @@ private:
      */
     bool updateApp(HostedApplication& app);
     bool initializeBackend();
+    void logLoadedFactories();
     bool initializeHaf();
 };
 

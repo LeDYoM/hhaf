@@ -68,9 +68,9 @@ bool ResourceManager::loadShader(str const& rid, str const& fileName)
 
 bool ResourceManager::loadBMPFont(str const& rid, str const& fileName)
 {
-    return get_or_add(this, p_->bmp_font_factory_, p_->bmp_fonts_,
-                      systemProvider().system<FileSystem>(), rid,
-                      fileName) != nullptr;
+    return get_or_add(this, systemProvider().backendFactory().bmpFontFactory(),
+                      p_->bmp_fonts_, systemProvider().system<FileSystem>(),
+                      rid, fileName) != nullptr;
 }
 
 bool ResourceManager::loadResource(
@@ -80,7 +80,7 @@ bool ResourceManager::loadResource(
 }
 
 bool ResourceManager::setExternalTexture(str const& resource_id,
-                                        backend::ITexture const* texture)
+                                         backend::ITexture const* texture)
 {
     return set_resource(p_->textures_, resource_id, texture);
 }

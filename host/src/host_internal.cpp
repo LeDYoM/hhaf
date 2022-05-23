@@ -24,7 +24,19 @@ bool HostInternal::initializeBackend()
             createBackendFactory(), destroyBackendFactory);
     backend_factory_->loadBackendFile("bsfml");
 
+    logLoadedFactories();
     return backend_factory_ != nullptr;
+}
+
+void HostInternal::logLoadedFactories()
+{
+    LogAsserter::log_assert(backend_factory_ != nullptr, "No backend loaded!");
+    HostLogDisplayer::debug(
+        "Window loaded at ",
+        reinterpret_cast<int>(backend_factory_->getWindow()));
+    HostLogDisplayer::debug(
+        "Texture factory loaded at ",
+        reinterpret_cast<int>(backend_factory_->getTextureFactory()));
 }
 
 bool HostInternal::initializeHaf()
@@ -98,13 +110,13 @@ bool HostInternal::updateApp(HostedApplication& app)
             {
                 app.app_state = AppState::ReadyToTerminate;
                 HostLogDisplayer::info(appDisplayNameAndVersion(app),
-                                 ": is now ready to terminate");
+                                       ": is now ready to terminate");
             }
         }
         break;
         case AppState::ReadyToTerminate:
             HostLogDisplayer::info(appDisplayNameAndVersion(app),
-                             ": ready to terminate");
+                                   ": ready to terminate");
             app.app_state = AppState::Terminated;
             return true;
             break;
@@ -128,9 +140,10 @@ bool HostInternal::addApplication(ManagedApp managed_app, htps::str name)
 bool HostInternal::loadApplication(htps::str const& app_name)
 {
     ManagedApp managed_app = app_loader.loadApp(app_name);
-    bool const result_add{managed_app.app != nullptr
-                              ? addApplication(htps::move(managed_app), app_name)
-                              : false};
+    bool const result_add{
+        managed_app.app != nullptr
+            ? addApplication(htps::move(managed_app), app_name)
+            : false};
 
     if (result_add)
     {
@@ -164,7 +177,7 @@ bool HostInternal::unloadApplication(str app_name)
     {
         // This is safe, given that app exists
         auto hosted_app = app_group_[app_name];
-        auto& app = hosted_app->managed_app_;
+        auto& app       = hosted_app->managed_app_;
         hosted_app->app_system_controller->terminate();
         hosted_app->app_system_controller.reset();
         app_loader.unloadApp(app);

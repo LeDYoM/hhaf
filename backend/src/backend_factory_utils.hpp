@@ -16,9 +16,19 @@ bool fillFactory(htps::uptr<BackendRegister> const& backend_register,
         (*factory_to_fill) = factory->create();
         return (*factory_to_fill) != nullptr;
     }
-    return false;
+    return true;
 }
 
+/**
+ * @brief (Try to) register all factory types passed as parameters
+ * @tparam FactoryType First factory type to register
+ * @tparam FactoryTypes Varyadic parameters to register more factories
+ * @param backend_register The backend_register instance to use
+ * @param factory_to_fill The factory to fill
+ * @param factories_to_fill The rest of the factories to fill
+ * @return true At least one of the factory parameters has been filled
+ * @return false None of the factories have been filled
+ */
 template <typename FactoryType, typename... FactoryTypes>
 bool fillFactories(htps::uptr<BackendRegister> const& backend_register,
                    FactoryType factory_to_fill,
@@ -28,7 +38,7 @@ bool fillFactories(htps::uptr<BackendRegister> const& backend_register,
 
     if constexpr (sizeof...(FactoryTypes) > 0U)
     {
-        result &= fillFactories(backend_register, factories_to_fill...);
+        result |= fillFactories(backend_register, factories_to_fill...);
     }
 
     return result;

@@ -57,9 +57,10 @@ bool BackendFactory::loadBackendFile(htps::str const& file_name)
                                           fp_finish_backend_client_library);
             if (backend_register->init())
             {
-                bool const result{
-                    fillFactories(backend_register, &window_, &ttfontFactory_,
-                                  &textureFactory_, &shaderFactory_)};
+                bool const result{fillFactories(
+                    backend_register, &window_, &ttfontFactory_,
+                    &textureFactory_, &shaderFactory_, &bmpFontFactory_)};
+
                 if (result)
                 {
                     loaded_modules_.emplace_back(file_name,
