@@ -26,47 +26,47 @@ void ResourceManager::init()
     loadEmbeddedResources();
 }
 
-sptr<ITTFont> ResourceManager::getTTFont(const str& rid) const
+sptr<ITTFont> ResourceManager::getTTFont(str const& rid) const
 {
     return get_or_default(p_->ttf_fonts_, rid);
 }
 
-sptr<ITexture> ResourceManager::getTexture(const str& rid) const
+sptr<ITexture> ResourceManager::getTexture(str const& rid) const
 {
     return get_or_default(p_->textures_, rid);
 }
 
-sptr<IShader> ResourceManager::getShader(const str& rid) const
+sptr<IShader> ResourceManager::getShader(str const& rid) const
 {
     return get_or_default(p_->shaders_, rid);
 }
 
-sptr<IFont> ResourceManager::getBMPFont(const str& rid) const
+sptr<IFont> ResourceManager::getBMPFont(str const& rid) const
 {
     return get_or_default(p_->bmp_fonts_, rid);
 }
 
-bool ResourceManager::loadTTFont(const str& rid, const str& fileName)
+bool ResourceManager::loadTTFont(str const& rid, str const& fileName)
 {
     return get_or_add(this, systemProvider().backendFactory().ttfontFactory(),
                       p_->ttf_fonts_, systemProvider().system<FileSystem>(),
                       rid, fileName) != nullptr;
 }
-bool ResourceManager::loadTexture(const str& rid, const str& fileName)
+bool ResourceManager::loadTexture(str const& rid, str const& fileName)
 {
     return get_or_add(this, systemProvider().backendFactory().textureFactory(),
                       p_->textures_, systemProvider().system<FileSystem>(), rid,
                       fileName) != nullptr;
 }
 
-bool ResourceManager::loadShader(const str& rid, const str& fileName)
+bool ResourceManager::loadShader(str const& rid, str const& fileName)
 {
     return get_or_add(this, systemProvider().backendFactory().shaderFactory(),
                       p_->shaders_, systemProvider().system<FileSystem>(), rid,
                       fileName) != nullptr;
 }
 
-bool ResourceManager::loadBMPFont(const str& rid, const str& fileName)
+bool ResourceManager::loadBMPFont(str const& rid, str const& fileName)
 {
     return get_or_add(this, p_->bmp_font_factory_, p_->bmp_fonts_,
                       systemProvider().system<FileSystem>(), rid,
