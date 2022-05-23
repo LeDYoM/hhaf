@@ -73,6 +73,8 @@ set(sources
 
   # Resources
   # Default resources
+  ${src_dir}/resources/resource_loaders/default_resources/default_bmp_font_factory.cpp
+  ${src_dir}/resources/resource_loaders/default_resources/default_bmp_font_factory.hpp
   ${src_dir}/resources/resource_loaders/default_resources/default_bmp_font_private.cpp
   ${src_dir}/resources/resource_loaders/default_resources/default_bmp_font_private.hpp
   ${src_dir}/resources/resource_loaders/default_resources/default_bmp_font.cpp
@@ -82,8 +84,6 @@ set(sources
   ${src_dir}/resources/bmp_font.cpp
   ${src_dir}/resources/bmp_font.hpp
   ${src_dir}/resources/character_render_data.hpp
-  ${src_dir}/resources/default_bmp_font_factory.cpp
-  ${src_dir}/resources/default_bmp_font_factory.hpp
   ${src_dir}/resources/font_utils.cpp
   ${src_dir}/resources/font_utils.hpp
   ${src_dir}/resources/resource_data_description_names.hpp

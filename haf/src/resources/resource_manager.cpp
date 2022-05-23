@@ -7,7 +7,6 @@
 #include <haf/include/resources/itexture.hpp>
 #include <haf/include/resources/ishader.hpp>
 #include <haf/include/resources/ibmp_font.hpp>
-#include "default_bmp_font_factory.hpp"
 
 using namespace htps;
 using namespace haf::res;

@@ -1,8 +1,6 @@
 #include "default_bmp_font_factory.hpp"
-#include "bmp_font.hpp"
-#include "texture.hpp"
 #include <htypes/include/str.hpp>
-#include "resource_loaders/default_resources/default_bmp_font.hpp"
+#include "default_bmp_font.hpp"
 #include <hlog/include/hlog.hpp>
 
 using namespace htps;
