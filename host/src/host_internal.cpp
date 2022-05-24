@@ -50,11 +50,11 @@ void HostInternal::logLoadedFactories()
 
 bool HostInternal::initializeHaf()
 {
-    auto const result_load_functions = system_loader_.loadFunctions();
-    if (result_load_functions != SystemControllerLoader::ResultType::Success)
-    {
-        HostLogDisplayer::error("Cannot load haf system!");
-    }
+    auto const result_load_functions{system_loader_.loadFunctions()};
+    HostLogDisplayer::error_if(
+        result_load_functions != SystemControllerLoader::ResultType::Success,
+        "Cannot load haf system!");
+
     return result_load_functions == SystemControllerLoader::ResultType::Success;
 }
 
