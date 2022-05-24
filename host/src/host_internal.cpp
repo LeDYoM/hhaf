@@ -32,11 +32,20 @@ void HostInternal::logLoadedFactories()
 {
     LogAsserter::log_assert(backend_factory_ != nullptr, "No backend loaded!");
     HostLogDisplayer::debug(
-        "Window loaded at ",
-        reinterpret_cast<int>(backend_factory_->getWindow()));
+        "Window loaded loaded...\t\t",
+        backend_factory_->isWindowFactoryAvailable() ? "Yes" : "No");
     HostLogDisplayer::debug(
-        "Texture factory loaded at ",
-        reinterpret_cast<int>(backend_factory_->getTextureFactory()));
+        "Texture factory loaded...\t",
+        backend_factory_->getTextureFactory() ? "Yes" : "No");
+    HostLogDisplayer::debug(
+        "BMPFont factory loaded...\t",
+        backend_factory_->isBMPFontFactoryAvailable() ? "Yes" : "No");
+    HostLogDisplayer::debug(
+        "TTFont factory loaded...\t\t",
+        backend_factory_->isTTFontFactoryAvailable() ? "Yes" : "No");
+    HostLogDisplayer::debug(
+        "Shader factory loaded...\t\t",
+        backend_factory_->isShaderFactoryAvailable() ? "Yes" : "No");
 }
 
 bool HostInternal::initializeHaf()

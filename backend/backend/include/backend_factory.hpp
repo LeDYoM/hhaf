@@ -47,6 +47,13 @@ public:
     IShaderFactory& shaderFactory() const;
     IBMPFontFactory& bmpFontFactory() const;
 
+    bool isWindowFactoryAvailable() const noexcept;
+    bool isRenderTargetAvailable() const noexcept;
+    bool isTextureFactoryAvailable() const noexcept;
+    bool isShaderFactoryAvailable() const noexcept;
+    bool isBMPFontFactoryAvailable() const noexcept;
+    bool isTTFontFactoryAvailable() const noexcept;
+
 private:
     using BackendRegisterUptr   = htps::uptr<BackendRegister>;
     using BackendRegisteredData = htps::pair<htps::str, BackendRegisterUptr>;

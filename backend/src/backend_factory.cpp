@@ -73,6 +73,36 @@ bool BackendFactory::loadBackendFile(htps::str const& file_name)
     return false;
 }
 
+bool BackendFactory::isWindowFactoryAvailable() const noexcept
+{
+    return window_ != nullptr;
+}
+
+bool BackendFactory::isRenderTargetAvailable() const noexcept
+{
+    return render_target_ != nullptr;
+}
+
+bool BackendFactory::isTextureFactoryAvailable() const noexcept
+{
+    return textureFactory_ != nullptr;
+}
+
+bool BackendFactory::isShaderFactoryAvailable() const noexcept
+{
+    return shaderFactory_ != nullptr;
+}
+
+bool BackendFactory::isBMPFontFactoryAvailable() const noexcept
+{
+    return bmpFontFactory_ != nullptr;
+}
+
+bool BackendFactory::isTTFontFactoryAvailable() const noexcept
+{
+    return ttfontFactory_ != nullptr;
+}
+
 rptr<IWindow> BackendFactory::getWindow() const noexcept
 {
     return window_;
