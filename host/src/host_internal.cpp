@@ -25,6 +25,7 @@ bool HostInternal::initializeBackend()
     backend_factory_->loadBackendFile("bsfml");
 
     logLoadedFactories();
+    backend_factory_->loadBackendFile("haf_integrated_backend");
     return backend_factory_ != nullptr;
 }
 
