@@ -45,4 +45,6 @@ backend::IBMPFont* DefaultBMPFontFactory::loadFromRawMemory(
     return bmpfont_cache_.back().get();
 }
 
+DefaultBMPFontFactory::~DefaultBMPFontFactory() = default;
+
 }  // namespace haf::res

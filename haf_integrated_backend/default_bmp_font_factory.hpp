@@ -19,6 +19,7 @@ class DefaultBMPFontFactory final : public backend::IBMPFontFactory
 public:
     backend::IBMPFont* loadFromRawMemory(backend::ResourceLoadParameters const&
                                              resource_load_parameters) override;
+    ~DefaultBMPFontFactory() override;
 
 private:
     htps::vector<htps::sptr<DefaultBMPFont>> bmpfont_cache_;

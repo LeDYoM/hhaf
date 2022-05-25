@@ -24,7 +24,7 @@ BackendFactory::~BackendFactory()
     for (auto&& loaded_module : loaded_modules_)
     {
         emptyFactories(loaded_module.second, &window_, &textureFactory_,
-                       &ttfontFactory_, &shaderFactory_);
+                       &ttfontFactory_, &shaderFactory_, &bmpFontFactory_);
         loaded_module.second->finish();
         loaded_module.second.reset();
 

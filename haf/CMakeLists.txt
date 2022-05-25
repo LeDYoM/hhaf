@@ -73,12 +73,6 @@ set(sources
 
   # Resources
   # Default resources
-  ${src_dir}/resources/resource_loaders/default_resources/default_bmp_font_factory.cpp
-  ${src_dir}/resources/resource_loaders/default_resources/default_bmp_font_factory.hpp
-  ${src_dir}/resources/resource_loaders/default_resources/default_bmp_font_private.cpp
-  ${src_dir}/resources/resource_loaders/default_resources/default_bmp_font_private.hpp
-  ${src_dir}/resources/resource_loaders/default_resources/default_bmp_font.cpp
-  ${src_dir}/resources/resource_loaders/default_resources/default_bmp_font.hpp
   ${src_dir}/resources/resource_loaders/iresource_loader.hpp
 
   ${src_dir}/resources/bmp_font.cpp

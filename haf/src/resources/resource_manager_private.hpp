@@ -5,8 +5,6 @@
 #include "shader.hpp"
 #include "ttfont.hpp"
 #include "bmp_font.hpp"
-#include "resource_loaders/default_resources/default_bmp_font_factory.hpp"
-#include "resource_loaders/default_resources/default_bmp_font_factory.hpp"
 
 #include <htypes/include/dictionary.hpp>
 #include <hlog/include/hlog.hpp>
@@ -106,7 +104,7 @@ struct ResourceManager::ResourceManagerPrivate
     ResourceList<sptr<Texture>> textures_;
     ResourceList<sptr<Shader>> shaders_;
     ResourceList<sptr<BMPFont>> bmp_fonts_;
-    DefaultBMPFontFactory bmp_font_factory_;
+//    DefaultBMPFontFactory bmp_font_factory_;
 };
 
 }  // namespace haf::sys
