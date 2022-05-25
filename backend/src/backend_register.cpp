@@ -1,4 +1,5 @@
 #include <backend/include/backend_register.hpp>
+#include "backend_factory_utils.hpp"
 
 using namespace htps;
 
@@ -65,4 +66,18 @@ bool BackendRegister::finish()
     }
     return false;
 }
+
+bool BackendRegister::fillRegisteredFactories()
+{
+    return fillFactories(this, &window_, &ttfontFactory_, &textureFactory_,
+                         &shaderFactory_, &bmpFontFactory_);
+
+}  // namespace haf::backend
+
+bool BackendRegister::emptyRegisteredFactories()
+{
+    return emptyFactories(this, &window_, &textureFactory_, &ttfontFactory_,
+                          &shaderFactory_, &bmpFontFactory_);
+}
+
 }  // namespace haf::backend

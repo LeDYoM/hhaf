@@ -7,7 +7,7 @@
 namespace haf::backend
 {
 template <typename FactoryType>
-bool fillFactory(htps::uptr<BackendRegister> const& backend_register,
+bool fillFactory(htps::rptr<BackendRegister> const& backend_register,
                  FactoryType** factory_to_fill)
 {
     if (auto factory{backend_register->getFactory<IFactoryOf<FactoryType>>()};
@@ -30,7 +30,7 @@ bool fillFactory(htps::uptr<BackendRegister> const& backend_register,
  * @return false None of the factories have been filled
  */
 template <typename FactoryType, typename... FactoryTypes>
-bool fillFactories(htps::uptr<BackendRegister> const& backend_register,
+bool fillFactories(htps::rptr<BackendRegister> const& backend_register,
                    FactoryType factory_to_fill,
                    FactoryTypes... factories_to_fill)
 {
@@ -45,7 +45,7 @@ bool fillFactories(htps::uptr<BackendRegister> const& backend_register,
 }
 
 template <typename FactoryType>
-bool emptyFactory(htps::uptr<BackendRegister> const& backend_register,
+bool emptyFactory(htps::rptr<BackendRegister> const& backend_register,
                   FactoryType** factory_to_empty)
 {
     if (auto factory{backend_register->getFactory<IFactoryOf<FactoryType>>()};
@@ -62,7 +62,7 @@ bool emptyFactory(htps::uptr<BackendRegister> const& backend_register,
 }
 
 template <typename FactoryType, typename... FactoryTypes>
-bool emptyFactories(htps::uptr<BackendRegister> const& backend_register,
+bool emptyFactories(htps::rptr<BackendRegister> const& backend_register,
                     FactoryType factory_to_empty,
                     FactoryTypes... factories_to_empty)
 {

@@ -73,6 +73,9 @@ public:
         return init_lib_func_ != nullptr && finish_lib_func_ != nullptr;
     }
 
+    bool fillRegisteredFactories();
+    bool emptyRegisteredFactories();
+
     htps::rptr<IWindow> window_{nullptr};
     htps::rptr<IRenderTarget> render_target_{nullptr};
     htps::rptr<ITextureFactory> textureFactory_{nullptr};
