@@ -57,6 +57,8 @@ public:
 private:
     using BackendRegisterUptr   = htps::uptr<BackendRegister>;
     using BackendRegisteredData = htps::pair<htps::str, BackendRegisterUptr>;
+    void selectFectoriesToUse(BackendRegisterUptr const& backend_register);
+
     htps::vector<BackendRegisteredData>
         loaded_modules_;  //< List of loaded backend libraries.
     htps::rptr<IWindow> window_{nullptr};

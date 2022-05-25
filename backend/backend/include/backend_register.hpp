@@ -73,6 +73,13 @@ public:
         return init_lib_func_ != nullptr && finish_lib_func_ != nullptr;
     }
 
+    htps::rptr<IWindow> window_{nullptr};
+    htps::rptr<IRenderTarget> render_target_{nullptr};
+    htps::rptr<ITextureFactory> textureFactory_{nullptr};
+    htps::rptr<ITTFontFactory> ttfontFactory_{nullptr};
+    htps::rptr<IShaderFactory> shaderFactory_{nullptr};
+    htps::rptr<IBMPFontFactory> bmpFontFactory_{nullptr};
+
 private:
     p_initBackendClient init_lib_func_{nullptr};
     p_finishBackendClient finish_lib_func_{nullptr};

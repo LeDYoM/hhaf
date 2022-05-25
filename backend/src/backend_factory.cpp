@@ -23,8 +23,11 @@ BackendFactory::~BackendFactory()
 {
     for (auto&& loaded_module : loaded_modules_)
     {
-        emptyFactories(loaded_module.second, &window_, &textureFactory_,
-                       &ttfontFactory_, &shaderFactory_, &bmpFontFactory_);
+        emptyFactories(loaded_module.second, &loaded_module.second->window_,
+                       &loaded_module.second->textureFactory_,
+                       &loaded_module.second->ttfontFactory_,
+                       &loaded_module.second->shaderFactory_,
+                       &loaded_module.second->bmpFontFactory_);
         loaded_module.second->finish();
         loaded_module.second.reset();
 
@@ -57,12 +60,16 @@ bool BackendFactory::loadBackendFile(htps::str const& file_name)
                                           fp_finish_backend_client_library);
             if (backend_register->init())
             {
-                bool const result{fillFactories(
-                    backend_register, &window_, &ttfontFactory_,
-                    &textureFactory_, &shaderFactory_, &bmpFontFactory_)};
+                bool const result{
+                    fillFactories(backend_register, &backend_register->window_,
+                                  &backend_register->ttfontFactory_,
+                                  &backend_register->textureFactory_,
+                                  &backend_register->shaderFactory_,
+                                  &backend_register->bmpFontFactory_)};
 
                 if (result)
                 {
+                    selectFectoriesToUse(backend_register);
                     loaded_modules_.emplace_back(file_name,
                                                  htps::move(backend_register));
                 }
@@ -71,6 +78,12 @@ bool BackendFactory::loadBackendFile(htps::str const& file_name)
         }
     }
     return false;
+}
+
+void BackendFactory::selectFectoriesToUse(
+    BackendRegisterUptr const& backend_register)
+{
+    (void)backend_register;
 }
 
 bool BackendFactory::isWindowFactoryAvailable() const noexcept

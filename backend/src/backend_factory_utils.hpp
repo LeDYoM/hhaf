@@ -48,7 +48,7 @@ template <typename FactoryType>
 bool emptyFactory(htps::uptr<BackendRegister> const& backend_register,
                   FactoryType** factory_to_empty)
 {
-    if (auto factory(backend_register->getFactory<IFactoryOf<FactoryType>>());
+    if (auto factory{backend_register->getFactory<IFactoryOf<FactoryType>>()};
         factory != nullptr)
     {
         if (factory_to_empty != nullptr && *factory_to_empty != nullptr)
@@ -58,7 +58,7 @@ bool emptyFactory(htps::uptr<BackendRegister> const& backend_register,
             return true;
         }
     }
-    return false;
+    return true;
 }
 
 template <typename FactoryType, typename... FactoryTypes>
@@ -66,11 +66,11 @@ bool emptyFactories(htps::uptr<BackendRegister> const& backend_register,
                     FactoryType factory_to_empty,
                     FactoryTypes... factories_to_empty)
 {
-    bool result = emptyFactory(backend_register, factory_to_empty);
+    bool result{emptyFactory(backend_register, factory_to_empty)};
 
     if constexpr (sizeof...(FactoryTypes) > 0U)
     {
-        result &= emptyFactories(backend_register, factories_to_empty...);
+        result |= emptyFactories(backend_register, factories_to_empty...);
     }
 
     return result;
