@@ -13,10 +13,10 @@ namespace haf::backend::sfmlb
 {
 class RenderElement;
 
-class RenderTarget : public IRenderTarget, public sf::RenderTarget
+class SFMLRenderTarget : public IRenderTarget, public sf::RenderTarget
 {
 public:
-    ~RenderTarget() override;
+    ~SFMLRenderTarget() override;
     void initialize() override;
 
     void render(IRenderElement const** render_element_begin,

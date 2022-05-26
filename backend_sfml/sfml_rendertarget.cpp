@@ -9,14 +9,14 @@ using namespace htps;
 
 namespace haf::backend::sfmlb
 {
-RenderTarget::~RenderTarget() = default;
+SFMLRenderTarget::~SFMLRenderTarget() = default;
 
-void RenderTarget::initialize()
+void SFMLRenderTarget::initialize()
 {
     sf::RenderTarget::initialize();
 }
 
-void RenderTarget::drawDebugQuad([
+void SFMLRenderTarget::drawDebugQuad([
     [maybe_unused]] IRenderElement const* const irender_element)
 {
 #ifdef DRAW_DEBUG_QUAD
@@ -36,12 +36,12 @@ void RenderTarget::drawDebugQuad([
 #endif
 }
 
-void RenderTarget::render(IRenderElement const* const render_element)
+void SFMLRenderTarget::render(IRenderElement const* const render_element)
 {
     renderImpl(static_cast<RenderElement const* const>(render_element));
 }
 
-void RenderTarget::render(IRenderElement const** render_element_begin,
+void SFMLRenderTarget::render(IRenderElement const** render_element_begin,
                           IRenderElement const** const render_element_end)
 {
     while (render_element_begin != render_element_end)
@@ -52,7 +52,7 @@ void RenderTarget::render(IRenderElement const** render_element_begin,
     }
 }
 
-void RenderTarget::renderImpl(RenderElement const* render_element)
+void SFMLRenderTarget::renderImpl(RenderElement const* render_element)
 {
     render_element->render(*this);
 #ifdef DRAW_DEBUG_QUAD
@@ -60,20 +60,20 @@ void RenderTarget::renderImpl(RenderElement const* render_element)
 #endif
 }
 
-void RenderTarget::setViewPort(const Rectf32&)
+void SFMLRenderTarget::setViewPort(const Rectf32&)
 {
     sf::View currentView(getView());
     currentView.setViewport(sf::FloatRect{0.0F, 0.0F, 1.0F, 1.0F});
     setView(currentView);
 }
 
-Rectf32 RenderTarget::viewPort() const
+Rectf32 SFMLRenderTarget::viewPort() const
 {
     sf::View currentView(getView());
     return from_sf_type(currentView.getViewport());
 }
 
-void RenderTarget::updateCamera(ICamera* const camera)
+void SFMLRenderTarget::updateCamera(ICamera* const camera)
 {
     if (camera->updateRequired())
     {
@@ -83,12 +83,12 @@ void RenderTarget::updateCamera(ICamera* const camera)
     }
 }
 
-void RenderTarget::clear()
+void SFMLRenderTarget::clear()
 {
     sf::RenderTarget::clear();
 }
 
-htps::str RenderTarget::info() const
+htps::str SFMLRenderTarget::info() const
 {
     return make_str(
         "name:SFMLWindowRenderTargget;provider:SFML;provider_version:",
@@ -96,17 +96,17 @@ htps::str RenderTarget::info() const
         ";version:0;subversion:2:patch3");
 }
 
-sf::Vector2u RenderTarget::getSize() const
+sf::Vector2u SFMLRenderTarget::getSize() const
 {
     return sf::Vector2u{};
 }
 
-ICamera* RenderTarget::createCamera()
+ICamera* SFMLRenderTarget::createCamera()
 {
     return new SFML2DCamera();
 }
 
-bool RenderTarget::destroyCamera(ICamera* camera)
+bool SFMLRenderTarget::destroyCamera(ICamera* camera)
 {
     if (camera != nullptr)
     {
@@ -120,12 +120,12 @@ bool RenderTarget::destroyCamera(ICamera* camera)
     return false;
 }
 
-IRenderElement* RenderTarget::createRenderElement()
+IRenderElement* SFMLRenderTarget::createRenderElement()
 {
     return new RenderElement();
 }
 
-bool RenderTarget::destroyRenderElement(IRenderElement* render_element)
+bool SFMLRenderTarget::destroyRenderElement(IRenderElement* render_element)
 {
     if (render_element != nullptr)
     {

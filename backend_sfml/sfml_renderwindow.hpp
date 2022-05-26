@@ -15,11 +15,11 @@
 
 namespace haf::backend::sfmlb
 {
-class RenderWindow : public IWindow, public RenderTarget, public sf::Window
+class SFMLRenderWindow : public IWindow, public SFMLRenderTarget, public sf::Window
 {
 public:
-    RenderWindow();
-    ~RenderWindow() override;
+    SFMLRenderWindow();
+    ~SFMLRenderWindow() override;
 
     bool createWindow(const htps::u32 width,
                       const htps::u32 height,

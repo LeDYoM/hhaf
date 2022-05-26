@@ -7,9 +7,9 @@ using namespace htps;
 
 namespace haf::backend::sfmlb
 {
-RenderWindow::RenderWindow()
+SFMLRenderWindow::SFMLRenderWindow()
 {}
-RenderWindow::~RenderWindow()
+SFMLRenderWindow::~SFMLRenderWindow()
 {
     sf::Window::close();
 }
@@ -37,12 +37,12 @@ private:
     const unsigned int* const data_;
 };
 
-bool RenderWindow::isAlreadyCreated() const
+bool SFMLRenderWindow::isAlreadyCreated() const
 {
     return already_created_;
 }
 
-bool RenderWindow::createWindow(const u32 width,
+bool SFMLRenderWindow::createWindow(const u32 width,
                                 const u32 height,
                                 const u8 red_bpp,
                                 const u8 green_bpp,
@@ -78,22 +78,22 @@ bool RenderWindow::createWindow(const u32 width,
     return false;
 }
 
-sf::Vector2u RenderWindow::getSize() const
+sf::Vector2u SFMLRenderWindow::getSize() const
 {
     return Window::getSize();
 }
 
-rptr<IRenderTarget> RenderWindow::renderTarget()
+rptr<IRenderTarget> SFMLRenderWindow::renderTarget()
 {
     return this;
 }
 
-bool RenderWindow::setActive(bool active)
+bool SFMLRenderWindow::setActive(bool active)
 {
     return sf::Window::setActive(active);
 }
 
-bool RenderWindow::processEvents()
+bool SFMLRenderWindow::processEvents()
 {
     input_driver_.clearInternalInputBuffer();
     sf::Event event;
@@ -112,34 +112,34 @@ bool RenderWindow::processEvents()
     return false;
 }
 
-void RenderWindow::display()
+void SFMLRenderWindow::display()
 {
     Window::display();
 }
 
-void RenderWindow::setWindowTitle(str newTitle)
+void SFMLRenderWindow::setWindowTitle(str newTitle)
 {
     Window::setTitle(to_sf_type(newTitle));
 }
 
-void RenderWindow::closeWindow()
+void SFMLRenderWindow::closeWindow()
 {
     Window::close();
 }
 
-rptr<IInputDriver> RenderWindow::inputDriver()
+rptr<IInputDriver> SFMLRenderWindow::inputDriver()
 {
     return &input_driver_;
 }
 
-str RenderWindow::info() const
+str SFMLRenderWindow::info() const
 {
     return make_str("name:SFMLWindow;provider:SFML;provider_version:",
                     SFML_VERSION_MAJOR, ".", SFML_VERSION_MINOR, ".",
                     SFML_VERSION_PATCH, ";version:0;subversion:2:patch:4");
 }
 
-str RenderWindow::settingsInfo()
+str SFMLRenderWindow::settingsInfo()
 {
     sf::ContextSettings settings = sf::Window::getSettings();
 
@@ -152,12 +152,12 @@ str RenderWindow::settingsInfo()
                     settings.minorVersion);
 }
 
-void RenderWindow::onCreate()
+void SFMLRenderWindow::onCreate()
 {
     renderTarget()->initialize();
 }
 
-void RenderWindow::onResize()
+void SFMLRenderWindow::onResize()
 {
 //    renderTarget()->setViewPort(renderTarget()->viewPort());
 }
