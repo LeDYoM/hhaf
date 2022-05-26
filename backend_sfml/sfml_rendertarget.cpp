@@ -1,4 +1,4 @@
-#include "rendertarget.hpp"
+#include "sfml_rendertarget.hpp"
 #include "conversions.hpp"
 #include "render_element.hpp"
 #include "sfml_2d_camera.hpp"
@@ -16,8 +16,8 @@ void RenderTarget::initialize()
     sf::RenderTarget::initialize();
 }
 
-void RenderTarget::drawDebugQuad(
-    [[maybe_unused]] IRenderElement const* const irender_element)
+void RenderTarget::drawDebugQuad([
+    [maybe_unused]] IRenderElement const* const irender_element)
 {
 #ifdef DRAW_DEBUG_QUAD
     auto const* const render_element{
@@ -60,10 +60,10 @@ void RenderTarget::renderImpl(RenderElement const* render_element)
 #endif
 }
 
-void RenderTarget::setViewPort(const Rectf32& nviewport)
+void RenderTarget::setViewPort(const Rectf32&)
 {
     sf::View currentView(getView());
-    currentView.setViewport(to_sf_type(nviewport));
+    currentView.setViewport(sf::FloatRect{0.0F, 0.0F, 1.0F, 1.0F});
     setView(currentView);
 }
 
@@ -110,7 +110,8 @@ bool RenderTarget::destroyCamera(ICamera* camera)
 {
     if (camera != nullptr)
     {
-        if (auto d_camera{dynamic_cast<SFML2DCamera*>(camera)}; d_camera != nullptr)
+        if (auto d_camera{dynamic_cast<SFML2DCamera*>(camera)};
+            d_camera != nullptr)
         {
             delete d_camera;
             return true;

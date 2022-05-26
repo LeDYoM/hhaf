@@ -1,7 +1,5 @@
-#include "renderwindow.hpp"
+#include "sfml_renderwindow.hpp"
 #include "conversions.hpp"
-
-#include <SFML/Config.hpp>
 
 #include <string>
 
@@ -161,7 +159,7 @@ void RenderWindow::onCreate()
 
 void RenderWindow::onResize()
 {
-    renderTarget()->setViewPort(renderTarget()->viewPort());
+//    renderTarget()->setViewPort(renderTarget()->viewPort());
 }
 
 }  // namespace haf::backend::sfmlb

@@ -10,7 +10,7 @@
 #include <backend_dev/include/iwindow.hpp>
 #include <backend_dev/include/iinputdriver.hpp>
 
-#include "rendertarget.hpp"
+#include "sfml_rendertarget.hpp"
 #include "inputdriver.hpp"
 
 namespace haf::backend::sfmlb
