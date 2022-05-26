@@ -6,9 +6,10 @@
 
 namespace haf::backend::sfmlb
 {
-class Camera : public ICamera
+class SFML2DCamera final : public ICamera
 {
 public:
+    ~SFML2DCamera() override;
     void setPointOfView(htps::vector2df const& pov) override;
     void setViewPort(htps::Rectf32 const& viewPort) override;
     void setNearRect(htps::Rectf32 const& nearRect) override;

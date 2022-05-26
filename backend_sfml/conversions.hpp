@@ -6,7 +6,7 @@
 #include <backend_dev/include/icamera.hpp>
 #include "sfml_texture.hpp"
 #include "sfml_shader.hpp"
-#include "camera.hpp"
+#include "sfml_2d_camera.hpp"
 #include <SFML/Window.hpp>
 #include <SFML/System/String.hpp>
 
@@ -108,9 +108,9 @@ inline auto to_sf_type(htps::f32 const* const matrix,
                             to_sf_type(shader)};
 }
 
-inline Camera* to_sf_type(ICamera * const camera)
+inline SFML2DCamera* to_sf_type(ICamera * const camera)
 {
-    return dynamic_cast<Camera*>(camera);
+    return dynamic_cast<SFML2DCamera*>(camera);
 }
 
 }  // namespace haf::backend::sfmlb

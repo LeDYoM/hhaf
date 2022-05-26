@@ -1,7 +1,7 @@
 #include "rendertarget.hpp"
 #include "conversions.hpp"
 #include "render_element.hpp"
-#include "camera.hpp"
+#include "sfml_2d_camera.hpp"
 
 #include <SFML/Config.hpp>
 
@@ -77,7 +77,7 @@ void RenderTarget::updateCamera(ICamera* const camera)
 {
     if (camera->updateRequired())
     {
-        Camera* const camera_sf{to_sf_type(camera)};
+        SFML2DCamera* const camera_sf{to_sf_type(camera)};
         setView(camera_sf->getView());
         camera_sf->resetUpdateRequired();
     }
@@ -103,14 +103,14 @@ sf::Vector2u RenderTarget::getSize() const
 
 ICamera* RenderTarget::createCamera()
 {
-    return new Camera();
+    return new SFML2DCamera();
 }
 
 bool RenderTarget::destroyCamera(ICamera* camera)
 {
     if (camera != nullptr)
     {
-        if (auto d_camera{dynamic_cast<Camera*>(camera)}; d_camera != nullptr)
+        if (auto d_camera{dynamic_cast<SFML2DCamera*>(camera)}; d_camera != nullptr)
         {
             delete d_camera;
             return true;
