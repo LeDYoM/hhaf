@@ -585,12 +585,6 @@ public:
         return !(*this == a);
     }
 
-    template <typename T>
-    constexpr basic_str& operator<<(T const& n)
-    {
-        return append(n);
-    }
-
     constexpr bool operator<(const basic_str& rhs) const noexcept
     {
         for (size_type i{0U}; i < size() && i < rhs.size(); ++i)
@@ -607,6 +601,13 @@ public:
         return size() < rhs.size();
     }
 };
+
+template <typename value_type, typename T>
+constexpr basic_str<value_type>& operator<<(basic_str<value_type>& lhs,
+                                            T const& n)
+{
+    return lhs.append(n);
+}
 
 template <typename T, typename value_type>
 basic_str<value_type> operator+(T&& lhs, basic_str<value_type> const& rhs)

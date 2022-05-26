@@ -1,10 +1,15 @@
 #include <backend/include/backend_register.hpp>
-#include "backend_factory_utils.hpp"
+#include "backend_utils.hpp"
+#include "backend_log.hpp"
 
 using namespace htps;
 
 namespace haf::backend
 {
+BackendRegister::BackendRegister(htps::str const& module_name) :
+    module_name_{module_name}
+{}
+
 void BackendRegister::setFactory(uptr<IWindowFactory> window_factory) noexcept
 {
     window_factory_ = htps::move(window_factory);
@@ -78,6 +83,11 @@ bool BackendRegister::emptyRegisteredFactories()
 {
     return emptyFactories(this, &window_, &textureFactory_, &ttfontFactory_,
                           &shaderFactory_, &bmpFontFactory_);
+}
+
+htps::str const& BackendRegister::moduleName() const noexcept
+{
+    return module_name_;
 }
 
 }  // namespace haf::backend

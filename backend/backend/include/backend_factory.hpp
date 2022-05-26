@@ -55,13 +55,11 @@ public:
     bool isTTFontFactoryAvailable() const noexcept;
 
 private:
-    using BackendRegisterUptr   = htps::uptr<BackendRegister>;
-    using BackendRegisteredData = htps::pair<htps::str, BackendRegisterUptr>;
+    using BackendRegisterUptr = htps::uptr<BackendRegister>;
+    htps::vector<BackendRegisterUptr>
+        loaded_modules_;  //< List of loaded backend libraries.
     void selectFactoriesToUse(
         BackendRegisterUptr const& backend_register) noexcept;
-
-    htps::vector<BackendRegisteredData>
-        loaded_modules_;  //< List of loaded backend libraries.
     htps::rptr<IWindow> window_{nullptr};
     htps::rptr<IRenderTarget> render_target_{nullptr};
     htps::rptr<ITextureFactory> textureFactory_{nullptr};

@@ -16,6 +16,7 @@ namespace haf::backend
 class BackendRegister final : public client::IBackendRegister
 {
 public:
+    explicit BackendRegister(htps::str const& module_name);
     void setFactory(htps::uptr<IWindowFactory>) noexcept override;
     void setFactory(htps::uptr<IRenderTargetFactory>) noexcept override;
     void setFactory(htps::uptr<ITTFontFactoryFactory>) noexcept override;
@@ -76,6 +77,7 @@ public:
     bool fillRegisteredFactories();
     bool emptyRegisteredFactories();
 
+    htps::str const& moduleName() const noexcept;
     htps::rptr<IWindow> window_{nullptr};
     htps::rptr<IRenderTarget> render_target_{nullptr};
     htps::rptr<ITextureFactory> textureFactory_{nullptr};
@@ -84,6 +86,7 @@ public:
     htps::rptr<IBMPFontFactory> bmpFontFactory_{nullptr};
 
 private:
+    htps::str module_name_{};
     p_initBackendClient init_lib_func_{nullptr};
     p_finishBackendClient finish_lib_func_{nullptr};
     htps::sptr<IWindowFactory> window_factory_;
