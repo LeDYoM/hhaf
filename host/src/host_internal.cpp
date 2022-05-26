@@ -23,9 +23,9 @@ bool HostInternal::initializeBackend()
         uptr<backend::BackendFactory, void (*)(backend::BackendFactory*)>(
             createBackendFactory(), destroyBackendFactory);
     backend_factory_->loadBackendFile("bsfml");
-
-    logLoadedFactories();
     backend_factory_->loadBackendFile("haf_integrated_backend");
+    logLoadedFactories();
+
     return backend_factory_ != nullptr;
 }
 
