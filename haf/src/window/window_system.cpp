@@ -1,6 +1,5 @@
 #include "window.hpp"
 #include "window_system.hpp"
-#include "window_private.hpp"
 #include <backend_dev/include/iwindow.hpp>
 #include <backend/include/backend_factory.hpp>
 
@@ -92,9 +91,9 @@ bool WindowSystem::initialize(str const& window_config_file)
     }
 }
 
-bool WindowSystem::preLoop()
+bool WindowSystem::preLoop(time::TimePoint const& time_since_start)
 {
-    return m_window->preLoop();
+    return m_window->preLoop(time_since_start);
 }
 
 void WindowSystem::postLoop()

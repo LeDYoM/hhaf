@@ -4,6 +4,7 @@ HTPS_PRAGMA_ONCE
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/str.hpp>
+#include "fps_counter.hpp"
 
 namespace haf::input
 {
@@ -43,12 +44,14 @@ public:
     ~Window();
 
     /**
-     * @brief Method to be executed before starting a cycle of the system
+     * @brief Method to be executed before starting a cycle of the window
+     * rendering
      *
+     * @param time_since_start Time containing the ellapsed time since start
      * @return true The window has requested to exit
      * @return false The window did not request to exit
      */
-    bool preLoop();
+    bool preLoop(time::TimePoint const& time_since_start);
 
     /**
      * @brief Method to be executed after the cycle of a system
@@ -62,8 +65,11 @@ public:
     htps::sptr<input::InputDriverWrapper const> inputDriverWrapper() const;
 
 private:
-    struct WindowPrivate;
-    htps::uptr<WindowPrivate> priv_;
+    FPSCounter fps_counter;
+    htps::rptr<backend::IWindow> m_backend_window{nullptr};
+    htps::sptr<input::InputDriverWrapper> m_input_driver_wrapper;
+    htps::sptr<RenderTarget> m_render_target;
+    htps::str m_title;
 };
 }  // namespace haf::sys
 

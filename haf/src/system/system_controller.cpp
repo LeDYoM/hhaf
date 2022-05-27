@@ -1,9 +1,10 @@
 #include "system_controller.hpp"
-#include "window/window.hpp"
+#include "window/window_system.hpp"
 #include "simulation/simulation_system.hpp"
 #include "input/input_system.hpp"
 #include "scene/scene_manager.hpp"
 #include "render/render_system.hpp"
+#include "time/time_system.hpp"
 
 #include <hlog/include/hlog.hpp>
 #include <hosted_app/include/iapp.hpp>
@@ -36,7 +37,8 @@ void SystemController::terminate()
 
 bool SystemController::preUpdate()
 {
-    const bool pre_update_wants_to_close{system<Window>().preLoop()};
+    const bool pre_update_wants_to_close{system<WindowSystem>().preLoop(
+        system<TimeSystem>().timeSinceStart())};
     system<SimulationSystem>().updateSimulationInput();
     system<InputSystem>().preUpdate();
     return pre_update_wants_to_close;
@@ -55,7 +57,7 @@ bool SystemController::update()
 bool SystemController::postUpdate()
 {
     system<InputSystem>().postUpdate();
-    system<Window>().postLoop();
+    system<WindowSystem>().postLoop();
 
     return false;
 }

@@ -187,8 +187,6 @@ set(sources
   ${src_dir}/window/fps_counter.cpp
   ${src_dir}/window/fps_counter.hpp
   ${src_dir}/window/window_configuration.hpp
-  ${src_dir}/window/window_private.cpp
-  ${src_dir}/window/window_private.hpp
   ${src_dir}/window/window_system.cpp
   ${src_dir}/window/window_system.hpp
   ${src_dir}/window/window.cpp

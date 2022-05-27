@@ -279,14 +279,14 @@ IApp const& SystemProvider::app() const
     return *p_->app_;
 }
 
-Window const& SystemProvider::window() const noexcept
+WindowSystem const& SystemProvider::windowSystem() const noexcept
 {
-    return *p_->window_system_->window();
+    return *p_->window_system_;
 }
 
-Window& SystemProvider::window() noexcept
+WindowSystem& SystemProvider::windowSystem() noexcept
 {
-    return *p_->window_system_->window();
+    return *p_->window_system_;
 }
 
 ResourceManager const& SystemProvider::resourceManager() const noexcept
@@ -436,15 +436,15 @@ scene::SceneManager& SystemProvider::system() noexcept
 }
 
 template <>
-Window const& SystemProvider::system() const noexcept
+WindowSystem const& SystemProvider::system() const noexcept
 {
-    return window();
+    return windowSystem();
 }
 
 template <>
-Window& SystemProvider::system() noexcept
+WindowSystem& SystemProvider::system() noexcept
 {
-    return window();
+    return windowSystem();
 }
 
 template <>

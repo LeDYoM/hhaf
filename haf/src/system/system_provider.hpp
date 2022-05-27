@@ -24,7 +24,7 @@ class SceneManager;
 namespace sys
 {
 class InputSystem;
-class Window;
+class WindowSystem;
 class ResourceManager;
 class RandomSystem;
 class FileSystem;
@@ -70,8 +70,8 @@ private:
     void instanciateSystems(InitSystemOptions const& init_system_options);
     void initializeSystems(InitSystemOptions const& init_system_options);
 
-    Window const& window() const noexcept;
-    Window& window() noexcept;
+    WindowSystem const& windowSystem() const noexcept;
+    WindowSystem& windowSystem() noexcept;
     ResourceManager const& resourceManager() const noexcept;
     ResourceManager& resourceManager() noexcept;
     InputSystem const& inputSystem() const noexcept;
