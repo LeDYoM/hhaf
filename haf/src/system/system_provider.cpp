@@ -10,7 +10,7 @@
 #include "random/randomsystem.hpp"
 #include "render/render_system.hpp"
 #include "scene/scene_manager.hpp"
-#include "window/window.hpp"
+#include "window/window_system.hpp"
 #include "time/time_system.hpp"
 #include "shareddata/shared_data_system.hpp"
 #include "resources/resource_manager.hpp"
@@ -35,7 +35,7 @@ struct SystemProvider::SystemProviderPrivate final
     uptr<DebugSystem> debug_system_;
     uptr<SharedDataSystem> shared_data_system_;
     BackendFactoryPtr backend_factory_{nullptr};
-    uptr<Window> window_;
+    uptr<WindowSystem> window_system_;
     uptr<ResourceManager> resource_manager_;
     uptr<InputSystem> input_system_;
     uptr<scene::SceneManager> scene_manager_;
@@ -137,7 +137,7 @@ void SystemProvider::instanciateSystems(
     if (init_system_options.init_window_system)
     {
         DisplayLog::debug("Initializing Window");
-        p_->window_ = muptr<Window>(*this);
+        p_->window_system_ = muptr<WindowSystem>(*this);
     }
 
     if (init_system_options.init_input_system)
@@ -192,18 +192,19 @@ void SystemProvider::initializeSystems(
         DisplayLog::debug("Initializing Window");
 
         configureSystem(
-            p_->window_,
+            p_->window_system_,
             p_->system_provdier_configuration_.windowSystemConfigurationFile());
 
         if (init_system_options.init_render_system)
         {
-            p_->render_system_->setRenderTarget(p_->window_->renderTarget());
+            p_->render_system_->setRenderTarget(
+                p_->window_system_->window()->renderTarget());
         }
 
         if (init_system_options.init_input_system)
         {
             p_->input_system_->setInputDriverWrapper(
-                p_->window_->inputDriverWrapper());
+                p_->window_system_->window()->inputDriverWrapper());
         }
     }
 
@@ -261,7 +262,7 @@ void SystemProvider::terminate()
     p_->resource_manager_.reset();
     p_->scene_manager_.reset();
     p_->input_system_.reset();
-    p_->window_.reset();
+    p_->window_system_.reset();
     p_->time_system_.reset();
     p_->debug_system_.reset();
     p_->file_system_.reset();
@@ -280,12 +281,12 @@ IApp const& SystemProvider::app() const
 
 Window const& SystemProvider::window() const noexcept
 {
-    return *p_->window_;
+    return *p_->window_system_->window();
 }
 
 Window& SystemProvider::window() noexcept
 {
-    return *p_->window_;
+    return *p_->window_system_->window();
 }
 
 ResourceManager const& SystemProvider::resourceManager() const noexcept

@@ -189,9 +189,11 @@ set(sources
   ${src_dir}/window/window_configuration.hpp
   ${src_dir}/window/window_private.cpp
   ${src_dir}/window/window_private.hpp
+  ${src_dir}/window/window_system.cpp
+  ${src_dir}/window/window_system.hpp
   ${src_dir}/window/window.cpp
   ${src_dir}/window/window.hpp
-  )
+)
 
 set(inc_dir include/haf/include)
 

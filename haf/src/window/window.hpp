@@ -4,11 +4,15 @@ HTPS_PRAGMA_ONCE
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/str.hpp>
-#include "system/system_base.hpp"
 
 namespace haf::input
 {
 class InputDriverWrapper;
+}
+
+namespace haf::backend
+{
+    class IWindow;
 }
 
 namespace haf::sys
@@ -23,29 +27,20 @@ class SystemProvider;
  * It encapsulates an IWindow from the backend. This Window reference
  * might be already created or not.
  */
-class Window final : public SystemBase
+class Window final
 {
 public:
     /**
      * @brief Construct a new Window object
-     * @param system_provider The system provider
      */
-    Window(sys::SystemProvider& system_provider);
+    Window(htps::rptr<backend::IWindow> backend_window_,
+           htps::sptr<input::InputDriverWrapper> input_driver_wrapper_,
+           htps::sptr<RenderTarget> render_target_);
 
     /**
      * @brief Destroy the Window object
      */
     ~Window();
-
-    /**
-     * @brief Initializes the window system.
-     * Also Creates (or tryes to create) an operating system window
-     *
-     * @param window_config_file Configuration file for the window system
-     * @return true If window creation was successful
-     * @return false Failed trying to create the window
-     */
-    bool initialize(htps::str const& window_config_file);
 
     /**
      * @brief Method to be executed before starting a cycle of the system
