@@ -6,7 +6,6 @@
 #include "sfml_renderwindow.hpp"
 #include "sfml_texture.hpp"
 #include "sfml_shader.hpp"
-#include "sfml_2d_camera.hpp"
 #include <SFML/Window.hpp>
 #include <SFML/System/String.hpp>
 
@@ -106,11 +105,6 @@ inline auto to_sf_type(htps::f32 const* const matrix,
     return sf::RenderStates{sf::RenderStates::Default.blendMode,
                             to_sf_type(matrix), to_sf_type(texture),
                             to_sf_type(shader)};
-}
-
-inline SFML2DCamera* to_sf_type(ICamera * const camera)
-{
-    return dynamic_cast<SFML2DCamera*>(camera);
 }
 
 }  // namespace haf::backend::sfmlb

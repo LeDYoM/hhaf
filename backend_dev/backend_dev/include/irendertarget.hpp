@@ -23,11 +23,9 @@ public:
     virtual void setViewPort(const htps::Rectf32& nviewport) = 0;
     virtual htps::Rectf32 viewPort() const                   = 0;
 
-    virtual void updateCamera(ICamera* const) = 0;
-    virtual void clear()                      = 0;
+    virtual void updateCamera(CameraData const&) = 0;
+    virtual void clear()                         = 0;
 
-    virtual ICamera* createCamera()                            = 0;
-    virtual bool destroyCamera(ICamera* camera)                = 0;
     virtual IRenderElement* createRenderElement()              = 0;
     virtual bool destroyRenderElement(IRenderElement* element) = 0;
 };

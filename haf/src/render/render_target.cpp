@@ -8,7 +8,9 @@ using namespace htps;
 namespace haf::sys
 {
 RenderTarget::RenderTarget(rptr<haf::backend::IRenderTarget> renderTarget) :
-    irender_target_{htps::move(renderTarget)}, icamera_{nullptr}
+    irender_target_{htps::move(renderTarget)},
+    m_camera_data{},
+    render_element_container_{}
 {
     LogAsserter::log_assert(renderTarget != nullptr,
                             "renderTarget parameter is nullptr");
@@ -22,21 +24,17 @@ void RenderTarget::draw(
     render_element_container_.push_back(render_element);
 }
 
-void RenderTarget::draw(htps::rptr<backend::ICamera> camera)
+void RenderTarget::draw(backend::CameraData const& camera_data)
 {
-    icamera_ = camera;
+    m_camera_data = camera_data;
 }
 
 void RenderTarget::update()
 {
-    if (icamera_)
-    {
-        irender_target_->updateCamera(icamera_);
-    }
+    irender_target_->updateCamera(m_camera_data);
 
     irender_target_->render(render_element_container_.begin(),
                             render_element_container_.end());
-    icamera_ = nullptr;
 }
 
 void RenderTarget::clear()
@@ -47,7 +45,6 @@ void RenderTarget::clear()
 void RenderTarget::clearRenderQueue()
 {
     render_element_container_.clear();
-    icamera_ = nullptr;
 }
 
 backend::IRenderElement* RenderTarget::createRenderElement()
@@ -58,16 +55,6 @@ backend::IRenderElement* RenderTarget::createRenderElement()
 bool RenderTarget::destroyRenderElement(backend::IRenderElement* render_element)
 {
     return irender_target_->destroyRenderElement(render_element);
-}
-
-backend::ICamera* RenderTarget::createCamera()
-{
-    return irender_target_->createCamera();
-}
-
-bool RenderTarget::destroyCamera(backend::ICamera* camera)
-{
-    return irender_target_->destroyCamera(camera);
 }
 
 }  // namespace haf::sys

@@ -28,14 +28,11 @@ public:
     void setViewPort(const htps::Rectf32& nviewport) override;
     htps::Rectf32 viewPort() const override;
 
-    void updateCamera(ICamera* const) override;
+    void updateCamera(CameraData const&) override;
     void clear() override;
 
     htps::str info() const override;
     sf::Vector2u getSize() const override;
-
-    ICamera* createCamera() override;
-    bool destroyCamera(ICamera* camera) override;
 
     IRenderElement* createRenderElement() override;
     bool destroyRenderElement(IRenderElement* render_element) override;

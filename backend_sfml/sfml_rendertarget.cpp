@@ -1,7 +1,6 @@
 #include "sfml_rendertarget.hpp"
 #include "conversions.hpp"
 #include "render_element.hpp"
-#include "sfml_2d_camera.hpp"
 
 #include <SFML/Config.hpp>
 
@@ -73,13 +72,13 @@ Rectf32 SFMLRenderTarget::viewPort() const
     return from_sf_type(currentView.getViewport());
 }
 
-void SFMLRenderTarget::updateCamera(ICamera* const camera)
+void SFMLRenderTarget::updateCamera(CameraData const& camera_data)
 {
-    if (camera->updateRequired())
+    if (camera_data.update_required)
     {
-        SFML2DCamera* const camera_sf{to_sf_type(camera)};
-        setView(camera_sf->getView());
-        camera_sf->resetUpdateRequired();
+        sf::View view{to_sf_type(camera_data.nearRect)};
+        view.setViewport(to_sf_type(camera_data.viewPort));
+        sf::RenderTarget::setView(view);
     }
 }
 
@@ -99,25 +98,6 @@ htps::str SFMLRenderTarget::info() const
 sf::Vector2u SFMLRenderTarget::getSize() const
 {
     return sf::Vector2u{};
-}
-
-ICamera* SFMLRenderTarget::createCamera()
-{
-    return new SFML2DCamera();
-}
-
-bool SFMLRenderTarget::destroyCamera(ICamera* camera)
-{
-    if (camera != nullptr)
-    {
-        if (auto d_camera{dynamic_cast<SFML2DCamera*>(camera)};
-            d_camera != nullptr)
-        {
-            delete d_camera;
-            return true;
-        }
-    }
-    return false;
 }
 
 IRenderElement* SFMLRenderTarget::createRenderElement()

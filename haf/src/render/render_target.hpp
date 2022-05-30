@@ -4,12 +4,12 @@ HTPS_PRAGMA_ONCE
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/rect.hpp>
+#include <backend_dev/include/icamera.hpp>
 
 namespace haf::backend
 {
 class IRenderTarget;
 class IRenderElement;
-class ICamera;
 }  // namespace haf::backend
 
 namespace haf::render
@@ -40,7 +40,7 @@ public:
      */
     ~RenderTarget();
 
-    void draw(htps::rptr<backend::ICamera> camera);
+    void draw(backend::CameraData const& camera_data);
     void draw(htps::rptr<backend::IRenderElement const> render_element);
     void update();
     void clearRenderQueue();
@@ -49,12 +49,10 @@ public:
 
     backend::IRenderElement* createRenderElement();
     bool destroyRenderElement(backend::IRenderElement* render_element);
-    backend::ICamera* createCamera();
-    bool destroyCamera(backend::ICamera* camera);
 
 private:
     htps::rptr<backend::IRenderTarget> irender_target_;
-    htps::rptr<backend::ICamera> icamera_;
+    backend::CameraData m_camera_data;
     htps::vector<htps::rptr<backend::IRenderElement const>>
         render_element_container_;
 };

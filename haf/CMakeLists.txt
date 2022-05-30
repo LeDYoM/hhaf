@@ -123,6 +123,7 @@ set(sources
   # Scene components
   ${src_dir}/scene_components/camera_component.cpp
   ${src_dir}/scene_components/discretetextcomponent.cpp
+  ${src_dir}/scene_components/scene_components_log.hpp
   ${src_dir}/scene_components/texteditorcomponent.cpp
   ${src_dir}/scene_components/visibility_selector_component.cpp
 
