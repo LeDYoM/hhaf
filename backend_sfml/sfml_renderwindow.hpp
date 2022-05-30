@@ -1,7 +1,7 @@
 #ifndef HAF_BACKEND_SFMLB_REDNERWINDOW_INCLUDE_HPP
 #define HAF_BACKEND_SFMLB_REDNERWINDOW_INCLUDE_HPP
 
-#include <SFML/Window/Window.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 
 #include <htypes/include/types.hpp>
@@ -17,8 +17,10 @@ namespace haf::backend::sfmlb
 {
 class SFMLRenderWindow : public IWindow,
                          public SFMLRenderTarget,
-                         public sf::Window
+                         public sf::RenderWindow
 {
+private:
+    using BaseClass = sf::RenderWindow;
 public:
     SFMLRenderWindow();
     ~SFMLRenderWindow() override;

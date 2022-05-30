@@ -7,11 +7,11 @@ using namespace htps;
 
 namespace haf::backend::sfmlb
 {
-SFMLRenderWindow::SFMLRenderWindow()
-{}
+SFMLRenderWindow::SFMLRenderWindow() = default;
+
 SFMLRenderWindow::~SFMLRenderWindow()
 {
-    sf::Window::close();
+    BaseClass::close();
 }
 
 class ParamExtractor
@@ -68,7 +68,7 @@ bool SFMLRenderWindow::createWindow(const u32 width,
                                                      blue_bpp + alpha_bpp);
 
         sf::ContextSettings context_settings = sf::ContextSettings();
-        sf::Window::create(sf::VideoMode(w, h, bpp), "", style,
+        BaseClass::create(sf::VideoMode(w, h, bpp), "", style,
                            context_settings);
 
         setVerticalSyncEnabled(false);
@@ -80,7 +80,7 @@ bool SFMLRenderWindow::createWindow(const u32 width,
 
 sf::Vector2u SFMLRenderWindow::getSize() const
 {
-    return Window::getSize();
+    return BaseClass::getSize();
 }
 
 rptr<IRenderTarget> SFMLRenderWindow::renderTarget()
@@ -90,7 +90,7 @@ rptr<IRenderTarget> SFMLRenderWindow::renderTarget()
 
 bool SFMLRenderWindow::setActive(bool active)
 {
-    return sf::Window::setActive(active);
+    return BaseClass::setActive(active);
 }
 
 bool SFMLRenderWindow::processEvents()
@@ -141,7 +141,7 @@ str SFMLRenderWindow::info() const
 
 str SFMLRenderWindow::settingsInfo()
 {
-    sf::ContextSettings settings = sf::Window::getSettings();
+    sf::ContextSettings settings = BaseClass::getSettings();
 
     return make_str("Depth bits: ", settings.depthBits,
                     ", stencil bits: ", settings.stencilBits,
