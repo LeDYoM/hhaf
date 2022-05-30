@@ -26,7 +26,10 @@ void RenderTarget::draw(
 
 void RenderTarget::draw(backend::CameraData const& camera_data)
 {
-    m_camera_data = camera_data;
+    if (camera_data.update_required)
+    {
+        m_camera_data = camera_data;
+    }
 }
 
 void RenderTarget::update()
