@@ -30,14 +30,18 @@ void RenderTarget::draw(backend::CameraData const& camera_data)
     {
         m_camera_data = camera_data;
     }
+    else
+    {
+        m_camera_data.update_required = false;
+    }
 }
 
 void RenderTarget::update()
 {
     irender_target_->updateCamera(m_camera_data);
 
-    irender_target_->render(render_element_container_.begin(),
-                            render_element_container_.end());
+    irender_target_->render(render_element_container_.cbegin(),
+                            render_element_container_.cend());
 }
 
 void RenderTarget::clear()

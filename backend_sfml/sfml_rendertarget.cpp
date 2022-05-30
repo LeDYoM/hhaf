@@ -40,8 +40,9 @@ void SFMLRenderTarget::render(IRenderElement const* const render_element)
     renderImpl(static_cast<RenderElement const* const>(render_element));
 }
 
-void SFMLRenderTarget::render(IRenderElement const** render_element_begin,
-                          IRenderElement const** const render_element_end)
+void SFMLRenderTarget::render(
+    IRenderElement const* const* render_element_begin,
+    IRenderElement const* const* const render_element_end)
 {
     while (render_element_begin != render_element_end)
     {

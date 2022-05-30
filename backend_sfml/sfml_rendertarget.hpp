@@ -19,8 +19,8 @@ public:
     ~SFMLRenderTarget() override;
     void initialize() override;
 
-    void render(IRenderElement const** render_element_begin,
-                IRenderElement const** const render_element_end) override;
+    void render(IRenderElement const* const* render_element_begin,
+                IRenderElement const* const* const render_element_end) override;
 
     void render(IRenderElement const* render_element);
     void renderImpl(RenderElement const* render_element);
