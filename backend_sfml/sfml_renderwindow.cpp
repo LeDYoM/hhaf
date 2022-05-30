@@ -43,13 +43,13 @@ bool SFMLRenderWindow::isAlreadyCreated() const
 }
 
 bool SFMLRenderWindow::createWindow(const u32 width,
-                                const u32 height,
-                                const u8 red_bpp,
-                                const u8 green_bpp,
-                                const u8 blue_bpp,
-                                const u8 alpha_bpp,
-                                const unsigned int num_extra_parameters,
-                                const unsigned int* const extra_parameters)
+                                    const u32 height,
+                                    const u8 red_bpp,
+                                    const u8 green_bpp,
+                                    const u8 blue_bpp,
+                                    const u8 alpha_bpp,
+                                    const unsigned int num_extra_parameters,
+                                    const unsigned int* const extra_parameters)
 {
     if (!already_created_)
     {

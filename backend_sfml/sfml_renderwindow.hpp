@@ -15,7 +15,9 @@
 
 namespace haf::backend::sfmlb
 {
-class SFMLRenderWindow : public IWindow, public SFMLRenderTarget, public sf::Window
+class SFMLRenderWindow : public IWindow,
+                         public SFMLRenderTarget,
+                         public sf::Window
 {
 public:
     SFMLRenderWindow();
