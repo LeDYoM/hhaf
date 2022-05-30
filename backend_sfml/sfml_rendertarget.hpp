@@ -25,11 +25,9 @@ public:
     void render(IRenderElement const* render_element);
     void renderImpl(RenderElement const* const render_element);
 
-    void setViewPort(const htps::Rectf32& nviewport) override;
-    htps::Rectf32 viewPort() const override;
-
     void updateCamera(CameraData const&) override;
     void clear() override;
+    void forceCameraUpdate() override;
 
     htps::str info() const override;
     sf::Vector2u getSize() const override;
@@ -38,6 +36,7 @@ public:
     bool destroyRenderElement(IRenderElement* render_element) override;
 private:
     void drawDebugQuad(IRenderElement const* const irender_element);
+    bool m_force_camera_update{false};
 };
 }  // namespace haf::backend::sfmlb
 

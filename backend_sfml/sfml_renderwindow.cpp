@@ -159,7 +159,7 @@ void SFMLRenderWindow::onCreate()
 
 void SFMLRenderWindow::onResize()
 {
-//    renderTarget()->setViewPort(renderTarget()->viewPort());
+    renderTarget()->forceCameraUpdate();
 }
 
 }  // namespace haf::backend::sfmlb

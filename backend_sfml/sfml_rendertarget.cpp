@@ -58,26 +58,19 @@ void SFMLRenderTarget::renderImpl(RenderElement const* const render_element)
 #endif
 }
 
-void SFMLRenderTarget::setViewPort(const Rectf32&)
+void SFMLRenderTarget::forceCameraUpdate()
 {
-    sf::View currentView(getView());
-    currentView.setViewport(sf::FloatRect{0.0F, 0.0F, 1.0F, 1.0F});
-    setView(currentView);
-}
-
-Rectf32 SFMLRenderTarget::viewPort() const
-{
-    sf::View currentView(getView());
-    return from_sf_type(currentView.getViewport());
+    m_force_camera_update = true;
 }
 
 void SFMLRenderTarget::updateCamera(CameraData const& camera_data)
 {
-    if (camera_data.update_required)
+    if (camera_data.update_required || m_force_camera_update)
     {
         sf::View view{to_sf_type(camera_data.nearRect)};
         view.setViewport(to_sf_type(camera_data.viewPort));
         sf::RenderTarget::setView(view);
+        m_force_camera_update = false;
     }
 }
 
