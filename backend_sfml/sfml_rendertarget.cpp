@@ -46,13 +46,11 @@ void SFMLRenderTarget::render(
 {
     while (render_element_begin != render_element_end)
     {
-        auto const* const render_element{
-            static_cast<IRenderElement const* const>(*render_element_begin++)};
-        render(render_element);
+        render(*render_element_begin++);
     }
 }
 
-void SFMLRenderTarget::renderImpl(RenderElement const* render_element)
+void SFMLRenderTarget::renderImpl(RenderElement const* const render_element)
 {
     render_element->render(*this);
 #ifdef DRAW_DEBUG_QUAD
