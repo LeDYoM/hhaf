@@ -36,7 +36,7 @@ public:
 
     bool isAlreadyCreated() const override;
 
-    sf::Vector2u getSize() const;
+    sf::Vector2u getSize() const override;
 
     bool setActive(bool active) override;
 
