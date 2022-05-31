@@ -1,4 +1,4 @@
-#include "sfml_rendertarget.hpp"
+#include "sfml_render_target.hpp"
 #include "conversions.hpp"
 #include "render_element.hpp"
 

@@ -2,7 +2,7 @@
 #include <backend_client/include/default_factory.hpp>
 
 #include "sfml_render_window.hpp"
-#include "sfml_rendertarget.hpp"
+#include "sfml_render_target.hpp"
 #include "sfml_ttfont_factory.hpp"
 #include "sfml_texture_factory.hpp"
 #include "sfml_shader_factory.hpp"
