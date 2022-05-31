@@ -117,7 +117,7 @@ void SFMLRenderWindow::display()
     BaseClass::display();
 }
 
-void SFMLRenderWindow::setWindowTitle(str newTitle)
+void SFMLRenderWindow::setWindowTitle(str const& newTitle)
 {
     BaseClass::setTitle(to_sf_type(newTitle));
 }

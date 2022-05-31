@@ -50,9 +50,9 @@ public:
 
     virtual bool processEvents() = 0;
 
-    virtual void display()                          = 0;
-    virtual void setWindowTitle(htps::str newTitle) = 0;
-    virtual void closeWindow()                      = 0;
+    virtual void display()                                 = 0;
+    virtual void setWindowTitle(htps::str const& newTitle) = 0;
+    virtual void closeWindow()                             = 0;
 
     virtual IRenderTarget* renderTarget() = 0;
     virtual IInputDriver* inputDriver()   = 0;

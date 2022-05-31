@@ -45,7 +45,7 @@ public:
 
     bool processEvents() override;
     void display() override;
-    void setWindowTitle(htps::str newTitle) override;
+    void setWindowTitle(htps::str const& newTitle) override;
     void closeWindow() override;
 
     htps::rptr<IInputDriver> inputDriver() override;
