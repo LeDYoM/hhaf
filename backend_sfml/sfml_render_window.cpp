@@ -1,4 +1,4 @@
-#include "sfml_renderwindow.hpp"
+#include "sfml_render_window.hpp"
 #include "conversions.hpp"
 
 #include <string>
