@@ -1,14 +1,14 @@
 #include <backend_dev/include/ikey.hpp>
 
-#include "inputdriver.hpp"
+#include "sfml_input_driver.hpp"
 #include "conversions.hpp"
 
 namespace haf::backend::sfmlb
 {
-InputDriver::InputDriver()  = default;
-InputDriver::~InputDriver() = default;
+SFMLInputDriver::SFMLInputDriver()  = default;
+SFMLInputDriver::~SFMLInputDriver() = default;
 
-void InputDriver::keyEvent(sf::Event const& e)
+void SFMLInputDriver::keyEvent(sf::Event const& e)
 {
     const IKey k(doCast(e.key.code));
     if (k != IKey::Unknown)
@@ -36,27 +36,27 @@ IKey popKey(T& container)
     return k;
 }
 
-void InputDriver::keyPressed(IKey const key)
+void SFMLInputDriver::keyPressed(IKey const key)
 {
     keys_pressed_.push_back(key);
 }
 
-void InputDriver::keyReleased(IKey const key)
+void SFMLInputDriver::keyReleased(IKey const key)
 {
     keys_released_.push_back(key);
 }
 
-void InputDriver::readKeyPressed(htps::vector<IKey>& keys_pressed) const
+void SFMLInputDriver::readKeyPressed(htps::vector<IKey>& keys_pressed) const
 {
     keys_pressed = keys_pressed_;
 }
 
-void InputDriver::readKeyReleased(htps::vector<IKey>& keys_released) const
+void SFMLInputDriver::readKeyReleased(htps::vector<IKey>& keys_released) const
 {
     keys_released = keys_released_;
 }
 
-void InputDriver::clearInternalInputBuffer()
+void SFMLInputDriver::clearInternalInputBuffer()
 {
     keys_pressed_.clear();
     keys_released_.clear();

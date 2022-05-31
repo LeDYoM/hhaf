@@ -11,7 +11,7 @@
 #include <backend_dev/include/iinputdriver.hpp>
 
 #include "sfml_render_target.hpp"
-#include "inputdriver.hpp"
+#include "sfml_input_driver.hpp"
 
 namespace haf::backend::sfmlb
 {
@@ -58,7 +58,7 @@ protected:
 
 private:
     bool already_created_{false};
-    InputDriver input_driver_;
+    SFMLInputDriver input_driver_;
 };
 
 }  // namespace haf::backend::sfmlb

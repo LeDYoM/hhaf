@@ -7,11 +7,11 @@
 
 namespace haf::backend::sfmlb
 {
-class InputDriver : public IInputDriver
+class SFMLInputDriver : public IInputDriver
 {
 public:
-    InputDriver();
-    ~InputDriver() override;
+    SFMLInputDriver();
+    ~SFMLInputDriver() override;
 
     void keyPressed(IKey const) override;
     void keyReleased(IKey const) override;
