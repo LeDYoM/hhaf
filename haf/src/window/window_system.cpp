@@ -12,7 +12,7 @@
 #include <haf/include/time/time_point.hpp>
 #include <haf/include/input/inputdriver_wrapper.hpp>
 
-#include <hlog/include/hlog.hpp>
+#include "window_log.hpp"
 
 using namespace htps;
 using namespace haf::time;
@@ -23,14 +23,25 @@ WindowSystem::WindowSystem(sys::SystemProvider& system_provider) :
     SystemBase{system_provider}
 {}
 
-WindowSystem::~WindowSystem() = default;
+WindowSystem::~WindowSystem()
+{
+    auto* p_backend_window{systemProvider().backendFactory().getWindow()};
+    if (p_backend_window != nullptr)
+    {
+        if (p_backend_window->isAlreadyCreated())
+        {
+            p_backend_window->closeWindow();
+        }
+    }
+    WindowLogDisplayer::info_if(p_backend_window != nullptr, "Window closed");
+}
 
 bool WindowSystem::initialize(str const& window_config_file)
 {
     m_window_configuration.loadConfiguration(subSystemViewer(),
                                              window_config_file);
 
-    DisplayLog::info("Creating window...");
+    WindowLogDisplayer::info("Creating window...");
 
     // Create window object
     auto* p_backend_window{systemProvider().backendFactory().getWindow()};
@@ -38,8 +49,8 @@ bool WindowSystem::initialize(str const& window_config_file)
     {
         backend::IWindow& backend_window{*p_backend_window};
 
-        DisplayLog::info_if(backend_window.isAlreadyCreated(),
-                            "Window was already created.");
+        WindowLogDisplayer::info_if(backend_window.isAlreadyCreated(),
+                                    "Window was already created.");
 
         // Create physical window if not already done
         if (!backend_window.isAlreadyCreated())
@@ -53,29 +64,31 @@ bool WindowSystem::initialize(str const& window_config_file)
                                             config.configuredBitsPerAlpha(), 0U,
                                             nullptr))
             {
-                DisplayLog::info("Window creation completed");
+                WindowLogDisplayer::info("Window creation completed");
             }
             else
             {
-                DisplayLog::error(
+                WindowLogDisplayer::error(
                     "Cannot create window with the set properties");
             }
         }
 
-        DisplayLog::debug("Window driver info: ", backend_window.info());
-        DisplayLog::debug("Window settings: ", backend_window.settingsInfo());
+        WindowLogDisplayer::debug("Window driver info: ",
+                                  backend_window.info());
+        WindowLogDisplayer::debug("Window settings: ",
+                                  backend_window.settingsInfo());
 
         // If window created successfully, extract the render target
         // associated with the window.
         auto render_target{msptr<RenderTarget>(backend_window.renderTarget())};
 
-        DisplayLog::debug("Extracted render target");
+        WindowLogDisplayer::debug("Extracted render target");
 
         // Also take the input driver.
         auto input_driver_wrapper{
             msptr<input::InputDriverWrapper>(p_backend_window->inputDriver())};
 
-        DisplayLog::debug("Extracted input driver");
+        WindowLogDisplayer::debug("Extracted input driver");
 
         m_window =
             msptr<Window>(p_backend_window, htps::move(input_driver_wrapper),
@@ -86,7 +99,7 @@ bool WindowSystem::initialize(str const& window_config_file)
     }
     else
     {
-        DisplayLog::error("Backend window is nullptr!");
+        WindowLogDisplayer::error("Backend window is nullptr!");
         return false;
     }
 }

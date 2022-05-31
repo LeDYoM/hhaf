@@ -35,14 +35,14 @@ public:
      * @return true The window is successfully created.
      * @return false Error creating the Window.
      */
-    virtual bool createWindow(const htps::u32 width,
-                              const htps::u32 height,
-                              const htps::u8 red_bpp,
-                              const htps::u8 green_bpp,
-                              const htps::u8 blue_bpp,
-                              const htps::u8 alpha_bpp,
-                              const unsigned int num_extra_parameters,
-                              const unsigned int* const extra_parameters) = 0;
+    virtual bool createWindow(htps::u32 const width,
+                              htps::u32 const height,
+                              htps::u8 const red_bpp,
+                              htps::u8 const green_bpp,
+                              htps::u8 const blue_bpp,
+                              htps::u8 const alpha_bpp,
+                              htps::u32 const num_extra_parameters,
+                              htps::u32 const* const extra_parameters) = 0;
 
     virtual bool isAlreadyCreated() const = 0;
 

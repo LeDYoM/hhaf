@@ -42,14 +42,14 @@ bool SFMLRenderWindow::isAlreadyCreated() const
     return already_created_;
 }
 
-bool SFMLRenderWindow::createWindow(const u32 width,
-                                    const u32 height,
-                                    const u8 red_bpp,
-                                    const u8 green_bpp,
-                                    const u8 blue_bpp,
-                                    const u8 alpha_bpp,
-                                    const unsigned int num_extra_parameters,
-                                    const unsigned int* const extra_parameters)
+bool SFMLRenderWindow::createWindow(u32 const width,
+                                    u32 const height,
+                                    u8 const red_bpp,
+                                    u8 const green_bpp,
+                                    u8 const blue_bpp,
+                                    u8 const alpha_bpp,
+                                    u32 const num_extra_parameters,
+                                    u32 const* const extra_parameters)
 {
     if (!already_created_)
     {
@@ -69,7 +69,7 @@ bool SFMLRenderWindow::createWindow(const u32 width,
 
         sf::ContextSettings context_settings = sf::ContextSettings();
         BaseClass::create(sf::VideoMode(w, h, bpp), "", style,
-                           context_settings);
+                          context_settings);
 
         setVerticalSyncEnabled(false);
         already_created_ = true;
@@ -114,17 +114,17 @@ bool SFMLRenderWindow::processEvents()
 
 void SFMLRenderWindow::display()
 {
-    Window::display();
+    BaseClass::display();
 }
 
 void SFMLRenderWindow::setWindowTitle(str newTitle)
 {
-    Window::setTitle(to_sf_type(newTitle));
+    BaseClass::setTitle(to_sf_type(newTitle));
 }
 
 void SFMLRenderWindow::closeWindow()
 {
-    Window::close();
+    BaseClass::close();
 }
 
 rptr<IInputDriver> SFMLRenderWindow::inputDriver()
