@@ -16,7 +16,7 @@ public:
     /**
      * @brief Destroy the IWindow object
      */
-    virtual ~IWindow() {}
+    virtual ~IWindow() = default;
 
     /**
      * @brief Create the window of the operating system.

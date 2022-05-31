@@ -35,11 +35,6 @@ public:
      */
     RenderTarget(htps::rptr<backend::IRenderTarget> renderTarget);
 
-    /**
-     * @brief Destroy the Render Target object
-     */
-    ~RenderTarget();
-
     void draw(backend::CameraData const& camera_data);
     void draw(htps::rptr<backend::IRenderElement const> render_element);
     void update();

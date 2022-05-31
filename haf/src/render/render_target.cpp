@@ -16,8 +16,6 @@ RenderTarget::RenderTarget(rptr<haf::backend::IRenderTarget> renderTarget) :
                             "renderTarget parameter is nullptr");
 }
 
-RenderTarget::~RenderTarget() = default;
-
 void RenderTarget::draw(
     htps::rptr<backend::IRenderElement const> render_element)
 {
