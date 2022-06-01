@@ -154,11 +154,12 @@ str SFMLRenderWindow::settingsInfo()
 
 void SFMLRenderWindow::onCreate()
 {
-    renderTarget()->initialize();
+    BaseClass::onCreate();
 }
 
 void SFMLRenderWindow::onResize()
 {
+    BaseClass::onResize();
     renderTarget()->forceCameraUpdate();
 }
 

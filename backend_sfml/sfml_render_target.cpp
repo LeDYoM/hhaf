@@ -90,7 +90,7 @@ void SFMLRenderTarget::clear()
 htps::str SFMLRenderTarget::info() const
 {
     return make_str(
-        "name:SFMLWindowRenderTargget;provider:SFML;provider_version:",
+        "name:SFMLWindowRenderTarget;provider:SFML;provider_version:",
         SFML_VERSION_MAJOR, ".", SFML_VERSION_MINOR, ".", SFML_VERSION_PATCH,
         ";version:0;subversion:2:patch3");
 }
