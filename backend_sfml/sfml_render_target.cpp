@@ -40,13 +40,17 @@ void SFMLRenderTarget::render(IRenderElement const* const render_element)
     renderImpl(static_cast<RenderElement const* const>(render_element));
 }
 
-void SFMLRenderTarget::render(
-    IRenderElement const* const* render_element_begin,
-    IRenderElement const* const* const render_element_end)
+void SFMLRenderTarget::render(rptr<CameraData const> const camera_data,
+    htps::span<IRenderElement const* const> const& render_element_span)
 {
-    while (render_element_begin != render_element_end)
+    if (camera_data != nullptr)
     {
-        render(*render_element_begin++);
+        updateCamera(*camera_data);
+    }
+
+    for (auto&& render_element : render_element_span)
+    {
+        render(render_element);
     }
 }
 

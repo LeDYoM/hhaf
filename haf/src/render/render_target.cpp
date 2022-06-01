@@ -1,5 +1,6 @@
 #include "render_target.hpp"
 
+#include <htypes/include/span.hpp>
 #include <backend_dev/include/irendertarget.hpp>
 #include <hlog/include/hlog.hpp>
 
@@ -36,10 +37,8 @@ void RenderTarget::draw(backend::CameraData const& camera_data)
 
 void RenderTarget::update()
 {
-    irender_target_->updateCamera(m_camera_data);
-
-    irender_target_->render(render_element_container_.cbegin(),
-                            render_element_container_.cend());
+    irender_target_->render(&m_camera_data,
+                            make_const_span(render_element_container_));
 }
 
 void RenderTarget::clear()

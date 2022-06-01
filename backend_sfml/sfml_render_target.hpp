@@ -19,13 +19,14 @@ public:
     ~SFMLRenderTarget() override;
     void initialize() override;
 
-    void render(IRenderElement const* const* render_element_begin,
-                IRenderElement const* const* const render_element_end) override;
+    void render(htps::rptr<CameraData const> const camera_data,
+                htps::span<IRenderElement const* const> const&
+                    render_element_span) override;
 
     void render(IRenderElement const* render_element);
     void renderImpl(RenderElement const* const render_element);
 
-    void updateCamera(CameraData const&) override;
+    void updateCamera(CameraData const&);
     void clear() override;
     void forceCameraUpdate() override;
 
@@ -34,6 +35,7 @@ public:
 
     IRenderElement* createRenderElement() override;
     bool destroyRenderElement(IRenderElement* render_element) override;
+
 private:
     void drawDebugQuad(IRenderElement const* const irender_element);
     bool m_force_camera_update{false};

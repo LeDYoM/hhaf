@@ -5,12 +5,13 @@ HTPS_PRAGMA_ONCE
 
 #include "growpolicy.hpp"
 #include "vector_base.hpp"
-#include "growpolicy.hpp"
 #include "memory/allocator.hpp"
 
 namespace htps
 {
-template <typename T, typename Allocator = AllocatorType<T>, typename GrowPolicy = GrowPolicyUnary>
+template <typename T,
+          typename Allocator  = AllocatorType<T>,
+          typename GrowPolicy = GrowPolicyUnary>
 using vector = vector_base<T, Allocator, GrowPolicy>;
 
 template <typename T>

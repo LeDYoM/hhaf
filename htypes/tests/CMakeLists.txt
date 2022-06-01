@@ -18,6 +18,7 @@ set(SOURCE_TESTS
     properties
     propertystate
     rect
+    span
     str_literal
     str
     vector_view

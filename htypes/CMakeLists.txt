@@ -45,6 +45,7 @@ set(headers
     ${include_dir}/rawmemory.hpp
     ${include_dir}/rect.hpp
     ${include_dir}/serializer.hpp
+    ${include_dir}/span.hpp
     ${include_dir}/stack.hpp
     ${include_dir}/str_literal.hpp
     ${include_dir}/str_view.hpp
