@@ -30,7 +30,7 @@ struct Renderizable::RenderizablePrivate
     vector<backend::iColor> colors_;
     vector<backend::iTextureCoordinates> texture_coordinates_;
     sptr<sys::RenderTarget> render_target_;
-    backend::IRenderElement* render_element_{nullptr};
+    rptr<backend::IRenderElement> render_element_{nullptr};
 
     RenderizablePrivate(rptr<Renderizable const> i_this,
                         size_type const num_vertex,
