@@ -9,10 +9,10 @@
 #include <SFML/Graphics/VertexArray.hpp>
 namespace haf::backend::sfmlb
 {
-class SFMLRenderElementVertexBuffer : public IRenderElement
+class SFMLRenderElement : public IRenderElement
 {
 public:
-    ~SFMLRenderElementVertexBuffer() override;
+    ~SFMLRenderElement() override;
 
     void setSize(htps::size_type const size) override;
     void setPositions(iPosition const* const positions) override;
@@ -37,10 +37,10 @@ private:
 
 namespace haf::backend::sfmlb
 {
-class SFMLRenderElementVertexBuffer : public IRenderElement
+class SFMLRenderElement : public IRenderElement
 {
 public:
-    ~SFMLRenderElementVertexBuffer() override;
+    ~SFMLRenderElement() override;
 
     void setSize(htps::size_type const size) override;
     void setPositions(iPosition const* const positions) override;

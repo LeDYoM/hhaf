@@ -1,6 +1,6 @@
 #include "sfml_render_target.hpp"
 #include "conversions.hpp"
-#include "sfml_render_element_vertex_buffer.hpp"
+#include "sfml_render_element.hpp"
 
 #include <SFML/Config.hpp>
 
@@ -20,7 +20,7 @@ void SFMLRenderTarget::drawDebugQuad([
 {
 #ifdef DRAW_DEBUG_QUAD
     auto const* const render_element{
-        static_cast<SFMLRenderElementVertexBuffer const* const>(
+        static_cast<SFMLRenderElement const* const>(
             irender_element)};
 
     using namespace ::sf;
@@ -38,7 +38,7 @@ void SFMLRenderTarget::drawDebugQuad([
 
 void SFMLRenderTarget::render(IRenderElement const* const render_element)
 {
-    renderImpl(static_cast<SFMLRenderElementVertexBuffer const* const>(
+    renderImpl(static_cast<SFMLRenderElement const* const>(
         render_element));
 }
 
@@ -58,7 +58,7 @@ void SFMLRenderTarget::render(
 }
 
 void SFMLRenderTarget::renderImpl(
-    SFMLRenderElementVertexBuffer const* const render_element)
+    SFMLRenderElement const* const render_element)
 {
     render_element->render(*this);
 #ifdef DRAW_DEBUG_QUAD
@@ -102,7 +102,7 @@ sf::Vector2u SFMLRenderTarget::getSize() const
 
 IRenderElement* SFMLRenderTarget::createRenderElement()
 {
-    return new SFMLRenderElementVertexBuffer();
+    return new SFMLRenderElement();
 }
 
 bool SFMLRenderTarget::destroyRenderElement(IRenderElement* render_element)
@@ -110,7 +110,7 @@ bool SFMLRenderTarget::destroyRenderElement(IRenderElement* render_element)
     if (render_element != nullptr)
     {
         if (auto* casted_render_element{
-                dynamic_cast<SFMLRenderElementVertexBuffer*>(render_element)};
+                dynamic_cast<SFMLRenderElement*>(render_element)};
             render_element != nullptr)
         {
             delete casted_render_element;

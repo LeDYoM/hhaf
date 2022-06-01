@@ -1,11 +1,11 @@
-#include "sfml_render_element_vertex_buffer.hpp"
+#include "sfml_render_element.hpp"
 #include "conversions.hpp"
 
 namespace haf::backend::sfmlb
 {
-SFMLRenderElementVertexBuffer::~SFMLRenderElementVertexBuffer() = default;
+SFMLRenderElement::~SFMLRenderElement() = default;
 #ifdef USE_VERTEX_ARRAY
-void SFMLRenderElementVertexBuffer::setPositions(
+void SFMLRenderElement::setPositions(
     iPosition const* const positions)
 {
     iPosition const* vtemp{positions};
@@ -16,7 +16,7 @@ void SFMLRenderElementVertexBuffer::setPositions(
     }
 }
 
-void SFMLRenderElementVertexBuffer::setColors(iColor const* const colors)
+void SFMLRenderElement::setColors(iColor const* const colors)
 {
     iColor const* vtemp{colors};
     for (auto i{0U}; i < vertex_array_.getVertexCount(); ++i)
@@ -26,7 +26,7 @@ void SFMLRenderElementVertexBuffer::setColors(iColor const* const colors)
     }
 }
 
-void SFMLRenderElementVertexBuffer::setTexturecoordinates(
+void SFMLRenderElement::setTexturecoordinates(
     iTextureCoordinates const* const texture_coordinates)
 {
     iTextureCoordinates const* vtemp{texture_coordinates};
@@ -37,32 +37,32 @@ void SFMLRenderElementVertexBuffer::setTexturecoordinates(
     }
 }
 
-void SFMLRenderElementVertexBuffer::setSize(htps::size_type const size)
+void SFMLRenderElement::setSize(htps::size_type const size)
 {
     vertex_array_.resize(static_cast<std::size_t>(size));
 }
 
-void SFMLRenderElementVertexBuffer::setTexture(ITexture const* const texture)
+void SFMLRenderElement::setTexture(ITexture const* const texture)
 {
     render_states_.texture = to_sf_type(texture);
 }
 
-void SFMLRenderElementVertexBuffer::setModelViewMatrix(
+void SFMLRenderElement::setModelViewMatrix(
     htps::f32 const* const model_view_matrix)
 {
     render_states_.transform = to_sf_type(model_view_matrix);
 }
 
-void SFMLRenderElementVertexBuffer::setProjectionMatrix(
+void SFMLRenderElement::setProjectionMatrix(
     htps::f32 const* const /*projection_matrix*/)
 {}
 
-void SFMLRenderElementVertexBuffer::setShader(IShader const* const shader)
+void SFMLRenderElement::setShader(IShader const* const shader)
 {
     render_states_.shader = to_sf_type(shader);
 }
 
-void SFMLRenderElementVertexBuffer::render(sf::RenderTarget& target) const
+void SFMLRenderElement::render(sf::RenderTarget& target) const
 {
     if (render_states_.shader != nullptr)
     {
@@ -82,7 +82,7 @@ void SFMLRenderElementVertexBuffer::render(sf::RenderTarget& target) const
     target.draw(vertex_array_, render_states_);
 }
 #else
-void SFMLRenderElementVertexBuffer::setPositions(
+void SFMLRenderElement::setPositions(
     iPosition const* const positions)
 {
     iPosition const* vtemp{positions};
@@ -94,14 +94,14 @@ void SFMLRenderElementVertexBuffer::setPositions(
     needs_update_ = true;
 }
 
-void SFMLRenderElementVertexBuffer::setSize(htps::size_type const size)
+void SFMLRenderElement::setSize(htps::size_type const size)
 {
     vertex_buffer_.create(static_cast<std::size_t>(size));
     vertex_buffer_origin_.resize(size);
     needs_update_ = true;
 }
 
-void SFMLRenderElementVertexBuffer::setColors(iColor const* const colors)
+void SFMLRenderElement::setColors(iColor const* const colors)
 {
     iColor const* vtemp{colors};
     for (auto i{0U}; i < vertex_buffer_origin_.size(); ++i)
@@ -112,7 +112,7 @@ void SFMLRenderElementVertexBuffer::setColors(iColor const* const colors)
     needs_update_ = true;
 }
 
-void SFMLRenderElementVertexBuffer::setTexturecoordinates(
+void SFMLRenderElement::setTexturecoordinates(
     iTextureCoordinates const* const texture_coordinates)
 {
     iTextureCoordinates const* vtemp{texture_coordinates};
@@ -124,27 +124,27 @@ void SFMLRenderElementVertexBuffer::setTexturecoordinates(
     needs_update_ = true;
 }
 
-void SFMLRenderElementVertexBuffer::setTexture(ITexture const* const texture)
+void SFMLRenderElement::setTexture(ITexture const* const texture)
 {
     render_states_.texture = to_sf_type(texture);
 }
 
-void SFMLRenderElementVertexBuffer::setModelViewMatrix(
+void SFMLRenderElement::setModelViewMatrix(
     htps::f32 const* const model_view_matrix)
 {
     render_states_.transform = to_sf_type(model_view_matrix);
 }
 
-void SFMLRenderElementVertexBuffer::setProjectionMatrix(
+void SFMLRenderElement::setProjectionMatrix(
     htps::f32 const* const /*projection_matrix*/)
 {}
 
-void SFMLRenderElementVertexBuffer::setShader(IShader const* const shader)
+void SFMLRenderElement::setShader(IShader const* const shader)
 {
     render_states_.shader = to_sf_type(shader);
 }
 
-void SFMLRenderElementVertexBuffer::render(sf::RenderTarget& target) const
+void SFMLRenderElement::render(sf::RenderTarget& target) const
 {
     if (needs_update_)
     {
