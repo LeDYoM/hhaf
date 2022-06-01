@@ -16,8 +16,8 @@
 namespace haf::backend::sfmlb
 {
 class SFMLRenderWindow : public IWindow,
-                         public SFMLRenderTarget,
-                         public sf::RenderWindow
+                         private SFMLRenderTarget,
+                         private sf::RenderWindow
 {
 private:
     using BaseClass = sf::RenderWindow;
@@ -53,8 +53,8 @@ public:
     htps::str settingsInfo() override;
 
 protected:
-    virtual void onCreate();
-    virtual void onResize();
+    void onCreate() override;
+    void onResize() override;
 
 private:
     bool already_created_{false};

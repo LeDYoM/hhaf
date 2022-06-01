@@ -13,7 +13,7 @@ namespace haf::backend::sfmlb
 {
 class RenderElement;
 
-class SFMLRenderTarget : public IRenderTarget, public sf::RenderTarget
+class SFMLRenderTarget : public IRenderTarget, private sf::RenderTarget
 {
 public:
     ~SFMLRenderTarget() override;
@@ -24,9 +24,6 @@ public:
                     render_element_span) override;
 
     void render(IRenderElement const* render_element);
-    void renderImpl(RenderElement const* const render_element);
-
-    void updateCamera(CameraData const&);
     void clear() override;
     void forceCameraUpdate() override;
 
@@ -37,6 +34,8 @@ public:
     bool destroyRenderElement(IRenderElement* render_element) override;
 
 private:
+    void updateCamera(CameraData const&);
+    void renderImpl(RenderElement const* const render_element);
     void drawDebugQuad(IRenderElement const* const irender_element);
     bool m_force_camera_update{false};
 };
