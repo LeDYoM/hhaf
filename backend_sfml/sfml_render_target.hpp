@@ -11,7 +11,7 @@
 
 namespace haf::backend::sfmlb
 {
-class RenderElement;
+class SFMLRenderElementVertexBuffer;
 
 class SFMLRenderTarget : public IRenderTarget, private sf::RenderTarget
 {
@@ -35,7 +35,7 @@ public:
 
 private:
     void updateCamera(CameraData const&);
-    void renderImpl(RenderElement const* const render_element);
+    void renderImpl(SFMLRenderElementVertexBuffer const* const render_element);
     void drawDebugQuad(IRenderElement const* const irender_element);
     bool m_force_camera_update{false};
 };

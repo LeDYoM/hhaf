@@ -1,6 +1,6 @@
 #include "sfml_render_target.hpp"
 #include "conversions.hpp"
-#include "render_element.hpp"
+#include "sfml_render_element_vertex_buffer.hpp"
 
 #include <SFML/Config.hpp>
 
@@ -20,7 +20,8 @@ void SFMLRenderTarget::drawDebugQuad([
 {
 #ifdef DRAW_DEBUG_QUAD
     auto const* const render_element{
-        static_cast<RenderElement const* const>(irender_element)};
+        static_cast<SFMLRenderElementVertexBuffer const* const>(
+            irender_element)};
 
     using namespace ::sf;
     VertexArray nva(sf::PrimitiveType::LineStrip, 5U);
@@ -37,10 +38,12 @@ void SFMLRenderTarget::drawDebugQuad([
 
 void SFMLRenderTarget::render(IRenderElement const* const render_element)
 {
-    renderImpl(static_cast<RenderElement const* const>(render_element));
+    renderImpl(static_cast<SFMLRenderElementVertexBuffer const* const>(
+        render_element));
 }
 
-void SFMLRenderTarget::render(rptr<CameraData const> const camera_data,
+void SFMLRenderTarget::render(
+    rptr<CameraData const> const camera_data,
     htps::span<IRenderElement const* const> const& render_element_span)
 {
     if (camera_data != nullptr)
@@ -54,7 +57,8 @@ void SFMLRenderTarget::render(rptr<CameraData const> const camera_data,
     }
 }
 
-void SFMLRenderTarget::renderImpl(RenderElement const* const render_element)
+void SFMLRenderTarget::renderImpl(
+    SFMLRenderElementVertexBuffer const* const render_element)
 {
     render_element->render(*this);
 #ifdef DRAW_DEBUG_QUAD
@@ -98,7 +102,7 @@ sf::Vector2u SFMLRenderTarget::getSize() const
 
 IRenderElement* SFMLRenderTarget::createRenderElement()
 {
-    return new RenderElement();
+    return new SFMLRenderElementVertexBuffer();
 }
 
 bool SFMLRenderTarget::destroyRenderElement(IRenderElement* render_element)
@@ -106,7 +110,7 @@ bool SFMLRenderTarget::destroyRenderElement(IRenderElement* render_element)
     if (render_element != nullptr)
     {
         if (auto* casted_render_element{
-                dynamic_cast<RenderElement*>(render_element)};
+                dynamic_cast<SFMLRenderElementVertexBuffer*>(render_element)};
             render_element != nullptr)
         {
             delete casted_render_element;
