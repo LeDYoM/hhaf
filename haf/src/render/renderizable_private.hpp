@@ -51,7 +51,7 @@ struct Renderizable::RenderizablePrivate
 
     ~RenderizablePrivate()
     {
-        render_target_->destroyRenderElement(render_element_);
+        delete render_element_;
     }
 
     void render()

@@ -43,7 +43,6 @@ public:
     void clear();
 
     backend::IRenderElement* createRenderElement();
-    bool destroyRenderElement(backend::IRenderElement* render_element);
 
 private:
     htps::rptr<backend::IRenderTarget> irender_target_;

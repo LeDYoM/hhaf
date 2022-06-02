@@ -56,9 +56,4 @@ backend::IRenderElement* RenderTarget::createRenderElement()
     return irender_target_->createRenderElement();
 }
 
-bool RenderTarget::destroyRenderElement(backend::IRenderElement* render_element)
-{
-    return irender_target_->destroyRenderElement(render_element);
-}
-
 }  // namespace haf::sys

@@ -12,10 +12,8 @@ class IShader;
 
 class IRenderElement
 {
-protected:
-    virtual ~IRenderElement() = default;
-
 public:
+    virtual ~IRenderElement() = default;
     virtual void setSize(htps::size_type const size)            = 0;
     virtual void setPositions(iPosition const* const positions) = 0;
     virtual void setColors(iColor const* const colors)          = 0;

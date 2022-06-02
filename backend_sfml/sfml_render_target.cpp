@@ -105,19 +105,4 @@ IRenderElement* SFMLRenderTarget::createRenderElement()
     return new SFMLRenderElement();
 }
 
-bool SFMLRenderTarget::destroyRenderElement(IRenderElement* render_element)
-{
-    if (render_element != nullptr)
-    {
-        if (auto* casted_render_element{
-                dynamic_cast<SFMLRenderElement*>(render_element)};
-            render_element != nullptr)
-        {
-            delete casted_render_element;
-            return true;
-        }
-    }
-    return false;
-}
-
 }  // namespace haf::backend::sfmlb

@@ -26,8 +26,7 @@ public:
     virtual void clear()             = 0;
     virtual void forceCameraUpdate() = 0;
 
-    virtual IRenderElement* createRenderElement()              = 0;
-    virtual bool destroyRenderElement(IRenderElement* element) = 0;
+    virtual IRenderElement* createRenderElement() = 0;
 };
 }  // namespace haf::backend
 

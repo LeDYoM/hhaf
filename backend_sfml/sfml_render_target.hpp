@@ -31,7 +31,6 @@ public:
     sf::Vector2u getSize() const override;
 
     IRenderElement* createRenderElement() override;
-    bool destroyRenderElement(IRenderElement* render_element) override;
 
 private:
     void updateCamera(CameraData const&);
