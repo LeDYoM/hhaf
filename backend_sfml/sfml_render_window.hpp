@@ -11,13 +11,11 @@
 #include <backend_dev/include/iinputdriver.hpp>
 
 #include "sfml_window_render_target.hpp"
-#include "sfml_render_target.hpp"
 #include "sfml_input_driver.hpp"
 
 namespace haf::backend::sfmlb
 {
 class SFMLRenderWindow : public IWindow,
-                         private SFMLRenderTarget,
                          private sf::RenderWindow
 {
 private:

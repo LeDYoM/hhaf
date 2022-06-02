@@ -17,7 +17,7 @@ class SFMLRenderElement;
 class SFMLWindowRenderTarget : public IRenderTarget
 {
 public:
-    SFMLWindowRenderTarget(sf::RenderWindow& render_window);
+    explicit SFMLWindowRenderTarget(sf::RenderWindow& render_window);
     ~SFMLWindowRenderTarget() override;
     void initialize() override;
 
