@@ -10,6 +10,11 @@ namespace haf::backend::sfmlb
 {
 SFMLRenderTarget::~SFMLRenderTarget() = default;
 
+void SFMLRenderTarget::setInternalRenderTarget(sf::RenderTarget* render_target)
+{
+    m_render_target = render_target;
+}
+
 void SFMLRenderTarget::drawDebugQuad([
     [maybe_unused]] IRenderElement const* const irender_element)
 {
@@ -55,15 +60,10 @@ void SFMLRenderTarget::render(
 void SFMLRenderTarget::renderImpl(
     SFMLRenderElement const* const render_element)
 {
-    render_element->render(internalRenderTarget());
+    render_element->render(*m_render_target);
 #ifdef DRAW_DEBUG_QUAD
     drawDebugQuad(render_element);
 #endif
-}
-
-sf::RenderTarget& SFMLRenderTarget::internalRenderTarget()
-{
-    return *this;
 }
 
 void SFMLRenderTarget::forceCameraUpdate()
@@ -77,14 +77,14 @@ void SFMLRenderTarget::updateCamera(CameraData const& camera_data)
     {
         sf::View view{to_sf_type(camera_data.nearRect)};
         view.setViewport(to_sf_type(camera_data.viewPort));
-        internalRenderTarget().setView(view);
+        m_render_target->setView(view);
         m_force_camera_update = false;
     }
 }
 
 void SFMLRenderTarget::clear()
 {
-    internalRenderTarget().clear();
+    m_render_target->clear();
 }
 
 htps::str SFMLRenderTarget::info() const

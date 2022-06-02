@@ -18,6 +18,8 @@ class SFMLRenderTarget : public IRenderTarget, private sf::RenderTarget
 public:
     ~SFMLRenderTarget() override;
 
+    void setInternalRenderTarget(sf::RenderTarget* render_target);
+
     void render(htps::rptr<CameraData const> const camera_data,
                 htps::span<IRenderElement const* const> const&
                     render_element_span) override;
@@ -30,10 +32,9 @@ public:
     sf::Vector2u getSize() const override;
 
     IRenderElement* createRenderElement() override;
-protected:
-    void updateCamera(CameraData const&);
 private:
-    virtual sf::RenderTarget& internalRenderTarget();
+    sf::RenderTarget* m_render_target{nullptr};
+    void updateCamera(CameraData const&);
     void renderImpl(SFMLRenderElement const* const render_element);
     void drawDebugQuad(IRenderElement const* const irender_element);
     bool m_force_camera_update{false};

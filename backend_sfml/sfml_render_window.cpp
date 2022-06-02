@@ -1,5 +1,5 @@
 #include "sfml_render_window.hpp"
-#include "sfml_window_render_target.hpp"
+#include "sfml_render_target.hpp"
 #include "conversions.hpp"
 #include <string>
 
@@ -7,9 +7,6 @@ using namespace htps;
 
 namespace haf::backend::sfmlb
 {
-SFMLRenderWindow::SFMLRenderWindow() : m_render_window{*this}
-{}
-
 SFMLRenderWindow::~SFMLRenderWindow()
 {
     BaseClass::close();
@@ -74,6 +71,7 @@ bool SFMLRenderWindow::createWindow(u32 const width,
 
         setVerticalSyncEnabled(false);
         already_created_ = true;
+        m_render_window.setInternalRenderTarget(this);
         return true;
     }
     return false;
