@@ -10,6 +10,7 @@
 #include <backend_dev/include/iwindow.hpp>
 #include <backend_dev/include/iinputdriver.hpp>
 
+#include "sfml_window_render_target.hpp"
 #include "sfml_render_target.hpp"
 #include "sfml_input_driver.hpp"
 
@@ -57,6 +58,7 @@ protected:
     void onResize() override;
 
 private:
+    SFMLWindowRenderTarget m_render_window;
     bool already_created_{false};
     SFMLInputDriver input_driver_;
 };

@@ -1,13 +1,14 @@
 #include "sfml_render_window.hpp"
+#include "sfml_window_render_target.hpp"
 #include "conversions.hpp"
-
 #include <string>
 
 using namespace htps;
 
 namespace haf::backend::sfmlb
 {
-SFMLRenderWindow::SFMLRenderWindow() = default;
+SFMLRenderWindow::SFMLRenderWindow() : m_render_window{*this}
+{}
 
 SFMLRenderWindow::~SFMLRenderWindow()
 {
@@ -85,7 +86,7 @@ sf::Vector2u SFMLRenderWindow::getSize() const
 
 rptr<IRenderTarget> SFMLRenderWindow::renderTarget()
 {
-    return this;
+    return &m_render_window;
 }
 
 bool SFMLRenderWindow::setActive(bool active)
