@@ -8,12 +8,14 @@
 
 #include <backend_dev/include/irendertarget.hpp>
 #include <backend_dev/include/irender_element.hpp>
+#include "sfml_render_target.hpp"
 
 namespace haf::backend::sfmlb
 {
 class SFMLRenderElement;
 
-class SFMLWindowRenderTarget : public IRenderTarget
+class SFMLWindowRenderTarget : public SFMLRenderTarget
+//    : public IRenderTarget
 {
 public:
     explicit SFMLWindowRenderTarget(sf::RenderWindow& render_window);
@@ -23,7 +25,6 @@ public:
                 htps::span<IRenderElement const* const> const&
                     render_element_span) override;
 
-    void render(IRenderElement const* render_element);
     void clear() override;
     void forceCameraUpdate() override;
 
@@ -31,9 +32,9 @@ public:
     IRenderElement* createRenderElement() override;
 
 private:
+    sf::RenderTarget& internalRenderTarget() override;
     sf::RenderWindow& m_render_window;
     void updateCamera(CameraData const&);
-    void renderImpl(SFMLRenderElement const* const render_element);
     void drawDebugQuad(IRenderElement const* const irender_element);
     bool m_force_camera_update{false};
 };

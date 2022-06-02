@@ -32,6 +32,7 @@ public:
     IRenderElement* createRenderElement() override;
 
 private:
+    virtual sf::RenderTarget& internalRenderTarget();
     void updateCamera(CameraData const&);
     void renderImpl(SFMLRenderElement const* const render_element);
     void drawDebugQuad(IRenderElement const* const irender_element);

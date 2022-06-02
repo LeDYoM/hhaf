@@ -35,11 +35,6 @@ void SFMLWindowRenderTarget::drawDebugQuad([
 #endif
 }
 
-void SFMLWindowRenderTarget::render(IRenderElement const* const render_element)
-{
-    renderImpl(static_cast<SFMLRenderElement const* const>(render_element));
-}
-
 void SFMLWindowRenderTarget::render(
     rptr<CameraData const> const camera_data,
     htps::span<IRenderElement const* const> const& render_element_span)
@@ -51,16 +46,8 @@ void SFMLWindowRenderTarget::render(
 
     for (auto&& render_element : render_element_span)
     {
-        render(render_element);
+        SFMLRenderTarget::render(render_element);
     }
-}
-
-void SFMLWindowRenderTarget::renderImpl(SFMLRenderElement const* const render_element)
-{
-    render_element->render(m_render_window);
-#ifdef DRAW_DEBUG_QUAD
-    drawDebugQuad(render_element);
-#endif
 }
 
 void SFMLWindowRenderTarget::forceCameraUpdate()
@@ -95,6 +82,11 @@ htps::str SFMLWindowRenderTarget::info() const
 IRenderElement* SFMLWindowRenderTarget::createRenderElement()
 {
     return new SFMLRenderElement();
+}
+
+sf::RenderTarget& SFMLWindowRenderTarget::internalRenderTarget()
+{
+    return m_render_window;
 }
 
 }  // namespace haf::backend::sfmlb

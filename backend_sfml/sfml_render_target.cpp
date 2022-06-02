@@ -55,10 +55,15 @@ void SFMLRenderTarget::render(
 void SFMLRenderTarget::renderImpl(
     SFMLRenderElement const* const render_element)
 {
-    render_element->render(*this);
+    render_element->render(internalRenderTarget());
 #ifdef DRAW_DEBUG_QUAD
     drawDebugQuad(render_element);
 #endif
+}
+
+sf::RenderTarget& SFMLRenderTarget::internalRenderTarget()
+{
+    return *this;
 }
 
 void SFMLRenderTarget::forceCameraUpdate()
