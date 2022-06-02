@@ -77,22 +77,22 @@ void SFMLRenderTarget::updateCamera(CameraData const& camera_data)
     {
         sf::View view{to_sf_type(camera_data.nearRect)};
         view.setViewport(to_sf_type(camera_data.viewPort));
-        sf::RenderTarget::setView(view);
+        internalRenderTarget().setView(view);
         m_force_camera_update = false;
     }
 }
 
 void SFMLRenderTarget::clear()
 {
-    sf::RenderTarget::clear();
+    internalRenderTarget().clear();
 }
 
 htps::str SFMLRenderTarget::info() const
 {
     return make_str(
-        "name:SFMLWindowRenderTarget;provider:SFML;provider_version:",
+        "name:SFMLwRenderTarget;provider:SFML;provider_version:",
         SFML_VERSION_MAJOR, ".", SFML_VERSION_MINOR, ".", SFML_VERSION_PATCH,
-        ";version:0;subversion:2:patch3");
+        ";version:0;subversion:3:patch0");
 }
 
 sf::Vector2u SFMLRenderTarget::getSize() const
