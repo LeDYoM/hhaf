@@ -17,7 +17,6 @@ class SFMLRenderTarget : public IRenderTarget, private sf::RenderTarget
 {
 public:
     ~SFMLRenderTarget() override;
-    void initialize() override;
 
     void render(htps::rptr<CameraData const> const camera_data,
                 htps::span<IRenderElement const* const> const&

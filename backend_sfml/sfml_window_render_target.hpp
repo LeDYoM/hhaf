@@ -1,7 +1,6 @@
 #ifndef HAF_BACKEND_SFMLB_WINDOW_RENDERTARGET_INCLUDE_HPP
 #define HAF_BACKEND_SFMLB_WINDOW_RENDERTARGET_INCLUDE_HPP
 
-#include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include <htypes/include/types.hpp>
@@ -19,7 +18,6 @@ class SFMLWindowRenderTarget : public IRenderTarget
 public:
     explicit SFMLWindowRenderTarget(sf::RenderWindow& render_window);
     ~SFMLWindowRenderTarget() override;
-    void initialize() override;
 
     void render(htps::rptr<CameraData const> const camera_data,
                 htps::span<IRenderElement const* const> const&

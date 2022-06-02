@@ -15,11 +15,6 @@ SFMLWindowRenderTarget::SFMLWindowRenderTarget(
 
 SFMLWindowRenderTarget::~SFMLWindowRenderTarget() = default;
 
-void SFMLWindowRenderTarget::initialize()
-{
-//    static_cast<sf::RenderTarget&>(m_render_window).initialize();
-}
-
 void SFMLWindowRenderTarget::drawDebugQuad([
     [maybe_unused]] IRenderElement const* const irender_element)
 {

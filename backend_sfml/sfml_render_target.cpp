@@ -10,11 +10,6 @@ namespace haf::backend::sfmlb
 {
 SFMLRenderTarget::~SFMLRenderTarget() = default;
 
-void SFMLRenderTarget::initialize()
-{
-    sf::RenderTarget::initialize();
-}
-
 void SFMLRenderTarget::drawDebugQuad([
     [maybe_unused]] IRenderElement const* const irender_element)
 {

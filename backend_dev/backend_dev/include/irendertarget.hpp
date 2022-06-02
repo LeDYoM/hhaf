@@ -17,8 +17,6 @@ class IRenderTarget : public IResourceInfo
 public:
     ~IRenderTarget() override = default;
 
-    virtual void initialize() = 0;
-
     virtual void render(
         htps::rptr<CameraData const> const camera_data,
         htps::span<IRenderElement const* const> const& render_element_span) = 0;
