@@ -89,11 +89,6 @@ htps::str SFMLRenderTarget::info() const
         ";version:0;subversion:3:patch0");
 }
 
-sf::Vector2u SFMLRenderTarget::getSize() const
-{
-    return sf::Vector2u{};
-}
-
 IRenderElement* SFMLRenderTarget::createRenderElement()
 {
     return new SFMLRenderElement();

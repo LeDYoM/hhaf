@@ -13,7 +13,7 @@ namespace haf::backend::sfmlb
 {
 class SFMLRenderElement;
 
-class SFMLRenderTarget : public IRenderTarget, private sf::RenderTarget
+class SFMLRenderTarget : public IRenderTarget
 {
 public:
     ~SFMLRenderTarget() override;
@@ -28,7 +28,6 @@ public:
     void clear() override;
 
     htps::str info() const override;
-    sf::Vector2u getSize() const override;
 
     IRenderElement* createRenderElement() override;
 private:
