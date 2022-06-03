@@ -15,13 +15,10 @@
 
 namespace haf::backend::sfmlb
 {
-class SFMLRenderWindow : public IWindow,
-                         private sf::RenderWindow
+class SFMLRenderWindow : public IWindow
 {
-private:
-    using BaseClass = sf::RenderWindow;
-
 public:
+    SFMLRenderWindow();
     ~SFMLRenderWindow() override;
 
     bool createWindow(htps::u32 const width,
@@ -34,9 +31,6 @@ public:
                       htps::u32 const* const extra_parameters) override;
 
     bool isAlreadyCreated() const override;
-
-    sf::Vector2u getSize() const override;
-
     bool setActive(bool active) override;
 
     htps::rptr<IRenderTarget> renderTarget() override;
@@ -50,12 +44,9 @@ public:
     htps::str info() const override;
     htps::str settingsInfo() override;
 
-protected:
-    void onCreate() override;
-    void onResize() override;
-
 private:
-    SFMLRenderTarget m_render_window;
+    SFMLRenderTarget m_window_render_target;
+    htps::uptr<sf::RenderWindow> m_render_window;
     bool already_created_{false};
     SFMLInputDriver input_driver_;
 };

@@ -7,9 +7,13 @@ using namespace htps;
 
 namespace haf::backend::sfmlb
 {
+SFMLRenderWindow::SFMLRenderWindow() :
+    m_render_window{muptr<sf::RenderWindow>()}
+{}
+
 SFMLRenderWindow::~SFMLRenderWindow()
 {
-    BaseClass::close();
+    m_render_window->close();
 }
 
 class ParamExtractor
@@ -66,37 +70,32 @@ bool SFMLRenderWindow::createWindow(u32 const width,
                                                      blue_bpp + alpha_bpp);
 
         sf::ContextSettings context_settings = sf::ContextSettings();
-        BaseClass::create(sf::VideoMode(w, h, bpp), "", style,
-                          context_settings);
+        m_render_window->create(sf::VideoMode(w, h, bpp), "", style,
+                                context_settings);
 
-        setVerticalSyncEnabled(false);
+        m_render_window->setVerticalSyncEnabled(false);
         already_created_ = true;
-        m_render_window.setInternalRenderTarget(this);
+        m_window_render_target.setInternalRenderTarget(m_render_window.get());
         return true;
     }
     return false;
 }
 
-sf::Vector2u SFMLRenderWindow::getSize() const
-{
-    return BaseClass::getSize();
-}
-
 rptr<IRenderTarget> SFMLRenderWindow::renderTarget()
 {
-    return &m_render_window;
+    return &m_window_render_target;
 }
 
 bool SFMLRenderWindow::setActive(bool active)
 {
-    return BaseClass::setActive(active);
+    return m_render_window->setActive(active);
 }
 
 bool SFMLRenderWindow::processEvents()
 {
     input_driver_.clearInternalInputBuffer();
     sf::Event event;
-    while (pollEvent(event))
+    while (m_render_window->pollEvent(event))
     {
         if (event.type == sf::Event::Closed)
         {
@@ -113,17 +112,17 @@ bool SFMLRenderWindow::processEvents()
 
 void SFMLRenderWindow::display()
 {
-    BaseClass::display();
+    m_render_window->display();
 }
 
 void SFMLRenderWindow::setWindowTitle(str const& newTitle)
 {
-    BaseClass::setTitle(to_sf_type(newTitle));
+    m_render_window->setTitle(to_sf_type(newTitle));
 }
 
 void SFMLRenderWindow::closeWindow()
 {
-    BaseClass::close();
+    m_render_window->close();
 }
 
 rptr<IInputDriver> SFMLRenderWindow::inputDriver()
@@ -140,7 +139,7 @@ str SFMLRenderWindow::info() const
 
 str SFMLRenderWindow::settingsInfo()
 {
-    sf::ContextSettings settings = BaseClass::getSettings();
+    sf::ContextSettings settings = m_render_window->getSettings();
 
     return make_str("Depth bits: ", settings.depthBits,
                     ", stencil bits: ", settings.stencilBits,
@@ -149,16 +148,6 @@ str SFMLRenderWindow::settingsInfo()
                     ", sRGB capable: ", settings.sRgbCapable,
                     ", version: ", settings.majorVersion, ".",
                     settings.minorVersion);
-}
-
-void SFMLRenderWindow::onCreate()
-{
-    BaseClass::onCreate();
-}
-
-void SFMLRenderWindow::onResize()
-{
-    BaseClass::onResize();
 }
 
 }  // namespace haf::backend::sfmlb
