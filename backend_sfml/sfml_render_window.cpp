@@ -159,7 +159,6 @@ void SFMLRenderWindow::onCreate()
 void SFMLRenderWindow::onResize()
 {
     BaseClass::onResize();
-    renderTarget()->forceCameraUpdate();
 }
 
 }  // namespace haf::backend::sfmlb

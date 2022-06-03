@@ -26,7 +26,6 @@ public:
 
     void render(IRenderElement const* render_element);
     void clear() override;
-    void forceCameraUpdate() override;
 
     htps::str info() const override;
     sf::Vector2u getSize() const override;
@@ -37,7 +36,6 @@ private:
     void updateCamera(CameraData const&);
     void renderImpl(SFMLRenderElement const* const render_element);
     void drawDebugQuad(IRenderElement const* const irender_element);
-    bool m_force_camera_update{false};
 };
 }  // namespace haf::backend::sfmlb
 

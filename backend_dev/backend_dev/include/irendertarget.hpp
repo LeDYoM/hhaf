@@ -22,7 +22,6 @@ public:
         htps::span<IRenderElement const* const> const& render_element_span) = 0;
 
     virtual void clear()             = 0;
-    virtual void forceCameraUpdate() = 0;
 
     virtual IRenderElement* createRenderElement() = 0;
 };

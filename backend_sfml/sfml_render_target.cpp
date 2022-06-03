@@ -66,19 +66,13 @@ void SFMLRenderTarget::renderImpl(
 #endif
 }
 
-void SFMLRenderTarget::forceCameraUpdate()
-{
-    m_force_camera_update = true;
-}
-
 void SFMLRenderTarget::updateCamera(CameraData const& camera_data)
 {
-    if (camera_data.update_required || m_force_camera_update)
+    if (camera_data.update_required)
     {
         sf::View view{to_sf_type(camera_data.nearRect)};
         view.setViewport(to_sf_type(camera_data.viewPort));
         m_render_target->setView(view);
-        m_force_camera_update = false;
     }
 }
 
