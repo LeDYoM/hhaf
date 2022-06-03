@@ -25,10 +25,8 @@ public:
                     render_element_span) override;
 
     void render(IRenderElement const* render_element);
-    void clear() override;
 
     htps::str info() const override;
-
     IRenderElement* createRenderElement() override;
 private:
     sf::RenderTarget* m_render_target{nullptr};

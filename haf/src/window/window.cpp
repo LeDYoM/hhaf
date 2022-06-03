@@ -54,7 +54,6 @@ bool Window::preLoop(time::TimePoint const& time_since_start)
         fps_counter.updateFPS(time_since_start, m_backend_window, m_title);
     }
 
-    m_render_target->clear();
     return m_backend_window->processEvents();
 }
 

@@ -21,8 +21,6 @@ public:
         htps::rptr<CameraData const> const camera_data,
         htps::span<IRenderElement const* const> const& render_element_span) = 0;
 
-    virtual void clear()             = 0;
-
     virtual IRenderElement* createRenderElement() = 0;
 };
 }  // namespace haf::backend

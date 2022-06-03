@@ -41,11 +41,6 @@ void RenderTarget::update()
                             make_const_span(render_element_container_));
 }
 
-void RenderTarget::clear()
-{
-    irender_target_->clear();
-}
-
 void RenderTarget::clearRenderQueue()
 {
     render_element_container_.clear();

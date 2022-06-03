@@ -40,8 +40,6 @@ public:
     void update();
     void clearRenderQueue();
 
-    void clear();
-
     backend::IRenderElement* createRenderElement();
 
 private:

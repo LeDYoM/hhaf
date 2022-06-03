@@ -46,6 +46,8 @@ void SFMLRenderTarget::render(
     rptr<CameraData const> const camera_data,
     htps::span<IRenderElement const* const> const& render_element_span)
 {
+    m_render_target->clear();
+
     if (camera_data != nullptr)
     {
         updateCamera(*camera_data);
@@ -74,11 +76,6 @@ void SFMLRenderTarget::updateCamera(CameraData const& camera_data)
         view.setViewport(to_sf_type(camera_data.viewPort));
         m_render_target->setView(view);
     }
-}
-
-void SFMLRenderTarget::clear()
-{
-    m_render_target->clear();
 }
 
 htps::str SFMLRenderTarget::info() const
