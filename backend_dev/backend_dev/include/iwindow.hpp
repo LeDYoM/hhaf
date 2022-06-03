@@ -46,8 +46,6 @@ public:
 
     virtual bool isAlreadyCreated() const = 0;
 
-    virtual bool setActive(const bool activate) = 0;
-
     virtual bool processEvents() = 0;
 
     virtual void display()                                 = 0;

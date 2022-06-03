@@ -5,8 +5,7 @@ namespace haf::backend::sfmlb
 {
 SFMLRenderElement::~SFMLRenderElement() = default;
 #ifdef USE_VERTEX_ARRAY
-void SFMLRenderElement::setPositions(
-    iPosition const* const positions)
+void SFMLRenderElement::setPositions(iPosition const* const positions)
 {
     iPosition const* vtemp{positions};
     for (auto i{0U}; i < vertex_array_.getVertexCount(); ++i)
@@ -82,8 +81,7 @@ void SFMLRenderElement::render(sf::RenderTarget& target) const
     target.draw(vertex_array_, render_states_);
 }
 #else
-void SFMLRenderElement::setPositions(
-    iPosition const* const positions)
+void SFMLRenderElement::setPositions(iPosition const* const positions)
 {
     iPosition const* vtemp{positions};
     for (auto i{0U}; i < vertex_buffer_origin_.size(); ++i)
@@ -151,7 +149,9 @@ void SFMLRenderElement::render(sf::RenderTarget& target) const
         vertex_buffer_.update(vertex_buffer_origin_.cbegin());
         needs_update_ = false;
     }
-    target.draw(vertex_buffer_, render_states_);
+
+    target.draw(vertex_buffer_, 0U, vertex_buffer_.getVertexCount(),
+                render_states_);
 }
 
 #endif

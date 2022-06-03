@@ -31,7 +31,6 @@ public:
                       htps::u32 const* const extra_parameters) override;
 
     bool isAlreadyCreated() const override;
-    bool setActive(bool active) override;
 
     htps::rptr<IRenderTarget> renderTarget() override;
 

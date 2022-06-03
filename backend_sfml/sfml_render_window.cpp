@@ -86,11 +86,6 @@ rptr<IRenderTarget> SFMLRenderWindow::renderTarget()
     return &m_window_render_target;
 }
 
-bool SFMLRenderWindow::setActive(bool active)
-{
-    return m_render_window->setActive(active);
-}
-
 bool SFMLRenderWindow::processEvents()
 {
     input_driver_.clearInternalInputBuffer();
