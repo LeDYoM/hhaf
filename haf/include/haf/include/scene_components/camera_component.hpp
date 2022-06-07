@@ -16,7 +16,7 @@ class HAF_API CameraComponent : public component::ComponentForType<Scene>
     using BaseClass = component::ComponentForType<Scene>;
 
 public:
-    explicit CameraComponent();
+    CameraComponent();
     ~CameraComponent() override;
 
     htps::PropertyState<SceneBox> view;
