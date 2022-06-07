@@ -5,10 +5,10 @@ set (CURRENT_TARGET ${PROJECT_NAME})
 
 set(include_dir ${PROJECT_SOURCE_DIR}/backend_dev/include)
 set(headers
+    ${include_dir}/camera_data.hpp
     ${include_dir}/factory_types.hpp
     ${include_dir}/ibackendregister.hpp
     ${include_dir}/ibmp_font.hpp
-    ${include_dir}/icamera.hpp
     ${include_dir}/ifactory.hpp
     ${include_dir}/ifont.hpp
     ${include_dir}/iinputdriver.hpp

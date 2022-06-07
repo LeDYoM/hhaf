@@ -4,7 +4,7 @@ HTPS_PRAGMA_ONCE
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/rect.hpp>
-#include <backend_dev/include/icamera.hpp>
+#include <backend_dev/include/camera_data.hpp>
 #include <backend_dev/include/irender_element.hpp>
 
 namespace haf::backend

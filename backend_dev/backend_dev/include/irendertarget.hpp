@@ -2,15 +2,15 @@
 #define HAF_BACKEND_RENDER_TARGET_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
-#include <htypes/include/rect.hpp>
 #include <htypes/include/span.hpp>
 
-#include "icamera.hpp"
 #include "iresourceinfo.hpp"
-#include "irender_element.hpp"
 
 namespace haf::backend
 {
+class IRenderElement;
+struct CameraData;
+
 class IRenderTarget : public IResourceInfo
 {
 public:
