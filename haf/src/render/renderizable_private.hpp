@@ -7,7 +7,7 @@ HTPS_PRAGMA_ONCE
 #include <haf/include/resources/itexture.hpp>
 #include <haf/include/resources/ishader.hpp>
 #include "renderizable_internal_functions.hpp"
-#include <backend_dev/include/irender_element.hpp>
+#include "render_element.hpp"
 #include "render_data_conversion.hpp"
 #include "render_target.hpp"
 #include "resources/texture.hpp"
@@ -30,7 +30,7 @@ struct Renderizable::RenderizablePrivate
     vector<backend::iColor> colors_;
     vector<backend::iTextureCoordinates> texture_coordinates_;
     sptr<sys::RenderTarget> render_target_;
-    rptr<backend::IRenderElement> render_element_{nullptr};
+    RenderElement m_render_element;
 
     RenderizablePrivate(rptr<Renderizable const> i_this,
                         size_type const num_vertex,
@@ -40,26 +40,18 @@ struct Renderizable::RenderizablePrivate
         num_vertex_{num_vertex},
         figure_type_{figure_type},
         render_target_{htps::move(render_target)},
-        render_element_{render_target_->createRenderElement()}
+        m_render_element{render_target_->createRenderElement()}
     {
         positions_.resize(num_vertex_);
         colors_.resize(num_vertex_);
         texture_coordinates_.resize(num_vertex_);
-        render_element_->setSize(num_vertex_);
+        m_render_element.setSize(num_vertex_);
         updatePositions();
-    }
-
-    ~RenderizablePrivate()
-    {
-        delete render_element_;
     }
 
     void render()
     {
-        if (render_element_ != nullptr)
-        {
-            render_target_->draw(render_element_);
-        }
+        render_target_->draw(m_render_element);
     }
 
     void updatePositions()
@@ -78,20 +70,20 @@ struct Renderizable::RenderizablePrivate
             }
             break;
         }
-        render_element_->setPositions(positions_.cbegin());
+        m_render_element.setPositions(positions_.cbegin());
     }
 
     void updateTextureRect()
     {
         setTextureRect(positions_, texture_coordinates_,
                        i_this_->prop<TextureRectProperty>()());
-        render_element_->setTexturecoordinates(texture_coordinates_.cbegin());
+        m_render_element.setTexturecoordinates(texture_coordinates_.cbegin());
     }
 
     void updateColors()
     {
         setColor(colors_, i_this_->prop<ColorProperty>()());
-        render_element_->setColors(colors_.cbegin());
+        m_render_element.setColors(colors_.cbegin());
     }
 };
 

@@ -3,12 +3,13 @@
 #include <htypes/include/span.hpp>
 #include <backend_dev/include/irendertarget.hpp>
 #include <hlog/include/hlog.hpp>
+#include "render_element.hpp"
 
 using namespace htps;
 
 namespace haf::sys
 {
-RenderTarget::RenderTarget(rptr<haf::backend::IRenderTarget> renderTarget) :
+RenderTarget::RenderTarget(rptr<backend::IRenderTarget> renderTarget) :
     irender_target_{htps::move(renderTarget)},
     m_camera_data{},
     render_element_container_{}
@@ -17,10 +18,9 @@ RenderTarget::RenderTarget(rptr<haf::backend::IRenderTarget> renderTarget) :
                             "renderTarget parameter is nullptr");
 }
 
-void RenderTarget::draw(
-    htps::rptr<backend::IRenderElement const> render_element)
+void RenderTarget::draw(render::RenderElement const& render_element)
 {
-    render_element_container_.push_back(render_element);
+    render_element_container_.push_back(render_element.irenderElement());
 }
 
 void RenderTarget::draw(backend::CameraData const& camera_data)
@@ -46,7 +46,7 @@ void RenderTarget::clearRenderQueue()
     render_element_container_.clear();
 }
 
-backend::IRenderElement* RenderTarget::createRenderElement()
+uptr<backend::IRenderElement> RenderTarget::createRenderElement()
 {
     return irender_target_->createRenderElement();
 }

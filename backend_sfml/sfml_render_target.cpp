@@ -44,7 +44,7 @@ void SFMLRenderTarget::render(IRenderElement const* const render_element)
 
 void SFMLRenderTarget::render(
     rptr<CameraData const> const camera_data,
-    htps::span<IRenderElement const* const> const& render_element_span)
+    span<IRenderElement const* const> const& render_element_span)
 {
     m_render_target->clear();
 
@@ -78,7 +78,7 @@ void SFMLRenderTarget::updateCamera(CameraData const& camera_data)
     }
 }
 
-htps::str SFMLRenderTarget::info() const
+str SFMLRenderTarget::info() const
 {
     return make_str(
         "name:SFMLwRenderTarget;provider:SFML;provider_version:",
@@ -86,9 +86,9 @@ htps::str SFMLRenderTarget::info() const
         ";version:0;subversion:3:patch0");
 }
 
-IRenderElement* SFMLRenderTarget::createRenderElement()
+uptr<IRenderElement> SFMLRenderTarget::createRenderElement()
 {
-    return new SFMLRenderElement();
+    return muptr<SFMLRenderElement>();
 }
 
 }  // namespace haf::backend::sfmlb

@@ -5,16 +5,17 @@ HTPS_PRAGMA_ONCE
 #include <htypes/include/types.hpp>
 #include <htypes/include/rect.hpp>
 #include <backend_dev/include/icamera.hpp>
+#include <backend_dev/include/irender_element.hpp>
 
 namespace haf::backend
 {
 class IRenderTarget;
-class IRenderElement;
 }  // namespace haf::backend
 
 namespace haf::render
 {
 class RenderData;
+class RenderElement;
 }
 
 namespace haf::sys
@@ -36,11 +37,11 @@ public:
     RenderTarget(htps::rptr<backend::IRenderTarget> renderTarget);
 
     void draw(backend::CameraData const& camera_data);
-    void draw(htps::rptr<backend::IRenderElement const> render_element);
+    void draw(render::RenderElement const& render_element);
     void update();
     void clearRenderQueue();
 
-    backend::IRenderElement* createRenderElement();
+    htps::uptr<backend::IRenderElement> createRenderElement();
 
 private:
     htps::rptr<backend::IRenderTarget> irender_target_;

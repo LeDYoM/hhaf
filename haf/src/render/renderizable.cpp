@@ -65,7 +65,7 @@ void Renderizable::update(bool const parent_transformation_changed)
 {
     if (parent_transformation_changed)
     {
-        p_->render_element_->setModelViewMatrix(
+        p_->m_render_element.setModelViewMatrix(
             parent()->globalTransform().getMatrix());
     }
 
@@ -81,7 +81,7 @@ void Renderizable::update(bool const parent_transformation_changed)
 
     if (prop<TextureProperty>().readResetHasChanged())
     {
-        p_->render_element_->setTexture(
+        p_->m_render_element.setTexture(
             to_backend(prop<TextureProperty>()().get()));
     }
 
@@ -103,7 +103,7 @@ void Renderizable::update(bool const parent_transformation_changed)
             }
         }
 */
-        p_->render_element_->setShader(
+        p_->m_render_element.setShader(
             to_backend(prop<ShaderProperty>()().get()));
     }
 }

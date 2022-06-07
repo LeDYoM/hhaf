@@ -27,7 +27,7 @@ public:
     void render(IRenderElement const* render_element);
 
     htps::str info() const override;
-    IRenderElement* createRenderElement() override;
+    htps::uptr<IRenderElement> createRenderElement() override;
 private:
     sf::RenderTarget* m_render_target{nullptr};
     void updateCamera(CameraData const&);
