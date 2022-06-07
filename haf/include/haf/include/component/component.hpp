@@ -42,7 +42,6 @@ public:
     {
         LogAsserter::log_assert(attachedNode != nullptr,
                                 " Trying to attach nullptr node");
-
         using dest_type = ComponentAttachedNode::type;
         static_assert(std::derived_from<dest_type, scene::SceneNode>,
                       "Invalid type for component type");

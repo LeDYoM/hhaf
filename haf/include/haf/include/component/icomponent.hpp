@@ -25,6 +25,8 @@ public:
      * @brief Destroy the Attachable object
      */
     virtual ~IComponent() = default;
+    IComponent(IComponent const&) = delete;
+    IComponent& operator=(IComponent const&) = delete;
 
     /**
      * @brief Method called after the component is attached to a node.
@@ -34,6 +36,8 @@ public:
 
     virtual void setAttachedNode(
         htps::rptr<scene::SceneNode> const attachedNode) noexcept = 0;
+protected:
+    IComponent() noexcept = default;
 };
 
 }  // namespace haf::component
