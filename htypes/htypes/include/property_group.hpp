@@ -226,6 +226,33 @@ bool readResetAllHaveChanged(PropertyGroupBasic<Tag...>& pg) noexcept
 template <typename... Tag>
 using PropertyGroup = htps::PropertyGroupBasic<Tag...>;
 
+template <typename FirstProperty, typename... Properties_t>
+class PropertyReferences : public PropertyReferences<Properties_t...>
+{
+    explicit PropertyReferences(FirstProperty& first_property,
+                                Properties_t&... properties) :
+        PropertyReferences<Properties_t...>{properties}
+    {}
+};
+
+template <typename Property>
+class PropertyReferences<Property>
+{
+    explicit PropertyReferences(Property& property) noexcept :
+        m_property{property}
+    {}
+
+private:
+    Property& m_property;
+};
+
+template <typename... Properties_t>
+PropertyReferences<Properties_t...> make_properties_references(
+    Properties_t&... properties)
+{
+    return PropertyReferences<Properties_t...>{properties};
+}
+
 }  // namespace htps
 
 #endif
