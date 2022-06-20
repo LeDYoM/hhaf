@@ -2,7 +2,7 @@
 #define HAF_BACKEND_BACKEND_CREATOR_HPP
 
 #include <htypes/include/types.hpp>
-#include <backend/include/backendfactory.hpp>
+#include <backend/include/backend_factory.hpp>
 
 extern "C"
 {

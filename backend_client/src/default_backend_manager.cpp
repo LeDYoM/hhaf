@@ -14,13 +14,13 @@ struct DefaultBackendManager::DefaultBackendManagerPrivate
 };
 
 DefaultBackendManager::DefaultBackendManager() :
-    priv_{std::make_unique<DefaultBackendManagerPrivate>()}
+    priv_{make_pimplp<DefaultBackendManagerPrivate>()}
 {}
 
 void DefaultBackendManager::setFactories(
     rptr<IBackendRegister> const backend_register)
 {
-    for (auto const& factory : priv_->factories)
+    for (auto&& factory : priv_->factories)
     {
         factory.get()->setFactory(backend_register);
     }
@@ -29,7 +29,7 @@ void DefaultBackendManager::setFactories(
 void DefaultBackendManager::resetFactories(
     rptr<IBackendRegister> const backend_register)
 {
-    for (auto const& factory : priv_->factories)
+    for (auto&& factory : priv_->factories)
     {
         factory.get()->resetFactory(backend_register);
     }
@@ -37,7 +37,7 @@ void DefaultBackendManager::resetFactories(
 
 void DefaultBackendManager::destroy()
 {
-    for (const auto& factory : priv_->factories)
+    for (auto&& factory : priv_->factories)
     {
         factory.get()->destroy();
     }
@@ -50,7 +50,7 @@ DefaultBackendManager::~DefaultBackendManager()
 
 void DefaultBackendManager::pushFactory(uptr<IAutoRegisterFactory> f)
 {
-    priv_->factories.emplace_back(std::move(f));
+    priv_->factories.push_back(htps::move(f));
 }
 
 }  // namespace haf::backend::client

@@ -1,3 +1,4 @@
+HTPS_PRAGMA_ONCE
 #ifndef HAF_SCENE_SCENENODEFACTORY_INCLUDE_HPP
 #define HAF_SCENE_SCENENODEFACTORY_INCLUDE_HPP
 
@@ -35,13 +36,13 @@ public:
         SceneNodeConstructorFunction scene_constructor_function)
     {
         return registerSceneNodeType(T::StaticTypeName,
-                                     std::move(scene_constructor_function));
+                                     htps::move(scene_constructor_function));
     }
 
     template <typename T>
     constexpr bool registerSceneNodeType(htps::str type_name)
     {
-        return registerSceneNodeType(std::move(type_name), createScene<T>);
+        return registerSceneNodeType(htps::move(type_name), createScene<T>);
     }
 
     template <typename T>

@@ -1,3 +1,4 @@
+HTPS_PRAGMA_ONCE
 #ifndef HTYPES_ARRAY_INCLUDE_HPP
 #define HTYPES_ARRAY_INCLUDE_HPP
 
@@ -31,7 +32,7 @@ public:
         for (decltype(iList.size()) i{0U}; i < iList.size() && i < array_size;
              ++i)
         {
-            buffer_[i] = std::move(*(iList.begin() + i));
+            buffer_[i] = htps::move(*(iList.begin() + i));
         }
     }
 
@@ -57,9 +58,9 @@ public:
             for (size_type i{array_size - 2U};
                  i >= index && (i < static_cast<size_type>(-1)); --i)
             {
-                buffer_[i + 1] = std::move(buffer_[i]);
+                buffer_[i + 1] = htps::move(buffer_[i]);
             }
-            buffer_[index] = std::move(element);
+            buffer_[index] = htps::move(element);
         }
     }
 

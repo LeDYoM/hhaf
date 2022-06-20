@@ -10,16 +10,15 @@ class DefaultFactoryOf : public IFactoryOf<T>
 {
 public:
     using Interface = typename IFactoryOf<T>::Interface;
+    ~DefaultFactoryOf() override = default;
 
-    T* create() const override { return new ConcreteObject; }
+    T* create() override { return new ConcreteObject; }
 
-    bool destroy(T* obj) const override
+    bool destroy(T* obj) override
     {
         delete obj;
         return true;
     }
-
-    ~DefaultFactoryOf() override {}
 };
 }  // namespace haf::backend::client
 

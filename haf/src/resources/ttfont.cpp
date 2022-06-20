@@ -17,7 +17,7 @@ struct TTFont::FontPrivate
     std::map<u32, sptr<TTFontInstance>> font_map_;
 };
 
-TTFont::TTFont(backend::ITTFont* font) : priv_{muptr<FontPrivate>(font)}
+TTFont::TTFont(backend::ITTFont* const font) : priv_{muptr<FontPrivate>(font)}
 {}
 
 TTFont::~TTFont() = default;
@@ -50,10 +50,11 @@ f32 TTFont::getKerning(const u32 first,
     return priv_->font_->getKerning(first, second, characterSize);
 }
 
-sptr<ITexture> TTFont::getTexture(const u32 characterSize) const
+str TTFont::getTexture(const u32 characterSize, char const character) const
 {
-    return std::dynamic_pointer_cast<ITexture>(
-        msptr<Texture>(priv_->font_->getTexture(characterSize)));
+    return (priv_->font_ != nullptr)
+        ? priv_->font_->getTexture(characterSize, character)
+        : "";
 }
 
 sptr<IFont> TTFont::font(const u32 charactersize)
@@ -61,8 +62,8 @@ sptr<IFont> TTFont::font(const u32 charactersize)
     if (auto iterator = priv_->font_map_.find(charactersize);
         iterator == priv_->font_map_.end())
     {
-        sptr<TTFontInstance> newFont{
-            msptr<TTFontInstance>(*this, charactersize)};
+        sptr<TTFontInstance> newFont{msptr<TTFontInstance>(
+            *this, charactersize)};
         return priv_->font_map_[charactersize] = newFont;
     }
     else

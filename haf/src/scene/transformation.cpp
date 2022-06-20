@@ -6,17 +6,16 @@
 namespace haf::scene
 {
 Transformation::Transformation() noexcept :
-    TransformationProperties({}, {}, {1U, 1U}, {}), transform_{}
+    transform_{}
 {}
 
 Transformation::~Transformation() = default;
 
 bool Transformation::updateTransformIfNecessary() noexcept
 {
-    if (anyHasChanged(prop<TransformationProperties>()))
+    if (ps_readResetHasAnyChanged(Position, Scale, Rotation))
     {
         updateTransform();
-        resetHasChanged(prop<TransformationProperties>());
         return true;
     }
     return false;
@@ -25,22 +24,36 @@ bool Transformation::updateTransformIfNecessary() noexcept
 void Transformation::updateTransform()
 {
     // Recompute the combined transform
-    auto const angle{-prop<Rotation>().get() * render::ToRadians<Scalar>};
-    VectorScalar const sc{prop<Scale>().get() *
-                          static_cast<Scalar>(std::cos(angle))};
-    VectorScalar const ss{prop<Scale>().get() *
-                          static_cast<Scalar>(std::sin(angle))};
-    VectorScalar const orig{prop<Origin>().get()};
-    VectorScalar const pos{prop<Position>().get()};
+    auto const angle{-Rotation() * render::ToRadians<Scalar>};
+    VectorScalar const scale_cos{Scale() *
+                                 static_cast<Scalar>(std::cos(angle))};
+    VectorScalar const scale_sin{Scale() *
+                                 static_cast<Scalar>(std::sin(angle))};
+    VectorScalar const position{Position()};
 
-    transform_ = {sc.x,
-                  ss.y,
-                  (((-orig.x * sc.x) - (orig.y * ss.y)) + pos.x),
-                  -ss.x,
-                  sc.y,
-                  (((orig.x * ss.y) - (orig.y * sc.y)) + pos.y),
-                  Matrix4x4::Zero,
-                  Matrix4x4::Zero,
-                  Matrix4x4::One};
+    transform_ = {scale_cos.x,     scale_sin.y,     position.x,
+                  -scale_sin.x,    scale_cos.y,     position.y,
+                  Matrix4x4::Zero, Matrix4x4::Zero, Matrix4x4::One};
 }
+
+Matrix4x4 const& Transformation::matrix() noexcept
+{
+    return transform_;
+}
+
+void Transformation::setLeftTopPositionScale(VectorScalar const& vector)
+{
+    Position = VectorScalar{-0.5F, -0.5F} + (vector / 2.0F);
+    Scale = vector;
+}
+
+void Transformation::setRightTopPositionScale(VectorScalar const& vector)
+{
+    VectorScalar origin{0.5F, -0.5F};
+    origin.x -= vector.x / 2.0F;
+    origin.y += vector.y / 2.0F;
+    Position = htps::move(origin);
+    Scale = vector;
+}
+
 }  // namespace haf::scene

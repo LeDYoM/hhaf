@@ -1,3 +1,4 @@
+HTPS_PRAGMA_ONCE
 #ifndef HAF_SCENE_ITTFONT_INTERFACE_INCLUDE_HPP
 #define HAF_SCENE_ITTFONT_INTERFACE_INCLUDE_HPP
 
@@ -11,8 +12,10 @@ namespace haf::res
 {
 class ITTFont
 {
+protected:
+    ~ITTFont() = default;
+
 public:
-    virtual ~ITTFont() {}
     virtual htps::Rectf32 getBounds(const htps::u32 codePoint,
                                     const htps::u32 characterSize) const = 0;
     virtual htps::Rectf32 getTextureBounds(
@@ -24,9 +27,9 @@ public:
     virtual htps::f32 getKerning(const htps::u32 first,
                                  const htps::u32 second,
                                  const htps::u32 characterSize) const     = 0;
-    virtual htps::sptr<ITexture> getTexture(
-        const htps::u32 characterSize) const                      = 0;
-    virtual htps::sptr<IFont> font(const htps::u32 charactersize) = 0;
+    virtual htps::str getTexture(const htps::u32 characterSize,
+                                 char const character) const              = 0;
+    virtual htps::sptr<IFont> font(const htps::u32 charactersize)         = 0;
 };
 }  // namespace haf::res
 

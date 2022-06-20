@@ -1,3 +1,4 @@
+HTPS_PRAGMA_ONCE
 #ifndef HAF_SCENE_OBJECTFACTORY_INCLUDE_HPP
 #define HAF_SCENE_OBJECTFACTORY_INCLUDE_HPP
 
@@ -52,8 +53,8 @@ public:
     bool registerObjectType(htps::str type_name,
                             ObjectConstructorFunction constructor_function)
     {
-        return constructors_.add(std::move(type_name),
-                                 std::move(constructor_function), false);
+        return constructors_.add(htps::move(type_name),
+                                 htps::move(constructor_function), false);
     }
 
     /**
@@ -71,7 +72,7 @@ public:
         ObjectConstructorFunction constructor_function)
     {
         return registerObjectType(T::StaticTypeName,
-                                  std::move(constructor_function));
+                                  htps::move(constructor_function));
     }
 
     /**
@@ -87,7 +88,7 @@ public:
     template <typename T>
     constexpr bool registerObjectType(htps::str type_name)
     {
-        return registerObjectType(std::move(type_name),
+        return registerObjectType(htps::move(type_name),
                                   createObject<T, Args...>);
     }
 
@@ -122,14 +123,14 @@ public:
             return CreateReturnType(nullptr);
         }
 
-        const auto iterator = constructors_.find(std::move(type_name));
+        const auto iterator = constructors_.find(htps::move(type_name));
 
         if (iterator == constructors_.cend())
         {
             return CreateReturnType(nullptr);
         }
 
-        return (*iterator).second(std::forward<Args>(args)...);
+        return (*iterator).second(htps::forward<Args>(args)...);
     }
 
     /**
@@ -147,7 +148,7 @@ public:
     template <typename T>
     constexpr CreateReturnType create(Args... args)
     {
-        return create(T::StaticTypeName, std::forward<Args>(args)...);
+        return create(T::StaticTypeName, htps::forward<Args>(args)...);
     }
 
     /**
@@ -171,7 +172,7 @@ private:
     template <typename T, typename... MArgs>
     static CreateReturnType createObject(MArgs&&... args)
     {
-        return htps::muptr<T>(std::forward<MArgs>(args)...);
+        return htps::muptr<T>(htps::forward<MArgs>(args)...);
     }
 
     bool containsType(const htps::str& name) const

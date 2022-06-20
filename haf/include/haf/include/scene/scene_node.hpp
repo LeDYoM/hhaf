@@ -1,18 +1,22 @@
+HTPS_PRAGMA_ONCE
 #ifndef HAF_SCENE_SCENENODE_INCLUDE_HPP
 #define HAF_SCENE_SCENENODE_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
+#include <htypes/include/properties/property_state.hpp>
 #include <haf/include/haf_export.hpp>
+#include <haf/include/types/scene_types.hpp>
 #include <haf/include/scene/scenenodeparent.hpp>
-#include <haf/include/scene/scenenode_properties.hpp>
-#include <haf/include/scene/scenenodes.hpp>
+#include <haf/include/scene/scene_nodes.hpp>
 #include <haf/include/scene/hasname.hpp>
+#include <haf/include/scene/scene_render_context.hpp>
 #include <haf/include/system/system_access.hpp>
 #include <haf/include/component/component_container.hpp>
 #include <haf/include/system/subsystem_view.hpp>
 
 namespace haf::scene
 {
+class Scene;
 /**
  * @brief Main class representing all SceneNodes from a @b Scene.
  * This class serves as main entry point in the hierarchy of the scene.
@@ -22,12 +26,11 @@ class HAF_API SceneNode : public sys::HasName,
                           public SceneNodeParent<SceneNode>,
                           public SceneNodes,
                           public sys::SystemAccess,
-                          public SceneNodeProperties,
                           public component::ComponentContainer,
                           public sys::SubSystemViewer
 {
 public:
-    using SceneNodeProperties::prop;
+    htps::PropertyState<bool> Visible{true};
 
     /**
      * @brief Disabled copy constructor
@@ -56,7 +59,7 @@ public:
      * @param parent Parent of this element.
      * @param name Name of this element.
      */
-    SceneNode(types::rptr<SceneNode> parent, types::str name);
+    SceneNode(htps::rptr<SceneNode> parent, htps::str name);
 
     /**
      * @brief Destroy the Scene Node object.
@@ -72,12 +75,24 @@ public:
     /**
      * @brief Method called every frame
      */
-    virtual void update() {}
+    virtual void update();
+
+    /**
+     * @brief Method called every frame after update
+     * @param SceneRenderContext Current frame render context
+     */
+    virtual void postUpdate(SceneRenderContext& sceneRenderContext);
+
+    virtual htps::rptr<Scene> sceneParent();
+    virtual htps::rptr<Scene const> sceneParent() const;
 
     /**
      * @brief Clear all elements in this scene node
      */
     void clearAll();
+
+    SceneBox sceneView() const;
+    SceneBox::vector_t sceneViewSize() const;
 };
 
 using SceneNodeSPtr = htps::sptr<SceneNode>;

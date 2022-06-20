@@ -6,7 +6,7 @@
 #include <haf/include/scene/scene_node.hpp>
 #include <haf/include/resources/ifont.hpp>
 #include <haf/include/scene_nodes/renderizable_scene_node.hpp>
-#include <haf/include/scene_nodes/scene_node_table.hpp>
+#include <haf/include/scene_nodes/scene_node_table_text.hpp>
 #include <haf/include/scene_nodes/scene_node_text.hpp>
 #include <haf/include/animation/animation_component.hpp>
 #include "../loaders/highscoresresources.hpp"
@@ -14,38 +14,34 @@
 
 namespace zoper
 {
-using namespace haf;
-using namespace haf::scene;
-
-class HighScoreTextController : public nodes::TableNode<nodes::SceneNodeText>
+class HighScoreTextController : public haf::scene::nodes::TextTableNode
 {
-    using BaseClass = nodes::TableNode<nodes::SceneNodeText>;
+    using BaseClass = haf::scene::nodes::TextTableNode;
 
 public:
-    using BaseClass::prop;
+    using BaseClass::BaseClass;
 
-    HighScoreTextController(scene::SceneNode* parent, htps::str name);
-    virtual ~HighScoreTextController();
-
-    virtual void onCreated() override;
+    void onCreated() override;
 
     htps::emitter<> Finished;
 
 private:
-    void standarizeText(const htps::sptr<nodes::SceneNodeText>& ntext);
+    void onAllTableElementsCreated(htps::vector2dst const) override;
+    void standarizeText(
+        const htps::sptr<haf::scene::nodes::SceneNodeText>& ntext);
     void saveHighScores();
     void addHighScoresLine(const htps::size_type counter,
                            const HighScore& element,
                            const bool is_inserting);
-    void addHighScoreEditor(const htps::sptr<nodes::SceneNodeText>& label,
-                            const htps::size_type counter);
+    void addHighScoreEditor(
+        const htps::sptr<haf::scene::nodes::SceneNodeText>& label,
+        const htps::size_type counter);
     void addEditAnimation(const htps::size_type line_index);
     HighScoresData high_scores_data_;
-    htps::sptr<res::IFont> normal_font_;
-    htps::sptr<anim::AnimationComponent> animation_component_;
+    htps::sptr<haf::res::IFont> normal_font_;
 
-    Color normal_color_;
-    Color selected_color_;
+    haf::scene::Color normal_color_;
+    haf::scene::Color selected_color_;
 };
 }  // namespace zoper
 

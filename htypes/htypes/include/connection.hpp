@@ -1,3 +1,4 @@
+HTPS_PRAGMA_ONCE
 #ifndef HTPS_CONNECTION_INCLUDE_HPP
 #define HTPS_CONNECTION_INCLUDE_HPP
 
@@ -31,7 +32,7 @@ public:
     /**
      * @brief Create an emitter with one receiver attached
      */
-    constexpr emitter_t(emitter_callback_t f) : receivers_{std::move(f)} {}
+    constexpr emitter_t(emitter_callback_t f) : receivers_{htps::move(f)} {}
     constexpr emitter_t(emitter_t const&) = default;
     constexpr emitter_t& operator=(const emitter_t&) = default;
     constexpr emitter_t(emitter_t&&) noexcept        = default;
@@ -43,19 +44,19 @@ public:
         {
             for (auto& f : receivers_)
             {
-                f(std::forward<Args>(args)...);
+                f(htps::forward<Args>(args)...);
             }
         }
     }
 
     constexpr void connect(emitter_callback_t f) noexcept
     {
-        receivers_.emplace_back(std::move(f));
+        receivers_.emplace_back(htps::move(f));
     }
 
     constexpr emitter_t& operator+=(emitter_callback_t f) noexcept
     {
-        connect(std::move(f));
+        connect(htps::move(f));
         return *this;
     }
 
@@ -108,7 +109,7 @@ public:
      * @param f Function to connect.
      */
     constexpr connection_t(emitter_type& e, function_type<void(Args...)> f) :
-        emitter_{e}, function_{std::move(f)}
+        emitter_{e}, function_{htps::move(f)}
     {
         emitter_.connect(function_);
     }
@@ -123,7 +124,7 @@ public:
      */
     constexpr connection_t(emitter_type& e, emitter_type& r) :
         emitter_{e}, function_{[&r](Args... args) {
-            r(std::forward<Args>(args)...);
+            r(htps::forward<Args>(args)...);
         }}
     {
         emitter_.connect(function_);
@@ -150,7 +151,7 @@ public:
     template <typename R, typename... Args>
     constexpr void connect(emitter<Args...>& e, R r)
     {
-        connections_.push_back(msptr<connection<Args...>>(e, std::move(r)));
+        connections_.push_back(msptr<connection<Args...>>(e, htps::move(r)));
     }
 
     template <typename... Args>

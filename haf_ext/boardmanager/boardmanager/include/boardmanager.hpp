@@ -10,15 +10,20 @@
 namespace haf::board
 {
 class IBoardManagerActuator;
-
+/**
+ * @brief Component to manage a board of tiles.
+ * This component implements a way to manage a group of tiles in a 2D matrix
+ * providing functionality to add, remove and check for data.
+ */
 class BoardManager : public haf::component::Component
 {
 public:
-    using BackgroundData = htps::s32;
-    using BoardTileData  = ITile::BoardTileData;
+    using BackgroundData    = htps::s32;
+    using BoardTileData     = ITile::BoardTileData;
+    using BoardPositionType = BoardPositionType;
 
     using BackgroundFunction =
-        htps::function<BackgroundData(const htps::vector2dst&)>;
+        htps::function<BackgroundData(htps::vector2dst const&)>;
 
     /**
      * @brief Method to initialize the component.
@@ -29,28 +34,30 @@ public:
      * @param board_manager_actuator Pointer to a @b IBoardManagerActuator
      * to handle the callbacks.
      */
-    void initialize(const htps::vector2dst& size,
+    void initialize(htps::vector2dst const& size,
                     htps::rptr<IBoardManagerActuator> board_manager_actuator);
 
     BackgroundFunction setBackgroundFunction(
         BackgroundFunction background_function);
 
-    SITilePointer getTile(const htps::vector2dst& position) const noexcept;
-    bool tileEmpty(const htps::vector2dst& position) const noexcept;
-    bool setTile(const htps::vector2dst& position, SITilePointer newTile);
-    bool deleteTile(const htps::vector2dst& position);
-    bool moveTile(const htps::vector2dst& source, const htps::vector2dst& dest);
-    bool changeTileData(const htps::vector2dst& source,
-                        const BoardTileData& nv);
-    bool swapTileData(const htps::vector2dst& lhs, const htps::vector2dst& rhs);
+    SITilePointer getTile(BoardPositionType const& position) const noexcept;
+    bool tileEmpty(BoardPositionType const& position) const noexcept;
+    bool setTile(BoardPositionType const& position, SITilePointer newTile);
+    bool deleteTile(BoardPositionType const& position);
+    bool moveTile(BoardPositionType const source, BoardPositionType const dest);
+    bool changeTileData(BoardPositionType const& source,
+                        BoardTileData const& new_value);
+    bool swapTileData(BoardPositionType const& lhs,
+                      BoardPositionType const& rhs);
 
-    bool validCoords(const htps::vector2dst& tPosition) const noexcept;
-    BackgroundData backgroundData(const htps::vector2dst& tPosition) const;
+    bool validCoords(BoardPositionType const& tPosition) const noexcept;
+    BackgroundData backgroundData(BoardPositionType const& tPosition) const;
     htps::vector2dst size() const noexcept;
 
     htps::str toStr();
 
 private:
+    void initializeTileMatrix(htps::vector2dst const& size);
     void _setTile(const htps::vector2dst& position, SITilePointer newTile);
 
     BackgroundFunction background_function_{};

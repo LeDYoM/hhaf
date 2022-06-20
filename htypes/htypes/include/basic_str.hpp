@@ -1,3 +1,4 @@
+HTPS_PRAGMA_ONCE
 #ifndef HTPS_BASIC_STR_INCLUDE_HPP
 #define HTPS_BASIC_STR_INCLUDE_HPP
 
@@ -12,6 +13,13 @@
 
 namespace htps
 {
+/**
+ * @brief Template class containing a string like class dependant on the
+ * character type. It provides functions for adding stream and making
+ * search of characters, substrings and other useful operations.
+ *
+ * @tparam char_type Character type to be used
+ */
 template <typename char_type>
 class basic_str
 {
@@ -23,6 +31,7 @@ public:
     using iterator = char_type*;  //< Iterator value of the string;
     using const_iterator =
         char_type const*;  //< Const iterator type of the string
+    using size_type = vector<char_type>::size_type;
 
 private:
     vector<char_type> data_;
@@ -34,11 +43,13 @@ public:
     constexpr basic_str(const char_type (&a)[N]) : data_(a, N)
     {}
 
+    constexpr basic_str(size_type const size) : data_(size) {}
+
     constexpr basic_str(const_iterator const n, size_type const N) :
         data_(n, N + 1)
     {}
 
-    constexpr basic_str(char_type const* const n) :
+    constexpr explicit basic_str(char_type const* const n) :
         basic_str(n, detail::_str_len(n))
     {}
 
@@ -59,6 +70,16 @@ public:
     }
 
     void swap(basic_str& other) { data_.swap(other.data_); }
+
+    static basic_str fromCharAndSize(char_type const ch, size_type const size)
+    {
+        basic_str result(size + 1U);
+        for (size_type i{0U}; i < size; ++i)
+        {
+            result.push_back(ch);
+        }
+        return result;
+    }
 
     static basic_str to_str(u64 const n)
     {
@@ -97,47 +118,90 @@ public:
         return convert(temp);
     }
 
-    vector<basic_str> split(char_type const separator) const
+    vector<basic_str> split(basic_str::char_type const& separator) const
+    {
+        basic_str temp;
+        temp.push_back(separator);
+        return split(temp);
+    }
+
+    vector<basic_str> split(basic_str const& separator) const
     {
         vector<basic_str> result;
+        auto _this{*this};
 
-        basic_str tok;
-
-        for (auto const it : *this)
+        if (!separator.empty())
         {
-            if (it == separator)
+            do
             {
-                result.emplace_back(std::move(tok));
-                tok = basic_str();
-            }
-            else
-            {
-                tok.push_back(it);
-            }
-        }
+                size_type position{_this.cfind(separator)};
+                if (position == npos)
+                {
+                    result.push_back(htps::move(_this));
+                    _this.clear();
+                }
+                else
+                {
+                    result.push_back(_this.substr(0U, position));
+                    _this = _this.substr(position + separator.size());
+                    if (_this.empty())
+                    {
+                        result.push_back("");
+                    }
+                }
 
-        result.emplace_back(std::move(tok));
+            } while (!_this.empty());
+        }
+        else
+        {
+            result.push_back(htps::move(_this));
+        }
         return result;
     }
 
-    inline bool starts_with(const basic_str& prefix) const noexcept
+    bool starts_with(basic_str const& prefix) const noexcept
     {
-        if (size() < prefix.size())
-        {
-            return false;
-        }
-
-        return (substr(0, prefix.size()) == prefix);
+        return has_in(prefix, 0U);
     }
 
-    inline bool ends_with(const basic_str& prefix) const noexcept
+    bool ends_with(basic_str const& prefix) const noexcept
     {
-        if (size() < prefix.size())
+        return has_in(prefix, size() - prefix.size());
+    }
+
+    bool has_in(basic_str const& prefix,
+                size_type const start_position) const noexcept
+    {
+        if (size() < prefix.size() || start_position > size())
         {
             return false;
         }
 
-        return (substr(size() - prefix.size()) == prefix);
+        return (substr(start_position, prefix.size()) == prefix);
+    }
+
+    size_type has(basic_str const& sub_str) const noexcept
+    {
+        if (size() < sub_str.size())
+        {
+            return npos;
+        }
+
+        if (sub_str.empty())
+        {
+            return 0U;
+        }
+
+        auto const size_to_check{size() - (sub_str.size() - 1U)};
+
+        for (size_type i{0U}; i < size_to_check; ++i)
+        {
+            if (has_in(sub_str, i))
+            {
+                return i;
+            }
+        }
+        return npos;
     }
 
     basic_str substr(size_type start, size_type len = npos) const
@@ -174,20 +238,20 @@ public:
     basic_str& append(basic_str&& n)
     {
         data_.pop_back();
-        data_.insert(std::move(n.data_));
+        data_.insert(htps::move(n.data_));
         return *this;
     }
 
     template <size_type N>
-    constexpr basic_str& append(const char_type (&n)[N])
+    constexpr basic_str& append(char_type const (&n)[N])
     {
-        append(str(std::forward<const char_type(&)[N]>(n)));
+        append(str(htps::forward<char_type const(&)[N]>(n)));
         return *this;
     }
 
     basic_str& append(char_type const* const n)
     {
-        append(basic_str(n));
+        append(basic_str{n});
         return *this;
     }
 
@@ -230,7 +294,7 @@ public:
     basic_str& push_back(char_type const n)
     {
         char_type const temp[2U] = {n, 0U};
-        return append(std::move(temp));
+        return append(htps::move(temp));
     }
 
     template <typename T>
@@ -259,30 +323,31 @@ public:
     template <typename T>
     basic_str& operator+=(T&& source)
     {
-        return append(std::forward<T>(source));
+        return append(htps::forward<T>(source));
     }
 
-    basic_str& operator+=(const basic_str& source) { return append(source); }
+    basic_str& operator+=(basic_str const& source) { return append(source); }
+
     basic_str operator+(basic_str<value_type> const& rhs) const
     {
         return basic_str<value_type>(*this).append(rhs);
     }
 
-    basic_str operator+(char_type const* rhs) const
+    basic_str operator+(char_type const* const rhs) const
     {
         return basic_str<value_type>(*this).append(rhs);
     }
 
     constexpr size_type size() const noexcept
     {
-        return data_.empty() ? 0 : data_.size() - 1;
+        return data_.empty() ? 0 : (data_.size() - 1U);
     }
 
-    inline void ltrim()
+    void ltrim()
     {
         if (!empty())
         {
-            for (size_type index = 0U; index < size(); ++index)
+            for (size_type index{0U}; index < size(); ++index)
             {
                 if (!std::isspace(static_cast<char_type>(data_[index])))
                 {
@@ -290,14 +355,74 @@ public:
                     return;
                 }
             }
-            *this = "";
+            data_.clear();
         }
+    }
+
+    constexpr void clear() noexcept { data_.clear(); }
+
+    constexpr size_type cfind(char_type const ch) const noexcept
+    {
+        const auto it(data_.cfind(ch));
+        return ((it == data_.cend()) ? npos : std::distance(cbegin(), it));
+    }
+
+    constexpr size_type cfind(basic_str const& other) const noexcept
+    {
+        if (!other.empty() && !empty() && other.size() <= size())
+        {
+            auto next_start{cbegin()};
+            while (next_start != cend())
+            {
+                auto const it_start{
+                    data_.cfind(next_start, data_.cend(), *other.begin())};
+                bool continue_inner{it_start != data_.cend()};
+                if (continue_inner)
+                {
+                    auto it_end{it_start + 1};
+                    for (size_type i{1U}; i < other.size() && continue_inner;
+                         ++i, ++it_end)
+                    {
+                        if (it_end == cend())
+                        {
+                            return npos;
+                        }
+                        else if (*it_end != other[i])
+                        {
+                            continue_inner = false;
+                            ++next_start;
+                        }
+                    }
+                }
+                else
+                {
+                    next_start = cend();
+                }
+                if (continue_inner)
+                {
+                    return std::distance(cbegin(), it_start);
+                }
+            }
+        }
+        return npos;
     }
 
     constexpr size_type find(char_type const ch) const noexcept
     {
-        const auto it(data_.cfind(ch));
-        return ((it == data_.cend()) ? npos : std::distance(cbegin(), it));
+        if (data_.empty())
+        {
+            return npos;
+        }
+        else
+        {
+            auto const it{data_.cfind(data_.cbegin(), &(data_.back()), ch)};
+            return ((it == &data_.back()) ? npos : std::distance(cbegin(), it));
+        }
+    }
+
+    constexpr size_type find(basic_str const& other) const noexcept
+    {
+        return cfind(other);
     }
 
     // trim from end (in place)
@@ -364,9 +489,48 @@ public:
     constexpr auto find_first_of(
         vector<char_type> const& chValue) const noexcept
     {
-        const auto it{data_.find_first_of(chValue)};
+        auto const it{data_.cfind_first_of(chValue)};
         return (it == data_.cend()) ? basic_str::npos
-                                     : std::distance(cbegin(), it);
+                                    : std::distance(cbegin(), it);
+    }
+
+    constexpr auto find_first_of(char_type const chValue) const noexcept
+    {
+        auto const it{data_.find_first_of(chValue)};
+        return (it == data_.cend()) ? basic_str::npos
+                                    : std::distance(cbegin(), it);
+    }
+
+    constexpr auto find_first_of(basic_str const value) const noexcept
+    {
+        auto value_data_copy{value.data_};
+        value_data_copy.pop_back();
+        auto const it{data_.find_first_of(value_data_copy)};
+        return (it == data_.cend()) ? basic_str::npos
+                                    : std::distance(cbegin(), it);
+    }
+
+    constexpr auto find_last_of(vector<char_type> const& chValue) const noexcept
+    {
+        auto const it{data_.find_last_of(chValue)};
+        return (it == data_.cend()) ? basic_str::npos
+                                    : std::distance(cbegin(), it);
+    }
+
+    constexpr auto find_last_of(char_type const chValue) const noexcept
+    {
+        auto const it{data_.find_last_of(chValue)};
+        return (it == data_.cend()) ? basic_str::npos
+                                    : std::distance(cbegin(), it);
+    }
+
+    constexpr auto find_last_of(basic_str const value) const noexcept
+    {
+        auto value_data_copy{value.data_};
+        value_data_copy.pop_back();
+        auto const it{data_.find_last_of(value_data_copy)};
+        return (it == data_.cend()) ? basic_str::npos
+                                    : std::distance(cbegin(), it);
     }
 
     template <typename T>
@@ -390,7 +554,7 @@ public:
         }
     }
 
-    static const size_type npos = static_cast<size_type>(-1);
+    static constexpr size_type npos{static_cast<size_type>(-1)};
 
     constexpr bool operator==(basic_str const& rhs) const noexcept
     {
@@ -421,12 +585,6 @@ public:
         return !(*this == a);
     }
 
-    template <typename T>
-    constexpr basic_str& operator<<(const T& n)
-    {
-        return append(n);
-    }
-
     constexpr bool operator<(const basic_str& rhs) const noexcept
     {
         for (size_type i{0U}; i < size() && i < rhs.size(); ++i)
@@ -444,10 +602,17 @@ public:
     }
 };
 
+template <typename value_type, typename T>
+constexpr basic_str<value_type>& operator<<(basic_str<value_type>& lhs,
+                                            T const& n)
+{
+    return lhs.append(n);
+}
+
 template <typename T, typename value_type>
 basic_str<value_type> operator+(T&& lhs, basic_str<value_type> const& rhs)
 {
-    return basic_str<value_type>(std::forward<T>(lhs)).append(rhs);
+    return basic_str<value_type>(htps::forward<T>(lhs)).append(rhs);
 }
 
 template <typename char_value>
@@ -465,23 +630,25 @@ constexpr bool operator!=(char_value const* const lhs,
 }
 
 template <typename char_value, typename T, typename... Args>
-constexpr void make_basic_str_internal(basic_str<char_value>& buffer, T&& arg, Args&&... args)
+constexpr void make_basic_str_internal(basic_str<char_value>& buffer,
+                                       T&& arg,
+                                       Args&&... args)
 {
-    make_basic_str_internal(buffer, std::forward<T>(arg));
-    make_basic_str_internal(buffer, std::forward<Args>(args)...);
+    make_basic_str_internal(buffer, htps::forward<T>(arg));
+    make_basic_str_internal(buffer, htps::forward<Args>(args)...);
 }
 
 template <typename char_value, typename T>
 constexpr void make_basic_str_internal(basic_str<char_value>& buffer, T&& arg)
 {
-    buffer << std::forward<T>(arg);
+    buffer << htps::forward<T>(arg);
 }
 
 template <typename char_value, typename... Args>
 constexpr basic_str<char_value> make_basic_str(Args&&... args)
 {
     basic_str<char_value> t;
-    make_basic_str_internal(t, std::forward<Args>(args)...);
+    make_basic_str_internal(t, htps::forward<Args>(args)...);
     return t;
 }
 
@@ -489,44 +656,44 @@ template <typename char_value, typename T>
 constexpr basic_str<char_value> make_basic_str(T&& arg)
 {
     basic_str<char_value> t;
-    make_basic_str_internal(t, std::forward<T>(arg));
+    make_basic_str_internal(t, htps::forward<T>(arg));
     return t;
 }
 
 template <typename char_value>
 inline basic_str<char_value> make_basic_str(u64&& n)
 {
-    return basic_str<char_value>::to_str(std::move(n));
+    return basic_str<char_value>::to_str(htps::move(n));
 }
 
 template <typename char_value>
 inline basic_str<char_value> make_basic_str(s64&& n)
 {
-    return basic_str<char_value>::to_str(std::move(n));
+    return basic_str<char_value>::to_str(htps::move(n));
 }
 
 template <typename char_value>
 inline basic_str<char_value> make_basic_str(u32&& n)
 {
-    return basic_str<char_value>::to_str(std::move(n));
+    return basic_str<char_value>::to_str(htps::move(n));
 }
 
 template <typename char_value>
 inline basic_str<char_value> make_basic_str(s32&& n)
 {
-    return basic_str<char_value>::to_str(std::move(n));
+    return basic_str<char_value>::to_str(htps::move(n));
 }
 
 template <typename char_value>
 inline basic_str<char_value> make_basic_str(f32&& n)
 {
-    return basic_str<char_value>::to_str(std::move(n));
+    return basic_str<char_value>::to_str(htps::move(n));
 }
 
 template <typename char_value>
 inline basic_str<char_value> make_basic_str(f64&& n)
 {
-    return basic_str<char_value>::to_str(std::move(n));
+    return basic_str<char_value>::to_str(htps::move(n));
 }
 
 }  // namespace htps

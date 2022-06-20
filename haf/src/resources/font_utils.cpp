@@ -10,51 +10,69 @@ namespace haf::res
 FontUtils::FontUtils(IFont* const font) : font_{font}
 {}
 
-vector<Rectf32> FontUtils::getTextBoxes(str const& text) const
+TextRenderData FontUtils::getTextRenderData(str const& text) const
 {
     if (text.empty())
     {
         return {};
     }
 
-    // Take it into account for multilines
-    //    const f32 vspace{font_->getLineSpacing()};
-    f32 x{0.f};
-    f32 y{0.0F};  // static_cast<f32>(characterSize)};
-
     // Create one quad for each character
     u32 prevChar{0U};
-    vector<Rectf32> result(text.size());
+    TextRenderData result(text.size());
+    f32 current_character_position_x{0.0F};
+    size_t current_index{0U};
 
     for (auto curChar : text)
     {
+        CharacterRenderData character_render_data{};
+
         // Apply the kerning offset
-        x += font_->getKerning(prevChar, curChar);
-        prevChar = curChar;
+        current_character_position_x += font_->getKerning(prevChar, curChar);
 
-        Rectf32 letterBox{font_->getBounds(curChar) + vector2df{x, y}};
-        // TODO: This is because the SFML bug printing at 0.
-        letterBox += vector2df{0.0F, 50.0F};
+        prevChar                               = curChar;
+        character_render_data.characterBounds  = font_->getBounds(curChar);
+        character_render_data.characterAdvance = font_->getAdvance(curChar);
 
-        result.emplace_back(std::move(letterBox));
+        current_character_position_x +=
+            character_render_data.characterBounds.width / 2.0F;
 
-        // Advance to the next character
-        x += font_->getAdvance(curChar);
+        character_render_data.character_position.x =
+            current_character_position_x;
+        character_render_data.character_size =
+            character_render_data.characterBounds.size();
+
+        result.character_render_data.push_back(character_render_data);
+
+        current_character_position_x -=
+            character_render_data.characterBounds.width / 2.0F;
+
+        current_character_position_x += character_render_data.characterAdvance;
+
+        ++current_index;
+        if (current_index == text.size())
+        {
+            result.text_size.x += character_render_data.characterBounds.width;
+        }
+        else
+        {
+            result.text_size.x += character_render_data.characterAdvance;
+        }
+
+        if (result.text_size.y < character_render_data.characterBounds.height)
+        {
+            result.text_size.y = character_render_data.characterBounds.height;
+        }
     }
-    return result;
-}
 
-Rectf32 FontUtils::textSize(htps::str const& text) const
-{
-    auto const boxes{getTextBoxes(text)};
-    Rectf32 result{};
-    for (auto const& box : boxes)
+    for (auto& character_render_data : result.character_render_data)
     {
-        result.left = std::min(result.left, box.left);
-        result.setRight(std::max(result.right(), box.right()));
-        result.top = std::min(result.top, box.top);
-        result.setBottom(std::max(result.bottom(), box.bottom()));
+        auto bounds{character_render_data.characterBounds.height / 2.0F};
+        auto half_size_y{result.text_size.y / 2.0F};
+        character_render_data.character_position.y =
+            half_size_y + ((half_size_y - bounds));
     }
+
     return result;
 }
 

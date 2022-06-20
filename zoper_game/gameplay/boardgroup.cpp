@@ -7,12 +7,12 @@
 #include "boardutils.hpp"
 
 #include <haf/include/scene/scene_node.hpp>
+#include <haf/include/scene/scene.hpp>
 #include <haf/include/scene_nodes/scene_node_table.hpp>
-#include <haf/include/scene_nodes/scene_node_size.hpp>
-#include <haf/include/scene_components/iscene_metrics_view.hpp>
 #include <haf/include/render/renderizable.hpp>
 #include <haf/include/scene/scenenode_cast.hpp>
 #include <haf/include/component/component_container.hpp>
+#include <haf/include/scene_components/camera_component.hpp>
 
 #include <boardmanager/include/boardmanager.hpp>
 #include <boardmanager/include/itile.hpp>
@@ -29,26 +29,9 @@ BoardGroup::~BoardGroup() = default;
 void BoardGroup::configure(vector2dst size,
                            sptr<LevelProperties> level_properties)
 {
-    level_properties_ = std::move(level_properties);
-    prop<TableSize>().set(size);
-    auto const tableSize{prop<TableSize>().get()};
-
-    Rectf32 textBox{subSystem<ISceneMetricsView>()->currentView()};
-    prop<Position>() = textBox.leftTop();
-    prop<SceneNodeSize>().set(textBox.size());
-
-    Rectf32 const bBox{textBox};
-    Rectf32 tileBox({}, cellSize());
-
-    // Create the nodes to render the tiles
-    for (size_type y{0U}; y < tableSize.y; ++y)
-    {
-        for (size_type x{0U}; x < tableSize.x; ++x)
-        {
-            auto node = createNodeAt({x, y}, make_str("BoardGroupTile_", x, y));
-            node->prop<NodeSize>().set(tileBox);
-        }
-    }
+    level_properties_ = htps::move(level_properties);
+    TableSize = size;
+    auto const tableSize{TableSize()};
 
     // Create and initialize the BoardManager
     auto board_model{component<board::BoardManager>()};
@@ -59,12 +42,20 @@ void BoardGroup::configure(vector2dst size,
             return ((TokenZones::pointInCenter(position)) ? (1) : (0));
         });
 
-    tokens_scene_node = createSceneNode("tokens_scene_node");
     setLevel(level_properties_->currentLevel());
     addPlayer();
 
     level_properties_->levelChanged.connect(
         make_function(this, &BoardGroup::setLevel));
+}
+
+void BoardGroup::onCreated()
+{
+    tokens_scene_node = createSceneNode<haf::scene::TransformableSceneNode>(
+        "tokens_scene_node");
+
+    onNodeReady.connect(
+        htps::make_function(this, &BoardGroup::onTableNodeAdded));
 }
 
 void BoardGroup::addPlayer()
@@ -75,15 +66,15 @@ void BoardGroup::addPlayer()
 
     // Create the player instance
     player_ = tokens_scene_node->createSceneNode<Player>("playerNode");
+    player_->Scale = tileSize();
 
     // Add it to the board and to the scene nodes
     componentOfType<board::BoardManager>()->setTile(
         TokenZones::centerRect.leftTop(), player_);
 }
 
-void BoardGroup::createNewToken(const BoardTileData data,
-                                const vector2dst& board_position,
-                                const vector2df& size)
+void BoardGroup::createNewToken(BoardTileData const data,
+                                vector2dst const& board_position)
 {
     using namespace haf::board;
 
@@ -91,11 +82,11 @@ void BoardGroup::createNewToken(const BoardTileData data,
                      " with value ", data);
 
     // Create a new Tile instance
-    auto new_tile_token = tokens_scene_node->createSceneNode<Token>("tileNode");
+    auto new_tile_token{tokens_scene_node->createSceneNode<Token>("tileNode")};
 
     // Set the position in the scene depending on the board position
-    new_tile_token->prop<Position>().set(board2Scene(board_position));
-    new_tile_token->setBox(rectFromSize(size));
+    new_tile_token->Position = board2Scene(board_position);
+    new_tile_token->Scale = tileSize();
 
     // Add it to the board
     auto board_model{componentOfType<board::BoardManager>()};
@@ -110,14 +101,19 @@ void BoardGroup::tileRemoved(const vector2dst, board::SITilePointer& tile)
     tokens_scene_node->removeSceneNode(std::dynamic_pointer_cast<Token>(tile));
 }
 
+void BoardGroup::onTableNodeAdded(htps::sptr<SceneNode> const&)
+{
+    moveToLastPosition(tokens_scene_node);
+}
+
 void BoardGroup::setLevel(const size_type level)
 {
     // Update background tiles
     for_each_tableSceneNode(
         [this, level](const auto position, sptr<BoardTileSceneNode> node) {
-            node->prop<BoardTileSceneNodeProperties>().set<BackgroundColor>(
+            node->BackgroundColor =
                 getBackgroundTileColor(level, position,
-                                       TokenZones::pointInCenter(position)));
+                                       TokenZones::pointInCenter(position));
         });
 }
 
@@ -234,17 +230,27 @@ bool BoardGroup::moveTileInDirection(Direction const direction,
     return false;
 }
 
+void BoardGroup::movePlayer(Direction const& direction)
+{
+    LogAsserter::log_assert(direction.isValid(),
+                            "Invalid direction passed to move");
+    auto const nPosition{direction.applyToVector(player_->boardPosition())};
+    componentOfType<board::BoardManager>()->moveTile(player_->boardPosition(),
+                                                     nPosition);
+    player_->currentDirection = direction;
+}
+
 bool BoardGroup::moveTowardsCenter(Direction const direction,
-                                   vector2dst const& position)
+                                   vector2dst const position)
 {
     bool moved_to_center{false};
-    auto board_model{componentOfType<board::BoardManager>()};
+    auto const board_model{componentOfType<board::BoardManager>()};
 
     // Is the current tile position empty?
     if (!board_model->tileEmpty(position))
     {
         // If not, what about the next position to check, is empty?
-        const auto next = direction.applyToVector(position);
+        const auto next{direction.applyToVector(position)};
 
         if (!board_model->tileEmpty(next))
         {
@@ -253,7 +259,7 @@ bool BoardGroup::moveTowardsCenter(Direction const direction,
             moved_to_center = moveTowardsCenter(direction, next);
         }
         board_model->moveTile(position, next);
-        auto dest_tile{
+        auto const dest_tile{
             std::dynamic_pointer_cast<Token>(board_model->getTile(next))};
 
         LogAsserter::log_assert(dest_tile != nullptr, "Error moving the tile!");
@@ -269,18 +275,19 @@ bool BoardGroup::moveTowardsCenter(Direction const direction,
 
 vector2df BoardGroup::board2SceneFactor() const
 {
-    return subSystem<ISceneMetricsView>()->currentView().size() /
+    return parentAs<Scene>()->cameraComponent()->view().size() /
         componentOfType<board::BoardManager>()->size();
 }
 
 vector2df BoardGroup::board2Scene(const vector2dst& bPosition) const
 {
-    return board2SceneFactor() * bPosition;
+    return {vector2df{-0.5F, -0.5F} + (board2SceneFactor() / 2.0F) +
+            (board2SceneFactor() * bPosition)};
 }
 
 vector2df BoardGroup::tileSize() const
 {
-    return board2Scene({1, 1});
+    return board2SceneFactor();
 }
 
 htps::sptr<board::BoardManager> BoardGroup::boardManager() noexcept

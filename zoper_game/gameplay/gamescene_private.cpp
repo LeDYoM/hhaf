@@ -5,6 +5,7 @@
 #include <haf/include/animation/animation_component.hpp>
 #include <haf/include/random/randomnumberscomponent.hpp>
 #include <haf/include/render/fig_type.hpp>
+#include <haf/include/scene_components/camera_component.hpp>
 
 using namespace haf::scene;
 using namespace haf::render;
@@ -16,24 +17,24 @@ namespace zoper
 {
 void GameScene::GameScenePrivate::createScoreIncrementPoints(
     SceneNode& main_node,
-    vector2df const& lastTokenPosition)
+    vector2df const& /*lastTokenPosition*/)
 {
-    auto pointsToScoreSceneNode =
-        main_node.createSceneNode<RenderizablesSceneNode>(
-            "pointIncrementScore_SceneNode");
+    auto pointsToScoreSceneNode{
+        main_node.createSceneNode<RenderizableSceneNode>(
+            "pointIncrementScore_SceneNode")};
 
-    auto node = pointsToScoreSceneNode->renderizableBuilder()
+    auto node{pointsToScoreSceneNode->renderizableBuilder()
                     .name("pointIncrementScore")
-                    .figType(FigType_t::Shape)
-                    .box(rectFromSize(15.0F, 15.0F))
+                    .figType(FigType_t::Sprite)
                     .color(colors::White)
-                    .pointCount(30U)
-                    .create();
+//                    .pointCount(30U)
+                    .create()};
 
+    pointsToScoreSceneNode->Scale = vector2df{0.01F, 0.01F};
     using namespace gameplay::constants;
 
     DisplayLog::info("Creating animation for points to score");
-
+/*
     auto property_animation_builder{
         scene_animation_component_->make_property_animation_builder<Position>(
             pointsToScoreSceneNode)};
@@ -43,8 +44,11 @@ void GameScene::GameScenePrivate::createScoreIncrementPoints(
         .actionWhenFinished([pointsToScoreSceneNode]() {
             pointsToScoreSceneNode->autoRemove();
         });
-
+*/
+    pointsToScoreSceneNode->Position = EndPositionPointsToScore;
+/*
     scene_animation_component_->addAnimation(
-        std::move(property_animation_builder));
+        htps::move(property_animation_builder));
+*/
 }
 }  // namespace zoper

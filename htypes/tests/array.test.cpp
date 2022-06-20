@@ -50,7 +50,7 @@ TEST_CASE("array::array", "[array]")
             CHECK(m == m2);
             CHECK(m.size() == m2.size());
 
-            auto m3(std::move(m));
+            auto m3(htps::move(m));
             CHECK(m2 == m3);
         }
     }
@@ -169,7 +169,7 @@ TEST_CASE("array of shared pointers", "[array][sptr]")
         auto test_array1(init_array_shared_pointers_A());
         CHECK(test_array1.size() == 10U);
 
-        array_shared_pointers<A, 10U> test_array2 = std::move(test_array1);
+        array_shared_pointers<A, 10U> test_array2 = htps::move(test_array1);
 
         CHECK(test_array2.size() == 10U);
 
@@ -312,10 +312,10 @@ TEST_CASE("array unique ptr", "[array][uptr]")
     CHECK_FALSE(test_array2[2U]);
 
     *test_array1[0U] = 2;
-    uptr<s32> t      = std::move(test_array1[0U]);
+    uptr<s32> t      = htps::move(test_array1[0U]);
     CHECK(*t == 2);
     CHECK_FALSE(test_array1[0U]);
-    test_array1[0U] = std::move(test_array2[0U]);
+    test_array1[0U] = htps::move(test_array2[0U]);
     CHECK_FALSE(test_array2[0U]);
     CHECK(test_array1[0U]);
 }

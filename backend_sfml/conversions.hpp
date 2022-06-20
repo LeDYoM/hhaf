@@ -1,10 +1,11 @@
 #include <htypes/include/cast.hpp>
-#include "renderwindow.hpp"
 #include <backend_dev/include/ikey.hpp>
 #include <backend_dev/include/itexture.hpp>
 #include <backend_dev/include/ishader.hpp>
-#include "texture.hpp"
-#include "shader.hpp"
+#include <backend_dev/include/camera_data.hpp>
+#include "sfml_render_window.hpp"
+#include "sfml_texture.hpp"
+#include "sfml_shader.hpp"
 #include <SFML/Window.hpp>
 #include <SFML/System/String.hpp>
 
@@ -17,7 +18,7 @@ constexpr sf::Rect<T> to_sf_type(htps::Rect<T> const& rect) noexcept
 }
 
 template <typename T>
-constexpr htps::Rect<T> from_sft_type(sf::Rect<T> const& rect) noexcept
+constexpr htps::Rect<T> from_sf_type(sf::Rect<T> const& rect) noexcept
 {
     return htps::Rect<T>{rect.left, rect.top, rect.width, rect.height};
 }
@@ -60,9 +61,9 @@ constexpr sf::Texture const* to_sf_type(ITexture const* texture) noexcept
 {
     if (texture != nullptr)
     {
-        if (auto const sf_texture{htps::d_cast<Texture const*>(texture)})
+        if (auto const sf_texture{htps::d_cast<SFMLTexture const*>(texture)})
         {
-            return &(sf_texture->backEndTexture());
+            return sf_texture->backEndTexture();
         }
     }
     return nullptr;
@@ -72,18 +73,12 @@ constexpr sf::Shader const* to_sf_type(IShader const* const shader) noexcept
 {
     if (shader != nullptr)
     {
-        if (auto const sf_shader{htps::d_cast<Shader const*>(shader)})
+        if (auto const sf_shader{htps::d_cast<SFMLShader const*>(shader)})
         {
-            return &(sf_shader->backEndShader());
+            return sf_shader->backEndShader();
         }
     }
     return nullptr;
-}
-
-constexpr auto to_sf_type(
-    iPrimitiveType const primitive_type) noexcept
-{
-    return static_cast<sf::PrimitiveType>(primitive_type);
 }
 
 inline auto to_sf_type(iVertex const* const vertex) noexcept
@@ -91,12 +86,25 @@ inline auto to_sf_type(iVertex const* const vertex) noexcept
     return reinterpret_cast<sf::Vertex const* const>(vertex);
 }
 
+inline auto to_sf_type(iVertex const vertex) noexcept
+{
+    return sf::Vertex{sf::Vector2f{vertex.pos_x, vertex.pos_y},
+                      sf::Color{vertex.r, vertex.g, vertex.b, vertex.a},
+                      sf::Vector2f{vertex.tc_x, vertex.tc_y}};
+}
+
+inline auto to_sf_type(iColor const& color) noexcept
+{
+    return sf::Color{color.r, color.g, color.b, color.a};
+}
+
 inline auto to_sf_type(htps::f32 const* const matrix,
-                                   ITexture const* const texture,
-                                   IShader const* const shader) noexcept
+                       ITexture const* const texture,
+                       IShader const* const shader) noexcept
 {
     return sf::RenderStates{sf::RenderStates::Default.blendMode,
                             to_sf_type(matrix), to_sf_type(texture),
                             to_sf_type(shader)};
 }
+
 }  // namespace haf::backend::sfmlb

@@ -1,13 +1,15 @@
-#ifndef HAF_BACKEND_IRESOURCEFACTORIES_INCLUDE_HPP
-#define HAF_BACKEND_IRESOURCEFACTORIES_INCLUDE_HPP
-
-#include <htypes/include/str.hpp>
+#ifndef HAF_BACKEND_IRESOURCE_FACTORIES_INCLUDE_HPP
+#define HAF_BACKEND_IRESOURCE_FACTORIES_INCLUDE_HPP
 
 #include "iresourcefactory.hpp"
-#include "itexture.hpp"
-#include "ittfont.hpp"
-#include "ishader.hpp"
-#include "ibmpfont.hpp"
+
+namespace haf::backend
+{
+class ITexture;
+class ITTFont;
+class IShader;
+class IBMPFont;
+}  // namespace haf::backend
 
 namespace haf::backend
 {

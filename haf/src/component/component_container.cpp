@@ -47,7 +47,7 @@ void ComponentContainer::clearComponents() noexcept
 bool ComponentContainer::addComponent(sptr<IComponent> nc)
 {
     LogAsserter::log_assert(nc != nullptr, "Trying to add a nullptr component");
-    p_->components_.push_back(std::move(nc));
+    p_->components_.push_back(htps::move(nc));
     return true;
 }
 

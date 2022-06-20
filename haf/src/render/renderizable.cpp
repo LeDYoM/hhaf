@@ -1,17 +1,15 @@
 #include <haf/include/render/renderizable.hpp>
 #include "render/renderizable_private.hpp"
-#include "rendersystem.hpp"
+#include "render_system.hpp"
 #include "renderizable_internal_data.hpp"
 #include "renderizable_internal_functions.hpp"
 #include "system/get_system.hpp"
 
-#include <haf/include/render/renderdata.hpp>
-#include <haf/include/scene/transformable_scene_node.hpp>
+#include <haf/include/scene_nodes/transformable_scene_node.hpp>
 #include <haf/include/render/renderizable_builder.hpp>
 #include <haf/include/resources/itexture.hpp>
 #include <haf/include/resources/ishader.hpp>
-#include <haf/include/render/vertexarray.hpp>
-#include <haf/include/render/renderdata.hpp>
+#include <haf/include/resources/idefault_resources_retriever.hpp>
 
 using namespace htps;
 using namespace haf::scene;
@@ -20,105 +18,89 @@ namespace haf::render
 {
 Renderizable::Renderizable(rptr<TransformableSceneNode> parent,
                            RenderizableData&& renderizable_data) :
-    sys::HasName{std::move(renderizable_data.prop<RenderizableName>()())},
-    RenderizableData{std::move(renderizable_data)},
-    p_{make_pimplp<RenderizablePrivate>(parent,
-                                        prop<FigureTypeProperty>()(),
-                                        prop<PointCount>()(),
-                                        parent->globalTransform(),
-                                        prop<TextureProperty>()().get(),
-                                        prop<ShaderProperty>()().get(),
-                                        this)}
+    sys::HasName{htps::move(renderizable_data.RenderizableName())},
+    parent_{htps::move(parent)},
+    p_{make_pimplp<RenderizablePrivate>(
+        this,
+        renderizable_data.PointCount(),
+        renderizable_data.FigureTypeProperty(),
+        sys::getSystem<sys::RenderSystem>(parent).currentRenderTarget())}
 {
-    prop<TextureRectProperty>().set(
-        textureFillQuad(renderizable_data.prop<TextureProperty>()()));
+    TextureProperty     = renderizable_data.TextureProperty();
+    TextureRectProperty = renderizable_data.TextureRectProperty();
+    ShaderProperty      = renderizable_data.ShaderProperty();
+    ColorProperty       = renderizable_data.ColorProperty();
+
+    if (ShaderProperty() == nullptr)
+    {
+        //        ShaderProperty =
+        //        parent_->subSystem<res::IDefaultResourcesRetriever>()
+        //                             ->getDefaultShader();
+    }
 }
 
 Renderizable::~Renderizable() = default;
 
 rptr<TransformableSceneNode> Renderizable::parent() noexcept
 {
-    return p_->parent_;
+    return parent_;
 }
 
 rptr<TransformableSceneNode const> Renderizable::parent() const noexcept
 {
-    return p_->parent_;
+    return parent_;
 }
 
-void Renderizable::render()
+void Renderizable::render(bool const parent_transformation_changed)
 {
     if (visible())
     {
-        update();
+        update(parent_transformation_changed);
+        p_->render();
+    }
+}
 
-        if (!p_->vertices_.empty())
+void Renderizable::update(bool const parent_transformation_changed)
+{
+    if (parent_transformation_changed)
+    {
+        p_->m_render_element.setModelViewMatrix(
+            parent()->globalTransform().getMatrix());
+    }
+
+    if (ps_readResetHasAnyChanged(TextureRectProperty))
+    {
+        p_->updateTextureRect();
+    }
+
+    if (ps_readResetHasAnyChanged(ColorProperty))
+    {
+        p_->updateColors();
+    }
+
+    if (TextureProperty.readResetHasChanged())
+    {
+        p_->m_render_element.setTexture(to_backend(TextureProperty().get()));
+    }
+
+    if (ShaderProperty.readResetHasChanged())
+    {
+/*        if (ShaderProperty() != nullptr)
         {
-            sys::getSystem<sys::RenderSystem>(parent()).draw(p_->render_data_);
+            sptr<res::IShader> const& shader{ShaderProperty()};
+
+            if (TextureProperty() != nullptr)
+            {
+                shader->setUniform("has_texture", true);
+                shader->setUniform("texture", TextureProperty().get());
+            }
+            else
+            {
+                shader->setUniform("has_texture", false);
+            }
         }
-    }
-}
-
-void Renderizable::setTextureAndTextureRectFromTextureSize(
-    sptr<res::ITexture> texture_,
-    Rects32 const& textRect) noexcept
-{
-    prop<TextureRectProperty>().set(textRect);
-    prop<TextureProperty>().set(std::move(texture_));
-}
-
-void Renderizable::setTextureAndTextureRectNormalizedRect(
-    sptr<res::ITexture> texture_,
-    Rectf32 const& textRect) noexcept
-{
-    // Generate a copy of the texture rect
-    auto dest_textureRect{textRect};
-    // Scale it according to the size of the current texture
-    dest_textureRect.scale(texture_->size());
-    // Use it as a new texture rect
-    setTextureAndTextureRectFromTextureSize(std::move(texture_),
-                                            dest_textureRect);
-}
-
-void Renderizable::setTextureFill(sptr<res::ITexture> texture_)
-{
-    setTextureAndTextureRectFromTextureSize(std::move(texture_),
-                                            textureFillQuad(texture_));
-}
-
-void Renderizable::update()
-{
-    auto const& mi_data{p_->getMomentumInternalData()};
-
-    if (ps_readResetHasAnyChanged(prop<PointCount>(),
-                                  prop<FigureTypeProperty>(),
-                                  prop<BoxProperty>()))
-    {
-        updateGeometry(p_->vertices_.verticesArray(), mi_data);
-        prop<TextureRectProperty>().resetHasChanged();
-        prop<ColorProperty>().resetHasChanged();
-        prop<ColorModifierProperty>().resetHasChanged();
-    }
-    else if (prop<TextureRectProperty>().readResetHasChanged())
-    {
-        updateTextureCoordsAndColor(p_->vertices_.verticesArray(), mi_data);
-        prop<ColorProperty>().resetHasChanged();
-        prop<ColorModifierProperty>().resetHasChanged();
-    }
-    else if (ps_readResetHasAnyChanged(prop<ColorProperty>(),
-                                       prop<ColorModifierProperty>()))
-    {
-        updateColors(p_->vertices_.verticesArray(), mi_data);
-    }
-
-    if (prop<TextureProperty>().readResetHasChanged())
-    {
-        p_->render_data_.texture = prop<TextureProperty>()().get();
-    }
-
-    if (prop<ShaderProperty>().readResetHasChanged())
-    {
-        p_->render_data_.shader = prop<ShaderProperty>()().get();
+        p_->m_render_element.setShader(to_backend(ShaderProperty().get()));
+        */
     }
 }
 

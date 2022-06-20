@@ -3,6 +3,7 @@
 
 #include <htypes/include/str.hpp>
 #include <htypes/include/rawmemory.hpp>
+#include <backend_dev/include/resource_load_parameters.hpp>
 
 namespace haf::backend
 {
@@ -10,9 +11,10 @@ template <typename T>
 class IResourceFactory
 {
 public:
-    virtual T* loadFromFile(const htps::str&) = 0;
-    virtual T* loadFromRawMemory(htps::RawMemory*) { return nullptr; }
-    virtual ~IResourceFactory() {}
+    virtual ~IResourceFactory() = default;
+
+    virtual T* loadFromRawMemory(
+        ResourceLoadParameters const& resource_load_parameters) = 0;
 };
 }  // namespace haf::backend
 

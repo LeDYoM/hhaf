@@ -1,3 +1,4 @@
+HTPS_PRAGMA_ONCE
 #ifndef HAF_SCENE_NODE_TABLE_TEXT_INCLUDE_HPP
 #define HAF_SCENE_NODE_TABLE_TEXT_INCLUDE_HPP
 
@@ -12,7 +13,8 @@ class TextTableNode : public TableNode<SceneNodeText>
 
 public:
     using BaseClass::BaseClass;
-    using BaseClass::prop;
+
+    htps::sptr<SceneNodeText> text(htps::vector2dst const& index);
 };
 }  // namespace haf::scene::nodes
 

@@ -5,8 +5,7 @@
 #include "player.hpp"
 #include "constants.hpp"
 #include "gameover.hpp"
-#include "gamehud.hpp"
-#include "pause.hpp"
+#include "pause_scene_node.hpp"
 #include "boardutils.hpp"
 #include "scoreutils.hpp"
 #include "next_token.hpp"
@@ -20,7 +19,7 @@
 #include "../zoperprogramcontroller.hpp"
 #include "../keymapping.hpp"
 #include <htypes/include/types.hpp>
-#include <htypes/include/properties.hpp>
+#include <htypes/include/properties/iproperty.hpp>
 
 #include <boardmanager/include/boardmanager.hpp>
 #include <boardmanager/include/board_types.hpp>
@@ -35,6 +34,7 @@
 #include <haf/include/filesystem/ifile_serializer.hpp>
 #include <haf/include/render/renderizables.hpp>
 #include <haf/include/render/renderizable_builder.hpp>
+#include "../static_data.hpp"
 
 using namespace htps;
 using namespace haf;
@@ -45,8 +45,7 @@ using namespace haf::anim;
 
 namespace zoper
 {
-constexpr u32 NumTokens   = 5U;
-constexpr u32 PlayerToken = NumTokens;
+constexpr u32 NumTokens = 5U;
 
 GameScene::GameScene() : Scene{StaticTypeName}
 {}
@@ -61,7 +60,6 @@ str GameScene::nextSceneName()
 void GameScene::onCreated()
 {
     BaseClass::onCreated();
-
     LogAsserter::log_assert(p_ == nullptr,
                             "Private data pointer is not nullptr!");
     p_ = muptr<GameScenePrivate>();
@@ -69,11 +67,6 @@ void GameScene::onCreated()
     auto resources_configurator{subSystem<res::IResourcesConfigurator>()};
     resources_configurator->setResourceConfigFile("resources.txt");
     resources_configurator->loadSection("game");
-
-    using namespace haf::board;
-
-    LogAsserter::log_assert(!board_group_, "board_group_ is not empty");
-    board_group_ = createSceneNode<BoardGroup>("BoardGroup");
 
     next_token_part_ = 0U;
 
@@ -91,8 +84,8 @@ void GameScene::onCreated()
 
     {
         auto game_shared_data{shdata::SharedDataViewer<GameSharedData>(
-                                    subSystem<shdata::ISharedData>())
-                                    .view(GameSharedData::address())};
+                                  subSystem<shdata::ISharedData>())
+                                  .view(GameSharedData::address())};
 
         start_level = game_shared_data->startLevel;
         game_mode   = game_shared_data->gameMode;
@@ -101,9 +94,18 @@ void GameScene::onCreated()
     level_properties_->configure(start_level, game_mode,
                                  scene_timer_component_);
 
+    using namespace haf::board;
+
+    LogAsserter::log_assert(!board_group_, "board_group_ is not empty");
+    board_group_ = createSceneNode<BoardGroup>("BoardGroup");
+
     board_group_->configure(TokenZones::size, level_properties_);
 
+    moveToFirstPosition(board_group_);
 #ifdef USE_DEBUG_ACTIONS
+    component<debug::DebugActions>()->addDebugAction(
+        input::Key::Num2,
+        [this]() { component<debug::DebugActions>()->logSceneNodeTree(); });
     component<debug::DebugActions>()->addDebugAction(
         input::Key::Num1, [this]() { levelProperties()->increaseScore(100U); });
     component<debug::DebugActions>()->addDebugAction(
@@ -121,17 +123,9 @@ void GameScene::onCreated()
                       &LevelProperties::millisBetweenTokens),
         [this]() { generateNextToken(); });
 
-    // Prepare the game over text
-    {
-        auto game_over_scene_node =
-            createSceneNode<GameOverSceneNode>("gameOverSceneNode");
-        game_over_scene_node->prop<Visible>().set(false);
-
-        p_->states_manager_ = muptr<GameSceneStateManager>(
-            scene_timer_component_,
-            createSceneNode<PauseSceneNode>("PauseNode"),
-            std::move(game_over_scene_node));
-    }
+    p_->states_manager_ = muptr<GameSceneStateManager>(
+        scene_timer_component_, createSceneNode<PauseSceneNode>("PauseNode"),
+        createSceneNode<GameOverSceneNode>("gameOverSceneNode"));
 
     // Set state control.
     {
@@ -192,8 +186,7 @@ void GameScene::generateNextToken()
 
     // Set the new token
     board_group_->createNewToken(
-        static_cast<BoardGroup::BoardTileData>(newToken), new_position,
-        board_group_->tileSize());
+        static_cast<BoardGroup::BoardTileData>(newToken), new_position);
 
     // Select the next token zone.
     next_token_part_ = ((next_token_part_ + 1U) % NumWays);

@@ -1,3 +1,4 @@
+HTPS_PRAGMA_ONCE
 #ifndef HAF_CORE_SYSTEM_SIMULATIONSYSTEM_PRIVATE_INCLUDE_HPP
 #define HAF_CORE_SYSTEM_SIMULATIONSYSTEM_PRIVATE_INCLUDE_HPP
 
@@ -97,13 +98,13 @@ struct SimulationSystem::SimulationSystemPrivate final
     void addSimulationAction(SimulationAction simulation_action)
     {
         next_replay_data_.simulation_actions_.push_back(
-            std::move(simulation_action));
+            htps::move(simulation_action));
     }
 
     void setSimulateRandomDataBuffer(
         SimulateRandomDataBuffer simulated_data_buffer)
     {
-        current_replay_data_.data_buffer_ = std::move(simulated_data_buffer);
+        current_replay_data_.data_buffer_ = htps::move(simulated_data_buffer);
         current_simulable_data_buffer_iterator =
             current_replay_data_.data_buffer_.begin();
     }

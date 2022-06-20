@@ -1,3 +1,4 @@
+HTPS_PRAGMA_ONCE
 #ifndef MTPS_VECTOR2D_INCLUDE_HPP
 #define MTPS_VECTOR2D_INCLUDE_HPP
 
@@ -11,56 +12,6 @@ template <typename T>
 class vector2d
 {
 public:
-    constexpr vector2d& operator+=(const vector2d& right) noexcept
-    {
-        x += right.x;
-        y += right.y;
-        return *this;
-    }
-
-    template <typename V>
-    constexpr vector2d& operator+=(const vector2d& right) noexcept
-    {
-        x += static_cast<T>(right.x);
-        y += static_cast<T>(right.y);
-        return *this;
-    }
-
-    constexpr vector2d& operator-=(const vector2d& right) noexcept
-    {
-        x -= right.x;
-        y -= right.y;
-        return *this;
-    }
-
-    constexpr vector2d& operator*=(const vector2d& right) noexcept
-    {
-        x *= right.x;
-        y *= right.y;
-        return *this;
-    }
-
-    constexpr vector2d& operator*=(const T& scalar) noexcept
-    {
-        x *= scalar;
-        y *= scalar;
-        return *this;
-    }
-
-    constexpr vector2d& operator/=(const vector2d& right)
-    {
-        x /= right.x;
-        y /= right.y;
-        return *this;
-    }
-
-    constexpr vector2d& operator/=(const T& scalar)
-    {
-        x /= scalar;
-        y /= scalar;
-        return *this;
-    }
-
     constexpr vector2d& operator-() noexcept
     {
         x = -x;
@@ -68,71 +19,10 @@ public:
         return *this;
     }
 
-    constexpr T dotProduct(const vector2d& p2) const noexcept
+    constexpr T dotProduct(vector2d const& p2) const noexcept
     {
         auto r(*this * p2);
         return r.x + r.y;
-    }
-
-    template <typename V>
-    static constexpr bool IsNotInnerType =
-        !std::is_same_v<std::decay_t<T>, std::decay_t<V>>;
-
-    constexpr vector2d operator+(const vector2d& right) const noexcept
-    {
-        return (vector2d(*this) += right);
-    }
-
-    template <typename V, typename = std::enable_if_t<IsNotInnerType<V>>>
-    constexpr vector2d operator+(const vector2d<V>& right) const noexcept
-    {
-        return (vector2d(*this) += right);
-    }
-
-    constexpr vector2d operator-(const vector2d& right) const noexcept
-    {
-        return (vector2d(*this) -= right);
-    }
-
-    constexpr vector2d operator*(const vector2d& right) const noexcept
-    {
-        return (vector2d(*this) *= right);
-    }
-    constexpr vector2d operator*(const T& right) const noexcept
-    {
-        return (vector2d(*this) *= right);
-    }
-    template <typename V,
-              typename = std::enable_if_t<
-                  !std::is_same_v<std::decay_t<T>, std::decay_t<V>>>>
-    constexpr vector2d operator*(const vector2d<V>& right) const noexcept
-    {
-        return (vector2d(*this) *= static_cast<vector2d>(right));
-    }
-
-    constexpr vector2d operator/(const vector2d& right) const noexcept
-    {
-        return (vector2d(*this) /= right);
-    }
-    constexpr vector2d operator/(const T& right) const noexcept
-    {
-        return (vector2d(*this) /= right);
-    }
-    template <typename V,
-              typename = std::enable_if_t<
-                  !std::is_same_v<std::decay_t<T>, std::decay_t<V>>>>
-    constexpr vector2d operator/(const vector2d<V>& right) const noexcept
-    {
-        return (vector2d(*this) /= static_cast<vector2d>(right));
-    }
-
-    constexpr bool operator==(const vector2d& right) const noexcept
-    {
-        return (x == right.x && y == right.y);
-    }
-    constexpr bool operator!=(const vector2d& right) const noexcept
-    {
-        return !(*operator==(right));
     }
 
     // Conversion operator
@@ -146,29 +36,145 @@ public:
     T y;
 };
 
-template <typename T>
-constexpr vector2d<T> operator/(const vector2d<T>& lhs,
-                                const vector2d<T>& rhs) noexcept
+template <typename T, typename Y>
+constexpr vector2d<T> operator+(vector2d<T> const& lhs,
+                                vector2d<Y> const& rhs) noexcept
 {
-    return lhs / rhs;
+    return {lhs.x + static_cast<T>(rhs.x), lhs.y + static_cast<T>(rhs.y)};
+}
+
+template <typename T, typename Y>
+constexpr vector2d<T>& operator+=(vector2d<T>& lhs,
+                                  vector2d<Y> const& rhs) noexcept
+{
+    lhs.x += static_cast<T>(rhs.x);
+    lhs.y += static_cast<T>(rhs.y);
+    return lhs;
+}
+
+template <typename T, typename Y>
+constexpr vector2d<T>& operator-=(vector2d<T>& lhs,
+                                  vector2d<Y> const& rhs) noexcept
+{
+    lhs.x -= static_cast<T>(rhs.x);
+    lhs.y -= static_cast<T>(rhs.y);
+    return lhs;
+}
+
+template <typename T, typename Y>
+constexpr vector2d<T> operator-(vector2d<T> const& lhs,
+                                vector2d<Y> const& rhs) noexcept
+{
+    return {lhs.x - static_cast<T>(rhs.x), lhs.y - static_cast<T>(rhs.y)};
+}
+
+template <typename T, typename Y>
+constexpr vector2d<T>& operator*=(vector2d<T>& lhs,
+                                  vector2d<Y> const& rhs) noexcept
+{
+    lhs.x *= static_cast<T>(rhs.x);
+    lhs.y *= static_cast<T>(rhs.y);
+    return lhs;
+}
+
+template <typename T, typename Y>
+constexpr vector2d<T> operator*(vector2d<T> const& lhs,
+                                vector2d<Y> const& rhs) noexcept
+{
+    return {lhs.x * static_cast<T>(rhs.x), lhs.y * static_cast<T>(rhs.y)};
+}
+
+template <typename T, typename Y>
+constexpr vector2d<T>& operator*=(vector2d<T>& lhs, T const& scalar) noexcept
+{
+    lhs.x *= static_cast<T>(scalar);
+    lhs.y *= static_cast<T>(scalar);
+    return lhs;
+}
+
+template <typename T, typename Y>
+constexpr vector2d<T> operator*(vector2d<T> const& lhs,
+                                Y const& scalar) noexcept
+{
+    return {lhs.x * static_cast<T>(scalar), lhs.y * static_cast<T>(scalar)};
+}
+
+template <typename T, typename Y>
+constexpr vector2d<T> operator*(Y const& scalar,
+                                vector2d<T> const& rhs) noexcept
+{
+    return {static_cast<T>(scalar) * rhs.x, static_cast<T>(scalar) * rhs.y};
+}
+
+template <typename T, typename Y>
+constexpr vector2d<T>& operator/=(vector2d<T>& lhs,
+                                  vector2d<Y> const& rhs) noexcept
+{
+    lhs.x /= static_cast<T>(rhs.x);
+    lhs.y /= static_cast<T>(rhs.y);
+    return lhs;
+}
+
+template <typename T, typename Y>
+constexpr vector2d<T> operator/(vector2d<T> const& lhs,
+                                vector2d<Y> const& rhs) noexcept
+{
+    return {lhs.x / static_cast<T>(rhs.x), lhs.y / static_cast<T>(rhs.y)};
+}
+
+template <typename T, typename Y>
+constexpr vector2d<T>& operator/=(vector2d<T>& lhs, T const& scalar) noexcept
+{
+    lhs.x /= static_cast<T>(scalar);
+    lhs.y /= static_cast<T>(scalar);
+    return lhs;
+}
+
+template <typename T, typename Y>
+constexpr vector2d<T> operator/(vector2d<T> const& lhs,
+                                Y const& scalar) noexcept
+{
+    return {lhs.x / static_cast<T>(scalar), lhs.y / static_cast<T>(scalar)};
+}
+
+template <typename T, typename Y>
+constexpr vector2d<T> operator/(Y const& scalar,
+                                vector2d<T> const& rhs) noexcept
+{
+    return {static_cast<T>(scalar) / rhs.x, static_cast<T>(scalar) / rhs.y};
 }
 
 template <typename T>
-constexpr vector2d<T> operator-(const vector2d<T>& v2d) noexcept
+constexpr vector2d<T> operator-(vector2d<T> const& v2d) noexcept
 {
     return vector2d<T>{-v2d.x, -v2d.y};
 }
 
+template <typename T, typename Y>
+constexpr bool operator==(vector2d<T> const& lhs,
+                          vector2d<Y> const& rhs) noexcept
+
+{
+    return (lhs.x == static_cast<T>(rhs.x) && lhs.y == static_cast<T>(rhs.y));
+}
+
+template <typename T, typename Y>
+constexpr bool operator!=(vector2d<T> const& lhs,
+                          vector2d<Y> const& rhs) noexcept
+{
+    return !(lhs == rhs);
+}
+
 // Serialization operators
 template <typename T>
-constexpr str& operator<<(str& os, const vector2d<T>& v2d)
+constexpr str& operator<<(str& os, vector2d<T> const& v2d)
 {
     os << "{" << v2d.x << "," << v2d.y << "}";
     return os;
 }
 
 template <typename T>
-constexpr str& operator>>(str& is, const vector2d<T>& v2d)
+constexpr str& operator>>(str& is, vector2d<T> const& v2d)
 {
     return is;
 }

@@ -1,14 +1,16 @@
+HTPS_PRAGMA_ONCE
 #ifndef HAF_RESOURCES_RESOURCES_CONFIGURATOR_INCLUDE_HPP
 #define HAF_RESOURCES_RESOURCES_CONFIGURATOR_INCLUDE_HPP
 
-#include <haf/include/types/basic_types.hpp>
+#include <htypes/include/types.hpp>
+#include <htypes/include/str.hpp>
 
 namespace haf::res
 {
 /**
  * @brief Enum to return the status of the function @b setResourceConfigFile
  */
-enum class SetResourceConfigFileResult : types::u8
+enum class SetResourceConfigFileResult : htps::u8
 {
     Ok = 0U,       ///< Everything was ok
     AlreadySet,    ///< The same file was already set. No actions performed
@@ -22,12 +24,14 @@ enum class SetResourceConfigFileResult : types::u8
  */
 class IResourcesConfigurator
 {
+protected:
+    ~IResourcesConfigurator() = default;
 public:
     /**
      * @brief Set the directory where the resources will be loaded.
      * @param[in] directory The directory where the resources are
      */
-    virtual void setResourcesDirectory(types::str const& directory) = 0;
+    virtual void setResourcesDirectory(htps::str const& directory) = 0;
 
     /**
      * @brief Set the config file to be loaded
@@ -36,7 +40,7 @@ public:
      * @see SetResourceConfigFileResult
      */
     virtual SetResourceConfigFileResult setResourceConfigFile(
-        types::str const& fileName) = 0;
+        htps::str const& fileName) = 0;
 
     /**
      * @brief Load a section from the previously set config file for resource

@@ -10,7 +10,7 @@ struct MixinCommiter
 
     static inline void finish() { (Commiter::finish(), ...); }
 
-    static inline void commitlog(const char* const log_stream)
+    static inline void commitlog(char const * const log_stream)
     {
         (Commiter::commitlog(log_stream), ...);
     }

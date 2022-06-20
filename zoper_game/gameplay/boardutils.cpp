@@ -1,7 +1,6 @@
 #include "boardutils.hpp"
 #include <hlog/include/hlog.hpp>
 
-using namespace haf;
 using namespace htps;
 
 namespace zoper
@@ -9,7 +8,7 @@ namespace zoper
 void BoardUtils::for_each_coordinate(
     vector2dst startPosition,
     const Direction& direction,
-    haf::function<bool(const vector2dst&)> updatePredicate)
+    htps::function<bool(const vector2dst&)> updatePredicate)
 {
     bool stay{true};
 
@@ -24,15 +23,15 @@ void BoardUtils::for_each_coordinate_in_rect(
     vector2dst const& startPosition,
     Direction const& direction,
     vector2dst const& board_size,
-    haf::function<bool(const vector2dst&)> updatePredicate)
+    function<bool(const vector2dst&)> updatePredicate)
 {
-    LogAsserter::log_assert(
+    haf::LogAsserter::log_assert(
         (board_size.x > startPosition.x) && (board_size.y > startPosition.y),
         "Invalid initial point");
 
     for_each_coordinate(
         startPosition, direction,
-        [&board_size, updatePredicate = std::move(updatePredicate)](
+        [&board_size, updatePredicate = htps::move(updatePredicate)](
             const vector2dst& v) {
             return (v.x < board_size.x) && (v.y < board_size.y) &&
                 updatePredicate(v);

@@ -12,7 +12,7 @@ namespace haf::debug
 {
 MemoryDataInitializer::MemoryDataInitializer(
     rptr<IMemoryDataViewer> memory_data_viewer) :
-    memory_data_viewer_{std::move(memory_data_viewer)}, is_valid_{false}
+    memory_data_viewer_{htps::move(memory_data_viewer)}, is_valid_{false}
 {
     if (memory_data_viewer_ != nullptr)
     {

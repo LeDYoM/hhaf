@@ -11,7 +11,7 @@ using namespace htps;
 namespace haf::sys
 {
 SystemAccess::SystemAccess(rptr<ISystemProvider> isystem_provider) noexcept :
-    isystem_provider_{std::move(isystem_provider)}
+    isystem_provider_{htps::move(isystem_provider)}
 {}
 
 SystemAccess::~SystemAccess() = default;

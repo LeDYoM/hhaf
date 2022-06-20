@@ -2,7 +2,6 @@
 #define ZOPER_GAMEBASETILE_HPP
 
 #include <htypes/include/types.hpp>
-#include <haf/include/types/basic_types.hpp>
 #include <haf/include/render/renderizable.hpp>
 #include <boardmanager/include/itile.hpp>
 #include "boardgroup.hpp"
@@ -31,14 +30,12 @@ public:
                  htps::str name);
     ~GameBaseTile() override;
 
-    void tileChanged(BoardPositionType const& position,
-                     BoardTileData const oldValue,
+    void tileChanged(BoardTileData const oldValue,
                      BoardTileData const newValue) override;
 
-    void tileAdded(BoardPositionType const& position) override;
+    void tileAdded() override;
 
-    void tileMoved(BoardPositionType const& source,
-                   BoardPositionType const& dest) override;
+    void tileMoved(BoardPositionType const& dest) override;
 
     bool isInCenter() const noexcept;
 

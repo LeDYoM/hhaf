@@ -25,26 +25,23 @@ Token::Token(SceneNode* const parent, str name) :
     GameBaseTile{
         parent, name + str::to_str(tile_counter_) + str::to_str(tile_counter_)},
     animation_component_{component<anim::AnimationComponent>()}
+{}
+
+Token::~Token() = default;
+
+void Token::onCreated()
 {
     ++tile_counter_;
     renderizableBuilder()
         .name("Node" + str::to_str(tile_counter_))
-        .figType(FigType_t::Shape)
+        .figType(FigType_t::PolygonSprite)
         .pointCount(30U)
         .create();
 }
 
-Token::~Token() = default;
-
-void Token::setBox(const Rectf32& box)
-{
-    node()->prop<render::BoxProperty>() = box;
-}
-
-bool Token::canBeMoved(BoardPositionType const&) const
+bool Token::canBeMovedTo(BoardPositionType const&) const
 {
     return true;
-    //    return !TokenZones::pointInCenter(dest_position);
 }
 
 void Token::resetTileCounter()
@@ -52,71 +49,48 @@ void Token::resetTileCounter()
     tile_counter_ = 0U;
 }
 
-void Token::tileAdded(const BoardPositionType& position_)
+void Token::tileAdded()
 {
-    BaseClass::tileAdded(position_);
-    DisplayLog::info("Token ", name(), " appeared at ", position_);
+    BaseClass::tileAdded();
+    DisplayLog::info("Token ", name(), " appeared at ", boardPosition());
 
     auto const AppearTokenTime = time::TimePoint_as_miliseconds(1000U);
-    auto const nodeBox{node()->prop<render::BoxProperty>()().size() / 2.0F};
-
-    reserveExtraTransformations(2U);
-    auto const newTransformationPosition{addTransformation()};
-    auto const newTransformationScale{addTransformation()};
+    auto const endScale{Scale()};
 
     {
         auto property_animation_builder{
-            animation_component_
-                ->make_property_animation_builder<Scale, Transformation>(
-                    &(getTransformation(newTransformationScale)))};
-        property_animation_builder.startValue(Scale::Zeros)
-            .endValue(Scale::Ones)
-            .duration(AppearTokenTime);
+            animation_component_->make_property_animation_builder(
+                &Transformation::Scale, {0.0F, 0.0F}, endScale)};
+        property_animation_builder.duration(AppearTokenTime);
         animation_component_->addAnimation(
-            std::move(property_animation_builder));
-    }
-
-    {
-        auto property_animation_builder{
-            animation_component_
-                ->make_property_animation_builder<Position, Transformation>(
-                    &(getTransformation(newTransformationPosition)))};
-        property_animation_builder.startValue(nodeBox)
-            .endValue(Position::value_type{0.0F, 0.0F})
-            .duration(AppearTokenTime);
-        animation_component_->addAnimation(
-            std::move(property_animation_builder));
+            htps::move(property_animation_builder));
     }
 }
 
-void Token::tileRemoved(const BoardPositionType& position_)
+void Token::tileRemoved()
 {
-    BaseClass::tileRemoved(position_);
+    BaseClass::tileRemoved();
     DisplayLog::info("Deleting token ", name(), " from scene at position ",
-                     position_);
+                     boardPosition());
 }
 
-void Token::tileChanged(const BoardPositionType& position_,
-                        const BoardTileData oldValue,
+void Token::tileChanged(const BoardTileData oldValue,
                         const BoardTileData newValue)
 {
-    BaseClass::tileChanged(position_, oldValue, newValue);
-    DisplayLog::info("Token at position ", position_, " changed from ",
+    BaseClass::tileChanged(oldValue, newValue);
+    DisplayLog::info("Token at position ", boardPosition(), " changed from ",
                      oldValue, " to ", newValue);
 }
 
-void Token::tileMoved(const BoardPositionType& source,
-                      const BoardPositionType& dest)
+void Token::tileMoved(const BoardPositionType& source)
 {
-    BaseClass::tileMoved(source, dest);
-    auto const destination{board2Scene(dest)};
+    BaseClass::tileMoved(source);
+    auto const destination{board2Scene(boardPosition())};
 
     auto property_animation_builder{
-        animation_component_
-            ->make_property_animation_builder_from_attached<Position, Token>()};
-    property_animation_builder.startValueIsCurrent()
-        .endValue(destination)
-        .duration(time::TimePoint_as_miliseconds(1000U));
-    animation_component_->addAnimation(std::move(property_animation_builder));
+        animation_component_->make_property_animation_builder(
+            &Transformation::Position, Position(), destination)};
+    property_animation_builder.duration(time::TimePoint_as_miliseconds(1000U));
+    animation_component_->addAnimation(htps::move(property_animation_builder));
 }
 }  // namespace zoper

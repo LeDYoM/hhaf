@@ -6,7 +6,7 @@
 #include "system/system_provider.hpp"
 #include "window/window.hpp"
 #include "resources/resource_manager.hpp"
-#include "render/rendertarget.hpp"
+#include "render/render_target.hpp"
 
 #include <hlog/include/hlog.hpp>
 
@@ -34,31 +34,6 @@ void SceneManager::update()
 void SceneManager::finish()
 {
     scene_controller_->finish();
-}
-
-SceneBox SceneManager::currentViewPort() const
-{
-    return systemProvider().system<Window>().renderTarget()->viewPort();
-}
-
-SceneBox SceneManager::currentView() const
-{
-    return systemProvider().system<Window>().renderTarget()->viewRect();
-}
-
-void SceneManager::setViewPort(SceneBox const& vp)
-{
-    systemProvider().system<Window>().renderTarget()->setViewPort(vp);
-}
-
-void SceneManager::setViewRect(SceneBox const& vr)
-{
-    systemProvider().system<Window>().renderTarget()->setViewRect(vr);
-}
-
-void SceneManager::move(SceneCoordinates const& delta)
-{
-    setViewRect(currentView() + delta);
 }
 
 sptr<SceneController const> SceneManager::sceneController() const noexcept

@@ -1,3 +1,4 @@
+HTPS_PRAGMA_ONCE
 #ifndef HTYPES_PARPAR_INCLUDE_HPP
 #define HTYPES_PARPAR_INCLUDE_HPP
 
@@ -305,7 +306,7 @@ private:
                                      {param.substr(1), {}});
             }
             return COptionResult(SyntaxParserErrorCodes::NoError,
-                                 {std::move(name), std::move(value)});
+                                 {htps::move(name), htps::move(value)});
         }
         // No '=' found
         return COptionResult{SyntaxParserErrorCodes::OptionWithoutEqual,
@@ -318,7 +319,7 @@ private:
 
         for (decltype(argv.size()) i{1}; i < argv.size(); ++i)
         {
-            str_t param{std::move(argv[i])};
+            str_t param{htps::move(argv[i])};
 
             if (!param.empty())
             {
@@ -326,7 +327,7 @@ private:
                 {
                     case ParameterType::Positional:
                     {
-                        positional_parameters_.push_back(std::move(param));
+                        positional_parameters_.push_back(htps::move(param));
                         syntax_errors_.push_back(
                             searchForPositional
                                 ? SyntaxParserErrorCodes::NoError
@@ -361,7 +362,7 @@ private:
 
                     default:
                     {
-                        positional_parameters_.push_back(std::move(param));
+                        positional_parameters_.push_back(htps::move(param));
                         syntax_errors_.push_back(
                             SyntaxParserErrorCodes::UnknownParameterType);
                     }
@@ -388,7 +389,7 @@ private:
 
 inline ParametersParser create(vector_t<str_t> commandLine)
 {
-    return ParametersParser(std::move(commandLine));
+    return ParametersParser(htps::move(commandLine));
 }
 
 inline ParametersParser create(int const argc, char const* const argv[])
@@ -396,9 +397,9 @@ inline ParametersParser create(int const argc, char const* const argv[])
     vector_t<str> params(argc);
     for (int i = 0; i < argc; ++i)
     {
-        params.push_back(argv[i]);
+        params.push_back(str{argv[i]});
     }
-    return create(std::move(params));
+    return create(htps::move(params));
 }
 }  // namespace htps::parpar
 

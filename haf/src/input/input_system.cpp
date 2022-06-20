@@ -17,7 +17,7 @@ void InputSystem::setInputDriverWrapper(
     LogAsserter::log_assert(input_driver_wrapper_ == nullptr,
                             "Input driver wrapper was already set");
 
-    input_driver_wrapper_ = std::move(input_driver_wrapper);
+    input_driver_wrapper_ = htps::move(input_driver_wrapper);
 }
 
 void InputSystem::preUpdate()

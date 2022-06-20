@@ -15,6 +15,10 @@
         console_font: {
             type: "bmp_font_fnt",
             file: "abc.fnt"
+        },
+        shader1: {
+            type: "shader",
+            file: shader1.txt
         }
     },
     game: {

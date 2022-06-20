@@ -10,7 +10,7 @@ namespace zoper
 {
 
 ScoreIncrementer::ScoreIncrementer(sptr<LevelProperties> level_properties) :
-    hits_{0U}, level_properties_{std::move(level_properties)}
+    hits_{0U}, level_properties_{htps::move(level_properties)}
 {}
 
 ScoreIncrementer::~ScoreIncrementer()

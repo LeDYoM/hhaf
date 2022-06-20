@@ -1,9 +1,7 @@
 #include "gamescene_state_manager.hpp"
-#include "pause.hpp"
+#include "pause_scene_node.hpp"
 #include "gameover.hpp"
 #include "gamescene_states.hpp"
-
-#include <haf/include/scene/scenenode_properties.hpp>
 
 #include <hlog/include/hlog.hpp>
 
@@ -19,8 +17,8 @@ GameSceneStateManager::GameSceneStateManager(
     sptr<PauseSceneNode> pause_scene_node,
     sptr<GameOverSceneNode> game_over_scene_node) :
     scene_timer_component_{scene_timer_component},
-    pause_node_{std::move(pause_scene_node)},
-    game_over_scene_node_{std::move(game_over_scene_node)}
+    pause_node_{htps::move(pause_scene_node)},
+    game_over_scene_node_{htps::move(game_over_scene_node)}
 {}
 
 void GameSceneStateManager::onEnterState(GameSceneStates const& state)
@@ -40,7 +38,7 @@ void GameSceneStateManager::onEnterState(GameSceneStates const& state)
         break;
         case GameSceneStates::GameOver:
         {
-            game_over_scene_node_->prop<Visible>().set(true);
+            game_over_scene_node_->Visible = true;
             scene_timer_component_->pause();
         }
         break;

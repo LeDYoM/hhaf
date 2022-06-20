@@ -30,7 +30,11 @@ extern template struct LogDisplayer<haf::LogClass, SeverityType>;
 namespace haf
 {
 using DisplayLog = logger::LogDisplayer<LogClass, logger::SeverityType>;
-}
+
+template <typename LogOptions>
+using MessageDisplayLog =
+    logger::LogDisplayer<LogClass, logger::SeverityType, LogOptions>;
+}  // namespace haf
 
 namespace logger
 {

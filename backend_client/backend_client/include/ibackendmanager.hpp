@@ -11,12 +11,13 @@ class IBackendRegister;
  */
 class BC_API IBackendManager
 {
+protected:
+    virtual ~IBackendManager() = default;
 public:
     virtual void create()                                                 = 0;
     virtual void setFactories(IBackendRegister* const)                    = 0;
     virtual void resetFactories(IBackendRegister* const backend_register) = 0;
     virtual void destroy()                                                = 0;
-    virtual ~IBackendManager() {}
 };
 }  // namespace haf::backend::client
 

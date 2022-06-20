@@ -10,6 +10,10 @@ namespace haf::scene
 class PageOptions
 {
 public:
+    bool operator==(PageOptions const& other) const noexcept
+    {
+        return centered_empty_option == other.centered_empty_option;
+    }
     bool centered_empty_option = false;
 };
 

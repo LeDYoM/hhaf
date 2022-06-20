@@ -5,7 +5,7 @@ using namespace htps;
 
 namespace haf::res
 {
-Texture::Texture(backend::ITexture* texture) : priv_{texture}
+Texture::Texture(backend::ITexture const* texture) : priv_{texture}
 {}
 
 Texture::~Texture() = default;

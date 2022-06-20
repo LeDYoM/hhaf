@@ -1,13 +1,12 @@
+HTPS_PRAGMA_ONCE
 #ifndef HAF_COMPONENT_COMPONENT_INCLUDE_HPP
 #define HAF_COMPONENT_COMPONENT_INCLUDE_HPP
 
-#include <haf/include/types/basic_types.hpp>
 #include <haf/include/component/icomponent_attached_node.hpp>
 #include <haf/include/component/icomponent.hpp>
 #include <haf/include/scene/scene_node.hpp>
 #include <haf/include/scene/scenenode_cast.hpp>
 #include <hlog/include/hlog.hpp>
-#include <concepts>
 
 namespace haf::scene
 {
@@ -43,7 +42,6 @@ public:
     {
         LogAsserter::log_assert(attachedNode != nullptr,
                                 " Trying to attach nullptr node");
-
         using dest_type = ComponentAttachedNode::type;
         static_assert(std::derived_from<dest_type, scene::SceneNode>,
                       "Invalid type for component type");

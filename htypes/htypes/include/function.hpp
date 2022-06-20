@@ -1,3 +1,4 @@
+HTPS_PRAGMA_ONCE
 #ifndef HTYPES_FUNCTION_INCLUDE_HPP
 #define HTYPES_FUNCTION_INCLUDE_HPP
 
@@ -38,7 +39,7 @@ public:
      * @param t Object to construct from
      */
     template <typename T>
-    constexpr function(T t) : callable_{msptr<CallableT<T>>(std::move(t))}
+    constexpr function(T t) : callable_{msptr<CallableT<T>>(htps::move(t))}
     {}
 
     /**
@@ -78,7 +79,7 @@ public:
     constexpr ReturnValue operator()(Args2&&... args) const
     {
         assert(callable_);
-        return callable_->Invoke(std::forward<Args2>(args)...);
+        return callable_->Invoke(htps::forward<Args2>(args)...);
     }
 
     /**
@@ -123,12 +124,12 @@ private:
     {
     public:
         template <typename Y>
-        constexpr CallableT(Y&& t) noexcept : t_{std::forward<Y>(t)}
+        constexpr CallableT(Y&& t) noexcept : t_{htps::forward<Y>(t)}
         {}
 
         inline ReturnValue Invoke(Args... args) override
         {
-            return t_(std::forward<Args>(args)...);
+            return t_(htps::forward<Args>(args)...);
         }
 
         inline bool equals(CallableT const& other) const noexcept
@@ -164,7 +165,7 @@ private:
 
         inline ReturnValue Invoke(Args... args) override
         {
-            return (obj->*function_)(std::forward<Args>(args)...);
+            return (obj->*function_)(htps::forward<Args>(args)...);
         }
 
         inline bool equals(CallableMethodPointerT const& other) const noexcept
@@ -202,7 +203,7 @@ private:
 
         inline ReturnValue Invoke(Args... args) override
         {
-            return (obj->*function_)(std::forward<Args>(args)...);
+            return (obj->*function_)(htps::forward<Args>(args)...);
         }
 
         inline bool equals(

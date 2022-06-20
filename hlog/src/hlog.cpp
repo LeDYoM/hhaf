@@ -16,6 +16,3 @@ template struct LogDisplayer<haf::LogClass, SeverityType>;
 template struct LogAsserter<haf::DisplayLog>;
 template struct LogInitializer<haf::LogClass>;
 }  // namespace logger
-
-namespace haf
-{}  // namespace haf

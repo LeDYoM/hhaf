@@ -18,7 +18,7 @@ TimerConnectorSPtr TimerComponent::addTimer(TimerType timerType,
 {
     auto timerConnector{msptr<TimerConnector>(
         muptr<Timer>(attachedNode()->subSystem<ITimeView>()), timerType,
-        std::move(timeOut), std::move(callback))};
+        htps::move(timeOut), htps::move(callback))};
     activeTimers_.push_back(timerConnector);
     return timerConnector;
 }

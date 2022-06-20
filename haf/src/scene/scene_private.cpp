@@ -14,6 +14,8 @@ Scene::ScenePrivate::ScenePrivate(htps::rptr<Scene> _this) noexcept :
     scene_{_this}
 {}
 
+Scene::ScenePrivate::~ScenePrivate() = default;
+
 void Scene::ScenePrivate::setSystemProvider(
     htps::rptr<sys::ISystemProvider> isystem_provider) noexcept
 {
@@ -22,6 +24,12 @@ void Scene::ScenePrivate::setSystemProvider(
         isystem_provider;
     static_cast<sys::SystemAccess*>(scene_)->isystem_provider_ =
         isystem_provider;
+}
+
+htps::rptr<sys::ISystemProvider> Scene::ScenePrivate::iSystemProvider()
+    const noexcept
+{
+    return isystem_provider_;
 }
 
 }  // namespace haf::scene

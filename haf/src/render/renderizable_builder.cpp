@@ -1,87 +1,82 @@
 #include <haf/include/render/renderizable_builder.hpp>
 #include <haf/include/render/renderizables.hpp>
+#include <haf/include/resources/iresource_retriever.hpp>
+#include <haf/include/scene_nodes/transformable_scene_node.hpp>
 
-#include <utility>
+using namespace htps;
 
 namespace haf::render
 {
 
 RenderizableBuilder::RenderizableBuilder(
-    htps::rptr<Renderizables> renderizables) noexcept :
-    data_{RenderizableBuilderData{std::move(renderizables), {}}}
+    rptr<Renderizables> renderizables) noexcept :
+    data_{RenderizableBuilderData{htps::move(renderizables), {}}}
 {
-    data_.builder_data_.prop<FigureTypeProperty>() = FigType_t::Shape;
-    data_.builder_data_.prop<ColorProperty>()      = scene::colors::White;
-    data_.builder_data_.prop<PointCount>()         = 4U;
+    data_.builder_data_.FigureTypeProperty = FigType_t::Sprite;
+    data_.builder_data_.ColorProperty      = scene::colors::White;
+    data_.builder_data_.PointCount         = 4U;
 }
 
-htps::sptr<Renderizable> RenderizableBuilder::create()
+sptr<Renderizable> RenderizableBuilder::create()
 {
-    return data_.renderizables_->createRenderizable(std::move(data_));
+    return data_.renderizables_->createRenderizable(htps::move(data_));
 }
 
-RenderizableBuilder& RenderizableBuilder::name(types::str const& _name)
+RenderizableBuilder& RenderizableBuilder::name(str const& _name)
 {
-    data_.builder_data_.prop<RenderizableName>() = _name;
+    data_.builder_data_.RenderizableName = _name;
     return *this;
 }
 
 RenderizableBuilder& RenderizableBuilder::figType(FigType_t const& fig_type)
 {
-    data_.builder_data_.prop<FigureTypeProperty>() = fig_type;
-    return *this;
-}
-
-RenderizableBuilder& RenderizableBuilder::box(SceneBox const& _box)
-{
-    data_.builder_data_.prop<BoxProperty>() = _box;
+    data_.builder_data_.FigureTypeProperty = fig_type;
+    data_.builder_data_.PointCount         = 6U;
     return *this;
 }
 
 RenderizableBuilder& RenderizableBuilder::color(scene::Color const& _color)
 {
-    data_.builder_data_.prop<ColorProperty>() = _color;
+    data_.builder_data_.ColorProperty = _color;
     return *this;
 }
 
 RenderizableBuilder& RenderizableBuilder::pointCount(
-    htps::size_type const& point_count)
+    size_type const& point_count)
 {
-    data_.builder_data_.prop<PointCount>() = point_count;
+    data_.builder_data_.PointCount = point_count * 3U;
     return *this;
 }
 
-RenderizableBuilder& RenderizableBuilder::shader(
-    htps::sptr<res::IShader> _shader)
+RenderizableBuilder& RenderizableBuilder::shader(sptr<res::IShader> _shader)
 {
-    data_.builder_data_.prop<ShaderProperty>() = std::move(_shader);
+    data_.builder_data_.ShaderProperty = htps::move(_shader);
     return *this;
 }
 
-RenderizableBuilder& RenderizableBuilder::texture(
-    htps::sptr<res::ITexture> _texture)
+RenderizableBuilder& RenderizableBuilder::shader(str const& shader_name)
 {
-    data_.builder_data_.prop<TextureProperty>() = std::move(_texture);
+    return shader(data_.renderizables_->sceneNode()
+                      ->subSystem<res::IResourceRetriever>()
+                      ->getShader(shader_name));
+}
+
+RenderizableBuilder& RenderizableBuilder::texture(sptr<res::ITexture> _texture)
+{
+    if (_texture != nullptr)
+    {
+        data_.builder_data_.TextureRectProperty =
+            Rects32{0, 0, static_cast<vector2ds32>(_texture->size())};
+    }
+    data_.builder_data_.TextureProperty = htps::move(_texture);
     return *this;
 }
 
-RenderizableBuilder& RenderizableBuilder::colorModifier(
-    htps::function<scene::Color(const RenderizableModifierContext&)>
-        color_modifier)
+RenderizableBuilder& RenderizableBuilder::texture(str const& texture_name)
 {
-    data_.builder_data_.prop<ColorModifierProperty>() =
-        std::move(color_modifier);
-    return *this;
-}
-
-RenderizableBuilder&& RenderizableBuilder::get() noexcept
-{
-    return std::move(*this);
-}
-
-RenderizableBuilderData&& RenderizableBuilder::extract() noexcept
-{
-    return std::move(data_);
+    return texture(data_.renderizables_->sceneNode()
+                       ->subSystem<res::IResourceRetriever>()
+                       ->getTexture(texture_name));
 }
 
 }  // namespace haf::render

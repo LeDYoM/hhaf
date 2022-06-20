@@ -11,6 +11,16 @@ class AnimationComponent::AnimationComponentPrivate
 public:
     AnimationComponentPrivate() {}
     LockableVector<sptr<Animation>> animations_;
+
+    void addAnimation(PropertyAnimationData&& data)
+    {
+        addAnimation(htps::muptr<PropertyAnimation>(htps::move(data)));
+    }
+
+    void addAnimation(uptr<Animation> nanimation)
+    {
+        animations_.emplace_back(htps::move(nanimation));
+    }
 };
 
 AnimationComponent::AnimationComponent() :
@@ -19,9 +29,23 @@ AnimationComponent::AnimationComponent() :
 
 AnimationComponent::~AnimationComponent() = default;
 
-void AnimationComponent::addAnimation(uptr<Animation> nanimation)
+void AnimationComponent::addAnimation(PropertyAnimationBuilder&& builder)
 {
-    p_->animations_.emplace_back(std::move(nanimation));
+    p_->addAnimation(builder.extract());
+}
+
+PropertyAnimationData AnimationComponent::make_property_animation_data()
+{
+    auto builder{PropertyAnimationData{}};
+    builder.TimerProperty =
+        attachedNode()->component<time::TimerComponent>()->addFreeTimer();
+    builder.Times = 1;
+    return builder;
+}
+
+PropertyAnimationBuilder AnimationComponent::make_property_animation_builder()
+{
+    return PropertyAnimationBuilder{make_property_animation_data()};
 }
 
 void AnimationComponent::update()

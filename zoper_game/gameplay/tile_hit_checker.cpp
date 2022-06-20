@@ -7,24 +7,24 @@
 
 #include <hlog/include/hlog.hpp>
 
-using namespace haf;
 using namespace haf::render;
 using namespace haf::scene;
 using namespace haf::scene::nodes;
+using namespace htps;
 
 namespace zoper
 {
 TileHitChecker::TileHitChecker(
-    types::sptr<BoardGroup> board_group,
+    sptr<BoardGroup> board_group,
     haf::board::ITile::BoardTileData const token_type,
     ScoreIncrementer& score_incrementer,
     SceneCoordinates& last_token_position,
     function<void(board::BoardPositionType)> createScoreIncrementPoints) :
-    board_group_{std::move(board_group)},
+    board_group_{htps::move(board_group)},
     tokenType{token_type},
     score_incrementer_{score_incrementer},
     last_token_position_{last_token_position},
-    createScoreIncrementPoints_{std::move(createScoreIncrementPoints)}
+    createScoreIncrementPoints_{htps::move(createScoreIncrementPoints)}
 {}
 
 bool TileHitChecker::operator()(board::BoardPositionType const& loopPosition)

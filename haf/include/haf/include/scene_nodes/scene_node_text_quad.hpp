@@ -1,3 +1,4 @@
+HTPS_PRAGMA_ONCE
 #ifndef HAF_SCENE_NODE_TEXT_QUAD_INCLUDE_HPP
 #define HAF_SCENE_NODE_TEXT_QUAD_INCLUDE_HPP
 
@@ -13,14 +14,11 @@ class TextQuad : public TextTableNode
 
 public:
     using BaseClass::BaseClass;
-    using BaseClass::prop;
 
     void onCreated() override;
 
-    inline htps::sptr<SceneNodeText> text(htps::vector2dst index) noexcept
-    {
-        return nodeAt(std::move(index));
-    }
+    void onElementCreated(htps::vector2dst, htps::sptr<SceneNodeText> const&);
+
 };
 }  // namespace haf::scene::nodes
 

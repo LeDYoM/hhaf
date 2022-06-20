@@ -9,9 +9,9 @@ HostedApplication::HostedApplication(
     ManagedApp managed_app,
     str app_name,
     uptr<IHostConnector> host_connector) noexcept :
-    managed_app_{std::move(managed_app)},
-    app_name_{std::move(app_name)},
-    host_connector_{std::move(host_connector)}
+    managed_app_{htps::move(managed_app)},
+    app_name_{htps::move(app_name)},
+    host_connector_{htps::move(host_connector)}
 {}
 
 bool operator==(HostedApplication const& lhs,

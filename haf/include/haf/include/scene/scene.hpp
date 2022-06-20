@@ -1,3 +1,4 @@
+HTPS_PRAGMA_ONCE
 #ifndef HAF_SCENE_SCENE_INCLUDE_HPP
 #define HAF_SCENE_SCENE_INCLUDE_HPP
 
@@ -9,21 +10,27 @@
 namespace haf::scene
 {
 class SceneManager;
+class CameraComponent;
 
 class HAF_API Scene : public SceneNode
 {
 public:
     explicit Scene(htps::str name);
     ~Scene() override;
-    void onCreated();
+    void onCreated() override;
     virtual htps::str nextSceneName();
     virtual void onFinished();
 
     void installDebugUtils();
 
+    htps::sptr<CameraComponent> const& cameraComponent();
+    htps::sptr<CameraComponent> const& cameraComponent() const;
+    htps::rptr<Scene> sceneParent() override;
+    htps::rptr<Scene const> sceneParent() const override;
+
 private:
     class ScenePrivate;
-    htps::PImplPointer<ScenePrivate> p_;    
+    htps::PImplPointer<ScenePrivate> p_;
     htps::rptr<ScenePrivate> scenePrivate();
     friend class SceneController;
 };

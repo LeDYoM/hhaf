@@ -6,39 +6,40 @@
 
 #include <haf/include/filesystem/ifile_serializer.hpp>
 #include <haf/include/scene_components/texteditorcomponent.hpp>
-#include <haf/include/scene_components/iscene_metrics_view.hpp>
-#include <haf/include/scene_nodes/scene_node_text_properties.hpp>
+#include <haf/include/scene/scene.hpp>
 #include <haf/include/resources/ittfont.hpp>
 #include <haf/include/resources/iresource_retriever.hpp>
 #include <haf/include/shareddata/ishared_data.hpp>
 #include <haf/include/shareddata/shared_data_viewer.hpp>
 #include <haf/include/input/input_component.hpp>
+#include <haf/include/scene_components/camera_component.hpp>
 #include <haf/include/component/component_container.hpp>
 
 using namespace htps;
 using namespace haf;
 using namespace haf::scene;
+using namespace haf::scene::nodes;
 
 namespace zoper
 {
 static constexpr char HighScoresFileName[] = "high_scores.txt";
 
-HighScoreTextController::HighScoreTextController(SceneNode* parent, str name) :
-    BaseClass{parent, std::move(name)}
-{}
-
-HighScoreTextController::~HighScoreTextController() = default;
-
 void HighScoreTextController::onCreated()
 {
     BaseClass::onCreated();
+    TableSize = {3U, NumHighScore};
+}
+
+void HighScoreTextController::onAllTableElementsCreated(htps::vector2dst const)
+{
+    set_property_for_each_table_node(&SceneNodeText::TextBaseSizeProperty,
+                                     TextBaseSize{'A', 8U});
 
     normal_font_ = subSystem<res::IResourceRetriever>()
                        ->getTTFont(HighScoresResources::MenuFontId)
                        ->font(72);
     normal_color_        = colors::Blue;
     selected_color_      = colors::Red;
-    animation_component_ = component<anim::AnimationComponent>();
 
     // Request the high scores.
     subSystem<sys::IFileSerializer>()->deserializeFromFile(HighScoresFileName,
@@ -49,13 +50,6 @@ void HighScoreTextController::onCreated()
                           subSystem<shdata::ISharedData>())
                           .view(GameSharedData::address())
                           ->score;
-    Rectf32 textBox{
-        rectFromSize(subSystem<ISceneMetricsView>()->currentView().size())
-            .setLeftTop({0, 250})
-            .setSize({2000, 1500})};
-    prop<haf::scene::Position>().set(textBox.leftTop());
-    prop<TableNodeProperties>().set<SceneNodeSize>(textBox.size());
-    prop<TableSize>().set({3U, NumHighScore});
 
     size_type positionInTable{0U};
     const bool isInserting{
@@ -83,16 +77,15 @@ void HighScoreTextController::addHighScoresLine(const size_type counter,
 {
     using namespace nodes;
 
-    auto label(
-        createNodeAt(vector2dst{0, counter}, make_str("label", 0, counter)));
+    auto label{text(vector2dst{0U, counter})};
     standarizeText(label);
-    label->prop<SceneNodeTextProperties>().set<Text>(make_str(counter, "."));
+    label->Text = make_str(counter, ".");
 
-    label = createNodeAt(vector2dst{1, counter}, make_str("label", 1, counter));
+    label = text(vector2dst{1U, counter});
     standarizeText(label);
-    label->prop<SceneNodeTextProperties>().set<Text>(make_str(element.score));
+    label->Text = make_str(element.score);
 
-    label = createNodeAt(vector2dst{2, counter}, make_str("label", 2, counter));
+    label = text(vector2dst{2U, counter});
     standarizeText(label);
 
     if (is_inserting)
@@ -101,7 +94,7 @@ void HighScoreTextController::addHighScoresLine(const size_type counter,
     }
     else
     {
-        label->prop<SceneNodeTextProperties>().set<Text>(element.name);
+        label->Text = element.name;
     }
 }
 
@@ -123,34 +116,32 @@ void HighScoreTextController::addHighScoreEditor(
 
 void HighScoreTextController::addEditAnimation(const size_type line_index)
 {
-    LogAsserter::log_assert(line_index < prop<TableSize>().get().y,
-                            "Invalid line_index");
+    LogAsserter::log_assert(line_index < TableSize().y, "Invalid line_index");
 
     for_each_tableSceneNode_in_y(
         line_index,
-        [this](const auto, const sptr<nodes::SceneNodeText>& element) {
-            auto property_animation_builder =
-                animation_component_
-                    ->make_property_animation_builder<nodes::TextColor>(
-                        element);
+        [this](const auto, sptr<nodes::SceneNodeText> const& element) {
+            sptr<anim::AnimationComponent> animation_component;
+            element->component(animation_component);
+            auto property_animation_builder{
+                animation_component->make_property_animation_builder(
+                    &nodes::SceneNodeText::TextColor, colors::White,
+                    colors::Black)};
             property_animation_builder
                 .duration(time::TimePoint_as_miliseconds(2000U))
-                .startValue(colors::White)
-                .endValue(colors::Black)
                 .switchAnimation(true)
                 .continuous();
 
-            animation_component_->addAnimation(
-                std::move(property_animation_builder));
+            animation_component->addAnimation(
+                htps::move(property_animation_builder));
         });
 }
 
 void HighScoreTextController::standarizeText(
     const sptr<nodes::SceneNodeText>& ntext)
 {
-    ntext->prop<nodes::SceneNodeTextProperties>()
-        .put<nodes::TextColor>(normal_color_)
-        .put<nodes::Font>(normal_font_);
+    ntext->TextColor = normal_color_;
+    ntext->Font      = normal_font_;
 }
 
 void HighScoreTextController::saveHighScores()

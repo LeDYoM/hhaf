@@ -67,7 +67,7 @@ void ThreadCommiter::thread_func()
                 message = data_->msg_queue_.front();
                 data_->msg_queue_.pop();
             }
-            const char* const msg = message.c_str();
+            char const * const msg{message.c_str()};
             Commiter::commitlog(msg);
         }
         else

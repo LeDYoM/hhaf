@@ -1,3 +1,4 @@
+HTPS_PRAGMA_ONCE
 #ifndef HTYPES_ALLOCATOR_MALLOC_FREE_INCLUDE_HPP
 #define HTYPES_ALLOCATOR_MALLOC_FREE_INCLUDE_HPP
 
@@ -6,7 +7,6 @@
 
 namespace htps
 {
-
 void free_with_size(void* block, auto const)
 {
     std::free(block);

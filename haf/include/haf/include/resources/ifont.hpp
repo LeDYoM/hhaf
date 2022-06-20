@@ -1,11 +1,10 @@
+HTPS_PRAGMA_ONCE
 #ifndef HAF_SCENE_FONT_INTERFACE_INCLUDE_HPP
 #define HAF_SCENE_FONT_INTERFACE_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/rect.hpp>
-
-// TO be removed
-#include "itexture.hpp"
+#include <htypes/include/str.hpp>
 
 namespace haf::res
 {
@@ -13,15 +12,17 @@ namespace haf::res
 /// of its type
 class IFont
 {
+protected:
+    ~IFont() = default;
+
 public:
-    virtual ~IFont() {}
     virtual htps::Rectf32 getBounds(const htps::u32 codePoint) const        = 0;
     virtual htps::Rectf32 getTextureBounds(const htps::u32 codePoint) const = 0;
     virtual htps::f32 getAdvance(const htps::u32 codePoint) const           = 0;
     virtual htps::f32 getLineSpacing() const                                = 0;
     virtual htps::f32 getKerning(const htps::u32 first,
                                  const htps::u32 second) const              = 0;
-    virtual htps::sptr<ITexture> getTexture() const                         = 0;
+    virtual htps::str getTexture(char const character)                      = 0;
 };
 }  // namespace haf::res
 

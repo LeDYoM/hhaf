@@ -1,3 +1,4 @@
+HTPS_PRAGMA_ONCE
 #ifndef HAF_CORE_SYSTEM_SIMULATIONACTION_GROUP_INCLUDE_HPP
 #define HAF_CORE_SYSTEM_SIMULATIONACTION_GROUP_INCLUDE_HPP
 
@@ -30,7 +31,7 @@ public:
      */
     SimulationActionGroup(
         SimulationActionContainer simulation_action_container) :
-        simulation_action_container_{std::move(simulation_action_container)}
+        simulation_action_container_{htps::move(simulation_action_container)}
     {}
 
     /**
@@ -43,7 +44,7 @@ public:
         SimulationActionContainer simulation_action_container)
     {
         simulation_action_container_.insert(
-            std::move(simulation_action_container));
+            htps::move(simulation_action_container));
     }
 
     /**

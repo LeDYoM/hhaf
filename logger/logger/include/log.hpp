@@ -9,6 +9,9 @@ namespace logger
  * @brief Component to facilitate the logging
  * This components provide some easy to use functions and classes
  * to perform a configurable and understandable logging.
+ * @tparam EnableLogs Global log enabling. If false, no logs will be displayed.
+ * @tparam StreamType Class supporting stream of strings
+ * @tparam LogCommiter Class that will receive the filtered log messages
  */
 template <bool EnableLogs, typename StreamType, typename LogCommiter>
 struct Log final
@@ -36,7 +39,8 @@ public:
     {
         if constexpr (EnableLogs)
         {
-            StreamType log_stream;
+            static StreamType log_stream;
+            log_stream.clear();
             LogCommiter::commitlog(
                 (log_stream << ... << std::forward<Args>(args)).c_str());
         }

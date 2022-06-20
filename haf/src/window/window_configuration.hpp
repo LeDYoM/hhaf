@@ -1,9 +1,11 @@
+HTPS_PRAGMA_ONCE
 #ifndef HAF_WINDOW_WINDOW_CONFIGURATION_INCLUDE_HPP
 #define HAF_WINDOW_WINDOW_CONFIGURATION_INCLUDE_HPP
 
 #include "haf_private.hpp"
 #include <htypes/include/types.hpp>
 #include <htypes/include/str.hpp>
+#include <htypes/include/vector2d.hpp>
 
 #include <haf/include/data/ideserializable.hpp>
 #include "system/system_configuration.hpp"

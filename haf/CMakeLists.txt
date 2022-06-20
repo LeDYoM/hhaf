@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.14)
 project(
   "HAF Main Library"
-  VERSION 0.8.1.2
+  VERSION 0.8.2.0
   DESCRIPTION "Host Application Framework main library"
   # [HOMEPAGE_URL <url-string>]
   LANGUAGES CXX
@@ -14,12 +14,14 @@ set(src_dir src)
 set(sources
   # Global
   ${src_dir}/haf_private.hpp
-  ${src_dir}/main.cpp 
+  ${src_dir}/main.cpp
   ${src_dir}/systemprovider_init.cpp
 
   # Animation
-  ${src_dir}/animation/animation.cpp
   ${src_dir}/animation/animation_component.cpp
+  ${src_dir}/animation/animation.cpp
+  ${src_dir}/animation/property_animation_builder.cpp
+  ${src_dir}/animation/property_animation.cpp
 
   # Component
   ${src_dir}/component/component_container.cpp
@@ -57,6 +59,14 @@ set(sources
 
   # Render
   ${src_dir}/render/geometry_math.hpp
+  ${src_dir}/render/render_data_conversion.cpp
+  ${src_dir}/render/render_data_conversion.hpp
+  ${src_dir}/render/render_element.cpp
+  ${src_dir}/render/render_element.hpp
+  ${src_dir}/render/render_system.cpp
+  ${src_dir}/render/render_system.hpp
+  ${src_dir}/render/render_target.cpp
+  ${src_dir}/render/render_target.hpp
   ${src_dir}/render/renderizable_builder.cpp
   ${src_dir}/render/renderizable_internal_data.hpp
   ${src_dir}/render/renderizable_internal_functions.cpp
@@ -64,33 +74,30 @@ set(sources
   ${src_dir}/render/renderizable_private.hpp
   ${src_dir}/render/renderizable.cpp
   ${src_dir}/render/renderizables.cpp
-  ${src_dir}/render/rendersystem.cpp
-  ${src_dir}/render/rendersystem.hpp
-  ${src_dir}/render/rendertarget.cpp
-  ${src_dir}/render/rendertarget.hpp
-  ${src_dir}/render/vertexarray.cpp
 
   # Resources
-  ${src_dir}/resources/bmpfont_private.cpp
-  ${src_dir}/resources/bmpfont_private.hpp
-  ${src_dir}/resources/bmpfont.cpp
-  ${src_dir}/resources/bmpfont.hpp
-  ${src_dir}/resources/bmpfontfactory.cpp
-  ${src_dir}/resources/bmpfontfactory.hpp
+  # Default resources
+  ${src_dir}/resources/resource_loaders/iresource_loader.hpp
+
+  ${src_dir}/resources/bmp_font.cpp
+  ${src_dir}/resources/bmp_font.hpp
+  ${src_dir}/resources/character_render_data.hpp
   ${src_dir}/resources/font_utils.cpp
   ${src_dir}/resources/font_utils.hpp
+  ${src_dir}/resources/resource_data_description_names.hpp
   ${src_dir}/resources/resource_manager_config_loader.cpp
   ${src_dir}/resources/resource_manager_config_loader.hpp
   ${src_dir}/resources/resource_manager_subsystems_view.cpp
+  ${src_dir}/resources/resource_manager_private.hpp
   ${src_dir}/resources/resource_manager.cpp
   ${src_dir}/resources/resource_manager.hpp
-  ${src_dir}/resources/resourcemanager_private.hpp
   ${src_dir}/resources/resources_config_data_element.cpp
   ${src_dir}/resources/resources_config_data_element.hpp
   ${src_dir}/resources/resources_config_data.cpp
   ${src_dir}/resources/resources_config_data.hpp
   ${src_dir}/resources/shader.cpp
   ${src_dir}/resources/shader.hpp
+  ${src_dir}/resources/text_render_data.hpp
   ${src_dir}/resources/texture.cpp
   ${src_dir}/resources/texture.hpp
   ${src_dir}/resources/ttfont.cpp
@@ -100,35 +107,41 @@ set(sources
 
   # Scene
   ${src_dir}/scene/color.cpp
+  ${src_dir}/scene/material.cpp
   ${src_dir}/scene/matrix4x4.cpp
-  ${src_dir}/scene/renderizables_scene_node.cpp
   ${src_dir}/scene/scene_controller.cpp
   ${src_dir}/scene/scene_controller.hpp
   ${src_dir}/scene/scene_manager_subsystems_view.cpp
   ${src_dir}/scene/scene_private.cpp
   ${src_dir}/scene/scene_private.hpp
   ${src_dir}/scene/scene_render.cpp
-  ${src_dir}/scene/scene_render.hpp  
+  ${src_dir}/scene/scene_render.hpp
   ${src_dir}/scene/scene.cpp
   ${src_dir}/scene/scene_manager.cpp
   ${src_dir}/scene/scene_manager.hpp
   ${src_dir}/scene/scene_node.cpp
+  ${src_dir}/scene/scene_nodes.cpp
   ${src_dir}/scene/scenenodefactory.cpp
-  ${src_dir}/scene/scenenodes.cpp
-  ${src_dir}/scene/transformable_scene_node.cpp
   ${src_dir}/scene/transformation.cpp
 
   # Scene components
+  ${src_dir}/scene_components/camera_component.cpp
   ${src_dir}/scene_components/discretetextcomponent.cpp
+  ${src_dir}/scene_components/scene_components_log.hpp
   ${src_dir}/scene_components/texteditorcomponent.cpp
   ${src_dir}/scene_components/visibility_selector_component.cpp
 
   # Scene nodes
   ${src_dir}/scene_nodes/renderizable_scene_node.cpp
+  ${src_dir}/scene_nodes/renderizables_scene_node.cpp
+  ${src_dir}/scene_nodes/scene_node_letter.cpp
+  ${src_dir}/scene_nodes/scene_node_letter.hpp
   ${src_dir}/scene_nodes/scene_node_table_imp.cpp
   ${src_dir}/scene_nodes/scene_node_table_text.cpp
   ${src_dir}/scene_nodes/scene_node_text_quad.cpp
   ${src_dir}/scene_nodes/scene_node_text.cpp
+  ${src_dir}/scene_nodes/text_base_size.cpp
+  ${src_dir}/scene_nodes/transformable_scene_node.cpp
 
   # Shared data
   ${src_dir}/shareddata/address.cpp
@@ -166,27 +179,25 @@ set(sources
   ${src_dir}/time/time_system_acceleration.hpp
   ${src_dir}/time/time_system_subsystems_view.cpp
   ${src_dir}/time/time_system.cpp
-  ${src_dir}/time/time_system.hpp 
+  ${src_dir}/time/time_system.hpp
   ${src_dir}/time/timer.cpp
   ${src_dir}/time/timer_component.cpp
   ${src_dir}/time/timer_connector.cpp
 
-  # Types
-  ${src_dir}/types/str.cpp
-
   # Utils
   ${src_dir}/utils/compile_time_constants.hpp
   ${src_dir}/utils/type_data.cpp
-  
+
   # Window
   ${src_dir}/window/fps_counter.cpp
   ${src_dir}/window/fps_counter.hpp
   ${src_dir}/window/window_configuration.hpp
-  ${src_dir}/window/window_private.cpp
-  ${src_dir}/window/window_private.hpp
+  ${src_dir}/window/window_log.hpp
+  ${src_dir}/window/window_system.cpp
+  ${src_dir}/window/window_system.hpp
   ${src_dir}/window/window.cpp
   ${src_dir}/window/window.hpp
-  )
+)
 
 set(inc_dir include/haf/include)
 
@@ -195,9 +206,11 @@ set(headers
   ${inc_dir}/haf_export.hpp
 
   # Animation
-  ${inc_dir}/animation/animabletypes.hpp
+  ${inc_dir}/animation/animable_types.hpp
   ${inc_dir}/animation/animation_data.hpp
   ${inc_dir}/animation/animation.hpp
+  ${inc_dir}/animation/delta_property.hpp
+  ${inc_dir}/animation/idelta_property.hpp
   ${inc_dir}/animation/animation_component.hpp
   ${inc_dir}/animation/property_animation_builder.hpp
   ${inc_dir}/animation/property_animation_data.hpp
@@ -222,8 +235,9 @@ set(headers
   ${inc_dir}/data/ideserializable.hpp
   ${inc_dir}/data/ifullserializable.hpp
   ${inc_dir}/data/iserializable.hpp
-  
+
   # File system
+  ${inc_dir}/filesystem/ibinary_file_reader.hpp
   ${inc_dir}/filesystem/ifile_serializer.hpp
   ${inc_dir}/filesystem/path.hpp
 
@@ -241,49 +255,45 @@ set(headers
 
   # Render
   ${inc_dir}/render/fig_type.hpp
-  ${inc_dir}/render/primitivetype.hpp
-  ${inc_dir}/render/renderdata.hpp
   ${inc_dir}/render/renderizable_builder_data.hpp
   ${inc_dir}/render/renderizable_builder.hpp
   ${inc_dir}/render/renderizable_data.hpp
-  ${inc_dir}/render/renderizable_modifier_context.hpp
   ${inc_dir}/render/renderizable.hpp
   ${inc_dir}/render/renderizables.hpp
   ${inc_dir}/render/vertex.hpp
-  ${inc_dir}/render/vertexarray.hpp
 
   # Resources
+  ${inc_dir}/resources/ibmp_font.hpp
+  ${inc_dir}/resources/idefault_resources_retriever.hpp
   ${inc_dir}/resources/ifont.hpp
   ${inc_dir}/resources/iresource_configurator.hpp
   ${inc_dir}/resources/iresource_retriever.hpp
   ${inc_dir}/resources/ishader.hpp
   ${inc_dir}/resources/itexture.hpp
   ${inc_dir}/resources/ittfont.hpp
+  ${inc_dir}/resources/resource_descriptor.hpp
 
   # Scene
   ${inc_dir}/scene/color_imp.hpp
   ${inc_dir}/scene/color.hpp
   ${inc_dir}/scene/hasname.hpp
+  ${inc_dir}/scene/material.hpp
   ${inc_dir}/scene/matrix4x4.hpp
-  ${inc_dir}/scene/renderizables_scene_node.hpp
+  ${inc_dir}/scene/scene_render_context.hpp
   ${inc_dir}/scene/scene.hpp
   ${inc_dir}/scene/scenenode_cast.hpp
-  ${inc_dir}/scene/scenenode_properties.hpp
   ${inc_dir}/scene/scene_node.hpp
+  ${inc_dir}/scene/scene_nodes.hpp
   ${inc_dir}/scene/scenenodefactory.hpp
   ${inc_dir}/scene/scenenodeparent.hpp
-  ${inc_dir}/scene/scenenodes.hpp
-  ${inc_dir}/scene/transformable_scene_node.hpp
-  ${inc_dir}/scene/transformation_properties.hpp
   ${inc_dir}/scene/transformation.hpp
 
   # Scene components
+  ${inc_dir}/scene_components/camera_component.hpp
   ${inc_dir}/scene_components/discretetextcomponent.hpp
   ${inc_dir}/scene_components/iapp_finisher.hpp
   ${inc_dir}/scene_components/iapp_initializer.hpp
   ${inc_dir}/scene_components/iscene_control.hpp
-  ${inc_dir}/scene_components/iscene_metrics_view.hpp
-  ${inc_dir}/scene_components/iscene_metrics.hpp
   ${inc_dir}/scene_components/states_controller_component.hpp
   ${inc_dir}/scene_components/statescontrolleractuator_register.hpp
   ${inc_dir}/scene_components/statescontrolleractuator.hpp
@@ -292,14 +302,14 @@ set(headers
 
   # Scene nodes
   ${inc_dir}/scene_nodes/renderizable_scene_node.hpp
-  ${inc_dir}/scene_nodes/scene_node_size.hpp
+  ${inc_dir}/scene_nodes/renderizables_scene_node.hpp
   ${inc_dir}/scene_nodes/scene_node_table_imp.hpp
-  ${inc_dir}/scene_nodes/scene_node_table_properties.hpp
   ${inc_dir}/scene_nodes/scene_node_table_text.hpp
   ${inc_dir}/scene_nodes/scene_node_table.hpp
-  ${inc_dir}/scene_nodes/scene_node_text_properties.hpp
   ${inc_dir}/scene_nodes/scene_node_text_quad.hpp
   ${inc_dir}/scene_nodes/scene_node_text.hpp
+  ${inc_dir}/scene_nodes/text_base_size.hpp
+  ${inc_dir}/scene_nodes/transformable_scene_node.hpp
 
   # Shared data
   ${inc_dir}/shareddata/address.hpp
@@ -330,10 +340,7 @@ set(headers
   ${inc_dir}/time/timer.hpp
 
   # Types
-  ${inc_dir}/types/basic_types.hpp
-  ${inc_dir}/types/property_group.hpp
-  ${inc_dir}/types/str.hpp
-  ${inc_dir}/types/vector.hpp
+  ${inc_dir}/types/scene_types.hpp
 
   # Utils
   ${inc_dir}/utils/object_factory.hpp
@@ -348,10 +355,9 @@ set(HAF_PUBLIC_INCLUDE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/)
 
 set(HAF_PRIVATE_INCLUDE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
-build_lib_component(EXPORT_ALL HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}/include" 
+build_lib_component(EXPORT_ALL HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}/include"
   SOURCES ${sources} HEADERS ${headers})
 
-#define compile time constants
 target_compile_definitions(${CURRENT_TARGET} PRIVATE HAF_ALLOW_ACCELERATION)
 target_compile_definitions(${CURRENT_TARGET} PRIVATE HAF_SHOW_FPS)
 
@@ -365,8 +371,6 @@ target_link_libraries(${CURRENT_TARGET} PUBLIC log_and_types)
 # TODO: Fix it
 target_include_directories(${CURRENT_TARGET}
                            PUBLIC ${HAF_PRIVATE_INCLUDE_DIRECTORY})
-
-include (cmake/haf_functions.cmake)
 
 # TODO: Investigate some day if(MSVC) set_target_properties(${CURRENT_TARGET}
 # PROPERTIES LINK_FLAGS "${LINK_FLAGS} /NODEFAULTLIB") endif()

@@ -1,3 +1,4 @@
+HTPS_PRAGMA_ONCE
 #ifndef HAF_STATES_CONTROLLER_INCLUDE_HPP
 #define HAF_STATES_CONTROLLER_INCLUDE_HPP
 
@@ -49,20 +50,20 @@ public:
         if (states_stack_.empty())
         {
             BeforeStart();
-            push_state(std::move(firstState));
+            push_state(htps::move(firstState));
         }
     }
 
     constexpr void push_state(T firstState) noexcept
     {
-        postAction([this, first_state = std::move(firstState)]() mutable {
+        postAction([this, first_state = htps::move(firstState)]() mutable {
             if (!states_stack_.empty())
             {
                 StatePaused(states_stack_.back());
             }
             StatePushed(first_state);
             StateStarted(first_state);
-            states_stack_.push_back(std::move(first_state));
+            states_stack_.push_back(htps::move(first_state));
         });
     }
 
@@ -86,7 +87,7 @@ public:
         });
     }
 
-    constexpr void setState(T newState) { changeState(std::move(newState)); }
+    constexpr void setState(T newState) { changeState(htps::move(newState)); }
 
     constexpr bool hasActiveState() const noexcept
     {
@@ -117,19 +118,19 @@ public:
 private:
     inline void changeState(T newState)
     {
-        postAction([this, newState = std::move(newState)]() {
+        postAction([this, newState = htps::move(newState)]() {
             LogAsserter::log_assert(!states_stack_.empty(),
                                     "States stack size is empty");
             StateFinished(states_stack_.back());
             states_stack_.pop_back();
             StateStarted(newState);
-            states_stack_.push_back(std::move(newState));
+            states_stack_.push_back(htps::move(newState));
         });
     }
 
     constexpr void postAction(Action action)
     {
-        pending_actions_.push_back(std::move(action));
+        pending_actions_.push_back(htps::move(action));
     }
 
     htps::stack<T> states_stack_;

@@ -12,10 +12,9 @@ void TextEditorComponent::onAttached()
 
     using namespace haf::scene::nodes;
 
-    auto& text_prop(attachedNodeAs<nodes::SceneNodeText>()
-                        ->prop<nodes::SceneNodeTextProperties>());
-    original_text_ = text_prop.get<Text>();
-    text_prop.set<Text>("");
+    auto attached_text_node{attachedNodeAs<nodes::SceneNodeText>()};
+    original_text_           = attached_text_node->Text();
+    attached_text_node->Text = "";
 }
 
 void TextEditorComponent::onKeyPressed(const input::Key& key)
@@ -25,46 +24,46 @@ void TextEditorComponent::onKeyPressed(const input::Key& key)
 
     if (enabled)
     {
-        auto& text_prop(attachedNodeAs<nodes::SceneNodeText>()
-                            ->prop<nodes::SceneNodeTextProperties>());
+        auto attached_text_node{attachedNodeAs<nodes::SceneNodeText>()};
         if (isAscii(key))
         {
-            const char c_ascii{this->toAscii(key)};
+            char const c_ascii{this->toAscii(key)};
             bool success{true};
             if (text_validator_)
             {
-                success =
-                    text_validator_->canAddChar(text_prop.get<Text>(), c_ascii);
+                success = text_validator_->canAddChar(
+                    attached_text_node->Text(), c_ascii);
             }
 
             if (success)
             {
-                str new_text{text_prop.get<Text>()};
+                str new_text{attached_text_node->Text()};
                 new_text.push_back(c_ascii);
-                text_prop.set<Text>(std::move(new_text));
+                attached_text_node->Text = htps::move(new_text);
             }
         }
-        else if (key == Key::BackSpace && !text_prop.get<Text>().empty())
+        else if (key == Key::BackSpace && !attached_text_node->Text().empty())
         {
-            text_prop.set<Text>(text_prop.get<Text>().substr(
-                0U, text_prop.get<Text>().size() - 1));
+            attached_text_node->Text = attached_text_node->Text().substr(
+                0U, attached_text_node->Text().size() - 1U);
         }
         else if (key == Key::Return)
         {
             bool success{true};
             if (text_validator_)
             {
-                success = text_validator_->isValidText(text_prop.get<Text>());
+                success =
+                    text_validator_->isValidText(attached_text_node->Text());
             }
             if (success)
             {
                 enabled = false;
-                Accepted(text_prop.get<Text>());
+                Accepted(attached_text_node->Text());
             }
         }
         else if (key == Key::Escape)
         {
-            text_prop.set<Text>(original_text_);
+            attached_text_node->Text = original_text_;
             enabled = false;
             Rejected();
         }

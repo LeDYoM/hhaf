@@ -2,15 +2,15 @@
 #include "system_provider_configuration.hpp"
 #include "init_system_options.hpp"
 
-#include <backend/include/backendfactory.hpp>
+#include <backend/include/backend_factory.hpp>
 #include <backend/include/backend_creator.hpp>
 #include "debug_utils/debug_system.hpp"
 #include "filesystem/file_system.hpp"
 #include "input/input_system.hpp"
 #include "random/randomsystem.hpp"
-#include "render/rendersystem.hpp"
+#include "render/render_system.hpp"
 #include "scene/scene_manager.hpp"
-#include "window/window.hpp"
+#include "window/window_system.hpp"
 #include "time/time_system.hpp"
 #include "shareddata/shared_data_system.hpp"
 #include "resources/resource_manager.hpp"
@@ -35,7 +35,7 @@ struct SystemProvider::SystemProviderPrivate final
     uptr<DebugSystem> debug_system_;
     uptr<SharedDataSystem> shared_data_system_;
     BackendFactoryPtr backend_factory_{nullptr};
-    uptr<Window> window_;
+    uptr<WindowSystem> window_system_;
     uptr<ResourceManager> resource_manager_;
     uptr<InputSystem> input_system_;
     uptr<scene::SceneManager> scene_manager_;
@@ -73,7 +73,7 @@ struct SystemProvider::SystemProviderPrivate final
         if (!haf_configuration_file_.empty())
         {
             system_provdier_configuration_.loadConfiguration(
-                std::move(sub_system_viewer), haf_configuration_file_);
+                htps::move(sub_system_viewer), haf_configuration_file_);
         }
     }
 };
@@ -137,7 +137,7 @@ void SystemProvider::instanciateSystems(
     if (init_system_options.init_window_system)
     {
         DisplayLog::debug("Initializing Window");
-        p_->window_ = muptr<Window>(*this);
+        p_->window_system_ = muptr<WindowSystem>(*this);
     }
 
     if (init_system_options.init_input_system)
@@ -192,19 +192,25 @@ void SystemProvider::initializeSystems(
         DisplayLog::debug("Initializing Window");
 
         configureSystem(
-            p_->window_,
+            p_->window_system_,
             p_->system_provdier_configuration_.windowSystemConfigurationFile());
 
         if (init_system_options.init_render_system)
         {
-            p_->render_system_->setRenderTarget(p_->window_->renderTarget());
+            p_->render_system_->setRenderTarget(
+                p_->window_system_->window()->renderTarget());
         }
 
         if (init_system_options.init_input_system)
         {
             p_->input_system_->setInputDriverWrapper(
-                p_->window_->inputDriverWrapper());
+                p_->window_system_->window()->inputDriverWrapper());
         }
+    }
+
+    if (init_system_options.init_resource_manager)
+    {
+        p_->resource_manager_->init();
     }
 }
 
@@ -256,7 +262,7 @@ void SystemProvider::terminate()
     p_->resource_manager_.reset();
     p_->scene_manager_.reset();
     p_->input_system_.reset();
-    p_->window_.reset();
+    p_->window_system_.reset();
     p_->time_system_.reset();
     p_->debug_system_.reset();
     p_->file_system_.reset();
@@ -273,14 +279,14 @@ IApp const& SystemProvider::app() const
     return *p_->app_;
 }
 
-Window const& SystemProvider::window() const noexcept
+WindowSystem const& SystemProvider::windowSystem() const noexcept
 {
-    return *p_->window_;
+    return *p_->window_system_;
 }
 
-Window& SystemProvider::window() noexcept
+WindowSystem& SystemProvider::windowSystem() noexcept
 {
-    return *p_->window_;
+    return *p_->window_system_;
 }
 
 ResourceManager const& SystemProvider::resourceManager() const noexcept
@@ -430,15 +436,15 @@ scene::SceneManager& SystemProvider::system() noexcept
 }
 
 template <>
-Window const& SystemProvider::system() const noexcept
+WindowSystem const& SystemProvider::system() const noexcept
 {
-    return window();
+    return windowSystem();
 }
 
 template <>
-Window& SystemProvider::system() noexcept
+WindowSystem& SystemProvider::system() noexcept
 {
-    return window();
+    return windowSystem();
 }
 
 template <>

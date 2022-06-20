@@ -4,8 +4,8 @@
 #include <htypes/include/str.hpp>
 #include <htypes/include/vector2d.hpp>
 #include <haf/include/scene/scene_node.hpp>
-#include <haf/include/scene/transformable_scene_node.hpp>
-#include <haf/include/scene/scenenodes.hpp>
+#include <haf/include/scene_nodes/transformable_scene_node.hpp>
+#include <haf/include/scene/scene_nodes.hpp>
 #include <haf/include/scene/scene.hpp>
 
 using namespace htps;
@@ -47,7 +47,7 @@ TEST_CASE("Scenenodes::for_each", "[SceneNode][SceneNodes]")
 
     testScene->for_each_sceneNode(
         [&numCheck](sptr<SceneNode> const& childNode) {
-            childNode->prop<Visible>().set(false);
+            childNode->Visible = false;
             ++numCheck;
         });
 
@@ -56,7 +56,7 @@ TEST_CASE("Scenenodes::for_each", "[SceneNode][SceneNodes]")
 
     for (auto const childNode : testScene->sceneNodes())
     {
-        CHECK(childNode->prop<Visible>().get() == false);
+        CHECK(childNode->Visible() == false);
         ++numCheck;
     }
 
@@ -74,7 +74,7 @@ TEST_CASE("Scenenodes::for_each", "[SceneNode][SceneNodes]")
 
     testScene->for_each_sceneNode(
         [&numCheck](sptr<SceneNode> const& childNode) {
-            childNode->prop<Visible>().set(false);
+            childNode->Visible = false;
             ++numCheck;
         });
 
@@ -83,7 +83,7 @@ TEST_CASE("Scenenodes::for_each", "[SceneNode][SceneNodes]")
 
     for (auto const childNode : testScene->sceneNodes())
     {
-        CHECK(childNode->prop<Visible>().get() == false);
+        CHECK(childNode->Visible() == false);
         ++numCheck;
     }
 
@@ -92,7 +92,7 @@ TEST_CASE("Scenenodes::for_each", "[SceneNode][SceneNodes]")
 
     testScene->for_each_sceneNode_as<TestSceneNode>(
         [&numCheck](sptr<TestSceneNode> const& childNode) {
-            childNode->prop<Visible>().set(true);
+            childNode->Visible = true;
             ++numCheck;
         });
 
@@ -121,7 +121,7 @@ TEST_CASE("Scenenodes::for_each const", "[SceneNode][SceneNodes]")
 
     testScene_->for_each_sceneNode(
         [&numCheck](sptr<SceneNode const> const& childNode) {
-            CHECK(childNode->prop<Visible>().get() == true);
+            CHECK(childNode->Visible() == true);
             ++numCheck;
         });
 
@@ -139,7 +139,7 @@ TEST_CASE("Scenenodes::for_each const", "[SceneNode][SceneNodes]")
 
     testScene_->for_each_sceneNode(
         [&numCheck](sptr<SceneNode const> const& childNode) {
-            CHECK(childNode->prop<Visible>().get() == true);
+            CHECK(childNode->Visible() == true);
             ++numCheck;
         });
 
@@ -148,7 +148,7 @@ TEST_CASE("Scenenodes::for_each const", "[SceneNode][SceneNodes]")
 
     testScene_->for_each_sceneNode_as<TestSceneNode>(
         [&numCheck](sptr<TestSceneNode const> const& childNode) {
-            CHECK(childNode->prop<Visible>().get() == true);
+            CHECK(childNode->Visible() == true);
             ++numCheck;
         });
 
@@ -156,8 +156,7 @@ TEST_CASE("Scenenodes::for_each const", "[SceneNode][SceneNodes]")
     numCheck = 0U;
 }
 
-TEST_CASE("Scenenodes::set_property_for_each_sceneNode",
-          "[SceneNode][SceneNodes]")
+TEST_CASE("Scenenodes::set_property_for_each_node", "[SceneNode][SceneNodes]")
 {
     using namespace haf;
     using namespace haf::scene;
@@ -173,13 +172,13 @@ TEST_CASE("Scenenodes::set_property_for_each_sceneNode",
     }
     CHECK(testScene->sceneNodes().size() == kNumSceneNodes);
 
-    //    testScene->set_property_for_each_sceneNode<Visible>(true);
+    testScene->set_property_for_each_node(&SceneNode::Visible, false);
 
     size_type numCheck{0U};
 
     for (auto const childNode : testScene->sceneNodes())
     {
-        CHECK(childNode->prop<Visible>().get() == true);
+        CHECK(childNode->Visible() == false);
         ++numCheck;
     }
 
@@ -193,14 +192,13 @@ TEST_CASE("Scenenodes::set_property_for_each_sceneNode",
         auto node_test(testScene->createSceneNode<TestSceneNode>(name));
     }
 
-    //    testScene->set_property_for_each_sceneNode_as<TestSceneNode, Visible>(
-    //        true);
+    testScene->set_property_for_each_node(&TestSceneNode::Visible, false);
 
     for (auto const childNode : testScene->sceneNodes())
     {
         if (auto node = std::dynamic_pointer_cast<TestSceneNode>(childNode))
         {
-            CHECK(childNode->prop<Visible>().get() == true);
+            CHECK(childNode->Visible() == false);
             ++numCheck;
         }
     }
@@ -352,7 +350,7 @@ TEST_CASE("Scenenodes::for_each_as", "[SceneNode]")
 
     testScene->for_each_sceneNode_as<TransformableSceneNode>(
         [&numCheck](sptr<TransformableSceneNode> const& childNode) {
-            childNode->prop<Position>().set({1.0F, 2.0F});
+            childNode->Position = {1.0F, 2.0F};
             ++numCheck;
         });
 
@@ -362,8 +360,7 @@ TEST_CASE("Scenenodes::for_each_as", "[SceneNode]")
     for (auto const childNode : testScene->sceneNodes())
     {
         CHECK(std::dynamic_pointer_cast<TransformableSceneNode>(childNode)
-                  ->prop<Position>()
-                  .get() == vector2df{1.0F, 2.0F});
+                  ->Position() == vector2df{1.0F, 2.0F});
         ++numCheck;
     }
 
@@ -382,7 +379,7 @@ TEST_CASE("Scenenodes::for_each_as", "[SceneNode]")
 
     testScene->for_each_sceneNode_as<TransformableSceneNode>(
         [&numCheck](sptr<TransformableSceneNode> const& childNode) {
-            childNode->prop<Position>().set({10.0F, 20.0F});
+            childNode->Position = {10.0F, 20.0F};
             ++numCheck;
         });
 
@@ -392,8 +389,7 @@ TEST_CASE("Scenenodes::for_each_as", "[SceneNode]")
     for (auto const childNode : testScene->sceneNodes())
     {
         CHECK(std::dynamic_pointer_cast<TransformableSceneNode>(childNode)
-                  ->prop<Position>()
-                  .get() == vector2df{10.0F, 20.0F});
+                  ->Position() == vector2df{10.0F, 20.0F});
         ++numCheck;
     }
 
@@ -402,7 +398,7 @@ TEST_CASE("Scenenodes::for_each_as", "[SceneNode]")
 
     testScene->for_each_sceneNode_as<TestTransformableSceneNode>(
         [&numCheck](sptr<TestTransformableSceneNode> const& childNode) {
-            childNode->prop<Position>().set({100.0F, 200.0F});
+            childNode->Position = {100.0F, 200.0F};
             ++numCheck;
         });
 
@@ -432,7 +428,7 @@ TEST_CASE("Scenenodes::for_each_as const", "[SceneNode][SceneNodes]")
 
     testScene_->for_each_sceneNode_as<TransformableSceneNode>(
         [&numCheck](sptr<TransformableSceneNode const> const& childNode) {
-            CHECK(childNode->prop<Position>().get() == vector2df{});
+            CHECK(childNode->Position() == vector2df{});
             ++numCheck;
         });
 
@@ -451,7 +447,7 @@ TEST_CASE("Scenenodes::for_each_as const", "[SceneNode][SceneNodes]")
 
     testScene_->for_each_sceneNode_as<TransformableSceneNode>(
         [&numCheck](sptr<TransformableSceneNode const> const& childNode) {
-            CHECK(childNode->prop<Position>().get() == vector2df{});
+            CHECK(childNode->Position() == vector2df{});
             ++numCheck;
         });
 
@@ -460,7 +456,7 @@ TEST_CASE("Scenenodes::for_each_as const", "[SceneNode][SceneNodes]")
 
     testScene_->for_each_sceneNode_as<TestTransformableSceneNode>(
         [&numCheck](sptr<TestTransformableSceneNode const> const& childNode) {
-            CHECK(childNode->prop<Position>().get() == vector2df{});
+            CHECK(childNode->Position() == vector2df{});
             ++numCheck;
         });
 
@@ -485,17 +481,15 @@ TEST_CASE("Scenenodes::set_property_for_each_as", "[SceneNode][SceneNodes]")
     }
     CHECK(testScene->sceneNodes().size() == kNumSceneNodes);
 
-    testScene
-        ->set_property_for_each_sceneNode_as<TransformableSceneNode, Position>(
-            vector2df{4.5F, 3.5F});
+    testScene->set_property_for_each_node(&TransformableSceneNode::Position,
+                                          {4.5F, 3.5F});
 
     size_type numCheck{0U};
 
     for (auto const childNode : testScene->sceneNodes())
     {
         CHECK(std::dynamic_pointer_cast<TransformableSceneNode>(childNode)
-                  ->prop<Position>()
-                  .get() == vector2df{4.5F, 3.5F});
+                  ->Position() == vector2df{4.5F, 3.5F});
         ++numCheck;
     }
 
@@ -510,16 +504,15 @@ TEST_CASE("Scenenodes::set_property_for_each_as", "[SceneNode][SceneNodes]")
             testScene->createSceneNode<TestTransformableSceneNode>(name));
     }
 
-    testScene->set_property_for_each_sceneNode_as<TestTransformableSceneNode,
-                                                  Position>(
-        vector2df{33.0F, 44.0F});
+    testScene->set_property_for_each_node(&TransformableSceneNode::Position,
+                                          vector2df{33.0F, 44.0F});
 
     for (auto const childNode : testScene->sceneNodes())
     {
         if (auto node = std::dynamic_pointer_cast<TestTransformableSceneNode>(
                 childNode))
         {
-            CHECK(node->prop<Position>().get() == vector2df{33.0F, 44.0F});
+            CHECK(node->Position() == vector2df{33.0F, 44.0F});
             ++numCheck;
         }
     }
@@ -569,7 +562,7 @@ auto createTestTransformableSceneNodes(sptr<haf::scene::Scene> scene)
             make_str("SceneNode_test_", index))};
         if (index == 0U)
         {
-            node_test = std::move(result);
+            node_test = htps::move(result);
         }
     }
     return node_test;

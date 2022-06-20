@@ -1,3 +1,4 @@
+HTPS_PRAGMA_ONCE
 #ifndef HTYPES_PLACEMENT_INCLUDE_HPP
 #define HTYPES_PLACEMENT_INCLUDE_HPP
 
@@ -21,13 +22,13 @@ public:
 
     template <typename... Args>
     static void construct(pointer where, Args&&... args) noexcept(
-        noexcept(T(std::forward<Args>(args)...)))
+        noexcept(T(htps::forward<Args>(args)...)))
     {
         assert(where != nullptr);
 
         if constexpr (sizeof...(args) > 0U)
         {
-            ::new ((void*)where) T(std::forward<Args>(args)...);
+            ::new ((void*)where) T(htps::forward<Args>(args)...);
         }
         else
         {

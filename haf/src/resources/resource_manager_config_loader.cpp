@@ -4,10 +4,10 @@
 
 #include <haf/include/filesystem/ifile_serializer.hpp>
 #include <haf/include/system/subsystem_view.hpp>
-
+#include <haf/include/resources/resource_descriptor.hpp>
 #include <hlog/include/hlog.hpp>
 
-using namespace haf::types;
+using namespace htps;
 
 namespace haf::res
 {
@@ -19,8 +19,7 @@ ResourceManagerConfigLoader::parseResourceConfigFile(
     LogAsserter::log_assert(!resources_config_file_name_.empty(),
                             "The resources file name was not set");
 
-    auto file_serializer{
-        sub_system_viewer.subSystem<sys::IFileSerializer>()};
+    auto file_serializer{sub_system_viewer.subSystem<sys::IFileSerializer>()};
     auto const result{file_serializer->deserializeFromFile(
         resources_config_file_name_, resources_config_data_)};
 
@@ -72,19 +71,12 @@ SetResourceConfigFileResult ResourceManagerConfigLoader::setResourceConfigFile(
     LogAsserter::log_assert(resources_config_file_name_.empty(),
                             "The resources file name was already set");
 
-    resources_config_file_name_ = std::move(file_name);
-    return parseResourceConfigFile(std::move(sub_system_viewer));
+    resources_config_file_name_ = htps::move(file_name);
+    return parseResourceConfigFile(htps::move(sub_system_viewer));
 }
 
-namespace
-{
-static constexpr char TypeStr[] = "type";
-static constexpr char FileStr[] = "file";
-}  // namespace
-
-bool ResourceManagerConfigLoader::loadSection(
-    str const& section_name,
-    sys::ResourceManager& resource_manager)
+bool ResourceManagerConfigLoader::loadSection(str const& section_name,
+                                              IResourceLoader& resource_loader)
 {
     bool global_result{true};
 
@@ -101,47 +93,36 @@ bool ResourceManagerConfigLoader::loadSection(
         for (auto const& resource_to_load :
              resources_to_load_iterator.second->second.elements())
         {
-            auto const& name{resource_to_load.first};
-            auto const& type{resource_to_load.second.type};
-            auto element_file{resource_to_load.second.file_name};
+            ResourceDescriptor resource_descriptor{
+                resource_to_load.first, resource_to_load.second.type,
+                resource_to_load.second.file_name};
 
-            DisplayLog::debug("Going to load element: ", name, " of type ",
-                              type, " with file name: ", element_file);
+            DisplayLog::debug(
+                "Going to load element: ", resource_descriptor.name,
+                " of type ", resource_descriptor.type,
+                " with file name: ", resource_descriptor.fileName);
 
             if (!config_directory_.empty())
             {
-                element_file = config_directory_ + element_file;
+                resource_descriptor.fileName =
+                    config_directory_ + resource_descriptor.fileName;
                 DisplayLog::debug("Element file with directory: ",
-                                  element_file);
+                                  resource_descriptor.fileName);
             }
 
-            bool local_result{false};
-
-            if (type == "ttf")
-            {
-                local_result = resource_manager.loadTTFont(name, element_file);
-            }
-            else if (type == "texture")
-            {
-                local_result = resource_manager.loadTexture(name, element_file);
-            }
-            else if (type.starts_with("bmp_font"))
-            {
-                local_result = resource_manager.loadBMPFont(name, element_file);
-            }
-            else
-            {
-                LogAsserter::log_assert(local_result,
-                                        "Invalid type of element");
-            }
+            bool const local_result{
+                resource_loader.loadResource(resource_descriptor)};
 
             if (local_result)
             {
-                DisplayLog::info("File ", element_file, " loaded as ", name);
+                DisplayLog::info("File ", resource_descriptor.fileName,
+                                 " loaded as ", resource_descriptor.name);
             }
             else
             {
-                DisplayLog::error("File ", element_file, " cannot be loaded");
+                DisplayLog::error("File ", resource_descriptor.fileName,
+                                  " cannot be loaded as ",
+                                  resource_descriptor.name);
             }
 
             global_result &= local_result;

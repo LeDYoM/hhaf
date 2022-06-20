@@ -1,8 +1,10 @@
+HTPS_PRAGMA_ONCE
 #ifndef MTPS_HTYPES_RAWMEMORY_INCLUDE_HPP
 #define MTPS_HTYPES_RAWMEMORY_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
 #include <cstring>
+#include <htypes/include/str.hpp>
 
 namespace htps
 {
@@ -14,15 +16,17 @@ namespace htps
 class RawMemory
 {
 public:
+    using inner_type = std::byte;
+
     /// Default constructor.
     constexpr RawMemory() noexcept : data_{nullptr}, size_{0U} {}
 
-    RawMemory(uptr<std::byte[]> data, const size_type size) :
-        data_{std::move(data)}, size_{size}
+    RawMemory(uptr<inner_type[]> data, size_type const size) :
+        data_{htps::move(data)}, size_{size}
     {}
 
-    RawMemory(const RawMemory& rhs) :
-        data_{uptr<std::byte[]>(new std::byte[rhs.size_])}, size_{rhs.size_}
+    RawMemory(RawMemory const& rhs) :
+        data_{uptr<inner_type[]>(new inner_type[rhs.size_])}, size_{rhs.size_}
     {
         std::memcpy(data_.get(), rhs.data_.get(), size_);
     }
@@ -30,16 +34,32 @@ public:
     RawMemory(RawMemory&&) noexcept = default;
     RawMemory& operator=(RawMemory&&) noexcept = default;
 
-    inline size_type size() const noexcept
+    inner_type const* cbegin() const noexcept { return data_.get(); }
+    inner_type const* cend() const noexcept { return data_.get() + size(); }
+
+    size_type size() const noexcept { return (data_ != nullptr) ? size_ : 0U; }
+
+    bool empty() const noexcept { return size() == 0U; }
+
+    inner_type const* data() const noexcept { return data_.get(); }
+
+    str to_str() const
     {
-        return (data_ != nullptr) ? size_ : 0U;
+        if (!empty())
+        {
+            str result{reinterpret_cast<str::value_type const*>(cbegin()),
+                       reinterpret_cast<str::value_type const*>(cend() - 1)};
+            result.push_back(0);
+            return result;
+        }
+        return str{};
     }
-    const std::byte* data() const noexcept { return data_.get(); }
 
 private:
-    uptr<std::byte[]> data_;
+    uptr<inner_type[]> data_;
     size_type size_;
 };
+
 }  // namespace htps
 
 #endif

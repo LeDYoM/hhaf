@@ -12,10 +12,9 @@
 #include <haf/include/debug_utils/displayvar_console.hpp>
 
 #include <haf/include/resources/iresource_configurator.hpp>
-#include <haf/include/scene_components/iscene_metrics.hpp>
 #include <haf/include/render/renderizables.hpp>
 #include <haf/include/render/renderizable_builder.hpp>
-#include <haf/include/scene/renderizables_scene_node.hpp>
+#include <haf/include/scene_nodes/renderizables_scene_node.hpp>
 
 using namespace htps;
 using namespace haf;
@@ -39,28 +38,27 @@ void MenuScene::onCreated()
 {
     BaseClass::onCreated();
 
-    // Set the default view for this scene
-    subSystem<ISceneMetrics>()->setViewRect(DefaultView);
-
     // Load the necessary resources
-    auto resources_configurator{
-        subSystem<res::IResourcesConfigurator>()};
+    auto resources_configurator{subSystem<res::IResourcesConfigurator>()};
     resources_configurator->setResourceConfigFile("resources.txt");
     resources_configurator->setResourcesDirectory("resources/");
     resources_configurator->loadSection("menu");
 
     // Create the background
     auto main_menu_background{
-        createSceneNode<RenderizablesSceneNode>("main_menu_background")};
-    createStandardBackground(main_menu_background->renderizableBuilder());
+        createSceneNode<RenderizableSceneNode>("main_menu_background")};
+    createStandardBackground(main_menu_background);
 
     // Create the logo
-    main_menu_background->renderizableBuilder()
+    auto main_menu_background_logo{
+        createSceneNode<RenderizableSceneNode>("main_menu_background_logo")};
+    main_menu_background_logo->Position = {0.F, -0.28F};
+    main_menu_background_logo->Scale = {0.5F, 0.4F};
+    main_menu_background_logo->renderizableBuilder()
         .name("mainLogo")
-        .figType(FigType_t::Quad)
-        .box(Rectf32{500.f, 150.f, 1000.f, 500.f})
-        .texture(subSystem<res::IResourceRetriever>()->getTexture(
-            MainMenuResources::LogoId))
+        .figType(FigType_t::Sprite)
+        .texture(MainMenuResources::LogoId)
+//        .shader("shader1")
         .create();
 
     createSceneNode<MainMenu>(MainMenu::StaticTypeName)

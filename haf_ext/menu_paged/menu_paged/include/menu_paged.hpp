@@ -4,10 +4,12 @@
 #include <htypes/include/types.hpp>
 #include <htypes/include/connection.hpp>
 
-#include <haf/include/scene/transformable_scene_node.hpp>
+#include <haf/include/scene_nodes/transformable_scene_node.hpp>
 #include <haf/include/scene/color.hpp>
 #include <haf/include/resources/ifont.hpp>
-#include "menu_paged_properties.hpp"
+#include <haf/include/scene_components/states_controller_component.hpp>
+#include <haf/include/scene_components/visibility_selector_component.hpp>
+
 #include "menu_page.hpp"
 
 namespace haf::scene
@@ -21,16 +23,19 @@ enum class MenuFinishedStatus : htps::u8
 /**
  * @brief Main class to model a menu in paged style.
  */
-class MenuPaged : public TransformableSceneNode, MenuPagedProperties
+class MenuPaged : public TransformableSceneNode
 {
     using BaseClass = TransformableSceneNode;
 
 public:
     using TransformableSceneNode::TransformableSceneNode;
 
-    using TransformableSceneNode::prop;
-    using MenuPagedProperties::prop;
+    htps::PropertyState<htps::sptr<res::IFont>> NormalTextFont;
+    htps::PropertyState<Color> NormalColor;
+    htps::PropertyState<Color> SelectedColor;
+    htps::PropertyState<bool> FinishSceneAtEnd;
 
+    void onCreated() override;
     ~MenuPaged() override;
 
     void setMenuPagedStatus(MenuFinishedStatus const status);
@@ -40,22 +45,13 @@ public:
 
     htps::emitter<const MenuFinishedStatus> MenuFinished;
 
-    void update() override;
-
 protected:
     htps::sptr<MenuPage> createMenuPage(htps::str name);
     void configure_menu(htps::vector_shared_pointers<MenuPage> menu_steps);
 
-    template <typename... Args>
-    htps::sptr<MenuPage> createAndConfigureMenuPage(htps::str name,
-                                                    Args&&... args)
-    {
-        auto node{createMenuPage(std::move(name))};
-        node->configure(std::forward<Args>(args)...);
-        return node;
-    }
-
 private:
+    htps::sptr<VisibilitySelectorComponent> visibilitySelectorComponent_;
+    htps::sptr<StatesControllerComponent<htps::s32>> statesControllerComponent_;
     htps::vector_shared_pointers<MenuPage> menu_steps_;
     MenuFinishedStatus status_{MenuFinishedStatus::Backward};
 };

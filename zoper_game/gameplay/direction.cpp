@@ -22,9 +22,8 @@ Direction Direction::negate() const noexcept
     return DirectionData::Invalid;
 }
 
-htps::vector2dst Direction::applyToVector(
-    htps::vector2dst const& v,
-    htps::u32 const scale) const noexcept
+htps::vector2dst Direction::applyToVector(htps::vector2dst const& v,
+                                          htps::u32 const scale) const noexcept
 {
     htps::vector2ds32 const dv{directionVector(scale)};
     return {v.x + dv.x, v.y + dv.y};
@@ -73,6 +72,39 @@ htps::f32 Direction::angle() const noexcept
             haf::DisplayLog::error("Invalid direction. Cannot convert");
     }
     return 0.f;
+}
+
+Direction fromPositions(htps::vector2dst const& origin,
+                        htps::vector2dst const& dest)
+{
+    htps::vector2ds32 const delta{static_cast<htps::vector2ds32>(dest) -
+                                  static_cast<htps::vector2ds32>(origin)};
+    if ((delta.x != 0 && delta.y != 0) || (delta.x == 0 && delta.y == 0))
+    {
+        haf::DisplayLog::error("Invalid vector diference. Cannot convert");
+        return Direction::DirectionData::Invalid;
+    }
+    else if (delta.x > 0)
+    {
+        return Direction::DirectionData::Right;
+    }
+    else if (delta.x < 0)
+    {
+        return Direction::DirectionData::Left;
+    }
+    else if (delta.y > 0)
+    {
+        return Direction::DirectionData::Down;
+    }
+    else if (delta.y < 0)
+    {
+        return Direction::DirectionData::Up;
+    }
+    else
+    {
+        haf::DisplayLog::error("Invalid vector diference. Cannot convert");
+        return Direction::DirectionData::Invalid;
+    }
 }
 
 }  // namespace zoper

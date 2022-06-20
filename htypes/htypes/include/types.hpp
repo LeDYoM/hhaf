@@ -1,12 +1,35 @@
+HTPS_PRAGMA_ONCE
 #ifndef MTPS_TYPES_INCLUDE_HPP
 #define MTPS_TYPES_INCLUDE_HPP
 
 #include <cstdint>
 #include <memory>
 #include <map>
+#include <type_traits>
 
 namespace htps
 {
+template <class _Ty>
+[[nodiscard]] constexpr _Ty&& forward(
+    std::remove_reference_t<_Ty>& _Arg) noexcept
+{  // forward an lvalue as either an lvalue or an rvalue
+    return static_cast<_Ty&&>(_Arg);
+}
+
+template <class _Ty>
+[[nodiscard]] constexpr _Ty&& forward(
+    std::remove_reference_t<_Ty>&& _Arg) noexcept
+{  // forward an rvalue as an rvalue
+    static_assert(!std::is_lvalue_reference_v<_Ty>, "bad forward call");
+    return static_cast<_Ty&&>(_Arg);
+}
+
+template <class _Ty>
+[[nodiscard]] constexpr std::remove_reference_t<_Ty>&& move(_Ty&& _Arg) noexcept
+{  // forward _Arg as movable
+    return static_cast<std::remove_reference_t<_Ty>&&>(_Arg);
+}
+
 template <typename T>
 using sptr = std::shared_ptr<T>;
 
@@ -31,13 +54,13 @@ using wptr = std::weak_ptr<T>;
 template <typename T, typename... Args>
 constexpr sptr<T> msptr(Args&&... args)
 {
-    return std::make_shared<T>(std::forward<Args>(args)...);
+    return std::make_shared<T>(htps::forward<Args>(args)...);
 }
 
 template <typename T, typename... Args>
 constexpr uptr<T> muptr(Args&&... args)
 {
-    return std::make_unique<T>(std::forward<Args>(args)...);
+    return std::make_unique<T>(htps::forward<Args>(args)...);
 }
 
 template <typename T>

@@ -1,8 +1,11 @@
+HTPS_PRAGMA_ONCE
 #ifndef HAF_COMPONENT_COMPONENT_CONTAINER_INCLUDE_HPP
 #define HAF_COMPONENT_COMPONENT_CONTAINER_INCLUDE_HPP
 
 #include <haf/include/haf_export.hpp>
-#include <haf/include/types/basic_types.hpp>
+#include <htypes/include/types.hpp>
+#include <htypes/include/p_impl_pointer.hpp>
+
 #include <haf/include/component/icomponent.hpp>
 #include <haf/include/utils/type_data.hpp>
 #include <hlog/include/hlog.hpp>
@@ -38,7 +41,7 @@ public:
      * existing
      */
     template <typename T>
-    types::sptr<T> component()
+    htps::sptr<T> component()
     {
         htps::sptr<T> result{componentOfType<T>()};
         if (result == nullptr)
@@ -57,7 +60,7 @@ public:
      * @return Pointer to the component or nullptr
      */
     template <typename T>
-    types::sptr<T> componentOfType() const
+    htps::sptr<T> componentOfType() const
     {
         auto cot{componentOfType(type_of<T>())};
         return cot ? std::dynamic_pointer_cast<T>(cot) : nullptr;
@@ -71,7 +74,7 @@ public:
      * if the component does not exist.
      */
     template <typename T>
-    void componentOfType(types::sptr<T>& element) const
+    void componentOfType(htps::sptr<T>& element) const
     {
         element = componentOfType<T>();
     }
@@ -113,10 +116,10 @@ private:
     }
 
     bool addComponent(htps::sptr<IComponent> nc);
-    types::sptr<IComponent> componentOfType(utils::type_index const& ti) const;
+    htps::sptr<IComponent> componentOfType(utils::type_index const& ti) const;
 
     struct ComponentContainerPrivate;
-    types::PImplPointer<ComponentContainerPrivate> p_;
+    htps::PImplPointer<ComponentContainerPrivate> p_;
 };
 
 }  // namespace haf::component

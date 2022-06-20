@@ -12,7 +12,7 @@ using namespace htps;
 namespace zoper
 {
 GameBaseTile::GameBaseTile(rptr<SceneNode> const parent, str name) :
-    TileBase{}, BaseClass{parent, std::move(name)}
+    TileBase{}, BaseClass{parent, htps::move(name)}
 {}
 
 GameBaseTile::~GameBaseTile() = default;
@@ -37,26 +37,24 @@ vector2df GameBaseTile::board2Scene(vector2dst const& bPosition) const
     return getBoardGroup()->board2Scene(bPosition);
 }
 
-void GameBaseTile::tileAdded(BoardPositionType const& position)
+void GameBaseTile::tileAdded()
 {
-    TileBase::tileAdded(position);
-    is_in_center = TokenZones::pointInCenter(position);
+    TileBase::tileAdded();
+    is_in_center = TokenZones::pointInCenter(boardPosition());
 }
 
-void GameBaseTile::tileMoved(BoardPositionType const& source,
-                             BoardPositionType const& dest)
+void GameBaseTile::tileMoved(BoardPositionType const& source)
 {
-    TileBase::tileMoved(source, dest);
-    is_in_center = TokenZones::pointInCenter(dest);
+    TileBase::tileMoved(source);
+    is_in_center = TokenZones::pointInCenter(boardPosition());
 }
 
-void GameBaseTile::tileChanged(BoardPositionType const& /*position */,
-                               BoardTileData const /* oldValue */,
+void GameBaseTile::tileChanged(BoardTileData const /* oldValue */,
                                BoardTileData const /* newValue */)
 {
     if (node())
     {
-        node()->prop<render::ColorProperty>() = getColorForToken();
+        node()->ColorProperty = getColorForToken();
     }
 }
 

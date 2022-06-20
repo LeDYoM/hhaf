@@ -14,6 +14,7 @@
 #include <haf/include/render/renderizables.hpp>
 #include <haf/include/render/renderizable_builder.hpp>
 #include <haf/include/component/component_container.hpp>
+#include <haf/include/scene_components/camera_component.hpp>
 
 namespace zoper
 {
@@ -35,24 +36,28 @@ void HighScoresScene::onCreated()
 {
     BaseClass::onCreated();
 
-    auto resources_configurator{
-        subSystem<res::IResourcesConfigurator>()};
+    //    cameraComponent()->view = DefaultView;
+    cameraComponent()->view = SceneBox{-0.5F, -0.5F, 1.0F, 1.0F};
+    //    cameraComponent()->view = SceneBox{-0.5F, -0.5F, 1.0F, 1.0F};
+
+    auto resources_configurator{subSystem<res::IResourcesConfigurator>()};
     resources_configurator->setResourceConfigFile("resources.txt");
     resources_configurator->loadSection("high_scores");
 
     auto statesController{
         component<StatesControllerComponent<HighScoresSceneStates>>()};
 
-    normal_font_ = 
-                       subSystem<res::IResourceRetriever>()
+    normal_font_ = subSystem<res::IResourceRetriever>()
                        ->getTTFont(HighScoresResources::MenuFontId)
                        ->font(72);
     normal_color_   = colors::Blue;
     selected_color_ = colors::Red;
 
-    createStandardBackground(createSceneNode<RenderizablesSceneNode>(
-                                  "high_scores_main_menu_background")
-                                  ->renderizableBuilder());
+    auto high_scores_main_menu_background{
+        createSceneNode<RenderizableSceneNode>(
+            "high_scores_main_menu_background")};
+
+    createStandardBackground(high_scores_main_menu_background);
 
     auto highScoreTextController{
         createSceneNode<HighScoreTextController>("HighScoreTextController")};

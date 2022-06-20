@@ -1,3 +1,4 @@
+HTPS_PRAGMA_ONCE
 #ifndef MTPS_HTYPES_RECT_INCLUDE_HPP
 #define MTPS_HTYPES_RECT_INCLUDE_HPP
 
@@ -9,54 +10,67 @@ namespace htps
 template <typename T>
 struct Rect
 {
+    using vector_t = vector2d<T>;
+
     T left{}, top{}, width{}, height{};
 
     constexpr Rect() noexcept = default;
-    constexpr Rect(const T rectLeft,
-                   const T rectTop,
-                   const T rectWidth,
-                   const T rectHeight) noexcept :
-        left{rectLeft}, top{rectTop}, width{rectWidth}, height{rectHeight}
-    {}
-    constexpr Rect(const vector2d<T>& position,
-                   const vector2d<T>& size) noexcept :
-        Rect{position.x, position.y, size.x, size.y}
-    {}
-    constexpr Rect(const vector2d<T>& position, T sizeX, T sizeY) noexcept :
-        Rect{position.x, position.y, sizeX, sizeY}
-    {}
-    constexpr Rect(const T positionX,
-                   const T positionY,
-                   const vector2d<T>& size) noexcept :
-        Rect{positionX, positionY, size.x, size.y}
+    constexpr Rect(T const rectLeft,
+                   T const rectTop,
+                   T const rectWidth,
+                   T const rectHeight) noexcept :
+        left{htps::move(rectLeft)},
+        top{htps::move(rectTop)},
+        width{htps::move(rectWidth)},
+        height{htps::move(rectHeight)}
     {}
 
-    constexpr Rect(const Rect&) noexcept = default;
-    constexpr Rect& operator=(const Rect&) noexcept = default;
+    constexpr Rect(vector2d<T> const& position,
+                   vector2d<T> const& size) noexcept :
+        Rect{position.x, position.y, size.x, size.y}
+    {}
+
+    constexpr Rect(vector2d<T> const& position,
+                   T const sizeX,
+                   T const sizeY) noexcept :
+        Rect{position.x, position.y, htps::move(sizeX), htps::move(sizeY)}
+    {}
+
+    constexpr Rect(T const positionX,
+                   T const positionY,
+                   vector2d<T> const& size) noexcept :
+        Rect{htps::move(positionX), htps::move(positionY), size.x, size.y}
+    {}
+
+    constexpr Rect(Rect const&) noexcept = default;
+    constexpr Rect& operator=(Rect const&) noexcept = default;
     constexpr Rect(Rect&&) noexcept                 = default;
     constexpr Rect& operator=(Rect&&) noexcept = default;
 
     template <typename U>
-    constexpr Rect(const Rect<U>& rectangle) :
+    constexpr Rect(Rect<U> const& rectangle) :
         left{static_cast<T>(rectangle.left)},
         top{static_cast<T>(rectangle.top)},
         width{static_cast<T>(rectangle.width)},
         height{static_cast<T>(rectangle.height)}
     {}
 
-    constexpr const vector2d<T> center() const
+    [[nodiscard]] constexpr vector2d<T> center() const noexcept
     {
         return vector2d<T>{left + (width / static_cast<T>(2)),
                            top + (height / static_cast<T>(2))};
     }
 
-    constexpr bool operator==(const Rect& r) const
+    [[nodiscard]] constexpr bool operator==(Rect const& r) const
     {
         return (left == r.left && width == r.width && top == r.top &&
                 height == r.height);
     }
 
-    constexpr bool operator!=(const Rect& r) const { return !(operator==(r)); }
+    [[nodiscard]] constexpr bool operator!=(Rect const& r) const
+    {
+        return !(*this == r);
+    }
 
     constexpr Rect& operator+=(vector2d<T> const& rhs)
     {
@@ -79,10 +93,30 @@ struct Rect
         return *this;
     }
 
+    constexpr Rect& moveX(T const& relativePositionX) noexcept
+    {
+        left += relativePositionX;
+        return *this;
+    }
+
+    constexpr Rect& moveY(T const& relativePositionY) noexcept
+    {
+        top += relativePositionY;
+        return *this;
+    }
+
     constexpr Rect& move(vector2d<T> const& relativePosition) noexcept
     {
         left += relativePosition.x;
         top += relativePosition.y;
+        return *this;
+    }
+
+    constexpr Rect& move(T const& relativePositionX,
+                         T const& relativePositionY) noexcept
+    {
+        left += relativePositionX;
+        top += relativePositionY;
         return *this;
     }
 
@@ -95,7 +129,7 @@ struct Rect
 
     constexpr Rect& setRadiusFromCenter(vector2d<T> const& radius) noexcept
     {
-        const auto c(center());
+        const auto c{center()};
         left   = static_cast<T>(c.x - radius.x);
         top    = static_cast<T>(c.y - radius.y);
         width  = static_cast<T>(radius.x * static_cast<T>(2));
@@ -103,73 +137,76 @@ struct Rect
         return *this;
     }
 
-    constexpr vector2d<T> radius() const noexcept
+    [[nodiscard]] constexpr vector2d<T> radius() const noexcept
     {
         return {width / static_cast<T>(2), height / static_cast<T>(2)};
     }
 
-    constexpr vector2d<T> leftTop() const noexcept
+    [[nodiscard]] constexpr vector2d<T> leftTop() const noexcept
     {
         return vector2d<T>{left, top};
     }
 
-    constexpr vector2d<T> size() const noexcept
+    [[nodiscard]] constexpr vector2d<T> size() const noexcept
     {
         return vector2d<T>{width, height};
     }
 
-    constexpr const T right() const noexcept { return left + width; }
-    constexpr void setRight(const T& r) noexcept { width = r - left; }
-    constexpr const T bottom() const noexcept { return top + height; }
-    constexpr void setBottom(const T& b) noexcept { height = b - top; }
-    constexpr const vector2d<T> rightBottom() const noexcept
+    [[nodiscard]] constexpr T right() const noexcept { return left + width; }
+    constexpr void setRight(T const& r) noexcept { width = r - left; }
+    [[nodiscard]] constexpr T bottom() const noexcept { return top + height; }
+    constexpr void setBottom(T const& b) noexcept { height = b - top; }
+    [[nodiscard]] constexpr vector2d<T> rightBottom() const noexcept
     {
         return vector2d<T>{right(), bottom()};
     }
 
-    constexpr const vector2d<T> rightTop() const noexcept
+    [[nodiscard]] constexpr vector2d<T> rightTop() const noexcept
     {
         return vector2d<T>{right(), top};
     }
-    constexpr const vector2d<T> leftBottom() const noexcept
+
+    [[nodiscard]] constexpr vector2d<T> leftBottom() const noexcept
     {
         return vector2d<T>{left, bottom()};
     }
 
-    constexpr Rect moved(const vector2d<T>& offset) const noexcept
+    [[nodiscard]] constexpr Rect moved(vector2d<T> const& offset) const noexcept
     {
-        return (Rect(*this) += offset);
+        return (Rect{*this} += offset);
     }
 
-    constexpr Rect resize(const vector2d<T>& sSize) const noexcept
+    [[nodiscard]] constexpr Rect resize(const vector2d<T>& sSize) const noexcept
     {
         return Rect{left, top, width + sSize.x, height + sSize.y};
     }
 
-    constexpr Rect setRadiusFromCenter(const vector2d<T>& radius) const noexcept
+    [[nodiscard]] constexpr Rect setRadiusFromCenter(
+        const vector2d<T>& radius) const noexcept
     {
         Rect temp{*this};
         temp.setRadiusFromCenter(radius);
         return temp;
     }
 
-    constexpr Rect moveResize(const vector2d<T>& offset,
-                              const vector2d<T>& sSize) const noexcept
+    [[nodiscard]] constexpr Rect moveResize(
+        const vector2d<T>& offset,
+        const vector2d<T>& sSize) const noexcept
     {
         return moved(offset).resize(sSize);
     };
 
-    constexpr bool insideX(const vector2d<T>& v) const noexcept
+    [[nodiscard]] constexpr bool insideX(vector2d<T> const& v) const noexcept
     {
         return (v.x >= left && v.x < right());
     }
 
-    constexpr bool insideY(const vector2d<T>& v) const noexcept
+    [[nodiscard]] constexpr bool insideY(vector2d<T> const& v) const noexcept
     {
         return (v.y >= top && v.y < bottom());
     }
 
-    constexpr bool inside(const vector2d<T>& v) const noexcept
+    [[nodiscard]] constexpr bool inside(vector2d<T> const& v) const noexcept
     {
         return insideX(v) && insideY(v);
     }
@@ -232,41 +269,44 @@ struct Rect
 };
 
 template <typename T>
-constexpr Rect<T> rectFromSize(const T sizeX, const T sizeY) noexcept
+[[nodiscard]] constexpr Rect<T> rectFromSize(T const sizeX,
+                                             T const sizeY) noexcept
 {
     return {{}, {}, vector2d<T>{sizeX, sizeY}};
 }
 
 template <typename T>
-constexpr Rect<T> rectFromSize(const vector2d<T>& size) noexcept
+[[nodiscard]] constexpr Rect<T> rectFromSize(vector2d<T> const& size) noexcept
 {
     return {{}, {}, size};
 }
 
 template <typename T>
-constexpr Rect<T> rectFromCenterAndRadius(const vector2d<T>& center,
-                                          const vector2d<T>& radius) noexcept
+[[nodiscard]] constexpr Rect<T> rectFromCenterAndRadius(
+    vector2d<T> const& center,
+    vector2d<T> const& radius) noexcept
 {
     return {center.x - radius.x, center.y - radius.y,
             radius.x * static_cast<T>(2), radius.y * static_cast<T>(2)};
 }
 
 template <typename T>
-constexpr Rect<T> rectFromCenterAndSize(const vector2d<T>& center,
-                                        const vector2d<T>& size) noexcept
+[[nodiscard]] constexpr Rect<T> rectFromCenterAndSize(
+    vector2d<T> const& center,
+    vector2d<T> const& size) noexcept
 {
     return rectFromCenterAndRadius<T>(center, size / static_cast<T>(2));
 }
 
 template <typename T>
-constexpr Rect<T> operator+(const Rect<T>& lhs, const vector2d<T>& rhs) noexcept
+constexpr Rect<T> operator+(Rect<T> const& lhs, vector2d<T> const& rhs) noexcept
 {
     return {lhs.left + rhs.x, lhs.top + rhs.y, lhs.width, lhs.height};
 }
 
 // Serialization operators
 template <typename T>
-constexpr str& operator<<(str& os, const Rect<T>& rect)
+constexpr str& operator<<(str& os, Rect<T> const& rect)
 {
     os << "{ {" << rect.left << "," << rect.top << "}, {" << rect.width << ","
        << rect.height << "} }";

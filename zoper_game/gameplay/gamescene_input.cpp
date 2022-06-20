@@ -53,7 +53,7 @@ void GameSceneInput::onKeyPressedPlaying(haf::input::Key const& key)
     auto const dir{keyMapping->getDirectionFromKey(key)};
     if (dir.isValid())
     {
-        board_group_->player()->movePlayer(dir);
+        board_group_->movePlayer(dir);
     }
     else if (keyMapping->isLaunchKey(key))
     {

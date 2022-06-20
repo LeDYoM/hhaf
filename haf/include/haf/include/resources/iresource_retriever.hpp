@@ -1,7 +1,9 @@
+HTPS_PRAGMA_ONCE
 #ifndef HAF_RESOURCES_RESOURCE_RETRIVER_INCLUDE_HPP
 #define HAF_RESOURCES_RESOURCE_RETRIVER_INCLUDE_HPP
 
-#include <haf/include/types/basic_types.hpp>
+#include <htypes/include/types.hpp>
+#include <htypes/include/str.hpp>
 
 namespace haf::res
 {
@@ -12,13 +14,13 @@ class IShader;
 
 class IResourceRetriever
 {
+protected:
+    ~IResourceRetriever() = default;
 public:
-    virtual ~IResourceRetriever() = default;
-
-    virtual types::sptr<ITTFont> getTTFont(types::str const& rid) const = 0;
-    virtual types::sptr<ITexture> getTexture(types::str const& rid) const = 0;
-    virtual types::sptr<IShader> getShader(types::str const& rid) const = 0;
-    virtual types::sptr<IFont> getBMPFont(types::str const& rid) const = 0;
+    virtual htps::sptr<ITTFont> getTTFont(htps::str const& rid) const = 0;
+    virtual htps::sptr<ITexture> getTexture(htps::str const& rid) const = 0;
+    virtual htps::sptr<IShader> getShader(htps::str const& rid) const = 0;
+    virtual htps::sptr<IFont> getBMPFont(htps::str const& rid) const = 0;
 };
 
 }  // namespace haf::res

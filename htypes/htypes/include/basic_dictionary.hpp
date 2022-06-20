@@ -1,3 +1,4 @@
+HTPS_PRAGMA_ONCE
 #ifndef HTYPES_BASIC_DICTIONARY_INCLUDE_HPP
 #define HTYPES_BASIC_DICTIONARY_INCLUDE_HPP
 
@@ -29,10 +30,10 @@ public:
     constexpr BasicDictionary() noexcept = default;
 
     constexpr BasicDictionary(std::initializer_list<element> eList) :
-        data_{std::move(eList)}
+        data_{htps::move(eList)}
     {}
 
-    constexpr BasicDictionary(const content& eList) : data_{std::move(eList)} {}
+    constexpr BasicDictionary(const content& eList) : data_{htps::move(eList)} {}
 
     constexpr iterator begin() noexcept { return data_.begin(); }
     constexpr const_iterator begin() const noexcept { return data_.begin(); }
@@ -68,7 +69,7 @@ public:
 
         if (it == data_.end())
         {
-            data_.emplace_back(std::move(key), std::move(value));
+            data_.emplace_back(htps::move(key), htps::move(value));
             return true;
         }
         else if (overwrite)
@@ -81,7 +82,7 @@ public:
 
     constexpr bool put(key_type const& key, T value, const bool overwrite = true)
     {
-        (void)(add(std::move(key), std::move(value), overwrite));
+        (void)(add(htps::move(key), htps::move(value), overwrite));
         return *this;
     }
 

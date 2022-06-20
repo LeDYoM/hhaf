@@ -1,3 +1,4 @@
+HTPS_PRAGMA_ONCE
 #ifndef HAF_ANIMATION_IANIMATION_INCLUDE_HPP
 #define HAF_ANIMATION_IANIMATION_INCLUDE_HPP
 
@@ -9,7 +10,7 @@
 #include <haf/include/time/timer.hpp>
 
 #include <htypes/include/types.hpp>
-#include <htypes/include/properties.hpp>
+#include <htypes/include/properties/iproperty.hpp>
 #include <htypes/include/function.hpp>
 
 namespace haf::anim

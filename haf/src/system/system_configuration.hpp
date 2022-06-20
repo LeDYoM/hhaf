@@ -1,3 +1,4 @@
+HTPS_PRAGMA_ONCE
 #ifndef HAF_SYSTEM_SYSTEM_CONFIGURATION_TEMPLATE_INCLUDE_HPP
 #define HAF_SYSTEM_SYSTEM_CONFIGURATION_TEMPLATE_INCLUDE_HPP
 
@@ -28,7 +29,7 @@ public:
 
         if (result == IFileSerializer::Result::Success)
         {
-            data_ = std::move(current.data);
+            data_ = htps::move(current.data);
         }
 
         return result == IFileSerializer::Result::Success;

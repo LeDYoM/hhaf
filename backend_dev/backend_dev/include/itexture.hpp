@@ -11,9 +11,7 @@ namespace haf::backend
 class ITexture : public IResourceInfo
 {
 public:
-    ITexture() {}
-    virtual ~ITexture() {}
-
+    virtual ~ITexture() = default;
     virtual htps::vector2du32 size() const = 0;
 };
 }  // namespace haf::backend

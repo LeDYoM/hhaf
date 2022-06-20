@@ -1,7 +1,8 @@
+HTPS_PRAGMA_ONCE
 #ifndef HAF_SYSTEM_SUBSYSTEM_VIEW_INCLUDE_HPP
 #define HAF_SYSTEM_SUBSYSTEM_VIEW_INCLUDE_HPP
 
-#include <haf/include/types/basic_types.hpp>
+#include <htypes/include/types.hpp>
 #include <haf/include/system/subsystem_interface.hpp>
 #include <haf/include/system/system_access.hpp>
 #include <hlog/include/hlog.hpp>
@@ -20,18 +21,18 @@ public:
     virtual ~SubSystemViewer() = default;
 
     template <typename SystemInterface_t>
-    types::rptr<SystemInterface_t> subSystem()
+    htps::rptr<SystemInterface_t> subSystem()
     {
         return subSystemInterface<SystemInterface_t>(isystem_provider_);
     }
 
     template <typename SystemInterface_t>
-    types::rptr<SystemInterface_t const> subSystem() const
+    htps::rptr<SystemInterface_t const> subSystem() const
     {
         return subSystemInterface<SystemInterface_t>(isystem_provider_);
     }
 
-    types::rptr<ISystemProvider> isystem_provider_;
+    htps::rptr<ISystemProvider> isystem_provider_;
 
 private:
 };

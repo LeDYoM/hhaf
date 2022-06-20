@@ -38,7 +38,7 @@ private:
 template <typename... Args>
 htps::sptr<MenuPagedOption> make_option(Args&&... args)
 {
-    return htps::msptr<MenuPagedOption>(std::forward<Args>(args)...);
+    return htps::msptr<MenuPagedOption>(htps::forward<Args>(args)...);
 }
 }  // namespace haf::scene
 

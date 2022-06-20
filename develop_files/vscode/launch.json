@@ -31,7 +31,8 @@
             "args": [],
             "stopAtEntry": false,
             "cwd": "${command:cmake.launchTargetDirectory}",
-            "environment": []
+            "environment": [],
+            "console": "externalTerminal"
         },
         {
             "name": "(Windows) Launch with config",
@@ -41,7 +42,8 @@
             "args": ["-haf_config=haf_configuration.txt"],
             "stopAtEntry": false,
             "cwd": "${command:cmake.launchTargetDirectory}",
-            "environment": []
+            "environment": [],
+            "console": "externalTerminal"
         }
     ]
 }

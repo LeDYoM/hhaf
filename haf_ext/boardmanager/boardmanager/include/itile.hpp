@@ -1,8 +1,8 @@
 #ifndef HAF_BOARD_ITILE_HPP
 #define HAF_BOARD_ITILE_HPP
 
-#include <haf/include/types/basic_types.hpp>
-#include <htypes/include/vector2d.hpp>
+#include <htypes/include/types.hpp>
+#include <haf/include/types/scene_types.hpp>
 #include <boardmanager/include/board_types.hpp>
 
 namespace haf::board
@@ -14,28 +14,31 @@ namespace haf::board
 class ITile
 {
 public:
-    using BoardTileData = types::s32;
+    using BoardTileData     = htps::s32;
     using BoardPositionType = BoardPositionType;
 
     constexpr ITile() noexcept = default;
-    virtual ~ITile() = default;
+    virtual ~ITile()           = default;
 
-    virtual bool canBeMoved(BoardPositionType const&) const { return true; }
-    virtual void tileAdded(BoardPositionType const& /* position */) {}
-    virtual void tileRemoved(BoardPositionType const& /* position */) {}
-    virtual void tileChanged(BoardPositionType const& /*position */,
-                             BoardTileData const /* oldValue */,
+    virtual bool canBeMovedTo(BoardPositionType const&) const { return true; }
+    virtual void tileAdded() {}
+    virtual void tileRemoved() {}
+    virtual void tileChanged(BoardTileData const /* oldValue */,
                              BoardTileData const /* newValue */)
     {}
 
-    virtual void tileMoved(BoardPositionType const& /* source */,
-                           BoardPositionType const& /* dest */)
+    virtual void tileMoved(BoardPositionType const& /* source */)
     {}
 
-    BoardTileData value() const noexcept { return data_; }
+    constexpr BoardTileData value() const noexcept { return data_; }
+    constexpr BoardPositionType const& boardPosition() const noexcept
+    {
+        return board_position;
+    }
 
 private:
     BoardTileData data_{static_cast<BoardTileData>(0)};
+    BoardPositionType board_position{};
     friend class BoardManager;
 };
 

@@ -2,7 +2,7 @@
 #define ZOPER_GAMEHUD_SCENENODE_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
-#include <haf/include/scene/transformable_scene_node.hpp>
+#include <haf/include/scene_nodes/transformable_scene_node.hpp>
 #include <haf/include/scene_nodes/scene_node_text_quad.hpp>
 
 namespace zoper
@@ -13,16 +13,30 @@ class GameHudSceneNode final : public haf::scene::TransformableSceneNode
     using BaseClass = haf::scene::TransformableSceneNode;
 
 public:
-    GameHudSceneNode(htps::rptr<haf::scene::SceneNode> const parent,
-                     htps::str name);
+    using BaseClass::BaseClass;
 
-    void setLevel(const htps::size_type level);
-    void setStayCounter(const htps::size_type stayCounter);
-    void setConsumedTokens(const htps::size_type consumedTokens);
-    void setEllapsedTimeInSeconds(const htps::u64 seconds);
-    void setScore(const htps::size_type score);
+    void update() override;
+
+    htps::PropertyState<htps::size_type> currentLevel;
+    htps::PropertyState<htps::size_type> currentScore;
+    htps::PropertyState<htps::size_type> currentConsumedTokens;
+    htps::PropertyState<htps::u64> currentEllapsedTimeInSeconds;
+    htps::PropertyState<htps::size_type> currentStayCounter;
+
+    void onCreated() override;
+    int foo() { return 4; }
+    bool abc;
+    htps::PropertyState<bool> cde;
 
 private:
+    void onAllScoreElementsCreated(htps::vector2dst const);
+    void onAllGoalElementsCreated(htps::vector2dst const);
+    bool setLevel(const htps::size_type level);
+    bool setScore(htps::size_type const score);
+    bool setConsumedTokens(htps::size_type const consumedTokens);
+    bool setEllapsedTimeInSeconds(htps::u64 const seconds);
+    bool setStayCounter(htps::size_type const stayCounter);
+
     htps::sptr<haf::scene::nodes::TextQuad> score_quad_;
     htps::sptr<haf::scene::nodes::TextQuad> goal_quad_;
 };

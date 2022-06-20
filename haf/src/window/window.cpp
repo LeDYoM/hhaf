@@ -1,12 +1,9 @@
 #include "window.hpp"
-#include "window_private.hpp"
 #include <backend_dev/include/iwindow.hpp>
-#include <backend/include/backendfactory.hpp>
 
 #include "input/input_system.hpp"
-#include "render/rendertarget.hpp"
+#include "render/render_target.hpp"
 #include "time/time_system.hpp"
-#include "system/system_provider.hpp"
 #include "utils/compile_time_constants.hpp"
 
 #include <haf/include/time/time_point.hpp>
@@ -19,98 +16,50 @@ using namespace haf::time;
 
 namespace haf::sys
 {
-Window::Window(sys::SystemProvider& system_provider) :
-    SystemBase{system_provider}, priv_{muptr<WindowPrivate>()}
+Window::Window(rptr<backend::IWindow> backend_window,
+               sptr<input::InputDriverWrapper> input_driver_wrapper,
+               sptr<RenderTarget> render_target) :
+    fps_counter{},
+    m_backend_window{backend_window},
+    m_input_driver_wrapper{htps::move(input_driver_wrapper)},
+    m_render_target{htps::move(render_target)}
 {}
 
 Window::~Window() = default;
 
 sptr<RenderTarget> Window::renderTarget()
 {
-    return priv_->render_target_;
+    return m_render_target;
 }
 
 sptr<RenderTarget const> Window::renderTarget() const
 {
-    return priv_->render_target_;
+    return m_render_target;
 }
 
 sptr<input::InputDriverWrapper> Window::inputDriverWrapper()
 {
-    return priv_->input_driver_wrapper_;
+    return m_input_driver_wrapper;
 }
 
 sptr<input::InputDriverWrapper const> Window::inputDriverWrapper() const
 {
-    return priv_->input_driver_wrapper_;
+    return m_input_driver_wrapper;
 }
 
-bool Window::initialize(str const& window_config_file)
-{
-    priv_->window_configuration_.loadConfiguration(
-        subSystemViewer(), window_config_file);
-
-    DisplayLog::info("Going to create Window");
-
-    LogAsserter::log_assert(!priv_->backend_window_,
-                            "Pointer to window already initialized");
-
-    DisplayLog::info("Creating window...");
-
-    // Create window object
-    priv_->backend_window_ = systemProvider().backendFactory().getWindow();
-    backend::IWindow& bw(*priv_->backend_window_);
-
-    DisplayLog::info_if(bw.isAlreadyCreated(), "Window was already created.");
-
-    // Create physical window if not already done
-    if (!bw.isAlreadyCreated())
-    {
-        auto const& config{priv_->window_configuration_};
-        if (bw.createWindow(config.configuredWindowWidth(),
-                            config.configuredWindowHeight(),
-                            config.configuredBitsPerRed(),
-                            config.configuredBitsPerGreen(),
-                            config.configuredBitsPerBlue(),
-                            config.configuredBitsPerAlpha(), 0U, nullptr))
-        {
-            DisplayLog::info("Window creation completed");
-        }
-        else
-        {
-            DisplayLog::error("Cannot create window");
-            return false;
-        }
-    }
-
-    // If window created successfully, extract the render target
-    // associated with the window.
-    priv_->render_target_ =
-        msptr<RenderTarget>(priv_->backend_window_->renderTarget());
-
-    // Also take the input driver.
-    priv_->input_driver_wrapper_ =
-        msptr<input::InputDriverWrapper>(priv_->backend_window_->inputDriver());
-    DisplayLog::debug("Window driver info: ", bw.info());
-    DisplayLog::debug("Window settings: ", bw.settingsInfo());
-    return true;
-}
-
-bool Window::preLoop()
+bool Window::preLoop(time::TimePoint const& time_since_start)
 {
     if constexpr (ctc::ShowFPS)
     {
-        priv_->updateFPS(
-            systemProvider().system<TimeSystem>().timeSinceStart());
+        fps_counter.updateFPS(time_since_start, m_backend_window, m_title);
     }
 
-    priv_->render_target_->clear();
-    return priv_->backend_window_->processEvents();
+    return m_backend_window->processEvents();
 }
 
 void Window::postLoop()
 {
-    priv_->backend_window_->display();
+    m_backend_window->display();
 }
 
 }  // namespace haf::sys

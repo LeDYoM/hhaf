@@ -26,18 +26,16 @@ public:
     Token(htps::rptr<haf::scene::SceneNode> parent, htps::str name);
     ~Token() override;
 
-    void setBox(const htps::Rectf32& box);
+    void onCreated() override;
 
     static void resetTileCounter();
 
-    bool canBeMoved(BoardPositionType const& dest_position) const;
-    void tileAdded(BoardPositionType const& position) override;
-    void tileRemoved(BoardPositionType const& position) override;
-    void tileChanged(BoardPositionType const& position,
-                     BoardTileData const oldValue,
+    bool canBeMovedTo(BoardPositionType const& dest_position) const override;
+    void tileAdded() override;
+    void tileRemoved() override;
+    void tileChanged(BoardTileData const oldValue,
                      BoardTileData const newValue) override;
-    void tileMoved(BoardPositionType const& source,
-                   BoardPositionType const& dest) override;
+    void tileMoved(BoardPositionType const& source) override;
 
 private:
     static htps::u32 tile_counter_;

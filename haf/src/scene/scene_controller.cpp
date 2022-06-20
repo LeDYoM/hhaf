@@ -3,7 +3,7 @@
 #include "scene_render.hpp"
 #include "scene_private.hpp"
 #include "system/system_provider.hpp"
-
+#include <haf/include/scene/matrix4x4.hpp>
 #include <haf/include/scene/scene.hpp>
 #include <haf/include/system/isystem_provider.hpp>
 
@@ -25,7 +25,7 @@ void SceneController::setSceneManager(rptr<SceneManager> scene_manager)
 bool SceneController::startScene(str const& sceneName)
 {
     auto scene = scene_factory_.create(sceneName);
-    startScene(sptr<Scene>(std::move(scene)));
+    startScene(sptr<Scene>(htps::move(scene)));
     return true;
 }
 
@@ -55,7 +55,7 @@ void SceneController::deferredSwitchScene()
 
     DisplayLog::info("Setting new scene: ",
                      nextScene ? nextScene->name() : "<nullptr>");
-    startScene(std::move(nextScene));
+    startScene(htps::move(nextScene));
 }
 
 void SceneController::terminateCurrentScene()
@@ -76,7 +76,8 @@ void SceneController::update()
 
     if (current_scene_ != nullptr)
     {
-        render(*current_scene_, false);
+        Matrix4x4 startMatrix{Matrix4x4::Identity};
+        render(*current_scene_, SceneRenderContext{false, startMatrix});
     }
 }
 
@@ -118,7 +119,7 @@ bool SceneController::setSystemProviderInScene(
 
 void SceneController::startScene(sptr<Scene> scene)
 {
-    current_scene_ = std::move(scene);
+    current_scene_ = htps::move(scene);
     if (current_scene_ != nullptr)
     {
         if (scene_manager_ != nullptr)

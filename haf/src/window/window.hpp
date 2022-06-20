@@ -1,13 +1,19 @@
+HTPS_PRAGMA_ONCE
 #ifndef HAF_WINDOW_WINDOW_INCLUDE_HPP
 #define HAF_WINDOW_WINDOW_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/str.hpp>
-#include "system/system_base.hpp"
+#include "fps_counter.hpp"
 
 namespace haf::input
 {
 class InputDriverWrapper;
+}
+
+namespace haf::backend
+{
+    class IWindow;
 }
 
 namespace haf::sys
@@ -22,14 +28,15 @@ class SystemProvider;
  * It encapsulates an IWindow from the backend. This Window reference
  * might be already created or not.
  */
-class Window final : public SystemBase
+class Window final
 {
 public:
     /**
      * @brief Construct a new Window object
-     * @param system_provider The system provider
      */
-    Window(sys::SystemProvider& system_provider);
+    Window(htps::rptr<backend::IWindow> backend_window_,
+           htps::sptr<input::InputDriverWrapper> input_driver_wrapper_,
+           htps::sptr<RenderTarget> render_target_);
 
     /**
      * @brief Destroy the Window object
@@ -37,22 +44,14 @@ public:
     ~Window();
 
     /**
-     * @brief Initializes the window system.
-     * Also Creates (or tryes to create) an operating system window
+     * @brief Method to be executed before starting a cycle of the window
+     * rendering
      *
-     * @param window_config_file Configuration file for the window system
-     * @return true If window creation was successful
-     * @return false Failed trying to create the window
-     */
-    bool initialize(htps::str const& window_config_file);
-
-    /**
-     * @brief Method to be executed before starting a cycle of the system
-     *
+     * @param time_since_start Time containing the ellapsed time since start
      * @return true The window has requested to exit
      * @return false The window did not request to exit
      */
-    bool preLoop();
+    bool preLoop(time::TimePoint const& time_since_start);
 
     /**
      * @brief Method to be executed after the cycle of a system
@@ -66,8 +65,11 @@ public:
     htps::sptr<input::InputDriverWrapper const> inputDriverWrapper() const;
 
 private:
-    struct WindowPrivate;
-    htps::uptr<WindowPrivate> priv_;
+    FPSCounter fps_counter;
+    htps::rptr<backend::IWindow> m_backend_window{nullptr};
+    htps::sptr<input::InputDriverWrapper> m_input_driver_wrapper;
+    htps::sptr<RenderTarget> m_render_target;
+    htps::str m_title;
 };
 }  // namespace haf::sys
 

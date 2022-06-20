@@ -8,7 +8,6 @@ set(SOURCE_TESTS
     connection
     dictionary
     function
-    grouping_properties
     lockablevector
     main
     menum
@@ -18,10 +17,12 @@ set(SOURCE_TESTS
     properties
     propertystate
     rect
-    str
+    span
     str_literal
-    vector
+    str
     vector_view
+    vector
+    vector2d
 )
 
 add_test_executable(SOURCE_TESTS ${SOURCE_TESTS})

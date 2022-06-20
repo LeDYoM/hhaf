@@ -7,20 +7,22 @@
 
 namespace zoper
 {
-using namespace haf;
 enum class GameMode : htps::u8;
 
 class MainMenu : public haf::scene::MenuPaged
 {
 public:
     using BaseClass = haf::scene::MenuPaged;
-    using BaseClass::prop;
 
     static constexpr char StaticTypeName[] = "MainMenu";
     using BaseClass::BaseClass;
 
     virtual void onCreated() override;
+
 private:
+    void onTableNodeCreated(
+        htps::vector2dst,
+        htps::sptr<haf::scene::nodes::SceneNodeText> const&);
     void goTimeGame(htps::vector<htps::s32> menu_data);
     void goTokenGame(htps::vector<htps::s32> menu_data);
     void goGame(GameMode const game_mode, htps::vector<htps::s32> menu_data);

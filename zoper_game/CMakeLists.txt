@@ -17,9 +17,9 @@ build_client_library(
     DATA_SOURCE "${PROJECT_SOURCE_DIR}/../zoper_data/"
 
     DATA_DEST "."
-    HEADERS 
+    HEADERS
     ${HEADERS}
-    
+
     SOURCES
     ${SOURCES}
 )

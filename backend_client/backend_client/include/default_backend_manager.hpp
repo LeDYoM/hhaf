@@ -3,6 +3,7 @@
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/vector.hpp>
+#include <htypes/include/p_impl_pointer.hpp>
 #include <backend_client/include/ibackendmanager.hpp>
 #include <backend_client/include/autoregisterfactory.hpp>
 #include <backend_client/include/backend_client_exports.hpp>
@@ -28,7 +29,7 @@ public:
     /**
      * @brief Destroy the Default Backend Manager object
      */
-    ~DefaultBackendManager() override;
+    ~DefaultBackendManager();
 
     void setFactories(
         htps::rptr<IBackendRegister> const backend_register) override final;
@@ -41,7 +42,7 @@ public:
     {
         auto f(htps::muptr<AutoRegisterFactory<typename T::Interface>>());
         f.get()->create(htps::muptr<T>());
-        pushFactory(std::move(f));
+        pushFactory(htps::move(f));
     }
 
     void destroy() override final;
@@ -50,7 +51,7 @@ private:
     void pushFactory(htps::uptr<IAutoRegisterFactory> f);
 
     struct DefaultBackendManagerPrivate;
-    htps::uptr<DefaultBackendManagerPrivate> priv_;
+    htps::PImplPointer<DefaultBackendManagerPrivate> priv_;
 };
 }  // namespace haf::backend::client
 
