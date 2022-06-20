@@ -6,10 +6,9 @@ HTPS_PRAGMA_ONCE
 #include <htypes/include/vector.hpp>
 #include <htypes/include/vector2d.hpp>
 #include <htypes/include/rect.hpp>
-#include <htypes/include/propertystate.hpp>
+#include <htypes/include/properties/property_state.hpp>
 
 #include <haf/include/scene/matrix4x4.hpp>
-#include <haf/include/scene/transformation_properties.hpp>
 #include <haf/include/scene/transformation.hpp>
 #include <haf/include/scene/scene_node.hpp>
 #include <haf/include/scene/scene_render_context.hpp>
@@ -27,8 +26,6 @@ class HAF_API TransformableSceneNode : public SceneNode, public Transformation
     using BaseSceneNode = SceneNode;
 
 public:
-    using BaseSceneNode::prop;       ///< Export properties
-    using Transformation::prop;  ///< Export properties
 
     using Scalar = Matrix4x4::Scalar;  ///< Type Scalar for this class
     using VectorScalar =

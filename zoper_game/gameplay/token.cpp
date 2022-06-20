@@ -25,8 +25,7 @@ Token::Token(SceneNode* const parent, str name) :
     GameBaseTile{
         parent, name + str::to_str(tile_counter_) + str::to_str(tile_counter_)},
     animation_component_{component<anim::AnimationComponent>()}
-{
-}
+{}
 
 Token::~Token() = default;
 
@@ -55,34 +54,17 @@ void Token::tileAdded()
     BaseClass::tileAdded();
     DisplayLog::info("Token ", name(), " appeared at ", boardPosition());
 
-        auto const AppearTokenTime = time::TimePoint_as_miliseconds(1000U);
-        auto const endScale{prop<Scale>()()};
+    auto const AppearTokenTime = time::TimePoint_as_miliseconds(1000U);
+    auto const endScale{Scale()};
 
-        {
-            auto property_animation_builder{
-                animation_component_
-                    ->make_property_animation_builder<Scale, Transformation>(
-                        this)};
-            property_animation_builder.startValue(Scale::Zeros)
-                .endValue(endScale)
-                .duration(AppearTokenTime);
-            animation_component_->addAnimation(
-                htps::move(property_animation_builder));
-        }
-
-    /*
-        {
-            auto property_animation_builder{
-                animation_component_
-                    ->make_property_animation_builder<Position, Transformation>(
-                        &(getTransformation(newTransformationPosition)))};
-            property_animation_builder.startValue(nodeBox)
-                .endValue(Position::value_type{0.0F, 0.0F})
-                .duration(AppearTokenTime);
-            animation_component_->addAnimation(
-                htps::move(property_animation_builder));
-        }
-    */
+    {
+        auto property_animation_builder{
+            animation_component_->make_property_animation_builder(
+                &Transformation::Scale, {0.0F, 0.0F}, endScale)};
+        property_animation_builder.duration(AppearTokenTime);
+        animation_component_->addAnimation(
+            htps::move(property_animation_builder));
+    }
 }
 
 void Token::tileRemoved()
@@ -106,11 +88,9 @@ void Token::tileMoved(const BoardPositionType& source)
     auto const destination{board2Scene(boardPosition())};
 
     auto property_animation_builder{
-        animation_component_
-            ->make_property_animation_builder_from_attached<Position, Token>()};
-    property_animation_builder.startValueIsCurrent()
-        .endValue(destination)
-        .duration(time::TimePoint_as_miliseconds(1000U));
+        animation_component_->make_property_animation_builder(
+            &Transformation::Position, Position(), destination)};
+    property_animation_builder.duration(time::TimePoint_as_miliseconds(1000U));
     animation_component_->addAnimation(htps::move(property_animation_builder));
 }
 }  // namespace zoper

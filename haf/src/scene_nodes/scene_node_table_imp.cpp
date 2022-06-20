@@ -9,8 +9,7 @@ namespace haf::scene::nodes
 {
 htps::vector2df TableNodeImp::cellSize() const
 {
-    return htps::vector2df{
-        1.0F / static_cast<htps::vector2df>(prop<TableSize>().get())};
+    return htps::vector2df{1.0F / static_cast<htps::vector2df>(TableSize())};
 }
 
 void TableNodeImp::update()
@@ -19,9 +18,9 @@ void TableNodeImp::update()
     updateTableSizeIfNecessary();
 
     // Update row and column size
-    if (prop<TableSize>().readResetHasChanged())
+    if (TableSize.readResetHasChanged())
     {
-        auto const tableSize{prop<TableSize>().get()};
+        auto const tableSize{TableSize()};
 
         // Create the nodes to render the tiles
         for (size_type y{0U}; y < tableSize.y; ++y)
@@ -49,14 +48,14 @@ void TableNodeImp::update()
                     createNodeAt({p.x, p.y});
                 }
 
-                node->prop<Scale>().set(cell_size);
+                node->Scale = cell_size;
 
-                node->prop<Position>().set(
-                    left_top_plus_half_size +
-                    (cell_size * static_cast<htps::vector2df>(p)));
+                node->Position = left_top_plus_half_size +
+                    (cell_size * static_cast<htps::vector2df>(p));
+                Position = {0.0F, 0.0F};
             });
-        onAllTableElementsCreated(prop<TableSize>()());
-        allTableElementsCreated(prop<TableSize>()());
+        onAllTableElementsCreated(TableSize());
+        allTableElementsCreated(TableSize());
     }
 }
 
@@ -88,9 +87,9 @@ TableNodeImp::ContainedType_t TableNodeImp::innerSceneNodeAt(
 
 void TableNodeImp::updateTableSizeIfNecessary()
 {
-    if (prop<TableSize>().hasChanged())
+    if (TableSize.hasChanged())
     {
-        setTableSize(prop<TableSize>().get());
+        setTableSize(TableSize());
     }
 }
 
@@ -110,11 +109,9 @@ void TableNodeImp::setTableSize(htps::vector2dst const ntableSize)
 void TableNodeImp::setInnerSceneNodeAt(htps::vector2dst const index,
                                        ContainedType_t& scene_node)
 {
-    LogAsserter::log_assert(
-        index.x < prop<TableSize>().get().x &&
-            index.y < prop<TableSize>().get().y,
-        "TableSize::createNodeAt: Index ", index,
-        " is out of bounds. Size: ", prop<TableSize>().get());
+    LogAsserter::log_assert(index.x < TableSize().x && index.y < TableSize().y,
+                            "TableSize::createNodeAt: Index ", index,
+                            " is out of bounds. Size: ", TableSize());
 
     inner_nodes_[index.x][index.y] = scene_node;
 }

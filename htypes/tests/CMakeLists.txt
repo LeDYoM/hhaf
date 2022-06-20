@@ -8,7 +8,6 @@ set(SOURCE_TESTS
     connection
     dictionary
     function
-    grouping_properties
     lockablevector
     main
     menum

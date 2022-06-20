@@ -20,52 +20,51 @@ namespace haf::scene::nodes
 
 namespace
 {
-inline void updateAlignmentX(
-    PropertyState<vector2df, Position>& position,
-    AlignmentX::value_type const alignmentX,
-    f32 const textSizeX,
-    AlignmentSize::value_type const& alignmentSize) noexcept
+inline void updateAlignmentX(PropertyState<vector2df>& position,
+                             SceneNodeText::AlignmentXModes const alignmentX,
+                             f32 const textSizeX,
+                             vector2df const& alignmentSize) noexcept
 {
     f32 newPosX{0.f};
 
     switch (alignmentX)
     {
         default:
-        case AlignmentXModes::Left:
+        case SceneNodeText::AlignmentXModes::Left:
             break;
-        case AlignmentXModes::Center:
+        case SceneNodeText::AlignmentXModes::Center:
             newPosX = (alignmentSize.x / 2) - (textSizeX / 2);
             break;
-        case AlignmentXModes::Right:
+        case SceneNodeText::AlignmentXModes::Right:
             newPosX = (alignmentSize.x - textSizeX);
             break;
     }
 
-    position.set(vector2df{newPosX, position.get().y});
+    position = {newPosX, position().y};
 }
 
 inline void updateAlignmentY(
-    PropertyState<vector2df, Position>& position,
-    AlignmentY::value_type const alignmentY,
+    PropertyState<vector2df>& position,
+    SceneNodeText::AlignmentYModes const alignmentY,
     f32 const textSizeY,
-    AlignmentSize::value_type const& alignmentSize) noexcept
+    vector2df const& alignmentSize) noexcept
 {
     f32 newPosY{0.f};
 
     switch (alignmentY)
     {
         default:
-        case AlignmentYModes::Top:
+        case SceneNodeText::AlignmentYModes::Top:
             break;
-        case AlignmentYModes::Middle:
+        case SceneNodeText::AlignmentYModes::Middle:
             newPosY = (alignmentSize.y / 2) - (textSizeY / 2);
             break;
-        case AlignmentYModes::Bottom:
+        case SceneNodeText::AlignmentYModes::Bottom:
             newPosY = alignmentSize.y - textSizeY;
             break;
     }
 
-    position.set(vector2df{position.get().x, newPosY});
+    position = {position().x, newPosY};
 }
 
 inline TextBaseSize updateTextRenderData(res::FontUtils const& font_utils,
@@ -92,12 +91,12 @@ void SceneNodeText::onCreated()
 void SceneNodeText::update()
 {
     BaseClass::update();
-    if (ps_readResetHasAnyChanged(prop<Font>(), prop<Text>(),
-                                  prop<TextBaseSizeProperty>()))
+    if (ps_readResetHasAnyChanged(Font, Text,
+                                  TextBaseSizeProperty))
     {
-        if (prop<Font>()() != nullptr && !(prop<Text>()().empty()))
+        if (Font() != nullptr && !(Text().empty()))
         {
-            auto font{prop<Font>()().get()};
+            auto font{Font().get()};
             // TODO: Select texture for character
             auto texture_str{font->getTexture(0)};
             if (!texture_str.empty())
@@ -111,10 +110,10 @@ void SceneNodeText::update()
                 size_type const old_counter{sceneNodes().size()};
 
                 // Get the text to render
-                auto const& current_text{prop<Text>()()};
+                auto const& current_text{Text()};
 
                 // Get The text color for each character
-                auto const text_color{prop<TextColor>()()};
+                auto const text_color{TextColor()};
 
                 // Initialize the index of the current character
                 size_type indexChar{0U};
@@ -127,16 +126,16 @@ void SceneNodeText::update()
                 // Update the text base size property. If it contains a text, it
                 // has preference, but prepare the size value of these text and
                 // update the property accordinly.
-                prop<TextBaseSizeProperty>() = updateTextRenderData(
-                    font_utils, prop<TextBaseSizeProperty>()());
+                TextBaseSizeProperty = updateTextRenderData(
+                    font_utils, TextBaseSizeProperty());
 
                 // This was an internal change. Forget it happened.
-                prop<TextBaseSizeProperty>().resetHasChanged();
+                TextBaseSizeProperty.resetHasChanged();
 
                 auto const text_render_data{
                     font_utils.getTextRenderData(current_text)};
 
-                auto const text_base_size{prop<TextBaseSizeProperty>()()};
+                auto const text_base_size{TextBaseSizeProperty()};
 
                 vector2df const text_render_size{
                     text_base_size.value().x == htps::f32{}
@@ -146,10 +145,10 @@ void SceneNodeText::update()
                         ? text_render_data.text_size.y
                         : text_base_size.value().y};
 
-                getTransformation(inner_scale_).prop<Scale>() =
+                getTransformation(inner_scale_).Scale =
                     vector2df{1.0F / text_render_size};
 
-                getTransformation(inner_position_).prop<Position>() =
+                getTransformation(inner_position_).Position =
                     -(text_render_size / 2.0F);
 
                 // Initialize the node for each letter we are going to use
@@ -177,11 +176,10 @@ void SceneNodeText::update()
                     auto const& ch_data{
                         text_render_data.character_render_data[indexChar]};
 
-                    letterNode->prop<Position>() = ch_data.character_position;
-                    letterNode->prop<Scale>()    = ch_data.character_size;
+                    letterNode->Position = ch_data.character_position;
+                    letterNode->Scale    = ch_data.character_size;
 
-                    letterNode->node()->prop<render::ColorProperty>().set(
-                        text_color);
+                    letterNode->node()->ColorProperty = text_color;
 
                     letterNode->setCharacterTextureData(
                         texture, font->getTextureBounds(curChar));
@@ -205,7 +203,7 @@ void SceneNodeText::update()
                 }
 
                 // Force update color
-                prop<TextColor>().resetHasChanged();
+                TextColor.resetHasChanged();
             }
         }
         else
@@ -214,13 +212,13 @@ void SceneNodeText::update()
         }
     }
 
-    if (prop<TextColor>().readResetHasChanged())
+    if (TextColor.readResetHasChanged())
     {
-        Color const& text_color{prop<TextColor>()()};
+        Color const& text_color{TextColor()};
 
         for_each_sceneNode_as<RenderizableSceneNode>(
             [&text_color](sptr<RenderizableSceneNode> const& sNode) {
-                sNode->node()->prop<render::ColorProperty>() = text_color;
+                sNode->node()->ColorProperty = text_color;
             });
     }
 }

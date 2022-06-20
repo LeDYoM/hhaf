@@ -12,17 +12,17 @@ TEST_CASE("haf::scene::Transformation", "[haf][scene][Transformation]")
     CHECK(transformation.updateTransformIfNecessary());
     CHECK_FALSE(transformation.updateTransformIfNecessary());
 
-    transformation.prop<Position>() = {2.0F, 4.0F};
+    transformation.Position = {2.0F, 4.0F};
 
     CHECK(transformation.updateTransformIfNecessary());
     CHECK_FALSE(transformation.updateTransformIfNecessary());
 
-    transformation.prop<Scale>() = {2.0F, 4.0F};
+    transformation.Scale = {2.0F, 4.0F};
 
     CHECK(transformation.updateTransformIfNecessary());
     CHECK_FALSE(transformation.updateTransformIfNecessary());
 
-    transformation.prop<Rotation>() = {2.0F};
+    transformation.Rotation = {2.0F};
 
     CHECK(transformation.updateTransformIfNecessary());
     CHECK_FALSE(transformation.updateTransformIfNecessary());

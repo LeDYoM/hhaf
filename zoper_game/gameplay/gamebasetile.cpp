@@ -54,7 +54,7 @@ void GameBaseTile::tileChanged(BoardTileData const /* oldValue */,
 {
     if (node())
     {
-        node()->prop<render::ColorProperty>() = getColorForToken();
+        node()->ColorProperty = getColorForToken();
     }
 }
 

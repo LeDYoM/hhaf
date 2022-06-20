@@ -1,7 +1,7 @@
 #include "catch.hpp"
 
 #include <htypes/include/types.hpp>
-#include <htypes/include/propertystate.hpp>
+#include <htypes/include/properties/property_state.hpp>
 
 using namespace htps;
 
@@ -14,17 +14,17 @@ TEST_CASE("PropertyState", "[htypes][property][state]")
 
     PropertyState<htps::sptr<s32>> b;
     auto t = htps::msptr<s32>(5);
-    b.set(t);
+    b = t;
     CHECK(*(t.get()) == 5);
-    CHECK(*(b.get()) == 5);
+    CHECK(*(b()) == 5);
     t = msptr<s32>(10);
 
     CHECK(b.readResetHasChanged());
     CHECK_FALSE(b.readResetHasChanged());
 
-    b.set(htps::move(t));
+    b = htps::move(t);
     CHECK(t.get() == nullptr);
-    CHECK(*(b.get()) == 10);
+    CHECK(*(b()) == 10);
 
     CHECK(b.readResetHasChanged());
     CHECK_FALSE(b.readResetHasChanged());

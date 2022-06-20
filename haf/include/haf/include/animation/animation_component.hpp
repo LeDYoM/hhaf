@@ -10,7 +10,7 @@ HTPS_PRAGMA_ONCE
 #include <haf/include/scene/scene_node.hpp>
 #include <haf/include/time/timer_component.hpp>
 #include <haf/include/time/timer_connector.hpp>
-#include <htypes/include/properties.hpp>
+#include <htypes/include/properties/iproperty.hpp>
 
 namespace haf::anim
 {
@@ -29,81 +29,26 @@ public:
      * @brief Add an animation that animates a certain property of the node.
      * @param builder Builder containing the data
      */
-    template <typename PropertyTag, typename SceneNodeType>
-    void addAnimation(PropertyAnimationData<PropertyTag, SceneNodeType>&& data)
-    {
-        addAnimation(htps::muptr<PropertyAnimation<PropertyTag, SceneNodeType>>(
-            htps::move(data)));
-    }
+    void addAnimation(PropertyAnimationBuilder&& builder);
 
-    template <typename PropertyTag, typename SceneNodeType>
-    void addAnimation(
-        PropertyAnimationBuilder<PropertyTag, SceneNodeType>&& builder)
-    {
-        addAnimation(builder.extract());
-    }
+    PropertyAnimationBuilder make_property_animation_builder();
 
-    template <typename PropertyTag, typename PropertyContainer>
-    auto make_property_animation_data(htps::rptr<PropertyContainer> scene_node)
+    template <template <typename> typename PropertyType,
+              typename PropertyValue,
+              typename ObjectType>
+    PropertyAnimationBuilder make_property_animation_builder(
+        PropertyType<PropertyValue>(ObjectType::*property_v),
+        PropertyValue const& start_value,
+        PropertyValue const& end_value)
     {
-        auto builder{PropertyAnimationData<PropertyTag, PropertyContainer>()};
-        builder
-            .prop<PropertyAnimationPropertiesSingle<PropertyTag,
-                                                    PropertyContainer>>()
-            .put<SceneNodeType<PropertyContainer>>(scene_node);
-
-        builder.prop<AnimationProperties>()
-            .put<TimerProperty>(attachedNode()
-                                    ->component<time::TimerComponent>()
-                                    ->addFreeTimer())
-            .put<Times>(1);
+        auto builder{make_property_animation_builder()};
+        builder.deltaProperty(make_delta_property(
+            attachedNodeAs<ObjectType>(), property_v, start_value, end_value));
         return builder;
     }
 
-    template <typename PropertyTag, typename PropertyContainer>
-    auto make_property_animation_data(htps::sptr<PropertyContainer> scene_node)
-    {
-        return make_property_animation_data<PropertyTag, PropertyContainer>(
-            scene_node.get());
-    }
-
-    template <typename PropertyTag, typename PropertyContainer>
-    auto make_property_animation_data_from_attached()
-    {
-        return make_property_animation_data<PropertyTag, PropertyContainer>(
-            attachedNodeAs<PropertyContainer>());
-    }
-
-    template <typename PropertyTag, typename PropertyContainer>
-    auto make_property_animation_builder(
-        htps::rptr<PropertyContainer> scene_node)
-    {
-        return PropertyAnimationBuilder<PropertyTag, PropertyContainer>{
-            make_property_animation_data<PropertyTag, PropertyContainer>(
-                htps::move(scene_node))};
-    }
-
-    template <typename PropertyTag, typename PropertyContainer>
-    auto make_property_animation_builder(
-        htps::sptr<PropertyContainer> scene_node)
-    {
-        return make_property_animation_builder<PropertyTag, PropertyContainer>(
-            scene_node.get());
-    }
-
-    template <typename PropertyTag, typename PropertyContainer>
-    auto make_property_animation_builder_from_attached()
-    {
-        return PropertyAnimationBuilder<PropertyTag, PropertyContainer>{
-            make_property_animation_data_from_attached<PropertyTag,
-                                                       PropertyContainer>()};
-    }
-
 private:
-    /**
-     * @brief Add an already created animation to the list of animations.
-     */
-    void addAnimation(htps::uptr<Animation>);
+    PropertyAnimationData make_property_animation_data();
 
     class AnimationComponentPrivate;
     htps::uptr<AnimationComponentPrivate> p_;

@@ -18,14 +18,14 @@ void MenuPaged::onCreated()
 
     statesControllerComponent_->StatePushed.connect(
         [this](const s32 menu_page) {
-            visibilitySelectorComponent_->visible_index.set(
-                static_cast<size_type>(menu_page));
+            visibilitySelectorComponent_->visible_index =
+                static_cast<size_type>(menu_page);
         });
 
     statesControllerComponent_->StateResumed.connect(
         [this](const s32 menu_page) {
-            visibilitySelectorComponent_->visible_index.set(
-                static_cast<size_type>(menu_page));
+            visibilitySelectorComponent_->visible_index =
+                static_cast<size_type>(menu_page);
         });
 
     statesControllerComponent_->AfterFinish.connect(
@@ -70,7 +70,7 @@ void MenuPaged::configure_menu(
     }
 
     statesControllerComponent_->start(0);
-    visibilitySelectorComponent_->visible_index.set(0U);
+    visibilitySelectorComponent_->visible_index = 0U;
 }
 
 void MenuPaged::terminate(MenuFinishedStatus const status)
@@ -78,7 +78,7 @@ void MenuPaged::terminate(MenuFinishedStatus const status)
     setMenuPagedStatus(status);
     MenuFinished(status_);
 
-    if (prop<FinishSceneAtEnd>()())
+    if (FinishSceneAtEnd())
     {
         subSystem<ISceneControl>()->switchToNextScene();
     }

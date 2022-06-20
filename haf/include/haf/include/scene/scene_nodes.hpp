@@ -6,6 +6,7 @@ HTPS_PRAGMA_ONCE
 #include <htypes/include/str.hpp>
 #include <htypes/include/vector.hpp>
 #include <htypes/include/connection.hpp>
+#include <htypes/include/properties/properties.hpp>
 #include <haf/include/scene/scenenode_cast.hpp>
 
 namespace haf::scene
@@ -152,13 +153,6 @@ public:
      * @tparam T Type of the property
      * @param value Value of the property
      */
-    template <typename Tag, typename T>
-    void set_property_for_each_sceneNode(T const& value)
-    {
-        for_each_sceneNode(
-            [&value](auto& node) { node->template prop<Tag>().set(value); });
-    }
-
     /**
      * @brief Set a property value for each SceneNode object in the group
      * that is convertible to NodeType
@@ -168,11 +162,16 @@ public:
      * @tparam T Type of the property
      * @param value Value of the property
      */
-    template <typename NodeType, typename Tag, typename T>
-    void set_property_for_each_sceneNode_as(T const& value)
+    template <template <typename> typename PropertyType,
+              typename PropertyValue,
+              typename ObjectType>
+    constexpr void set_property_for_each_node(
+        PropertyType<PropertyValue>(ObjectType::*property_v),
+        PropertyValue const& value)
     {
-        for_each_sceneNode_as<NodeType>(
-            [&value](auto& node) { node->template prop<Tag>().set(value); });
+        for_each_sceneNode_as<ObjectType>([&value, &property_v](auto& node) {
+            set_property(node, property_v, value);
+        });
     }
 
     bool moveToLastPosition(htps::sptr<SceneNode> const& node);

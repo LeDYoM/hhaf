@@ -12,9 +12,9 @@ RenderizableBuilder::RenderizableBuilder(
     rptr<Renderizables> renderizables) noexcept :
     data_{RenderizableBuilderData{htps::move(renderizables), {}}}
 {
-    data_.builder_data_.prop<FigureTypeProperty>() = FigType_t::Sprite;
-    data_.builder_data_.prop<ColorProperty>()      = scene::colors::White;
-    data_.builder_data_.prop<PointCount>()         = 4U;
+    data_.builder_data_.FigureTypeProperty = FigType_t::Sprite;
+    data_.builder_data_.ColorProperty      = scene::colors::White;
+    data_.builder_data_.PointCount         = 4U;
 }
 
 sptr<Renderizable> RenderizableBuilder::create()
@@ -24,33 +24,33 @@ sptr<Renderizable> RenderizableBuilder::create()
 
 RenderizableBuilder& RenderizableBuilder::name(str const& _name)
 {
-    data_.builder_data_.prop<RenderizableName>() = _name;
+    data_.builder_data_.RenderizableName = _name;
     return *this;
 }
 
 RenderizableBuilder& RenderizableBuilder::figType(FigType_t const& fig_type)
 {
-    data_.builder_data_.prop<FigureTypeProperty>() = fig_type;
-    data_.builder_data_.prop<PointCount>()         = 6U;
+    data_.builder_data_.FigureTypeProperty = fig_type;
+    data_.builder_data_.PointCount         = 6U;
     return *this;
 }
 
 RenderizableBuilder& RenderizableBuilder::color(scene::Color const& _color)
 {
-    data_.builder_data_.prop<ColorProperty>() = _color;
+    data_.builder_data_.ColorProperty = _color;
     return *this;
 }
 
 RenderizableBuilder& RenderizableBuilder::pointCount(
     size_type const& point_count)
 {
-    data_.builder_data_.prop<PointCount>() = point_count * 3U;
+    data_.builder_data_.PointCount = point_count * 3U;
     return *this;
 }
 
 RenderizableBuilder& RenderizableBuilder::shader(sptr<res::IShader> _shader)
 {
-    data_.builder_data_.prop<ShaderProperty>() = htps::move(_shader);
+    data_.builder_data_.ShaderProperty = htps::move(_shader);
     return *this;
 }
 
@@ -65,10 +65,10 @@ RenderizableBuilder& RenderizableBuilder::texture(sptr<res::ITexture> _texture)
 {
     if (_texture != nullptr)
     {
-        data_.builder_data_.prop<TextureRectProperty>().set(
-            Rects32{0, 0, static_cast<vector2ds32>(_texture->size())});
+        data_.builder_data_.TextureRectProperty =
+            Rects32{0, 0, static_cast<vector2ds32>(_texture->size())};
     }
-    data_.builder_data_.prop<TextureProperty>() = htps::move(_texture);
+    data_.builder_data_.TextureProperty = htps::move(_texture);
     return *this;
 }
 

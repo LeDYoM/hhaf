@@ -7,7 +7,7 @@ namespace haf::scene::nodes
 void TextQuad::onCreated()
 {
     onTableNodeCreated += make_function(this, &TextQuad::onElementCreated);
-    prop<TableSize>().set({2U, 2U});
+    TableSize = {2U, 2U};
 }
 
 void TextQuad::onElementCreated(htps::vector2dst index,
@@ -16,30 +16,26 @@ void TextQuad::onElementCreated(htps::vector2dst index,
     if (index == vector2dst{0U, 0U})
     {
         // First text is left aligned on top
-        node->prop<SceneNodeTextProperties>()
-            .put<AlignmentX>(AlignmentXModes::Left)
-            .put<AlignmentY>(AlignmentYModes::Top);
+        node->AlignmentX = SceneNodeText::AlignmentXModes::Left;
+        node->AlignmentY = SceneNodeText::AlignmentYModes::Top;
     }
     else if (index == vector2dst{1U, 0U})
     {
         // Second text is right aligned op top
-        node->prop<SceneNodeTextProperties>()
-            .put<AlignmentX>(AlignmentXModes::Left)
-            .put<AlignmentY>(AlignmentYModes::Top);
+        node->AlignmentX = SceneNodeText::AlignmentXModes::Left;
+        node->AlignmentY = SceneNodeText::AlignmentYModes::Top;
     }
     else if (index == vector2dst{0U, 1U})
     {
         // Third text is left aligned on bottom
-        node->prop<SceneNodeTextProperties>()
-            .put<AlignmentX>(AlignmentXModes::Left)
-            .put<AlignmentY>(AlignmentYModes::Bottom);
+        node->AlignmentX = SceneNodeText::AlignmentXModes::Left;
+        node->AlignmentY = SceneNodeText::AlignmentYModes::Top;
     }
     else if (index == vector2dst{1U, 1U})
     {
         // Fourth text is right aligned on bottom
-        node->prop<SceneNodeTextProperties>()
-            .put<AlignmentX>(AlignmentXModes::Left)
-            .put<AlignmentY>(AlignmentYModes::Bottom);
+        node->AlignmentX = SceneNodeText::AlignmentXModes::Left;
+        node->AlignmentY = SceneNodeText::AlignmentYModes::Top;
     }
 }
 

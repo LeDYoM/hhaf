@@ -29,10 +29,7 @@ Player::Player(rptr<SceneNode> parent, str name) :
         .create();
 
     reserveExtraTransformations(1U);
-    //    move_in_  = addTransformation();
     rotator_ = addTransformation();
-    //    scalator_ = addTransformation();
-    //    move_out_ = addTransformation();
 }
 
 Player::~Player() = default;
@@ -44,14 +41,14 @@ void Player::update()
     if (player_board_position.readResetHasChanged())
     {
         DisplayLog::info("Player board position: ", boardPosition());
-        prop<Position>() = board2Scene(boardPosition());
-        DisplayLog::info("Player scene position: ", prop<Position>().get());
+        Position = board2Scene(boardPosition());
+        DisplayLog::info("Player scene position: ", Position());
     }
 
     if (currentDirection.readResetHasChanged())
     {
         auto const direction{currentDirection()};
-        getTransformation(rotator_).prop<Rotation>().set(direction.angle());
+        getTransformation(rotator_).Rotation = direction.angle();
     }
 }
 
@@ -67,8 +64,8 @@ void Player::tileMoved(BoardPositionType const& source)
     LogAsserter::log_assert(boardPosition() != source,
                             "Source and dest are the same!");
     DisplayLog::info("Player board position: ", boardPosition());
-    prop<Position>() = board2Scene(boardPosition());
-    DisplayLog::info("Player scene position: ", prop<Position>().get());
+    Position = board2Scene(boardPosition());
+    DisplayLog::info("Player scene position: ", Position());
 
     player_board_position = boardPosition();
     currentDirection      = fromPositions(source, boardPosition());
@@ -79,13 +76,11 @@ void Player::launchPlayerAnimation(vector2df const& toWhere)
     component(animation_component_);
 
     auto property_animation_builder{
-        animation_component_->make_property_animation_builder_from_attached<
-            Position, Player>()};
-    property_animation_builder.startValue(prop<Position>()())
-        .endValue(toWhere)
-        .duration(TimePoint_as_miliseconds(
-            gameplay::constants::MillisAnimationLaunchPlayerStep))
-        .actionWhenFinished([this, currentPosition = prop<Position>()()]() {
+        animation_component_->make_property_animation_builder(
+            &Player::Position, Player::Position(), toWhere)};
+    property_animation_builder.duration(TimePoint_as_miliseconds(
+        gameplay::constants::MillisAnimationLaunchPlayerStep))
+        .actionWhenFinished([this, currentPosition = Position()]() {
             launchAnimationBack(currentPosition);
         });
     animation_component_->addAnimation(htps::move(property_animation_builder));
@@ -98,21 +93,20 @@ void Player::launchAnimationBack(SceneCoordinates const& toWhere)
     component(animation_component_);
 
     auto property_animation_builder{
-        animation_component_->make_property_animation_builder<Position, Player>(
-            this)};
-    property_animation_builder.startValueIsCurrent().endValue(toWhere).duration(
-        TimePoint_as_miliseconds(
-            gameplay::constants::MillisAnimationLaunchPlayerStep));
+        animation_component_->make_property_animation_builder(
+            &Player::Position, Position(), toWhere)};
+    property_animation_builder.duration(TimePoint_as_miliseconds(
+        gameplay::constants::MillisAnimationLaunchPlayerStep));
     animation_component_->addAnimation(htps::move(property_animation_builder));
 }
 
 void Player::tileAdded()
 {
     DisplayLog::info("TokenPlayer appeared at ", boardPosition());
-    node()->prop<render::ColorProperty>().set(getColorForToken());
+    node()->ColorProperty = getColorForToken();
 
     // Set the position in the scene depending on the board position
-    player_board_position.set(boardPosition());
+    player_board_position = boardPosition();
 }
 
 void Player::tileChanged(BoardTileData const oldValue,

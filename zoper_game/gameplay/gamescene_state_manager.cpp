@@ -3,8 +3,6 @@
 #include "gameover.hpp"
 #include "gamescene_states.hpp"
 
-#include <haf/include/scene/scenenode_properties.hpp>
-
 #include <hlog/include/hlog.hpp>
 
 using namespace haf;
@@ -40,7 +38,7 @@ void GameSceneStateManager::onEnterState(GameSceneStates const& state)
         break;
         case GameSceneStates::GameOver:
         {
-            game_over_scene_node_->prop<Visible>().set(true);
+            game_over_scene_node_->Visible = true;
             scene_timer_component_->pause();
         }
         break;

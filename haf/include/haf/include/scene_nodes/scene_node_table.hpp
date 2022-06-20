@@ -4,6 +4,7 @@ HTPS_PRAGMA_ONCE
 
 #include <haf/include/haf_export.hpp>
 #include <htypes/include/connection.hpp>
+#include <htypes/include/properties/properties.hpp>
 #include <haf/include/scene_nodes/scene_node_table_imp.hpp>
 #include <hlog/include/hlog.hpp>
 
@@ -23,7 +24,6 @@ public:
     using ContainedElement = T;
 
     using BaseClass::BaseClass;
-    using BaseClass::prop;
 
     htps::emitter<htps::vector2dst, htps::sptr<T> const&> onTableNodeCreated;
 
@@ -65,12 +65,17 @@ public:
         }
     }
 
-    template <typename Tag, typename ValueType_t>
-    void set_property_for_each_tableSceneNode(ValueType_t const& value)
+    template <template <typename> typename PropertyType,
+              typename PropertyValue,
+              typename ObjectType>
+    constexpr void set_property_for_each_table_node(
+        PropertyType<PropertyValue>(ObjectType::*property_v),
+        PropertyValue const& value)
     {
         for_each_tableSceneNode(
-            [&value](htps::vector2dst const&, htps::sptr<T> const& node) {
-                node->template prop<Tag>().set(value);
+            [&value, property_v](htps::vector2dst const&,
+                                 htps::sptr<T> const& node) {
+                set_property(node, property_v, value);
             });
     }
 
@@ -100,16 +105,6 @@ public:
                 action(pos.x, node);
             }
         });
-    }
-
-    template <typename PropertyType>
-    auto* setTableNodeProperty(typename PropertyType::value_type const& value)
-    {
-        for_each_tableSceneNode(
-            [&value](auto const&, htps::sptr<T> const& node) {
-                node->template prop<PropertyType>().set(value);
-            });
-        return this;
     }
 
 private:

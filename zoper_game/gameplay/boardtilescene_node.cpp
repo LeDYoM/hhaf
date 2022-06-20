@@ -23,22 +23,21 @@ void BoardTileSceneNode::onCreated()
         .create();
 
     // Size of the point in the middle of the tile
-    point_in_center_->prop<Scale>().set({0.1F, 0.1F});
+    point_in_center_->Scale = {0.1F, 0.1F};
 
     background_tile_ = renderizableBuilder()
-                            .name("backgroundTile")
-                            .figType(FigType_t::Sprite)
-                            .create();
+                           .name("backgroundTile")
+                           .figType(FigType_t::Sprite)
+                           .create();
 }
 
 void BoardTileSceneNode::update()
 {
     BaseClass::update();
 
-    if (prop<BackgroundColor>().readResetHasChanged())
+    if (BackgroundColor.readResetHasChanged())
     {
-        background_tile_->prop<ColorProperty>() =
-            htps::move(prop<BackgroundColor>().get());
+        background_tile_->ColorProperty = BackgroundColor();
     }
 }
 

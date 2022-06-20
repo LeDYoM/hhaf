@@ -2,17 +2,16 @@ HTPS_PRAGMA_ONCE
 #ifndef MTPS_BASIC_PROPERTY_INCLUDE_HPP
 #define MTPS_BASIC_PROPERTY_INCLUDE_HPP
 
-#include "properties.hpp"
+#include <htypes/include/properties/iproperty.hpp>
 #include <utility>
 
 namespace htps
 {
-template <typename T, typename Tag = DummyTag>
-class BasicProperty : public IProperty<T, Tag>
+template <typename T>
+class BasicProperty : public IProperty<T>
 {
 public:
-    using Base            = IProperty<T, Tag>;
-    using tag             = typename Base::tag;
+    using Base            = IProperty<T>;
     using value_type      = typename Base::value_type;
     using const_type      = typename Base::const_type;
     using reference       = typename Base::reference;
@@ -25,7 +24,7 @@ public:
 
     constexpr BasicProperty(BasicProperty&&) noexcept(
         std::is_nothrow_move_constructible_v<T>) = default;
-    BasicProperty(const BasicProperty&) noexcept(
+    BasicProperty(BasicProperty const&) noexcept(
         std::is_nothrow_copy_constructible_v<T>) = default;
     constexpr BasicProperty& operator            =(BasicProperty&&) noexcept(
         std::is_nothrow_move_assignable_v<T>) = default;
@@ -34,46 +33,31 @@ public:
 
     constexpr BasicProperty(T&& iv) noexcept(
         std::is_nothrow_move_constructible_v<T>) :
-        value_{htps::move(iv)}
+        m_value{htps::move(iv)}
     {}
-    constexpr BasicProperty(const T& iv) noexcept(
+    constexpr BasicProperty(T const& iv) noexcept(
         std::is_nothrow_copy_constructible_v<T>) :
-        value_{iv}
+        m_value{iv}
     {}
 
-    constexpr const T& operator()() const noexcept { return value_; }
-    constexpr void operator=(const T& v) { set(v); }
+    constexpr T const& operator()() const noexcept override { return m_value; }
+
+    constexpr void operator=(T const& v) noexcept(
+        std::is_nothrow_copy_assignable_v<T>) override
+    {
+        m_value = v;
+    }
 
     constexpr void operator=(T&& v) noexcept(
-        std::is_nothrow_move_assignable_v<T>)
+        std::is_nothrow_move_assignable_v<T>) override
     {
-        set(htps::move(v));
-    }
-
-    constexpr const T& get() const noexcept override final { return value_; }
-    inline bool set(const T& v) noexcept(noexcept(Base::set(v))) override
-    {
-        if (!(value_ == v))
-        {
-            value_ = v;
-            return true;
-        }
-        return false;
-    }
-
-    inline bool set(T&& v) noexcept(noexcept(Base::set(htps::move(v)))) override
-    {
-        if (!(value_ == htps::forward<T>(v)))
-        {
-            value_ = htps::move(v);
-            return true;
-        }
-        return false;
+        m_value = htps::move(v);
     }
 
 protected:
-    T value_{};
+    T m_value{};
 };
+
 }  // namespace htps
 
 #endif

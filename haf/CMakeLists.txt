@@ -18,8 +18,10 @@ set(sources
   ${src_dir}/systemprovider_init.cpp
 
   # Animation
-  ${src_dir}/animation/animation.cpp
   ${src_dir}/animation/animation_component.cpp
+  ${src_dir}/animation/animation.cpp
+  ${src_dir}/animation/property_animation_builder.cpp
+  ${src_dir}/animation/property_animation.cpp
 
   # Component
   ${src_dir}/component/component_container.cpp
@@ -204,9 +206,11 @@ set(headers
   ${inc_dir}/haf_export.hpp
 
   # Animation
-  ${inc_dir}/animation/animabletypes.hpp
+  ${inc_dir}/animation/animable_types.hpp
   ${inc_dir}/animation/animation_data.hpp
   ${inc_dir}/animation/animation.hpp
+  ${inc_dir}/animation/delta_property.hpp
+  ${inc_dir}/animation/idelta_property.hpp
   ${inc_dir}/animation/animation_component.hpp
   ${inc_dir}/animation/property_animation_builder.hpp
   ${inc_dir}/animation/property_animation_data.hpp
@@ -254,7 +258,6 @@ set(headers
   ${inc_dir}/render/renderizable_builder_data.hpp
   ${inc_dir}/render/renderizable_builder.hpp
   ${inc_dir}/render/renderizable_data.hpp
-  ${inc_dir}/render/renderizable_object_data.hpp
   ${inc_dir}/render/renderizable.hpp
   ${inc_dir}/render/renderizables.hpp
   ${inc_dir}/render/vertex.hpp
@@ -279,12 +282,10 @@ set(headers
   ${inc_dir}/scene/scene_render_context.hpp
   ${inc_dir}/scene/scene.hpp
   ${inc_dir}/scene/scenenode_cast.hpp
-  ${inc_dir}/scene/scenenode_properties.hpp
   ${inc_dir}/scene/scene_node.hpp
   ${inc_dir}/scene/scene_nodes.hpp
   ${inc_dir}/scene/scenenodefactory.hpp
   ${inc_dir}/scene/scenenodeparent.hpp
-  ${inc_dir}/scene/transformation_properties.hpp
   ${inc_dir}/scene/transformation.hpp
 
   # Scene components
@@ -303,10 +304,8 @@ set(headers
   ${inc_dir}/scene_nodes/renderizable_scene_node.hpp
   ${inc_dir}/scene_nodes/renderizables_scene_node.hpp
   ${inc_dir}/scene_nodes/scene_node_table_imp.hpp
-  ${inc_dir}/scene_nodes/scene_node_table_properties.hpp
   ${inc_dir}/scene_nodes/scene_node_table_text.hpp
   ${inc_dir}/scene_nodes/scene_node_table.hpp
-  ${inc_dir}/scene_nodes/scene_node_text_properties.hpp
   ${inc_dir}/scene_nodes/scene_node_text_quad.hpp
   ${inc_dir}/scene_nodes/scene_node_text.hpp
   ${inc_dir}/scene_nodes/text_base_size.hpp

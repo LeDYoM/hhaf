@@ -3,10 +3,10 @@ HTPS_PRAGMA_ONCE
 #define HAF_SCENE_SCENENODE_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
+#include <htypes/include/properties/property_state.hpp>
 #include <haf/include/haf_export.hpp>
 #include <haf/include/types/scene_types.hpp>
 #include <haf/include/scene/scenenodeparent.hpp>
-#include <haf/include/scene/scenenode_properties.hpp>
 #include <haf/include/scene/scene_nodes.hpp>
 #include <haf/include/scene/hasname.hpp>
 #include <haf/include/scene/scene_render_context.hpp>
@@ -26,12 +26,11 @@ class HAF_API SceneNode : public sys::HasName,
                           public SceneNodeParent<SceneNode>,
                           public SceneNodes,
                           public sys::SystemAccess,
-                          public SceneNodeProperties,
                           public component::ComponentContainer,
                           public sys::SubSystemViewer
 {
 public:
-    using SceneNodeProperties::prop;
+    htps::PropertyState<bool> Visible{true};
 
     /**
      * @brief Disabled copy constructor
@@ -94,7 +93,6 @@ public:
 
     SceneBox sceneView() const;
     SceneBox::vector_t sceneViewSize() const;
-
 };
 
 using SceneNodeSPtr = htps::sptr<SceneNode>;

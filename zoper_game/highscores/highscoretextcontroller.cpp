@@ -6,7 +6,6 @@
 
 #include <haf/include/filesystem/ifile_serializer.hpp>
 #include <haf/include/scene_components/texteditorcomponent.hpp>
-#include <haf/include/scene_nodes/scene_node_text_properties.hpp>
 #include <haf/include/scene/scene.hpp>
 #include <haf/include/resources/ittfont.hpp>
 #include <haf/include/resources/iresource_retriever.hpp>
@@ -15,7 +14,6 @@
 #include <haf/include/input/input_component.hpp>
 #include <haf/include/scene_components/camera_component.hpp>
 #include <haf/include/component/component_container.hpp>
-#include <haf/include/scene_nodes/scene_node_text_properties.hpp>
 
 using namespace htps;
 using namespace haf;
@@ -29,21 +27,19 @@ static constexpr char HighScoresFileName[] = "high_scores.txt";
 void HighScoreTextController::onCreated()
 {
     BaseClass::onCreated();
-    prop<TableSize>().set({3U, NumHighScore});
+    TableSize = {3U, NumHighScore};
 }
 
 void HighScoreTextController::onAllTableElementsCreated(htps::vector2dst const)
 {
-//    prop<Scale>() = {0.5F, 0.5F};
-    set_property_for_each_tableSceneNode<TextBaseSizeProperty>(
-        TextBaseSize{'A', 8U});
+    set_property_for_each_table_node(&SceneNodeText::TextBaseSizeProperty,
+                                     TextBaseSize{'A', 8U});
 
     normal_font_ = subSystem<res::IResourceRetriever>()
                        ->getTTFont(HighScoresResources::MenuFontId)
                        ->font(72);
     normal_color_        = colors::Blue;
     selected_color_      = colors::Red;
-    animation_component_ = component<anim::AnimationComponent>();
 
     // Request the high scores.
     subSystem<sys::IFileSerializer>()->deserializeFromFile(HighScoresFileName,
@@ -83,11 +79,11 @@ void HighScoreTextController::addHighScoresLine(const size_type counter,
 
     auto label{text(vector2dst{0U, counter})};
     standarizeText(label);
-    label->prop<SceneNodeTextProperties>().set<Text>(make_str(counter, "."));
+    label->Text = make_str(counter, ".");
 
     label = text(vector2dst{1U, counter});
     standarizeText(label);
-    label->prop<SceneNodeTextProperties>().set<Text>(make_str(element.score));
+    label->Text = make_str(element.score);
 
     label = text(vector2dst{2U, counter});
     standarizeText(label);
@@ -98,7 +94,7 @@ void HighScoreTextController::addHighScoresLine(const size_type counter,
     }
     else
     {
-        label->prop<SceneNodeTextProperties>().set<Text>(element.name);
+        label->Text = element.name;
     }
 }
 
@@ -120,24 +116,23 @@ void HighScoreTextController::addHighScoreEditor(
 
 void HighScoreTextController::addEditAnimation(const size_type line_index)
 {
-    LogAsserter::log_assert(line_index < prop<TableSize>().get().y,
-                            "Invalid line_index");
+    LogAsserter::log_assert(line_index < TableSize().y, "Invalid line_index");
 
     for_each_tableSceneNode_in_y(
         line_index,
-        [this](const auto, const sptr<nodes::SceneNodeText>& element) {
-            auto property_animation_builder =
-                animation_component_
-                    ->make_property_animation_builder<nodes::TextColor>(
-                        element);
+        [this](const auto, sptr<nodes::SceneNodeText> const& element) {
+            sptr<anim::AnimationComponent> animation_component;
+            element->component(animation_component);
+            auto property_animation_builder{
+                animation_component->make_property_animation_builder(
+                    &nodes::SceneNodeText::TextColor, colors::White,
+                    colors::Black)};
             property_animation_builder
                 .duration(time::TimePoint_as_miliseconds(2000U))
-                .startValue(colors::White)
-                .endValue(colors::Black)
                 .switchAnimation(true)
                 .continuous();
 
-            animation_component_->addAnimation(
+            animation_component->addAnimation(
                 htps::move(property_animation_builder));
         });
 }
@@ -145,9 +140,8 @@ void HighScoreTextController::addEditAnimation(const size_type line_index)
 void HighScoreTextController::standarizeText(
     const sptr<nodes::SceneNodeText>& ntext)
 {
-    ntext->prop<nodes::SceneNodeTextProperties>()
-        .put<nodes::TextColor>(normal_color_)
-        .put<nodes::Font>(normal_font_);
+    ntext->TextColor = normal_color_;
+    ntext->Font      = normal_font_;
 }
 
 void HighScoreTextController::saveHighScores()

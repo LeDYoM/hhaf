@@ -3,30 +3,29 @@ HTPS_PRAGMA_ONCE
 #define HAF_SCENE_SCENE_NODE_TABLE_IMP_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
-#include <htypes/include/properties.hpp>
+#include <htypes/include/properties/iproperty.hpp>
 
 #include <haf/include/haf_export.hpp>
 #include <htypes/include/connection.hpp>
 #include <haf/include/scene_nodes/transformable_scene_node.hpp>
-#include <haf/include/scene_nodes/scene_node_table_properties.hpp>
 
 namespace haf::scene::nodes
 {
 /**
  * @brief class Node with implementation details for a Table node.
  */
-class HAF_API TableNodeImp : public TransformableSceneNode,
-                             public TableNodeProperties
+class HAF_API TableNodeImp : public TransformableSceneNode
 {
     using BaseClass = TransformableSceneNode;
 
 public:
-    using TableNodeProperties::prop;     ///< Properties TableNodeProperties
-    using TransformableSceneNode::prop;  ///< Properties from @b SceneNode
     using TransformableSceneNode::TransformableSceneNode;  ///< Inherited
                                                            ///< constuctor
 
     using ContainedType_t = htps::sptr<TransformableSceneNode>;
+
+    htps::PropertyState<htps::vector2dst> TableSize;
+    htps::PropertyState<htps::vector2df> TableSizeForNodes;
 
     htps::emitter<htps::vector2dst, ContainedType_t const&> onInnerNodeCreated;
 

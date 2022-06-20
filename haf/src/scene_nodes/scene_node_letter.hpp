@@ -3,7 +3,7 @@ HTPS_PRAGMA_ONCE
 #define HAF_SCENE_NODES_SCENE_NODE_LETTER_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
-#include <htypes/include/properties.hpp>
+#include <htypes/include/properties/iproperty.hpp>
 #include <haf/include/scene_nodes/renderizable_scene_node.hpp>
 #include "resources/character_render_data.hpp"
 
@@ -15,11 +15,6 @@ class SceneNodeLetter : public RenderizableSceneNode
 
 public:
     using BaseClass::BaseClass;
-
-    /**
-     * @brief Expose TransformableSceneNode properties
-     */
-    using TransformableSceneNode::prop;
 
     void setCharacterTextureData(htps::sptr<haf::res::ITexture> texture,
                                  htps::Rectf32 const& textureUV);

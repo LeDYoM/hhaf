@@ -6,17 +6,16 @@
 namespace haf::scene
 {
 Transformation::Transformation() noexcept :
-    TransformationProperties({}, {1U, 1U}, {}), transform_{}
+    transform_{}
 {}
 
 Transformation::~Transformation() = default;
 
 bool Transformation::updateTransformIfNecessary() noexcept
 {
-    if (anyHasChanged(prop<TransformationProperties>()))
+    if (ps_readResetHasAnyChanged(Position, Scale, Rotation))
     {
         updateTransform();
-        resetHasChanged(prop<TransformationProperties>());
         return true;
     }
     return false;
@@ -25,12 +24,12 @@ bool Transformation::updateTransformIfNecessary() noexcept
 void Transformation::updateTransform()
 {
     // Recompute the combined transform
-    auto const angle{-prop<Rotation>()() * render::ToRadians<Scalar>};
-    VectorScalar const scale_cos{prop<Scale>()() *
+    auto const angle{-Rotation() * render::ToRadians<Scalar>};
+    VectorScalar const scale_cos{Scale() *
                                  static_cast<Scalar>(std::cos(angle))};
-    VectorScalar const scale_sin{prop<Scale>()() *
+    VectorScalar const scale_sin{Scale() *
                                  static_cast<Scalar>(std::sin(angle))};
-    VectorScalar const position{prop<Position>()()};
+    VectorScalar const position{Position()};
 
     transform_ = {scale_cos.x,     scale_sin.y,     position.x,
                   -scale_sin.x,    scale_cos.y,     position.y,
@@ -44,8 +43,8 @@ Matrix4x4 const& Transformation::matrix() noexcept
 
 void Transformation::setLeftTopPositionScale(VectorScalar const& vector)
 {
-    prop<Position>().set(VectorScalar{-0.5F, -0.5F} + (vector / 2.0F));
-    prop<Scale>().set(vector);
+    Position = VectorScalar{-0.5F, -0.5F} + (vector / 2.0F);
+    Scale = vector;
 }
 
 void Transformation::setRightTopPositionScale(VectorScalar const& vector)
@@ -53,8 +52,8 @@ void Transformation::setRightTopPositionScale(VectorScalar const& vector)
     VectorScalar origin{0.5F, -0.5F};
     origin.x -= vector.x / 2.0F;
     origin.y += vector.y / 2.0F;
-    prop<Position>().set(htps::move(origin));
-    prop<Scale>().set(vector);
+    Position = htps::move(origin);
+    Scale = vector;
 }
 
 }  // namespace haf::scene

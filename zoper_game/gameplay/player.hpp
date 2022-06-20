@@ -38,10 +38,7 @@ public:
     void update() override;
 
 private:
-    htps::size_type move_in_;
     htps::size_type rotator_;
-    htps::size_type scalator_;
-    htps::size_type move_out_;
     void launchAnimationBack(haf::SceneCoordinates const& toWhere);
     htps::sptr<haf::anim::AnimationComponent> animation_component_;
 };

@@ -30,8 +30,8 @@ void BoardGroup::configure(vector2dst size,
                            sptr<LevelProperties> level_properties)
 {
     level_properties_ = htps::move(level_properties);
-    prop<TableSize>().set(size);
-    auto const tableSize{prop<TableSize>().get()};
+    TableSize = size;
+    auto const tableSize{TableSize()};
 
     // Create and initialize the BoardManager
     auto board_model{component<board::BoardManager>()};
@@ -66,7 +66,7 @@ void BoardGroup::addPlayer()
 
     // Create the player instance
     player_ = tokens_scene_node->createSceneNode<Player>("playerNode");
-    player_->prop<Scale>() = tileSize();
+    player_->Scale = tileSize();
 
     // Add it to the board and to the scene nodes
     componentOfType<board::BoardManager>()->setTile(
@@ -85,8 +85,8 @@ void BoardGroup::createNewToken(BoardTileData const data,
     auto new_tile_token{tokens_scene_node->createSceneNode<Token>("tileNode")};
 
     // Set the position in the scene depending on the board position
-    new_tile_token->prop<Position>().set(board2Scene(board_position));
-    new_tile_token->prop<Scale>() = tileSize();
+    new_tile_token->Position = board2Scene(board_position);
+    new_tile_token->Scale = tileSize();
 
     // Add it to the board
     auto board_model{componentOfType<board::BoardManager>()};
@@ -111,9 +111,9 @@ void BoardGroup::setLevel(const size_type level)
     // Update background tiles
     for_each_tableSceneNode(
         [this, level](const auto position, sptr<BoardTileSceneNode> node) {
-            node->prop<BoardTileSceneNodeProperties>().set<BackgroundColor>(
+            node->BackgroundColor =
                 getBackgroundTileColor(level, position,
-                                       TokenZones::pointInCenter(position)));
+                                       TokenZones::pointInCenter(position));
         });
 }
 

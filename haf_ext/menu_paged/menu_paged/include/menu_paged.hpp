@@ -10,7 +10,6 @@
 #include <haf/include/scene_components/states_controller_component.hpp>
 #include <haf/include/scene_components/visibility_selector_component.hpp>
 
-#include "menu_paged_properties.hpp"
 #include "menu_page.hpp"
 
 namespace haf::scene
@@ -24,15 +23,17 @@ enum class MenuFinishedStatus : htps::u8
 /**
  * @brief Main class to model a menu in paged style.
  */
-class MenuPaged : public TransformableSceneNode, MenuPagedProperties
+class MenuPaged : public TransformableSceneNode
 {
     using BaseClass = TransformableSceneNode;
 
 public:
     using TransformableSceneNode::TransformableSceneNode;
 
-    using TransformableSceneNode::prop;
-    using MenuPagedProperties::prop;
+    htps::PropertyState<htps::sptr<res::IFont>> NormalTextFont;
+    htps::PropertyState<Color> NormalColor;
+    htps::PropertyState<Color> SelectedColor;
+    htps::PropertyState<bool> FinishSceneAtEnd;
 
     void onCreated() override;
     ~MenuPaged() override;

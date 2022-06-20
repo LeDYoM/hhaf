@@ -6,7 +6,6 @@
 
 #include <haf/include/scene/scene_node.hpp>
 #include <haf/include/scene_nodes/scene_node_table.hpp>
-#include <haf/include/scene_nodes/scene_node_table_properties.hpp>
 
 #include "boardtilescene_node.hpp"
 #include "direction.hpp"
@@ -29,9 +28,9 @@ private:
     using BaseClass = haf::scene::nodes::TableNode<BoardTileSceneNode>;
 
 public:
-    using BaseClass::prop;
     using BoardTileData = haf::board::IBoardManagerActuator::BoardTileData;
     using BaseClass::BaseClass;
+
     constexpr static char const StaticName[] = "BoardGroup";
 
     ~BoardGroup() override;

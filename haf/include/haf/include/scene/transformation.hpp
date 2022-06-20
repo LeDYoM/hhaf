@@ -5,23 +5,22 @@ HTPS_PRAGMA_ONCE
 #include <htypes/include/types.hpp>
 #include <htypes/include/vector2d.hpp>
 #include <htypes/include/rect.hpp>
-#include <htypes/include/propertystate.hpp>
+#include <htypes/include/properties/property_state.hpp>
 
 #include <haf/include/scene/matrix4x4.hpp>
-#include <haf/include/scene/transformation_properties.hpp>
 
 namespace haf::scene
 {
-class HAF_API Transformation : public TransformationProperties
+class HAF_API Transformation
 {
-    using BaseClass = TransformationProperties;
-
 public:
-    using BaseClass::prop;
-
     using Scalar       = Matrix4x4::Scalar;
     using VectorScalar = htps::vector2d<Scalar>;
     using RectScalar   = htps::Rect<Scalar>;
+
+    htps::PropertyState<VectorScalar> Position{VectorScalar{0.0F, 0.0F}};
+    htps::PropertyState<Scalar> Rotation{Scalar{0.0F}};
+    htps::PropertyState<VectorScalar> Scale{VectorScalar{1.0F, 1.0F}};
 
     Transformation() noexcept;
     virtual ~Transformation();

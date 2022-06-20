@@ -23,32 +23,28 @@ void GameOverSceneNode::onCreated()
     {
         auto gameText(
             game_over_rg_->createSceneNode<SceneNodeText>("gameovergame"));
-        gameText->prop<SceneNodeTextProperties>()
-            .put<Text>("GAME")
-            .put<Font>(subSystem<res::IResourceRetriever>()
-                           ->getTTFont(GameResources::ScoreFontId)
-                           ->font(100))
-            .put<TextColor>(colors::White);
-        gameText->prop<TransformationProperties>()
-            .put<Scale>({0.3F, 0.3F})
-            .put<Position>({0.0F, -0.15F});
+        gameText->Text = "GAME";
+        gameText->Font = subSystem<res::IResourceRetriever>()
+                             ->getTTFont(GameResources::ScoreFontId)
+                             ->font(100);
+        gameText->TextColor = colors::White;
+        gameText->Scale     = {0.3F, 0.3F};
+        gameText->Position  = {0.0F, -0.15F};
     }
 
     {
         auto overText(
             game_over_rg_->createSceneNode<SceneNodeText>("gameoverover"));
-        overText->prop<SceneNodeTextProperties>()
-            .put<Text>("OVER")
-            .put<Font>(subSystem<res::IResourceRetriever>()
-                           ->getTTFont(GameResources::ScoreFontId)
-                           ->font(100))
-            .put<TextColor>(colors::White);
-        overText->prop<TransformationProperties>()
-            .put<Scale>({0.3F, 0.3F})
-            .put<Position>({0.0F, 0.15F});
+        overText->Text = "OVER";
+        overText->Font = subSystem<res::IResourceRetriever>()
+                             ->getTTFont(GameResources::ScoreFontId)
+                             ->font(100);
+        overText->TextColor = colors::White;
+        overText->Scale     = {0.3F, 0.3F};
+        overText->Position  = {0.0F, 0.15F};
     }
 
-    prop<Visible>().set(false);
+    Visible = false;
 }
 
 }  // namespace zoper

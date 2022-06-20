@@ -24,6 +24,9 @@ public:
     htps::PropertyState<htps::size_type> currentStayCounter;
 
     void onCreated() override;
+    int foo() { return 4; }
+    bool abc;
+    htps::PropertyState<bool> cde;
 
 private:
     void onAllScoreElementsCreated(htps::vector2dst const);

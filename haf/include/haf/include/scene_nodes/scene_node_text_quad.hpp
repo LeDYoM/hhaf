@@ -14,7 +14,6 @@ class TextQuad : public TextTableNode
 
 public:
     using BaseClass::BaseClass;
-    using BaseClass::prop;
 
     void onCreated() override;
 

@@ -15,7 +15,8 @@ void VisibilitySelectorComponent::update()
 {
     if (visible_index.readResetHasChanged())
     {
-        attachedNode()->set_property_for_each_sceneNode<Visible>(false);
+        attachedNode()->set_property_for_each_node(&SceneNode::Visible,
+                                                        false);
 
         LogAsserter::log_assert(
             visible_index() < attachedNode()->sceneNodes().size(),
@@ -23,8 +24,7 @@ void VisibilitySelectorComponent::update()
 
         if (visible_index() < attachedNode()->sceneNodes().size())
         {
-            attachedNode()->sceneNodes()[visible_index()]->prop<Visible>().set(
-                true);
+            attachedNode()->sceneNodes()[visible_index()]->Visible = true;
         }
     }
 }

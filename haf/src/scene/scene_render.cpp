@@ -10,7 +10,7 @@ namespace haf::scene
 {
 void render(SceneNode& scene_node, SceneRenderContext scene_render_context)
 {
-    if (scene_node.prop<Visible>().get())
+    if (scene_node.Visible())
     {
         // Update the node components
         scene_node.updateComponents();

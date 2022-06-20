@@ -20,7 +20,6 @@ class RenderizableSceneNode : public RenderizablesSceneNode
 
 public:
     using BaseClass::BaseClass;
-    using BaseClass::prop;
 
     htps::sptr<render::Renderizable> const& node() const noexcept;
 };

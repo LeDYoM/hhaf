@@ -19,7 +19,7 @@
 #include "../zoperprogramcontroller.hpp"
 #include "../keymapping.hpp"
 #include <htypes/include/types.hpp>
-#include <htypes/include/properties.hpp>
+#include <htypes/include/properties/iproperty.hpp>
 
 #include <boardmanager/include/boardmanager.hpp>
 #include <boardmanager/include/board_types.hpp>

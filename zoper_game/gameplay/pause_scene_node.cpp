@@ -14,48 +14,45 @@
 #include <haf/include/resources/ittfont.hpp>
 #include <haf/include/resources/iresource_retriever.hpp>
 
+#include <haf/include/animation/delta_property.hpp>
+
 using namespace htps;
 
-namespace zoper
-{
 using namespace haf;
 using namespace haf::scene;
 using namespace haf::scene::nodes;
 using namespace haf::time;
 
+namespace zoper
+{
 PauseSceneNode::~PauseSceneNode() = default;
 
 void PauseSceneNode::onCreated()
 {
-    pause_text_ = createSceneNode<SceneNodeText>("pausetext");
-    pause_text_->prop<SceneNodeTextProperties>()
-        .put<Text>("PAUSE")
-        .put<Font>(subSystem<res::IResourceRetriever>()
-                       ->getTTFont(GameResources::ScoreFontId)
-                       ->font(100U))
-        .put<TextColor>(colors::White);
+    pause_text_       = createSceneNode<SceneNodeText>("pausetext");
+    pause_text_->Text = "PAUSE";
+    pause_text_->Font = subSystem<res::IResourceRetriever>()
+                            ->getTTFont(GameResources::ScoreFontId)
+                            ->font(200U);
+    pause_text_->TextColor = colors::White;
 
-    pause_text_->prop<Scale>() = {0.5F, 0.5F};
-    prop<Visible>().set(false);
+    pause_text_->Scale = {0.5F, 0.5F};
+    Visible            = false;
 }
 
 void PauseSceneNode::enterPause()
 {
-    prop<Visible>().set(true);
+    Visible = true;
     pause_text_->component(animation_component_);
-
-    auto builder{
-        animation_component_->make_property_animation_builder_from_attached<
-            TextColor, SceneNodeText>()};
-    builder.startValue(Color{colors::White, Color::Transparent})
-        .endValue(Color{colors::White, Color::Opaque})
-        .duration(TimePoint_as_miliseconds(1000U));
+    auto builder{animation_component_->make_property_animation_builder(
+        &SceneNodeText::TextColor, colors::Transparent, colors::White)};
+    builder.duration(TimePoint_as_miliseconds(1000U));
 
     animation_component_->addAnimation(htps::move(builder));
 }
 
 void PauseSceneNode::exitPause()
 {
-    prop<Visible>().set(false);
+    Visible = false;
 }
 }  // namespace zoper

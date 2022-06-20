@@ -8,6 +8,8 @@
 #include <hlog/include/hlog.hpp>
 #include <haf/include/resources/iresource_retriever.hpp>
 #include <haf/include/resources/ittfont.hpp>
+#include <htypes/include/function.hpp>
+#include <htypes/include/properties/properties.hpp>
 
 using namespace htps;
 using namespace haf;
@@ -74,52 +76,49 @@ void GameHudSceneNode::update()
 
 void GameHudSceneNode::onAllScoreElementsCreated(htps::vector2dst const)
 {
-    Font::value_type font{subSystem<res::IResourceRetriever>()
-                              ->getTTFont(GameResources::ScoreFontId)
-                              ->font(200U)};
+    auto font{subSystem<res::IResourceRetriever>()
+                  ->getTTFont(GameResources::ScoreFontId)
+                  ->font(200U)};
 
-    score_quad_->setTableNodeProperty<Font>(font)
-        ->setTableNodeProperty<TextColor>(colors::White);
-    //        ->setTableNodeProperty<AlignmentSize>(vector2df{0.1F, 0.1F});
+    score_quad_->set_property_for_each_table_node(&SceneNodeText::Font, font);
+    score_quad_->set_property_for_each_table_node(&SceneNodeText::TextColor,
+                                                 colors::White);
 
-    score_quad_->text(vector2dst{0U, 0U})
-        ->prop<SceneNodeTextProperties>()
-        .put<Text>("Level:")
-        .put<TextColor>(colors::Blue);
-    score_quad_->text(vector2dst{0U, 1})
-        ->prop<SceneNodeTextProperties>()
-        .put<Text>("Score:")
-        .put<TextColor>(colors::Blue);
+    auto text_00{score_quad_->text(vector2dst{0U, 0U})};
+    text_00->Text      = "Level:";
+    text_00->TextColor = colors::Blue;
+
+    auto text_01{score_quad_->text(vector2dst{0U, 1U})};
+    text_01->Text      = "Score:";
+    text_01->TextColor = colors::Blue;
 
     score_quad_->setLeftTopPositionScale({0.35F, 0.32F});
-    score_quad_->for_each_tableSceneNode([](auto const&, auto const& node)
-    {
-        node->prop<TextBaseSizeProperty>() = TextBaseSize{'A', 6U};
+    score_quad_->for_each_tableSceneNode([](auto const&, auto const& node) {
+        node->TextBaseSizeProperty = TextBaseSize{'A', 6U};
     });
 }
 
 void GameHudSceneNode::onAllGoalElementsCreated(htps::vector2dst const)
 {
-    Font::value_type font{subSystem<res::IResourceRetriever>()
-                              ->getTTFont(GameResources::ScoreFontId)
-                              ->font(200U)};
+    auto font{subSystem<res::IResourceRetriever>()
+                  ->getTTFont(GameResources::ScoreFontId)
+                  ->font(200U)};
 
-    goal_quad_->setTableNodeProperty<Font>(font)
-        ->setTableNodeProperty<TextColor>(colors::White);
+    goal_quad_->set_property_for_each_table_node(&SceneNodeText::Font, font);
+    goal_quad_->set_property_for_each_table_node(&SceneNodeText::TextColor,
+                                                 colors::White);
 
-    goal_quad_->text(vector2dst{0U, 0U})
-        ->prop<SceneNodeTextProperties>()
-        .put<Text>("Current:")
-        .put<TextColor>(colors::Blue);
-    goal_quad_->text(vector2dst{0U, 1})
-        ->prop<SceneNodeTextProperties>()
-        .put<Text>("Goal:")
-        .put<TextColor>(colors::Blue);
+    auto text_00{goal_quad_->text(vector2dst{0U, 0U})};
+    text_00->Text      = "Current:";
+    text_00->TextColor = colors::Blue;
+
+    auto text_01{goal_quad_->text(vector2dst{0U, 1U})};
+    text_01->Text      = "Goal:";
+    text_01->TextColor = colors::Blue;
 
     goal_quad_->setRightTopPositionScale({0.35F, 0.32F});
-    goal_quad_->for_each_tableSceneNode([](auto const&, auto const& node)
-    {
-        node->prop<TextBaseSizeProperty>() = TextBaseSize{'A', 8U};
+    goal_quad_->for_each_tableSceneNode([](auto const&, auto const& node) {
+        node->TextBaseSizeProperty = TextBaseSize{'A', 8U};
     });
 }
 
@@ -127,7 +126,7 @@ bool GameHudSceneNode::setLevel(size_type const level)
 {
     if (score_quad_->nodeTableCreated({1U, 0U}))
     {
-        score_quad_->text({1U, 0U})->prop<Text>().set(make_str(level + 1U));
+        score_quad_->text({1U, 0U})->Text = make_str(level + 1U);
         return true;
     }
     return false;
@@ -137,7 +136,7 @@ bool GameHudSceneNode::setStayCounter(size_type const stayCounter)
 {
     if (goal_quad_->nodeTableCreated({1U, 1U}))
     {
-        goal_quad_->text({1U, 1U})->prop<Text>().set(make_str(stayCounter));
+        goal_quad_->text({1U, 1U})->Text = make_str(stayCounter);
         return true;
     }
     return false;
@@ -147,9 +146,8 @@ bool GameHudSceneNode::setConsumedTokens(size_type const consumedTokens)
 {
     if (goal_quad_->nodeTableCreated({1U, 0U}))
     {
-        goal_quad_->text(vector2dst{1U, 0U})
-            ->prop<Text>()
-            .set(str::to_str(consumedTokens));
+        goal_quad_->text(vector2dst{1U, 0U})->Text =
+            str::to_str(consumedTokens);
 
         return true;
     }
@@ -160,8 +158,8 @@ bool GameHudSceneNode::setEllapsedTimeInSeconds(u64 const seconds)
 {
     if (goal_quad_->nodeTableCreated({1U, 0U}))
     {
-        goal_quad_->text({1U, 0U})->prop<Text>().set(
-            str::to_str(static_cast<u16>(seconds)));
+        goal_quad_->text({1U, 0U})->Text =
+            str::to_str(static_cast<u16>(seconds));
 
         return true;
     }
@@ -179,7 +177,7 @@ bool GameHudSceneNode::setScore(size_type const score)
         {
             result = "0" + result;
         }
-        score_quad_->text({1U, 1U})->prop<Text>().set(result);
+        score_quad_->text({1U, 1U})->Text = result;
         return true;
     }
     return false;

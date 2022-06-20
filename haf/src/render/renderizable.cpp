@@ -18,25 +18,24 @@ namespace haf::render
 {
 Renderizable::Renderizable(rptr<TransformableSceneNode> parent,
                            RenderizableData&& renderizable_data) :
-    sys::HasName{htps::move(renderizable_data.prop<RenderizableName>()())},
+    sys::HasName{htps::move(renderizable_data.RenderizableName())},
     parent_{htps::move(parent)},
     p_{make_pimplp<RenderizablePrivate>(
         this,
-        renderizable_data.prop<PointCount>()(),
-        renderizable_data.prop<FigureTypeProperty>()(),
+        renderizable_data.PointCount(),
+        renderizable_data.FigureTypeProperty(),
         sys::getSystem<sys::RenderSystem>(parent).currentRenderTarget())}
 {
-    put<TextureProperty>(renderizable_data.prop<TextureProperty>()())
-        .put<TextureRectProperty>(
-            renderizable_data.prop<TextureRectProperty>()())
-        .put<ShaderProperty>(renderizable_data.prop<ShaderProperty>()())
-        .put<ColorProperty>(renderizable_data.prop<ColorProperty>()());
+    TextureProperty     = renderizable_data.TextureProperty();
+    TextureRectProperty = renderizable_data.TextureRectProperty();
+    ShaderProperty      = renderizable_data.ShaderProperty();
+    ColorProperty       = renderizable_data.ColorProperty();
 
-    if (prop<ShaderProperty>()() == nullptr)
+    if (ShaderProperty() == nullptr)
     {
-//        prop<ShaderProperty>() =
-//            parent_->subSystem<res::IDefaultResourcesRetriever>()
-//                ->getDefaultShader();
+        //        ShaderProperty =
+        //        parent_->subSystem<res::IDefaultResourcesRetriever>()
+        //                             ->getDefaultShader();
     }
 }
 
@@ -69,42 +68,39 @@ void Renderizable::update(bool const parent_transformation_changed)
             parent()->globalTransform().getMatrix());
     }
 
-    if (ps_readResetHasAnyChanged(prop<TextureRectProperty>()))
+    if (ps_readResetHasAnyChanged(TextureRectProperty))
     {
         p_->updateTextureRect();
     }
 
-    if (ps_readResetHasAnyChanged(prop<ColorProperty>()))
+    if (ps_readResetHasAnyChanged(ColorProperty))
     {
         p_->updateColors();
     }
 
-    if (prop<TextureProperty>().readResetHasChanged())
+    if (TextureProperty.readResetHasChanged())
     {
-        p_->m_render_element.setTexture(
-            to_backend(prop<TextureProperty>()().get()));
+        p_->m_render_element.setTexture(to_backend(TextureProperty().get()));
     }
 
-    if (prop<ShaderProperty>().readResetHasChanged())
+    if (ShaderProperty.readResetHasChanged())
     {
-/*        if (prop<ShaderProperty>()() != nullptr)
+/*        if (ShaderProperty() != nullptr)
         {
-            types::sptr<res::IShader> const& shader{
-                prop<ShaderProperty>()()};
+            sptr<res::IShader> const& shader{ShaderProperty()};
 
-            if (prop<TextureProperty>()() != nullptr)
+            if (TextureProperty() != nullptr)
             {
                 shader->setUniform("has_texture", true);
-                shader->setUniform("texture", prop<TextureProperty>()().get());
+                shader->setUniform("texture", TextureProperty().get());
             }
             else
             {
                 shader->setUniform("has_texture", false);
             }
         }
-*/
-        p_->m_render_element.setShader(
-            to_backend(prop<ShaderProperty>()().get()));
+        p_->m_render_element.setShader(to_backend(ShaderProperty().get()));
+        */
     }
 }
 

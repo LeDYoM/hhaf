@@ -21,10 +21,13 @@ set(headers
     ${include_dir}/memory/allocator.hpp
     ${include_dir}/memory/allocatorfunc.hpp
     ${include_dir}/memory/placement.hpp
+    ${include_dir}/properties/basic_property.hpp
+    ${include_dir}/properties/iproperty.hpp
+    ${include_dir}/properties/properties.hpp
+    ${include_dir}/properties/wrapper_property.hpp
     ${include_dir}/algoutils.hpp
     ${include_dir}/array.hpp
     ${include_dir}/basic_dictionary.hpp
-    ${include_dir}/basic_property.hpp
     ${include_dir}/basic_str.hpp
     ${include_dir}/cast.hpp
     ${include_dir}/connection.hpp
@@ -38,10 +41,6 @@ set(headers
     ${include_dir}/object.hpp
     ${include_dir}/p_impl_pointer.hpp
     ${include_dir}/parpar.hpp
-    ${include_dir}/properties.hpp
-    ${include_dir}/property_group_impl.hpp
-    ${include_dir}/property_group.hpp
-    ${include_dir}/propertystate.hpp
     ${include_dir}/rawmemory.hpp
     ${include_dir}/rect.hpp
     ${include_dir}/serializer.hpp
@@ -56,7 +55,7 @@ set(headers
     ${include_dir}/vector_view.hpp
     ${include_dir}/vector.hpp
     ${include_dir}/vector2d.hpp
-    )
+)
 
 build_lib_component(EXPORT_ALL HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}" SOURCES
                     ${sources} HEADERS ${headers})

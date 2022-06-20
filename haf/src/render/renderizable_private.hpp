@@ -76,13 +76,13 @@ struct Renderizable::RenderizablePrivate
     void updateTextureRect()
     {
         setTextureRect(positions_, texture_coordinates_,
-                       i_this_->prop<TextureRectProperty>()());
+                       i_this_->TextureRectProperty());
         m_render_element.setTexturecoordinates(texture_coordinates_.cbegin());
     }
 
     void updateColors()
     {
-        setColor(colors_, i_this_->prop<ColorProperty>()());
+        setColor(colors_, i_this_->ColorProperty());
         m_render_element.setColors(colors_.cbegin());
     }
 };

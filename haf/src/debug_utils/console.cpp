@@ -20,21 +20,18 @@ void Console::onCreated()
 {
     BaseClass::onCreated();
 
-    auto a = createSceneNode<SceneNodeText>("scnText");
-    a->prop<Font>().set(
-        subSystem<res::IResourceRetriever>()->getBMPFont(
-            "console_font"));
+    auto a  = createSceneNode<SceneNodeText>("scnText");
+    a->Font = subSystem<res::IResourceRetriever>()->getBMPFont("console_font");
 
-//    prop<Position>().set(vector2df{100.0F, 0.0F});
-//    prop<Scale>().set({1 / 2000.0F, 1 / 2000.0F});
-//    a->prop<Text>().set("234 ABC abc");
-    a->prop<Text>().set("AYi2_+q");
-    a->prop<TextColor>().set(colors::Red);
+//    Position     = {100.0F, 0.0F};
+//    Scale        = {1 / 2000.0F, 1 / 2000.0F};
+//    a->Text      = "234 ABC abc";
+    a->Text      = "AYi2_+q";
+    a->TextColor = colors::Red;
     a->setLeftTopPositionScale({0.5F, 0.1F});
-    a->prop<TextBaseSizeProperty>() = TextBaseSize{'A', 0U};
-//    a->setBaseSizeFromText('A', 10U);
-//    a->prop<Position>().set({-0.250F, -0.25F});
-//    a->prop<Scale>().set({0.5F, 0.5F});
+    a->TextBaseSizeProperty = TextBaseSize{'A', 0U};
+//    a->Position = {-0.250F, -0.25F};
+//    a->Scale = {0.5F, 0.5F};
 }
 
 void Console::setText(str const& text)
@@ -42,4 +39,4 @@ void Console::setText(str const& text)
     (void)(text);
 }
 
-}  // namespace zoper
+}  // namespace haf

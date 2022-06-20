@@ -20,7 +20,6 @@ class HighScoreTextController : public haf::scene::nodes::TextTableNode
 
 public:
     using BaseClass::BaseClass;
-    using BaseClass::prop;
 
     void onCreated() override;
 
@@ -40,7 +39,6 @@ private:
     void addEditAnimation(const htps::size_type line_index);
     HighScoresData high_scores_data_;
     htps::sptr<haf::res::IFont> normal_font_;
-    htps::sptr<haf::anim::AnimationComponent> animation_component_;
 
     haf::scene::Color normal_color_;
     haf::scene::Color selected_color_;

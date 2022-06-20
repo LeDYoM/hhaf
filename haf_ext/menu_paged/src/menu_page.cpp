@@ -18,7 +18,7 @@ MenuPage::~MenuPage() = default;
 void MenuPage::onCreated()
 {
     BaseClass::onCreated();
-    prop<TableSize>() = {0U, 0U};
+    TableSize = {0U, 0U};
 
     auto input{component<MenuPageInputComponent>()};
     input->Up.connect({this, &MenuPage::goUp});
@@ -50,8 +50,7 @@ void MenuPage::onAllTableElementsCreated(htps::vector2dst const table_size)
 
             auto newOption{nodeAt(vector2dst{title_column, counter})};
             standarizeText(newOption);
-            newOption->prop<nodes::SceneNodeTextProperties>().set<nodes::Text>(
-                option->title());
+            newOption->Text = option->title();
 
             if (!option->option().options().empty())
             {
@@ -60,7 +59,7 @@ void MenuPage::onAllTableElementsCreated(htps::vector2dst const table_size)
                 standarizeText(discreteTextLabel);
                 auto discreteTextComponent{
                     discreteTextLabel->component<DiscreteTextComponent>()};
-                discreteTextComponent->data.set(option->option().options());
+                discreteTextComponent->data = option->option().options();
             }
 
             ++counter;
@@ -98,22 +97,22 @@ rptr<MenuPaged const> MenuPage::parentMenuPaged() const
 
 sptr<res::IFont> MenuPage::normalFont() const
 {
-    return parentMenuPaged()->prop<MenuPagedProperties>().get<NormalTextFont>();
+    return parentMenuPaged()->NormalTextFont();
 }
 
 Color MenuPage::normalColor() const
 {
-    return parentMenuPaged()->prop<MenuPagedProperties>().get<NormalColor>();
+    return parentMenuPaged()->NormalColor();
 }
 
 Color MenuPage::selectedColor() const
 {
-    return parentMenuPaged()->prop<MenuPagedProperties>().get<SelectedColor>();
+    return parentMenuPaged()->SelectedColor();
 }
 
 size_type MenuPage::SelectedOptionAtRow(const size_type row) const
 {
-    if (row < prop<TableSize>().get().y)
+    if (row < TableSize().y)
     {
         auto node(nodeAt({columnForOptions, row}));
         if (auto discreteText = node->componentOfType<DiscreteTextComponent>())
@@ -140,16 +139,16 @@ void MenuPage::update()
     {
         if (!menu_options().empty())
         {
-            prop<TableSize>().set({5U, menu_options().size()});
+            TableSize = {5U, menu_options().size()};
         }
     }
 }
 
 vector<s32> MenuPage::optionsSelected() const
 {
-    vector<s32> result(prop<TableSize>().get().y);
+    vector<s32> result(TableSize().y);
 
-    for (size_type index{0U}; index < prop<TableSize>().get().y; ++index)
+    for (size_type index{0U}; index < TableSize().y; ++index)
     {
         result.emplace_back(
             (nodeHasOptions(index))
@@ -178,31 +177,28 @@ void MenuPage::setColorToLine(const size_type index, const Color& color)
         index,
         [&color](const size_type,
                  const sptr<BaseClass::ContainedElement>& node) {
-            node->prop<nodes::SceneNodeTextProperties>().set<nodes::TextColor>(
-                color);
+            node->TextColor = color;
         });
 }
 
 void MenuPage::standarizeText(const sptr<ContainedElement>& ntext)
 {
-    ntext->prop<nodes::SceneNodeTextProperties>()
-        .put<nodes::TextColor>(normalColor())
-        .put<nodes::Font>(normalFont());
+    ntext->TextColor = normalColor();
+    ntext->Font      = normalFont();
 }
 
 void MenuPage::goDown()
 {
     previously_selected_item_ = selected_item_;
-    setSelectedItem((selected_item_ < (prop<TableSize>().get().y - 1U))
-                        ? (selected_item_ + 1U)
-                        : (0U));
+    setSelectedItem(
+        (selected_item_ < (TableSize().y - 1U)) ? (selected_item_ + 1U) : (0U));
 }
 
 void MenuPage::goUp()
 {
     previously_selected_item_ = selected_item_;
     setSelectedItem((selected_item_ > 0U) ? (selected_item_ - 1U)
-                                          : (prop<TableSize>().get().y - 1U));
+                                          : (TableSize().y - 1U));
 }
 
 void MenuPage::goLeft()
@@ -243,7 +239,7 @@ sptr<DiscreteTextComponent> MenuPage::optionsLabelAt(const size_type y) const
 
 bool MenuPage::nodeHasOptions(const size_type y) const noexcept
 {
-    if (prop<TableSize>().get().x >= columnForOptions)
+    if (TableSize().x >= columnForOptions)
     {
         if (auto node = nodeAt({columnForOptions, y}))
         {

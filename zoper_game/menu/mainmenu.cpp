@@ -85,8 +85,7 @@ void MainMenu::onCreated()
 {
     BaseClass::onCreated();
 
-    prop<MenuPagedProperties>()
-        .put<NormalTextFont>(
+    NormalTextFont =
 #ifdef TEST_BMP_FONT
             getBMPFont(MainMenuResources::TestFontId)
 #else
@@ -94,12 +93,12 @@ void MainMenu::onCreated()
                 ->getTTFont(MainMenuResources::MenuFontId)
                 ->font(30)
 #endif
-                )
-        .put<NormalColor>(colors::Blue)
-        .put<SelectedColor>(colors::Red);
+                ;
+    NormalColor = colors::Blue;
+    SelectedColor = colors::Red;
 
     vector_shared_pointers<scene::MenuPage> menu_steps;
-    prop<Scale>() = Scale::value_type{1.0F, 0.3F};
+    Scale = {1.0F, 0.3F};
 
     // Create and register menu pages
     {
@@ -160,13 +159,13 @@ void MainMenu::onCreated()
 
     configure_menu(htps::move(menu_steps));
 
-    prop<FinishSceneAtEnd>() = true;
+    FinishSceneAtEnd = true;
 }
 
 void MainMenu::onTableNodeCreated(htps::vector2dst,
                                   htps::sptr<SceneNodeText> const& node)
 {
-    node->prop<TextBaseSizeProperty>() = TextBaseSize{'A', 8U};
+    node->TextBaseSizeProperty = TextBaseSize{'A', 8U};
 }
 
 }  // namespace zoper

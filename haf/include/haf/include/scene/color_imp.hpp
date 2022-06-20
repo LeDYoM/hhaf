@@ -192,20 +192,6 @@ struct ColorImp
     }
 
     /**
-     * @brief Add two colors (They might be of different type). The result
-     * is ensured to be a valid color of the source type
-     *
-     * @tparam VT Value type of the second color
-     * @param rhs  Right hand side operand
-     * @return ColorImp with the resulting color
-     */
-    template <typename VT>
-    constexpr ColorImp operator+(ColorImp<VT> const& rhs) const noexcept
-    {
-        return (ColorImp{*this} += rhs);
-    }
-
-    /**
      * @brief Substract two colors (They might be of different type). The result
      * is ensured to be a valid color of the source type
      *
@@ -283,16 +269,6 @@ struct ColorImp
         return *this;
     }
 
-    constexpr ColorImp operator*(htps::f32 const delta) const noexcept
-    {
-        return ColorImp{*this} *= delta;
-    }
-
-    constexpr ColorImp operator/(htps::f32 const delta) noexcept
-    {
-        return ColorImp{*this} /= delta;
-    }
-
     constexpr value_type red() const noexcept { return r; }
     constexpr value_type green() const noexcept { return g; }
     constexpr value_type blue() const noexcept { return b; }
@@ -309,17 +285,38 @@ private:
 };
 
 template <typename vt>
+constexpr ColorImp<vt> operator*(ColorImp<vt> const& color,
+                                 htps::f32 const delta) noexcept
+{
+    return ColorImp<vt>{color} *= delta;
+}
+
+template <typename vt>
 constexpr ColorImp<vt> operator*(htps::f32 const delta,
                                  ColorImp<vt> const& color) noexcept
 {
-    return color * delta;
+    return ColorImp<vt>{color} *= delta;
+}
+
+template <typename vt>
+constexpr ColorImp<vt> operator/(ColorImp<vt> const& color,
+                                 htps::f32 const delta) noexcept
+{
+    return ColorImp<vt>{color} /= delta;
 }
 
 template <typename vt>
 constexpr ColorImp<vt> operator/(htps::f32 const delta,
                                  ColorImp<vt> const& color) noexcept
 {
-    return color / delta;
+    return ColorImp<vt>{color} /= delta;
+}
+
+template <typename vt>
+constexpr ColorImp<vt> operator+(ColorImp<vt> const& lhs,
+                                 ColorImp<vt> const& rhs) noexcept
+{
+    return (ColorImp{lhs} += rhs);
 }
 
 }  // namespace haf::scene
