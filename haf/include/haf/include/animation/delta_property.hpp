@@ -55,8 +55,8 @@ public:
 private:
     void updateDelta()
     {
-        m_property = (AnimableType_t{m_start_value} +
-                      (m_delta_value * m_delta_property()));
+        m_property = static_cast<T>((AnimableType_t{m_start_value} +
+                                     (m_delta_value * m_delta_property())));
     }
 
     htps::BasicProperty<htps::f32> m_delta_property;
