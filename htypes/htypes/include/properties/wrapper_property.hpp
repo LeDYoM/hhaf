@@ -21,18 +21,12 @@ public:
 
     template <template <typename>
               typename PropertyType,
+              typename PropertyValue,
               typename ObjectType>
     constexpr WrapperProperty(
         ObjectType* const obj,
-        PropertyType<T>(ObjectType::*property_v)) noexcept :
+        PropertyType<PropertyValue>(ObjectType::*property_v)) :
         m_property{&(obj->*property_v)}
-    {}
-
-    template <template <typename>
-              typename PropertyType>
-    constexpr explicit WrapperProperty(
-        PropertyType<T>& property) noexcept :
-        m_property{&property}
     {}
 
     constexpr T const& operator()() const noexcept override

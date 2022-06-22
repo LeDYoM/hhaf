@@ -13,11 +13,21 @@ namespace haf::anim
 class PropertyAnimationBuilder
 {
 public:
+    PropertyAnimationBuilder() = delete;
+
     /**
      * @brief Construct a new Property Animation Builder object
      * @param data An already created @b PropertyAnimationData
      */
     explicit PropertyAnimationBuilder(PropertyAnimationData data);
+
+    PropertyAnimationBuilder(PropertyAnimationBuilder const&) = delete;
+    PropertyAnimationBuilder& operator=(PropertyAnimationBuilder const&) =
+        delete;
+    PropertyAnimationBuilder(PropertyAnimationBuilder&&) noexcept = default;
+    PropertyAnimationBuilder& operator=(PropertyAnimationBuilder&&) noexcept =
+        default;
+
     PropertyAnimationBuilder& duration(time::TimePoint const& value);
     PropertyAnimationBuilder& times(htps::s32 value);
     PropertyAnimationBuilder& switchAnimation(bool value);

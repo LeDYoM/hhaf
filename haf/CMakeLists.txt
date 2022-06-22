@@ -274,7 +274,6 @@ set(headers
   ${inc_dir}/resources/resource_descriptor.hpp
 
   # Scene
-  ${inc_dir}/scene/color_imp.hpp
   ${inc_dir}/scene/color.hpp
   ${inc_dir}/scene/hasname.hpp
   ${inc_dir}/scene/material.hpp

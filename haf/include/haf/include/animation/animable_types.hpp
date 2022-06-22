@@ -2,22 +2,17 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_ANIM_ANIMABLETYPE_INCLUDE_HPP
 #define HAF_ANIM_ANIMABLETYPE_INCLUDE_HPP
 
-#include <haf/include/scene/color.hpp>
+#include <htypes/include/types.hpp>
 
 namespace haf::anim
 {
-
 template <typename PropertyType>
-struct AnimableType
+PropertyType interpolate(PropertyType const& begin,
+                         PropertyType const& end,
+                         htps::f32 const delta)
 {
-    using type = PropertyType;
-};
-
-template <>
-struct AnimableType<scene::Color>
-{
-    using type = scene::ColorImp<htps::s16>;
-};
+    return begin + ((end - begin) * delta);
+}
 
 }  // namespace haf::anim
 

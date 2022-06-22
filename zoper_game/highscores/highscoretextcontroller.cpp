@@ -125,7 +125,7 @@ void HighScoreTextController::addEditAnimation(const size_type line_index)
             element->component(animation_component);
             auto property_animation_builder{
                 animation_component->make_property_animation_builder(
-                    &nodes::SceneNodeText::TextColor, colors::White,
+                    &nodes::SceneNodeText::TextColor, colors::Blue,
                     colors::Black)};
             property_animation_builder
                 .duration(time::TimePoint_as_miliseconds(2000U))
