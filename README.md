@@ -1,8 +1,8 @@
 Github-CI:<br>
 [![Build Status][github_windows_status]][github_windows_link]<br>
 
-[github_windows_status]: https://github.com/LeDYoM/hhaf/actions/workflows/x86_windows.yml/badge.svg
-[github_windows_link]: https://github.com/LeDYoM/hhaf/actions/workflows/x86_windows.yml
+[github_windows_status]: https://github.com/LeDYoM/hhaf/actions/workflows/cmake.yml/badge.svg
+[github_windows_link]: https://github.com/LeDYoM/hhaf/actions/workflows/cmake.yml
 
 # Host Application Framework (HAF)  {#mainpaige}
 
