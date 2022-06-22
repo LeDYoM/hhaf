@@ -31,16 +31,16 @@ public:
         acceleration_    = 1.0F;
     }
 
-    constexpr time::TimePoint&& accelerate(
+    constexpr time::TimePoint accelerate(
         time::TimePoint&& time_point) const noexcept
     {
         if (use_acceleration)
         {
-            return htps::move(time_point * acceleration_);
+            return time_point * acceleration_;
         }
         else
         {
-            return htps::move(time_point);
+            return time_point;
         }
     }
 
@@ -58,10 +58,10 @@ public:
     constexpr void setAcceleration(AccelerationFactor const) const noexcept {}
     constexpr void resetAcceleration() const noexcept {}
 
-    constexpr time::TimePoint&& accelerate(
+    constexpr time::TimePoint accelerate(
         time::TimePoint&& time_point) const noexcept
     {
-        return htps::move(time_point);
+        return time_point;
     }
 };
 

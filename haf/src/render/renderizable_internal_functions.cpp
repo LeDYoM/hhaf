@@ -62,7 +62,7 @@ void setPolygon(htps::vector<backend::iPosition>& positions)
 {
     constexpr SceneCoordinates const center{0.0F, 0.0F};
 
-    fast_u32 const kNumSides{positions.size() / 3U};
+    fast_u32 const kNumSides{static_cast<fast_u32>(positions.size() / 3U)};
     auto const baseAngle{PiM2Constant<f64> / static_cast<f64>(kNumSides)};
     vector2dd const radius{0.5F, 0.5F};
 
