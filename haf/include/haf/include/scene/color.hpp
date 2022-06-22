@@ -30,17 +30,6 @@ struct Color
     static constexpr value_type const value_min{0U};
 
     /**
-     * @brief Ensure that a value is between the required limits
-     *
-     * @tparam Source Type of the source value
-     * @param source Source value of type Source
-     * @return value_type Value of the type required for this Color
-     */
-    static value_type ensureLimits(value_type source) noexcept;
-
-    static value_type ensureLimits_f32(htps::f32 source) noexcept;
-
-    /**
      * @brief Static constant defining the value for opaque colors
      */
     static constexpr value_type Opaque = value_max;
@@ -87,12 +76,6 @@ struct Color
                             htps::f32 const blue,
                             htps::f32 const alpha = 1.0F) noexcept;
 
-    Color& operator+=(Color const& right) noexcept;
-
-    Color& operator-=(Color const& right) noexcept;
-
-    Color& operator*=(Color const& right) noexcept;
-
     Color& operator*=(htps::f32 const delta) noexcept;
 
     Color& operator/=(htps::f32 const delta) noexcept;
@@ -103,29 +86,20 @@ struct Color
     value_type alpha() const noexcept;
 
 private:
+    /**
+     * @brief Ensure that a value is between the required limits
+     *
+     * @tparam Source Type of the source value
+     * @param source Source value of type Source
+     * @return value_type Value of the type required for this Color
+     */
+    static value_type ensureLimits_f32(htps::f32 source) noexcept;
+
     value_type r;
     value_type g;
     value_type b;
     value_type a;
 };
-
-/**
- * @brief Multiply two colors (They might be of different type). The result
- * is ensured to be a valid color of the source type
- *
- * @param rhs  Right hand side operand
- * @return Color with the resulting color
- */
-Color operator*(Color const& lhs, Color const& rhs) noexcept;
-
-/**
- * @brief Substract two colors (They might be of different type). The result
- * is ensured to be a valid color of the source type
- *
- * @param rhs  Right hand side operand
- * @return Color with the resulting color
- */
-inline Color operator-(Color const& lhs, Color const& rhs) noexcept;
 
 /**
  * @brief Equality comparation with another Color of the same type
@@ -146,14 +120,9 @@ bool operator==(Color const& lhs, Color const& rhs) noexcept;
 bool operator!=(Color const& lhs, Color const& rhs) noexcept;
 
 Color operator*(Color const& color, htps::f32 const delta) noexcept;
-
 Color operator*(htps::f32 const delta, Color const& color) noexcept;
 
 Color operator/(Color const& color, htps::f32 const delta) noexcept;
-
-Color operator/(htps::f32 const delta, Color const& color) noexcept;
-
-Color operator+(Color const& lhs, Color const& rhs) noexcept;
 
 Color interpolate(Color const& begin, Color const& end, htps::f32 const delta);
 

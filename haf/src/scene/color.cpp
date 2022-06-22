@@ -3,19 +3,11 @@
 
 namespace haf::scene
 {
-Color::value_type Color::ensureLimits(Color::value_type source) noexcept
-{
-    return static_cast<Color::value_type>(std::min(
-        static_cast<Color::value_type>(Color::value_max),
-        std::max(source, static_cast<Color::value_type>(Color::value_min))));
-}
-
 Color::value_type Color::ensureLimits_f32(htps::f32 source) noexcept
 {
-    return static_cast<Color::value_type>(
-        std::min(static_cast<Color::value_type>(Color::value_max),
-                 std::max(static_cast<Color::value_type>(source),
-                          static_cast<Color::value_type>(Color::value_min))));
+    return (source >= 255.0F)
+        ? 255U
+        : ((source <= 0.0) ? 0U : static_cast<Color::value_type>(source));
 }
 
 Color::Color() noexcept : r{value_min}, g{value_min}, b{value_min}, a{value_max}
@@ -48,37 +40,6 @@ Color Color::fromFloats(htps::f32 const red,
                  static_cast<value_type>(green * value_max),
                  static_cast<value_type>(blue * value_max),
                  static_cast<value_type>(alpha * value_max)};
-}
-
-Color& Color::operator*=(Color const& right) noexcept
-{
-    r = static_cast<value_type>((static_cast<htps::u32>(r) * right.r) /
-                                value_max);
-    g = static_cast<value_type>((static_cast<htps::u32>(g) * right.g) /
-                                value_max);
-    b = static_cast<value_type>((static_cast<htps::u32>(b) * right.b) /
-                                value_max);
-    a = static_cast<value_type>((static_cast<htps::u32>(a) * right.a) /
-                                value_max);
-    return *this;
-}
-
-Color& Color::operator+=(Color const& right) noexcept
-{
-    r = ensureLimits(r + right.r);
-    g = ensureLimits(g + right.g);
-    b = ensureLimits(b + right.b);
-    a = ensureLimits(a + right.a);
-    return *this;
-}
-
-Color& Color::operator-=(Color const& right) noexcept
-{
-    r = ensureLimits(static_cast<htps::s32>(r) - right.r);
-    g = ensureLimits(static_cast<htps::s32>(g) - right.g);
-    b = ensureLimits(static_cast<htps::s32>(b) - right.b);
-    a = ensureLimits(static_cast<htps::s32>(a) - right.a);
-    return *this;
 }
 
 Color& Color::operator*=(htps::f32 const delta) noexcept
@@ -119,16 +80,6 @@ Color::value_type Color::alpha() const noexcept
     return a;
 }
 
-Color operator*(Color const& lhs, Color const& rhs) noexcept
-{
-    return Color{lhs} *= rhs;
-}
-
-Color operator-(Color const& lhs, Color const& rhs) noexcept
-{
-    return Color{lhs} -= rhs;
-}
-
 bool operator==(Color const& lhs, Color const& rhs) noexcept
 {
     return (lhs.red() == rhs.red() && lhs.green() == rhs.green() &&
@@ -153,16 +104,6 @@ Color operator*(htps::f32 const delta, Color const& color) noexcept
 Color operator/(Color const& color, htps::f32 const delta) noexcept
 {
     return Color{color} /= delta;
-}
-
-Color operator/(htps::f32 const delta, Color const& color) noexcept
-{
-    return Color{color} /= delta;
-}
-
-Color operator+(Color const& lhs, Color const& rhs) noexcept
-{
-    return (Color{lhs} += rhs);
 }
 
 Color interpolate(Color const& begin, Color const& end, htps::f32 const delta)
