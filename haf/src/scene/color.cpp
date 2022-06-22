@@ -3,6 +3,21 @@
 
 namespace haf::scene
 {
+Color::value_type Color::ensureLimits(Color::value_type source) noexcept
+{
+    return static_cast<Color::value_type>(std::min(
+        static_cast<Color::value_type>(Color::value_max),
+        std::max(source, static_cast<Color::value_type>(Color::value_min))));
+}
+
+Color::value_type Color::ensureLimits_f32(htps::f32 source) noexcept
+{
+    return static_cast<Color::value_type>(
+        std::min(static_cast<Color::value_type>(Color::value_max),
+                 std::max(static_cast<Color::value_type>(source),
+                          static_cast<Color::value_type>(Color::value_min))));
+}
+
 Color::Color() noexcept : r{value_min}, g{value_min}, b{value_min}, a{value_max}
 {}
 
@@ -46,6 +61,62 @@ Color& Color::operator*=(Color const& right) noexcept
     a = static_cast<value_type>((static_cast<htps::u32>(a) * right.a) /
                                 value_max);
     return *this;
+}
+
+Color& Color::operator+=(Color const& right) noexcept
+{
+    r = ensureLimits(r + right.r);
+    g = ensureLimits(g + right.g);
+    b = ensureLimits(b + right.b);
+    a = ensureLimits(a + right.a);
+    return *this;
+}
+
+Color& Color::operator-=(Color const& right) noexcept
+{
+    r = ensureLimits(static_cast<htps::s32>(r) - right.r);
+    g = ensureLimits(static_cast<htps::s32>(g) - right.g);
+    b = ensureLimits(static_cast<htps::s32>(b) - right.b);
+    a = ensureLimits(static_cast<htps::s32>(a) - right.a);
+    return *this;
+}
+
+Color& Color::operator*=(htps::f32 const delta) noexcept
+{
+    r = ensureLimits_f32(static_cast<htps::f32>(r) * delta);
+    g = ensureLimits_f32(static_cast<htps::f32>(g) * delta);
+    b = ensureLimits_f32(static_cast<htps::f32>(b) * delta);
+    a = ensureLimits_f32(static_cast<htps::f32>(a) * delta);
+    return *this;
+}
+
+Color& Color::operator/=(htps::f32 const delta) noexcept
+{
+    r = ensureLimits_f32(static_cast<htps::f32>(r) / delta);
+    g = ensureLimits_f32(static_cast<htps::f32>(g) / delta);
+    b = ensureLimits_f32(static_cast<htps::f32>(b) / delta);
+    a = ensureLimits_f32(static_cast<htps::f32>(a) / delta);
+    return *this;
+}
+
+Color::value_type Color::red() const noexcept
+{
+    return r;
+}
+
+Color::value_type Color::green() const noexcept
+{
+    return g;
+}
+
+Color::value_type Color::blue() const noexcept
+{
+    return b;
+}
+
+Color::value_type Color::alpha() const noexcept
+{
+    return a;
 }
 
 Color operator*(Color const& lhs, Color const& rhs) noexcept

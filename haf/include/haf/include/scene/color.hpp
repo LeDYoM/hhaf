@@ -3,47 +3,10 @@ HTPS_PRAGMA_ONCE
 #define HAF_SCENE_COLOR_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
-#include <algorithm>
-#include <limits>
-
 #include <haf/include/animation/animable_types.hpp>
 
 namespace haf::scene
 {
-namespace detail
-{
-template <typename value_type>
-static constexpr value_type const value_max =
-    std::numeric_limits<value_type>::max();
-
-template <typename value_type>
-static constexpr value_type const value_min =
-    std::numeric_limits<value_type>::min();
-
-template <typename Dest, typename Source>
-constexpr Dest ensureLimits(Source const source) noexcept
-{
-    return static_cast<Dest>(
-        std::min(static_cast<Source>(value_max<Dest>),
-                 std::max(source, static_cast<Source>(value_min<Dest>))));
-}
-
-template <typename value_type>
-constexpr htps::f32 normalize(value_type const v) noexcept
-{
-    return static_cast<htps::f32>(
-        static_cast<htps::f32>(v) /
-        static_cast<htps::f32>(value_max<value_type>));
-}
-
-template <typename value_type>
-constexpr void denormalize(const htps::f32 v, value_type& d) noexcept
-{
-    d = static_cast<value_type>(v * value_max<value_type>);
-}
-
-}  // namespace detail
-
 /**
  * @brief Class representing a color. The suffix helps to
  * create custom specializations with more meaningful names.
@@ -59,12 +22,12 @@ struct Color
     /**
      * @brief Maximum value for each coordinate
      */
-    static constexpr value_type value_max = detail::value_max<value_type>;
+    static constexpr value_type const value_max{255U};
 
     /**
      * @brief Minimum value for each coordinate
      */
-    static constexpr value_type value_min = detail::value_min<value_type>;
+    static constexpr value_type const value_min{0U};
 
     /**
      * @brief Ensure that a value is between the required limits
@@ -73,11 +36,9 @@ struct Color
      * @param source Source value of type Source
      * @return value_type Value of the type required for this Color
      */
-    template <typename Source>
-    static constexpr value_type ensureLimits(Source source) noexcept
-    {
-        return detail::ensureLimits<value_type, Source>(htps::move(source));
-    }
+    static value_type ensureLimits(value_type source) noexcept;
+
+    static value_type ensureLimits_f32(htps::f32 source) noexcept;
 
     /**
      * @brief Static constant defining the value for opaque colors
@@ -126,48 +87,20 @@ struct Color
                             htps::f32 const blue,
                             htps::f32 const alpha = 1.0F) noexcept;
 
-    Color& operator+=(Color const& right) noexcept
-    {
-        r = ensureLimits(r + right.r);
-        g = ensureLimits(g + right.g);
-        b = ensureLimits(b + right.b);
-        a = ensureLimits(a + right.a);
-        return *this;
-    }
+    Color& operator+=(Color const& right) noexcept;
 
-    Color& operator-=(Color const& right) noexcept
-    {
-        r = ensureLimits(static_cast<htps::s32>(r) - right.r);
-        g = ensureLimits(static_cast<htps::s32>(g) - right.g);
-        b = ensureLimits(static_cast<htps::s32>(b) - right.b);
-        a = ensureLimits(static_cast<htps::s32>(a) - right.a);
-        return *this;
-    }
+    Color& operator-=(Color const& right) noexcept;
 
     Color& operator*=(Color const& right) noexcept;
 
-    Color& operator*=(htps::f32 const delta) noexcept
-    {
-        r = detail::ensureLimits<value_type>(static_cast<htps::f32>(r) * delta);
-        g = detail::ensureLimits<value_type>(static_cast<htps::f32>(g) * delta);
-        b = detail::ensureLimits<value_type>(static_cast<htps::f32>(b) * delta);
-        a = detail::ensureLimits<value_type>(static_cast<htps::f32>(a) * delta);
-        return *this;
-    }
+    Color& operator*=(htps::f32 const delta) noexcept;
 
-    Color& operator/=(htps::f32 const delta) noexcept
-    {
-        r = detail::ensureLimits<value_type>(static_cast<htps::f32>(r) / delta);
-        g = detail::ensureLimits<value_type>(static_cast<htps::f32>(g) / delta);
-        b = detail::ensureLimits<value_type>(static_cast<htps::f32>(b) / delta);
-        a = detail::ensureLimits<value_type>(static_cast<htps::f32>(a) / delta);
-        return *this;
-    }
+    Color& operator/=(htps::f32 const delta) noexcept;
 
-    value_type red() const noexcept { return r; }
-    value_type green() const noexcept { return g; }
-    value_type blue() const noexcept { return b; }
-    value_type alpha() const noexcept { return a; }
+    value_type red() const noexcept;
+    value_type green() const noexcept;
+    value_type blue() const noexcept;
+    value_type alpha() const noexcept;
 
 private:
     value_type r;
