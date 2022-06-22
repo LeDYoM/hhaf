@@ -21,7 +21,6 @@ public:
     using const_reference = typename Base::const_reference;
     using pointer         = typename Base::pointer;
     using const_pointer   = typename Base::const_pointer;
-    using AnimableType_t  = typename AnimableType<T>::type;
 
     constexpr DeltaProperty() = delete;
 
@@ -31,8 +30,7 @@ public:
         m_delta_property{0.0F},
         m_property{wrapper_property},
         m_start_value{start_value},
-        m_end_value{end_value},
-        m_delta_value{AnimableType_t{end_value} - AnimableType_t{start_value}}
+        m_end_value{end_value}
     {}
 
     constexpr htps::f32 const& operator()() const noexcept override
@@ -55,15 +53,17 @@ public:
 private:
     void updateDelta()
     {
-        m_property = static_cast<T>((AnimableType_t{m_start_value} +
-                                     (m_delta_value * m_delta_property())));
+        //        m_property = static_cast<T>((AnimableType_t{m_start_value} +
+        //                                     (m_delta_value *
+        //                                     m_delta_property())));
+        m_property =
+            interpolate(m_start_value, m_end_value, m_delta_property());
     }
 
     htps::BasicProperty<htps::f32> m_delta_property;
     htps::WrapperProperty<T> m_property;
     T const m_start_value;
     T const m_end_value;
-    AnimableType_t const m_delta_value;
 };
 
 template <template <typename> typename PropertyType,
