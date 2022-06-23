@@ -67,6 +67,11 @@ void Token::tileAdded()
     }
 }
 
+void Token::setTokenColor(scene::Color const& token_color)
+{
+    node()->ColorProperty = token_color;
+}
+
 void Token::tileRemoved()
 {
     BaseClass::tileRemoved();

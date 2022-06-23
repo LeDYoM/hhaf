@@ -38,6 +38,8 @@ public:
     void tileMoved(BoardPositionType const& source) override;
 
 private:
+    void setTokenColor(haf::scene::Color const& token_color) override;
+
     static htps::u32 tile_counter_;
     htps::vector2df board2SceneFactor_;
     htps::sptr<haf::anim::AnimationComponent> animation_component_;

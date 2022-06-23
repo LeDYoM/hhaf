@@ -52,10 +52,7 @@ void GameBaseTile::tileMoved(BoardPositionType const& source)
 void GameBaseTile::tileChanged(BoardTileData const /* oldValue */,
                                BoardTileData const /* newValue */)
 {
-    if (node())
-    {
-        node()->ColorProperty = getColorForToken();
-    }
+    setTokenColor(getColorForToken());
 }
 
 Color GameBaseTile::getColorForToken() const

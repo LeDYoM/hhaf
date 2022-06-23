@@ -3,6 +3,7 @@
 
 #include <htypes/include/types.hpp>
 #include <haf/include/render/renderizable.hpp>
+#include <haf/include/scene/color.hpp>
 #include <boardmanager/include/itile.hpp>
 #include "boardgroup.hpp"
 
@@ -53,6 +54,7 @@ protected:
 
 private:
     bool is_in_center{false};
+    virtual void setTokenColor(haf::scene::Color const& token_color) = 0;
 };
 }  // namespace zoper
 

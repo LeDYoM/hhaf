@@ -9,27 +9,26 @@
 #include <haf/include/render/renderizables.hpp>
 #include <haf/include/component/component_container.hpp>
 
-namespace zoper
-{
 using namespace htps;
 using namespace haf::scene;
 using namespace haf::render;
 using namespace haf::time;
 using namespace haf::anim;
 
+namespace zoper
+{
 Player::Player(rptr<SceneNode> parent, str name) :
     BaseClass{htps::move(parent), htps::move(name)},
     player_board_position{},
     currentDirection{Direction{Direction::DirectionData::Up}}
 {
-    renderizableBuilder()
+    m_renderizable_scene_node =
+        createSceneNode<RenderizableSceneNode>("renderizable_scene_node");
+    m_renderizable_scene_node->renderizableBuilder()
         .name("player_render_scene_node")
         .figType(FigType_t::PolygonSprite)
         .pointCount(3U)
         .create();
-
-    reserveExtraTransformations(1U);
-    rotator_ = addTransformation();
 }
 
 Player::~Player() = default;
@@ -48,7 +47,7 @@ void Player::update()
     if (currentDirection.readResetHasChanged())
     {
         auto const direction{currentDirection()};
-        getTransformation(rotator_).Rotation = direction.angle();
+        m_renderizable_scene_node->Rotation = direction.angle();
     }
 }
 
@@ -78,8 +77,9 @@ void Player::launchPlayerAnimation(vector2df const& toWhere)
     auto property_animation_builder{
         animation_component_->make_property_animation_builder(
             &Player::Position, Player::Position(), toWhere)};
-    property_animation_builder.duration(TimePoint_as_miliseconds(
-        gameplay::constants::MillisAnimationLaunchPlayerStep))
+    property_animation_builder
+        .duration(TimePoint_as_miliseconds(
+            gameplay::constants::MillisAnimationLaunchPlayerStep))
         .actionWhenFinished([this, currentPosition = Position()]() {
             launchAnimationBack(currentPosition);
         });
@@ -103,10 +103,15 @@ void Player::launchAnimationBack(SceneCoordinates const& toWhere)
 void Player::tileAdded()
 {
     DisplayLog::info("TokenPlayer appeared at ", boardPosition());
-    node()->ColorProperty = getColorForToken();
+    m_renderizable_scene_node->node()->ColorProperty = getColorForToken();
 
     // Set the position in the scene depending on the board position
     player_board_position = boardPosition();
+}
+
+void Player::setTokenColor(scene::Color const& token_color)
+{
+    m_renderizable_scene_node->node()->ColorProperty = token_color;
 }
 
 void Player::tileChanged(BoardTileData const oldValue,
