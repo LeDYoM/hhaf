@@ -47,8 +47,9 @@ public:
 
 protected:
     void update() override final;
-    htps::size_type inner_scale_;
-    htps::size_type inner_position_;
+    htps::sptr<TransformableSceneNode> m_inner_scale_scene_node;
+    htps::sptr<TransformableSceneNode> m_inner_position_scene_node;
+    htps::sptr<TransformableSceneNode> m_letters_scene_node;
 };
 
 }  // namespace haf::scene::nodes

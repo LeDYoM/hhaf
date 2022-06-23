@@ -83,8 +83,13 @@ inline TextBaseSize updateTextRenderData(res::FontUtils const& font_utils,
 void SceneNodeText::onCreated()
 {
     BaseClass::onCreated();
-    inner_scale_    = addTransformation();
-    inner_position_ = addTransformation();
+    m_inner_scale_scene_node =
+        createSceneNode<TransformableSceneNode>("inner_scale_scene_node");
+    m_inner_position_scene_node =
+        m_inner_scale_scene_node->createSceneNode<TransformableSceneNode>(
+            "inner_position_scene_node");
+
+    m_letters_scene_node = m_inner_position_scene_node;
 }
 
 void SceneNodeText::update()
@@ -92,7 +97,7 @@ void SceneNodeText::update()
     BaseClass::update();
     if (ps_readResetHasAnyChanged(Font, Text, TextBaseSizeProperty))
     {
-        clearSceneNodes();
+        m_letters_scene_node->clearSceneNodes();
         if (Font() != nullptr && !(Text().empty()))
         {
             auto font{Font().get()};
@@ -132,17 +137,17 @@ void SceneNodeText::update()
                 auto const text_base_size{TextBaseSizeProperty()};
 
                 vector2df const text_render_size{
-                    text_base_size.value().x == htps::f32{}
+                    text_base_size.value().x == f32{}
                         ? text_render_data.text_size.x
                         : text_base_size.value().x,
-                    text_base_size.value().y == htps::f32{}
+                    text_base_size.value().y == f32{}
                         ? text_render_data.text_size.y
                         : text_base_size.value().y};
 
-                getTransformation(inner_scale_).Scale =
+                m_inner_scale_scene_node->Scale =
                     vector2df{1.0F / text_render_size};
 
-                getTransformation(inner_position_).Position =
+                m_inner_position_scene_node->Position =
                     -(text_render_size / 2.0F);
 
                 // Initialize the node for each letter we are going to use
@@ -150,8 +155,9 @@ void SceneNodeText::update()
 
                 for (auto curChar : current_text)
                 {
-                    letterNode = createSceneNode<SceneNodeLetter>(
-                        "text_" + str::to_str(indexChar));
+                    letterNode =
+                        m_letters_scene_node->createSceneNode<SceneNodeLetter>(
+                            "text_" + str::to_str(indexChar));
                     letterNode->renderizableBuilder()
                         .name("text_" + str::to_str(indexChar))
                         .figType(render::FigType_t::Sprite)
@@ -171,7 +177,7 @@ void SceneNodeText::update()
                     ++indexChar;
                 }
 
-                // Force update color
+                // Avoid update color
                 TextColor.resetHasChanged();
             }
         }
@@ -181,7 +187,7 @@ void SceneNodeText::update()
     {
         Color const& text_color{TextColor()};
 
-        for_each_sceneNode_as<RenderizableSceneNode>(
+        m_letters_scene_node->for_each_sceneNode_as<RenderizableSceneNode>(
             [&text_color](sptr<RenderizableSceneNode> const& sNode) {
                 sNode->node()->ColorProperty = text_color;
             });
