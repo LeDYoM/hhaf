@@ -16,9 +16,9 @@ namespace zoper
 {
 
 class GameBaseTile : public haf::board::ITile,
-                     public haf::scene::RenderizableSceneNode
+                     public haf::scene::TransformableSceneNode
 {
-    using BaseClass = haf::scene::RenderizableSceneNode;
+    using BaseClass = haf::scene::TransformableSceneNode;
 
 protected:
     using TileBase = haf::board::ITile;

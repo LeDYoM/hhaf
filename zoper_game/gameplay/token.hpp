@@ -43,6 +43,7 @@ private:
     static htps::u32 tile_counter_;
     htps::vector2df board2SceneFactor_;
     htps::sptr<haf::anim::AnimationComponent> animation_component_;
+    htps::sptr<haf::render::RenderizableSceneNode> m_renderizable;
 };
 }  // namespace zoper
 

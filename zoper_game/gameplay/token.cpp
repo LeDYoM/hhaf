@@ -32,7 +32,8 @@ Token::~Token() = default;
 void Token::onCreated()
 {
     ++tile_counter_;
-    renderizableBuilder()
+    m_renderizable = createSceneNode<RenderizableSceneNode>("renderizable");
+    m_renderizable->renderizableBuilder()
         .name("Node" + str::to_str(tile_counter_))
         .figType(FigType_t::PolygonSprite)
         .pointCount(30U)
