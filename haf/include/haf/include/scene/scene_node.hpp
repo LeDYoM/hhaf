@@ -79,9 +79,9 @@ public:
 
     /**
      * @brief Method called every frame after update
-     * @param SceneRenderContext Current frame render context
+     * @param sceneRenderContext Current frame render context
      */
-    virtual void postUpdate(SceneRenderContext& sceneRenderContext);
+    virtual void postRender(SceneRenderContext& sceneRenderContext);
 
     virtual htps::rptr<Scene> sceneParent();
     virtual htps::rptr<Scene const> sceneParent() const;

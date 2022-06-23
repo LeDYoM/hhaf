@@ -37,9 +37,9 @@ bool TransformableSceneNode::updateLocalTransformationsIfNecessary() noexcept
     return false;
 }
 
-void TransformableSceneNode::postUpdate(SceneRenderContext& sceneRenderContext)
+void TransformableSceneNode::postRender(SceneRenderContext& sceneRenderContext)
 {
-    BaseSceneNode::postUpdate(sceneRenderContext);
+    BaseSceneNode::postRender(sceneRenderContext);
 
     sceneRenderContext.currentTransformation =
         parentAs<TransformableSceneNode>()

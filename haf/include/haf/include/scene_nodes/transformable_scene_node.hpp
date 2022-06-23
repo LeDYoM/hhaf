@@ -60,7 +60,7 @@ public:
      */
     Matrix4x4 const& localTransform() const noexcept;
 
-    void postUpdate(SceneRenderContext& sceneRenderContext) override;
+    void postRender(SceneRenderContext& sceneRenderContext) override;
 
     bool updateLocalTransformationsIfNecessary() noexcept;
 

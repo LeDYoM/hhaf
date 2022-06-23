@@ -11,9 +11,9 @@ RenderizablesSceneNode::RenderizablesSceneNode(rptr<SceneNode> parent,
     SceneNodeBaseClass{parent, htps::move(name)}, render::Renderizables{this}
 {}
 
-void RenderizablesSceneNode::postUpdate(SceneRenderContext& sceneRenderContext)
+void RenderizablesSceneNode::postRender(SceneRenderContext& sceneRenderContext)
 {
-    SceneNodeBaseClass::postUpdate(sceneRenderContext);
+    SceneNodeBaseClass::postRender(sceneRenderContext);
     Renderizables::updateRenderizables(
         sceneRenderContext.parentTransformationChanged_);
 }

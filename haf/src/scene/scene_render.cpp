@@ -15,7 +15,7 @@ void render(SceneNode& scene_node, SceneRenderContext scene_render_context)
         // Update the node components
         scene_node.updateComponents();
         scene_node.update();
-        scene_node.postUpdate(scene_render_context);
+        scene_node.postRender(scene_render_context);
 
         // Render the nodes added to this node
         for (auto& group : scene_node.sceneNodes())

@@ -22,7 +22,7 @@ SceneNode::~SceneNode() = default;
 void SceneNode::update()
 {}
 
-void SceneNode::postUpdate(SceneRenderContext& /*sceneRenderContext*/)
+void SceneNode::postRender(SceneRenderContext& /*sceneRenderContext*/)
 {
 }
 

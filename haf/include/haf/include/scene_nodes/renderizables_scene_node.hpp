@@ -18,7 +18,7 @@ class HAF_API RenderizablesSceneNode : public TransformableSceneNode,
 public:
 
     RenderizablesSceneNode(htps::rptr<SceneNode> parent, htps::str name);
-    void postUpdate(SceneRenderContext& sceneRenderContext) override;
+    void postRender(SceneRenderContext& sceneRenderContext) override;
 };
 
 }  // namespace haf::scene
