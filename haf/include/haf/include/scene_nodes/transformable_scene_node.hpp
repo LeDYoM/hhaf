@@ -60,59 +60,15 @@ public:
      */
     Matrix4x4 const& localTransform() const noexcept;
 
-    /**
-     * @brief Add a new @b Transformation to the extra transformations of the
-     * object.
-     * @return htps::size_type Index to refer to new added @b Transformation
-     */
-    htps::size_type addTransformation();
-
-    /**
-     * @brief Remove last @b Transformation grom the extra transformations of
-     * the object.
-     * @note If no extra transformations are contained
-     * (numTransformations() == 1U), the you have UB.
-     * @return htps::size_type Count of extra transformations.
-     */
-    htps::size_type removeTransformation();
-
-    /**
-     * @brief Total number of @b Transformation objects
-     * @return htps::size_type 1 + the number of extra transformations
-     */
-    htps::size_type numTransformations() const noexcept;
-
-    /**
-     * @brief Get the Transformation object at a given index
-     * @note If index is invalid ypu will have UB.
-     * @param index Index of the transformation. Starting at 0
-     * @return Transformation& Object at the specified index
-     */
-    Transformation& getTransformation(htps::size_type const index) noexcept;
-
     void postUpdate(SceneRenderContext& sceneRenderContext) override;
 
     bool updateLocalTransformationsIfNecessary() noexcept;
-
-    /**
-     * @brief Optimization helper function. Reserve memory (but not initialize)
-     * of the number of @b Transform that the object will store. This function
-     * is not necessary to be used, but decreases allocations.
-     * @param minimum_size Minimum number of transformations you will use.
-     */
-    void reserveExtraTransformations(htps::size_type const minimum_size);
 
 private:
     void updateGlobalTransformation(Matrix4x4 const&) noexcept;
 
     Matrix4x4 local_transform_;   ///< Current local Transformation cached
     Matrix4x4 global_transform_;  ///< Global Transformation Matrix cached
-
-    /**
-     * Extra transformations contained in this object. One is at least always
-     * there
-     */
-    htps::vector<Transformation> extra_transformations_;
 };
 }  // namespace haf::scene
 
