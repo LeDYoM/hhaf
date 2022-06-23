@@ -43,11 +43,10 @@ inline void updateAlignmentX(PropertyState<vector2df>& position,
     position = {newPosX, position().y};
 }
 
-inline void updateAlignmentY(
-    PropertyState<vector2df>& position,
-    SceneNodeText::AlignmentYModes const alignmentY,
-    f32 const textSizeY,
-    vector2df const& alignmentSize) noexcept
+inline void updateAlignmentY(PropertyState<vector2df>& position,
+                             SceneNodeText::AlignmentYModes const alignmentY,
+                             f32 const textSizeY,
+                             vector2df const& alignmentSize) noexcept
 {
     f32 newPosY{0.f};
 
@@ -91,9 +90,9 @@ void SceneNodeText::onCreated()
 void SceneNodeText::update()
 {
     BaseClass::update();
-    if (ps_readResetHasAnyChanged(Font, Text,
-                                  TextBaseSizeProperty))
+    if (ps_readResetHasAnyChanged(Font, Text, TextBaseSizeProperty))
     {
+        clearSceneNodes();
         if (Font() != nullptr && !(Text().empty()))
         {
             auto font{Font().get()};
@@ -103,11 +102,6 @@ void SceneNodeText::update()
             {
                 auto texture{subSystem<res::IResourceRetriever>()->getTexture(
                     texture_str)};
-                // Initialize counter of characters
-                size_type counter{0U};
-
-                // Get the counter of letters in the previous text set
-                size_type const old_counter{sceneNodes().size()};
 
                 // Get the text to render
                 auto const& current_text{Text()};
@@ -126,8 +120,8 @@ void SceneNodeText::update()
                 // Update the text base size property. If it contains a text, it
                 // has preference, but prepare the size value of these text and
                 // update the property accordinly.
-                TextBaseSizeProperty = updateTextRenderData(
-                    font_utils, TextBaseSizeProperty());
+                TextBaseSizeProperty =
+                    updateTextRenderData(font_utils, TextBaseSizeProperty());
 
                 // This was an internal change. Forget it happened.
                 TextBaseSizeProperty.resetHasChanged();
@@ -156,22 +150,12 @@ void SceneNodeText::update()
 
                 for (auto curChar : current_text)
                 {
-                    // In case we already have a node containing the letter,
-                    // reuse it. If not, create a new one.
-                    if (counter < old_counter)
-                    {
-                        letterNode = std::dynamic_pointer_cast<SceneNodeLetter>(
-                            sceneNodes()[counter]);
-                    }
-                    else
-                    {
-                        letterNode = createSceneNode<SceneNodeLetter>(
-                            "text_" + str::to_str(counter));
-                        letterNode->renderizableBuilder()
-                            .name("text_" + str::to_str(counter))
-                            .figType(render::FigType_t::Sprite)
-                            .create();
-                    }
+                    letterNode = createSceneNode<SceneNodeLetter>(
+                        "text_" + str::to_str(indexChar));
+                    letterNode->renderizableBuilder()
+                        .name("text_" + str::to_str(indexChar))
+                        .figType(render::FigType_t::Sprite)
+                        .create();
 
                     auto const& ch_data{
                         text_render_data.character_render_data[indexChar]};
@@ -184,31 +168,12 @@ void SceneNodeText::update()
                     letterNode->setCharacterTextureData(
                         texture, font->getTextureBounds(curChar));
 
-                    ++counter;
                     ++indexChar;
-                }
-
-                // Remove the unused letters.
-                // Get the current total size of the vector of scene nodes.
-                auto const scene_nodes_size{sceneNodes().size()};
-                // Iterate from the last one to one after counter
-                // and delete them
-                for (size_type index{(scene_nodes_size - 1U)}; index >= counter;
-                     --index)
-                {
-                    // Assert we are removing always the last one.
-                    LogAsserter::log_assert(sceneNodes()[index] ==
-                                            *(sceneNodes().end() - 1U));
-                    removeSceneNode(sceneNodes()[index]);
                 }
 
                 // Force update color
                 TextColor.resetHasChanged();
             }
-        }
-        else
-        {
-            clearSceneNodes();
         }
     }
 
