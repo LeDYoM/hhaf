@@ -14,10 +14,6 @@ build_concrete_backend(
 # Detect and add SFML
 add_subdirectory(sfml)
 
-add_dependencies(${CURRENT_TARGET} sfml-system sfml-window sfml-graphics)
-
-#find_package(SFML 2.5 COMPONENTS system window graphics REQUIRED)
-
 target_link_libraries(${CURRENT_TARGET} PRIVATE
     sfml-system
     sfml-window

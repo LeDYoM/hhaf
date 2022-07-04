@@ -5,16 +5,13 @@
 
 namespace logger
 {
-static constexpr char const EmptyString[] = "";
+static constexpr char const EmptyString[]{""};
 
 template <auto Message>
 struct DefaultMessageLogOptions
 {
     static constexpr char const* const BaseMessage = Message;
 };
-
-struct DefaultLogOptions : DefaultMessageLogOptions<EmptyString>
-{};
 
 /**
  * @brief Helper class to forward the log calls to a Logger. It makes some
@@ -24,7 +21,7 @@ struct DefaultLogOptions : DefaultMessageLogOptions<EmptyString>
  */
 template <typename LogClass,
           typename SeverityType,
-          typename LogOptions = DefaultLogOptions>
+          typename LogOptions = DefaultMessageLogOptions<EmptyString>>
 struct LogDisplayer
 {
     using LogClass_t     = LogClass;

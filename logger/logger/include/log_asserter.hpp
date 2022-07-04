@@ -2,8 +2,11 @@
 #define HAF_LOG_LOG_ASSERTER_INCLUDE_HPP
 
 #include "severity_type.hpp"
-#include <source_location>
 #include <cassert>
+
+#ifdef __cpp_lib_source_location
+    #include <source_location>
+#endif
 
 namespace logger
 {
@@ -19,8 +22,11 @@ struct LogAsserter
     template <typename T>
     static constexpr void log_assert(
         const bool condition,
-        T&& arg,
-        std::source_location const source = std::source_location::current())
+        T&& arg
+#ifdef __cpp_lib_source_location
+        , std::source_location const source = std::source_location::current()
+#endif
+)
     {
         // Store the condition in a variable to execute it only once.
         const bool cond{condition};
@@ -28,11 +34,17 @@ struct LogAsserter
         if (!cond)
         {
             LogDisplayerClass::error("Assert!");
+#ifdef __cpp_lib_source_location
             LogDisplayerClass::error("File: ", source.file_name());
             LogDisplayerClass::error("Line and column: ", source.line(), ",",
                                      source.column());
-            LogDisplayerClass::error("\t", source.function_name(), ": ",
+#endif
+            LogDisplayerClass::error(
+#ifdef __cpp_lib_source_location
+                "\t", source.function_name(), ": ",
+#endif
                                      std::forward<T>(arg));
+
             if (UseLowLevelAssert)
             {
                 assert(cond);

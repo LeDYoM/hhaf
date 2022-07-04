@@ -22,8 +22,10 @@ if (NOT use_system_sfml)
     )
 
     FetchContent_MakeAvailable(SFML)
+    add_dependencies(${CURRENT_TARGET} sfml-system sfml-window sfml-graphics)
 
-    message(STATUS "Fetching SFML done")
+    message("Fetching SFML done")
 else()
     message("Using system SFML. Note: SFML should be installed")
+    find_package(SFML 2.5 REQUIRED system window graphics)
 endif()
