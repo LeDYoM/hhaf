@@ -4,22 +4,18 @@
 
 namespace
 {
-void updateFileExtension(std::string& fileName,
-                                std::string const& extension)
+std::string formatFileName(std::string fileName,
+                                  char const* const extension,
+                                  char const* const prefix)
 {
     if (!fileName.ends_with(extension))
     {
         fileName += extension;
     }
-}
 
-std::string formatFileName(std::string fileName,
-                                  char const* const extension,
-                                  char const* const prefix)
-{
-    updateFileExtension(fileName, extension);
     return prefix + fileName;
 }
+
 }  // namespace
 
 #if defined(_MSC_VER) || defined(__BORLANDC__)
