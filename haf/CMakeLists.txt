@@ -371,6 +371,8 @@ set(HAF_PRIVATE_INCLUDE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/src)
 build_lib_component(EXPORT_ALL HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}/include"
   SOURCES ${sources} HEADERS ${headers})
 
+set_compile_warning_level_and_cxx_properties_all(${CURRENT_TARGET})
+
 target_compile_definitions(${CURRENT_TARGET} PRIVATE HAF_ALLOW_ACCELERATION)
 target_compile_definitions(${CURRENT_TARGET} PRIVATE HAF_SHOW_FPS)
 
