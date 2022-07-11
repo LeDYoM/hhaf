@@ -86,6 +86,8 @@ public:
     virtual htps::rptr<Scene> sceneParent();
     virtual htps::rptr<Scene const> sceneParent() const;
 
+    virtual htps::str completeName() const;
+
     /**
      * @brief Clear all elements in this scene node
      */

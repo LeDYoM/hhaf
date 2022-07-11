@@ -29,8 +29,9 @@ public:
 
     time::TimePoint now() const override;
 
-    time::TimePoint timeSinceStart() const;
     time::TimePoint lastFrameTime() const;
+    time::TimePoint nowFrame() const;
+
     void startFrame();
     void endFrame();
 

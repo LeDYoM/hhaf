@@ -8,6 +8,7 @@
 #include "time/time_system.hpp"
 #include "system/system_provider.hpp"
 #include "utils/compile_time_constants.hpp"
+#include "system/get_system.hpp"
 
 #include <haf/include/time/time_point.hpp>
 #include <haf/include/input/inputdriver_wrapper.hpp>
@@ -104,9 +105,10 @@ bool WindowSystem::initialize(str const& window_config_file)
     }
 }
 
-bool WindowSystem::preLoop(time::TimePoint const& time_since_start)
+bool WindowSystem::preLoop()
 {
-    return m_window->preLoop(time_since_start);
+    return m_window->preLoop(
+        getSystem<sys::TimeSystem>(systemAccessPtr()).nowFrame());
 }
 
 void WindowSystem::postLoop()

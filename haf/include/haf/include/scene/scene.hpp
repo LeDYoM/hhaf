@@ -27,6 +27,7 @@ public:
     htps::sptr<CameraComponent> const& cameraComponent() const;
     htps::rptr<Scene> sceneParent() override;
     htps::rptr<Scene const> sceneParent() const override;
+    htps::str completeName() const override;
 
 private:
     class ScenePrivate;

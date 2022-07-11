@@ -48,13 +48,14 @@ struct TimeSystem::TimeSystemPrivate final : public TimeSystemAcceleration
     void updateStartFrameTime()
     {
         auto const tmp_start_frame_{last_start_frame_};
-        last_start_frame_ = timepoint_global_now();
+        last_start_frame_ = timeSinceStart();
         last_frame_time_  = last_start_frame_ - tmp_start_frame_;
     }
 
     void updateEndFrameTime() { last_end_frame_ = timepoint_global_now(); }
 
     TimePoint lastFrameTime() const noexcept { return last_frame_time_; }
+    TimePoint lastStartFrame() const noexcept { return last_start_frame_; }
 
 private:
     TimePoint globalStart_;
@@ -68,11 +69,6 @@ TimeSystem::TimeSystem(sys::ISystemProvider& system_provider) :
 {}
 
 TimeSystem::~TimeSystem() = default;
-
-TimePoint TimeSystem::timeSinceStart() const
-{
-    return priv_->timeSinceStart();
-}
 
 TimePoint TimeSystem::now() const
 {
@@ -100,6 +96,11 @@ void TimeSystem::endFrame()
 TimePoint TimeSystem::lastFrameTime() const
 {
     return priv_->lastFrameTime();
+}
+
+time::TimePoint TimeSystem::nowFrame() const
+{
+    return priv_->lastStartFrame();
 }
 
 }  // namespace haf::sys

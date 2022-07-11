@@ -39,13 +39,12 @@ public:
     {
         if constexpr (EnableLogs)
         {
+            static StreamType log_stream;
             log_stream.clear();
             LogCommiter::commitlog(
                 (log_stream << ... << std::forward<Args>(args)).c_str());
         }
     }
-
-    static StreamType log_stream;
 
     /**
      * @brief Low level log display. This method should not be called

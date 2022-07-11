@@ -1,5 +1,5 @@
-#include <haf/include/debug_utils/memory_data_initializer.hpp>
-#include <haf/include/debug_utils/imemory_data_viewer.hpp>
+#include <haf/include/profiler/memory_data_initializer.hpp>
+#include <haf/include/profiler/imemory_data_viewer.hpp>
 
 #include <htypes/include/types.hpp>
 

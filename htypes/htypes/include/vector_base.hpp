@@ -498,6 +498,39 @@ public:
     }
 
     template <typename F>
+    constexpr ssize_type cfind_index_if(F&& f) const noexcept
+    {
+        auto begin_{cbegin()};
+        ssize_type counter{0};
+
+        for (; (begin_ != cend() && !(htps::forward<F>(f)(*begin_)));
+             ++begin_, ++counter)
+            ;
+        return ((begin_ == cend()) ? -1 : counter);
+    }
+
+    template <typename F>
+    constexpr ssize_type find_index_if(F&& f) const noexcept
+    {
+        return cfind_index_if(htps::forward<F>(f));
+    }
+
+    constexpr ssize_type cfind_index(T const& other) const noexcept
+    {
+        auto begin_{cbegin()};
+        ssize_type counter{-1};
+
+        for (; (begin_ != cend() && !(*begin_ == other)); ++begin_, ++counter)
+            ;
+        return ((begin_ == cend()) ? -1 : counter);
+    }
+
+    constexpr ssize_type find_index(T const& other) const noexcept
+    {
+        return cfind_index(other);
+    }
+
+    template <typename F>
     constexpr iterator find_if(F&& f) noexcept
     {
         return find_if(begin(), cend(), htps::forward<F>(f));
@@ -570,8 +603,8 @@ public:
     }
 
     constexpr iterator find_backwards(iterator const begin,
-                            iterator end,
-                            T const& element) noexcept
+                                      iterator end,
+                                      T const& element) noexcept
     {
         checkRange(begin);
         --end;
@@ -583,8 +616,8 @@ public:
     }
 
     constexpr iterator find_backwards(iterator const begin,
-                            iterator end,
-                            T const& element) const noexcept
+                                      iterator end,
+                                      T const& element) const noexcept
     {
         return cfind_backwards(begin, end, element);
     }

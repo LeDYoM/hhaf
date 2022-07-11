@@ -49,7 +49,7 @@ public:
      * @return true The window has requested to exit
      * @return false The window did not request to exit
      */
-    bool preLoop(time::TimePoint const& time_since_start);
+    bool preLoop();
 
     /**
      * @brief Method to be executed after the cycle of a system

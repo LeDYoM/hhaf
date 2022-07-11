@@ -1,0 +1,7 @@
+HTPS_PRAGMA_ONCE
+#ifndef HAF_DEBUG_MEMORY_DATA_INITIALIZER_INCLUDE_HPP
+#define HAF_DEBUG_MEMORY_DATA_INITIALIZER_INCLUDE_HPP
+
+#include <haf/include/profiler/profiler_imp/memory_data_initializer.hpp>
+
+#endif

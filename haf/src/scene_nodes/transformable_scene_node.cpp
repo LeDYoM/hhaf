@@ -1,5 +1,5 @@
 #include <haf/include/scene_nodes/transformable_scene_node.hpp>
-
+#include <haf/include/profiler/code_profiler.hpp>
 #include <hlog/include/hlog.hpp>
 
 using namespace htps;
@@ -39,6 +39,7 @@ bool TransformableSceneNode::updateLocalTransformationsIfNecessary() noexcept
 
 void TransformableSceneNode::postRender(SceneRenderContext& sceneRenderContext)
 {
+    HAF_PROFILE_SCENE_NODE_METHOD(testing, buh)
     BaseSceneNode::postRender(sceneRenderContext);
 
     sceneRenderContext.currentTransformation =
@@ -46,22 +47,25 @@ void TransformableSceneNode::postRender(SceneRenderContext& sceneRenderContext)
         ? parentAs<TransformableSceneNode>()->globalTransform()
         : Matrix4x4::Identity;
 
-    bool const localTransformationChanged =
-        updateLocalTransformationsIfNecessary() ||
-        sceneRenderContext.parentTransformationChanged_;
+    bool localTransformationChanged{updateTransformIfNecessary()};
+    if (localTransformationChanged)
+    {
+        local_transform_ = matrix();
+    }
+    else
+    {
+        localTransformationChanged =
+            sceneRenderContext.parentTransformationChanged_;
+    }
 
     if (localTransformationChanged)
     {
-        updateGlobalTransformation(sceneRenderContext.currentTransformation);
+        global_transform_ =
+            sceneRenderContext.currentTransformation * local_transform_;
     }
+
     sceneRenderContext.parentTransformationChanged_ =
         localTransformationChanged;
-}
-
-void TransformableSceneNode::updateGlobalTransformation(
-    Matrix4x4 const& currentGlobalTransformation) noexcept
-{
-    global_transform_ = currentGlobalTransformation * local_transform_;
 }
 
 }  // namespace haf::scene

@@ -33,7 +33,8 @@ public:
         data_{htps::move(eList)}
     {}
 
-    constexpr BasicDictionary(const content& eList) : data_{htps::move(eList)} {}
+    constexpr BasicDictionary(const content& eList) : data_{htps::move(eList)}
+    {}
 
     constexpr iterator begin() noexcept { return data_.begin(); }
     constexpr const_iterator begin() const noexcept { return data_.begin(); }
@@ -63,7 +64,9 @@ public:
         return result;
     }
 
-    constexpr bool add(key_type const& key, T value, const bool overwrite = true)
+    constexpr bool add(key_type const& key,
+                       T value,
+                       const bool overwrite = true)
     {
         auto it(find(key));
 
@@ -80,7 +83,9 @@ public:
         return false;
     }
 
-    constexpr bool put(key_type const& key, T value, const bool overwrite = true)
+    constexpr bool put(key_type const& key,
+                       T value,
+                       const bool overwrite = true)
     {
         (void)(add(htps::move(key), htps::move(value), overwrite));
         return *this;
@@ -101,7 +106,7 @@ public:
         return find(key);
     }
 
-    constexpr iterator find(key_type const&  key) noexcept
+    constexpr iterator find(key_type const& key) noexcept
     {
         return data_.find_if(
             [&key](auto const& element) { return element.first == key; });
@@ -131,23 +136,51 @@ public:
         return find_checked(key);
     }
 
+    constexpr pair<bool, size_type> cfind_index(
+        key_type const& key) const noexcept
+    {
+        auto const index{data_.find_index_if(
+            [&key](auto const& element) { return element.first == key; })};
+        return {index > -1 ? true : false, static_cast<size_type>(index)};
+    }
+
+    constexpr pair<bool, size_type> find_index(
+        key_type const& key) const noexcept
+    {
+        return cfind_index(key);
+    }
+
     constexpr size_type size() const noexcept { return data_.size(); }
 
     constexpr bool empty() const noexcept { return data_.empty(); }
 
-    constexpr bool operator==(BasicDictionary const& other) const noexcept
+    constexpr value_type const& index(size_type const index) const
     {
-        return data_ == other.data_;
+        return data_[index].second;
     }
 
-    constexpr bool operator!=(BasicDictionary const& other) const noexcept
+    constexpr value_type& index(size_type const index)
     {
-        return !(*this == other);
+        return data_[index].second;
     }
 
 private:
     content data_;
 };
+
+template <typename Key, typename T>
+constexpr bool operator==(BasicDictionary<Key, T> const& lhs,
+                          BasicDictionary<Key, T> const& rhs) noexcept
+{
+    return lhs.data() == rhs.data();
+}
+
+template <typename Key, typename T>
+constexpr bool operator!=(BasicDictionary<Key, T> const& lhs,
+                          BasicDictionary<Key, T> const& rhs) noexcept
+{
+    return !(lhs == rhs);
+}
 
 }  // namespace htps
 

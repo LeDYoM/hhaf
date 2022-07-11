@@ -3,5 +3,4 @@
 namespace haf::time
 {
     class TimePoint;
-    
 }  // namespace haf::time

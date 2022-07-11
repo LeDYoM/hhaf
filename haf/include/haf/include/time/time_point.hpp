@@ -158,7 +158,8 @@ constexpr TimePoint operator-(TimePoint const& lhs,
  * @param scalar Scalar value
  * @return Resulting TimePoint
  */
-constexpr TimePoint operator*(TimePoint const& lhs, htps::f32 const scalar) noexcept
+constexpr TimePoint operator*(TimePoint const& lhs,
+                              htps::f32 const scalar) noexcept
 {
     return TimePoint{lhs.nanoseconds()} *= scalar;
 }
@@ -169,11 +170,11 @@ constexpr TimePoint operator*(TimePoint const& lhs, htps::f32 const scalar) noex
  * @param scalar Scalar value
  * @return Resulting TimePoint
  */
-constexpr TimePoint operator/(TimePoint const& lhs, htps::f32 const scalar) noexcept
+constexpr TimePoint operator/(TimePoint const& lhs,
+                              htps::f32 const scalar) noexcept
 {
     return TimePoint{lhs.nanoseconds()} /= scalar;
 }
-
 
 /**
  * @brief Create a TimePoint given an initial value in nanoseconds
@@ -181,7 +182,8 @@ constexpr TimePoint operator/(TimePoint const& lhs, htps::f32 const scalar) noex
  * @param micros The initial value
  * @return TimePoint initialized to the correct value
  */
-constexpr TimePoint TimePoint_as_nanoseconds(TimePoint::Rep const nanos) noexcept
+constexpr TimePoint TimePoint_as_nanoseconds(
+    TimePoint::Rep const nanos) noexcept
 {
     return TimePoint{nanos};
 }
@@ -191,7 +193,8 @@ constexpr TimePoint TimePoint_as_nanoseconds(TimePoint::Rep const nanos) noexcep
  * @param micros The initial value
  * @return TimePoint initialized to the correct value
  */
-constexpr TimePoint TimePoint_as_microseconds(TimePoint::Rep const micros) noexcept
+constexpr TimePoint TimePoint_as_microseconds(
+    TimePoint::Rep const micros) noexcept
 {
     return TimePoint{micros * 1000U};
 }
@@ -201,7 +204,8 @@ constexpr TimePoint TimePoint_as_microseconds(TimePoint::Rep const micros) noexc
  * @param millis The initial value
  * @return TimePoint initialized to the correct value
  */
-constexpr TimePoint TimePoint_as_miliseconds(TimePoint::Rep const millis) noexcept
+constexpr TimePoint TimePoint_as_miliseconds(
+    TimePoint::Rep const millis) noexcept
 {
     return TimePoint_as_microseconds(millis * 1000U);
 }
@@ -310,6 +314,18 @@ constexpr htps::str& operator<<(htps::str& os, TimePoint const& tp)
     return os;
 }
 
+constexpr bool ellapsedUpdate(TimePoint& time_point_to_update,
+                              TimePoint const& time_since_start,
+                              TimePoint const& ellapsed) noexcept
+{
+    TimePoint const delta{time_since_start - time_point_to_update};
+    if (delta > ellapsed)
+    {
+        time_point_to_update = time_since_start;
+        return true;
+    }
+    return false;
+}
 }  // namespace haf::time
 
 #endif

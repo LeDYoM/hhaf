@@ -1,10 +1,9 @@
 HTPS_PRAGMA_ONCE
-#ifndef HAF_VARIABLE_VIEWER_INCLUDE_HPP
-#define HAF_VARIABLE_VIEWER_INCLUDE_HPP
+#ifndef HAF_VARIABLE_VIEWER_IMP_INCLUDE_HPP
+#define HAF_VARIABLE_VIEWER_IMP_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
 #include <haf/include/component/component.hpp>
-
 
 namespace haf::debug
 {

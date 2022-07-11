@@ -2,5 +2,6 @@ To format from command line:
 find haf/ -iname *.hpp -o -iname *.cpp| xargs clang-format -i
 
 - Points to score go to somewhere on top
-- Make transformations explicit of rotation, scalation, position, etc...
-   that should help to not store the entire matrix always.
+#- Make transformations explicit of rotation, scalation, position, etc...
+#   that should help to not store the entire matrix always.
+- Create CodeProfiler

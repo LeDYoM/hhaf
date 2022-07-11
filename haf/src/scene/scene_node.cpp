@@ -51,4 +51,9 @@ rptr<Scene const> SceneNode::sceneParent() const
     return cancestor<Scene>();
 }
 
+str SceneNode::completeName() const
+{
+    return parent()->completeName() + "::" + name();
+}
+
 }  // namespace haf::scene

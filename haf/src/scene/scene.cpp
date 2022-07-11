@@ -73,4 +73,9 @@ void Scene::installDebugUtils()
     });
 }
 
+str Scene::completeName() const
+{
+    return name();
+}
+
 }  // namespace haf::scene

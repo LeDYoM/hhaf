@@ -5,7 +5,7 @@
 #include "scene/scene_manager.hpp"
 #include "render/render_system.hpp"
 #include "time/time_system.hpp"
-
+#include "debug_utils/debug_system.hpp"
 #include <hlog/include/hlog.hpp>
 #include <hosted_app/include/iapp.hpp>
 
@@ -37,27 +37,34 @@ void SystemController::terminate()
 
 bool SystemController::preUpdate()
 {
-    const bool pre_update_wants_to_close{system<WindowSystem>().preLoop(
-        system<TimeSystem>().timeSinceStart())};
+    system<TimeSystem>().startFrame();
+    system<DebugSystem>().onStartPreUpdate();
+    const bool pre_update_wants_to_close{system<WindowSystem>().preLoop()};
     system<SimulationSystem>().updateSimulationInput();
     system<InputSystem>().preUpdate();
+    system<DebugSystem>().onFinishPreUpdate();
     return pre_update_wants_to_close;
 }
 
 bool SystemController::update()
 {
+    system<DebugSystem>().onStartUpdate();
     system<InputSystem>().update();
     system<SimulationSystem>().updateSimulationOutput();
     system<scene::SceneManager>().update();
     system<RenderSystem>().update();
+    system<DebugSystem>().onFinishUpdate();
 
     return false;
 }
 
 bool SystemController::postUpdate()
 {
+    system<DebugSystem>().onStartPostUpdate();
     system<InputSystem>().postUpdate();
     system<WindowSystem>().postLoop();
+    system<DebugSystem>().onFinishPostUpdate();
+    system<TimeSystem>().endFrame();
 
     return false;
 }

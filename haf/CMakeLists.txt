@@ -32,10 +32,11 @@ set(sources
   ${src_dir}/debug_utils/debug_system_subsystems_view.cpp
   ${src_dir}/debug_utils/debug_system.cpp
   ${src_dir}/debug_utils/debug_system.hpp
+  ${src_dir}/debug_utils/debug_variable.hpp
+  ${src_dir}/debug_utils/debug_variables.cpp
+  ${src_dir}/debug_utils/debug_variables.hpp
   ${src_dir}/debug_utils/displayvar_console.cpp
-  ${src_dir}/debug_utils/memory_data_initializer.cpp
-  ${src_dir}/debug_utils/variable_viewer.cpp
-  
+
   # FileSystem
   ${src_dir}/filesystem/file_system_private_funcs.cpp
   ${src_dir}/filesystem/file_system_private_funcs.hpp
@@ -52,6 +53,11 @@ set(sources
   ${src_dir}/input/stated_input_component_base.cpp
   ${src_dir}/input/virtual_input_component.cpp
 
+  # Profiler
+  ${src_dir}/profiler/code_profiler.cpp
+  ${src_dir}/profiler/memory_data_initializer.cpp
+  ${src_dir}/profiler/variable_viewer.cpp
+  
   # Random
   ${src_dir}/random/randomnumberscomponent.cpp
   ${src_dir}/random/randomsystem.cpp
@@ -227,9 +233,6 @@ set(headers
   ${inc_dir}/debug_utils/console.hpp
   ${inc_dir}/debug_utils/debug_actions.hpp
   ${inc_dir}/debug_utils/displayvar_console.hpp
-  ${inc_dir}/debug_utils/imemory_data_viewer.hpp
-  ${inc_dir}/debug_utils/memory_data_initializer.hpp
-  ${inc_dir}/debug_utils/variable_viewer.hpp
 
   # Data
   ${inc_dir}/data/ideserializable.hpp
@@ -249,6 +252,17 @@ set(headers
   ${inc_dir}/input/stated_input_component_base.hpp
   ${inc_dir}/input/stated_input_component.hpp
   ${inc_dir}/input/virtual_input_component.hpp
+
+  # Profiler
+  ${inc_dir}/profiler/profiler_imp/code_profiler.hpp
+  ${inc_dir}/profiler/profiler_imp/imemory_data_viewer.hpp
+  ${inc_dir}/profiler/profiler_imp/memory_data_initializer.hpp
+  ${inc_dir}/profiler/profiler_imp/variable_viewer.hpp
+
+  ${inc_dir}/profiler/code_profiler.hpp
+  ${inc_dir}/profiler/imemory_data_viewer.hpp
+  ${inc_dir}/profiler/memory_data_initializer.hpp
+  ${inc_dir}/profiler/variable_viewer.hpp
 
   # Random
   ${inc_dir}/random/randomnumberscomponent.hpp
@@ -359,6 +373,8 @@ build_lib_component(EXPORT_ALL HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}/include"
 
 target_compile_definitions(${CURRENT_TARGET} PRIVATE HAF_ALLOW_ACCELERATION)
 target_compile_definitions(${CURRENT_TARGET} PRIVATE HAF_SHOW_FPS)
+
+target_compile_definitions(${CURRENT_TARGET} PUBLIC HAF_PROFILE)
 
 # Prepare the haf libray
 target_compile_definitions(${CURRENT_TARGET} PRIVATE haf_EXPORTS)

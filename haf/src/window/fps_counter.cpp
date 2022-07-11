@@ -11,9 +11,8 @@ void FPSCounter::updateFPS(time::TimePoint const& time_since_start,
                htps::str const& base_title)
 {
     static constexpr time::TimePoint OneSec{TimePoint_as_seconds(1U)};
-    if ((time_since_start - lastTimeFps) > OneSec)
+    if (ellapsedUpdate(lastTimeFps, time_since_start, OneSec))
     {
-        lastTimeFps = time_since_start;
         lastFps     = currentFps;
         currentFps  = 0U;
         backend_window->setWindowTitle(make_str(base_title, " FPS:", lastFps));

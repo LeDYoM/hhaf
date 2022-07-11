@@ -1,7 +1,7 @@
 #include "system/subsystem_interface_definitions.hpp"
 #include "debug_system.hpp"
 
-#include <haf/include/debug_utils/imemory_data_viewer.hpp>
+#include <haf/include/profiler/imemory_data_viewer.hpp>
 
 namespace haf::sys
 {

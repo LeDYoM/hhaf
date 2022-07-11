@@ -47,6 +47,36 @@ TEST_CASE("dictionary::find", "[htypes][dictionry]")
     CHECK(v.empty());
 }
 
+TEST_CASE("dictionary::find_index", "[htypes][dictionry]")
+{
+    Dictionary<int> v{{"ABC", 4}};
+    CHECK(v.add("bcd", 100));
+    CHECK(v.add("zxy", 3455));
+
+    CHECK(v.find_index("bcd").first);
+    CHECK(v.find_index("bcd").second == 1);
+    CHECK(v.cfind_index("bcd").first);
+    CHECK(v.cfind_index("bcd").second == 1);
+
+    CHECK_FALSE(v.find_index("bcde").first);
+    CHECK(v.find_index("bcde").second == -1);
+    CHECK_FALSE(v.cfind_index("bcde").first);
+    CHECK(v.cfind_index("bcde").second == -1);
+
+    CHECK_FALSE(v.find_index("").first);
+    CHECK(v.find_index("").second == -1);
+    CHECK_FALSE(v.cfind_index("").first);
+    CHECK(v.cfind_index("").second == -1);
+
+    CHECK(v.size() == 3U);
+    CHECK_FALSE(v.empty());
+
+    v.clear();
+
+    CHECK(v.size() == 0U);
+    CHECK(v.empty());
+}
+
 TEST_CASE("dictionary::find_checked", "[htypes][dictionry]")
 {
     Dictionary<int> v{{"ABC", 4}};
