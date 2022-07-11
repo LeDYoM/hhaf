@@ -4,24 +4,16 @@
 
 namespace
 {
-inline bool endsWith(std::string const& fullString, std::string const& ending)
-{
-    return fullString.length() >= ending.length()
-        ? fullString.compare(fullString.length() - ending.length(),
-                             ending.length(), ending) == 0
-        : false;
-}
-
-inline void updateFileExtension(std::string& fileName,
+void updateFileExtension(std::string& fileName,
                                 std::string const& extension)
 {
-    if (!endsWith(fileName, extension))
+    if (!fileName.ends_with(extension))
     {
         fileName += extension;
     }
 }
 
-inline std::string formatFileName(std::string fileName,
+std::string formatFileName(std::string fileName,
                                   char const* const extension,
                                   char const* const prefix)
 {

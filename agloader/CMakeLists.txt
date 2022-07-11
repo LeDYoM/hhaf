@@ -23,6 +23,8 @@ set(PUBLIC_HEADERS_DIRECTORY include)
 build_lib_component(HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}" SOURCES
                     "${SOURCES}" HEADERS "${HEADERS}")
 
+set_compile_warning_level_and_cxx_properties_all(${CURRENT_TARGET})
+
 #target_include_directories(
 #  ${CURRENT_TARGET}
 #  PUBLIC $<INSTALL_INTERFACE:include>
