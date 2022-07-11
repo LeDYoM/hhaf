@@ -38,12 +38,24 @@ function (set_compile_warning_level CURRENT_TARGET level)
     )
 endfunction()
 
+function (set_compile_warning_level_for_tests CURRENT_TARGET level)
+    target_compile_options(${CURRENT_TARGET} ${level}
+        $<$<CXX_COMPILER_ID:MSVC>:/W4 /WX>
+        $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:-Wall -Wextra -pedantic -Werror>
+    )
+endfunction()
+
 function (set_compile_warning_level_interface CURRENT_TARGET)
     set_compile_warning_level(${CURRENT_TARGET} INTERFACE)
 endfunction()
 
 function(set_compile_warning_level_and_cxx_properties CURRENT_TARGET)
     set_compile_warning_level(${CURRENT_TARGET} PRIVATE)
+    set_cxx_standard(${CURRENT_TARGET})
+endfunction()
+
+function(set_compile_warning_level_and_cxx_properties_for_tests CURRENT_TARGET)
+    set_compile_warning_level_for_tests(${CURRENT_TARGET} PRIVATE)
     set_cxx_standard(${CURRENT_TARGET})
 endfunction()
 

@@ -32,7 +32,12 @@ inline std::string formatFileName(std::string fileName,
 
 #if defined(_MSC_VER) || defined(__BORLANDC__)
 #define WIN32_LEAN_AND_MEAN
+#pragma warning( push )
+#pragma warning( disable : 5039 )
+#define WIN32_LEAN_AND_MEAN
 #include <windows.h>
+#pragma warning( pop )
+
 inline void* getMethod(void* handle, const char* methodName)
 {
     return static_cast<void*>(

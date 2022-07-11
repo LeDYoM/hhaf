@@ -21,11 +21,7 @@ public:
     using value_type       = T;
     using const_value_type = const T;
 
-    array()             = default;
-    array(const array&) = default;
-    array(array&&)      = default;
-    array& operator=(const array&) = default;
-    array& operator=(array&&) = default;
+    array() = default;
 
     constexpr array(std::initializer_list<value_type> iList) noexcept
     {
@@ -93,14 +89,16 @@ public:
     constexpr const_reference cfront() const noexcept { return cbegin(); }
     constexpr const_reference cback() const noexcept { return back(); }
 
-    constexpr bool operator==(const array& other) const
-    {
-        return std::equal(cbegin(), cend(), other.cbegin());
-    }
-
 private:
     T buffer_[array_size];
 };
+
+template <class T, size_type array_size>
+constexpr bool operator==(array<T, array_size> const& lhs,
+                          array<T, array_size> const& rhs) noexcept
+{
+    return std::equal(lhs.cbegin(), lhs.cend(), rhs.cbegin());
+}
 
 template <typename T, size_type S>
 using array_shared_pointers = array<sptr<T>, S>;

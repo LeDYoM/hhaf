@@ -10,7 +10,7 @@ void getVariableImp(DebugVariableHandle& index,
                     char const* const name,
                     VariablesGroup& variables)
 {
-    if (index < 0 || index > variables.size())
+    if (index < 0 || index > static_cast<DebugVariableHandle>(variables.size()))
     {
         str str_name{name};
         if (auto const index_found{variables.cfind_index(str_name)};

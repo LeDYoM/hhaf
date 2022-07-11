@@ -5,8 +5,13 @@
 #include <new>
 
 #ifdef _MSC_VER
+#define WIN32_LEAN_AND_MEAN
+#pragma warning( push )
+#pragma warning( disable : 5039 )
+
 #include <windows.h>
 #include <crtdbg.h>
+#pragma warning( pop )
 
 #ifndef NDEBUG
 static int crtDebugMemAllocHook(int allocType,
@@ -15,15 +20,15 @@ static int crtDebugMemAllocHook(int allocType,
                                 int blockType,
                                 long requestIndex,
                                 const unsigned char* fileName,
-                                int lineIndex)
+                                int lineIndex) noexcept
 {
-    lineIndex;
-    fileName;
-    blockType;
-    blockType;
-    size;
-    userData;
-    allocType;
+    (void)(lineIndex);
+    (void)(fileName);
+    (void)(blockType);
+    (void)(blockType);
+    (void)(size);
+    (void)(userData);
+    (void)(allocType);
 
     if (requestIndex == 73838)  // break;
 
