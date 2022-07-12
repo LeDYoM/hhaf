@@ -11,6 +11,8 @@ build_concrete_backend(
     ${SOURCES}
 )
 
+set_compile_warning_level_and_cxx_properties_all(${CURRENT_TARGET})
+
 # Detect and add SFML
 add_subdirectory(sfml)
 

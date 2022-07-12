@@ -6,6 +6,9 @@ HTPS_PRAGMA_ONCE
 #include <cstring>
 #include <htypes/include/str.hpp>
 
+#pragma warning( push )
+#pragma warning( disable : 4514 )   // Unused functions in MSVC
+
 namespace htps
 {
 /**
@@ -29,6 +32,14 @@ public:
         data_{uptr<inner_type[]>(new inner_type[rhs.size_])}, size_{rhs.size_}
     {
         std::memcpy(data_.get(), rhs.data_.get(), size_);
+    }
+
+    RawMemory& operator=(RawMemory const& rhs)
+    {
+        data_ = uptr<inner_type[]>(new inner_type[rhs.size_]);
+        size_ = rhs.size_;
+        std::memcpy(data_.get(), rhs.data_.get(), size_);
+        return *this;
     }
 
     RawMemory(RawMemory&&) noexcept = default;
@@ -61,5 +72,7 @@ private:
 };
 
 }  // namespace htps
+
+#pragma warning ( pop )
 
 #endif
