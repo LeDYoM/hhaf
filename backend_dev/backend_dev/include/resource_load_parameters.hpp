@@ -18,7 +18,7 @@ struct ResourceLoadParameters
 
     ResourceLoadParameters(htps::str r_id,
                            htps::RawMemory r_m,
-                           htps::rptr<IResourceManager> ir_m) :
+                           htps::rptr<IResourceManager> ir_m) noexcept :
         resource_id{htps::move(r_id)},
         raw_memory{htps::move(r_m)},
         iresource_manager{htps::move(ir_m)}
