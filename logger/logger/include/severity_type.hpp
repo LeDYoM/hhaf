@@ -22,6 +22,9 @@ struct SeverityType
         error,
     };
 
+#pragma warning( push )
+#pragma warning( disable : 4514 )   // Unused functions in MSVC
+
     static constexpr const auto as_str(severity_type_t severity_value) noexcept
     {
         switch (severity_value)
@@ -50,6 +53,7 @@ struct SeverityType
         }
     }
 
+#pragma warning ( pop )
     static constexpr severity_type_t MinSeverity = severity_type_t::debug;
 
     template <severity_type_t severity_type>

@@ -22,6 +22,11 @@ struct InnerData
     std::thread thread_;
     std::queue<Message> msg_queue_;
     std::atomic<bool> exit;
+    std::byte _padding[3];
+
+    InnerData() = default;
+    InnerData(InnerData const&) = delete;
+    InnerData& operator=(InnerData const&) = delete;
 };
 
 namespace
