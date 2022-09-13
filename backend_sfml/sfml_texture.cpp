@@ -25,7 +25,9 @@ vector2du32 SFMLTexture::size() const
 
 htps::u64 SFMLTexture::uniqueId() const
 {
-    return priv_->m_cacheId;
+    // Not implemented, still
+    // #yolo
+    return 0;
 }
 
 void SFMLTexture::bind() const
