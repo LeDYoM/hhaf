@@ -15,6 +15,8 @@ public:
     using BaseClass::BaseClass;
     void onCreated() override;
 
+    void onAllTableElementsCreated(htps::vector2dst const table_size) override;
+
     void setText(htps::str const& text);
 };
 }  // namespace haf

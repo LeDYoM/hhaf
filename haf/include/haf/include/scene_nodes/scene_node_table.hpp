@@ -38,7 +38,7 @@ public:
         return nodeAt(index);
     }
 
-    constexpr htps::sptr<T>& nodeAt(htps::vector2dst const& index)
+    constexpr htps::sptr<T>& nodeAt(htps::vector2dst const& index) noexcept
     {
         return nodes_[index.x][index.y];
     }
@@ -47,6 +47,18 @@ public:
         htps::vector2dst const& index) const noexcept
     {
         return nodes_[index.x][index.y];
+    }
+
+    constexpr htps::sptr<T>& nodeAt(htps::u32 const x,
+                                    htps::u32 const y) noexcept
+    {
+        return nodes_[x][y];
+    }
+
+    constexpr htps::sptr<T const> const nodeAt(htps::u32 const x,
+                                               htps::u32 const y) const noexcept
+    {
+        return nodes_[x][y];
     }
 
     constexpr void for_each_tableSceneNode(
