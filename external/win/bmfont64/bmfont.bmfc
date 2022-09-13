@@ -2,10 +2,10 @@
 fileVersion=1
 
 # font settings
-fontName=Arial
+fontName=Lucida Console
 fontFile=PixelFJVerdana12pt.ttf
 charSet=0
-fontSize=-64
+fontSize=-20
 aa=2
 scaleH=100
 useSmoothing=1
@@ -34,8 +34,8 @@ forceZero=0
 widthPaddingFactor=0.00
 
 # output file
-outWidth=256
-outHeight=256
+outWidth=128
+outHeight=128
 outBitDepth=32
 fontDescFormat=0
 fourChnlPacked=0
@@ -54,6 +54,6 @@ invB=0
 outlineThickness=0
 
 # selected chars
-chars=32-126,161,200,248
+chars=32-126
 
 # imported icon images

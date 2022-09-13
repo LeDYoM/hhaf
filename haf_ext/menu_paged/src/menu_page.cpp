@@ -39,11 +39,11 @@ void MenuPage::onAllTableElementsCreated(htps::vector2dst const table_size)
         auto const& options{menu_options()};
         auto const& page_options{menu_page_options()};
 
-        LogAsserter::log_assert(options.size() > 0U, "options cannot be empty");
+        LogAsserter::log_assert(!options.empty(), "options cannot be empty");
         size_type counter{0U};
         for (auto&& option : options)
         {
-            size_type title_column{(page_options.centered_empty_option &&
+            size_type const title_column{(page_options.centered_empty_option &&
                                     option->option().options().empty())
                                        ? 2U
                                        : 0U};

@@ -23,15 +23,9 @@ void Console::onCreated()
     auto a  = createSceneNode<SceneNodeText>("scnText");
     a->Font = subSystem<res::IResourceRetriever>()->getBMPFont("console_font");
 
-//    Position     = {100.0F, 0.0F};
-//    Scale        = {1 / 2000.0F, 1 / 2000.0F};
-//    a->Text      = "234 ABC abc";
     a->Text      = "AYi2_+q";
     a->TextColor = colors::Red;
-    a->setLeftTopPositionScale({0.5F, 0.1F});
-    a->TextBaseSizeProperty = TextBaseSize{'A', 0U};
-//    a->Position = {-0.250F, -0.25F};
-//    a->Scale = {0.5F, 0.5F};
+    a->setLeftTopPositionScale({0.1F, 0.05F});
 }
 
 void Console::setText(str const& text)

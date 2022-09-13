@@ -14,7 +14,7 @@
         },
         console_font: {
             type: "bmp_font_fnt",
-            file: "abc.fnt"
+            file: "console.fnt"
         },
         shader1: {
             type: "shader",
