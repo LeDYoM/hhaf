@@ -81,7 +81,8 @@ bool WindowSystem::initialize(str const& window_config_file)
 
         // If window created successfully, extract the render target
         // associated with the window.
-        auto render_target{msptr<RenderTarget>(backend_window.renderTarget())};
+        //        auto
+        //        render_target{msptr<RenderTarget>(backend_window.renderTarget())};
 
         WindowLogDisplayer::debug("Extracted render target");
 
@@ -92,11 +93,9 @@ bool WindowSystem::initialize(str const& window_config_file)
         WindowLogDisplayer::debug("Extracted input driver");
 
         m_window =
-            msptr<Window>(p_backend_window, htps::move(input_driver_wrapper),
-                          htps::move(render_target));
+            msptr<Window>(p_backend_window, htps::move(input_driver_wrapper));
 
-        return m_window != nullptr && m_window->renderTarget() != nullptr &&
-            m_window->inputDriverWrapper() != nullptr;
+        return m_window != nullptr && m_window->inputDriverWrapper() != nullptr;
     }
     else
     {

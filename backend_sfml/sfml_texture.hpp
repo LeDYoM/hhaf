@@ -19,7 +19,9 @@ public:
     SFMLTexture(sf::Texture const* const texture, bool const owned);
     ~SFMLTexture() override;
 
-    virtual htps::vector2du32 size() const override;
+    htps::vector2du32 size() const override;
+    htps::u64 uniqueId() const override;
+    void bind() const override;
 
     sf::Texture const* backEndTexture() const noexcept { return priv_; }
     htps::str info() const override;

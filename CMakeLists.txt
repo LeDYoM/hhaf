@@ -58,6 +58,7 @@ set(hhaf_core_module_list
   host
   backend_dev
   backend
+  hogl
   haf
   haf_user
   haf_run

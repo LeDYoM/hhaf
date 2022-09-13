@@ -28,11 +28,11 @@ public:
 
         if constexpr (sizeof...(args) > 0U)
         {
-            ::new ((void*)where) T(htps::forward<Args>(args)...);
+            ::new (static_cast<void*>(where)) T(htps::forward<Args>(args)...);
         }
         else
         {
-            ::new ((void*)where) T{};
+            ::new (static_cast<void*>(where)) T{};
         }
     }
 

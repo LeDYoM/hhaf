@@ -55,6 +55,7 @@ set(headers
     ${include_dir}/vector_view.hpp
     ${include_dir}/vector.hpp
     ${include_dir}/vector2d.hpp
+    ${include_dir}/vector3d.hpp
 )
 
 build_lib_component(EXPORT_ALL HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}" SOURCES

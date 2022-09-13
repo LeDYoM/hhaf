@@ -1,3 +1,6 @@
+#pragma warning( push )
+#pragma warning( disable : 4668 )
+
 #include <hlog/include/hlog.hpp>
 
 #include <logger/include/stream_commiter.hpp>
@@ -8,6 +11,8 @@
 #include <hlog/include/thread_commiter.hpp>
 
 #include <htypes/include/str.hpp>
+
+#pragma warning( pop )
 
 namespace logger
 {

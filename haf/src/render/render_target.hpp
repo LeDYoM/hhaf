@@ -4,18 +4,18 @@ HTPS_PRAGMA_ONCE
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/rect.hpp>
-#include <backend_dev/include/camera_data.hpp>
-#include <backend_dev/include/irender_element.hpp>
+#include <htypes/include/properties/property_state.hpp>
+#include <haf/include/scene/matrix4x4.hpp>
 
-namespace haf::backend
+namespace haf::ogl
 {
-class IRenderTarget;
-}  // namespace haf::backend
+class RenderTarget;
+class RenderElement;
+}  // namespace haf::ogl
 
 namespace haf::render
 {
 class RenderData;
-class RenderElement;
 }
 
 namespace haf::sys
@@ -31,22 +31,19 @@ class RenderTarget
 public:
     /**
      * @brief Construct a new RenderTarget object
-     *
-     * @param renderTarget Interface to the underlying low level render target.
      */
-    RenderTarget(htps::rptr<backend::IRenderTarget> renderTarget);
+    RenderTarget();
 
-    void draw(backend::CameraData const& camera_data);
-    void draw(render::RenderElement const& render_element);
+    void draw(ogl::RenderElement const& render_element);
     void update();
     void clearRenderQueue();
 
-    htps::uptr<backend::IRenderElement> createRenderElement();
+    htps::PropertyState<htps::Rects32> ViewPort;
+    htps::PropertyState<scene::Matrix4x4> Projection;
 
 private:
-    htps::rptr<backend::IRenderTarget> irender_target_;
-    backend::CameraData m_camera_data;
-    htps::vector<htps::rptr<backend::IRenderElement const>>
+    htps::sptr<ogl::RenderTarget> irender_target_;
+    htps::vector<htps::rptr<ogl::RenderElement const>>
         render_element_container_;
 };
 }  // namespace haf::sys

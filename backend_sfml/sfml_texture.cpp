@@ -20,7 +20,17 @@ SFMLTexture::~SFMLTexture()
 vector2du32 SFMLTexture::size() const
 {
     auto const size{priv_->getSize()};
-    return {static_cast<u32>(size.x), static_cast<u32>(size.y)};
+    return vector2du32{static_cast<u32>(size.x), static_cast<u32>(size.y)};
+}
+
+htps::u64 SFMLTexture::uniqueId() const
+{
+    return priv_->m_cacheId;
+}
+
+void SFMLTexture::bind() const
+{
+    sf::Texture::bind(priv_, sf::Texture::Pixels);
 }
 
 str SFMLTexture::info() const

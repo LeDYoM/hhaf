@@ -18,7 +18,6 @@ namespace haf::backend
 
 namespace haf::sys
 {
-class RenderTarget;
 class SystemProvider;
 
 /**
@@ -35,8 +34,7 @@ public:
      * @brief Construct a new Window object
      */
     Window(htps::rptr<backend::IWindow> backend_window_,
-           htps::sptr<input::InputDriverWrapper> input_driver_wrapper_,
-           htps::sptr<RenderTarget> render_target_);
+           htps::sptr<input::InputDriverWrapper> input_driver_wrapper_);
 
     /**
      * @brief Destroy the Window object
@@ -58,9 +56,6 @@ public:
      */
     void postLoop();
 
-    htps::sptr<RenderTarget> renderTarget();
-    htps::sptr<RenderTarget const> renderTarget() const;
-
     htps::sptr<input::InputDriverWrapper> inputDriverWrapper();
     htps::sptr<input::InputDriverWrapper const> inputDriverWrapper() const;
 
@@ -68,7 +63,6 @@ private:
     FPSCounter fps_counter;
     htps::rptr<backend::IWindow> m_backend_window{nullptr};
     htps::sptr<input::InputDriverWrapper> m_input_driver_wrapper;
-    htps::sptr<RenderTarget> m_render_target;
     htps::str m_title;
 };
 }  // namespace haf::sys

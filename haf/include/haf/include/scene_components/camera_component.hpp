@@ -20,7 +20,9 @@ public:
     ~CameraComponent() override;
 
     htps::PropertyState<SceneBox> view;
-    htps::PropertyState<SceneQuad> viewPort;
+    htps::PropertyState<SceneUnit> Near;
+    htps::PropertyState<SceneUnit> Far;
+    htps::PropertyState<SceneBox> viewPort;
 
     void moveView(SceneCoordinates const& delta);
 

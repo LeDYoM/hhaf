@@ -3,7 +3,7 @@
 #include <hlog/include/hlog.hpp>
 
 #include <htypes/include/object_utils.hpp>
-#include <debug_utils/debug_system.hpp>
+#include <debug_system/debug_system.hpp>
 #include <system/get_system.hpp>
 #include <haf/include/system/system_access.hpp>
 #include <system/system_provider.hpp>

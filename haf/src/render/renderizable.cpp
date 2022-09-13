@@ -21,21 +21,19 @@ Renderizable::Renderizable(rptr<TransformableSceneNode> parent,
     sys::HasName{htps::move(renderizable_data.RenderizableName())},
     parent_{htps::move(parent)},
     p_{make_pimplp<RenderizablePrivate>(
-        this,
         renderizable_data.PointCount(),
         renderizable_data.FigureTypeProperty(),
         sys::getSystem<sys::RenderSystem>(parent).currentRenderTarget())}
 {
-    TextureProperty     = renderizable_data.TextureProperty();
-    TextureRectProperty = renderizable_data.TextureRectProperty();
-    ShaderProperty      = renderizable_data.ShaderProperty();
-    ColorProperty       = renderizable_data.ColorProperty();
+    m_material.texture     = renderizable_data.TextureProperty();
+    m_material.textureRect = renderizable_data.TextureRectProperty();
+    m_material.shader      = renderizable_data.ShaderProperty();
+    m_material.color       = renderizable_data.ColorProperty();
 
-    if (ShaderProperty() == nullptr)
+    if (m_material.shader() == nullptr)
     {
-        //        ShaderProperty =
-        //        parent_->subSystem<res::IDefaultResourcesRetriever>()
-        //                             ->getDefaultShader();
+        m_material.shader = parent_->subSystem<res::IDefaultResourcesRetriever>()
+                             ->getDefaultShader();
     }
 }
 
@@ -68,39 +66,24 @@ void Renderizable::update(bool const parent_transformation_changed)
             parent()->globalTransform().getMatrix());
     }
 
-    if (ps_readResetHasAnyChanged(TextureRectProperty))
+    if (m_material.shader.readResetHasChanged())
     {
-        p_->updateTextureRect();
+//        p_->m_render_element.setShader(to_backend(m_material.shader().get()));
     }
 
-    if (ps_readResetHasAnyChanged(ColorProperty))
+    if (m_material.textureRect.readResetHasChanged())
     {
-        p_->updateColors();
+        p_->updateTextureRect(m_material.textureRect());
     }
 
-    if (TextureProperty.readResetHasChanged())
+    if (m_material.color.readResetHasChanged())
     {
-        p_->m_render_element.setTexture(to_backend(TextureProperty().get()));
+        p_->updateColors(m_material.color());
     }
 
-    if (ShaderProperty.readResetHasChanged())
+    if (m_material.texture.readResetHasChanged())
     {
-/*        if (ShaderProperty() != nullptr)
-        {
-            sptr<res::IShader> const& shader{ShaderProperty()};
-
-            if (TextureProperty() != nullptr)
-            {
-                shader->setUniform("has_texture", true);
-                shader->setUniform("texture", TextureProperty().get());
-            }
-            else
-            {
-                shader->setUniform("has_texture", false);
-            }
-        }
-        p_->m_render_element.setShader(to_backend(ShaderProperty().get()));
-        */
+        p_->m_render_element.setTexture(to_backend(m_material.texture().get()));
     }
 }
 

@@ -2,15 +2,16 @@
 #define MEMMANAGER_MEMORY_VIEW_INCLUDE_HPP
 
 #include <cstddef>
+#include <cstdint>
 
 namespace memm
 {
 struct MemoryStatistics
 {
-    std::size_t num_alloc_{0U};
-    std::size_t num_dealloc_{0U};
-    std::size_t bytes_alloc_{0U};
-    std::size_t bytes_dealloc_{0U};
+    std::uint64_t num_alloc_{0U};
+    std::uint64_t num_dealloc_{0U};
+    std::uint64_t bytes_alloc_{0U};
+    std::uint64_t bytes_dealloc_{0U};
 };
 
 bool pushMemoryStatisticsQueue();

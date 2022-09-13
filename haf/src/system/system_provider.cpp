@@ -4,7 +4,7 @@
 
 #include <backend/include/backend_factory.hpp>
 #include <backend/include/backend_creator.hpp>
-#include "debug_utils/debug_system.hpp"
+#include "debug_system/debug_system.hpp"
 #include "filesystem/file_system.hpp"
 #include "input/input_system.hpp"
 #include "random/randomsystem.hpp"
@@ -197,8 +197,7 @@ void SystemProvider::initializeSystems(
 
         if (init_system_options.init_render_system)
         {
-            p_->render_system_->setRenderTarget(
-                p_->window_system_->window()->renderTarget());
+            p_->render_system_->initialize();
         }
 
         if (init_system_options.init_input_system)

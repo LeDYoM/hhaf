@@ -60,7 +60,7 @@ public:
 
     htps::vector2du32 configuredWindowSize() const noexcept
     {
-        return {data().width, data().height};
+        return htps::vector2du32{data().width, data().height};
     }
 
     htps::u8 configuredBitsPerRed() const noexcept

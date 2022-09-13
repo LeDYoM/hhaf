@@ -2,7 +2,6 @@
 #define HLOG_FILE_COMMITER_INCLUDE_HPP
 
 #include <logger/include/stream_commiter.hpp>
-#include <iostream>
 
 namespace haf
 {

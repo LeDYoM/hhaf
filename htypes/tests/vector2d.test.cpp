@@ -66,6 +66,13 @@ TEST_CASE("vector2d::operator-", "[vector2d]")
     vector2ds32 v4{-v1};
     CHECK(v4.x == -11);
     CHECK(v4.y == -20);
+
+    vector2ds32 v5{-v4};
+    CHECK(v5.x == 11);
+    CHECK(v5.y == 20);
+
+    CHECK(v4.x == -11);
+    CHECK(v4.y == -20);
 }
 
 TEST_CASE("vector2d::operator*", "[vector2d]")
@@ -76,6 +83,10 @@ TEST_CASE("vector2d::operator*", "[vector2d]")
     vector2ds32 v3{v1 * v2};
     CHECK(v3.x == 11);
     CHECK(v3.y == 40);
+
+    v1 *= v2;
+    CHECK(v1.x == 11);
+    CHECK(v1.y == 40);
 }
 
 TEST_CASE("vector2d::operator/", "[vector2d]")
@@ -86,4 +97,15 @@ TEST_CASE("vector2d::operator/", "[vector2d]")
     vector2ds32 v3{v1 / v2};
     CHECK(v3.x == 11);
     CHECK(v3.y == 10);
+
+    const s32 scalar{10};
+    vector2ds32 v4{v1 / scalar};
+    CHECK(v4.x == 1);
+    CHECK(v4.y == 2);
+
+    const vector2ds32 v5{20, 50};
+    const s32 scalar2{200};
+    vector2ds32 v6{scalar2 / v5};
+    CHECK(v6.x == 10);
+    CHECK(v6.y == 4);
 }

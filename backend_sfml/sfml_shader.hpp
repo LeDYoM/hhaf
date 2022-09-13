@@ -6,20 +6,28 @@
 
 namespace sf
 {
-    class Shader;
-}
+class Shader;
+class Texture;
+}  // namespace sf
 
 namespace haf::backend::sfmlb
 {
 class SFMLShader : public IShader
 {
 public:
-    explicit SFMLShader(htps::uptr<sf::Shader> shader);
-    ~SFMLShader() override;
+    explicit SFMLShader(htps::uptr<sf::Shader> shader) noexcept;
+    ~SFMLShader() noexcept override;
 
     void setUniform(htps::str const& name, bool const& v) override;
     void setUniform(htps::str const& name, htps::vector2df const& v) override;
-    void setUniform(htps::str const& name, ITexture const* texture) override;
+    void setUniform(htps::str const& name,
+                    htps::rptr<ITexture const> const texture) override;
+
+    void setTexture(htps::size_type const index,
+                            ITexture const* const texture) override;
+
+    void bind() const override;
+    void unbind() const override;
 
     sf::Shader const* backEndShader() const { return priv_.get(); }
 

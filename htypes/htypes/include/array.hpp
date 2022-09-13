@@ -4,7 +4,7 @@ HTPS_PRAGMA_ONCE
 
 #include <initializer_list>
 #include "types.hpp"
-
+#include "span.hpp"
 #include <cassert>
 
 namespace htps
@@ -47,6 +47,11 @@ public:
         array{_begin, static_cast<size_type>(std::distance(_begin, _end))}
     {}
 
+    constexpr array(span<T const> const rhs) : array{rhs.cbegin(), rhs.cend()}
+    {}
+
+    constexpr array(span<T> const rhs) : array{rhs.cbegin(), rhs.cend()} {}
+
     constexpr void insert(const size_type index, value_type element) noexcept
     {
         if (index < array_size)
@@ -88,6 +93,18 @@ public:
     }
     constexpr const_reference cfront() const noexcept { return cbegin(); }
     constexpr const_reference cback() const noexcept { return back(); }
+
+    constexpr array& operator=(span<T> const& rhs)
+    {
+        *this = array{rhs};
+        return *this;
+    }
+
+    constexpr array& operator=(span<T const> const& rhs)
+    {
+        *this = array{rhs};
+        return *this;
+    }
 
 private:
     T buffer_[array_size];

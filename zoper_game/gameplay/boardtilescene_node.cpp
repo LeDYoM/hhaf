@@ -37,7 +37,7 @@ void BoardTileSceneNode::update()
 
     if (BackgroundColor.readResetHasChanged())
     {
-        background_tile_->ColorProperty = BackgroundColor();
+        background_tile_->material().color = BackgroundColor();
     }
 }
 

@@ -11,7 +11,7 @@
 #include "time/time_system.hpp"
 #include "shareddata/shared_data_system.hpp"
 #include "filesystem/file_system.hpp"
-#include "debug_utils/debug_system.hpp"
+#include "debug_system/debug_system.hpp"
 
 using namespace htps;
 

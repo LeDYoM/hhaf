@@ -9,10 +9,17 @@ include (backend_client_functions)
 build_concrete_backend(
     SOURCES
     ${SOURCES}
+    opengl/gl_check.cpp
+    opengl/gl_check.hpp
+    opengl/glad.cpp
+    opengl/glad.h
+    opengl/khrplatform.h
 )
 
 set_compile_warning_level_and_cxx_properties_all(${CURRENT_TARGET})
-
+#find_package(OpenGL REQUIRED)
+#set(LIBS ${GLFW3_LIBRARY} ${OPENGL_LIBRARY} GLAD ${CMAKE_DL_LIBS} ${ASSIMP_LIBRARY} STB_IMAGE)
+#target_link_libraries(${CURRENT_TARGET} PRIVATE ${OPENGL_LIBRARY})
 # Detect and add SFML
 add_subdirectory(sfml)
 

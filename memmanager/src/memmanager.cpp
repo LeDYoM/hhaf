@@ -1,17 +1,19 @@
 #include <memmanager/include/memmanager.hpp>
+#include <memmanager/include/memory_view.hpp>
 #include "memory_statistics.hpp"
 
 #include <cstdlib>
 #include <new>
+#include <iostream>
 
 #ifdef _MSC_VER
 #define WIN32_LEAN_AND_MEAN
-#pragma warning( push )
-#pragma warning( disable : 5039 )
+#pragma warning(push)
+#pragma warning(disable : 5039)
 
 #include <windows.h>
 #include <crtdbg.h>
-#pragma warning( pop )
+#pragma warning(pop)
 
 #ifndef NDEBUG
 static int crtDebugMemAllocHook(int allocType,
@@ -48,8 +50,36 @@ void installMemManager()
     memm::initMemoryStatistics();
 }
 
-void finishMemManager()
+struct Bytes
 {
+    uint64_t bytes;
+
+    uint64_t KBytes() const noexcept { return bytes / 1024U; }
+    uint64_t MBytes() const noexcept { return bytes / (1024U * 1024U); }
+};
+
+void finishMemManager(bool const display_log)
+{
+    if (display_log)
+    {
+        memm::MemoryStatistics const* mem_statistics{
+            memm::getMemoryStatistics()};
+        std::cout << "[MemManager] Number of allocations: " << mem_statistics->num_alloc_
+                  << "\n";
+        std::cout << "[MemManager] Number of deallocations: " << mem_statistics->num_dealloc_
+                  << "\n";
+        Bytes allocated{mem_statistics->bytes_alloc_};
+        std::cout << "[MemManager] Bytes allocated:\t" << allocated.bytes << "\t("
+                  << allocated.KBytes() << "KB)\t(" << allocated.MBytes()
+                  << "MB)"
+                  << "\n";
+        Bytes deallocated{mem_statistics->bytes_alloc_};
+        std::cout << "[MemManager] Bytes deallocated:\t" << deallocated.bytes << "\t("
+                  << deallocated.KBytes() << "KB)\t(" << deallocated.MBytes()
+                  << "MB)";
+        std::cout << std::endl;
+    }
+
     memm::destroyMemoryStatistics();
 
 #ifdef _MSC_VER

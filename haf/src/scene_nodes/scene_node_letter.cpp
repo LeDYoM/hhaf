@@ -8,8 +8,8 @@ namespace haf::scene::nodes
 void SceneNodeLetter::setCharacterTextureData(sptr<res::ITexture> texture,
                                               Rectf32 const& textureUV)
 {
-    node()->TextureProperty     = texture;
-    node()->TextureRectProperty = textureUV;
+    node()->material().texture     = texture;
+    node()->material().textureRect = textureUV;
 }
 
 }  // namespace haf::scene::nodes

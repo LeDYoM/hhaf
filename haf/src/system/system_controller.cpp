@@ -5,7 +5,7 @@
 #include "scene/scene_manager.hpp"
 #include "render/render_system.hpp"
 #include "time/time_system.hpp"
-#include "debug_utils/debug_system.hpp"
+#include "debug_system/debug_system.hpp"
 #include <hlog/include/hlog.hpp>
 #include <hosted_app/include/iapp.hpp>
 

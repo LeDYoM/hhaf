@@ -1,7 +1,11 @@
 #include <hlog/include/file_commiter.hpp>
 
-#include <iostream>
+#pragma warning( push )
+#pragma warning( disable : 4668 )
+
 #include <fstream>
+
+#pragma warning( pop )
 
 namespace haf
 {

@@ -139,7 +139,8 @@ struct Rect
 
     [[nodiscard]] constexpr vector2d<T> radius() const noexcept
     {
-        return {width / static_cast<T>(2), height / static_cast<T>(2)};
+        return vector2d<T>{width / static_cast<T>(2),
+                           height / static_cast<T>(2)};
     }
 
     [[nodiscard]] constexpr vector2d<T> leftTop() const noexcept

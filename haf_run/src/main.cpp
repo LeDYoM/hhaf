@@ -39,6 +39,6 @@ int main(int argc, char* argv[])
     }
 
     agloader::destroyLoader();
-    finishMemManager();
+    finishMemManager(true);
     return result;
 }

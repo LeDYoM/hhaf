@@ -7,7 +7,7 @@ HTPS_PRAGMA_ONCE
 #include <haf/include/resources/itexture.hpp>
 #include <haf/include/resources/ishader.hpp>
 #include "renderizable_internal_functions.hpp"
-#include "render_element.hpp"
+#include <hogl/include/render_element.hpp>
 #include "render_data_conversion.hpp"
 #include "render_target.hpp"
 #include "resources/texture.hpp"
@@ -15,76 +15,28 @@ HTPS_PRAGMA_ONCE
 #include "renderizable_internal_data.hpp"
 #include <backend_dev/include/ivertex.hpp>
 
-using namespace htps;
-using namespace haf::scene;
-
 namespace haf::render
 {
-
 struct Renderizable::RenderizablePrivate
 {
-    rptr<Renderizable const> const i_this_;
-    size_type num_vertex_;
     FigType_t figure_type_;
-    vector<backend::iPosition> positions_;
-    vector<backend::iColor> colors_;
-    vector<backend::iTextureCoordinates> texture_coordinates_;
-    sptr<sys::RenderTarget> render_target_;
-    RenderElement m_render_element;
+    htps::vector<backend::iPosition> positions_;
+    htps::vector<backend::iColor> colors_;
+    htps::vector<backend::iTextureCoordinates> texture_coordinates_;
+    htps::sptr<sys::RenderTarget> render_target_;
+    ogl::RenderElement m_render_element;
 
-    RenderizablePrivate(rptr<Renderizable const> i_this,
-                        size_type const num_vertex,
+    RenderizablePrivate(htps::size_type const num_vertex,
                         FigType_t const figure_type,
-                        sptr<sys::RenderTarget> render_target) :
-        i_this_{i_this},
-        num_vertex_{num_vertex},
-        figure_type_{figure_type},
-        render_target_{htps::move(render_target)},
-        m_render_element{render_target_->createRenderElement()}
-    {
-        positions_.resize(num_vertex_);
-        colors_.resize(num_vertex_);
-        texture_coordinates_.resize(num_vertex_);
-        m_render_element.setSize(num_vertex_);
-        updatePositions();
-    }
+                        htps::sptr<sys::RenderTarget> render_target);
 
-    void render()
-    {
-        render_target_->draw(m_render_element);
-    }
+    void render();
 
-    void updatePositions()
-    {
-        switch (figure_type_)
-        {
-            case FigType_t::Sprite:
-            {
-                setQuad(positions_);
-            }
-            break;
+    void updatePositions();
 
-            case FigType_t::PolygonSprite:
-            {
-                setPolygon(positions_);
-            }
-            break;
-        }
-        m_render_element.setPositions(positions_.cbegin());
-    }
+    void updateTextureRect(htps::Rects32 const& textureRect);
 
-    void updateTextureRect()
-    {
-        setTextureRect(positions_, texture_coordinates_,
-                       i_this_->TextureRectProperty());
-        m_render_element.setTexturecoordinates(texture_coordinates_.cbegin());
-    }
-
-    void updateColors()
-    {
-        setColor(colors_, i_this_->ColorProperty());
-        m_render_element.setColors(colors_.cbegin());
-    }
+    void updateColors(scene::Color const& color);
 };
 
 }  // namespace haf::render

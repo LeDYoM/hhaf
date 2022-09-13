@@ -90,7 +90,6 @@ void BackendFactory::selectFactoriesToUse(
     BackendRegisterUptr const& backend_register) noexcept
 {
     updateFactory(window_, backend_register->window_);
-    updateFactory(render_target_, backend_register->render_target_);
     updateFactory(ttfontFactory_, backend_register->ttfontFactory_);
     updateFactory(bmpFontFactory_, backend_register->bmpFontFactory_);
     updateFactory(textureFactory_, backend_register->textureFactory_);
@@ -100,11 +99,6 @@ void BackendFactory::selectFactoriesToUse(
 bool BackendFactory::isWindowFactoryAvailable() const noexcept
 {
     return window_ != nullptr;
-}
-
-bool BackendFactory::isRenderTargetAvailable() const noexcept
-{
-    return render_target_ != nullptr;
 }
 
 bool BackendFactory::isTextureFactoryAvailable() const noexcept
@@ -130,11 +124,6 @@ bool BackendFactory::isTTFontFactoryAvailable() const noexcept
 rptr<IWindow> BackendFactory::getWindow() const noexcept
 {
     return window_;
-}
-
-rptr<IRenderTarget> BackendFactory::getRenderTarget() const noexcept
-{
-    return render_target_;
 }
 
 rptr<ITextureFactory> BackendFactory::getTextureFactory() const noexcept

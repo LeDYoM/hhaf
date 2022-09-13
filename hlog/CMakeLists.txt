@@ -3,7 +3,7 @@ project(hlog LANGUAGES CXX)
 
 set(CURRENT_TARGET hlog)
 
-set(sources 
+set(sources
     src/cout_commiter.cpp
     src/file_commiter.cpp
     src/thread_commiter.cpp

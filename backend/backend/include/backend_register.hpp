@@ -2,7 +2,6 @@
 #define HAF_BACKEND_REGISTER_INCLUDE_HPP
 
 #include <backend_dev/include/iwindow.hpp>
-#include <backend_dev/include/irendertarget.hpp>
 #include <backend_dev/include/iresourcefactories.hpp>
 #include <backend_dev/include/ibackendregister.hpp>
 
@@ -18,7 +17,6 @@ class BackendRegister final : public client::IBackendRegister
 public:
     explicit BackendRegister(htps::str const& module_name);
     void setFactory(htps::uptr<IWindowFactory>) noexcept override;
-    void setFactory(htps::uptr<IRenderTargetFactory>) noexcept override;
     void setFactory(htps::uptr<ITTFontFactoryFactory>) noexcept override;
     void setFactory(htps::uptr<ITextureFactoryFactory>) noexcept override;
     void setFactory(htps::uptr<IShaderFactoryFactory>) noexcept override;
@@ -79,7 +77,6 @@ public:
 
     htps::str const& moduleName() const noexcept;
     htps::rptr<IWindow> window_{nullptr};
-    htps::rptr<IRenderTarget> render_target_{nullptr};
     htps::rptr<ITextureFactory> textureFactory_{nullptr};
     htps::rptr<ITTFontFactory> ttfontFactory_{nullptr};
     htps::rptr<IShaderFactory> shaderFactory_{nullptr};
@@ -90,7 +87,6 @@ private:
     p_initBackendClient init_lib_func_{nullptr};
     p_finishBackendClient finish_lib_func_{nullptr};
     htps::sptr<IWindowFactory> window_factory_;
-    htps::sptr<IRenderTargetFactory> render_target_factory_;
     htps::sptr<ITTFontFactoryFactory> ttfont_factory_factory_;
     htps::sptr<ITextureFactoryFactory> texture_factory_factory_;
     htps::sptr<IShaderFactoryFactory> shader_factory_factory_;

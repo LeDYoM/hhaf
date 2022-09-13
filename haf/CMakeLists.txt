@@ -27,15 +27,14 @@ set(sources
   ${src_dir}/component/component_container.cpp
 
   # Debug
-  ${src_dir}/debug_utils/console.cpp
-  ${src_dir}/debug_utils/debug_actions.cpp
-  ${src_dir}/debug_utils/debug_system_subsystems_view.cpp
-  ${src_dir}/debug_utils/debug_system.cpp
-  ${src_dir}/debug_utils/debug_system.hpp
-  ${src_dir}/debug_utils/debug_variable.hpp
-  ${src_dir}/debug_utils/debug_variables.cpp
-  ${src_dir}/debug_utils/debug_variables.hpp
-  ${src_dir}/debug_utils/displayvar_console.cpp
+  ${src_dir}/debug_system/console.cpp
+  ${src_dir}/debug_system/debug_actions.cpp
+  ${src_dir}/debug_system/debug_system_subsystems_view.cpp
+  ${src_dir}/debug_system/debug_system.cpp
+  ${src_dir}/debug_system/debug_system.hpp
+  ${src_dir}/debug_system/debug_variables.cpp
+  ${src_dir}/debug_system/debug_variables.hpp
+  ${src_dir}/debug_system/displayvar_console.cpp
 
   # FileSystem
   ${src_dir}/filesystem/file_system_private_funcs.cpp
@@ -57,7 +56,7 @@ set(sources
   ${src_dir}/profiler/code_profiler.cpp
   ${src_dir}/profiler/memory_data_initializer.cpp
   ${src_dir}/profiler/variable_viewer.cpp
-  
+
   # Random
   ${src_dir}/random/randomnumberscomponent.cpp
   ${src_dir}/random/randomsystem.cpp
@@ -67,8 +66,6 @@ set(sources
   ${src_dir}/render/geometry_math.hpp
   ${src_dir}/render/render_data_conversion.cpp
   ${src_dir}/render/render_data_conversion.hpp
-  ${src_dir}/render/render_element.cpp
-  ${src_dir}/render/render_element.hpp
   ${src_dir}/render/render_system.cpp
   ${src_dir}/render/render_system.hpp
   ${src_dir}/render/render_target.cpp
@@ -77,6 +74,7 @@ set(sources
   ${src_dir}/render/renderizable_internal_data.hpp
   ${src_dir}/render/renderizable_internal_functions.cpp
   ${src_dir}/render/renderizable_internal_functions.hpp
+  ${src_dir}/render/renderizable_private.cpp
   ${src_dir}/render/renderizable_private.hpp
   ${src_dir}/render/renderizable.cpp
   ${src_dir}/render/renderizables.cpp
@@ -230,9 +228,9 @@ set(headers
   ${inc_dir}/component/icomponent.hpp
 
   # Debug
-  ${inc_dir}/debug_utils/console.hpp
-  ${inc_dir}/debug_utils/debug_actions.hpp
-  ${inc_dir}/debug_utils/displayvar_console.hpp
+  ${inc_dir}/debug_system/console.hpp
+  ${inc_dir}/debug_system/debug_actions.hpp
+  ${inc_dir}/debug_system/displayvar_console.hpp
 
   # Data
   ${inc_dir}/data/ideserializable.hpp
@@ -380,7 +378,13 @@ target_compile_definitions(${CURRENT_TARGET} PUBLIC HAF_PROFILE)
 
 # Prepare the haf libray
 target_compile_definitions(${CURRENT_TARGET} PRIVATE haf_EXPORTS)
-target_link_libraries(${CURRENT_TARGET} PRIVATE hosted_app agloader backend backend_dev)
+target_link_libraries(${CURRENT_TARGET} PRIVATE
+  renderer
+  hosted_app
+  agloader
+  backend
+  backend_dev
+)
 
 target_link_libraries(${CURRENT_TARGET} PUBLIC log_and_types)
 

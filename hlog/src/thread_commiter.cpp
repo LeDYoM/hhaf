@@ -2,7 +2,6 @@
 #include <hlog/include/cout_commiter.hpp>
 #include <hlog/include/file_commiter.hpp>
 
-#include <iostream>
 #include <mutex>
 #include <thread>
 #include <queue>

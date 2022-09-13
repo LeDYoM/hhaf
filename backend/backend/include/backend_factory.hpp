@@ -14,7 +14,6 @@ namespace haf::backend
 {
 class BackendRegister;
 class IWindow;
-class IRenderTarget;
 
 /**
  * @brief Class representing a factory for backend classes.
@@ -37,7 +36,6 @@ public:
     bool loadBackendFile(htps::str const& file_name);
 
     htps::rptr<IWindow> getWindow() const noexcept;
-    htps::rptr<IRenderTarget> getRenderTarget() const noexcept;
     htps::rptr<ITextureFactory> getTextureFactory() const noexcept;
     htps::rptr<ITTFontFactory> getTTFontFactory() const noexcept;
     htps::rptr<IShaderFactory> getShaderFactory() const noexcept;
@@ -48,7 +46,6 @@ public:
     IBMPFontFactory& bmpFontFactory() const;
 
     bool isWindowFactoryAvailable() const noexcept;
-    bool isRenderTargetAvailable() const noexcept;
     bool isTextureFactoryAvailable() const noexcept;
     bool isShaderFactoryAvailable() const noexcept;
     bool isBMPFontFactoryAvailable() const noexcept;
@@ -61,7 +58,6 @@ private:
     void selectFactoriesToUse(
         BackendRegisterUptr const& backend_register) noexcept;
     htps::rptr<IWindow> window_{nullptr};
-    htps::rptr<IRenderTarget> render_target_{nullptr};
     htps::rptr<ITextureFactory> textureFactory_{nullptr};
     htps::rptr<ITTFontFactory> ttfontFactory_{nullptr};
     htps::rptr<IShaderFactory> shaderFactory_{nullptr};

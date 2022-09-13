@@ -6,11 +6,6 @@ HTPS_PRAGMA_ONCE
 #include <htypes/include/vector.hpp>
 #include "system/system_base.hpp"
 
-namespace haf::backend
-{
-class IRenderElement;
-}
-
 namespace haf::sys
 {
 class RenderTarget;
@@ -23,9 +18,10 @@ class RenderSystem final : public SystemBase
 {
 public:
     using SystemBase::SystemBase;
+    void initialize();
+
     void update();
 
-    void setRenderTarget(htps::sptr<RenderTarget> render_target);
     htps::sptr<RenderTarget> const& currentRenderTarget() const;
 
 private:

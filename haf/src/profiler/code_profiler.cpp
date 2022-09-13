@@ -3,9 +3,9 @@
 #include <hlog/include/hlog.hpp>
 #include "system/get_system.hpp"
 #include "time/time_system.hpp"
-#include "debug_utils/debug_system.hpp"
-#include "debug_utils/debug_variables.hpp"
-#include "debug_utils/debug_log.hpp"
+#include "debug_system/debug_system.hpp"
+#include "debug_system/debug_variables.hpp"
+#include "debug_system/debug_log.hpp"
 
 #include <haf/include/scene/scene_node.hpp>
 #include <haf/include/system/system_access.hpp>
@@ -28,8 +28,7 @@ CodeProfiler::CodeProfiler(sys::ISystemProvider& isystem_provider,
     {
         sys::getSystem<sys::DebugSystem>(&m_system_provider)
             .debugVariables()
-            .getVariable(DebugVariables::DebugVariablesScope::Frame,
-                         m_variable_id_ref, var_name);
+            .getVariable(m_variable_id_ref, var_name);
     }
 }
 
@@ -47,8 +46,7 @@ CodeProfiler::~CodeProfiler()
         sys::getSystem<sys::TimeSystem>(&m_system_provider).now() - m_start};
     sys::getSystem<sys::DebugSystem>(&m_system_provider)
         .debugVariables()
-        .incrementVariable(DebugVariables::DebugVariablesScope::Frame,
-                           m_variable_id_ref,
+        .incrementVariable(m_variable_id_ref,
                            static_cast<DebugVariables::DebugVariable_t>(
                                time_dif.nanoseconds()));
 }

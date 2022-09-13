@@ -17,25 +17,13 @@ using namespace haf::time;
 namespace haf::sys
 {
 Window::Window(rptr<backend::IWindow> backend_window,
-               sptr<input::InputDriverWrapper> input_driver_wrapper,
-               sptr<RenderTarget> render_target) :
+               sptr<input::InputDriverWrapper> input_driver_wrapper) :
     fps_counter{},
     m_backend_window{backend_window},
-    m_input_driver_wrapper{htps::move(input_driver_wrapper)},
-    m_render_target{htps::move(render_target)}
+    m_input_driver_wrapper{htps::move(input_driver_wrapper)}
 {}
 
 Window::~Window() = default;
-
-sptr<RenderTarget> Window::renderTarget()
-{
-    return m_render_target;
-}
-
-sptr<RenderTarget const> Window::renderTarget() const
-{
-    return m_render_target;
-}
 
 sptr<input::InputDriverWrapper> Window::inputDriverWrapper()
 {

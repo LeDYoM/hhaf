@@ -13,8 +13,7 @@ set(headers
     ${include_dir}/ifont.hpp
     ${include_dir}/iinputdriver.hpp
     ${include_dir}/ikey.hpp
-    ${include_dir}/irender_element.hpp
-    ${include_dir}/irendertarget.hpp
+    ${include_dir}/imaterial_data.hpp
     ${include_dir}/iresource_descriptor.hpp
     ${include_dir}/iresource_manager.hpp
     ${include_dir}/iresourcefactories.hpp

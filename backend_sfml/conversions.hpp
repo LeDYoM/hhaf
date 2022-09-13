@@ -8,6 +8,8 @@
 #include "sfml_shader.hpp"
 #include <SFML/Window.hpp>
 #include <SFML/System/String.hpp>
+#include <SFML/Graphics/Rect.hpp>
+#include <SFML/Graphics/Transform.hpp>
 
 namespace haf::backend::sfmlb
 {
@@ -79,32 +81,6 @@ constexpr sf::Shader const* to_sf_type(IShader const* const shader) noexcept
         }
     }
     return nullptr;
-}
-
-inline auto to_sf_type(iVertex const* const vertex) noexcept
-{
-    return reinterpret_cast<sf::Vertex const* const>(vertex);
-}
-
-inline auto to_sf_type(iVertex const vertex) noexcept
-{
-    return sf::Vertex{sf::Vector2f{vertex.pos_x, vertex.pos_y},
-                      sf::Color{vertex.r, vertex.g, vertex.b, vertex.a},
-                      sf::Vector2f{vertex.tc_x, vertex.tc_y}};
-}
-
-inline auto to_sf_type(iColor const& color) noexcept
-{
-    return sf::Color{color.r, color.g, color.b, color.a};
-}
-
-inline auto to_sf_type(htps::f32 const* const matrix,
-                       ITexture const* const texture,
-                       IShader const* const shader) noexcept
-{
-    return sf::RenderStates{sf::RenderStates::Default.blendMode,
-                            to_sf_type(matrix), to_sf_type(texture),
-                            to_sf_type(shader)};
 }
 
 }  // namespace haf::backend::sfmlb

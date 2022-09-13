@@ -11,7 +11,6 @@ HTPS_PRAGMA_ONCE
 
 namespace haf::render
 {
-backend::iVertex const* to_backend(Vertex const* vertices) noexcept;
 backend::iColor to_backend(scene::Color const& color) noexcept;
 backend::ITexture const* to_backend(res::ITexture const* texture);
 backend::IShader const* to_backend(res::IShader const* shader);

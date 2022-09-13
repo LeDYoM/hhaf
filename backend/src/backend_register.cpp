@@ -16,12 +16,6 @@ void BackendRegister::setFactory(uptr<IWindowFactory> window_factory) noexcept
 }
 
 void BackendRegister::setFactory(
-    uptr<IRenderTargetFactory> render_target_factory) noexcept
-{
-    render_target_factory_ = htps::move(render_target_factory);
-}
-
-void BackendRegister::setFactory(
     uptr<ITTFontFactoryFactory> ttfont_factory_factory) noexcept
 {
     ttfont_factory_factory_ = htps::move(ttfont_factory_factory);

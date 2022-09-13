@@ -23,6 +23,7 @@ set(SOURCE_TESTS
     vector_view
     vector
     vector2d
+    vector3d
 )
 
 add_test_executable(SOURCE_TESTS ${SOURCE_TESTS})

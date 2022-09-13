@@ -14,6 +14,7 @@ HTPS_PRAGMA_ONCE
 #include <haf/include/resources/itexture.hpp>
 #include <haf/include/resources/ishader.hpp>
 #include <haf/include/render/renderizable_data.hpp>
+#include <haf/include/scene/material.hpp>
 
 namespace haf::scene
 {
@@ -25,16 +26,13 @@ namespace haf::render
 class Renderizable final : public sys::HasName
 {
 public:
-
     Renderizable(htps::rptr<scene::TransformableSceneNode> parent,
                  RenderizableData&& renderizable_data);
 
     ~Renderizable();
 
-    htps::PropertyState<scene::Color> ColorProperty;
-    htps::PropertyState<htps::sptr<res::IShader>> ShaderProperty;
-    htps::PropertyState<htps::sptr<res::ITexture>> TextureProperty;
-    htps::PropertyState<htps::Rects32> TextureRectProperty;
+    scene::Material& material() noexcept { return m_material; }
+    scene::Material const& material() const noexcept { return m_material; }
 
     void render(bool const parent_transformation_changed);
 
@@ -44,6 +42,7 @@ public:
     htps::rptr<scene::TransformableSceneNode const> parent() const noexcept;
 
 private:
+    scene::Material m_material;
     htps::rptr<scene::TransformableSceneNode> parent_;
     struct RenderizablePrivate;
     htps::PImplPointer<RenderizablePrivate> p_;

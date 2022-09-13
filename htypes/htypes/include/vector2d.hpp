@@ -1,6 +1,6 @@
 HTPS_PRAGMA_ONCE
-#ifndef MTPS_VECTOR2D_INCLUDE_HPP
-#define MTPS_VECTOR2D_INCLUDE_HPP
+#ifndef HTYPES_VECTOR2D_INCLUDE_HPP
+#define HTYPES_VECTOR2D_INCLUDE_HPP
 
 #include "types.hpp"
 #include "str.hpp"
@@ -12,24 +12,65 @@ template <typename T>
 class vector2d
 {
 public:
-    constexpr vector2d& operator-() noexcept
-    {
-        x = -x;
-        y = -y;
-        return *this;
-    }
+    constexpr vector2d() noexcept = default;
 
-    constexpr T dotProduct(vector2d const& p2) const noexcept
-    {
-        auto r(*this * p2);
-        return r.x + r.y;
-    }
+    constexpr vector2d(T _x, T _y) noexcept :
+        x{htps::move(_x)}, y{htps::move(_y)}
+    {}
 
     // Conversion operator
     template <typename Y>
     constexpr explicit operator vector2d<Y>() const noexcept
     {
         return vector2d<Y>{static_cast<Y>(x), static_cast<Y>(y)};
+    }
+
+    template <typename Y>
+    constexpr vector2d& operator+=(vector2d<Y> const& rhs) noexcept
+    {
+        x += static_cast<T>(rhs.x);
+        y += static_cast<T>(rhs.y);
+        return *this;
+    }
+
+    template <typename Y>
+    constexpr vector2d& operator-=(vector2d<Y> const& rhs) noexcept
+    {
+        x -= static_cast<T>(rhs.x);
+        y -= static_cast<T>(rhs.y);
+        return *this;
+    }
+
+    template <typename Y>
+    constexpr vector2d& operator*=(vector2d<Y> const& rhs) noexcept
+    {
+        x *= static_cast<T>(rhs.x);
+        y *= static_cast<T>(rhs.y);
+        return *this;
+    }
+
+    template <typename Y>
+    constexpr vector2d& operator*=(Y const& scalar) noexcept
+    {
+        x *= static_cast<T>(scalar);
+        y *= static_cast<T>(scalar);
+        return *this;
+    }
+
+    template <typename Y>
+    constexpr vector2d& operator/=(vector2d<Y> const& rhs) noexcept
+    {
+        x /= static_cast<T>(rhs.x);
+        y /= static_cast<T>(rhs.y);
+        return *this;
+    }
+
+    template <typename Y>
+    constexpr vector2d operator/=(Y const& scalar) noexcept
+    {
+        x /= static_cast<T>(scalar);
+        y /= static_cast<T>(scalar);
+        return *this;
     }
 
     T x;
@@ -40,108 +81,57 @@ template <typename T, typename Y>
 constexpr vector2d<T> operator+(vector2d<T> const& lhs,
                                 vector2d<Y> const& rhs) noexcept
 {
-    return {lhs.x + static_cast<T>(rhs.x), lhs.y + static_cast<T>(rhs.y)};
-}
-
-template <typename T, typename Y>
-constexpr vector2d<T>& operator+=(vector2d<T>& lhs,
-                                  vector2d<Y> const& rhs) noexcept
-{
-    lhs.x += static_cast<T>(rhs.x);
-    lhs.y += static_cast<T>(rhs.y);
-    return lhs;
-}
-
-template <typename T, typename Y>
-constexpr vector2d<T>& operator-=(vector2d<T>& lhs,
-                                  vector2d<Y> const& rhs) noexcept
-{
-    lhs.x -= static_cast<T>(rhs.x);
-    lhs.y -= static_cast<T>(rhs.y);
-    return lhs;
+    return vector2d<T>{lhs} += rhs;
 }
 
 template <typename T, typename Y>
 constexpr vector2d<T> operator-(vector2d<T> const& lhs,
                                 vector2d<Y> const& rhs) noexcept
 {
-    return {lhs.x - static_cast<T>(rhs.x), lhs.y - static_cast<T>(rhs.y)};
-}
-
-template <typename T, typename Y>
-constexpr vector2d<T>& operator*=(vector2d<T>& lhs,
-                                  vector2d<Y> const& rhs) noexcept
-{
-    lhs.x *= static_cast<T>(rhs.x);
-    lhs.y *= static_cast<T>(rhs.y);
-    return lhs;
-}
-
-template <typename T, typename Y>
-constexpr vector2d<T> operator*(vector2d<T> const& lhs,
-                                vector2d<Y> const& rhs) noexcept
-{
-    return {lhs.x * static_cast<T>(rhs.x), lhs.y * static_cast<T>(rhs.y)};
-}
-
-template <typename T, typename Y>
-constexpr vector2d<T>& operator*=(vector2d<T>& lhs, T const& scalar) noexcept
-{
-    lhs.x *= static_cast<T>(scalar);
-    lhs.y *= static_cast<T>(scalar);
-    return lhs;
-}
-
-template <typename T, typename Y>
-constexpr vector2d<T> operator*(vector2d<T> const& lhs,
-                                Y const& scalar) noexcept
-{
-    return {lhs.x * static_cast<T>(scalar), lhs.y * static_cast<T>(scalar)};
+    return vector2d<T>{lhs} -= rhs;
 }
 
 template <typename T, typename Y>
 constexpr vector2d<T> operator*(Y const& scalar,
                                 vector2d<T> const& rhs) noexcept
 {
-    return {static_cast<T>(scalar) * rhs.x, static_cast<T>(scalar) * rhs.y};
+    return vector2d<T>{rhs} *= scalar;
 }
 
 template <typename T, typename Y>
-constexpr vector2d<T>& operator/=(vector2d<T>& lhs,
-                                  vector2d<Y> const& rhs) noexcept
+constexpr vector2d<T> operator*(vector2d<T> const& lhs,
+                                Y const& scalar) noexcept
 {
-    lhs.x /= static_cast<T>(rhs.x);
-    lhs.y /= static_cast<T>(rhs.y);
-    return lhs;
+    return scalar * lhs;
 }
 
 template <typename T, typename Y>
-constexpr vector2d<T> operator/(vector2d<T> const& lhs,
+constexpr vector2d<T> operator*(vector2d<T> const& lhs,
                                 vector2d<Y> const& rhs) noexcept
 {
-    return {lhs.x / static_cast<T>(rhs.x), lhs.y / static_cast<T>(rhs.y)};
+    return vector2d<T>{lhs} *= rhs;
 }
 
 template <typename T, typename Y>
-constexpr vector2d<T>& operator/=(vector2d<T>& lhs, T const& scalar) noexcept
+constexpr vector2d<Y> operator/(Y const& scalar,
+                                vector2d<T> const& rhs) noexcept
 {
-    lhs.x /= static_cast<T>(scalar);
-    lhs.y /= static_cast<T>(scalar);
-    return lhs;
+    return vector2d<Y>{scalar / static_cast<Y>(rhs.x),
+                       scalar / static_cast<Y>(rhs.y)};
 }
 
 template <typename T, typename Y>
 constexpr vector2d<T> operator/(vector2d<T> const& lhs,
                                 Y const& scalar) noexcept
 {
-    return {lhs.x / static_cast<T>(scalar), lhs.y / static_cast<T>(scalar)};
+    return vector2d<T>{lhs} /= scalar;
 }
 
 template <typename T, typename Y>
-constexpr vector2d<T> operator/(Y const& scalar,
-                                vector2d<T> const& rhs) noexcept
+constexpr vector2d<T> operator/(vector2d<T> const& lhs,
+                                vector2d<Y> const& rhs) noexcept
 {
-    return {static_cast<T>(scalar) / rhs.x, static_cast<T>(scalar) / rhs.y};
+    return vector2d<T>{lhs} /= rhs;
 }
 
 template <typename T>

@@ -7,7 +7,6 @@
 
 namespace haf::backend
 {
-class IRenderTarget;
 class IInputDriver;
 
 class IWindow : public IResourceInfo
@@ -52,7 +51,6 @@ public:
     virtual void setWindowTitle(htps::str const& newTitle) = 0;
     virtual void closeWindow()                             = 0;
 
-    virtual IRenderTarget* renderTarget() = 0;
     virtual IInputDriver* inputDriver()   = 0;
     virtual htps::str settingsInfo()      = 0;
 };

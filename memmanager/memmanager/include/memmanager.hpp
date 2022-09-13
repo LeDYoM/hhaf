@@ -4,7 +4,7 @@
 #include <cstddef>
 
 void installMemManager();
-void finishMemManager();
+void finishMemManager(bool const display_log = false);
 
 void* mmalloc(std::size_t size);
 void mfree(void* block);

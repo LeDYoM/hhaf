@@ -1,6 +1,6 @@
 #include <haf/include/scene/scene.hpp>
 #include "scene_private.hpp"
-#include <haf/include/debug_utils/debug_actions.hpp>
+#include <haf/include/debug_system/debug_actions.hpp>
 #include <haf/include/component/component_container.hpp>
 #include <haf/include/scene_components/camera_component.hpp>
 

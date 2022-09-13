@@ -169,7 +169,7 @@ void SceneNodeText::update()
                     letterNode->Position = ch_data.character_position;
                     letterNode->Scale    = ch_data.character_size;
 
-                    letterNode->node()->ColorProperty = text_color;
+                    letterNode->node()->material().color = text_color;
 
                     letterNode->setCharacterTextureData(
                         texture, font->getTextureBounds(curChar));
@@ -189,7 +189,7 @@ void SceneNodeText::update()
 
         m_letters_scene_node->for_each_sceneNode_as<RenderizableSceneNode>(
             [&text_color](sptr<RenderizableSceneNode> const& sNode) {
-                sNode->node()->ColorProperty = text_color;
+                sNode->node()->material().color = text_color;
             });
     }
 }

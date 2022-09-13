@@ -1,8 +1,7 @@
 #ifndef HAF_BACKEND_SFMLB_REDNERWINDOW_INCLUDE_HPP
 #define HAF_BACKEND_SFMLB_REDNERWINDOW_INCLUDE_HPP
 
-#include <SFML/Graphics/RenderWindow.hpp>
-#include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/Window/Window.hpp>
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/vector2d.hpp>
@@ -10,7 +9,6 @@
 #include <backend_dev/include/iwindow.hpp>
 #include <backend_dev/include/iinputdriver.hpp>
 
-#include "sfml_render_target.hpp"
 #include "sfml_input_driver.hpp"
 
 namespace haf::backend::sfmlb
@@ -32,8 +30,6 @@ public:
 
     bool isAlreadyCreated() const override;
 
-    htps::rptr<IRenderTarget> renderTarget() override;
-
     bool processEvents() override;
     void display() override;
     void setWindowTitle(htps::str const& newTitle) override;
@@ -44,8 +40,7 @@ public:
     htps::str settingsInfo() override;
 
 private:
-    SFMLRenderTarget m_window_render_target;
-    htps::uptr<sf::RenderWindow> m_render_window;
+    htps::uptr<sf::Window> m_render_window;
     bool already_created_{false};
     SFMLInputDriver input_driver_;
 };

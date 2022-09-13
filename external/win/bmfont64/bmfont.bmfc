@@ -3,7 +3,7 @@ fileVersion=1
 
 # font settings
 fontName=Arial
-fontFile=../../../zoper_data/resources/oldct.ttf
+fontFile=PixelFJVerdana12pt.ttf
 charSet=0
 fontSize=-64
 aa=2
@@ -11,7 +11,7 @@ scaleH=100
 useSmoothing=1
 isBold=0
 isItalic=0
-useUnicode=0
+useUnicode=1
 disableBoxChars=1
 outputInvalidCharGlyph=0
 dontIncludeKerningPairs=0
@@ -36,7 +36,7 @@ widthPaddingFactor=0.00
 # output file
 outWidth=256
 outHeight=256
-outBitDepth=8
+outBitDepth=32
 fontDescFormat=0
 fourChnlPacked=0
 textureFormat=png
@@ -51,7 +51,7 @@ invG=0
 invB=0
 
 # outline
-outlineThickness=2
+outlineThickness=0
 
 # selected chars
 chars=32-126,161,200,248
