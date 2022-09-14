@@ -21,4 +21,21 @@ DisplayVarConsole::DisplayVarConsole(
     Console{parent, htps::move(name)}
 {}
 
-}  // namespace zoper
+void DisplayVarConsole::updateVar(str const& name, s64 const value)
+{
+    m_variables_data.add(name, make_str(name, ": ", value));
+}
+
+void DisplayVarConsole::update()
+{
+    {
+        fast_u32 index{0U};
+        for (auto const& variables : m_variables_data)
+        {
+            nodeAt(0U, index++)->Text = variables.second;
+        }
+    }
+    BaseClass::update();
+}
+
+}  // namespace haf

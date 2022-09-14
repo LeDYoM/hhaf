@@ -13,20 +13,15 @@ using namespace htps;
 using namespace haf::scene;
 using namespace haf::scene::nodes;
 
+static const haf::scene::Color ConsoleTextColor{haf::scene::colors::Black};
+static constexpr htps::fast_u32 kNumLines{10U};
 namespace haf
 {
 
 void Console::onCreated()
 {
     BaseClass::onCreated();
-    TableSize = {2, 5};
-
-//    auto a  = createSceneNode<SceneNodeText>("scnText");
-//    a->Font = subSystem<res::IResourceRetriever>()->getBMPFont("console_font");
-
-//    a->Text      = "AYi2_+q";
-//    a->TextColor = colors::Red;
-//    a->setLeftTopPositionScale({0.1F, 0.05F});
+    TableSize = {1, kNumLines};
 }
 
 void Console::setText(str const& text)
@@ -34,13 +29,20 @@ void Console::setText(str const& text)
     (void)(text);
 }
 
+void Console::tableNodeCreated(
+    htps::vector2dst index,
+    htps::sptr<haf::scene::nodes::SceneNodeText> const&)
+{
+    nodeAt(index)->Text      = "Hello2";
+    nodeAt(index)->TextColor = ConsoleTextColor;
+    nodeAt(index)->Font =
+        subSystem<res::IResourceRetriever>()->getBMPFont("console_font");
+    // Allow for 20U "A" characters
+//    nodeAt(index)->TextBaseSizeProperty = TextBaseSize{'A', 10U};
+}
+
 void Console::onAllTableElementsCreated(htps::vector2dst const /*table_size*/)
 {
-    nodeAt(0, 0)->Text = "Hello2";
-    nodeAt(0, 0)->TextColor = colors::Red;
-    nodeAt(0, 0)->Font = subSystem<res::IResourceRetriever>()->getBMPFont("console_font");
-    // Allow for 20U characters
-    nodeAt(0, 0)->TextBaseSizeProperty = TextBaseSize{'A', 20U};
 }
 
 }  // namespace haf
