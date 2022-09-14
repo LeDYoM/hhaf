@@ -15,12 +15,6 @@ using namespace haf::scene::nodes;
 
 namespace haf
 {
-DisplayVarConsole::DisplayVarConsole(
-    htps::rptr<haf::scene::SceneNode> const parent,
-    str name) :
-    Console{parent, htps::move(name)}
-{}
-
 void DisplayVarConsole::updateVar(str const& name, s64 const value)
 {
     m_variables_data.add(name, make_str(name, ": ", value));

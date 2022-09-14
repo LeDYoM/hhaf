@@ -46,8 +46,8 @@ CodeProfiler::~CodeProfiler()
         sys::getSystem<sys::TimeSystem>(&m_system_provider).now() - m_start};
     sys::getSystem<sys::DebugSystem>(&m_system_provider)
         .debugVariables()
-        .incrementVariable(m_variable_id_ref,
-                           static_cast<DebugVariables::DebugVariable_t>(
-                               time_dif.nanoseconds()));
+        .incrementVariable(
+            m_variable_id_ref,
+            static_cast<DebugVariable_t>(time_dif.nanoseconds()));
 }
 }  // namespace haf::debug

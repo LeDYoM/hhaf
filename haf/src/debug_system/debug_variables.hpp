@@ -9,10 +9,11 @@ HTPS_PRAGMA_ONCE
 
 namespace haf::debug
 {
+using DebugVariable_t = htps::s64;
+
 class DebugVariables final
 {
 public:
-    using DebugVariable_t     = htps::s64;
     using DebugVariableHandle = htps::s64;
 
     void getVariable(DebugVariableHandle& index, char const* const name);

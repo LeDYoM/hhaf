@@ -12,14 +12,13 @@ namespace haf
 {
 class DisplayVarConsole : public Console
 {
+private:
+    using BaseClass = Console;
 public:
-    DisplayVarConsole(htps::rptr<haf::scene::SceneNode> const parent,
-                      htps::str name);
-
+    using BaseClass::BaseClass;
     void updateVar(htps::str const& name, htps::s64 const value);
     void update() override;
 private:
-    using BaseClass = Console;
     htps::PureDictionary m_variables_data;
 };
 }  // namespace haf
