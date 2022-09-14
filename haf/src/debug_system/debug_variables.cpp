@@ -2,7 +2,7 @@
 
 using namespace htps;
 using DebugVariableHandle = haf::debug::DebugVariables::DebugVariableHandle;
-using DebugVariable_t     = haf::debug::DebugVariables::DebugVariable_t;
+using DebugVariable_t     = haf::debug::DebugVariable_t;
 
 namespace haf::debug
 {
