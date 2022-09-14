@@ -33,7 +33,8 @@ endfunction()
 
 function (set_compile_warning_level_all CURRENT_TARGET level)
     target_compile_options(${CURRENT_TARGET} ${level}
-        $<$<CXX_COMPILER_ID:MSVC>:/Wall /WX>
+#        $<$<CXX_COMPILER_ID:MSVC>:/Wall /WX>
+        $<$<CXX_COMPILER_ID:MSVC>:/W4 /WX>
         $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:-Wall -Wextra -pedantic -Werror>
     )
 endfunction()
