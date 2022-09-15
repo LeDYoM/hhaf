@@ -9,7 +9,6 @@
 #include "../zoperprogramcontroller.hpp"
 #include "../common_scene_nodes.hpp"
 #include "../static_data.hpp"
-#include <haf/include/debug_system/displayvar_console.hpp>
 
 #include <haf/include/resources/iresource_configurator.hpp>
 #include <haf/include/render/renderizables.hpp>
@@ -53,12 +52,12 @@ void MenuScene::onCreated()
     auto main_menu_background_logo{
         createSceneNode<RenderizableSceneNode>("main_menu_background_logo")};
     main_menu_background_logo->Position = {0.F, -0.28F};
-    main_menu_background_logo->Scale = {0.5F, 0.4F};
+    main_menu_background_logo->Scale    = {0.5F, 0.4F};
     main_menu_background_logo->renderizableBuilder()
         .name("mainLogo")
         .figType(FigType_t::Sprite)
         .texture(MainMenuResources::LogoId)
-//        .shader("shader1")
+        //        .shader("shader1")
         .create();
 
     createSceneNode<MainMenu>(MainMenu::StaticTypeName)
@@ -69,8 +68,11 @@ void MenuScene::onCreated()
             }
         });
 
-    auto a = createSceneNode<DisplayVarConsole>("a");
+    m_display_var_console =
+        createSceneNode<DisplayVarConsole>("m_display_var_console");
 
+    m_display_var_console->updateVar("Test", 1);
     installDebugUtils();
 }
+
 }  // namespace zoper
