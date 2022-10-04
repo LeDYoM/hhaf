@@ -4,11 +4,12 @@
 #include <htypes/include/types.hpp>
 #include <htypes/include/connection.hpp>
 
-#include <haf/include/scene_nodes/transformable_scene_node.hpp>
+#include <haf/include/scene_components/transformable_component.hpp>
 #include <haf/include/scene/color.hpp>
 #include <haf/include/resources/ifont.hpp>
 #include <haf/include/scene_components/states_controller_component.hpp>
 #include <haf/include/scene_components/visibility_selector_component.hpp>
+#include <haf/include/component/composed_component.hpp>
 
 #include "menu_page.hpp"
 
@@ -23,19 +24,19 @@ enum class MenuFinishedStatus : htps::u8
 /**
  * @brief Main class to model a menu in paged style.
  */
-class MenuPaged : public TransformableSceneNode
+class MenuPaged : public component::ComposedComponent<TransformableComponent>
 {
-    using BaseClass = TransformableSceneNode;
+    using BaseClass = component::ComposedComponent<TransformableComponent>;
 
 public:
-    using TransformableSceneNode::TransformableSceneNode;
+    using BaseClass::BaseClass;
 
     htps::PropertyState<htps::sptr<res::IFont>> NormalTextFont;
     htps::PropertyState<Color> NormalColor;
     htps::PropertyState<Color> SelectedColor;
     htps::PropertyState<bool> FinishSceneAtEnd;
 
-    void onCreated() override;
+    void onAttached() override;
     ~MenuPaged() override;
 
     void setMenuPagedStatus(MenuFinishedStatus const status);

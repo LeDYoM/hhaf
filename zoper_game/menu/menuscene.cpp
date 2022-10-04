@@ -60,7 +60,7 @@ void MenuScene::onCreated()
         //        .shader("shader1")
         .create();
 
-    createSceneNode<MainMenu>(MainMenu::StaticTypeName)
+    createSceneNode(MainMenu::StaticTypeName)->component<MainMenu>()
         ->MenuFinished.connect([this](MenuFinishedStatus const status) {
             if (status == MenuFinishedStatus::Backward)
             {
@@ -68,11 +68,7 @@ void MenuScene::onCreated()
             }
         });
 
-    m_display_var_console =
-        createSceneNode<DisplayVarConsole>("m_display_var_console");
-
-    m_display_var_console->updateVar("Test", 1);
-    installDebugUtils();
+    initDebugUtils();
 }
 
 }  // namespace zoper

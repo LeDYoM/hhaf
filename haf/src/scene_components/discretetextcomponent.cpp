@@ -46,7 +46,6 @@ void DiscreteTextComponent::update()
 
 void DiscreteTextComponent::_setText(str const& nText)
 {
-    using namespace nodes;
-    attachedNode()->Text = nText;
+    attachedNodeAs<nodes::SceneNodeText>()->Text = nText;
 }
 }  // namespace haf::scene

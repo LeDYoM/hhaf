@@ -7,6 +7,7 @@ HTPS_PRAGMA_ONCE
 #include <htypes/include/p_impl_pointer.hpp>
 
 #include <haf/include/component/icomponent.hpp>
+#include <haf/include/component/composed_component.hpp>
 #include <haf/include/utils/type_data.hpp>
 #include <hlog/include/hlog.hpp>
 
@@ -47,6 +48,7 @@ public:
         if (result == nullptr)
         {
             result = htps::msptr<T>();
+            applyRequirements(*result);
             initialize(*result);
             addComponent(result);
         }
@@ -106,8 +108,20 @@ public:
      */
     void clearComponents() noexcept;
 
+    htps::size_type components() const noexcept;
+
 private:
-    void initialize(IComponent& component) const;
+    void applyRequirements(IComponent&) {}
+
+    template <typename U>
+    void applyRequirements(ComposedComponent<U>& component_based_component)
+    {
+        component_based_component.setComposedComponent(component<U>().get());
+    }
+
+    htps::rptr<scene::SceneNode> attachable() const noexcept;
+
+    void initialize(component::IComponent& component) const;
 
     template <typename T>
     utils::type_index type_of() const noexcept

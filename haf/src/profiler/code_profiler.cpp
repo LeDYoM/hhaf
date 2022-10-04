@@ -16,7 +16,7 @@ using namespace htps;
 namespace haf::debug
 {
 CodeProfiler::CodeProfiler(sys::ISystemProvider& isystem_provider,
-                           s64& variable_ref,
+                           DebugVariableHandle& variable_ref,
                            char const* const var_name,
                            std::source_location source) :
     m_system_provider{isystem_provider},
@@ -33,7 +33,7 @@ CodeProfiler::CodeProfiler(sys::ISystemProvider& isystem_provider,
 }
 
 CodeProfiler::CodeProfiler(scene::SceneNode& scene_node,
-                           s64& variable_ref,
+                           DebugVariableHandle& variable_ref,
                            char const* const var_name,
                            std::source_location source) :
     CodeProfiler{scene_node.isystemProvider(), variable_ref, var_name,
@@ -48,6 +48,6 @@ CodeProfiler::~CodeProfiler()
         .debugVariables()
         .incrementVariable(
             m_variable_id_ref,
-            static_cast<DebugVariable_t>(time_dif.nanoseconds()));
+            static_cast<DebugVariable::value_type>(time_dif.nanoseconds()));
 }
 }  // namespace haf::debug

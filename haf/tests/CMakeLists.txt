@@ -8,6 +8,7 @@ set(SOURCE_TESTS
 
     components/component_container
 
+    debug_system/debug_variable
     debug_system/debug_variables
 
     scene/color

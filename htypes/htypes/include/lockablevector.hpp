@@ -132,10 +132,7 @@ public:
      * @brief Retrieve the number of pending elements to be added.
      * @return The number of elements.
      */
-    constexpr auto pending_add() const noexcept
-    {
-        return addingCache_.size();
-    }
+    constexpr auto pending_add() const noexcept { return addingCache_.size(); }
 
     /**
      * @brief Ask if there is any number of elements pending to be added.
@@ -154,6 +151,12 @@ public:
     constexpr auto pending_remove() const noexcept
     {
         return remove_cache_.size();
+    }
+
+    constexpr auto size() const noexcept
+    {
+        return (main_container_.size() + addingCache_.size()) -
+            remove_cache_.size();
     }
 
     /**
@@ -180,7 +183,26 @@ public:
     {
         update();
 
-        for_each_all(main_container_, [f](auto& element) { f(element); });
+        for_each_all(main_container_,
+                     [f = htps::forward<F>(f)](auto& element) { f(element); });
+
+        update();
+    }
+
+    template <typename F>
+    void performUpdateBackwards(F&& f)
+    {
+        update();
+
+        if (!main_container_.empty())
+        {
+            for (htps::ssize_type index{
+                     static_cast<htps::ssize_type>(main_container_.size()) - 1};
+                 index > -1; --index)
+            {
+                htps::forward<F>(f)(main_container_[index]);
+            }
+        }
 
         update();
     }

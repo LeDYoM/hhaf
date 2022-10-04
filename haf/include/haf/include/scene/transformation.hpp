@@ -33,7 +33,7 @@ public:
     void setRightTopPositionScale(VectorScalar const& vector);
     bool updateTransformIfNecessary() noexcept;
 
-    Matrix4x4 const& matrix() noexcept;
+    Matrix4x4 const& matrix() const noexcept;
 
 private:
     void updateTransform();

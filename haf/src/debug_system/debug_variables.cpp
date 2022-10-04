@@ -2,13 +2,17 @@
 
 using namespace htps;
 using DebugVariableHandle = haf::debug::DebugVariables::DebugVariableHandle;
-using DebugVariable_t     = haf::debug::DebugVariable_t;
+using DebugVariable_t     = haf::debug::DebugVariable;
 
 namespace haf::debug
 {
 void DebugVariables::startFrame(time::TimePoint const& now)
 {
     ++m_frames;
+    for (auto& element : m_debug_variables)
+    {
+        element.second.incrementFrame();
+    }
     if (time::ellapsedUpdate(m_last_time_update, now,
                              time::TimePoint_as_seconds(1U)))
     {
@@ -30,7 +34,8 @@ void DebugVariables::getVariable(DebugVariableHandle& index,
         else
         {
             m_debug_variables.add(
-                str_name, DebugVariable_t{static_cast<DebugVariable_t>(0)});
+                str_name,
+                DebugVariable{static_cast<DebugVariable::value_type>(0)});
             index =
                 static_cast<DebugVariableHandle>(m_debug_variables.size() - 1);
         }
@@ -38,7 +43,7 @@ void DebugVariables::getVariable(DebugVariableHandle& index,
 }
 
 bool DebugVariables::getVariableValue(DebugVariableHandle& index,
-                                      DebugVariable_t& value)
+                                      DebugVariable& value)
 {
     if (index > -1)
     {
@@ -48,12 +53,19 @@ bool DebugVariables::getVariableValue(DebugVariableHandle& index,
     return false;
 }
 
-void DebugVariables::incrementVariable(DebugVariableHandle const index,
-                                       DebugVariable_t const increment)
+void DebugVariables::incrementVariable(
+    DebugVariableHandle const index,
+    DebugVariable::value_type const increment)
 {
     auto const value{m_debug_variables.index(static_cast<size_type>(index))};
     m_debug_variables.index(static_cast<size_type>(index)) =
         (value + increment);
+}
+
+void DebugVariables::setVariable(DebugVariableHandle const index,
+                                 DebugVariable::value_type const newValue)
+{
+    m_debug_variables.index(static_cast<size_type>(index)) = newValue;
 }
 
 htps::size_type DebugVariables::size() const noexcept
@@ -76,12 +88,18 @@ str DebugVariables::state() const
     {
         result += element.first;
         result += ":\t";
-        result += element.second;
+        result += element.second.value();
         result += "\t";
-        result += element.second / m_frames;
+        result += element.second.value() / m_frames;
         result += "\n";
     }
     return result;
+}
+
+Dictionary<DebugVariable> const& DebugVariables::debugVariables()
+    const noexcept
+{
+    return m_debug_variables;
 }
 
 }  // namespace haf::debug

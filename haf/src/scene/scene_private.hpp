@@ -5,6 +5,7 @@ HTPS_PRAGMA_ONCE
 #include "haf_private.hpp"
 #include <htypes/include/types.hpp>
 #include <haf/include/scene/scene.hpp>
+#include <haf/include/debug_system/displayvar_console.hpp>
 
 namespace haf::sys
 {
@@ -26,6 +27,7 @@ public:
     htps::rptr<sys::ISystemProvider> iSystemProvider() const noexcept;
 
     htps::sptr<CameraComponent> camera_component_;
+    htps::sptr<haf::DisplayVarConsole> m_display_var_console;
 
 private:
     htps::rptr<Scene> scene_;

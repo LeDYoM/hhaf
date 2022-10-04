@@ -4,12 +4,12 @@ HTPS_PRAGMA_ONCE
 
 #include <htypes/include/types.hpp>
 #include <haf/include/scene_nodes/scene_node_text.hpp>
-#include <haf/include/component/component.hpp>
+#include <haf/include/component/icomponent.hpp>
 
 namespace haf::scene
 {
 class DiscreteTextComponent final
-    : public component::ComponentForType<nodes::SceneNodeText>
+    : public component::IComponent //ComponentForType<nodes::SceneNodeText>
 {
     using BaseClass = component::IComponent;
 

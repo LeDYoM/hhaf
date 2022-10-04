@@ -1,14 +1,14 @@
 HTPS_PRAGMA_ONCE
-#ifndef HAF_SCENE_NODE_TABLE_INCLUDE_HPP
-#define HAF_SCENE_NODE_TABLE_INCLUDE_HPP
+#ifndef HAF_SCENE_TABLE_COMPONENT_INCLUDE_HPP
+#define HAF_SCENE_TABLE_COMPONENT_INCLUDE_HPP
 
 #include <haf/include/haf_export.hpp>
 #include <htypes/include/connection.hpp>
 #include <htypes/include/properties/properties.hpp>
-#include <haf/include/scene_nodes/scene_node_table_imp.hpp>
+#include <haf/include/scene_components/table_node_imp.hpp>
 #include <hlog/include/hlog.hpp>
 
-namespace haf::scene::nodes
+namespace haf::scene
 {
 /**
  * @brief Class representing a SceneNode with table layout.
@@ -147,6 +147,6 @@ private:
     htps::vector<htps::vector_shared_pointers<T>> nodes_;
 };
 
-}  // namespace haf::scene::nodes
+}  // namespace haf::scene
 
 #endif

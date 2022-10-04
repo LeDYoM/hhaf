@@ -4,6 +4,7 @@ HTPS_PRAGMA_ONCE
 
 #include <source_location>
 #include <haf/include/time/time_point.hpp>
+#include <haf/include/debug_system/debug_types.hpp>
 
 namespace haf::sys
 {
@@ -21,18 +22,18 @@ class CodeProfiler
 {
 public:
     CodeProfiler(sys::ISystemProvider& isystem_provider,
-                 htps::s64& variable_ref, char const * const var_name,
+                 DebugVariableHandle& variable_ref, char const * const var_name,
                  std::source_location source = std::source_location::current());
 
     CodeProfiler(scene::SceneNode& scene_node,
-                 htps::s64& variable_ref, char const * const var_name,
+                 DebugVariableHandle& variable_ref, char const * const var_name,
                  std::source_location source = std::source_location::current());
 
     ~CodeProfiler();
 
 private:
     sys::ISystemProvider& m_system_provider;
-    htps::s64& m_variable_id_ref;
+    DebugVariableHandle& m_variable_id_ref;
     std::source_location m_source_location;
     time::TimePoint m_start;
 };

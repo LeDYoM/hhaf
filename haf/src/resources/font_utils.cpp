@@ -23,7 +23,7 @@ TextRenderData FontUtils::getTextRenderData(str const& text) const
     f32 current_character_position_x{0.0F};
     size_t current_index{0U};
 
-    for (auto curChar : text)
+    for (auto const curChar : text)
     {
         CharacterRenderData character_render_data{};
 

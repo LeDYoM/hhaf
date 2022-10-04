@@ -1,6 +1,6 @@
 HTPS_PRAGMA_ONCE
-#ifndef HAF_SCENE_TRANSFORMABLE_INCLUDE_HPP
-#define HAF_SCENE_TRANSFORMABLE_INCLUDE_HPP
+#ifndef HAF_SCENE_TRANSFORMABLE_COMPONENT_INCLUDE_HPP
+#define HAF_SCENE_TRANSFORMABLE_COMPONENT_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/vector.hpp>
@@ -12,6 +12,7 @@ HTPS_PRAGMA_ONCE
 #include <haf/include/scene/transformation.hpp>
 #include <haf/include/scene/scene_node.hpp>
 #include <haf/include/scene/scene_render_context.hpp>
+#include <haf/include/component/composed_component.hpp>
 
 namespace haf::scene
 {
@@ -21,12 +22,13 @@ namespace haf::scene
  * Transformation.
  * @see Transofrmation
  */
-class HAF_API TransformableSceneNode : public SceneNode, public Transformation
+class HAF_API TransformableComponent : public component::IComponent,
+                                       public Transformation
 {
-    using BaseSceneNode = SceneNode;
+private:
+    using BaseClass = component::IComponent;
 
 public:
-
     using Scalar = Matrix4x4::Scalar;  ///< Type Scalar for this class
     using VectorScalar =
         htps::vector2d<Scalar>;  ///< Type VectorScalar for this class
@@ -36,15 +38,13 @@ public:
     /**
      * @brief Construct a new Transformable object. The object will be
      * initialized with default properties
-     * @param parent Parent of this element.
-     * @param name Name of this element.
      */
-    TransformableSceneNode(htps::rptr<SceneNode> parent, htps::str name);
+    TransformableComponent();
 
     /**
      * @brief Destroy the Transformable object
      */
-    ~TransformableSceneNode() override;
+    ~TransformableComponent() override;
 
     /**
      * @brief Get a copy of the current stored global transformation. No
@@ -60,9 +60,11 @@ public:
      */
     Matrix4x4 const& localTransform() const noexcept;
 
-    void postRender(SceneRenderContext& sceneRenderContext) override;
+    void setSceneRenderContext(SceneRenderContext& sceneRenderContext);
+    void update() override;
 
 private:
+    SceneRenderContext* m_sceneRenderContext{nullptr};
     Matrix4x4 global_transform_;  ///< Global Transformation Matrix cached
 };
 }  // namespace haf::scene

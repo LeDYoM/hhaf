@@ -1,6 +1,12 @@
 #include <haf/include/scene_nodes/transformable_scene_node.hpp>
+#include <haf/include/scene_components/transformable_component.hpp>
 #include <haf/include/profiler/code_profiler.hpp>
+#include <haf/include/debug_system/debug_types.hpp>
 #include <hlog/include/hlog.hpp>
+#include <haf/include/debug_system/idebug_variables.hpp>
+
+#include "system/get_system.hpp"
+#include "debug_system/debug_system.hpp"
 
 using namespace htps;
 
@@ -10,7 +16,6 @@ TransformableSceneNode::TransformableSceneNode(htps::rptr<SceneNode> parent,
                                                htps::str name) :
     SceneNode{htps::move(parent), htps::move(name)},
     Transformation(),
-    local_transform_{},
     global_transform_{}
 {}
 
@@ -23,36 +28,74 @@ Matrix4x4 const& TransformableSceneNode::globalTransform() const noexcept
 
 Matrix4x4 const& TransformableSceneNode::localTransform() const noexcept
 {
-    return local_transform_;
+    return matrix();
 }
 
-bool TransformableSceneNode::updateLocalTransformationsIfNecessary() noexcept
+/*bool TransformableSceneNode::updateLocalTransformationsIfNecessary() noexcept
 {
     if (updateTransformIfNecessary())
     {
+        HAF_DECLARE_DEBUG_VARIABLE(matrix_updater_counter)
+        if (HAF_DEBUG_VARIABLE_NAME(matrix_updater_counter) < 0)
+        {
+            subSystem<debug::IDebugVariables>()->getVariable(
+                HAF_DEBUG_VARIABLE_NAME(matrix_updater_counter),
+                "matrix_updater_counter");
+        }
+
         local_transform_ = matrix();
         return true;
     }
 
     return false;
 }
+*/
 
 void TransformableSceneNode::postRender(SceneRenderContext& sceneRenderContext)
 {
-    HAF_PROFILE_SCENE_NODE_METHOD(testing, buh)
+    HAF_PROFILE_SCENE_NODE_METHOD(prTime)
     BaseSceneNode::postRender(sceneRenderContext);
 
-    sceneRenderContext.currentTransformation =
-        parentAs<TransformableSceneNode>()
-        ? parentAs<TransformableSceneNode>()->globalTransform()
-        : Matrix4x4::Identity;
+    auto const& transformable_parent{parentAs<TransformableSceneNode>()};
 
-    bool localTransformationChanged{updateTransformIfNecessary()};
-    if (localTransformationChanged)
+    if (transformable_parent != nullptr)
     {
-        local_transform_ = matrix();
+        sceneRenderContext.currentTransformation =
+            transformable_parent != nullptr
+            ? transformable_parent->globalTransform()
+            : Matrix4x4::Identity;
     }
     else
+    {
+        auto const& parentTransformable{
+            parent()->componentOfType<TransformableComponent>()};
+
+        sceneRenderContext.currentTransformation = parentTransformable
+            ? parentTransformable->globalTransform()
+            : Matrix4x4::Identity;
+    }
+
+    bool localTransformationChanged{updateTransformIfNecessary()};
+
+    HAF_DECLARE_DEBUG_VARIABLE(matrix_updater_counter)
+    if (HAF_DEBUG_VARIABLE_NAME(matrix_updater_counter) < 0)
+    {
+        subSystem<debug::IDebugVariables>()->getVariable(
+            HAF_DEBUG_VARIABLE_NAME(matrix_updater_counter), "muc");
+    }
+    else
+    {
+        debug::DebugVariable value{0};
+
+        subSystem<debug::IDebugVariables>()->getVariableValue(
+            HAF_DEBUG_VARIABLE_NAME(matrix_updater_counter), value);
+
+        if (value.value() < 5)
+            subSystem<debug::IDebugVariables>()->incrementVariable(
+                HAF_DEBUG_VARIABLE_NAME(matrix_updater_counter), 1);
+    }
+
+    if (!localTransformationChanged)
     {
         localTransformationChanged =
             sceneRenderContext.parentTransformationChanged_;
@@ -60,8 +103,7 @@ void TransformableSceneNode::postRender(SceneRenderContext& sceneRenderContext)
 
     if (localTransformationChanged)
     {
-        global_transform_ =
-            sceneRenderContext.currentTransformation * local_transform_;
+        global_transform_ = sceneRenderContext.currentTransformation * matrix();
     }
 
     sceneRenderContext.parentTransformationChanged_ =

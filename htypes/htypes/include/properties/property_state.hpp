@@ -68,6 +68,24 @@ public:
         setChanged();
     }
 
+    constexpr void assignIfDifferent(T const& v) noexcept(
+        std::is_nothrow_copy_assignable_v<T>)
+    {
+        if (BaseClass::m_value != v)
+        {
+            *this = v;
+        }
+    }
+
+    constexpr void assignIfDifferent(T&& v) noexcept(
+        std::is_nothrow_move_assignable_v<T>)
+    {
+        if (BaseClass::m_value != htps::forward<T>(v))
+        {
+            *this = htps::move(v);
+        }
+    }
+
     constexpr bool hasChanged() const noexcept { return has_changed_; }
     constexpr void resetHasChanged() noexcept { has_changed_ = false; }
     constexpr void setChanged() noexcept { has_changed_ = true; }

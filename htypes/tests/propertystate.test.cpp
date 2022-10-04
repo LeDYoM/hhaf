@@ -14,7 +14,7 @@ TEST_CASE("PropertyState", "[htypes][property][state]")
 
     PropertyState<htps::sptr<s32>> b;
     auto t = htps::msptr<s32>(5);
-    b = t;
+    b      = t;
     CHECK(*(t.get()) == 5);
     CHECK(*(b()) == 5);
     t = msptr<s32>(10);
@@ -37,4 +37,56 @@ TEST_CASE("PropertyState", "[htypes][property][state]")
     CHECK(c.readResetHasChanged());
     CHECK_FALSE(c.readResetHasChanged());
     CHECK(c() == 1);
+}
+
+struct Movable
+{
+    int a;
+    bool operator==(Movable const& rhs) const noexcept
+    {
+        return a == rhs.a;
+    }
+};
+
+TEST_CASE("PropertyState::assignIfDifferent", "[htypes][property][state]")
+{
+    SECTION("By value")
+    {
+        PropertyState<Movable> temp;
+        temp = Movable{1};
+        temp.resetHasChanged();
+        CHECK_FALSE(temp.hasChanged());
+        CHECK(temp().a == 1);
+
+        Movable to_move{1};
+        temp.assignIfDifferent(htps::move(to_move));
+        CHECK_FALSE(temp.hasChanged());
+        CHECK_FALSE(temp.readResetHasChanged());
+        CHECK(temp().a == 1);
+
+        to_move.a = 10;
+        temp.assignIfDifferent(htps::move(to_move));
+        CHECK(temp.hasChanged());
+        CHECK(temp.readResetHasChanged());
+        CHECK(temp().a == 10);
+    }
+
+    SECTION("Const reference")
+    {
+        PropertyState<int> temp;
+        temp = 1;
+        temp.resetHasChanged();
+        CHECK_FALSE(temp.hasChanged());
+        CHECK(temp() == 1);
+
+        temp.assignIfDifferent(1);
+        CHECK_FALSE(temp.hasChanged());
+        CHECK_FALSE(temp.readResetHasChanged());
+        CHECK(temp() == 1);
+
+        temp.assignIfDifferent(10);
+        CHECK(temp.hasChanged());
+        CHECK(temp.readResetHasChanged());
+        CHECK(temp() == 10);
+    }
 }

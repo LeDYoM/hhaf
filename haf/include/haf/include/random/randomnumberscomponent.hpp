@@ -5,7 +5,7 @@ HTPS_PRAGMA_ONCE
 #include <htypes/include/types.hpp>
 #include <htypes/include/str.hpp>
 
-#include <haf/include/component/component.hpp>
+#include <haf/include/component/icomponent.hpp>
 
 namespace haf::rnd
 {
@@ -14,7 +14,7 @@ namespace haf::rnd
  * a series of random numbers.
  * @see component::IComponent
  */
-class RandomNumbersComponent final : public component::Component
+class RandomNumbersComponent final : public component::IComponent
 {
 public:
     RandomNumbersComponent() noexcept;

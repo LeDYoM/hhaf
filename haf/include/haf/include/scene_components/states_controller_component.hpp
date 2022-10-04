@@ -8,7 +8,7 @@ HTPS_PRAGMA_ONCE
 #include <htypes/include/stack.hpp>
 #include <htypes/include/lockablevector.hpp>
 #include <hlog/include/hlog.hpp>
-#include <haf/include/component/component.hpp>
+#include <haf/include/component/icomponent.hpp>
 
 namespace haf
 {
@@ -139,7 +139,7 @@ private:
 
 template <typename T>
 class StatesControllerComponent : public StatesControllerRaw<T>,
-                                  public component::Component
+                                  public component::IComponent
 {
 public:
     ~StatesControllerComponent() override = default;

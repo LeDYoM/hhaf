@@ -1,6 +1,7 @@
 #include "sfml_render_window.hpp"
 #include "conversions.hpp"
 #include <string>
+#include <SFML/Config.hpp>
 
 using namespace htps;
 

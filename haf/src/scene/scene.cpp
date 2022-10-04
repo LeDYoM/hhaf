@@ -3,6 +3,9 @@
 #include <haf/include/debug_system/debug_actions.hpp>
 #include <haf/include/component/component_container.hpp>
 #include <haf/include/scene_components/camera_component.hpp>
+#include <haf/include/debug_system/displayvar_console.hpp>
+
+#include <haf/include/scene_nodes/scene_node_table_text.hpp>
 
 using namespace htps;
 
@@ -76,6 +79,19 @@ void Scene::installDebugUtils()
 str Scene::completeName() const
 {
     return name();
+}
+
+void Scene::initDebugUtils()
+{
+    sptr<SceneNode> nodeConsole = createSceneNode("m_display_var_console");
+    p_->m_display_var_console   = nodeConsole->component<DisplayVarConsole>();
+
+    debug::DebugVariable a{1};
+    p_->m_display_var_console->updateVar("Test", a);
+    p_->m_display_var_console->showDebugVariables = true;
+    installDebugUtils();
+    //    nodeConsole->componentOfType<TransformableComponent>()->Position =
+    //    {0.1f, 0.1f};
 }
 
 }  // namespace haf::scene

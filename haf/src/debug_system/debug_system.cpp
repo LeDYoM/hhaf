@@ -71,4 +71,29 @@ debug::DebugVariables& DebugSystem::debugVariables()
     return m_debug_variables;
 }
 
+void DebugSystem::getVariable(debug::DebugVariableHandle& index,
+                              char const* const name)
+{
+    m_debug_variables.getVariable(index, name);
+}
+
+bool DebugSystem::getVariableValue(debug::DebugVariableHandle& index,
+                                   debug::DebugVariable& value)
+{
+    return m_debug_variables.getVariableValue(index, value);
+}
+
+void DebugSystem::incrementVariable(
+    debug::DebugVariableHandle const index,
+    debug::DebugVariable::value_type const increment)
+{
+    m_debug_variables.incrementVariable(index, increment);
+}
+
+void DebugSystem::setVariable(debug::DebugVariableHandle const index,
+                              debug::DebugVariable::value_type const newValue)
+{
+    m_debug_variables.setVariable(index, newValue);
+}
+
 }  // namespace haf::sys

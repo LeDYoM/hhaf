@@ -3,25 +3,25 @@ HTPS_PRAGMA_ONCE
 #define HAF_CONSOLE_INCLUDE_HPP
 
 #include <htypes/include/str.hpp>
-#include <haf/include/scene_nodes/scene_node_table_text.hpp>
+#include <haf/include/scene_components/table_text_component.hpp>
 #include <haf/include/scene_nodes/scene_node_text.hpp>
+#include <haf/include/component/composed_component.hpp>
 
 namespace haf
 {
-class Console : public haf::scene::nodes::TextTableNode
+class Console : public component::ComposedComponent<scene::TextTableNode>
 {
-    using BaseClass = haf::scene::nodes::TextTableNode;
+    using BaseClass = component::ComposedComponent<scene::TextTableNode>;
 
 public:
     using BaseClass::BaseClass;
-    void onCreated() override;
+    void onAttached() override;
 
     void tableNodeCreated(
-        htps::vector2dst,
-        htps::sptr<haf::scene::nodes::SceneNodeText> const&) override;
-    void onAllTableElementsCreated(htps::vector2dst const table_size) override;
+        htps::vector2dst const&,
+        htps::sptr<haf::scene::nodes::SceneNodeText> const&);
 
-    void setText(htps::str const& text);
+    void setText(htps::vector2dst const& nodeIndex, htps::str const& text);
 };
 }  // namespace haf
 

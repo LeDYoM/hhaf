@@ -29,6 +29,8 @@ public:
     htps::rptr<Scene const> sceneParent() const override;
     htps::str completeName() const override;
 
+    void initDebugUtils();
+
 private:
     class ScenePrivate;
     htps::PImplPointer<ScenePrivate> p_;

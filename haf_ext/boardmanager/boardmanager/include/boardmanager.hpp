@@ -4,7 +4,7 @@
 #include <htypes/include/types.hpp>
 #include <htypes/include/function.hpp>
 #include <htypes/include/vector2d.hpp>
-#include <haf/include/component/component.hpp>
+#include <haf/include/component/icomponent.hpp>
 #include "itile.hpp"
 
 namespace haf::board
@@ -15,7 +15,7 @@ class IBoardManagerActuator;
  * This component implements a way to manage a group of tiles in a 2D matrix
  * providing functionality to add, remove and check for data.
  */
-class BoardManager : public haf::component::Component
+class BoardManager : public haf::component::IComponent
 {
 public:
     using BackgroundData    = htps::s32;

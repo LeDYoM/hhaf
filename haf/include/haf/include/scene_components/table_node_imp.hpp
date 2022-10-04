@@ -7,21 +7,22 @@ HTPS_PRAGMA_ONCE
 
 #include <haf/include/haf_export.hpp>
 #include <htypes/include/connection.hpp>
+#include <haf/include/scene_components/transformable_component.hpp>
 #include <haf/include/scene_nodes/transformable_scene_node.hpp>
-#include <haf/include/component/icomponent.hpp>
+#include <haf/include/component/component_container.hpp>
 
-namespace haf::scene::nodes
+namespace haf::scene
 {
 /**
  * @brief class Node with implementation details for a Table node.
  */
-class HAF_API TableNodeImp : public TransformableSceneNode
+class HAF_API TableNodeImp
+    : public component::ComposedComponent<TransformableComponent>
 {
-    using BaseClass = TransformableSceneNode;
+    using BaseClass = component::ComposedComponent<TransformableComponent>;
 
 public:
-    using TransformableSceneNode::TransformableSceneNode;  ///< Inherited
-                                                           ///< constuctor
+    using BaseClass::BaseClass;
 
     using ContainedType_t = htps::sptr<TransformableSceneNode>;
 
@@ -43,14 +44,11 @@ public:
     void update() override;
 
     bool nodeTableCreated(htps::vector2dst const& index) const;
-
-    virtual void onAllTableElementsCreated(htps::vector2dst const);
     htps::emitter<htps::vector2dst const> allTableElementsCreated;
 
     void createTableNodesIfNecessary();
 
 protected:
-
     ContainedType_t innerSceneNodeAt(htps::vector2dst const index) const;
 
     virtual void setTableSize(htps::vector2dst const ntableSize);
@@ -72,6 +70,6 @@ private:
     htps::vector<htps::vector<ContainedType_t>> inner_nodes_;
 };
 
-}  // namespace haf::scene::nodes
+}  // namespace haf::scene
 
 #endif

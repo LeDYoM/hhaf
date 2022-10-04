@@ -36,7 +36,7 @@ void Transformation::updateTransform()
                   Matrix4x4::Zero, Matrix4x4::Zero, Matrix4x4::One};
 }
 
-Matrix4x4 const& Transformation::matrix() noexcept
+Matrix4x4 const& Transformation::matrix() const noexcept
 {
     return transform_;
 }

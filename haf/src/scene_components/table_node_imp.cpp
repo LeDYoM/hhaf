@@ -1,11 +1,11 @@
 #include <htypes/include/types.hpp>
 #include <htypes/include/vector2d.hpp>
 #include <htypes/include/str.hpp>
-#include <haf/include/scene_nodes/scene_node_table_imp.hpp>
+#include <haf/include/scene_components/table_node_imp.hpp>
 
 using namespace htps;
 
-namespace haf::scene::nodes
+namespace haf::scene
 {
 htps::vector2df TableNodeImp::cellSize() const
 {
@@ -44,22 +44,22 @@ void TableNodeImp::createTableNodesIfNecessary()
         auto const half_cell_size{cell_size / 2.0F};
         auto const left_top_plus_half_size{vector2df{-0.5F, -0.5F} +
                                            half_cell_size};
-        for_each_table_innerSceneNode(
-            [this, &cell_size, &left_top_plus_half_size](
-                htps::vector2dst const& p,
-                const htps::sptr<TransformableSceneNode>& node) {
-                if (node->sceneNodes().empty())
-                {
-                    createNodeAt({p.x, p.y});
-                }
+        for_each_table_innerSceneNode([this, &cell_size,
+                                       &left_top_plus_half_size](
+                                          htps::vector2dst const& p,
+                                          const htps::sptr<
+                                              TransformableSceneNode>& node) {
+            if (node->sceneNodes().empty())
+            {
+                createNodeAt({p.x, p.y});
+            }
 
-                node->Scale = cell_size;
+            node->Scale = cell_size;
 
-                node->Position = left_top_plus_half_size +
-                    (cell_size * static_cast<htps::vector2df>(p));
-                Position = {0.0F, 0.0F};
-            });
-        onAllTableElementsCreated(TableSize());
+            node->Position = left_top_plus_half_size +
+                (cell_size * static_cast<htps::vector2df>(p));
+            composedComponent()->Position = {0.0F, 0.0F};
+        });
         allTableElementsCreated(TableSize());
     }
 }
@@ -76,8 +76,9 @@ TableNodeImp::ContainedType_t TableNodeImp::createInnerSceneNodeAt(
 {
     LogAsserter::log_assert(inner_nodes_[index.x][index.y] == nullptr,
                             "Node already created");
-    ContainedType_t inner_node{createSceneNode<TransformableSceneNode>(
-        make_str(name, "_inner_node", index))};
+    ContainedType_t inner_node{
+        attachedNode()->createSceneNode<TransformableSceneNode>(
+            make_str(name, "_inner_node", index))};
 
     setInnerSceneNodeAt(index, inner_node);
     onInnerNodeCreated(index, inner_node);
@@ -97,9 +98,6 @@ void TableNodeImp::updateTableSizeIfNecessary()
         setTableSize(TableSize());
     }
 }
-
-void TableNodeImp::onAllTableElementsCreated(htps::vector2dst const)
-{}
 
 void TableNodeImp::setTableSize(htps::vector2dst const ntableSize)
 {
@@ -136,4 +134,4 @@ void TableNodeImp::for_each_table_innerSceneNode(
     }
 }
 
-}  // namespace haf::scene::nodes
+}  // namespace haf::scene

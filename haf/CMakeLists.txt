@@ -32,6 +32,7 @@ set(sources
   ${src_dir}/debug_system/debug_system_subsystems_view.cpp
   ${src_dir}/debug_system/debug_system.cpp
   ${src_dir}/debug_system/debug_system.hpp
+  ${src_dir}/debug_system/debug_variable.cpp
   ${src_dir}/debug_system/debug_variables.cpp
   ${src_dir}/debug_system/debug_variables.hpp
   ${src_dir}/debug_system/displayvar_console.cpp
@@ -132,7 +133,10 @@ set(sources
   ${src_dir}/scene_components/camera_component.cpp
   ${src_dir}/scene_components/discretetextcomponent.cpp
   ${src_dir}/scene_components/scene_components_log.hpp
+  ${src_dir}/scene_components/table_node_imp.cpp
+  ${src_dir}/scene_components/table_text_component.cpp
   ${src_dir}/scene_components/texteditorcomponent.cpp
+  ${src_dir}/scene_components/transformable_component.cpp
   ${src_dir}/scene_components/visibility_selector_component.cpp
 
   # Scene nodes
@@ -222,15 +226,17 @@ set(headers
 
   # Component
   ${inc_dir}/component/component_container.hpp
-  ${inc_dir}/component/component.hpp
-  ${inc_dir}/component/icomponent_attached_node.hpp
+  ${inc_dir}/component/composed_component.hpp
   ${inc_dir}/component/icomponent_mixin.hpp
   ${inc_dir}/component/icomponent.hpp
 
   # Debug
   ${inc_dir}/debug_system/console.hpp
   ${inc_dir}/debug_system/debug_actions.hpp
+  ${inc_dir}/debug_system/debug_types.hpp
+  ${inc_dir}/debug_system/debug_variable.hpp
   ${inc_dir}/debug_system/displayvar_console.hpp
+  ${inc_dir}/debug_system/idebug_variables.hpp
 
   # Data
   ${inc_dir}/data/ideserializable.hpp
@@ -308,7 +314,11 @@ set(headers
   ${inc_dir}/scene_components/states_controller_component.hpp
   ${inc_dir}/scene_components/statescontrolleractuator_register.hpp
   ${inc_dir}/scene_components/statescontrolleractuator.hpp
+  ${inc_dir}/scene_components/table_node_imp.hpp
+  ${inc_dir}/scene_components/table_text_component.hpp
+  ${inc_dir}/scene_components/table_component.hpp
   ${inc_dir}/scene_components/texteditorcomponent.hpp
+  ${inc_dir}/scene_components/transformable_component.hpp
   ${inc_dir}/scene_components/visibility_selector_component.hpp
 
   # Scene nodes
@@ -375,6 +385,8 @@ target_compile_definitions(${CURRENT_TARGET} PRIVATE HAF_ALLOW_ACCELERATION)
 target_compile_definitions(${CURRENT_TARGET} PRIVATE HAF_SHOW_FPS)
 
 target_compile_definitions(${CURRENT_TARGET} PUBLIC HAF_PROFILE)
+target_compile_definitions(${CURRENT_TARGET} PUBLIC HAF_DEBUG_VARIABLES)
+
 
 # Prepare the haf libray
 target_compile_definitions(${CURRENT_TARGET} PRIVATE haf_EXPORTS)

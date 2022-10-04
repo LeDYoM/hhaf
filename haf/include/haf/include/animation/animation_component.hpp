@@ -3,7 +3,7 @@ HTPS_PRAGMA_ONCE
 #define HAF_ANIMATION_ANIMATION_COMPONENT_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
-#include <haf/include/component/component.hpp>
+#include <haf/include/component/icomponent.hpp>
 #include <haf/include/animation/animation.hpp>
 #include <haf/include/animation/property_animation.hpp>
 #include <haf/include/animation/property_animation_builder.hpp>
@@ -17,7 +17,7 @@ namespace haf::anim
 /**
  * @brief Component designed to store, manage and update animations.
  */
-class AnimationComponent final : public component::Component
+class AnimationComponent final : public component::IComponent
 {
 public:
     AnimationComponent();

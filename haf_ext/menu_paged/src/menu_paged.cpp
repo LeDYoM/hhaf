@@ -11,10 +11,10 @@ namespace haf::scene
 
 MenuPaged::~MenuPaged() = default;
 
-void MenuPaged::onCreated()
+void MenuPaged::onAttached()
 {
-    visibilitySelectorComponent_ = component<VisibilitySelectorComponent>();
-    statesControllerComponent_   = component<StatesControllerComponent<s32>>();
+    visibilitySelectorComponent_ = attachedNode()->component<VisibilitySelectorComponent>();
+    statesControllerComponent_   = attachedNode()->component<StatesControllerComponent<s32>>();
 
     statesControllerComponent_->StatePushed.connect(
         [this](const s32 menu_page) {
@@ -44,7 +44,7 @@ MenuFinishedStatus MenuPaged::status() const
 
 sptr<MenuPage> MenuPaged::createMenuPage(str name)
 {
-    return createSceneNode<MenuPage>(htps::move(name));
+    return attachedNode()->createSceneNode<MenuPage>(htps::move(name));
 }
 
 void MenuPaged::configure_menu(
@@ -80,7 +80,7 @@ void MenuPaged::terminate(MenuFinishedStatus const status)
 
     if (FinishSceneAtEnd())
     {
-        subSystem<ISceneControl>()->switchToNextScene();
+        attachedNode()->subSystem<ISceneControl>()->switchToNextScene();
     }
 }
 

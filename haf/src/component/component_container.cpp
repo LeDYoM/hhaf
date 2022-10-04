@@ -35,7 +35,7 @@ ComponentContainer::~ComponentContainer() = default;
 
 void ComponentContainer::updateComponents()
 {
-    p_->components_.performUpdate(
+    p_->components_.performUpdateBackwards(
         [](sptr<IComponent> const& component) { component->update(); });
 }
 
@@ -57,9 +57,19 @@ sptr<IComponent> ComponentContainer::componentOfType(
     return p_->getComponentFromTypeIndex(ti);
 }
 
-void ComponentContainer::initialize(IComponent& component) const
+rptr<scene::SceneNode> ComponentContainer::attachable() const noexcept
 {
-    component.setAttachedNode(p_->attachable_);
+    return p_->attachable_;
+}
+
+void ComponentContainer::initialize(component::IComponent& component) const
+{
+    component.setAttachedNode(attachable());
+}
+
+htps::size_type ComponentContainer::components() const noexcept
+{
+    return p_->components_.size();
 }
 
 }  // namespace haf::component

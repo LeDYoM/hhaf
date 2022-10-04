@@ -59,7 +59,7 @@ void MainMenu::goGame(GameMode const game_mode, vector<s32> menu_data)
 {
     using namespace haf::shdata;
     auto game_shared_data_updater{
-        SharedDataUpdater<GameSharedData>{subSystem<ISharedData>()}};
+        SharedDataUpdater<GameSharedData>{attachedNode()->subSystem<ISharedData>()}};
 
     auto game_shared_data{
         game_shared_data_updater.updateOrCreate(GameSharedData::address())};
@@ -81,15 +81,15 @@ void MainMenu::goTokenGame(vector<s32> menu_data)
     goGame(GameMode::Token, htps::move(menu_data));
 }
 
-void MainMenu::onCreated()
+void MainMenu::onAttached()
 {
-    BaseClass::onCreated();
+    BaseClass::onAttached();
 
     NormalTextFont =
 #ifdef TEST_BMP_FONT
             getBMPFont(MainMenuResources::TestFontId)
 #else
-            subSystem<res::IResourceRetriever>()
+            attachedNode()->subSystem<res::IResourceRetriever>()
                 ->getTTFont(MainMenuResources::MenuFontId)
                 ->font(30)
 #endif
@@ -98,7 +98,7 @@ void MainMenu::onCreated()
     SelectedColor = colors::Red;
 
     vector_shared_pointers<scene::MenuPage> menu_steps;
-    Scale = {1.0F, 0.3F};
+//    Scale = {1.0F, 0.3F};
 
     // Create and register menu pages
     {
