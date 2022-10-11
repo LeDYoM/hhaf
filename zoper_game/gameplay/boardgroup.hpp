@@ -6,6 +6,7 @@
 
 #include <haf/include/scene/scene_node.hpp>
 #include <haf/include/scene_nodes/scene_node_table.hpp>
+#include <haf/include/scene_components/table_component.hpp>
 
 #include "boardtilescene_node.hpp"
 #include "direction.hpp"
@@ -20,12 +21,12 @@ namespace zoper
 class LevelProperties;
 class Player;
 
-class BoardGroup : public haf::scene::nodes::TableNode<BoardTileSceneNode>,
+class BoardGroup : public haf::scene::TableNode<BoardTileSceneNode>,
                    public haf::board::IBoardManagerActuator
 {
 
 private:
-    using BaseClass = haf::scene::nodes::TableNode<BoardTileSceneNode>;
+    using BaseClass = haf::scene::TableNode<BoardTileSceneNode>;
 
 public:
     using BoardTileData = haf::board::IBoardManagerActuator::BoardTileData;
@@ -38,7 +39,7 @@ public:
     void configure(htps::vector2dst size,
                    htps::sptr<LevelProperties> level_properties);
 
-    void onCreated() override;
+    void onAttached() override;
 
     void createNewToken(BoardTileData const data,
                         htps::vector2dst const& board_position);

@@ -1,6 +1,6 @@
 HTPS_PRAGMA_ONCE
-#ifndef HAF_SCENE_SCENE_NODE_TABLE_IMP_INCLUDE_HPP
-#define HAF_SCENE_SCENE_NODE_TABLE_IMP_INCLUDE_HPP
+#ifndef HAF_SCENE_COMPONENTS_NODE_TABLE_IMP_INCLUDE_HPP
+#define HAF_SCENE_COMPONENTS_NODE_TABLE_IMP_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/properties/iproperty.hpp>

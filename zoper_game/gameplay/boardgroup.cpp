@@ -49,9 +49,9 @@ void BoardGroup::configure(vector2dst size,
         make_function(this, &BoardGroup::setLevel));
 }
 
-void BoardGroup::onCreated()
+void BoardGroup::onAttached()
 {
-    tokens_scene_node = createSceneNode<haf::scene::TransformableSceneNode>(
+    tokens_scene_node = attachedNode()->createSceneNode<haf::scene::TransformableSceneNode>(
         "tokens_scene_node");
 
     onNodeReady.connect(
