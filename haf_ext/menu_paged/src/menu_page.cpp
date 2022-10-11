@@ -92,7 +92,7 @@ void MenuPage::onAllTableElementsCreated(htps::vector2dst const table_size)
 
 rptr<MenuPaged const> MenuPage::parentMenuPaged() const
 {
-    return parent()->componentOfType<MenuPaged>().get();
+    return parentAs<MenuPaged>();
 }
 
 sptr<res::IFont> MenuPage::normalFont() const

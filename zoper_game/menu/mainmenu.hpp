@@ -17,7 +17,7 @@ public:
     static constexpr char StaticTypeName[] = "MainMenu";
     using BaseClass::BaseClass;
 
-    virtual void onAttached() override;
+    virtual void onCreated() override;
 
 private:
     void onTableNodeCreated(

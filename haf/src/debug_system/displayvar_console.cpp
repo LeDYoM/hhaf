@@ -41,12 +41,17 @@ void DisplayVarConsole::update()
         fast_u32 index{0U};
         for (auto const& variables : m_variables_data)
         {
-            composedComponent()->setText({0U, index}, variables.first);
-            composedComponent()->setText({1U, index}, variables.second);
+            m_console->setText({0U, index}, variables.first);
+            m_console->setText({1U, index}, variables.second);
             ++index;
         }
     }
     BaseClass::update();
+}
+
+void DisplayVarConsole::addRequirements(component::ComponentRequirements& c_req)
+{
+    c_req.component(m_console);
 }
 
 }  // namespace haf

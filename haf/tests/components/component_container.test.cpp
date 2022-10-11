@@ -4,15 +4,15 @@
 #include <haf/include/scene/scene_node.hpp>
 #include <haf/include/scene/scene.hpp>
 #include <haf/include/component/component_container.hpp>
-#include <haf/include/component/icomponent.hpp>
-#include <haf/include/component/composed_component.hpp>
+#include <haf/include/component/component.hpp>
+#include <haf/include/component/component_requirements.hpp>
 
 using namespace htps;
 using namespace haf;
 using namespace haf::scene;
 using namespace haf::component;
 
-struct TestComponent : public IComponent
+struct TestComponent : public Component
 {
     int data_{0};
 
@@ -72,21 +72,28 @@ TEST_CASE("haf::scene::ComponentContainer", "[ComponentContainer][constructor]")
     }
 }
 
-struct TestComposedComponent : public ComposedComponent<TestComponent>
+struct TestComposedComponent : public Component
 {
     int data_{0};
 
 private:
+    void addRequirements(ComponentRequirements& cReq) override
+    {
+        cReq.component<TestComponent>();
+    }
     void update() override { ++data_; }
 };
 
-struct TestComposedComposedComponent
-    : public ComposedComponent<TestComposedComponent>
+struct TestComposedComposedComponent : public Component
 {
     int data_{0};
 
 private:
     void update() override { ++data_; }
+    void addRequirements(ComponentRequirements& cReq) override
+    {
+        cReq.component<TestComposedComponent>();
+    }
 };
 
 TEST_CASE("ComponentContainer::composed_component", "[ComponentContainer]")
@@ -131,9 +138,10 @@ TEST_CASE("ComponentContainer::composed_composed_component",
     CHECK(component_container->component<TestComposedComposedComponent>() !=
           nullptr);
     CHECK(component_container->components() == 3U);
-
+/*
     CHECK(component_container->componentOfType<TestComposedComposedComponent>()
               ->composedComponent()
               ->composedComponent()
               ->attachedNode() == &sceneNode);
+*/
 }

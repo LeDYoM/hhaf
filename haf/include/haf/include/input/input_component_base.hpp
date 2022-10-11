@@ -3,12 +3,12 @@ HTPS_PRAGMA_ONCE
 #define HAF_INPUT_COMPONENT_BASE_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
-#include <haf/include/component/icomponent.hpp>
+#include <haf/include/component/component.hpp>
 #include <haf/include/input/key.hpp>
 
 namespace haf::input
 {
-class InputComponentBase : public component::IComponent
+class InputComponentBase : public component::Component
 {
 public:
     bool isPressed(const Key key);

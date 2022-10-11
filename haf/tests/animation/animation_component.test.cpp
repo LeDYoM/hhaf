@@ -16,7 +16,7 @@ struct CommonData
 };
 }  // namespace
 
-TEST_CASE("haf::anim::AnimationComponent", "[AnimationComponent][IComponent]")
+TEST_CASE("haf::anim::AnimationComponent", "[AnimationComponent][Component]")
 {
     //    constexpr u32 Start_State  = 0U;
     //    constexpr u32 Finish_State = 1U;

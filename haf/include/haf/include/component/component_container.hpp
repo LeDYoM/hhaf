@@ -6,8 +6,7 @@ HTPS_PRAGMA_ONCE
 #include <htypes/include/types.hpp>
 #include <htypes/include/p_impl_pointer.hpp>
 
-#include <haf/include/component/icomponent.hpp>
-#include <haf/include/component/composed_component.hpp>
+#include <haf/include/component/component.hpp>
 #include <haf/include/utils/type_data.hpp>
 #include <hlog/include/hlog.hpp>
 
@@ -20,7 +19,7 @@ namespace haf::component
 {
 /**
  * @brief class representing a container for components.
- * @see IComponent
+ * @see Component
  */
 class HAF_API ComponentContainer
 {
@@ -111,17 +110,11 @@ public:
     htps::size_type components() const noexcept;
 
 private:
-    void applyRequirements(IComponent&) {}
-
-    template <typename U>
-    void applyRequirements(ComposedComponent<U>& component_based_component)
-    {
-        component_based_component.setComposedComponent(component<U>().get());
-    }
+    void applyRequirements(Component& _thisComponent);
 
     htps::rptr<scene::SceneNode> attachable() const noexcept;
 
-    void initialize(component::IComponent& component) const;
+    void initialize(component::Component& component) const;
 
     template <typename T>
     utils::type_index type_of() const noexcept
@@ -129,8 +122,8 @@ private:
         return utils::type_index{typeid(T)};
     }
 
-    bool addComponent(htps::sptr<IComponent> nc);
-    htps::sptr<IComponent> componentOfType(utils::type_index const& ti) const;
+    bool addComponent(htps::sptr<Component> nc);
+    htps::sptr<Component> componentOfType(utils::type_index const& ti) const;
 
     struct ComponentContainerPrivate;
     htps::PImplPointer<ComponentContainerPrivate> p_;

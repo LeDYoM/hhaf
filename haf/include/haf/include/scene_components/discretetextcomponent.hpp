@@ -4,14 +4,14 @@ HTPS_PRAGMA_ONCE
 
 #include <htypes/include/types.hpp>
 #include <haf/include/scene_nodes/scene_node_text.hpp>
-#include <haf/include/component/icomponent.hpp>
+#include <haf/include/component/component.hpp>
 
 namespace haf::scene
 {
 class DiscreteTextComponent final
-    : public component::IComponent //ComponentForType<nodes::SceneNodeText>
+    : public component::Component //ComponentForType<nodes::SceneNodeText>
 {
-    using BaseClass = component::IComponent;
+    using BaseClass = component::Component;
 
 public:
     htps::BasicProperty<bool> circleAroud{true};

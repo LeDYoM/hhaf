@@ -9,22 +9,24 @@ HTPS_PRAGMA_ONCE
 #include <htypes/include/connection.hpp>
 #include <haf/include/scene_components/transformable_component.hpp>
 #include <haf/include/scene_nodes/transformable_scene_node.hpp>
-#include <haf/include/component/component_container.hpp>
+#include <haf/include/component/component.hpp>
+#include <haf/include/component/component_requirements.hpp>
 
 namespace haf::scene
 {
 /**
  * @brief class Node with implementation details for a Table node.
  */
-class HAF_API TableNodeImp
-    : public component::ComposedComponent<TransformableComponent>
+class HAF_API TableNodeImp : public component::Component
 {
-    using BaseClass = component::ComposedComponent<TransformableComponent>;
+    using BaseClass = component::Component;
 
 public:
     using BaseClass::BaseClass;
 
     using ContainedType_t = htps::sptr<TransformableSceneNode>;
+
+    void addRequirements(component::ComponentRequirements&) override;
 
     htps::PropertyState<htps::vector2dst> TableSize;
     htps::PropertyState<htps::vector2df> TableSizeForNodes;
@@ -68,6 +70,7 @@ private:
     virtual void createNodeAt(htps::vector2dst const& index) = 0;
 
     htps::vector<htps::vector<ContainedType_t>> inner_nodes_;
+    htps::sptr<TransformableComponent> m_transformableComponent;
 };
 
 }  // namespace haf::scene

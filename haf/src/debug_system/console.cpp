@@ -22,17 +22,17 @@ namespace haf
 void Console::onAttached()
 {
     BaseClass::onAttached();
-    composedComponent()->onTableNodeCreated +=
+    m_textTableNode->onTableNodeCreated +=
         make_function(this, &Console::tableNodeCreated);
-    composedComponent()->TableSize = {2, kNumLines};
-    composedComponent()->createTableNodesIfNecessary();
-    composedComponent()->onTableNodeCreated +=
+    m_textTableNode->TableSize = {2, kNumLines};
+    m_textTableNode->createTableNodesIfNecessary();
+    m_textTableNode->onTableNodeCreated +=
         make_function(this, &Console::tableNodeCreated);
 }
 
 void Console::setText(htps::vector2dst const& nodeIndex, htps::str const& text)
 {
-    composedComponent()->nodeAt(nodeIndex)->Text.assignIfDifferent(text);
+    m_textTableNode->nodeAt(nodeIndex)->Text.assignIfDifferent(text);
 }
 
 void Console::tableNodeCreated(
@@ -46,6 +46,11 @@ void Console::tableNodeCreated(
             "console_font");
     // Allow for 20U "A" characters
     node->TextBaseSizeProperty = TextBaseSize{'A', 10U};
+}
+
+void Console::addRequirements(component::ComponentRequirements& cReq)
+{
+    cReq.component(m_textTableNode);
 }
 
 }  // namespace haf

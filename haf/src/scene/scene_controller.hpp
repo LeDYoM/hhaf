@@ -14,7 +14,9 @@ HTPS_PRAGMA_ONCE
 namespace haf::sys
 {
 class SystemAccess;
+class ISystemProvider;
 }
+
 namespace haf::scene
 {
 class SceneManager;

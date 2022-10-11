@@ -3,7 +3,7 @@ HTPS_PRAGMA_ONCE
 #define HAF_VARIABLE_VIEWER_IMP_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
-#include <haf/include/component/icomponent.hpp>
+#include <haf/include/component/component.hpp>
 
 namespace haf::debug
 {

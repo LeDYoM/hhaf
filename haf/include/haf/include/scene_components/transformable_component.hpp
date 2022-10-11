@@ -12,7 +12,7 @@ HTPS_PRAGMA_ONCE
 #include <haf/include/scene/transformation.hpp>
 #include <haf/include/scene/scene_node.hpp>
 #include <haf/include/scene/scene_render_context.hpp>
-#include <haf/include/component/composed_component.hpp>
+#include <haf/include/component/component.hpp>
 
 namespace haf::scene
 {
@@ -22,11 +22,11 @@ namespace haf::scene
  * Transformation.
  * @see Transofrmation
  */
-class HAF_API TransformableComponent : public component::IComponent,
+class HAF_API TransformableComponent : public component::Component,
                                        public Transformation
 {
 private:
-    using BaseClass = component::IComponent;
+    using BaseClass = component::Component;
 
 public:
     using Scalar = Matrix4x4::Scalar;  ///< Type Scalar for this class

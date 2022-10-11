@@ -7,25 +7,27 @@ HTPS_PRAGMA_ONCE
 #include <htypes/include/dictionary.hpp>
 #include <haf/include/debug_system/console.hpp>
 #include <haf/include/debug_system/debug_variable.hpp>
-#include <haf/include/component/icomponent.hpp>
-#include <haf/include/component/composed_component.hpp>
+#include <haf/include/component/component.hpp>
+#include <haf/include/component/component_requirements.hpp>
 
 namespace haf
 {
-class DisplayVarConsole : public component::ComposedComponent<Console>
+class DisplayVarConsole : public component::Component
 {
 private:
-    using BaseClass = component::ComposedComponent<Console>;
+    using BaseClass = component::Component;
 
 public:
     using BaseClass::BaseClass;
     void updateVar(htps::str const& name, debug::DebugVariable const& variable);
     void update() override;
+    void addRequirements(component::ComponentRequirements&);
 
     htps::PropertyState<bool> showDebugVariables{false};
 
 private:
     htps::PureDictionary m_variables_data;
+    htps::sptr<Console> m_console;
 };
 }  // namespace haf
 

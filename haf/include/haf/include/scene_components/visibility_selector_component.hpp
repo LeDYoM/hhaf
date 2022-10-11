@@ -5,7 +5,7 @@ HTPS_PRAGMA_ONCE
 #include <htypes/include/types.hpp>
 #include <htypes/include/properties/property_state.hpp>
 
-#include <haf/include/component/icomponent.hpp>
+#include <haf/include/component/component.hpp>
 
 namespace haf::scene
 {
@@ -13,7 +13,7 @@ namespace haf::scene
  * @brief Component to facilitatee the usage of scenenodes with
  * only one visible node.
  */
-class VisibilitySelectorComponent : public component::IComponent
+class VisibilitySelectorComponent : public component::Component
 {
 public:
     /**

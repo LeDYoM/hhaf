@@ -13,6 +13,7 @@
 namespace haf::scene
 {
 class MenuPaged;
+
 class MenuPage : public scene::nodes::TextTableNode
 {
 private:

@@ -1,6 +1,6 @@
 HTPS_PRAGMA_ONCE
-#ifndef HAF_COMPONENT_ICOMPONENT_INCLUDE_HPP
-#define HAF_COMPONENT_ICOMPONENT_INCLUDE_HPP
+#ifndef HAF_COMPONENT_COMPONENT_INCLUDE_HPP
+#define HAF_COMPONENT_COMPONENT_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
 
@@ -11,8 +11,9 @@ class SceneNode;
 
 namespace haf::component
 {
+class ComponentRequirements;
 
-class IComponent
+class Component
 {
 public:
     using pointer       = htps::rptr<scene::SceneNode>;
@@ -26,10 +27,12 @@ public:
     /**
      * @brief Destroy the Attachable object
      */
-    virtual ~IComponent() = default;
+    virtual ~Component() = default;
 
-    IComponent(IComponent const&) = delete;
-    IComponent& operator=(IComponent const&) = delete;
+    Component(Component const&) = delete;
+    Component& operator=(Component const&) = delete;
+    Component(Component&&) = default;
+    Component& operator=(Component&&) = default;
 
     /**
      * @brief Method called after the component is attached to a node.
@@ -80,7 +83,7 @@ public:
     }
 
 protected:
-    IComponent() noexcept = default;
+    Component() noexcept = default;
 
 private:
     void setAttachedNode(pointer const attachedNode) noexcept
@@ -88,6 +91,8 @@ private:
         attachedNode_ = attachedNode;
         onAttached();
     }
+
+    virtual void addRequirements(ComponentRequirements&) {}
 
     pointer attachedNode_{nullptr};
     friend class ComponentContainer;

@@ -1,4 +1,5 @@
 #include <haf/include/component/component_container.hpp>
+#include <haf/include/component/component_requirements.hpp>
 #include <htypes/include/lockablevector.hpp>
 
 using namespace htps;
@@ -7,19 +8,19 @@ namespace haf::component
 {
 struct ComponentContainer::ComponentContainerPrivate
 {
-    sptr<IComponent> getComponentFromTypeIndex(
+    sptr<Component> getComponentFromTypeIndex(
         utils::type_index const& tindex) const
     {
         const auto v{components_.next()};
         auto iterator(v.find_if(
-            v.cbegin(), v.cend(), [&tindex](sptr<IComponent> const& component) {
+            v.cbegin(), v.cend(), [&tindex](sptr<Component> const& component) {
                 return utils::type_index(typeid(*component)) == tindex;
             }));
         return (iterator == v.cend()) ? nullptr : (*iterator);
     }
 
     rptr<scene::SceneNode> const attachable_;
-    LockableVector<sptr<IComponent>> components_;
+    LockableVector<sptr<Component>> components_;
 
     ComponentContainer::ComponentContainerPrivate(
         rptr<scene::SceneNode> attachable) noexcept :
@@ -36,7 +37,7 @@ ComponentContainer::~ComponentContainer() = default;
 void ComponentContainer::updateComponents()
 {
     p_->components_.performUpdateBackwards(
-        [](sptr<IComponent> const& component) { component->update(); });
+        [](sptr<Component> const& component) { component->update(); });
 }
 
 void ComponentContainer::clearComponents() noexcept
@@ -44,14 +45,20 @@ void ComponentContainer::clearComponents() noexcept
     p_->components_.clear();
 }
 
-bool ComponentContainer::addComponent(sptr<IComponent> nc)
+bool ComponentContainer::addComponent(sptr<Component> nc)
 {
     LogAsserter::log_assert(nc != nullptr, "Trying to add a nullptr component");
     p_->components_.push_back(htps::move(nc));
     return true;
 }
 
-sptr<IComponent> ComponentContainer::componentOfType(
+void ComponentContainer::applyRequirements(Component& _thisComponent)
+{
+    ComponentRequirements component_requierements{*this};
+    _thisComponent.addRequirements(component_requierements);
+}
+
+sptr<Component> ComponentContainer::componentOfType(
     utils::type_index const& ti) const
 {
     return p_->getComponentFromTypeIndex(ti);
@@ -62,7 +69,7 @@ rptr<scene::SceneNode> ComponentContainer::attachable() const noexcept
     return p_->attachable_;
 }
 
-void ComponentContainer::initialize(component::IComponent& component) const
+void ComponentContainer::initialize(component::Component& component) const
 {
     component.setAttachedNode(attachable());
 }

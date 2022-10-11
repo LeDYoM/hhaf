@@ -5,15 +5,15 @@ HTPS_PRAGMA_ONCE
 #include <haf/include/haf_export.hpp>
 #include <htypes/include/p_impl_pointer.hpp>
 #include <htypes/include/properties/iproperty.hpp>
-#include <haf/include/component/icomponent.hpp>
+#include <haf/include/component/component.hpp>
 #include <haf/include/scene/scene.hpp>
 #include <haf/include/types/scene_types.hpp>
 
 namespace haf::scene
 {
-class HAF_API CameraComponent : public component::IComponent
+class HAF_API CameraComponent : public component::Component
 {
-    using BaseClass = component::IComponent;
+    using BaseClass = component::Component;
 
 public:
     CameraComponent();

@@ -9,7 +9,6 @@
 #include <haf/include/resources/ifont.hpp>
 #include <haf/include/scene_components/states_controller_component.hpp>
 #include <haf/include/scene_components/visibility_selector_component.hpp>
-#include <haf/include/component/composed_component.hpp>
 
 #include "menu_page.hpp"
 
@@ -24,9 +23,9 @@ enum class MenuFinishedStatus : htps::u8
 /**
  * @brief Main class to model a menu in paged style.
  */
-class MenuPaged : public component::ComposedComponent<TransformableComponent>
+class MenuPaged : public TransformableSceneNode
 {
-    using BaseClass = component::ComposedComponent<TransformableComponent>;
+    using BaseClass = TransformableSceneNode;
 
 public:
     using BaseClass::BaseClass;
@@ -36,7 +35,7 @@ public:
     htps::PropertyState<Color> SelectedColor;
     htps::PropertyState<bool> FinishSceneAtEnd;
 
-    void onAttached() override;
+    void onCreated() override;
     ~MenuPaged() override;
 
     void setMenuPagedStatus(MenuFinishedStatus const status);
@@ -55,6 +54,7 @@ private:
     htps::sptr<StatesControllerComponent<htps::s32>> statesControllerComponent_;
     htps::vector_shared_pointers<MenuPage> menu_steps_;
     MenuFinishedStatus status_{MenuFinishedStatus::Backward};
+    htps::sptr<TransformableComponent> m_transformableComponent;
 };
 }  // namespace haf::scene
 

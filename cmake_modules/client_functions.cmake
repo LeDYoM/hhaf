@@ -21,6 +21,7 @@ function(build_client_library)
   )
 
   # Copy data if data directory has been passed.
+  message("DATA SOURCE: ${CL_BUILD_DATA_SOURCE}")
   if(NOT ${CL_BUILD_DATA_SOURCE} STREQUAL "")
     message(${CL_BUILD_DATA_SOURCE})
     message("to")
@@ -36,6 +37,8 @@ function(build_client_library)
       COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:${CURRENT_TARGET}>/${CL_BUILD_DATA_DEST}"
       COMMAND ${CMAKE_COMMAND} -E copy_directory ${CL_BUILD_DATA_SOURCE}
               "$<TARGET_FILE_DIR:${CURRENT_TARGET}>/${CL_BUILD_DATA_DEST}")
+  else()
+    message("No data directory for ${CURRENT_TARGET}")
   endif()
 
 endfunction()

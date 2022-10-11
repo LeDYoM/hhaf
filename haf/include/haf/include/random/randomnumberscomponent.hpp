@@ -5,16 +5,16 @@ HTPS_PRAGMA_ONCE
 #include <htypes/include/types.hpp>
 #include <htypes/include/str.hpp>
 
-#include <haf/include/component/icomponent.hpp>
+#include <haf/include/component/component.hpp>
 
 namespace haf::rnd
 {
 /**
  * @brief This component class is intended to be used to generate
  * a series of random numbers.
- * @see component::IComponent
+ * @see component::Component
  */
-class RandomNumbersComponent final : public component::IComponent
+class RandomNumbersComponent final : public component::Component
 {
 public:
     RandomNumbersComponent() noexcept;

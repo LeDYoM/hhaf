@@ -25,6 +25,7 @@ set(sources
 
   # Component
   ${src_dir}/component/component_container.cpp
+  ${src_dir}/component/component.cpp
 
   # Debug
   ${src_dir}/debug_system/console.cpp
@@ -226,9 +227,8 @@ set(headers
 
   # Component
   ${inc_dir}/component/component_container.hpp
-  ${inc_dir}/component/composed_component.hpp
-  ${inc_dir}/component/icomponent_mixin.hpp
-  ${inc_dir}/component/icomponent.hpp
+  ${inc_dir}/component/component_requirements.hpp
+  ${inc_dir}/component/component.hpp
 
   # Debug
   ${inc_dir}/debug_system/console.hpp

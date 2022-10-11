@@ -3,6 +3,7 @@
 
 #include <haf/include/component/component_container.hpp>
 #include <haf/include/scene_components/iscene_control.hpp>
+#include <haf/include/component/component_requirements.hpp>
 
 using namespace htps;
 
@@ -11,10 +12,12 @@ namespace haf::scene
 
 MenuPaged::~MenuPaged() = default;
 
-void MenuPaged::onAttached()
+void MenuPaged::onCreated()
 {
-    visibilitySelectorComponent_ = attachedNode()->component<VisibilitySelectorComponent>();
-    statesControllerComponent_   = attachedNode()->component<StatesControllerComponent<s32>>();
+    visibilitySelectorComponent_ =
+        component<VisibilitySelectorComponent>();
+    statesControllerComponent_ =
+        component<StatesControllerComponent<s32>>();
 
     statesControllerComponent_->StatePushed.connect(
         [this](const s32 menu_page) {
@@ -44,7 +47,7 @@ MenuFinishedStatus MenuPaged::status() const
 
 sptr<MenuPage> MenuPaged::createMenuPage(str name)
 {
-    return attachedNode()->createSceneNode<MenuPage>(htps::move(name));
+    return createSceneNode<MenuPage>(htps::move(name));
 }
 
 void MenuPaged::configure_menu(
@@ -80,7 +83,7 @@ void MenuPaged::terminate(MenuFinishedStatus const status)
 
     if (FinishSceneAtEnd())
     {
-        attachedNode()->subSystem<ISceneControl>()->switchToNextScene();
+        subSystem<ISceneControl>()->switchToNextScene();
     }
 }
 

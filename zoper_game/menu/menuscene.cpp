@@ -60,7 +60,7 @@ void MenuScene::onCreated()
         //        .shader("shader1")
         .create();
 
-    createSceneNode(MainMenu::StaticTypeName)->component<MainMenu>()
+    createSceneNode<MainMenu>(MainMenu::StaticTypeName)
         ->MenuFinished.connect([this](MenuFinishedStatus const status) {
             if (status == MenuFinishedStatus::Backward)
             {
