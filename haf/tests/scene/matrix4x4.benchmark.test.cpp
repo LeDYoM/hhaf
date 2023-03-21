@@ -1,14 +1,14 @@
 #include "catch.hpp"
 
 #include <htypes/include/types.hpp>
-#include <haf/include/scene/matrix4x4.hpp>
-#include "matrix_utils.hpp"
+#include <haf/include/core/matrix4x4.hpp>
 
 using namespace haf;
+using namespace haf::math;
 using namespace haf::scene;
 using namespace haf::scene::testing;
 
-TEST_CASE("haf::scene::Matrix4x4 Benchmark",
+TEST_CASE("haf::math::Matrix4x4 Benchmark",
           "[haf][scene][Matrix4x4][Transformable][benchmark]")
 {
     Matrix4x4 const matrix1(100.0F, 200.0F, 300.0F, 400.0F, 500.0F, 600.0F,

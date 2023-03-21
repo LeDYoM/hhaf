@@ -34,7 +34,7 @@ public:
     static constexpr size_t maxLevelWithProperties{25U};
 
     void tokenConsumed();
-    htps::emitter<const LevelType> levelChanged;
+    evt::emitter<const LevelType> levelChanged;
 
 private:
     void updateGoals();

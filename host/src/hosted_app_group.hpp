@@ -11,6 +11,7 @@ class HostConnector;
 class HostedAppGroup final
 {
 public:
+    static constexpr char StaticTypeName[] = "HostedAppGroup";
 
     bool try_add_app(ManagedApp managed_app,
                      htps::str name,

@@ -7,7 +7,6 @@ namespace haf::backend
 {
 class ITexture;
 class ITTFont;
-class IShader;
 class IBMPFont;
 }  // namespace haf::backend
 
@@ -15,7 +14,6 @@ namespace haf::backend
 {
 using ITextureFactory = IResourceFactory<ITexture>;
 using ITTFontFactory  = IResourceFactory<ITTFont>;
-using IShaderFactory  = IResourceFactory<IShader>;
 using IBMPFontFactory = IResourceFactory<IBMPFont>;
 }  // namespace haf::backend
 

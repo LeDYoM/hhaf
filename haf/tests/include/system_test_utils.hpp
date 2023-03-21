@@ -2,18 +2,23 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_SYSTEM_TESTS_UTILS_INCLUDE_HPP
 #define HAF_SYSTEM_TESTS_UTILS_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
+#include <haf/include/core/types.hpp>
 #include "system/system_provider.hpp"
 #include <haf/include/system/subsystem_view.hpp>
 #include "shareddata/shared_data_system.hpp"
 #include "time/time_system.hpp"
 #include "scene/scene_manager.hpp"
+#include "filesystem/file_system.hpp"
 #include "system/system_options_init.hpp"
 
+namespace haf::test
+{
 template <typename T>
 class TestSystem
 {
 public:
+    using SystemType = T;
+
     TestSystem() : system_provider_{}, init_system_options_{} {}
 
     haf::sys::SubSystemViewer getSubSystemViewer()
@@ -64,13 +69,30 @@ private:
 using TestSharedDataSystem = TestSystem<haf::sys::SharedDataSystem>;
 using TestTimeSystem       = TestSystem<haf::sys::TimeSystem>;
 using TestSceneManager     = TestSystem<haf::scene::SceneManager>;
+using TestFileSystem       = TestSystem<haf::sys::FileSystem>;
 
 template <typename T>
-htps::uptr<T> makeTestSystem()
+haf::core::uptr<T> makeTestSystem()
 {
-    auto t = htps::muptr<T>();
+    auto t{haf::core::muptr<T>()};
     t->init();
     return t;
 }
+
+template <typename SystemTestType>
+struct CreateSystemForTestResult
+{
+    haf::core::uptr<SystemTestType> testSystem;
+    SystemTestType::SystemType& system;
+};
+
+template <typename SystemTestType>
+CreateSystemForTestResult<SystemTestType> createSystemForTest()
+{
+    auto test_system{makeTestSystem<SystemTestType>()};
+    auto& t_system{test_system->system<typename SystemTestType::SystemType>()};
+    return {htps::move(test_system), t_system};
+}
+}  // namespace haf
 
 #endif

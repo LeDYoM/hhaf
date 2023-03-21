@@ -217,6 +217,19 @@ public:
     }
 
     template <typename F>
+    constexpr void for_each_backwards(F f)
+    {
+        if (!empty())
+        {
+            auto current{end()};
+            while (current-- != begin())
+            {
+                f(*current);
+            }
+        }
+    }
+
+    template <typename F>
     constexpr void cfor_each(F f) const
     {
         if (!empty())
@@ -226,6 +239,19 @@ public:
             {
                 f(*current);
             } while (++current != cend());
+        }
+    }
+
+    template <typename F>
+    constexpr void cfor_each_backwards(F f)
+    {
+        if (!empty())
+        {
+            auto current{cend()};
+            while (--current != cbegin())
+            {
+                f(*current);
+            }
         }
     }
 
@@ -666,10 +692,13 @@ public:
 
     constexpr void insert(vector_base&& other)
     {
-        reserve(size() + other.size());
-        for (auto&& element : htps::move(other))
+        if (!other.empty())
         {
-            emplace_back(htps::move(element));
+            reserve(size() + other.size());
+            for (auto&& element : htps::move(other))
+            {
+                emplace_back(htps::move(element));
+            }
         }
     }
 

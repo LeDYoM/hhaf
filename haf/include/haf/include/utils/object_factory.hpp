@@ -1,10 +1,10 @@
 HTPS_PRAGMA_ONCE
-#ifndef HAF_SCENE_OBJECTFACTORY_INCLUDE_HPP
-#define HAF_SCENE_OBJECTFACTORY_INCLUDE_HPP
+#ifndef HAF_UTILS_OBJECT_FACTORY_INCLUDE_HPP
+#define HAF_UTILS_OBJECT_FACTORY_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
+#include <haf/include/core/types.hpp>
 #include <htypes/include/function.hpp>
-#include <htypes/include/str.hpp>
+#include <haf/include/core/types.hpp>
 
 #include <htypes/include/dictionary.hpp>
 
@@ -28,18 +28,19 @@ template <typename InterfaceType, typename... Args>
 class ObjectFactory
 {
 public:
-    using CreateReturnType          = htps::uptr<InterfaceType>;
+    using CreateReturnType          = core::sptr<InterfaceType>;
     using ObjectConstructorFunction = htps::function<CreateReturnType(Args...)>;
+    using size_type                 = core::size_type;
 
     /**
      * @brief Constructs an ObjectFactory object
      */
-    constexpr ObjectFactory() {}
+    constexpr ObjectFactory() = default;
 
     /**
      * @brief Destroy the Object Factory object
      */
-    virtual ~ObjectFactory() {}
+    virtual ~ObjectFactory() = default;
 
     /**
      * @brief Register a concrete object type with a given name and a
@@ -50,10 +51,10 @@ public:
      * @return true When the object type has been successfully registered.
      * @return false The object type cannot be registered.
      */
-    bool registerObjectType(htps::str type_name,
+    bool registerObjectType(core::str_view type_name,
                             ObjectConstructorFunction constructor_function)
     {
-        return constructors_.add(htps::move(type_name),
+        return constructors_.add(core::str{type_name},
                                  htps::move(constructor_function), false);
     }
 
@@ -86,10 +87,26 @@ public:
      * @return false The object type cannot be registered.
      */
     template <typename T>
-    constexpr bool registerObjectType(htps::str type_name)
+    constexpr bool registerObjectType(core::str type_name)
     {
-        return registerObjectType(htps::move(type_name),
+        return registerObjectType(core::str_view{type_name.c_str()},
                                   createObject<T, Args...>);
+    }
+
+    /**
+     * @brief Register a concrete object type with a given name and a
+     *  construction function.
+     *
+     * @tparam T The concrete object type to be registered. Requires
+     *  T::StaticTypeName to exists as a const char[] member
+     * @param type_name A char array Representing the unique type name.
+     * @return true When the object type has been successfully registered.
+     * @return false The object type cannot be registered.
+     */
+    template <typename T, size_type N>
+    bool registerObjectType(char const (&type_name)[N])
+    {
+        return registerObjectType(type_name, createObject<T, Args...>);
     }
 
     /**
@@ -107,6 +124,50 @@ public:
     }
 
     /**
+     * @brief Unregister a concrete object type. Subsequent calls to create
+     * will return nullptr as if the type name never existed.
+     * @param type_name A char array Representing the unique type name.
+     *
+     * @return true When the object type has been successfully unregistered.
+     * @return false The object type does not exist.
+     */
+    bool unregisterObjectType(core::str type_name)
+    {
+        size_type const size_previous{size()};
+        constructors_.erase(htps::move(type_name));
+        return size_previous > size();
+    }
+
+    /**
+     * @brief Unregister a concrete object type. Subsequent calls to create
+     * will return nullptr as if the type name never existed.
+     * @tparam N Size of the char array
+     * @param type_name A char array Representing the unique type name.
+     *
+     * @return true When the object type has been successfully unregistered.
+     * @return false The object type does not exist.
+     */
+    template <size_type N>
+    bool unregisterObjectType(char const (&type_name)[N])
+    {
+        return unregisterObjectType(core::str{type_name});
+    }
+
+    /**
+     * @brief Unregister a concrete object type. Subsequent calls to create
+     * will return nullptr as if the type name never existed.
+     * @tparam T The type containing StaticTypeName to register.
+     *
+     * @return true When the object type has been successfully unregistered.
+     * @return false The object type does not exist.
+     */
+    template <typename T>
+    constexpr bool unregisterObjectType()
+    {
+        return unregisterObjectType(T::StaticTypeName);
+    }
+
+    /**
      * @brief Create an object instance from a previously registered type and
      * using the construction fucion provided using the arguments passed in
      * this call.
@@ -116,21 +177,17 @@ public:
      * @return CreateReturnType The object created or nullptr if the type name
      * does not exist.
      */
-    CreateReturnType create(const htps::str& type_name, Args... args)
+    CreateReturnType create(core::str_view const type_name, Args... args)
     {
-        if (!containsType(type_name))
+        if (auto const iterator{constructors_.find(core::str{type_name})};
+            iterator == constructors_.cend())
         {
             return CreateReturnType(nullptr);
         }
-
-        const auto iterator = constructors_.find(htps::move(type_name));
-
-        if (iterator == constructors_.cend())
+        else
         {
-            return CreateReturnType(nullptr);
+            return (*iterator).second(htps::forward<Args>(args)...);
         }
-
-        return (*iterator).second(htps::forward<Args>(args)...);
     }
 
     /**
@@ -172,12 +229,12 @@ private:
     template <typename T, typename... MArgs>
     static CreateReturnType createObject(MArgs&&... args)
     {
-        return htps::muptr<T>(htps::forward<MArgs>(args)...);
+        return htps::msptr<T>(htps::forward<MArgs>(args)...);
     }
 
-    bool containsType(const htps::str& name) const
+    bool containsType(core::str_view const name) const
     {
-        return constructors_.find(name) != constructors_.cend();
+        return constructors_.cfind(name) != constructors_.cend();
     }
 };
 }  // namespace haf::utils

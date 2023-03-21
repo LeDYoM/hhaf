@@ -22,6 +22,7 @@ public:
     using content        = vector<element>;
     using iterator       = typename content::iterator;
     using const_iterator = typename content::const_iterator;
+    using size_type      = size_type;
 
     /**
      * @brief  Default constructor
@@ -162,6 +163,16 @@ public:
     constexpr value_type& index(size_type const index)
     {
         return data_[index].second;
+    }
+
+    constexpr size_type erase(key_type const& key)
+    {
+        size_type previous_size{size()};
+
+        data_.erase_if<false>(
+            [&key](element const& current) { return current.first == key; });
+
+        return (previous_size - size());
     }
 
 private:

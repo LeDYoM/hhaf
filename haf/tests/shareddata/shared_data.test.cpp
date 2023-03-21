@@ -8,6 +8,8 @@
 
 using namespace htps;
 using namespace haf::shdata;
+using namespace haf;
+using namespace haf::test;
 
 TEST_CASE("SharedData::SharedData", "[haf][shareddatasystem]")
 {

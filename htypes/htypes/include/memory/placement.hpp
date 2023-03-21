@@ -3,6 +3,7 @@ HTPS_PRAGMA_ONCE
 #define HTYPES_PLACEMENT_INCLUDE_HPP
 
 #include <utility>
+#include <cassert>
 
 namespace htps
 {

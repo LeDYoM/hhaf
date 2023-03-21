@@ -7,12 +7,9 @@
 extern "C"
 {
     haf::backend::BackendFactory* createBackendFactory();
-    void destroyBackendFactory(haf::backend::BackendFactory*);
 }
 
-using BackendFactoryUPtr = htps::uptr<haf::backend::BackendFactory,
-                                      void (*)(haf::backend::BackendFactory*)>;
-
+using BackendFactoryUPtr = htps::uptr<haf::backend::BackendFactory>;
 using BackendFactoryPtr = htps::rptr<haf::backend::BackendFactory>;
 
 #endif

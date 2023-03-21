@@ -2,7 +2,6 @@
 #include <menu_paged/include/menu_page.hpp>
 
 #include <haf/include/component/component_container.hpp>
-#include <haf/include/scene_components/iscene_control.hpp>
 #include <haf/include/component/component_requirements.hpp>
 
 using namespace htps;
@@ -15,9 +14,9 @@ MenuPaged::~MenuPaged() = default;
 void MenuPaged::onCreated()
 {
     visibilitySelectorComponent_ =
-        component<VisibilitySelectorComponent>();
+        getOrCreateComponent<VisibilitySelectorComponent>();
     statesControllerComponent_ =
-        component<StatesControllerComponent<s32>>();
+        getOrCreateComponent<StatesControllerComponent<s32>>();
 
     statesControllerComponent_->StatePushed.connect(
         [this](const s32 menu_page) {

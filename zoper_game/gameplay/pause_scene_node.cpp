@@ -43,7 +43,7 @@ void PauseSceneNode::onCreated()
 void PauseSceneNode::enterPause()
 {
     Visible = true;
-    pause_text_->component(animation_component_);
+    pause_text_->getOrCreateComponent(animation_component_);
     auto builder{animation_component_->make_property_animation_builder(
         &SceneNodeText::TextColor, colors::Transparent, colors::White)};
     builder.duration(TimePoint_as_miliseconds(1000U));

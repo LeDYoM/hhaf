@@ -38,7 +38,7 @@ PropertyAnimationData AnimationComponent::make_property_animation_data()
 {
     auto builder{PropertyAnimationData{}};
     builder.TimerProperty =
-        attachedNode()->component<time::TimerComponent>()->addFreeTimer();
+        attachedNode()->attachComponent<time::TimerComponent>()->addFreeTimer();
     builder.Times = 1;
     return builder;
 }

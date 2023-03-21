@@ -3,7 +3,8 @@
 
 #include "system/get_system.hpp"
 #include "time/time_system.hpp"
-#include "debug_log.hpp"
+#include "static_build_data_display.hpp"
+#include <hlog/include/hlog.hpp>
 
 using namespace htps;
 
@@ -11,7 +12,12 @@ namespace haf::sys
 {
 DebugSystem::~DebugSystem()
 {
-    DebugLogDisplayer::debug(m_debug_variables.state());
+    DisplayLog::debug(StaticTypeName, ": ", m_debug_variables.state());
+}
+
+void DebugSystem::logBuildStaticData()
+{
+    debug::logBuildStaticData();
 }
 
 void DebugSystem::onStartPreUpdate()

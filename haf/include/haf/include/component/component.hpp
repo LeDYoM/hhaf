@@ -2,7 +2,9 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_COMPONENT_COMPONENT_INCLUDE_HPP
 #define HAF_COMPONENT_COMPONENT_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
+#include <haf/include/core/types.hpp>
+#include <haf/include/properties/iproperty_state.hpp>
+#include <haf/include/component/component_updater.hpp>
 
 namespace haf::scene
 {
@@ -13,86 +15,52 @@ namespace haf::component
 {
 class ComponentRequirements;
 
-class Component
+class Component : public ComponentUpdater
 {
 public:
-    using pointer       = htps::rptr<scene::SceneNode>;
-    using const_pointer = htps::rptr<scene::SceneNode const>;
+    using pointer       = core::rptr<scene::SceneNode>;
+    using const_pointer = core::rptr<scene::SceneNode const>;
+
+    virtual constexpr const core::str_view staticTypeName() const noexcept = 0;
+
+    Component(Component const&) = delete;
+    Component& operator=(Component const&) = delete;
+    Component(Component&&)                 = default;
+    Component& operator=(Component&&) = default;
+
+    void updateComponent();
 
     /**
      * @brief Interface to be implemented to update the component
      */
-    virtual void update() {}
-
-    /**
-     * @brief Destroy the Attachable object
-     */
-    virtual ~Component() = default;
-
-    Component(Component const&) = delete;
-    Component& operator=(Component const&) = delete;
-    Component(Component&&) = default;
-    Component& operator=(Component&&) = default;
+    virtual void update();
 
     /**
      * @brief Method called after the component is attached to a node.
      * Override it to perform initialization
      */
-    virtual void onAttached() {}
+    virtual void onAttached();
 
     /**
      * @brief Get the attached node.
      * @return The pointer to const attached node.
      */
-    constexpr const_pointer attachedNode() const noexcept
-    {
-        return attachedNode_;
-    }
+    const_pointer attachedNode() const noexcept;
 
     /**
      * @brief Get the attached node.
      * @return The pointer to the attached node.
      */
-    constexpr pointer attachedNode() noexcept { return attachedNode_; }
+    pointer attachedNode() noexcept;
 
-    /**
-     * @brief Shortcut method to get the attached node converted to a type.
-     *
-     * @tparam Y Dest type to convert
-     * @return htps::rptr<Y> containing the attached node or nullptr if no
-     * conversion was possible.
-     */
-    template <typename Y>
-    htps::rptr<Y> attachedNodeAs() noexcept
-    {
-        return dynamic_cast<Y*>(attachedNode());
-    }
-
-    /**
-     * @brief Shortcut method to get the attached node converted to a type.
-     * Const version
-     *
-     * @tparam Y Dest type to convert
-     * @return htps::rptr<Y> containing the attached node or nullptr if no
-     * conversion was possible.
-     */
-    template <typename Y>
-    htps::rptr<Y const> attachedNodeAs() const noexcept
-    {
-        return dynamic_cast<Y const*>(attachedNode());
-    }
+    virtual ~Component();
 
 protected:
-    Component() noexcept = default;
+    Component();
 
 private:
-    void setAttachedNode(pointer const attachedNode) noexcept
-    {
-        attachedNode_ = attachedNode;
-        onAttached();
-    }
-
-    virtual void addRequirements(ComponentRequirements&) {}
+    void setAttachedNode(pointer const attachedNode);
+    virtual bool addRequirements(ComponentRequirements&);
 
     pointer attachedNode_{nullptr};
     friend class ComponentContainer;

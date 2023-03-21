@@ -42,7 +42,10 @@ SystemAccess SystemBase::systemAccess() noexcept
 
 rptr<SystemAccess> SystemBase::systemAccessPtr() noexcept
 {
-    system_access_ = muptr<SystemAccess>(&(isystemProvider()));
+    if (system_access_ == nullptr)
+    {
+        system_access_ = muptr<SystemAccess>(&(isystemProvider()));
+    }
     return system_access_.get();
 }
 

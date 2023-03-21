@@ -11,10 +11,18 @@ set(SOURCE_TESTS
     debug_system/debug_variable
     debug_system/debug_variables
 
-    scene/color
+    events/connection
+
+    file_system/file_system
+
+    input/keyboard_input_component
+
+    properties/properties
+    properties/propertystate
+
+    render/mesh_render_component
+
     scene/matrix4x4
-    scene/scenecontroller
-    scene/scenemanager
     scene/scenenode
     scene/scenenodefactory
     scene/scenenodeparent
@@ -22,7 +30,11 @@ set(SOURCE_TESTS
     scene/transformable
     scene/transformation
 
+    scene_components/global_transformation_component
+    scene_components/scene_nodes_component
     scene_components/states_controller_component
+    scene_components/transformation_component
+    scene_components/visibility_selector_component
 
     shareddata/address
     shareddata/shared_data_system

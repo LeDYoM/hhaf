@@ -4,7 +4,7 @@
 namespace logger
 {
 
-struct SeverityType
+struct SeverityTypeDefinition
 {
     /**
      * @brief Enumerator containing the severity type of the message.
@@ -22,10 +22,11 @@ struct SeverityType
         error,
     };
 
-#pragma warning( push )
-#pragma warning( disable : 4514 )   // Unused functions in MSVC
+#pragma warning(push)
+#pragma warning(disable : 4514)  // Unused functions in MSVC
 
-    static constexpr const auto as_str(severity_type_t severity_value) noexcept
+    template <severity_type_t severity_value>
+    static constexpr const auto as_str() noexcept
     {
         switch (severity_value)
         {
@@ -53,14 +54,30 @@ struct SeverityType
         }
     }
 
-#pragma warning ( pop )
-    static constexpr severity_type_t MinSeverity = severity_type_t::debug;
+#pragma warning(pop)
+};
+
+template <typename SeverityType, SeverityType::severity_type_t MinSeverity>
+struct SeverityTypeImpl
+{
+    using severity_type_t = SeverityType::severity_type_t;
+
+    template <severity_type_t severity_value>
+    static constexpr const auto as_str() noexcept
+    {
+        return SeverityType::template as_str<severity_value>();
+    }
 
     template <severity_type_t severity_type>
-    static constexpr bool ShowSeverity =
-        (static_cast<std::underlying_type_t<severity_type_t>>(severity_type) >=
-         static_cast<std::underlying_type_t<severity_type_t>>(MinSeverity));
+    static constexpr bool ShowSeverity = (static_cast<int>(severity_type) >=
+                                          static_cast<int>(MinSeverity));
 };
+
+template <auto severity>
+using SeverityTypeActiveTo = SeverityTypeImpl<SeverityTypeDefinition, severity>;
+
+using SeverityType =
+    SeverityTypeActiveTo<SeverityTypeDefinition::severity_type_t::debug>;
 
 }  // namespace logger
 

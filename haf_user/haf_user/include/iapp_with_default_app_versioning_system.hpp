@@ -21,7 +21,7 @@ public:
     htps::u16 getSubVersion() const noexcept override { return SubVersion; }
     htps::u16 getPatch() const noexcept override { return Patch; }
     htps::u16 getTweak() const noexcept override { return Tweak; }
-    htps::str getName() const noexcept { return htps::str{Holder.data()}; }    
+    htps::str getName() const noexcept { return htps::str{Holder.data()}; }
 };
 }  // namespace haf::user
 

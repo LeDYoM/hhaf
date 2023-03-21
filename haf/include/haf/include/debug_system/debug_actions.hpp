@@ -18,6 +18,8 @@ class DebugActions : public input::VirtualInputComponent
     using BaseClass = input::VirtualInputComponent;
 
 public:
+    static constexpr char StaticTypeName[] = "DebugActions";
+
     using DebugAction = htps::function<void()>;
 
     DebugActions();

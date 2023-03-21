@@ -4,7 +4,6 @@
 #include "sfml_render_window.hpp"
 #include "sfml_ttfont_factory.hpp"
 #include "sfml_texture_factory.hpp"
-#include "sfml_shader_factory.hpp"
 
 void SFMLBackendManager::create()
 {
@@ -17,6 +16,4 @@ void SFMLBackendManager::create()
         DefaultFactoryOf<ITTFontFactory, SFMLTTFontFactory>>();
     createFactoryOfFactories<
         DefaultFactoryOf<ITextureFactory, SFMLTextureFactory>>();
-    createFactoryOfFactories<
-        DefaultFactoryOf<IShaderFactory, SFMLShaderFactory>>();
 }

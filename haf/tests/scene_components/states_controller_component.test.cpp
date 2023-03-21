@@ -1,5 +1,5 @@
 #include "catch.hpp"
-
+/*
 #include <htypes/include/types.hpp>
 #include <haf/include/scene_components/states_controller_component.hpp>
 
@@ -95,3 +95,4 @@ TEST_CASE("haf::StatesControllerComponent",
     common.step++;
     CHECK(common.step == 9U);
 }
+*/

@@ -96,8 +96,7 @@ str DebugVariables::state() const
     return result;
 }
 
-Dictionary<DebugVariable> const& DebugVariables::debugVariables()
-    const noexcept
+Dictionary<DebugVariable> const& DebugVariables::debugVariables() const noexcept
 {
     return m_debug_variables;
 }

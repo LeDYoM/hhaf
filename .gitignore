@@ -19,7 +19,7 @@ bld/
 [Bb]in/
 [Oo]bj/
 
-# Visual Studo 2015 cache/options directory
+# Visual Studo cache/options directory
 .vs/
 
 # MSTest test Results
@@ -77,9 +77,7 @@ ipch/
 *.vspx
 
 
-#Zoper/log.txt
-#dist/
-#Zoper.VC.opendb
-#install/
 build/
 \.vscode/
+external/win/oglsandbox/sb7code
+external/win/opengl_test/sb7code

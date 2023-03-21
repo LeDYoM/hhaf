@@ -2,15 +2,15 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_ANIMATION_IDELTA_PROPERTY_INCLUDE_HPP
 #define HAF_ANIMATION_IDELTA_PROPERTY_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
-#include <htypes/include/properties/iproperty.hpp>
+#include <haf/include/core/types.hpp>
+#include <haf/include/properties/iproperty.hpp>
 
 namespace haf::anim
 {
-class IDeltaProperty : public htps::IProperty<htps::f32>
+class IDeltaProperty : public prop::IProperty<htps::f32>
 {
 public:
-    using Base            = htps::IProperty<htps::f32>;
+    using Base            = prop::IProperty<htps::f32>;
     using value_type      = typename Base::value_type;
     using const_type      = typename Base::const_type;
     using reference       = typename Base::reference;

@@ -45,7 +45,7 @@ public:
      * @return false
      */
     [[nodiscard]] virtual bool isEmpty() const noexcept = 0;
-    virtual bool makeEmpty() = 0;
+    virtual bool makeEmpty()                            = 0;
 };
 
 }  // namespace haf::shdata

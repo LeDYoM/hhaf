@@ -1,4 +1,5 @@
 #define CATCH_CONFIG_RUNNER
+#define CATCH_CONFIG_WINDOWS_CRTDBG
 #include "catch.hpp"
 
 int main(int argc, char* argv[])

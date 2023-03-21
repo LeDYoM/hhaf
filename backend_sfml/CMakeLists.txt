@@ -9,11 +9,6 @@ include (backend_client_functions)
 build_concrete_backend(
     SOURCES
     ${SOURCES}
-    opengl/gl_check.cpp
-    opengl/gl_check.hpp
-    opengl/glad.cpp
-    opengl/glad.h
-    opengl/khrplatform.h
 )
 
 set_compile_warning_level_and_cxx_properties_all(${CURRENT_TARGET})
@@ -26,7 +21,8 @@ add_subdirectory(sfml)
 target_link_libraries(${CURRENT_TARGET} PRIVATE
     sfml-system
     sfml-window
-    sfml-graphics)
+    sfml-graphics
+    renderer)
 
 #add_custom_command(TARGET ${CURRENT_TARGET} POST_BUILD
 #                   COMMAND ${CMAKE_COMMAND}

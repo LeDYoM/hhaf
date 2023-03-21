@@ -19,6 +19,8 @@ namespace haf::host
 class HostInternal
 {
 public:
+    static constexpr char StaticTypeName[] = "HostInternal";
+
     HostInternal(const int argc, char const* const argv[]);
 
     int const argc_;

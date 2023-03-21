@@ -2,73 +2,71 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_RESOURCEMANAGER_INCLUDE_HPP
 #define HAF_RESOURCEMANAGER_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
-#include <haf/include/resources/idefault_resources_retriever.hpp>
-#include <haf/include/resources/iresource_retriever.hpp>
-#include <haf/include/resources/iresource_configurator.hpp>
-#include <haf/include/resources/resource_descriptor.hpp>
-#include <backend_dev/include/iresource_manager.hpp>
-#include <backend_dev/include/iresource_descriptor.hpp>
+#include <haf/include/core/types.hpp>
 
 #include "system/system_base.hpp"
-#include "resources_config_data.hpp"
-#include "resource_manager_config_loader.hpp"
-#include "resource_loaders/iresource_loader.hpp"
+#include "default_resources.hpp"
+#include "shader_manager.hpp"
+
+#include <haf/include/resources/resource_codes.hpp>
+#include <haf/include/resources/iresource.hpp>
+#include <haf/include/resources/resource_cast.hpp>
 
 namespace haf::res
 {
-class BMPFont;
-class IFont;
-class ITTFont;
-class ITexture;
-class IShader;
+class Shader;
 }  // namespace haf::res
 
 namespace haf::sys
 {
-class ResourceManager final : public SystemBase,
-                              public res::IResourceRetriever,
-                              public res::IResourcesConfigurator,
-                              public res::IDefaultResourcesRetriever,
-                              public res::IResourceLoader,
-                              public backend::IResourceManager
+class ResourceManager final : public SystemBase
 {
 public:
+    static constexpr char StaticTypeName[] = "ResourceManager";
+
     explicit ResourceManager(sys::SystemProvider& system_provider);
     ~ResourceManager();
 
     void init();
-    htps::sptr<res::ITTFont> getTTFont(htps::str const& rid) const override;
-    htps::sptr<res::ITexture> getTexture(htps::str const& rid) const override;
-    htps::sptr<res::IShader> getShader(htps::str const& rid) const override;
-    htps::sptr<res::IFont> getBMPFont(htps::str const& rid) const override;
 
-    bool loadResourceForResource(
-        backend::IResourceDescriptor const& resource_descriptor) override;
-    bool setExternalTexture(htps::str const& resource_id,
-                                 backend::ITexture const* texture) override;
+    bool createResource(core::str_view rid,
+                     core::str_view const r_type_id,
+                     core::RawMemory data);
 
-    bool loadResource(
-        res::ResourceDescriptor const& resource_descriptor) override;
-    bool loadTTFont(htps::str const& rid, htps::str const& fileName);
-    bool loadTexture(htps::str const& rid, htps::str const& fileName);
-    bool loadShader(htps::str const& rid, htps::str const& fileName);
-    bool loadBMPFont(htps::str const& rid, htps::str const& fileName);
+    bool createResource(core::str_view rid,
+                     res::ResourceType const r_type,
+                     core::RawMemory data);
 
-    res::SetResourceConfigFileResult setResourceConfigFile(
-        htps::str const& config_file_name) override;
-    bool loadSection(htps::str const& section_name) override;
-    void setResourcesDirectory(htps::str const& directory) override;
+    bool createResource(core::str_view rid,
+                     res::ResourceType const r_type,
+                     core::span<core::vector4df> data);
 
-    htps::sptr<res::IShader> getDefaultShader() const override;
+    bool createResourceFromResources(core::str_view rid,
+                                     res::ResourceType const resourceType,
+                                     core::vector<core::str> resourceIds);
+
+    template <typename T>
+    bool aquireResource(core::str_view rid, core::sptr<T>& res) const
+    {
+        res = safe_resource_cast<T>(
+            findResourceOfType(T::StaticResourceType, rid));
+        return res != nullptr;
+    }
+
+    res::DefaultResources const& defaultResources() const;
+    bool addResource(core::str_view rid, core::sptr<res::IResource> resource);
+    res::ShaderManager& shaderManager() noexcept;
+    res::ShaderManager const& shaderManager() const noexcept;
 
 private:
-    bool loadEmbeddedResources();
+    core::sptr<res::IResource> findResource(core::str_view rid) const;
+    core::sptr<res::IResource> findResourceOfType(
+        res::ResourceType const resourceType,
+        core::str_view rid) const;
 
-    struct ResourceManagerPrivate;
-    htps::uptr<ResourceManagerPrivate> p_;
-    res::ResourceManagerConfigLoader config_loader_;
-    res::ResourcesConfigData resources_config_data_;
+    core::Dictionary<core::sptr<res::IResource>> m_resources;
+    res::DefaultResources m_default_resources;
+    res::ShaderManager m_shader_manager;
 };
 
 }  // namespace haf::sys

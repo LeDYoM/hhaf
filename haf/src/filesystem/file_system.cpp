@@ -9,7 +9,7 @@
 #include <system/system_provider.hpp>
 #include <haf/include/system/subsystem_view.hpp>
 
-using namespace htps;
+using namespace haf::core;
 
 namespace haf::sys
 {
@@ -53,9 +53,9 @@ RawMemory FileSystem::loadBinaryFile(const Path& file_name)
         // Note function returns size_max. size_type is maximum 4GB for a file.
         auto const file_size{detail::fileSize(file_name)};
 
-        uptr<std::byte[]> buf{muptr<std::byte[]>(file_size)};
+        vector<char> buf(file_size);
         buf = detail::readBuffer(htps::move(buf), file_name, file_size);
-        return RawMemory{htps::move(buf), file_size};
+        return RawMemory{htps::move(buf)};
     }
     return RawMemory{};
 }
@@ -73,7 +73,7 @@ str FileSystem::loadTextFile(const Path& file_name)
 bool FileSystem::saveTextFile(const Path& file_name, const str& data)
 {
     // Open a file
-    std::ofstream file(file_name.c_str());
+    std::ofstream file{file_name.c_str()};
     // Everything is correct by default
     bool correct{true};
 

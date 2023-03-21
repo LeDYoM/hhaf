@@ -2,9 +2,7 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_SYSTEM_FILESYSTEM_INCLUDE_HPP
 #define HAF_SYSTEM_FILESYSTEM_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
-#include <htypes/include/vector.hpp>
-#include <htypes/include/rawmemory.hpp>
+#include <haf/include/core/types.hpp>
 
 #include <haf/include/filesystem/path.hpp>
 #include <haf/include/filesystem/ifile_serializer.hpp>
@@ -27,7 +25,7 @@ public:
                        Path const& file,
                        bool const assert_on_error) override;
 
-    htps::RawMemory loadBinaryFile(Path const& file_name) override;
+    core::RawMemory loadBinaryFile(Path const& file_name) override;
     htps::str loadTextFile(const Path& file_name) override;
 
     bool saveTextFile(const Path& file_name, const htps::str& data) override;

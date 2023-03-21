@@ -41,7 +41,7 @@ public:
     void createFactoryOfFactories()
     {
         auto f(htps::muptr<AutoRegisterFactory<typename T::Interface>>());
-        f.get()->create(htps::muptr<T>());
+        f->create(htps::muptr<T>());
         pushFactory(htps::move(f));
     }
 

@@ -31,8 +31,8 @@ protected:
         return internalData();
     }
 
-    htps::sptr<T> updateOrCreate(Address const& address) 
-    { 
+    htps::sptr<T> updateOrCreate(Address const& address)
+    {
         createInternalDataIfEmpty();
         (void)(retrieve(address));
         address_ = address;

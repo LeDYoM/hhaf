@@ -2,10 +2,9 @@
 #define ZOPER_BOARDGROUP_HPP
 
 #include <htypes/include/vector2d.hpp>
-#include <htypes/include/connection.hpp>
+#include <haf/include/events/connection.hpp>
 
 #include <haf/include/scene/scene_node.hpp>
-#include <haf/include/scene_nodes/scene_node_table.hpp>
 #include <haf/include/scene_components/table_component.hpp>
 
 #include "boardtilescene_node.hpp"
@@ -82,7 +81,7 @@ public:
     htps::vector2df tileSize() const;
 
 private:
-    void onTableNodeAdded(htps::sptr<SceneNode> const&);
+    void onTableNodeAdded(htps::sptr<haf::scene::SceneNode> const&);
     htps::sptr<Player> player_;
     htps::sptr<haf::scene::TransformableSceneNode> tokens_scene_node;
     htps::sptr<LevelProperties> level_properties_;

@@ -17,8 +17,12 @@ class DebugSystem final : public SystemBase,
     using BaseClass = SystemBase;
 
 public:
+    static constexpr char StaticTypeName[] = "DebugSystem";
+
     using BaseClass::BaseClass;
     ~DebugSystem();
+
+    void logBuildStaticData();
 
     void onStartPreUpdate();
     void onFinishPreUpdate() {}

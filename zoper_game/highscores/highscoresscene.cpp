@@ -10,7 +10,6 @@
 #include <haf/include/input/input_component.hpp>
 #include <haf/include/resources/iresource_retriever.hpp>
 #include <haf/include/resources/iresource_configurator.hpp>
-#include <haf/include/scene_components/iscene_control.hpp>
 #include <haf/include/render/renderizables.hpp>
 #include <haf/include/render/renderizable_builder.hpp>
 #include <haf/include/component/component_container.hpp>
@@ -45,7 +44,7 @@ void HighScoresScene::onCreated()
     resources_configurator->loadSection("high_scores");
 
     auto statesController{
-        component<StatesControllerComponent<HighScoresSceneStates>>()};
+        getOrCreateComponent<StatesControllerComponent<HighScoresSceneStates>>()};
 
     normal_font_ = subSystem<res::IResourceRetriever>()
                        ->getTTFont(HighScoresResources::MenuFontId)

@@ -1,150 +1,214 @@
 #include "resource_manager.hpp"
-#include "resource_manager_private.hpp"
-#include <haf/include/system/subsystem_view.hpp>
+#include "system/system_provider.hpp"
 #include <hlog/include/hlog.hpp>
 
-#include <haf/include/resources/ittfont.hpp>
-#include <haf/include/resources/itexture.hpp>
-#include <haf/include/resources/ishader.hpp>
-#include <haf/include/resources/ibmp_font.hpp>
-
-using namespace htps;
 using namespace haf::res;
+using namespace haf::core;
 
 namespace haf::sys
 {
-ResourceManager::ResourceManager(sys::SystemProvider& system_provider) :
-    SystemBase{system_provider},
-    p_{muptr<ResourceManagerPrivate>()},
-    config_loader_{}
+ResourceManager::ResourceManager(SystemProvider& system_provider) :
+    SystemBase{system_provider}
 {}
 
 ResourceManager::~ResourceManager() noexcept = default;
 
 void ResourceManager::init()
 {
-    loadEmbeddedResources();
+    bool isOk{m_default_resources.loadDefaultResources(*this)};
+    (void)(isOk);
 }
 
-sptr<ITTFont> ResourceManager::getTTFont(str const& rid) const
+sptr<IResource> ResourceManager::findResource(str_view rid) const
 {
-    return get_or_default(p_->ttf_fonts_, rid);
+    auto const resource{m_resources.find(rid)};
+    return (resource == m_resources.end()) ? nullptr : resource->second;
 }
 
-sptr<ITexture> ResourceManager::getTexture(str const& rid) const
+sptr<IResource> ResourceManager::findResourceOfType(
+    ResourceType const resourceType,
+    str_view rid) const
 {
-    return get_or_default(p_->textures_, rid);
+    auto const resource{findResource(rid)};
+    return (resource == nullptr || resource->resourceType() != resourceType)
+        ? nullptr
+        : resource;
 }
 
-sptr<IShader> ResourceManager::getShader(str const& rid) const
+bool ResourceManager::addResource(str_view rid, sptr<IResource> resource)
 {
-    return get_or_default(p_->shaders_, rid);
-}
-
-sptr<IFont> ResourceManager::getBMPFont(str const& rid) const
-{
-    return get_or_default(p_->bmp_fonts_, rid);
-}
-
-bool ResourceManager::loadTTFont(str const& rid, str const& fileName)
-{
-    return get_or_add(this, systemProvider().backendFactory().ttfontFactory(),
-                      p_->ttf_fonts_, systemProvider().system<FileSystem>(),
-                      rid, fileName) != nullptr;
-}
-bool ResourceManager::loadTexture(str const& rid, str const& fileName)
-{
-    return get_or_add(this, systemProvider().backendFactory().textureFactory(),
-                      p_->textures_, systemProvider().system<FileSystem>(), rid,
-                      fileName) != nullptr;
-}
-
-bool ResourceManager::loadShader(str const& rid, str const& fileName)
-{
-    return get_or_add(this, systemProvider().backendFactory().shaderFactory(),
-                      p_->shaders_, systemProvider().system<FileSystem>(), rid,
-                      fileName) != nullptr;
-}
-
-bool ResourceManager::loadBMPFont(str const& rid, str const& fileName)
-{
-    return get_or_add(this, systemProvider().backendFactory().bmpFontFactory(),
-                      p_->bmp_fonts_, systemProvider().system<FileSystem>(),
-                      rid, fileName) != nullptr;
-}
-
-bool ResourceManager::loadResource(
-    res::ResourceDescriptor const& resource_descriptor)
-{
-    return loadResourceForResource(to_backend(resource_descriptor));
-}
-
-bool ResourceManager::setExternalTexture(str const& resource_id,
-                                         backend::ITexture const* texture)
-{
-    return set_resource(p_->textures_, resource_id, texture);
-}
-
-bool ResourceManager::loadResourceForResource(
-    backend::IResourceDescriptor const& resource_descriptor)
-{
-    bool result{false};
-
-    if (resource_descriptor.type == kResourceTTFont)
+    bool const resourceExists{findResource(rid)};
+    if (resourceExists)
     {
-        result =
-            loadTTFont(resource_descriptor.name, resource_descriptor.fileName);
-    }
-    else if (resource_descriptor.type == kResourceTexture)
-    {
-        result =
-            loadTexture(resource_descriptor.name, resource_descriptor.fileName);
-    }
-    else if (resource_descriptor.type == kResourceBMPFont)
-    {
-        result =
-            loadBMPFont(resource_descriptor.name, resource_descriptor.fileName);
-    }
-    else if (resource_descriptor.type == kResourceShader)
-    {
-        result =
-            loadShader(resource_descriptor.name, resource_descriptor.fileName);
+        DisplayLog::warn(StaticTypeName, ": Resource ", rid, " already exists");
     }
     else
     {
-        LogAsserter::log_assert(result, "Invalid type of element");
+        auto shader_opt{safe_resource_cast<Shader>(resource)};
+        if (shader_opt)
+        {
+            m_shader_manager.addShader(rid, core::move(shader_opt));
+        }
+        m_resources.add(rid, core::move(resource), false);
     }
-    return result;
+    return !resourceExists;
 }
 
-void ResourceManager::setResourcesDirectory(str const& directory)
+bool ResourceManager::createResource(str_view rid,
+                                     str_view const r_type_id,
+                                     RawMemory data)
 {
-    DisplayLog::debug("Set resources directory to: ", directory);
-    config_loader_.setConfigDirectory(directory);
+    return createResource(rid, fromResourceTypeId(r_type_id), core::move(data));
 }
 
-SetResourceConfigFileResult ResourceManager::setResourceConfigFile(
-    str const& file_name)
+bool ResourceManager::createResource(str_view rid,
+                                     ResourceType const r_type,
+                                     RawMemory data)
 {
-    return config_loader_.setResourceConfigFile(file_name, subSystemViewer());
+    switch (r_type)
+    {
+        case ResourceType::VertexShaderCode:
+        {
+            return addResource(rid, msptr<VertexShaderCode>(move(data)));
+        }
+        break;
+        case ResourceType::FragmentShaderCode:
+        {
+            return addResource(rid,
+                               msptr<FragmentShaderCode>(core::move(data)));
+        }
+        break;
+    }
+    LogAsserter::log_assert(false,
+                            "[ResourceManager]: Invalid parameters for create "
+                            "resource shader code");
+    return false;
 }
 
-bool ResourceManager::loadSection(str const& section_name)
+bool ResourceManager::createResource(str_view rid,
+                                     ResourceType const r_type,
+                                     span<vector4df> data)
 {
-    return config_loader_.loadSection(section_name, *this);
+    switch (r_type)
+    {
+        case ResourceType::VertexBufferObject:
+        {
+            return addResource(rid, msptr<VertexBufferObject>(0, move(data)));
+        }
+        break;
+    }
+    LogAsserter::log_assert(false,
+                            "[ResourceManager]: Invalid parameters for create "
+                            "resource for render data buffer");
+    return false;
 }
 
-sptr<res::IShader> ResourceManager::getDefaultShader() const
+template <ResourceType res_type, typename ResType>
+void setIfResource(
+    str_view id,
+    sptr<ResType>& res,
+    function<sptr<IResource>(ResourceType const, str_view)> const&
+        findResourceOfType) noexcept
 {
-    return get_or_default(p_->shaders_, "defaultShader");
+    if (res == nullptr)
+    {
+        DisplayLog::info(ResourceManager::StaticTypeName,
+                         ": Looking for resource ", id);
+
+        sptr<IResource> r{findResourceOfType(res_type, id)};
+
+        if (r != nullptr)
+        {
+            safe_resource_cast(core::move(r), res);
+        }
+    }
 }
 
-bool ResourceManager::loadEmbeddedResources()
+bool ResourceManager::createResourceFromResources(
+    str_view rid,
+    ResourceType const resourceType,
+    vector<str> resourceIds)
 {
-    bool resources_loaded{true};
-    resources_loaded &= loadShader("defaultShader", "shader0.txt");
+    auto findResourceOfType{
+        make_function(this, &ResourceManager::findResourceOfType)};
 
-    return resources_loaded;
+    switch (resourceType)
+    {
+        case ResourceType::Shader:
+        {
+            sptr<VertexShaderCode> vs;
+            sptr<FragmentShaderCode> fs;
+
+            for (const auto& id : resourceIds)
+            {
+                setIfResource<ResourceType::VertexShaderCode>(
+                    id.to_view(), vs, findResourceOfType);
+                setIfResource<ResourceType::FragmentShaderCode>(
+                    id.to_view(), fs, findResourceOfType);
+            }
+            auto shader{msptr<Shader>(core::move(vs), nullptr, nullptr, nullptr,
+                                      core::move(fs), nullptr)};
+            return addResource(rid, core::move(shader));
+        }
+        break;
+        case ResourceType::VertexArrayObject:
+        {
+            sptr<Shader> shader;
+            sptr<Mesh> mesh;
+            setIfResource<ResourceType::Shader>(resourceIds[0].to_view(),
+                                                shader, findResourceOfType);
+            setIfResource<ResourceType::Mesh>(resourceIds[1].to_view(), mesh,
+                                              findResourceOfType);
+
+            LogAsserter::log_assert(shader != nullptr, "Shader is empty");
+            LogAsserter::log_assert(mesh != nullptr, "Mesh is empty");
+
+            if (shader != nullptr && mesh != nullptr)
+            {
+                auto vertex_array_object{msptr<VertexArrayObject>(
+                    core::move(mesh), core::move(shader))};
+                return addResource(rid, core::move(vertex_array_object));
+            }
+        }
+        break;
+        case ResourceType::Mesh:
+        {
+            vector<sptr<VertexBufferObject>> vertex_buffer_objects(
+                resourceIds.size());
+            sptr<VertexBufferObject> temp;
+            for (u32 count{0U}; count < resourceIds.size(); ++count)
+            {
+                temp.reset();
+                setIfResource<ResourceType::VertexBufferObject>(
+                    resourceIds[count].to_view(), temp, findResourceOfType);
+
+                if (temp)
+                {
+                    vertex_buffer_objects.push_back(core::move(temp));
+                }
+            }
+            auto mesh{msptr<Mesh>(core::move(vertex_buffer_objects))};
+            return addResource(rid, core::move(mesh));
+        }
+        break;
+    }
+
+    return false;
+}
+
+DefaultResources const& ResourceManager::defaultResources() const
+{
+    return m_default_resources;
+}
+
+ShaderManager const& ResourceManager::shaderManager() const noexcept
+{
+    return m_shader_manager;
+}
+
+ShaderManager& ResourceManager::shaderManager() noexcept
+{
+    return m_shader_manager;
 }
 
 }  // namespace haf::sys

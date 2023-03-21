@@ -2,8 +2,7 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_SYSTEM_FILESYSTEM_PRIVATE_FUNCS_INCLUDE_HPP
 #define HAF_SYSTEM_FILESYSTEM_PRIVATE_FUNCS_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
-
+#include <haf/include/core/types.hpp>
 #include <haf/include/filesystem/path.hpp>
 #include "haf_private.hpp"
 #include <fstream>
@@ -11,9 +10,9 @@ HTPS_PRAGMA_ONCE
 namespace haf::sys::detail
 {
 template <typename InnerType>
-htps::uptr<InnerType[]> readBuffer(htps::uptr<InnerType[]> buffer,
-                             const Path& file_name,
-                             const htps::size_type file_size)
+core::vector<InnerType> readBuffer(core::vector<InnerType>&& buffer,
+                                   const Path& file_name,
+                                   const htps::size_type file_size)
 {
     // Alias for the char type we are going to use to read the file
     using char_type = typename std::ifstream::char_type;
@@ -23,13 +22,15 @@ htps::uptr<InnerType[]> readBuffer(htps::uptr<InnerType[]> buffer,
 
     {
         // Open the file to read in binary mode
-        std::ifstream input_file_stream{file_name.c_str(), std::ios::binary};
-        // Get a pointer to the buffer but transforming the type to
-        // the one we are going to read
-        auto* buffer_char{reinterpret_cast<char_type*>(buffer.get())};
+        if (std::ifstream input_file_stream{file_name.c_str(),
+                                            std::ios::binary};
+            input_file_stream)
+        {
+            buffer.resize(file_size);
 
-        // Read the buffer.
-        input_file_stream.read(buffer_char, file_size);
+            // Read the buffer.
+            input_file_stream.read(buffer.begin(), file_size);
+        }
     }
 
     return buffer;

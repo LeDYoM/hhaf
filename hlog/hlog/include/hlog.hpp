@@ -6,54 +6,47 @@
 #include <logger/include/log_asserter.hpp>
 #include <logger/include/severity_type.hpp>
 #include <logger/include/log_init.hpp>
-#include <logger/include/mixin_commiter.hpp>
 #include <hlog/include/thread_commiter.hpp>
-
+#include <logger/include/mixin_commiter.hpp>
 #include <htypes/include/str.hpp>
-
-namespace logger
-{
-extern template struct Log<true, htps::str, MixinCommiter<haf::ThreadCommiter>>;
-}
+#include <hlog/include/cout_commiter.hpp>
+#include <hlog/include/file_commiter.hpp>
 
 namespace haf
 {
-using LogClass =
-    logger::Log<true, htps::str, logger::MixinCommiter<ThreadCommiter>>;
-}
-
-namespace logger
+class LogStream
 {
-extern template struct LogDisplayer<haf::LogClass, SeverityType>;
-}
+    inline static htps::str data;
 
-namespace haf
-{
-using DisplayLog = logger::LogDisplayer<LogClass, logger::SeverityType>;
+public:
+    htps::str& operator()() { return data; }
+};
 
-template <typename LogOptions>
-using MessageDisplayLog =
-    logger::LogDisplayer<LogClass, logger::SeverityType, LogOptions>;
-}  // namespace haf
+extern template struct logger::MixinCommiter<FileCommiter, COutCommiter>;
+using FileCOutCommiter = logger::MixinCommiter<FileCommiter, COutCommiter>;
 
-namespace logger
-{
-extern template struct LogAsserter<haf::DisplayLog>;
-}
+extern template struct ThreadCommiter<FileCOutCommiter>;
+using ThreadFileCoutCommiter = ThreadCommiter<FileCOutCommiter>;
 
-namespace haf
-{
+//using CurrentCommiter = ThreadFileCoutCommiter;
+using CurrentCommiter = COutCommiter;
+
+extern template struct logger::LogDisplayer<
+    logger::Log<true, LogStream, CurrentCommiter>,
+    logger::SeverityType>;
+
+using DisplayLog =
+    logger::LogDisplayer<logger::Log<true, LogStream, CurrentCommiter>,
+                         logger::SeverityType>;
+
+extern template struct logger::LogAsserter<DisplayLog>;
 using LogAsserter = logger::LogAsserter<DisplayLog>;
-}
 
-namespace logger
-{
-extern template struct LogInitializer<haf::LogClass>;
-}
+extern template struct logger::LogInitializer<
+    logger::Log<true, LogStream, CurrentCommiter>>;
+using LogInitializer =
+    logger::LogInitializer<logger::Log<true, LogStream, CurrentCommiter>>;
 
-namespace haf
-{
-using LogInitializer = logger::LogInitializer<LogClass>;
-}
+}  // namespace haf
 
 #endif

@@ -27,7 +27,7 @@ private:
 };
 
 DebugVariable operator+(DebugVariable const& lhs,
-                          DebugVariable::value_type const& rhs);
+                        DebugVariable::value_type const& rhs);
 
 }  // namespace haf::debug
 

@@ -16,32 +16,24 @@ class SystemControllerLoader final
 {
 public:
     using CreateSystemController_t  = haf::sys::ISystemController* (*)();
-    using DestroySystemController_t = void (*)(haf::sys::ISystemController*);
 
     SystemControllerLoader();
     ~SystemControllerLoader();
 
     enum class ResultType : htps::u32
     {
-        Success            = 0,
+        Success            = 0U,
         CannotCreateLoader = 1U,
         ObjectNotFound     = 2U,
         CreateNotFound     = 3U,
-        DestroyNotFound    = 4U,
-        NoFunctionsFound   = 5U
     };
 
     [[nodiscard]] ResultType loadFunctions();
-    [[nodiscard]] sys::DestructibleSystemController create();
+    [[nodiscard]] sys::UptrSystemController create();
 
 private:
-    void destroy(sys::ISystemController* system_controller);
-
     htps::rptr<agloader::Loader> loader_;
     CreateSystemController_t fp_haf_create_system_controller_;
-    DestroySystemController_t fp_haf_destroy_system_controller_;
-    htps::size_type created_{0U};
-    htps::size_type deleted_{0U};
 };
 }  // namespace haf::host
 

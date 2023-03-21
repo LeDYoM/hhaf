@@ -1,20 +1,18 @@
 #include <haf/include/shareddata/address.hpp>
-#include <htypes/include/vector.hpp>
-
+#include <haf/include/core/types.hpp>
+#include <htypes/include/object.hpp>
 #include <utility>
-
-using namespace htps;
 
 namespace haf::shdata
 {
 struct Address::AddressPrivate
 {
-    AddressPrivate(str const& addr, char const separator) :
-        address_parts_(addr.split(separator))
+    AddressPrivate(core::str const& addr, char const separator) :
+        address_parts_{addr.split(separator)}
     {}
 
     constexpr explicit AddressPrivate(AddressPrivate const& addr_private) :
-        address_parts_(addr_private.address_parts_)
+        address_parts_{addr_private.address_parts_}
     {}
 
     ~AddressPrivate() = default;
@@ -23,15 +21,19 @@ struct Address::AddressPrivate
     AddressPrivate& operator=(AddressPrivate const&) noexcept = default;
     AddressPrivate& operator=(AddressPrivate&&) noexcept = default;
 
-    vector<str> address_parts_;
+    core::vector<core::str> address_parts_;
 };
 
-Address::Address(str const& addr, char const separator) :
-    private_{make_pimplp<AddressPrivate>(addr, separator)}
+Address::Address(core::str const& addr, char const separator) :
+    private_{core::make_pimplp<AddressPrivate>(addr, separator)}
+{}
+
+Address::Address(core::str const& addr) :
+    Address{addr, '/'}
 {}
 
 Address::Address(Address const& address) :
-    private_{make_pimplp<AddressPrivate>(*(address.private_))}
+    private_{core::make_pimplp<AddressPrivate>(*(address.private_))}
 
 {}
 
@@ -47,7 +49,7 @@ Address& Address::operator=(Address const& address)
 Address::Address(Address&& address) noexcept = default;
 Address& Address::operator=(Address&& address) noexcept = default;
 
-size_type Address::size() const noexcept
+core::size_type Address::size() const noexcept
 {
     return private_->address_parts_.size();
 }
@@ -72,25 +74,39 @@ Address::const_iterator Address::end() const noexcept
     return private_->address_parts_.end();
 }
 
-Address::reference Address::operator[](htps::size_type const index) noexcept
+Address::reference Address::operator[](core::size_type const index) noexcept
 {
     return private_->address_parts_[index];
 }
 
 Address::const_reference Address::operator[](
-    htps::size_type const index) const noexcept
+    core::size_type const index) const noexcept
 {
     return private_->address_parts_[index];
 }
 
-str Address::first() const
+core::str Address::first() const
 {
     return private_->address_parts_[0U];
 }
 
-str Address::last() const
+core::str Address::last() const
 {
     return private_->address_parts_[private_->address_parts_.size() - 1U];
+}
+
+core::str Address::str() const
+{
+    if (!private_->address_parts_.empty())
+    {
+        core::str result{private_->address_parts_.size() * 10U};
+        for (const auto part : private_->address_parts_)
+        {
+            result += part;
+        }
+        return result;
+    }
+    return "";
 }
 
 bool Address::isAbsolute() const noexcept
@@ -124,23 +140,23 @@ bool Address::removeLast()
     return false;
 }
 
-pair<bool, htps::Object> objectFromAddress(Address const& address,
-                                           Object const& object)
+core::pair<bool, htps::Object> objectFromAddress(Address const& address,
+                                                 htps::Object const& object)
 {
     if (address.isFinal())
     {
-        Object const* result{&object};
-        size_type size{address.size()};
+        htps::Object const* result{&object};
+        core::size_type size{address.size()};
 
-        size_type index_start{0U};
+        core::size_type index_start{0U};
         if (address[0].empty())
         {
             index_start = 1U;
         }
 
-        for (size_type index{index_start}; index < (size - 1U); ++index)
+        for (core::size_type index{index_start}; index < (size - 1U); ++index)
         {
-            Object::Value temp = result->getObject(address[index]);
+            htps::Object::Value temp = result->getObject(address[index]);
             if (temp.isObject())
             {
                 result = &(temp.getObject());
@@ -161,25 +177,25 @@ htps::Object* ensureAddress(Address const& address, htps::Object& object)
 {
     if (address.isFinal())
     {
-        Object* result{&object};
-        size_type size{address.size()};
+        htps::Object* result{&object};
+        core::size_type size{address.size()};
 
-        size_type index_start{0U};
+        core::size_type index_start{0U};
         if (address.first().empty())
         {
             index_start = 1U;
         }
 
-        for (size_type index{index_start}; index < (size - 1U); ++index)
+        for (core::size_type index{index_start}; index < (size - 1U); ++index)
         {
-            Object* temp = result->acquireObject(address[index]);
-            if (temp != nullptr)
+            if (htps::Object * temp{result->acquireObject(address[index])};
+                temp != nullptr)
             {
                 result = temp;
             }
             else
             {
-                result->set(address[index], Object{});
+                result->set(address[index], htps::Object{});
                 result = result->acquireObject(address[index]);
             }
         }

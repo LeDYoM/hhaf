@@ -65,7 +65,7 @@ void HighScoreTextController::onAllTableElementsCreated(htps::vector2dst const)
 
     if (!isInserting)
     {
-        auto input_component{component<input::InputComponent>()};
+        auto input_component{getOrCreateComponent<input::InputComponent>()};
         input_component->KeyPressed.connect(
             [this](const auto&) { Finished(); });
     }
@@ -103,7 +103,7 @@ void HighScoreTextController::addHighScoreEditor(
     const size_type counter)
 {
     addEditAnimation(counter);
-    auto editor{label->component<TextEditorComponent>()};
+    auto editor{label->getOrCreateComponent<TextEditorComponent>()};
     editor->setTextValidator(muptr<HighScoreValidator>());
     editor->Accepted.connect([this, counter](const str& entry) mutable {
         high_scores_data_.setHighScoreName(counter, entry);
@@ -111,7 +111,7 @@ void HighScoreTextController::addHighScoreEditor(
         Finished();
     });
     editor->Rejected.connect(
-        [editor_ = mwptr(editor)]() { editor_.lock()->enabled = true; });
+        [editor_ = wptr(editor)]() { editor_.lock()->enabled = true; });
 }
 
 void HighScoreTextController::addEditAnimation(const size_type line_index)
@@ -122,7 +122,7 @@ void HighScoreTextController::addEditAnimation(const size_type line_index)
         line_index,
         [this](const auto, sptr<nodes::SceneNodeText> const& element) {
             sptr<anim::AnimationComponent> animation_component;
-            element->component(animation_component);
+            element->getOrCreateComponent(animation_component);
             auto property_animation_builder{
                 animation_component->make_property_animation_builder(
                     &nodes::SceneNodeText::TextColor, colors::Blue,

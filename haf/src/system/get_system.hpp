@@ -12,24 +12,25 @@ class SceneNode;
 namespace haf::sys
 {
 class SystemAccess;
+class ISystemProvider;
 
 template <typename SystemType>
-SystemType const& getSystem(htps::rptr<SystemAccess const>);
+[[nodiscard]] SystemType const& getSystem(htps::rptr<SystemAccess const>);
 
 template <typename SystemType>
-SystemType& getSystem(htps::rptr<SystemAccess>);
+[[nodiscard]]SystemType& getSystem(htps::rptr<SystemAccess>);
 
 template <typename SystemType>
-SystemType const& getSystem(htps::rptr<ISystemProvider const>);
+[[nodiscard]]SystemType const& getSystem(htps::rptr<ISystemProvider const>);
 
 template <typename SystemType>
-SystemType& getSystem(htps::rptr<ISystemProvider>);
+[[nodiscard]]SystemType& getSystem(htps::rptr<ISystemProvider>);
 
 template <typename SystemType>
-SystemType const& getSystem(htps::rptr<scene::SceneNode const>);
+[[nodiscard]]SystemType const& getSystem(htps::rptr<scene::SceneNode const>);
 
 template <typename SystemType>
-SystemType& getSystem(htps::rptr<scene::SceneNode>);
+[[nodiscard]]SystemType& getSystem(htps::rptr<scene::SceneNode>);
 }  // namespace haf::sys
 
 #endif

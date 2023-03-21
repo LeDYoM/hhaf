@@ -3,7 +3,7 @@ HTPS_PRAGMA_ONCE
 #define HAF_WINDOW_FPS_COUNTER_INCLUDE_HPP
 
 #include "haf_private.hpp"
-#include <htypes/include/types.hpp>
+#include <haf/include/core/types.hpp>
 #include <haf/include/time/time_point.hpp>
 
 namespace haf::backend
@@ -16,8 +16,9 @@ namespace haf::sys
 struct HAF_PRIVATE FPSCounter
 {
     time::TimePoint lastTimeFps{0U};
-    htps::fast_u16 lastFps{0U};
-    htps::fast_u16 currentFps{0U};
+    core::fast_u16 lastFps{0U};
+    core::fast_u16 currentFps{0U};
+    core::str m_lastWindowTitle;
 
     void updateFPS(time::TimePoint const& time_since_start,
                    htps::rptr<backend::IWindow> backend_window,

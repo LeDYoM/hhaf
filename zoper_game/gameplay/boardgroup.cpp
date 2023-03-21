@@ -8,7 +8,6 @@
 
 #include <haf/include/scene/scene_node.hpp>
 #include <haf/include/scene/scene.hpp>
-#include <haf/include/scene_nodes/scene_node_table.hpp>
 #include <haf/include/render/renderizable.hpp>
 #include <haf/include/scene/scenenode_cast.hpp>
 #include <haf/include/component/component_container.hpp>
@@ -20,6 +19,7 @@
 using namespace htps;
 using namespace haf::scene;
 using namespace haf::scene::nodes;
+using namespace haf::component;
 
 namespace zoper
 {
@@ -34,7 +34,7 @@ void BoardGroup::configure(vector2dst size,
     auto const tableSize{TableSize()};
 
     // Create and initialize the BoardManager
-    auto board_model{component<board::BoardManager>()};
+    auto board_model{getOrCreateComponent<board::BoardManager>()};
     board_model->initialize(tableSize, this);
 
     board_model->setBackgroundFunction(
@@ -96,9 +96,9 @@ void BoardGroup::createNewToken(BoardTileData const data,
 
 void BoardGroup::tileRemoved(const vector2dst, board::SITilePointer& tile)
 {
-    LogAsserter::log_assert(std::dynamic_pointer_cast<Token>(tile) != nullptr,
+    LogAsserter::log_assert(core::dynamic_pointer_cast<Token>(tile) != nullptr,
                             "Trying to delete invalid type from board");
-    tokens_scene_node->removeSceneNode(std::dynamic_pointer_cast<Token>(tile));
+    tokens_scene_node->removeSceneNode(core::dynamic_pointer_cast<Token>(tile));
 }
 
 void BoardGroup::onTableNodeAdded(htps::sptr<SceneNode> const&)
@@ -260,7 +260,7 @@ bool BoardGroup::moveTowardsCenter(Direction const direction,
         }
         board_model->moveTile(position, next);
         auto const dest_tile{
-            std::dynamic_pointer_cast<Token>(board_model->getTile(next))};
+            core::dynamic_pointer_cast<Token>(board_model->getTile(next))};
 
         LogAsserter::log_assert(dest_tile != nullptr, "Error moving the tile!");
 

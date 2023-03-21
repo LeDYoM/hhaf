@@ -5,7 +5,6 @@
 #include "time/time_system.hpp"
 #include "debug_system/debug_system.hpp"
 #include "debug_system/debug_variables.hpp"
-#include "debug_system/debug_log.hpp"
 
 #include <haf/include/scene/scene_node.hpp>
 #include <haf/include/system/system_access.hpp>

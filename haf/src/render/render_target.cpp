@@ -1,9 +1,7 @@
 #include "render_target.hpp"
 
 #include <htypes/include/span.hpp>
-#include <backend_dev/include/ishader.hpp>
 #include <hlog/include/hlog.hpp>
-#include <hogl/include/render_element.hpp>
 #include <hogl/include/render_target.hpp>
 
 using namespace htps;
@@ -21,23 +19,23 @@ void RenderTarget::draw(ogl::RenderElement const& render_element)
 
 void RenderTarget::update()
 {
-    irender_target_->clear();
+//    irender_target_->clear();
 
     if (Projection.readResetHasChanged())
     {
-        irender_target_->setProjection(span<f32 const>(
-            Projection().getMatrix(), Projection().getMatrix() + 16));
+//        irender_target_->setProjection(span<f32 const>(
+//            Projection().getMatrix(), Projection().getMatrix() + 16));
     }
 
     if (ViewPort.readResetHasChanged())
     {
-        irender_target_->setViewPort(ViewPort());
+//        irender_target_->setViewPort(ViewPort());
     }
 
-    for (auto&& render_element : render_element_container_)
+//    for (auto&& render_element : render_element_container_)
     {
-        render_element->updateInternalData();
-        auto* const shader{render_element->shader};
+//        render_element->updateInternalData();
+/*        auto* const shader{render_element->shader};
 
         if (shader)
         {
@@ -51,6 +49,7 @@ void RenderTarget::update()
         {
             shader->unbind();
         }
+*/
     }
 }
 

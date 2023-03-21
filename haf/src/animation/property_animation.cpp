@@ -15,7 +15,7 @@ bool PropertyAnimation::animate()
 {
     // Get result from parent
     const bool bResult{BaseClass::animate()};
-    *(data_.delta_property) =  delta();
+    *(data_.delta_property) = delta();
 
     // Return result of base animation
     return bResult;

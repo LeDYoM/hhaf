@@ -12,6 +12,7 @@
 
 using namespace htps;
 using namespace haf;
+using namespace haf::test;
 using namespace haf::sys;
 using namespace haf::shdata;
 

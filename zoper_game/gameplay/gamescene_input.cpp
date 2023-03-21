@@ -4,7 +4,6 @@
 #include "player.hpp"
 
 #include <haf/include/component/component_container.hpp>
-#include <haf/include/scene_components/iscene_control.hpp>
 #include <hlog/include/hlog.hpp>
 
 using namespace haf;

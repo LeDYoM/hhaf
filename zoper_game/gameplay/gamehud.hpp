@@ -17,16 +17,16 @@ public:
 
     void update() override;
 
-    htps::PropertyState<htps::size_type> currentLevel;
-    htps::PropertyState<htps::size_type> currentScore;
-    htps::PropertyState<htps::size_type> currentConsumedTokens;
-    htps::PropertyState<htps::u64> currentEllapsedTimeInSeconds;
-    htps::PropertyState<htps::size_type> currentStayCounter;
+    prop::PropertyState<htps::size_type> currentLevel;
+    prop::PropertyState<htps::size_type> currentScore;
+    prop::PropertyState<htps::size_type> currentConsumedTokens;
+    prop::PropertyState<htps::u64> currentEllapsedTimeInSeconds;
+    prop::PropertyState<htps::size_type> currentStayCounter;
 
     void onCreated() override;
     int foo() { return 4; }
     bool abc;
-    htps::PropertyState<bool> cde;
+    prop::PropertyState<bool> cde;
 
 private:
     void onAllScoreElementsCreated(htps::vector2dst const);

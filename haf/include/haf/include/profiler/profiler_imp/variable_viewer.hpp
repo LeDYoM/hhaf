@@ -8,8 +8,7 @@ HTPS_PRAGMA_ONCE
 namespace haf::debug
 {
 class IVariableViewer
-{
-};
+{};
 }  // namespace haf::debug
 
 #endif

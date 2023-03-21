@@ -1,11 +1,10 @@
+#include <htypes/include/rect.hpp>
 #include <htypes/include/cast.hpp>
 #include <backend_dev/include/ikey.hpp>
 #include <backend_dev/include/itexture.hpp>
-#include <backend_dev/include/ishader.hpp>
 #include <backend_dev/include/camera_data.hpp>
 #include "sfml_render_window.hpp"
 #include "sfml_texture.hpp"
-#include "sfml_shader.hpp"
 #include <SFML/Window.hpp>
 #include <SFML/System/String.hpp>
 #include <SFML/Graphics/Rect.hpp>
@@ -66,18 +65,6 @@ constexpr sf::Texture const* to_sf_type(ITexture const* texture) noexcept
         if (auto const sf_texture{htps::d_cast<SFMLTexture const*>(texture)})
         {
             return sf_texture->backEndTexture();
-        }
-    }
-    return nullptr;
-}
-
-constexpr sf::Shader const* to_sf_type(IShader const* const shader) noexcept
-{
-    if (shader != nullptr)
-    {
-        if (auto const sf_shader{htps::d_cast<SFMLShader const*>(shader)})
-        {
-            return sf_shader->backEndShader();
         }
     }
     return nullptr;

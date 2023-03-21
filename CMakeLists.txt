@@ -46,6 +46,7 @@ add_library(log_and_types INTERFACE)
 target_link_libraries(log_and_types INTERFACE htypes memmanager hlog)
 
 add_subdirectory(tools)
+add_subdirectory(glad)
 
 set(hhaf_core_module_list
   agloader
@@ -71,16 +72,16 @@ foreach(target ${module_list})
   add_subdirectory(${target})
 endforeach()
 
-add_subdirectory(haf_ext)
-
+#add_subdirectory(haf_ext)
 add_subdirectory(backend_client)
 add_subdirectory(backend_sfml)
 add_subdirectory(haf_integrated_backend)
-add_subdirectory(zoper_game)
+#add_subdirectory(zoper_game)
 add_subdirectory(apps/haf_life_game)
 
-add_subdirectory(haf_app_menu)
-add_subdirectory(haf_app_middleware)
+#add_subdirectory(external/opengl_testing)
+#add_subdirectory(haf_app_menu)
+#add_subdirectory(haf_app_middleware)
 
 #if(BUILD_PACKAGES)
 #  generate_package("${hhaf_core_module_list}")

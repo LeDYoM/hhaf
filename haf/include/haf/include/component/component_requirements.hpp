@@ -2,7 +2,7 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_COMPONENT_COMPONENT_REQUIREMENTS_INCLUDE_HPP
 #define HAF_COMPONENT_COMPONENT_REQUIREMENTS_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
+#include <haf/include/core/types.hpp>
 #include <haf/include/component/component_container.hpp>
 
 namespace haf::component
@@ -15,27 +15,20 @@ public:
     {}
 
     template <typename T>
-    htps::sptr<T> component()
+    bool getOrCreateComponent(core::sptr<T>& element)
     {
-        return m_component_container.component<T>();
-    }
+        if (element == nullptr)
+        {
+            if constexpr (requires { T::StaticTypeName; })
+            {
+                auto component{m_component_container.safeComponentConversion<T>(
+                    m_component_container.getOrCreateComponent(
+                        T::StaticTypeName))};
+                element = component;
+            }
+        }
 
-    template <typename T>
-    htps::sptr<T> componentOfType() const
-    {
-        return m_component_container.componentOfType<T>();
-    }
-
-    template <typename T>
-    void componentOfType(htps::sptr<T>& element) const
-    {
-        element = m_component_container.componentOfType<T>();
-    }
-
-    template <typename T>
-    void component(htps::sptr<T>& element)
-    {
-        m_component_container.component(element);
+        return element != nullptr;
     }
 
 private:

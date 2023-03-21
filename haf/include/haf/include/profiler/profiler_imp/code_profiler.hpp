@@ -22,11 +22,13 @@ class CodeProfiler
 {
 public:
     CodeProfiler(sys::ISystemProvider& isystem_provider,
-                 DebugVariableHandle& variable_ref, char const * const var_name,
+                 DebugVariableHandle& variable_ref,
+                 char const* const var_name,
                  std::source_location source = std::source_location::current());
 
     CodeProfiler(scene::SceneNode& scene_node,
-                 DebugVariableHandle& variable_ref, char const * const var_name,
+                 DebugVariableHandle& variable_ref,
+                 char const* const var_name,
                  std::source_location source = std::source_location::current());
 
     ~CodeProfiler();

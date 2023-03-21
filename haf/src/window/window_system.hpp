@@ -22,6 +22,8 @@ class SystemProvider;
 class WindowSystem final : public SystemBase
 {
 public:
+    static constexpr char StaticTypeName[] = "WindowSystem";
+
     /**
      * @brief Construct a new Window system object
      * @param system_provider The system provider

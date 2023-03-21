@@ -35,10 +35,7 @@ public:
      * @see SceneNode
      * @return Parent or nullptr if no parent
      */
-    constexpr htps::rptr<CRTP const> parent() const noexcept
-    {
-        return parent_;
-    }
+    constexpr htps::rptr<CRTP const> parent() const noexcept { return parent_; }
 
     constexpr htps::rptr<CRTP const> cparent() const noexcept
     {

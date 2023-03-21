@@ -18,7 +18,7 @@ class RenderSystem final : public SystemBase
 {
 public:
     using SystemBase::SystemBase;
-    void initialize();
+    void initialize(bool const enableDebug);
 
     void update();
 
@@ -26,6 +26,7 @@ public:
 
 private:
     htps::sptr<RenderTarget> render_target_;
+    bool m_initialized{false};
 };
 }  // namespace haf::sys
 

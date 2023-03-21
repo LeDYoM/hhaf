@@ -22,8 +22,8 @@ public:
            htps::str name);
     ~Player() override;
 
-    htps::PropertyState<BoardPositionType> player_board_position;
-    htps::PropertyState<Direction> currentDirection;
+    prop::PropertyState<BoardPositionType> player_board_position;
+    prop::PropertyState<Direction> currentDirection;
 
     bool canBeMovedTo(BoardPositionType const& dest_position) const override;
 

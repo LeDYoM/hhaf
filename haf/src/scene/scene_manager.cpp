@@ -1,79 +1,105 @@
 #include "scene_manager.hpp"
-#include "scene_controller.hpp"
+#include "component_register.hpp"
 
-#include <haf/include/scene/scene.hpp>
+#include <haf/include/scene/scene_node.hpp>
 
 #include "system/system_provider.hpp"
-#include "window/window.hpp"
-#include "resources/resource_manager.hpp"
-#include "render/render_target.hpp"
-
 #include <hlog/include/hlog.hpp>
+#include <haf/include/scene_components/2.1/scene_nodes_component.hpp>
 
-using namespace htps;
 using namespace haf::sys;
+using namespace haf::core;
 
 namespace haf::scene
 {
 SceneManager::SceneManager(sys::SystemProvider& system_provider) :
-    SystemBase{system_provider}, scene_controller_{msptr<SceneController>()}
-{
-    scene_controller_->setSceneManager(this);
-}
+    SystemBase{system_provider},
+    m_scene_render_context_for_system{this->isystemProvider()}
+{}
 
 SceneManager::~SceneManager() = default;
 
-void SceneManager::start()
-{}
+void SceneManager::init()
+{
+    ComponentRegister component_register{*this};
+    component_register();
+
+    m_rootSceneNode = muptr<SceneNode>(&isystemProvider());
+    auto result{m_rootSceneNode->attachComponent<SceneNodesComponent>()};
+    LogAsserter::log_assert(result != nullptr,
+                            "Cannot attach sceneNodesComponent to root node");
+}
 
 void SceneManager::update()
 {
-    scene_controller_->update();
+    m_scene_render_context_for_system.beginFrame();
+    m_rootSceneNode->update();
+    m_scene_render_context_for_system.endFrame();
 }
 
 void SceneManager::finish()
+{}
+
+bool SceneManager::registerComponent(
+    str_view componentType,
+    component::ComponentCreateFunction component_create_function)
 {
-    scene_controller_->finish();
+    return m_component_factory.registerObjectType(
+        componentType, htps::move(component_create_function));
 }
 
-sptr<SceneController const> SceneManager::sceneController() const noexcept
+bool SceneManager::instanciateRootComponent(str_view componentType)
 {
-    return scene_controller_;
+    auto inner_scene_nodes_component{
+        m_rootSceneNode->componentOfType<SceneNodesComponent>()};
+    LogAsserter::log_assert(
+        inner_scene_nodes_component != nullptr,
+        "Root scene node does not contain SceneNodesComponent");
+
+    return m_rootSceneNode->attachComponent(componentType) != nullptr;
 }
 
-sptr<SceneController> SceneManager::sceneController() noexcept
+sptr<component::Component> SceneManager::instantiateComponent(str_view name)
 {
-    return scene_controller_;
+    return m_component_factory.create(name);
 }
 
-void SceneManager::switchToNextScene()
+rptr<SceneNode> SceneManager::rootSceneNode() const
 {
-    scene_controller_->switchToNextScene();
+    return m_rootSceneNode.get();
 }
 
-bool SceneManager::startScene(const htps::str& scene_name)
+SceneRenderContextForSystem&
+SceneManager::sceneRenderContextForSystem() noexcept
 {
-    return scene_controller_->startScene(scene_name);
+    return m_scene_render_context_for_system;
 }
 
-void SceneManager::requestExit()
+SceneRenderContextForSystem const& SceneManager::sceneRenderContextForSystem()
+    const noexcept
 {
-    return scene_controller_->requestExit();
+    return m_scene_render_context_for_system;
 }
 
-bool SceneManager::exitRequested() const
+SceneRenderContext& SceneManager::sceneRenderContext() noexcept
 {
-    return scene_controller_->exitRequested();
+    return m_scene_render_context_for_system;
 }
 
-SceneNodeFactory& SceneManager::sceneNodeFactory()
+SceneRenderContext const& SceneManager::sceneRenderContext() const noexcept
 {
-    return scene_controller_->sceneNodeFactory();
+    return m_scene_render_context_for_system;
 }
 
-bool SceneManager::setNextApp(htps::str const&)
+SceneRenderContextView& SceneManager::sceneRenderContextView() noexcept
 {
-    return true;
+    return m_scene_render_context_for_system;
+}
+
+SceneRenderContextView const& SceneManager::sceneRenderContextView()
+    const noexcept
+{
+    return m_scene_render_context_for_system;
 }
 
 }  // namespace haf::scene

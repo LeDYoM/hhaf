@@ -5,3 +5,6 @@ find haf/ -iname *.hpp -o -iname *.cpp| xargs clang-format -i
 #- Make transformations explicit of rotation, scalation, position, etc...
 #   that should help to not store the entire matrix always.
 - Create CodeProfiler
+
+For 0.5
+- Add cameraListenerComponent to change camera.

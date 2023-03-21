@@ -9,7 +9,7 @@
 #include <haf/include/resources/iresource_retriever.hpp>
 #include <haf/include/resources/ittfont.hpp>
 #include <htypes/include/function.hpp>
-#include <htypes/include/properties/properties.hpp>
+#include <haf/include/properties/properties.hpp>
 
 using namespace htps;
 using namespace haf;

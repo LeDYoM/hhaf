@@ -25,10 +25,22 @@ public:
 
     constexpr array(std::initializer_list<value_type> iList) noexcept
     {
-        for (decltype(iList.size()) i{0U}; i < iList.size() && i < array_size;
-             ++i)
+//        static_assert(iList.size() <= array_size);
+        auto buffer_element{&buffer_[0]};
+
+        for (auto&& element : iList)
         {
-            buffer_[i] = htps::move(*(iList.begin() + i));
+            (*buffer_element++) = htps::move(element);
+        }
+
+        if (iList.size() < array_size && iList.size() > 0U)
+        {
+            size_t counter{iList.size()};
+            buffer_element = &buffer_[counter];
+            while (counter++ < array_size)
+            {
+                (*buffer_element++) = buffer_[iList.size() -1U];
+            }
         }
     }
 
@@ -126,6 +138,10 @@ using array_unique_pointers = array<uptr<T>, S>;
 template <typename T, size_type S>
 using array_weak_pointers = array<wptr<T>, S>;
 
+template <typename _Tp, typename... _Up>
+array(_Tp, _Up...)
+    -> array<std::enable_if_t<(std::is_same_v<_Tp, _Up> && ...), _Tp>,
+             1 + sizeof...(_Up)>;
 }  // namespace htps
 
 #endif

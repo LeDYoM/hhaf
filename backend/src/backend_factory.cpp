@@ -4,7 +4,7 @@
 
 #include <agloader/include/loader.hpp>
 
-#include "backend_log.hpp"
+#include <hlog/include/hlog.hpp>
 
 using namespace htps;
 
@@ -14,18 +14,18 @@ BackendFactory::BackendFactory() :
     window_{nullptr},
     textureFactory_{nullptr},
     ttfontFactory_{nullptr},
-    shaderFactory_{nullptr},
     bmpFontFactory_{nullptr},
     loader_{agloader::createLoader()}
 {}
 
 BackendFactory::~BackendFactory()
 {
-    BackendLogDisplayer::debug("Destroying backend factory");
+    DisplayLog::debug(StaticTypeName, ": Destroying backend factory");
     for (auto&& loaded_module : loaded_modules_)
     {
-        BackendLogDisplayer::debug("Destroying backend loaded module: ",
-                                   loaded_module->moduleName());
+        DisplayLog::debug(StaticTypeName,
+                            ": Destroying backend loaded module: ",
+                            loaded_module->moduleName());
         loaded_module->emptyRegisteredFactories();
         loaded_module->finish();
         loader_->unloadModule(loaded_module->moduleName().c_str());
@@ -35,12 +35,13 @@ BackendFactory::~BackendFactory()
 
     agloader::destroyLoader();
     loader_ = nullptr;
-    BackendLogDisplayer::debug("backend factory destroyed");
+    DisplayLog::debug(StaticTypeName, ": backend factory destroyed");
 }
 
 bool BackendFactory::loadBackendFile(htps::str const& file_name)
 {
-    BackendLogDisplayer::debug("Going to load backend module: ", file_name);
+    DisplayLog::debug(StaticTypeName,
+                        ": Going to load backend module: ", file_name);
 
     if (loader_->loadModule(file_name.c_str()))
     {
@@ -93,7 +94,6 @@ void BackendFactory::selectFactoriesToUse(
     updateFactory(ttfontFactory_, backend_register->ttfontFactory_);
     updateFactory(bmpFontFactory_, backend_register->bmpFontFactory_);
     updateFactory(textureFactory_, backend_register->textureFactory_);
-    updateFactory(shaderFactory_, backend_register->shaderFactory_);
 }
 
 bool BackendFactory::isWindowFactoryAvailable() const noexcept
@@ -104,11 +104,6 @@ bool BackendFactory::isWindowFactoryAvailable() const noexcept
 bool BackendFactory::isTextureFactoryAvailable() const noexcept
 {
     return textureFactory_ != nullptr;
-}
-
-bool BackendFactory::isShaderFactoryAvailable() const noexcept
-{
-    return shaderFactory_ != nullptr;
 }
 
 bool BackendFactory::isBMPFontFactoryAvailable() const noexcept
@@ -136,11 +131,6 @@ rptr<ITTFontFactory> BackendFactory::getTTFontFactory() const noexcept
     return ttfontFactory_;
 }
 
-rptr<IShaderFactory> BackendFactory::getShaderFactory() const noexcept
-{
-    return shaderFactory_;
-}
-
 rptr<IBMPFontFactory> BackendFactory::getBMPFontFactory() const noexcept
 {
     return bmpFontFactory_;
@@ -154,11 +144,6 @@ ITextureFactory& BackendFactory::textureFactory() const
 ITTFontFactory& BackendFactory::ttfontFactory() const
 {
     return *getTTFontFactory();
-}
-
-IShaderFactory& BackendFactory::shaderFactory() const
-{
-    return *getShaderFactory();
 }
 
 IBMPFontFactory& BackendFactory::bmpFontFactory() const

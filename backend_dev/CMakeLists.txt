@@ -19,7 +19,6 @@ set(headers
     ${include_dir}/iresourcefactories.hpp
     ${include_dir}/iresourcefactory.hpp
     ${include_dir}/iresourceinfo.hpp
-    ${include_dir}/ishader.hpp
     ${include_dir}/itexture.hpp
     ${include_dir}/ittfont.hpp
     ${include_dir}/ivertex.hpp

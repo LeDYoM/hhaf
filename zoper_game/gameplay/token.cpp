@@ -24,7 +24,7 @@ u32 Token::tile_counter_{0};
 Token::Token(SceneNode* const parent, str name) :
     GameBaseTile{
         parent, name + str::to_str(tile_counter_) + str::to_str(tile_counter_)},
-    animation_component_{component<anim::AnimationComponent>()}
+    animation_component_{getOrCreateComponent<anim::AnimationComponent>()}
 {}
 
 Token::~Token() = default;

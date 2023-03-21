@@ -4,6 +4,7 @@ HTPS_PRAGMA_ONCE
 
 #include "types.hpp"
 #include "str.hpp"
+
 #include <type_traits>
 
 namespace htps
@@ -12,6 +13,9 @@ template <typename T>
 class vector2d
 {
 public:
+    static constexpr htps::u16 kNumElements{2U};
+    using value_type = T;
+
     constexpr vector2d() noexcept = default;
 
     constexpr vector2d(T _x, T _y) noexcept :
@@ -135,9 +139,9 @@ constexpr vector2d<T> operator/(vector2d<T> const& lhs,
 }
 
 template <typename T>
-constexpr vector2d<T> operator-(vector2d<T> const& v2d) noexcept
+constexpr vector2d<T> operator-(vector2d<T> const& v) noexcept
 {
-    return vector2d<T>{-v2d.x, -v2d.y};
+    return vector2d<T>{-v.x, -v.y};
 }
 
 template <typename T, typename Y>
@@ -157,14 +161,14 @@ constexpr bool operator!=(vector2d<T> const& lhs,
 
 // Serialization operators
 template <typename T>
-constexpr str& operator<<(str& os, vector2d<T> const& v2d)
+constexpr str& operator<<(str& os, vector2d<T> const& v)
 {
-    os << "{" << v2d.x << "," << v2d.y << "}";
+    os << "{" << v.x << "," << v.y << "}";
     return os;
 }
 
 template <typename T>
-constexpr str& operator>>(str& is, vector2d<T> const& v2d)
+constexpr str& operator>>(str& is, vector2d<T> const& v)
 {
     return is;
 }

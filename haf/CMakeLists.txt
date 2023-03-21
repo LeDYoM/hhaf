@@ -10,7 +10,11 @@ project(
 set(CURRENT_TARGET haf)
 
 set(src_dir src)
+file (GLOB_RECURSE sources
+  ${src_dir}/*.cpp
+  ${src_dir}/*.hpp)
 
+#[[
 set(sources
   # Global
   ${src_dir}/haf_private.hpp
@@ -25,6 +29,7 @@ set(sources
 
   # Component
   ${src_dir}/component/component_container.cpp
+  ${src_dir}/component/component_factory.cpp
   ${src_dir}/component/component.cpp
 
   # Debug
@@ -137,7 +142,7 @@ set(sources
   ${src_dir}/scene_components/table_node_imp.cpp
   ${src_dir}/scene_components/table_text_component.cpp
   ${src_dir}/scene_components/texteditorcomponent.cpp
-  ${src_dir}/scene_components/transformable_component.cpp
+  ${src_dir}/scene_components/transformation_component.cpp
   ${src_dir}/scene_components/visibility_selector_component.cpp
 
   # Scene nodes
@@ -207,9 +212,12 @@ set(sources
   ${src_dir}/window/window.cpp
   ${src_dir}/window/window.hpp
 )
+]]
 
 set(inc_dir include/haf/include)
+file (GLOB_RECURSE headers "${inc_dir}/*.hpp")
 
+#[[
 set(headers
   # Global
   ${inc_dir}/haf_export.hpp
@@ -227,6 +235,7 @@ set(headers
 
   # Component
   ${inc_dir}/component/component_container.hpp
+  ${inc_dir}/component/component_factory.hpp
   ${inc_dir}/component/component_requirements.hpp
   ${inc_dir}/component/component.hpp
 
@@ -286,7 +295,6 @@ set(headers
   ${inc_dir}/resources/ifont.hpp
   ${inc_dir}/resources/iresource_configurator.hpp
   ${inc_dir}/resources/iresource_retriever.hpp
-  ${inc_dir}/resources/ishader.hpp
   ${inc_dir}/resources/itexture.hpp
   ${inc_dir}/resources/ittfont.hpp
   ${inc_dir}/resources/resource_descriptor.hpp
@@ -310,7 +318,6 @@ set(headers
   ${inc_dir}/scene_components/discretetextcomponent.hpp
   ${inc_dir}/scene_components/iapp_finisher.hpp
   ${inc_dir}/scene_components/iapp_initializer.hpp
-  ${inc_dir}/scene_components/iscene_control.hpp
   ${inc_dir}/scene_components/states_controller_component.hpp
   ${inc_dir}/scene_components/statescontrolleractuator_register.hpp
   ${inc_dir}/scene_components/statescontrolleractuator.hpp
@@ -318,7 +325,7 @@ set(headers
   ${inc_dir}/scene_components/table_text_component.hpp
   ${inc_dir}/scene_components/table_component.hpp
   ${inc_dir}/scene_components/texteditorcomponent.hpp
-  ${inc_dir}/scene_components/transformable_component.hpp
+  ${inc_dir}/scene_components/transformation_component.hpp
   ${inc_dir}/scene_components/visibility_selector_component.hpp
 
   # Scene nodes
@@ -369,6 +376,7 @@ set(headers
 
   # Window
   )
+]]
 
 # Set the public directory for includes in this library. It will be
 # used by the external components.

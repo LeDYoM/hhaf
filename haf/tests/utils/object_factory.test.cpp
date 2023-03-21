@@ -26,7 +26,7 @@ TEST_CASE("ObjectFactory simple case", "[haf][ObjectFactory]")
     CHECK(a.empty());
     CHECK(a.size() == 0U);
 
-    CHECK(a.registerObjectType<int>(str{"obj1"}));
+    CHECK(a.registerObjectType<int>("obj1"));
 
     CHECK_FALSE(a.empty());
     CHECK(a.size() == 1U);
@@ -190,6 +190,18 @@ TEST_CASE("ObjectFactory type with interface and different concrete types",
         CHECK_FALSE(t_obj->data() == t_obj2->data());
         CHECK(t_obj->data() == 4);
         CHECK(t_obj2->data() == 10);
+
+        SECTION("Erase")
+        {
+            CHECK_FALSE(a.empty());
+            CHECK(a.size() == 4U);
+
+            CHECK(a.unregisterObjectType<ObjectImpl1>());
+            CHECK(a.size() == 3U);
+            CHECK_FALSE(a.unregisterObjectType("asfasdf"));
+            CHECK(a.size() == 3U);
+            CHECK(a.create<ObjectImpl1>("") == nullptr);
+        }
     }
 }
 

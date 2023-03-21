@@ -1,9 +1,9 @@
 #include "input_system.hpp"
 
 #include <hlog/include/hlog.hpp>
-#include <haf/include/input/inputdriver_wrapper.hpp>
+#include "input_driver_wrapper.hpp"
 
-using namespace htps;
+using namespace haf::core;
 using namespace haf::input;
 
 namespace haf::sys
@@ -50,9 +50,19 @@ KeyStates const& InputSystem::keyStates() const noexcept
     return key_states_;
 }
 
-KeyState InputSystem::keyState(Key const key) const
+KeyState InputSystem::keyState(Key const key) const noexcept
 {
     return key_states_[keyIndex(key)];
+}
+
+bool InputSystem::shitPressed() const noexcept
+{
+    return keyState(Key::LShift) || keyState(Key::RShift);
+}
+
+bool InputSystem::controlPressed() const noexcept
+{
+    return keyState(Key::LControl) || keyState(Key::RControl);
 }
 
 const vector<Key>& InputSystem::pressedKeys() const noexcept

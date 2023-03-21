@@ -1,25 +1,36 @@
 #ifndef HF_MAIN_SCENE_INCLUDE_HPP
 #define HF_MAIN_SCENE_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
-#include <haf/include/scene/scene.hpp>
-#include <haf/include/component/component.hpp>
+#include <haf/include/core/types.hpp>
+#include <haf/include/component/component_declaration.hpp>
+#include <haf/include/scene_components/2.1/scene_component.hpp>
+
+namespace haf::render
+{
+    class MeshComponent;
+}
+
+namespace haf::scene
+{
+    class SceneComponent;
+}
 
 namespace hl
 {
-class MainScene final : public haf::component::Component
+class MainScene final
+    : public haf::component::ComponentBase<"MainScene",
+                                           haf::scene::SceneComponent>
 {
-private:
-    using BaseClass = haf::component::Component;
-
 public:
     MainScene();
     ~MainScene() override;
 
-    static constexpr char StaticTypeName[] = "MainScene";
-
     void onAttached() override;
+
+private:
+    haf::ComponentSPtr<haf::render::MeshComponent>
+        m_mesh_component;
 };
-}  // namespace zoper
+}  // namespace hl
 
 #endif

@@ -1,100 +1,38 @@
 #include <hogl/include/render_target.hpp>
-#include <hogl/include/render_element.hpp>
-#include <hogl/include/vertex_buffer.hpp>
-#include <hogl/include/blend_mode.hpp>
-#include "backend_dev/include/ivertex.hpp"
-#include "backend_dev/include/itexture.hpp"
-#include "opengl/glad.h"
-#include "opengl/gl_check.hpp"
+//#include "backend_dev/include/ivertex.hpp"
+//#include "backend_dev/include/itexture.hpp"
+#include <glad/glad.h>
+#include <hogl/include/types.hpp>
 
 using namespace htps;
 
 namespace haf::ogl
 {
-u32 factorToGlConstant(BlendMode::Factor blendFactor)
-{
-    switch (blendFactor)
-    {
-        case ogl::BlendMode::Zero:
-            return GL_ZERO;
-        case ogl::BlendMode::One:
-            return GL_ONE;
-        case ogl::BlendMode::SrcColor:
-            return GL_SRC_COLOR;
-        case ogl::BlendMode::OneMinusSrcColor:
-            return GL_ONE_MINUS_SRC_COLOR;
-        case ogl::BlendMode::DstColor:
-            return GL_DST_COLOR;
-        case ogl::BlendMode::OneMinusDstColor:
-            return GL_ONE_MINUS_DST_COLOR;
-        case ogl::BlendMode::SrcAlpha:
-            return GL_SRC_ALPHA;
-        case ogl::BlendMode::OneMinusSrcAlpha:
-            return GL_ONE_MINUS_SRC_ALPHA;
-        case ogl::BlendMode::DstAlpha:
-            return GL_DST_ALPHA;
-        case ogl::BlendMode::OneMinusDstAlpha:
-            return GL_ONE_MINUS_DST_ALPHA;
-    }
-
-    assert(false);
-    return GL_ZERO;
-}
-
-u32 equationToGlConstant(ogl::BlendMode::Equation blendEquation)
-{
-    switch (blendEquation)
-    {
-        case ogl::BlendMode::Add:
-            return GL_FUNC_ADD;
-        case ogl::BlendMode::Subtract:
-            return GL_FUNC_SUBTRACT;
-        case ogl::BlendMode::ReverseSubtract:
-            return GL_FUNC_REVERSE_SUBTRACT;
-    }
-
-    assert(false);
-    return GL_FUNC_ADD;
-}
-
-void applyBlendMode(const BlendMode& mode)
-{
-    glCheck(glBlendFuncSeparate(factorToGlConstant(mode.colorSrcFactor),
-                                factorToGlConstant(mode.colorDstFactor),
-                                factorToGlConstant(mode.alphaSrcFactor),
-                                factorToGlConstant(mode.alphaDstFactor)));
-    glCheck(glBlendEquationSeparate(equationToGlConstant(mode.colorEquation),
-                                    equationToGlConstant(mode.alphaEquation)));
-}
 
 void RenderTarget::resetRenderStates()
 {
-    glCheck(glClientActiveTexture(GL_TEXTURE0));
-    glCheck(glActiveTexture(GL_TEXTURE0));
-    glCheck(glDisable(GL_CULL_FACE));
-    glCheck(glDisable(GL_LIGHTING));
-    glCheck(glDisable(GL_DEPTH_TEST));
-    glCheck(glDisable(GL_ALPHA_TEST));
-    glCheck(glEnable(GL_TEXTURE_2D));
-    glCheck(glEnable(GL_BLEND));
-    glCheck(glMatrixMode(GL_MODELVIEW));
-    glCheck(glLoadIdentity());
-    glCheck(glEnableClientState(GL_VERTEX_ARRAY));
-    glCheck(glEnableClientState(GL_COLOR_ARRAY));
-    glCheck(glEnableClientState(GL_TEXTURE_COORD_ARRAY));
+//    glCheck(glClientActiveTexture(GL_TEXTURE0));
+//    glCheck(glActiveTexture(GL_TEXTURE0));
+//    glCheck(glDisable(GL_CULL_FACE));
+//    glCheck(glDisable(GL_LIGHTING));
+//    glCheck(glDisable(GL_DEPTH_TEST));
+//    glCheck(glDisable(GL_ALPHA_TEST));
+//    glCheck(glEnable(GL_TEXTURE_2D));
+//    glCheck(glEnable(GL_BLEND));
+//    glCheck(glMatrixMode(GL_MODELVIEW));
+//    glCheck(glLoadIdentity());
+//    glCheck(glEnableClientState(GL_VERTEX_ARRAY));
+//    glCheck(glEnableClientState(GL_COLOR_ARRAY));
+//    glCheck(glEnableClientState(GL_TEXTURE_COORD_ARRAY));
 
     // Apply the default SFML states
     //    render_target.applyBlendMode(sf::BlendAlpha);
-    applyTexture(nullptr);
-    glCheck(glBindBuffer(GL_ARRAY_BUFFER, 0));
-
-    applyBlendMode(ogl::BlendAlpha);
+//    applyTexture(nullptr);
+//    glCheck(glBindBuffer(GL_ARRAY_BUFFER, 0));
 }
 
 RenderTarget::RenderTarget()
 {
-    gladLoadGL();
-    resetRenderStates();
 }
 
 void RenderTarget::drawDebugQuad([
@@ -119,37 +57,26 @@ void RenderTarget::drawDebugQuad([
 
 void RenderTarget::clear()
 {
-    glCheck(glClearColor(0.0F, 0.0F, 0.0F, 1.0F));
-    glCheck(glClear(GL_COLOR_BUFFER_BIT));
+//    glCheck(glClearColor(0.0F, 0.0F, 0.0F, 1.0F));
+//    glCheck(glClear(GL_COLOR_BUFFER_BIT));
 }
 
-void applyTransform(const htps::array<htps::f32, 16U>& transform)
+void applyTransform(const htps::array<htps::f32, 16U>&)
 {
-    glCheck(glLoadMatrixf(transform.cbegin()));
+//    glCheck(glLoadMatrixf(transform.cbegin()));
 }
 
-void RenderTarget::applyTexture(backend::ITexture const* const texture)
+void RenderTarget::applyTexture(backend::ITexture const* const)
 {
-    if (texture)
-    {
-        texture->bind();
-    }
-    else
-    {
-        glCheck(glBindTexture(GL_TEXTURE_2D, 0U));
-        glCheck(glMatrixMode(GL_TEXTURE));
-        glCheck(glLoadIdentity());
-        glCheck(glMatrixMode(GL_MODELVIEW));
-    }
 }
 
 void RenderTarget::postTexture()
 {}
 
-void RenderTarget::preDraw(RenderElement const& render_element)
+void RenderTarget::preDraw(RenderElement const&)
 {
-    applyTransform(render_element.transformation);
-    applyTexture(render_element.texture);
+//    applyTransform(render_element.transformation);
+//    applyTexture(render_element.texture);
 }
 
 void RenderTarget::postDraw(RenderElement const& /*render_element*/)
@@ -159,19 +86,20 @@ void RenderTarget::postDraw(RenderElement const& /*render_element*/)
 
 void RenderTarget::bindVertexBuffer(VertexBuffer const* vertexBuffer)
 {
-    ogl::NativeHandleType handle{0};
+//    ogl::Handle handle{0};
 
     if (vertexBuffer)
     {
-        handle = vertexBuffer->getNativeHandle();
+//        handle = vertexBuffer->getNativeHandle();
     }
 
-    glCheck(glBindBuffer(GL_ARRAY_BUFFER, handle));
+//    glCheck(glBindBuffer(GL_ARRAY_BUFFER, handle));
 }
 
-void RenderTarget::draw(VertexBuffer const& vertexBuffer,
-                            RenderElement const& render_element)
+void RenderTarget::draw(VertexBuffer const&,
+                            RenderElement const&)
 {
+/*
     size_type firstVertex = 0;
 
     // Clamp vertexCount to something that makes sense
@@ -200,35 +128,36 @@ void RenderTarget::draw(VertexBuffer const& vertexBuffer,
     bindVertexBuffer(nullptr);
 
     postDraw(render_element);
+*/
 }
 
-void RenderTarget::render(RenderElement const* const render_element)
+void RenderTarget::render(RenderElement const* const)
 {
-    draw(render_element->vertexBuffer(), *render_element);
+//    draw(render_element->vertexBuffer(), *render_element);
 
 #ifdef DRAW_DEBUG_QUAD
     drawDebugQuad(tre);
 #endif
 }
 
-void RenderTarget::setViewPort(htps::Rects32 const& viewport)
+void RenderTarget::setViewPort(htps::Rects32 const& /*viewport*/)
 {
     // TODO: Since now we check the view only here, the view is "constant"
     // when the window is resized.
 
     // Set the viewport
-    glCheck(glViewport(viewport.left, viewport.top, viewport.width,
-                       viewport.height));
+    //glCheck(glViewport(viewport.left, viewport.top, viewport.width,
+//                       viewport.height));
 }
 
-void RenderTarget::setProjection(span<f32 const> const& projection)
+void RenderTarget::setProjection(span<f32 const> const&)
 {
     // Set the projection matrix
-    glCheck(glMatrixMode(GL_PROJECTION));
-    glCheck(glLoadMatrixf(projection.cbegin()));
+    //glCheck(glMatrixMode(GL_PROJECTION));
+    //glCheck(glLoadMatrixf(projection.cbegin()));
 
     // Go back to model-view mode
-    glCheck(glMatrixMode(GL_MODELVIEW));
+    //glCheck(glMatrixMode(GL_MODELVIEW));
 }
 
 str RenderTarget::info() const

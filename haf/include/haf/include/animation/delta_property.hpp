@@ -3,8 +3,8 @@ HTPS_PRAGMA_ONCE
 #define HAF_ANIMATION_DELTA_PROPERTY_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
-#include <htypes/include/properties/basic_property.hpp>
-#include <htypes/include/properties/wrapper_property.hpp>
+#include <haf/include/properties/basic_property.hpp>
+#include <haf/include/properties/wrapper_property.hpp>
 #include <haf/include/animation/idelta_property.hpp>
 #include <haf/include/animation/animable_types.hpp>
 
@@ -24,7 +24,7 @@ public:
 
     constexpr DeltaProperty() = delete;
 
-    constexpr DeltaProperty(htps::WrapperProperty<T> wrapper_property,
+    constexpr DeltaProperty(prop::WrapperProperty<T> wrapper_property,
                             T const& start_value,
                             T const& end_value) :
         m_delta_property{0.0F},
@@ -57,8 +57,8 @@ private:
             interpolate(m_start_value, m_end_value, m_delta_property());
     }
 
-    htps::BasicProperty<htps::f32> m_delta_property;
-    htps::WrapperProperty<T> m_property;
+    prop::BasicProperty<htps::f32> m_delta_property;
+    prop::WrapperProperty<T> m_property;
     T const m_start_value;
     T const m_end_value;
 };
@@ -73,7 +73,7 @@ htps::uptr<DeltaProperty<PropertyValue>> make_delta_property(
     PropertyValue const& end_value)
 {
     return htps::muptr<anim::DeltaProperty<PropertyValue>>(
-        htps::WrapperProperty<PropertyValue>{obj, property_v}, start_value,
+        prop::WrapperProperty<PropertyValue>{obj, property_v}, start_value,
         end_value);
 }
 
@@ -86,7 +86,7 @@ htps::uptr<DeltaProperty<PropertyValue>> make_delta_property(
     PropertyValue const& end_value)
 {
     return htps::muptr<anim::DeltaProperty<PropertyValue>>(
-        htps::WrapperProperty<PropertyValue>{property}, start_value, end_value);
+        prop::WrapperProperty<PropertyValue>{property}, start_value, end_value);
 }
 
 }  // namespace haf::anim

@@ -10,7 +10,6 @@
 
 namespace logger
 {
-
 /**
  * @brief Class to perform run-time assertions in code.
  * Provides constexpr methods that could be eliminated under certain conditions.
@@ -28,10 +27,7 @@ struct LogAsserter
 #endif
 )
     {
-        // Store the condition in a variable to execute it only once.
-        const bool cond{condition};
-
-        if (!cond)
+        if (!condition)
         {
             LogDisplayerClass::error("Assert!");
 #ifdef __cpp_lib_source_location
@@ -47,7 +43,7 @@ struct LogAsserter
 
             if (UseLowLevelAssert)
             {
-                assert(cond);
+                assert(false);
             }
         }
     }
@@ -55,24 +51,18 @@ struct LogAsserter
     template <typename... Args>
     static constexpr void log_assert(const bool condition, Args&&... args)
     {
-        // Store the condition in a variable to execute it only once.
-        const bool cond{condition};
-
-        if (!cond)
+        if (!condition)
         {
             LogDisplayerClass::error(std::forward<Args>(args)...);
             if (UseLowLevelAssert)
             {
-                assert(cond);
+                assert(false);
             }
         }
     }
 
-    static bool UseLowLevelAssert;
+    inline static bool UseLowLevelAssert{true};
 };
-
-template <typename LogDisplayerClass>
-bool LogAsserter<LogDisplayerClass>::UseLowLevelAssert{true};
 
 }  // namespace logger
 

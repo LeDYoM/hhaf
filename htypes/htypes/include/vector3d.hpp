@@ -4,6 +4,9 @@ HTPS_PRAGMA_ONCE
 
 #include "types.hpp"
 #include "str.hpp"
+
+#include "vector2d.hpp"
+
 #include <type_traits>
 
 namespace htps
@@ -12,10 +15,21 @@ template <typename T>
 class vector3d
 {
 public:
+    static constexpr htps::u16 kNumElements{3U};
+    using value_type = T;
+
     constexpr vector3d() noexcept = default;
+
+    explicit constexpr vector3d(vector2d<T> const& v) noexcept :
+        x{v.x}, y{v.y}, z{static_cast<T>(0)}
+    {}
 
     constexpr vector3d(T _x, T _y, T _z) noexcept :
         x{htps::move(_x)}, y{htps::move(_y)}, z{htps::move(_z)}
+    {}
+
+    constexpr vector3d(T _x, T _y) noexcept :
+        x{htps::move(_x)}, y{htps::move(_y)}, z{}
     {}
 
     // Conversion operator
@@ -42,6 +56,31 @@ public:
         y -= static_cast<T>(rhs.y);
         z -= static_cast<T>(rhs.z);
         return *this;
+    }
+
+    template <typename Y>
+    constexpr vector3d& move(vector3d<Y> const& rhs) noexcept
+    {
+        *this += rhs;
+        return *this;
+    }
+
+    template <typename Y>
+    constexpr vector3d& moveX(Y const x_) noexcept
+    {
+        return this->move(vector3d<Y>{x_, Y{}, Y{}});
+    }
+
+    template <typename Y>
+    constexpr vector3d& moveY(Y const y_) noexcept
+    {
+        return this->move(vector3d<Y>{Y{}, y_, Y{}});
+    }
+
+    template <typename Y>
+    constexpr vector3d& moveZ(Y const z_) noexcept
+    {
+        return this->move(vector3d<Y>{Y{}, Y{}, z_});
     }
 
     template <typename Y>
@@ -144,9 +183,9 @@ constexpr vector3d<T> operator/(vector3d<T> const& lhs,
 }
 
 template <typename T>
-constexpr vector3d<T> operator-(vector3d<T> const& v3d) noexcept
+constexpr vector3d<T> operator-(vector3d<T> const& v) noexcept
 {
-    return vector3d<T>{-v3d.x, -v3d.y, -v3d.z};
+    return vector3d<T>{-v.x, -v.y, -v.z};
 }
 
 template <typename T, typename Y>
@@ -166,14 +205,14 @@ constexpr bool operator!=(vector3d<T> const& lhs,
 
 // Serialization operators
 template <typename T>
-constexpr str& operator<<(str& os, vector3d<T> const& v3d)
+constexpr str& operator<<(str& os, vector3d<T> const& v)
 {
-    os << "{" << v3d.x << "," << v3d.y << "," << v3d.z << "}";
+    os << "{" << v.x << "," << v.y << "," << v.z << "}";
     return os;
 }
 
 template <typename T>
-constexpr str& operator>>(str& is, vector3d<T> const& v2d)
+constexpr str& operator>>(str& is, vector3d<T> const& v)
 {
     return is;
 }

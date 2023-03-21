@@ -8,6 +8,7 @@
 #include <chrono>
 #include <string>
 #include <atomic>
+#include <functional>
 #include <logger/include/stream_commiter.hpp>
 #include <logger/include/mixin_commiter.hpp>
 
@@ -22,10 +23,12 @@ struct InnerData
     std::queue<Message> msg_queue_;
     std::atomic<bool> exit;
     std::byte _padding[3];
-
-    InnerData() = default;
+    std::function<void(const char* const log_stream)> commit_function;
+    InnerData()                 = default;
     InnerData(InnerData const&) = delete;
     InnerData& operator=(InnerData const&) = delete;
+    InnerData(InnerData&&) = default;
+    InnerData& operator=(InnerData&&) = default;
 };
 
 namespace
@@ -35,15 +38,15 @@ using Commiter = logger::MixinCommiter<COutCommiter, FileCommiter>;
 
 }  // namespace
 
-void ThreadCommiter::init()
+void ThreadCommiterImpl::init(void (*cmt_log)(const char* const log_stream))
 {
-    Commiter::init();
-    data_          = new InnerData;
-    data_->exit    = false;
-    data_->thread_ = std::thread(thread_func);
+    data_                  = new InnerData;
+    data_->commit_function = cmt_log;
+    data_->exit            = false;
+    data_->thread_         = std::thread(thread_func);
 }
 
-void ThreadCommiter::finish()
+void ThreadCommiterImpl::finish()
 {
     data_->exit.store(true);
     auto& thread{data_->thread_};
@@ -53,10 +56,9 @@ void ThreadCommiter::finish()
         thread.join();
     }
     delete data_;
-    Commiter::finish();
 }
 
-void ThreadCommiter::thread_func()
+void ThreadCommiterImpl::thread_func()
 {
     Message message;
 
@@ -71,7 +73,7 @@ void ThreadCommiter::thread_func()
                 message = data_->msg_queue_.front();
                 data_->msg_queue_.pop();
             }
-            char const * const msg{message.c_str()};
+            char const* const msg{message.c_str()};
             Commiter::commitlog(msg);
         }
         else
@@ -81,7 +83,7 @@ void ThreadCommiter::thread_func()
     }
 }
 
-void ThreadCommiter::commitlog(const char* const log_stream)
+void ThreadCommiterImpl::commitlog(const char* const log_stream)
 {
     Message message{log_stream};
     std::lock_guard<std::mutex> lck{data_->mutex_};

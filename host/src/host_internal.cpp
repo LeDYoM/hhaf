@@ -1,7 +1,7 @@
 #include "host_internal.hpp"
 #include "host_connector.hpp"
 #include "host_connectorimpl.hpp"
-#include "host_log.hpp"
+#include <hlog/include/hlog.hpp>
 #include <backend/include/backend_factory.hpp>
 
 using namespace htps;
@@ -11,7 +11,7 @@ namespace haf::host
 HostInternal::HostInternal(const int argc, char const* const argv[]) :
     argc_{argc},
     argv_{argv},
-    backend_factory_{nullptr, nullptr},
+    backend_factory_{nullptr},
     config_{argc, argv},
     params_{parpar::create(argc, argv)}
 {}
@@ -19,9 +19,7 @@ HostInternal::HostInternal(const int argc, char const* const argv[]) :
 bool HostInternal::initializeBackend()
 {
     // Initialize and create the backend factory
-    backend_factory_ =
-        uptr<backend::BackendFactory, void (*)(backend::BackendFactory*)>(
-            createBackendFactory(), destroyBackendFactory);
+    backend_factory_ = uptr<backend::BackendFactory>(createBackendFactory());
     backend_factory_->loadBackendFile("bsfml");
     backend_factory_->loadBackendFile("haf_integrated_backend");
     logLoadedFactories();
@@ -32,29 +30,25 @@ bool HostInternal::initializeBackend()
 void HostInternal::logLoadedFactories()
 {
     LogAsserter::log_assert(backend_factory_ != nullptr, "No backend loaded!");
-    HostLogDisplayer::debug(
-        "Window loaded loaded...\t\t",
+    DisplayLog::debug(
+        StaticTypeName, ": Window loaded loaded...\t\t",
         backend_factory_->isWindowFactoryAvailable() ? "Yes" : "No");
-    HostLogDisplayer::debug(
-        "Texture factory loaded...\t",
-        backend_factory_->getTextureFactory() ? "Yes" : "No");
-    HostLogDisplayer::debug(
-        "BMPFont factory loaded...\t",
+    DisplayLog::debug(StaticTypeName, ": Texture factory loaded...\t",
+                      backend_factory_->getTextureFactory() ? "Yes" : "No");
+    DisplayLog::debug(
+        StaticTypeName, ": BMPFont factory loaded...\t",
         backend_factory_->isBMPFontFactoryAvailable() ? "Yes" : "No");
-    HostLogDisplayer::debug(
-        "TTFont factory loaded...\t\t",
+    DisplayLog::debug(
+        StaticTypeName, ": TTFont factory loaded...\t\t",
         backend_factory_->isTTFontFactoryAvailable() ? "Yes" : "No");
-    HostLogDisplayer::debug(
-        "Shader factory loaded...\t\t",
-        backend_factory_->isShaderFactoryAvailable() ? "Yes" : "No");
 }
 
 bool HostInternal::initializeHaf()
 {
     auto const result_load_functions{system_loader_.loadFunctions()};
-    HostLogDisplayer::error_if(
+    DisplayLog::error_if(
         result_load_functions != SystemControllerLoader::ResultType::Success,
-        "Cannot load haf system!");
+        StaticTypeName, ": Cannot load haf system!");
 
     return result_load_functions == SystemControllerLoader::ResultType::Success;
 }
@@ -110,7 +104,8 @@ bool HostInternal::updateApp(HostedApplication& app)
             break;
         case AppState::ReadyToStart:
         {
-            HostLogDisplayer::info("Starting initialization of new App...");
+            DisplayLog::info(StaticTypeName,
+                             ": Starting initialization of new App...");
             app.app_state = AppState::Executing;
         }
         break;
@@ -119,14 +114,16 @@ bool HostInternal::updateApp(HostedApplication& app)
             if (app.app_system_controller->update())
             {
                 app.app_state = AppState::ReadyToTerminate;
-                HostLogDisplayer::info(appDisplayNameAndVersion(app),
-                                       ": is now ready to terminate");
+                DisplayLog::info(StaticTypeName, ": ",
+                                 appDisplayNameAndVersion(app),
+                                 ": is now ready to terminate");
             }
         }
         break;
         case AppState::ReadyToTerminate:
-            HostLogDisplayer::info(appDisplayNameAndVersion(app),
-                                   ": ready to terminate");
+            DisplayLog::info(StaticTypeName, ": ",
+                             appDisplayNameAndVersion(app),
+                             ": ready to terminate");
             app.app_state = AppState::Terminated;
             return true;
             break;
@@ -163,7 +160,7 @@ bool HostInternal::loadApplication(htps::str const& app_name)
         {
             // Remove the newly added app
             app_group_.pop_back();
-            DisplayLog::error("Cannot create haf system!");
+            DisplayLog::error(StaticTypeName, ": Cannot create haf system!");
         }
         else
         {
@@ -173,7 +170,8 @@ bool HostInternal::loadApplication(htps::str const& app_name)
                                             backend_factory_.get(), argc_,
                                             argv_);
 
-            DisplayLog::info(appDisplayNameAndVersion(app),
+            DisplayLog::info(StaticTypeName, ": ",
+                             appDisplayNameAndVersion(app),
                              ": Starting execution...");
             return true;
         }
@@ -189,7 +187,7 @@ bool HostInternal::unloadApplication(str app_name)
         auto hosted_app = app_group_[app_name];
         auto& app       = hosted_app->managed_app_;
         hosted_app->app_system_controller->terminate();
-        hosted_app->app_system_controller.reset();
+        hosted_app->app_system_controller = nullptr;
         app_loader.unloadApp(app);
         return app_group_.removeApp(app_name);
     }

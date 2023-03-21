@@ -2,7 +2,7 @@
 #define ZOPER_HIGHSCORESSCENE_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
-#include <htypes/include/connection.hpp>
+#include <haf/include/events/connection.hpp>
 
 #include <haf/include/scene/scene.hpp>
 #include <haf/include/render/renderizable.hpp>

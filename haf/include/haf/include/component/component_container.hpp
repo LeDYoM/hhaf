@@ -3,11 +3,10 @@ HTPS_PRAGMA_ONCE
 #define HAF_COMPONENT_COMPONENT_CONTAINER_INCLUDE_HPP
 
 #include <haf/include/haf_export.hpp>
-#include <htypes/include/types.hpp>
+#include <haf/include/core/types.hpp>
 #include <htypes/include/p_impl_pointer.hpp>
 
 #include <haf/include/component/component.hpp>
-#include <haf/include/utils/type_data.hpp>
 #include <hlog/include/hlog.hpp>
 
 namespace haf::scene
@@ -24,6 +23,8 @@ namespace haf::component
 class HAF_API ComponentContainer
 {
 public:
+    static constexpr char StaticTypeName[] = "ComponentContainer";
+
     explicit ComponentContainer(htps::rptr<scene::SceneNode> attachable);
 
     /**
@@ -31,27 +32,13 @@ public:
      */
     virtual ~ComponentContainer();
 
-    /**
-     * @brief Create or get a pointer to a component type. This method
-     * could create an instance of the component and add it to the component
-     * list or retrieve a pointer to it
-     *
-     * @tparam T Type of the component
-     * @return Pointer to the component type. Either newly created or already
-     * existing
-     */
+    core::sptr<Component> attachComponent(core::str_view typeName);
+
     template <typename T>
-    htps::sptr<T> component()
+    core::sptr<T> attachComponent()
     {
-        htps::sptr<T> result{componentOfType<T>()};
-        if (result == nullptr)
-        {
-            result = htps::msptr<T>();
-            applyRequirements(*result);
-            initialize(*result);
-            addComponent(result);
-        }
-        return result;
+        core::sptr<Component> result{attachComponent(T::StaticTypeName)};
+        return result ? core::dynamic_pointer_cast<T>(result) : nullptr;
     }
 
     /**
@@ -63,8 +50,8 @@ public:
     template <typename T>
     htps::sptr<T> componentOfType() const
     {
-        auto cot{componentOfType(type_of<T>())};
-        return cot ? std::dynamic_pointer_cast<T>(cot) : nullptr;
+        auto cot{componentOfType(T::StaticTypeName)};
+        return cot ? core::dynamic_pointer_cast<T>(cot) : nullptr;
     }
 
     /**
@@ -80,22 +67,7 @@ public:
         element = componentOfType<T>();
     }
 
-    /**
-     * @brief Retrieve an instance of a component type. Either newly created
-     * or already existing
-     *
-     * @tparam T Type of the component
-     * @param element Return value as a reference. Template deduction will
-     * get the required type.
-     */
-    template <typename T>
-    void component(htps::sptr<T>& element)
-    {
-        if (element == nullptr)
-        {
-            element = component<T>();
-        }
-    }
+    core::sptr<Component> componentOfType(core::str_view typeName) const;
 
     /**
      * @brief Update componentents of this container
@@ -103,27 +75,43 @@ public:
     void updateComponents();
 
     /**
-     * @brief Clear all elements of this container     *
+     * @brief Clear all elements of this container
      */
     void clearComponents() noexcept;
 
-    htps::size_type components() const noexcept;
+    core::size_type components() const noexcept;
+    core::str_view componentNameAt(core::size_type const index) const;
 
-private:
-    void applyRequirements(Component& _thisComponent);
-
-    htps::rptr<scene::SceneNode> attachable() const noexcept;
-
-    void initialize(component::Component& component) const;
+    core::sptr<Component> getOrCreateComponent(core::str_view typeName);
 
     template <typename T>
-    utils::type_index type_of() const noexcept
+    core::sptr<T> safeComponentConversion(
+        core::sptr<Component> source_component)
     {
-        return utils::type_index{typeid(T)};
+        return source_component ? core::dynamic_pointer_cast<T>(source_component)
+                                : nullptr;
     }
 
+private:
+    /**
+     * @brief Create or get a pointer to a component type. This method
+     * could create an instance of the component and add it to the component
+     * list or retrieve a pointer to it
+     *
+     * @tparam T Type of the component
+     * @return Pointer to the component type. Either newly created or already
+     * existing
+     */
+    template <typename T>
+    core::sptr<T> getOrCreateComponent()
+    {
+        core::sptr<Component> result{getOrCreateComponent(T::StaticTypeName)};
+        return result ? core::dynamic_pointer_cast<T>(result) : nullptr;
+    }
+
+    core::sptr<Component> createComponent(core::str_view typeName);
+    bool applyRequirements(Component& _thisComponent);
     bool addComponent(htps::sptr<Component> nc);
-    htps::sptr<Component> componentOfType(utils::type_index const& ti) const;
 
     struct ComponentContainerPrivate;
     htps::PImplPointer<ComponentContainerPrivate> p_;

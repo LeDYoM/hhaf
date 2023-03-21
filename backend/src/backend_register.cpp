@@ -1,6 +1,5 @@
 #include <backend/include/backend_register.hpp>
 #include "backend_utils.hpp"
-#include "backend_log.hpp"
 
 using namespace htps;
 
@@ -25,12 +24,6 @@ void BackendRegister::setFactory(
     uptr<ITextureFactoryFactory> texture_factory_factory) noexcept
 {
     texture_factory_factory_ = htps::move(texture_factory_factory);
-}
-
-void BackendRegister::setFactory(
-    uptr<IShaderFactoryFactory> shader_factory_factory) noexcept
-{
-    shader_factory_factory_ = htps::move(shader_factory_factory);
 }
 
 void BackendRegister::setFactory(
@@ -69,14 +62,14 @@ bool BackendRegister::finish()
 bool BackendRegister::fillRegisteredFactories()
 {
     return fillFactories(this, &window_, &ttfontFactory_, &textureFactory_,
-                         &shaderFactory_, &bmpFontFactory_);
+                         &bmpFontFactory_);
 
 }  // namespace haf::backend
 
 bool BackendRegister::emptyRegisteredFactories()
 {
     return emptyFactories(this, &window_, &textureFactory_, &ttfontFactory_,
-                          &shaderFactory_, &bmpFontFactory_);
+                          &bmpFontFactory_);
 }
 
 htps::str const& BackendRegister::moduleName() const noexcept

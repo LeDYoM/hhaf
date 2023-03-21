@@ -20,8 +20,8 @@
 #include <hosted_app/include/iapp.hpp>
 
 #include <haf/include/system/system_access.hpp>
-#include <haf/include/scene_components/iapp_initializer.hpp>
-#include <haf/include/scene_components/iapp_finisher.hpp>
+#include <haf/include/scene_components/2.1/iapp_initializer.hpp>
+#include <haf/include/scene_components/2.1/iapp_finisher.hpp>
 
 #include <htypes/include/parpar.hpp>
 
@@ -103,7 +103,7 @@ void configureSystem(T& system, str const& file_name)
 void SystemProvider::createSystems(InitSystemOptions const& init_system_options)
 {
     instanciateSystems(init_system_options);
-    p_->loadConfiguration(SubSystemViewer(this));
+    p_->loadConfiguration(SubSystemViewer{this});
     initializeSystems(init_system_options);
 }
 
@@ -180,6 +180,10 @@ void SystemProvider::instanciateSystems(
 void SystemProvider::initializeSystems(
     InitSystemOptions const& init_system_options)
 {
+    if (init_system_options.init_debug_system)
+    {
+        p_->debug_system_->logBuildStaticData();
+    }
     if (init_system_options.init_simulation_system)
     {
         configureSystem(p_->simulation_system_,
@@ -197,7 +201,7 @@ void SystemProvider::initializeSystems(
 
         if (init_system_options.init_render_system)
         {
-            p_->render_system_->initialize();
+            p_->render_system_->initialize(true);
         }
 
         if (init_system_options.init_input_system)
@@ -210,6 +214,11 @@ void SystemProvider::initializeSystems(
     if (init_system_options.init_resource_manager)
     {
         p_->resource_manager_->init();
+    }
+
+    if (init_system_options.init_scene_manager)
+    {
+        p_->scene_manager_->init();
     }
 }
 

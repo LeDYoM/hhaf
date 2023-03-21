@@ -20,7 +20,7 @@ void MenuPage::onCreated()
     BaseClass::onCreated();
     TableSize = {0U, 0U};
 
-    auto input{component<MenuPageInputComponent>()};
+    auto input{getOrCreateComponent<MenuPageInputComponent>()};
     input->Up.connect({this, &MenuPage::goUp});
     input->Down.connect({this, &MenuPage::goDown});
     input->Left.connect({this, &MenuPage::goLeft});
@@ -58,7 +58,7 @@ void MenuPage::onAllTableElementsCreated(htps::vector2dst const table_size)
                     nodeAt(vector2dst{columnForOptions, counter})};
                 standarizeText(discreteTextLabel);
                 auto discreteTextComponent{
-                    discreteTextLabel->component<DiscreteTextComponent>()};
+                    discreteTextLabel->getOrCreateComponent<DiscreteTextComponent>()};
                 discreteTextComponent->data = option->option().options();
             }
 

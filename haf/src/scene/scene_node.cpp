@@ -1,39 +1,44 @@
 #include <haf/include/scene/scene_node.hpp>
-#include <haf/include/scene/scene.hpp>
-#include <haf/include/scene_components/camera_component.hpp>
+#include <hlog/include/hlog.hpp>
 
-using namespace htps;
+using namespace haf::core;
 
 namespace haf::scene
 {
-SceneNode::SceneNode(rptr<SceneNode> parent, str name) :
-    sys::HasName{htps::move(name)},
+SceneNode::SceneNode(rptr<SceneNode> parent, str_view name) :
+    sys::HasName{str{name}},
     SceneNodeParent{parent},
-    SceneNodes{this},
-    sys::SystemAccess{parent != nullptr ? &(parent->isystemProvider())
-                                        : nullptr},
-//    SceneNodeProperties(true),
+    sys::SystemAccess{&(parent->isystemProvider())},
     component::ComponentContainer{this},
     sys::SubSystemViewer{&isystemProvider()}
 {}
 
-SceneNode::~SceneNode() = default;
-
-void SceneNode::update()
+SceneNode::SceneNode(rptr<SceneNode> parent, str name) :
+    SceneNode{parent, str_view{name.c_str()}}
 {}
 
-void SceneNode::postRender(SceneRenderContext& /*sceneRenderContext*/)
+SceneNode::SceneNode(rptr<sys::ISystemProvider> isystem_provider) :
+    sys::HasName{"global"},
+    SceneNodeParent{nullptr},
+    sys::SystemAccess{isystem_provider},
+    component::ComponentContainer{this},
+    sys::SubSystemViewer{isystem_provider}
+{}
+
+SceneNode::~SceneNode()
 {
+    DisplayLog::debug(StaticTypeName, ": ", name(), ": Destroying");
+    component::ComponentContainer::clearComponents();
 }
 
-void SceneNode::clearAll()
+void SceneNode::update()
 {
-    clearSceneNodes();
+    ComponentContainer::updateComponents();
 }
 
 SceneBox SceneNode::sceneView() const
 {
-    return sceneParent()->cameraComponent()->view();
+    return SceneBox{};
 }
 
 SceneBox::vector_t SceneNode::sceneViewSize() const
@@ -41,19 +46,10 @@ SceneBox::vector_t SceneNode::sceneViewSize() const
     return sceneView().size();
 }
 
-rptr<Scene> SceneNode::sceneParent()
-{
-    return ancestor<Scene>();
-}
-
-rptr<Scene const> SceneNode::sceneParent() const
-{
-    return cancestor<Scene>();
-}
-
 str SceneNode::completeName() const
 {
-    return parent()->completeName() + "::" + name();
+    auto const p{parent()};
+    return (p == nullptr ? "" : p->completeName() + "::") + name();
 }
 
 }  // namespace haf::scene

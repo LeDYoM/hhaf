@@ -52,7 +52,7 @@ struct TimeSystem::TimeSystemPrivate final : public TimeSystemAcceleration
         last_frame_time_  = last_start_frame_ - tmp_start_frame_;
     }
 
-    void updateEndFrameTime() { last_end_frame_ = timepoint_global_now(); }
+    void updateEndFrameTime() { last_end_frame_ = timeSinceStart(); }
 
     TimePoint lastFrameTime() const noexcept { return last_frame_time_; }
     TimePoint lastStartFrame() const noexcept { return last_start_frame_; }

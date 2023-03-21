@@ -12,6 +12,6 @@ public:
     virtual bool serialize(htps::Object&) const = 0;
     virtual ~ISerializable()                    = default;
 };
-}
+}  // namespace haf::data
 
 #endif

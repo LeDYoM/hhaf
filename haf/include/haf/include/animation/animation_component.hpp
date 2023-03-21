@@ -2,22 +2,23 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_ANIMATION_ANIMATION_COMPONENT_INCLUDE_HPP
 #define HAF_ANIMATION_ANIMATION_COMPONENT_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
-#include <haf/include/component/component.hpp>
+#include <haf/include/core/types.hpp>
+#include <haf/include/component/component_declaration.hpp>
 #include <haf/include/animation/animation.hpp>
 #include <haf/include/animation/property_animation.hpp>
 #include <haf/include/animation/property_animation_builder.hpp>
 #include <haf/include/scene/scene_node.hpp>
 #include <haf/include/time/timer_component.hpp>
 #include <haf/include/time/timer_connector.hpp>
-#include <htypes/include/properties/iproperty.hpp>
+#include <haf/include/properties/iproperty.hpp>
 
 namespace haf::anim
 {
 /**
  * @brief Component designed to store, manage and update animations.
  */
-class AnimationComponent final : public component::Component
+class AnimationComponent final
+    : public component::ComponentBase<"AnimationComponent">
 {
 public:
     AnimationComponent();

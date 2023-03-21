@@ -37,9 +37,7 @@ public:
     virtual void terminate()                    = 0;
 };
 
-using DestructibleSystemController =
-    htps::uptr<sys::ISystemController,
-               htps::function<void(sys::ISystemController*)>>;
+using UptrSystemController = htps::uptr<sys::ISystemController>;
 
 }  // namespace haf::sys
 

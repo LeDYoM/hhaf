@@ -6,22 +6,22 @@ HTPS_PRAGMA_ONCE
 #include <htypes/include/types.hpp>
 #include <htypes/include/rect.hpp>
 #include <haf/include/types/scene_types.hpp>
-#include <haf/include/scene_components/iscene_control.hpp>
-#include <haf/include/scene_components/iapp_initializer.hpp>
-#include <haf/include/scene_components/iapp_finisher.hpp>
+#include "scene_render_context_for_system.hpp"
+#include <haf/include/scene_components/2.1/iapp_initializer.hpp>
+#include <haf/include/scene_components/2.1/iapp_finisher.hpp>
 #include "system/system_base.hpp"
+
+#include <haf/include/component/component_factory.hpp>
+#include <hlog/include/hlog.hpp>
 
 namespace haf::scene
 {
-class SceneController;
 class SceneNode;
-class SceneFactory;
 }  // namespace haf::scene
 
 namespace haf::scene
 {
 class HAF_PRIVATE SceneManager final : public sys::SystemBase,
-                                       public ISceneControl,
                                        public IAppInitializer,
                                        public IAppFinisher
 {
@@ -29,49 +29,53 @@ public:
     explicit SceneManager(sys::SystemProvider& system_provider);
     ~SceneManager() override;
 
-    void start();
+    void init();
     void update();
     void finish();
-
-    htps::sptr<SceneController const> sceneController() const noexcept;
-    htps::sptr<SceneController> sceneController() noexcept;
-
-    /**
-     * @brief Method to change to the next scene.
-     */
-    void switchToNextScene() override;
-
-    /**
-     * @brief Gives the control to the @b SceneController and
-     * @b SceneManager to perform the main loop updating the scene.
-     *
-     * @param scene_name Registered name of the scene to start
-     * @return true  Everything went correct
-     * @return false A problem happened.
-     */
-    bool startScene(const htps::str& scene_name) override;
 
     /**
      * @brief Tell the system to stop the current aplication.
      */
-    void requestExit() override;
+    void requestExit();
 
-    /**
-     * @brief Ask the system about the status of the request to finish the
-     *  current aplication.
-     *
-     * @return true The system will terminate at the next opportunity.
-     * @return false The system has no intention of terminating the current
-     *  application.
-     */
-    bool exitRequested() const override;
+    template <typename T>
+    bool registerComponent()
+    {
+        static_assert(std::is_base_of_v<component::Component, T>,
+                      "The template type must be inherited from Component");
+        auto const result{registerComponent(T::StaticTypeName,
+                                            []() { return core::msptr<T>(); })};
+        if (result)
+        {
+            DisplayLog::verbose("Registered component of type: <",
+                                T::StaticTypeName, "> with size: ", sizeof(T));
+        }
+        return result;
+    }
 
-    SceneNodeFactory& sceneNodeFactory() override;
+    bool registerComponent(
+        core::str_view componentType,
+        component::ComponentCreateFunction component_create_function) override;
 
-    bool setNextApp(htps::str const& next_app) override;
+    bool instanciateRootComponent(core::str_view componentType) override;
+    core::sptr<component::Component> instantiateComponent(core::str_view name);
+
+    core::rptr<SceneNode> rootSceneNode() const;
+
+    SceneRenderContextForSystem& sceneRenderContextForSystem() noexcept;
+    SceneRenderContextForSystem const& sceneRenderContextForSystem()
+        const noexcept;
+
+    SceneRenderContext& sceneRenderContext() noexcept;
+    SceneRenderContext const& sceneRenderContext() const noexcept;
+
+    SceneRenderContextView& sceneRenderContextView() noexcept;
+    SceneRenderContextView const& sceneRenderContextView() const noexcept;
 
 private:
-    htps::sptr<SceneController> scene_controller_;
+    SceneRenderContextForSystem m_scene_render_context_for_system;
+    component::ComponentFactory m_component_factory;
+    core::uptr<SceneNode> m_rootSceneNode;
 };
 }  // namespace haf::scene
 

@@ -25,6 +25,8 @@ public:
     BackendFactory();
     ~BackendFactory();
 
+    static constexpr char StaticTypeName[] = "BackendFactory";
+
     /**
      * @brief Load a new shared object containing factories to be used by haf
      *
@@ -38,16 +40,13 @@ public:
     htps::rptr<IWindow> getWindow() const noexcept;
     htps::rptr<ITextureFactory> getTextureFactory() const noexcept;
     htps::rptr<ITTFontFactory> getTTFontFactory() const noexcept;
-    htps::rptr<IShaderFactory> getShaderFactory() const noexcept;
     htps::rptr<IBMPFontFactory> getBMPFontFactory() const noexcept;
     ITextureFactory& textureFactory() const;
     ITTFontFactory& ttfontFactory() const;
-    IShaderFactory& shaderFactory() const;
     IBMPFontFactory& bmpFontFactory() const;
 
     bool isWindowFactoryAvailable() const noexcept;
     bool isTextureFactoryAvailable() const noexcept;
-    bool isShaderFactoryAvailable() const noexcept;
     bool isBMPFontFactoryAvailable() const noexcept;
     bool isTTFontFactoryAvailable() const noexcept;
 
@@ -60,7 +59,6 @@ private:
     htps::rptr<IWindow> window_{nullptr};
     htps::rptr<ITextureFactory> textureFactory_{nullptr};
     htps::rptr<ITTFontFactory> ttfontFactory_{nullptr};
-    htps::rptr<IShaderFactory> shaderFactory_{nullptr};
     htps::rptr<IBMPFontFactory> bmpFontFactory_{nullptr};
     htps::rptr<agloader::Loader> loader_{nullptr};
 };

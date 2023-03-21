@@ -2,11 +2,12 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_FILESYSTEM_PATH_INCLUDE_HPP
 #define HAF_FILESYSTEM_PATH_INCLUDE_HPP
 
-#include <htypes/include/str.hpp>
+#include <haf/include/core/types.hpp>
 
 namespace haf::sys
 {
-using Path = htps::str;
+using Path = core::str;
+
 }  // namespace haf::sys
 
 #endif

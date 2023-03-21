@@ -79,7 +79,7 @@ private:
     parpar::ParametersParser params_;
     PureDictionary config_data_;
     str config_file_name_{"host_config.cfg"};  ///< Default config file name
-    str start_app_{"Zoper"};
+    str start_app_{"HafLife"};
 };
 
 }  // namespace haf::host

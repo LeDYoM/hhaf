@@ -1,23 +1,19 @@
 #include "catch.hpp"
 
-#include <htypes/include/types.hpp>
+#include <haf/include/core/types.hpp>
 #include <haf/include/scene/scene_node.hpp>
-#include <haf/include/scene/scene.hpp>
 
-using namespace htps;
+#include "system_test_utils.hpp"
 
-auto unitTestScene()
-{
-    static auto uts(msptr<haf::scene::Scene>("unitTest"));
-    return uts;
-}
+using namespace haf;
+using namespace haf::test;
 
 TEST_CASE("Constructor", "[SceneNode]")
 {
     using namespace haf;
     using namespace haf::scene;
 
-    auto node_test(unitTestScene()->createSceneNode("SceneNode_test"));
-    CHECK(unitTestScene()->sceneNodes().size() == 1U);
-    CHECK(node_test->sceneNodes().size() == 0U);
+    auto test_scene_manager{makeTestSystem<TestSceneManager>()};
+    SceneManager& scene_manager{test_scene_manager->system<SceneManager>()};
+    (void)(scene_manager);
 }

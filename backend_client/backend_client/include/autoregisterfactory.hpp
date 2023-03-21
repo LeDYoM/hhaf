@@ -33,7 +33,7 @@ public:
     void resetFactory(
         IBackendRegister* const backend_register) const noexcept override
     {
-        backend_register->setFactory(std::unique_ptr<IFactoryOf<T>>{});
+        backend_register->setFactory(htps::uptr<IFactoryOf<T>>{});
     }
 
     void destroy() noexcept override { factory_.reset(); }

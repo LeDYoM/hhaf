@@ -31,6 +31,8 @@ public:
      */
     constexpr function() noexcept : callable_{nullptr} {}
 
+    constexpr function(nullptr_t) noexcept : function{} {}
+
     /**
      * @brief Construct from a callable object. Normally, a lambda or a pointer
      * to function.
@@ -127,24 +129,20 @@ private:
         constexpr CallableT(Y&& t) noexcept : t_{htps::forward<Y>(t)}
         {}
 
-        inline ReturnValue Invoke(Args... args) override
+        constexpr ReturnValue Invoke(Args... args) override
         {
             return t_(htps::forward<Args>(args)...);
         }
 
-        inline bool equals(CallableT const& other) const noexcept
+        constexpr bool equals(CallableT const& other) const noexcept
         {
             return &t_ == &other.t_;
         }
 
-        inline bool equals(ICallable const& other) const noexcept override
+        constexpr bool equals(ICallable const& other) const noexcept override
         {
-            CallableT const* const tmp = dynamic_cast<CallableT const*>(&other);
-            if (tmp == nullptr)
-            {
-                return false;
-            }
-            return equals(*tmp);
+            CallableT const* const tmp{dynamic_cast<CallableT const*>(&other)};
+            return tmp ? equals(*tmp) : false;
         }
 
     private:
@@ -155,33 +153,30 @@ private:
     class CallableMethodPointerT final : public ICallable
     {
     public:
-        //        typedef ReturnValue (T::*HandlerFunctionPtr)(Args...);
         using HandlerFunctionPtr = ReturnValue (T::*)(Args...);
 
-        constexpr CallableMethodPointerT(T* const receiver,
-                                         const HandlerFunctionPtr function) :
+        constexpr CallableMethodPointerT(
+            T* const receiver,
+            const HandlerFunctionPtr function) noexcept :
             obj{receiver}, function_{function}
         {}
 
-        inline ReturnValue Invoke(Args... args) override
+        constexpr ReturnValue Invoke(Args... args) override
         {
             return (obj->*function_)(htps::forward<Args>(args)...);
         }
 
-        inline bool equals(CallableMethodPointerT const& other) const noexcept
+        constexpr bool equals(
+            CallableMethodPointerT const& other) const noexcept
         {
             return obj == other.obj && function_ == other.function_;
         }
 
-        inline bool equals(ICallable const& other) const noexcept override
+        constexpr bool equals(ICallable const& other) const noexcept override
         {
-            function::CallableMethodPointerT<T> const* const tmp =
-                dynamic_cast<CallableMethodPointerT<T> const*>(&other);
-            if (tmp == nullptr)
-            {
-                return false;
-            }
-            return equals(*tmp);
+            function::CallableMethodPointerT<T> const* const tmp{
+                dynamic_cast<CallableMethodPointerT<T> const*>(&other)};
+            return tmp ? equals(*tmp) : false;
         }
 
     private:
@@ -201,26 +196,22 @@ private:
             obj{receiver}, function_{function}
         {}
 
-        inline ReturnValue Invoke(Args... args) override
+        constexpr ReturnValue Invoke(Args... args) override
         {
             return (obj->*function_)(htps::forward<Args>(args)...);
         }
 
-        inline bool equals(
+        constexpr bool equals(
             ConstCallableMethodPointerT const& other) const noexcept
         {
             return obj == other.obj && function_ == other.function_;
         }
 
-        inline bool equals(ICallable const& other) const noexcept override
+        constexpr bool equals(ICallable const& other) const noexcept override
         {
-            function::ConstCallableMethodPointerT<T> const* const tmp =
-                dynamic_cast<ConstCallableMethodPointerT<T> const*>(&other);
-            if (tmp == nullptr)
-            {
-                return false;
-            }
-            return equals(*tmp);
+            function::ConstCallableMethodPointerT<T> const* const tmp{
+                dynamic_cast<ConstCallableMethodPointerT<T> const*>(&other)};
+            return tmp ? equals(*tmp) : false;
         }
 
     private:

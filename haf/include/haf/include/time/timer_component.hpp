@@ -6,7 +6,7 @@ HTPS_PRAGMA_ONCE
 #include <htypes/include/lockablevector.hpp>
 #include <haf/include/time/timer_connector.hpp>
 #include <haf/include/time/timer_type.hpp>
-#include <haf/include/component/component.hpp>
+#include <haf/include/component/component_declaration.hpp>
 
 namespace haf::time
 {
@@ -16,7 +16,7 @@ namespace haf::time
  * managed by the returned @b TimerConnectorSptr. They can be of different
  * @b TimerType.
  */
-class TimerComponent : public component::Component
+class TimerComponent : public component::ComponentBase<"TimerComponent">
 {
 public:
     /**

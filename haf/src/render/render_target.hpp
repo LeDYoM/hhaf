@@ -4,8 +4,8 @@ HTPS_PRAGMA_ONCE
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/rect.hpp>
-#include <htypes/include/properties/property_state.hpp>
-#include <haf/include/scene/matrix4x4.hpp>
+#include <haf/include/properties/property_state.hpp>
+#include <haf/include/core/matrix4x4.hpp>
 
 namespace haf::ogl
 {
@@ -38,8 +38,8 @@ public:
     void update();
     void clearRenderQueue();
 
-    htps::PropertyState<htps::Rects32> ViewPort;
-    htps::PropertyState<scene::Matrix4x4> Projection;
+    prop::PropertyState<htps::Rects32> ViewPort;
+    prop::PropertyState<math::Matrix4x4> Projection;
 
 private:
     htps::sptr<ogl::RenderTarget> irender_target_;

@@ -6,7 +6,6 @@ set(CURRENT_TARGET ${PROJECT_NAME})
 set(SOURCES
     src/backend_creator.cpp
     src/backend_factory.cpp
-    src/backend_log.hpp
     src/backend_register.cpp
     src/backend_utils.hpp
 )

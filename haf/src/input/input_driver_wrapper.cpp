@@ -1,8 +1,8 @@
-#include <haf/include/input/inputdriver_wrapper.hpp>
+#include "input_driver_wrapper.hpp"
 #include <backend_dev/include/iinputdriver.hpp>
 #include <backend_dev/include/ikey.hpp>
 
-using namespace htps;
+using namespace haf::core;
 
 namespace
 {
@@ -53,7 +53,7 @@ void InputDriverWrapper::readKeyPressed(vector<Key>& keys_pressed)
 
 void InputDriverWrapper::readKeyReleased(vector<Key>& keys_released)
 {
-    p_->input_driver_->readKeyPressed(p_->driver_keys_released);
+    p_->input_driver_->readKeyReleased(p_->driver_keys_released);
     keys_released.clear();
     for (auto const& key : p_->driver_keys_released)
     {

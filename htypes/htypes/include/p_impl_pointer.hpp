@@ -58,6 +58,13 @@ PImplPointer<T> make_pimplp(Args&&... args)
     return PImplPointer<T>(p);
 }
 
+template <typename T, typename... Args>
+PImplPointer<T> make_pimplp_forward(Args&&... args)
+{
+    T* p = new T{htps::forward<Args>(args)...};
+    return PImplPointer<T>(p);
+}
+
 }  // namespace htps
 
 #endif

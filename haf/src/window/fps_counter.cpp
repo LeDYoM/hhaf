@@ -15,7 +15,10 @@ void FPSCounter::updateFPS(time::TimePoint const& time_since_start,
     {
         lastFps     = currentFps;
         currentFps  = 0U;
-        backend_window->setWindowTitle(make_str(base_title, " FPS:", lastFps));
+        m_lastWindowTitle = base_title;
+        m_lastWindowTitle += " FPS: ";
+        m_lastWindowTitle.append(lastFps);
+        backend_window->setWindowTitle(m_lastWindowTitle);
     }
     ++(currentFps);
 }

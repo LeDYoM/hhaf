@@ -7,7 +7,7 @@ HTPS_PRAGMA_ONCE
 #include <haf/include/debug_system/debug_types.hpp>
 
 #define HAF_PROFILE_SCENE_NODE_METHOD(v_id) \
-    HAF_DECLARE_DEBUG_VARIABLE(v_id)    \
+    HAF_DECLARE_DEBUG_VARIABLE(v_id) \
     haf::debug::CodeProfiler ___{*this, HAF_DEBUG_VARIABLE_NAME(v_id), #v_id};
 #else
 

@@ -2,9 +2,7 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_SHAREDDATA_ADRESS_INCLUDE_HPP
 #define HAF_SHAREDDATA_ADRESS_INCLUDE_HPP
 
-#include <htypes/include/p_impl_pointer.hpp>
-#include <htypes/include/types.hpp>
-#include <htypes/include/str.hpp>
+#include <haf/include/core/types.hpp>
 #include <htypes/include/object.hpp>
 #include <haf/include/haf_export.hpp>
 
@@ -16,10 +14,10 @@ namespace haf::shdata
 class HAF_API Address
 {
 public:
-    using iterator        = htps::str*;
-    using const_iterator  = htps::str const*;
-    using reference       = htps::str&;
-    using const_reference = htps::str const&;
+    using iterator        = core::str*;
+    using const_iterator  = core::str const*;
+    using reference       = core::str&;
+    using const_reference = core::str const&;
 
     /**
      * @brief Construct a new Address object
@@ -28,7 +26,8 @@ public:
      * @param separator Element to be used as a separator of the parts of the
      *  address.
      */
-    Address(htps::str const& addr, char const separator = '/');
+    Address(core::str const& addr);
+    Address(core::str const& addr, char const separator);
 
     /**
      * @brief Destroy the Address object
@@ -66,7 +65,7 @@ public:
      */
     Address& operator=(Address&& address) noexcept;
 
-    htps::size_type size() const noexcept;
+    core::size_type size() const noexcept;
 
     iterator begin() noexcept;
     iterator end() noexcept;
@@ -77,11 +76,13 @@ public:
     inline const_iterator cbegin() const noexcept { return begin(); }
     inline const_iterator cend() const noexcept { return end(); }
 
-    reference operator[](htps::size_type const index) noexcept;
-    const_reference operator[](htps::size_type const index) const noexcept;
+    reference operator[](core::size_type const index) noexcept;
+    const_reference operator[](core::size_type const index) const noexcept;
 
-    htps::str first() const;
-    htps::str last() const;
+    core::str first() const;
+    core::str last() const;
+
+    core::str str() const;
 
     /**
      * @brief Check if an address is relative (it does not start with separator)
@@ -122,7 +123,7 @@ public:
 
 private:
     struct AddressPrivate;
-    htps::PImplPointer<AddressPrivate> private_;
+    core::PImplPointer<AddressPrivate> private_;
 };
 
 /**
@@ -130,7 +131,7 @@ private:
  *
  * @param address Address to retrieve
  * @param object Object where to search
- * @return htps::pair<bool, htps::Object> In the returned pair, the first
+ * @return core::pair<bool, htps::Object> In the returned pair, the first
  * will be if the operation wass successful and the second will be an
  * @b htps::Object . If first is false, the second value is undefined.
  */

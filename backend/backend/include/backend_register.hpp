@@ -19,7 +19,6 @@ public:
     void setFactory(htps::uptr<IWindowFactory>) noexcept override;
     void setFactory(htps::uptr<ITTFontFactoryFactory>) noexcept override;
     void setFactory(htps::uptr<ITextureFactoryFactory>) noexcept override;
-    void setFactory(htps::uptr<IShaderFactoryFactory>) noexcept override;
     void setFactory(htps::uptr<IBMPFontFactoryFactory>) noexcept override;
 
     void setLibFuncs(p_initBackendClient init_lib_func,
@@ -50,14 +49,6 @@ public:
 
     template <
         typename T,
-        typename = std::enable_if_t<std::is_same_v<T, IShaderFactoryFactory>>>
-    htps::sptr<IShaderFactoryFactory> getFactory() const
-    {
-        return shader_factory_factory_;
-    }
-
-    template <
-        typename T,
         typename = std::enable_if_t<std::is_same_v<T, IBMPFontFactoryFactory>>>
     htps::sptr<IBMPFontFactoryFactory> getFactory() const
     {
@@ -79,7 +70,6 @@ public:
     htps::rptr<IWindow> window_{nullptr};
     htps::rptr<ITextureFactory> textureFactory_{nullptr};
     htps::rptr<ITTFontFactory> ttfontFactory_{nullptr};
-    htps::rptr<IShaderFactory> shaderFactory_{nullptr};
     htps::rptr<IBMPFontFactory> bmpFontFactory_{nullptr};
 
 private:
@@ -89,7 +79,6 @@ private:
     htps::sptr<IWindowFactory> window_factory_;
     htps::sptr<ITTFontFactoryFactory> ttfont_factory_factory_;
     htps::sptr<ITextureFactoryFactory> texture_factory_factory_;
-    htps::sptr<IShaderFactoryFactory> shader_factory_factory_;
     htps::sptr<IBMPFontFactoryFactory> bmpfont_factory_factory_;
 };
 }  // namespace haf::backend

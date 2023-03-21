@@ -20,8 +20,7 @@ bool Animation::animate()
 {
     current_time_ = animation_data_.TimerProperty()->ellapsed();
 
-    bool continue_animation{current_time_ <=
-                            animation_data_.Duration()};
+    bool continue_animation{current_time_ <= animation_data_.Duration()};
     raw_delta_ = (continue_animation)
         ? (static_cast<decltype(raw_delta_)>(current_time_.milliseconds()) /
            animation_data_.Duration().milliseconds())

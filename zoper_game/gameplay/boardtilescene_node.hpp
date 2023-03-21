@@ -2,7 +2,7 @@
 #define ZOPER_BOARD_TILE_SCENENODE_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
-#include <htypes/include/properties/property_state.hpp>
+#include <haf/include/properties/property_state.hpp>
 #include <haf/include/scene/scene_node.hpp>
 #include <haf/include/scene/color.hpp>
 #include <haf/include/render/renderizable.hpp>
@@ -21,7 +21,7 @@ public:
      */
     using BaseClass::BaseClass;
 
-    htps::PropertyState<haf::scene::Color> BackgroundColor;
+    prop::PropertyState<haf::scene::Color> BackgroundColor;
 
     void onCreated() override;
 

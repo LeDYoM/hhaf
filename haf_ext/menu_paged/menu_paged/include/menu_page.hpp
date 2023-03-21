@@ -7,7 +7,7 @@
 #include <haf/include/scene_nodes/scene_node_table_text.hpp>
 #include <haf/include/scene_nodes/scene_node_text.hpp>
 
-#include <htypes/include/connection.hpp>
+#include <haf/include/events/connection.hpp>
 #include <haf/include/scene_components/discretetextcomponent.hpp>
 
 namespace haf::scene
@@ -25,16 +25,16 @@ public:
     void onCreated() override;
     void update() override;
 
-    htps::PropertyState<htps::vector<htps::sptr<MenuPagedOption>>> menu_options;
-    htps::PropertyState<PageOptions> menu_page_options;
+    prop::PropertyState<htps::vector<htps::sptr<MenuPagedOption>>> menu_options;
+    prop::PropertyState<PageOptions> menu_page_options;
 
     htps::size_type SelectedOptionAtRow(const htps::size_type row) const;
 
-    htps::emitter<const htps::s32> Forward;
-    htps::emitter<htps::vector<htps::s32>> Accepted;
-    htps::emitter<> Back;
-    htps::emitter<htps::vector<htps::s32>> Canceled;
-    htps::emitter<const htps::size_type, const htps::s32> Selection;
+    evt::emitter<const htps::s32> Forward;
+    evt::emitter<htps::vector<htps::s32>> Accepted;
+    evt::emitter<> Back;
+    evt::emitter<htps::vector<htps::s32>> Canceled;
+    evt::emitter<const htps::size_type, const htps::s32> Selection;
 protected:
     using ContainedElement = BaseClass::ContainedElement;
 

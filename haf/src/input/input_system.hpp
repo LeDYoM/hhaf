@@ -2,8 +2,7 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_INPUTSYSTEM_INCLUDE_HPP
 #define HAF_INPUTSYSTEM_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
-#include <htypes/include/vector.hpp>
+#include <haf/include/core/types.hpp>
 #include <haf/include/input/key.hpp>
 
 #include "system/system_base.hpp"
@@ -28,10 +27,13 @@ public:
     void update();
     void postUpdate();
 
-    htps::vector<input::Key> const& pressedKeys() const noexcept;
-    htps::vector<input::Key> const& releasedKeys() const noexcept;
+    core::vector<input::Key> const& pressedKeys() const noexcept;
+    core::vector<input::Key> const& releasedKeys() const noexcept;
     input::KeyStates const& keyStates() const noexcept;
-    input::KeyState keyState(input::Key const key) const;
+    input::KeyState keyState(input::Key const key) const noexcept;
+
+    bool shitPressed() const noexcept;
+    bool controlPressed() const noexcept;
 
     /**
      * @brief Force or simulate a key press.
@@ -56,10 +58,10 @@ private:
     void keyPressed(input::Key const key);
     void keyReleased(input::Key const key);
 
-    htps::sptr<input::InputDriverWrapper> input_driver_wrapper_;
+    core::sptr<input::InputDriverWrapper> input_driver_wrapper_;
     input::KeyStates key_states_{};
-    htps::vector<input::Key> pressed_keys_;
-    htps::vector<input::Key> released_keys_;
+    core::vector<input::Key> pressed_keys_;
+    core::vector<input::Key> released_keys_;
 };
 }  // namespace haf::sys
 

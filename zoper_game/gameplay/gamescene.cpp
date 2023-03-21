@@ -19,14 +19,13 @@
 #include "../zoperprogramcontroller.hpp"
 #include "../keymapping.hpp"
 #include <htypes/include/types.hpp>
-#include <htypes/include/properties/iproperty.hpp>
+#include <haf/include/properties/iproperty.hpp>
 
 #include <boardmanager/include/boardmanager.hpp>
 #include <boardmanager/include/board_types.hpp>
 #include <hlog/include/hlog.hpp>
 #include <haf/include/component/component_container.hpp>
 #include <haf/include/render/renderizable.hpp>
-#include <haf/include/scene_components/iscene_control.hpp>
 #include <haf/include/scene_components/statescontrolleractuator_register.hpp>
 #include <haf/include/shareddata/shared_data_viewer.hpp>
 #include <haf/include/resources/iresource_configurator.hpp>
@@ -71,13 +70,13 @@ void GameScene::onCreated()
     next_token_part_ = 0U;
 
     // Create the general timer component for the scene.
-    scene_timer_component_ = component<time::TimerComponent>();
+    scene_timer_component_ = getOrCreateComponent<time::TimerComponent>();
 
-    p_->scene_animation_component_ = component<AnimationComponent>();
+    p_->scene_animation_component_ = getOrCreateComponent<AnimationComponent>();
 
     // At this point, we setup level properties.
     // level_properties_ should not be used before this point.
-    level_properties_ = component<LevelProperties>();
+    level_properties_ = getOrCreateComponent<LevelProperties>();
 
     size_type start_level;
     GameMode game_mode;
@@ -103,14 +102,14 @@ void GameScene::onCreated()
 
     moveToFirstPosition(board_group_);
 #ifdef USE_DEBUG_ACTIONS
-    component<debug::DebugActions>()->addDebugAction(
+    getOrCreateComponent<debug::DebugActions>()->addDebugAction(
         input::Key::Num2,
-        [this]() { component<debug::DebugActions>()->logSceneNodeTree(); });
-    component<debug::DebugActions>()->addDebugAction(
+        [this]() { getOrCreateComponent<debug::DebugActions>()->logSceneNodeTree(); });
+    getOrCreateComponent<debug::DebugActions>()->addDebugAction(
         input::Key::Num1, [this]() { levelProperties()->increaseScore(100U); });
-    component<debug::DebugActions>()->addDebugAction(
+    getOrCreateComponent<debug::DebugActions>()->addDebugAction(
         input::Key::Q, [this]() { goGameOver(); });
-    component<debug::DebugActions>()->addDebugAction(
+    getOrCreateComponent<debug::DebugActions>()->addDebugAction(
         input::Key::A, [this]() { levelProperties()->nextLevel(); });
 
 #endif
@@ -129,7 +128,7 @@ void GameScene::onCreated()
 
     // Set state control.
     {
-        component(scene_states_);
+        getOrCreateComponent(scene_states_);
 
         StatesControllerActuatorRegister<GameSceneStates>
             gameSceneActuatorRegister;
@@ -137,7 +136,7 @@ void GameScene::onCreated()
             *scene_states_, *(p_->states_manager_));
     }
 
-    p_->token_type_generator_ = component<rnd::RandomNumbersComponent>();
+    p_->token_type_generator_ = getOrCreateComponent<rnd::RandomNumbersComponent>();
     LogAsserter::log_assert(p_->token_type_generator_ != nullptr,
                             "Cannot create RandomNumbersComponent");
 
@@ -145,7 +144,7 @@ void GameScene::onCreated()
     LogAsserter::log_assert(p_->token_position_generator_ != nullptr,
                             "Cannot create RandomNumbersComponent");
 
-    auto game_scene_input{component<GameSceneInput>()};
+    auto game_scene_input{getOrCreateComponent<GameSceneInput>()};
 
     p_->key_mapping_ = muptr<KeyMapping>();
     p_->key_mapping_->reset();

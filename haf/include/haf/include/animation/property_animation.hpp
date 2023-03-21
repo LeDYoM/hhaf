@@ -16,7 +16,7 @@ namespace haf::anim
 /**
  * @brief Class representing an animation of a property. It uses functionality
  * from @b Animation to do that.
-*/
+ */
 class PropertyAnimation : public Animation
 {
     using BaseClass = Animation;
