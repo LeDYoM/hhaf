@@ -23,6 +23,11 @@ void DebugCameraComponent::onAttached()
         getComponent<KeyboardInputComponent>(),
         getComponent<KeyboardInputComponent>()->KeyPressed,
         make_function(this, &DebugCameraComponent::moveCamera));
+
+    m_receiver.shared_connect(
+        getComponent<CameraComponent>(),
+        getComponent<CameraComponent>()->cameraUpdated,
+        make_function(this, &DebugCameraComponent::logCameraData));
 }
 
 void DebugCameraComponent::moveCamera(Key const& key)
@@ -130,6 +135,33 @@ void DebugCameraComponent::moveCamera(Key const& key)
             camera->cameraMode = CameraComponent::CameraMode::Perspective;
             break;
     }
+}
+
+void DebugCameraComponent::logCameraData()
+{
+    auto camera{getComponent<CameraComponent>()};
+
+    DisplayLog::debug(
+        StaticTypeName, ": Camera view updated. New values:\nPosition: {",
+        camera->Position().x, ",", camera->Position().y, ",",
+        camera->Position().z, "}\nCenter: {", camera->Center().x, ",",
+        camera->Center().y, ",", camera->Center().z, "}\nUp: {", camera->Up().x,
+        ",", camera->Up().y, ",", camera->Up().z, "}");
+
+    DisplayLog::debug(
+        StaticTypeName, ": Mode: ",
+        camera->cameraMode() == CameraComponent::CameraMode::Ortho
+            ? "Ortho"
+            : (camera->cameraMode() == CameraComponent::CameraMode::Frustum
+                   ? "Frustum"
+                   : "Perspective"));
+
+    DisplayLog::debug(StaticTypeName,
+                      ": Camera perspectve updated. New values:\n: Left Right "
+                      "Bottom Top Near Far\n",
+                      camera->Left(), ",", camera->Right(), ",",
+                      camera->Bottom(), ",", camera->Top(), ",", camera->Near(),
+                      ",", camera->Far());
 }
 
 }  // namespace haf::scene

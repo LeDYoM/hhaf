@@ -27,6 +27,7 @@ public:
     void onAttached() override;
 
 private:
+    void logCameraData();
     void moveCamera(input::Key const& key);
     evt::ireceiver m_receiver;
 };

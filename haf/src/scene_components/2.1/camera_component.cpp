@@ -65,7 +65,8 @@ void CameraComponent::cameraDataUpdated()
                     Left(), Right(), Bottom(), Top(), Near(), Far());
             break;
         case CameraMode::Perspective:
-            m_perspective_matrix = math::perspective(60, 800.0F / 600.0F, 0.01F, 10.0F);
+            m_perspective_matrix =
+                math::perspective(60, 800.0F / 600.0F, 0.01F, 10.0F);
             break;
         default:
             LogAsserter::log_assert(true, "Invalid CameraMode value");
@@ -84,27 +85,7 @@ void CameraComponent::cameraDataUpdated()
             .shaderManager()
             .setUniformForAll("haf_camera_projection", m_perspective_matrix)};
 
-    DisplayLog::debug(
-        StaticTypeName, ": Camera view updated. New values:\nPosition: {",
-        Position().x, ",", Position().y, ",", Position().z, "}\nCenter: {",
-        Center().x, ",", Center().y, ",", Center().z, "}\nUp: {", Up().x, ",",
-        Up().y, ",", Up().z, "}");
-
-    DisplayLog::debug(
-        StaticTypeName, ": Mode: ",
-        cameraMode() == CameraMode::Ortho
-            ? "Ortho"
-            : (cameraMode() == CameraMode::Frustum ? "Frustum"
-                                                   : "Perspective"));
-
-    DisplayLog::debug(StaticTypeName,
-                      ": Camera perspectve updated. New values:\n: Left Right "
-                      "Bottom Top Near Far\n",
-                      Left(), ",", Right(), ",", Bottom(), ",", Top(), ",",
-                      Near(), ",", Far());
-
-    DisplayLog::debug(StaticTypeName, ": Camera updated in ", count,
-                      " shader(s)");
+    cameraUpdated();
 }
 
 void CameraComponent::clearBackground()

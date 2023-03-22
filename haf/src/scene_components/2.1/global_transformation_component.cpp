@@ -6,6 +6,7 @@
 #include <haf/include/debug_system/idebug_variables.hpp>
 #include <haf/include/scene/scene_node.hpp>
 #include <haf/include/render/mesh_render_context.hpp>
+#include <haf/include/component/component_finder.hpp>
 
 #include "system/get_system.hpp"
 #include "debug_system/debug_system.hpp"
@@ -22,28 +23,20 @@ void GlobalTransformationComponent::onAttached()
 {
     BaseClass::onAttached();
 
-    // Connect to receive the updates from a parent global transformation
-    if (auto parentNode{attachedNode()->parent()}; parentNode != nullptr)
+    component::ComponentFinder finder{attachedNode()};
+    if (auto parentComponent{
+            finder.findParentComponent<GlobalTransformationComponent>()};
+        parentComponent != nullptr)
     {
-        if (auto parentComponent{
-                parentNode->componentOfType<GlobalTransformationComponent>()};
-            parentComponent != nullptr)
-        {
-            m_receiver.connect(parentComponent,
-                               parentComponent->m_globalTransformationChanged,
-                               make_function(this,
-                                             &GlobalTransformationComponent::
-                                                 globalTransformationChanged));
-        }
-        else
-        {
-            DisplayLog::verbose(
-                "No parent GlobalTransformationComponent found");
-        }
+        m_receiver.connect(
+            parentComponent, parentComponent->m_globalTransformationChanged,
+            make_function(
+                this,
+                &GlobalTransformationComponent::globalTransformationChanged));
     }
     else
     {
-        DisplayLog::verbose("No parent found");
+        DisplayLog::verbose("No parent GlobalTransformationComponent found");
     }
 
     addUpdater({this, &GlobalTransformationComponent::updateMatrix},
