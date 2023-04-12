@@ -10,7 +10,10 @@ HTPS_PRAGMA_ONCE
 #include <type_traits>
 #include <algorithm>
 #include <cctype>
+
+#if __cpp_lib_format
 #include <format>
+#endif
 
 namespace htps
 {
@@ -112,12 +115,17 @@ public:
     template <typename T>
     static basic_str to_str_internal(T const n)
     {
+#if __cpp_lib_format
         char buffer[256U];
         auto const result{std::format_to_n(buffer, 255, "{}", n)};
         buffer[result.size] = 0;
         return (result.out != nullptr && result.size > 0)
             ? basic_str{buffer, static_cast<size_t>(result.size)}
             : basic_str{};
+#else
+        (void)(n);
+        return {};
+#endif
     }
 
     static basic_str to_str(u64 const n)

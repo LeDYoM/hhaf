@@ -3,7 +3,7 @@
 #include <hogl/include/types.hpp>
 #include <hlog/include/hlog.hpp>
 
-void __stdcall message_callback(GLenum source,
+void APIENTRY message_callback(GLenum source,
                                 GLenum type,
                                 GLuint id,
                                 GLenum severity,

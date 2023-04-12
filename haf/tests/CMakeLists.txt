@@ -22,6 +22,8 @@ set(SOURCE_TESTS
 
     render/mesh_render_component
 
+    resources/image
+
     scene/matrix4x4
     scene/scenenode
     scene/scenenodefactory

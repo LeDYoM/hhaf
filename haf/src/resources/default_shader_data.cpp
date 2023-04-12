@@ -9,7 +9,8 @@ namespace haf::res
 
 static NamedIndexedVertexFormatContainer DefaultAttribsTable{
     {"haf_position", {0U, {BufferType::Float, 3U, 1U}}},
-    {"haf_color", {1U, {BufferType::Float, 4U, 1U}}}};
+    {"haf_color", {1U, {BufferType::Float, 4U, 1U}}},
+    {"haf_textureuv", {2U, {BufferType::Float, 2U, 1U}}}};
 
 void DefaultAttribs::bindDefaultAttributes(ogl::Handle program) noexcept
 {

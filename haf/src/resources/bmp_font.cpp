@@ -3,7 +3,7 @@
 #include <hlog/include/hlog.hpp>
 #include <backend_dev/include/ifont.hpp>
 #include <backend_dev/include/ibmp_font.hpp>
-#include "texture.hpp"
+#include <haf/include/resources/texture.hpp>
 
 using namespace htps;
 

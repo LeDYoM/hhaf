@@ -10,10 +10,24 @@ template <typename T>
 class PImplPointer
 {
 public:
-    explicit constexpr PImplPointer(rptr<T> pointer) : pointer_{pointer} {}
+    explicit constexpr PImplPointer(rptr<T> pointer) noexcept :
+        pointer_{pointer}
+    {}
 
     PImplPointer(PImplPointer const&) = delete;
     PImplPointer& operator=(PImplPointer const&) = delete;
+
+    template <typename Y>
+    PImplPointer(PImplPointer<Y> const&) = delete;
+
+    template <typename Y>
+    PImplPointer& operator=(PImplPointer<Y> const&) = delete;
+
+    template <typename Y>
+    PImplPointer(PImplPointer<Y>&&) = delete;
+
+    template <typename Y>
+    PImplPointer& operator=(PImplPointer<Y>&&) = delete;
 
     constexpr PImplPointer(PImplPointer&& other) noexcept :
         pointer_{other.pointer_}
@@ -23,9 +37,9 @@ public:
 
     constexpr PImplPointer& operator=(PImplPointer&& other) noexcept
     {
-        auto tmp       = pointer_;
+        auto tmp{pointer_};
         pointer_       = other.pointer_;
-        other.pointer_ = tmp;
+        other.pointer_ = htps::move(tmp);
         return *this;
     }
 
@@ -37,6 +51,11 @@ public:
 
     constexpr T& operator*() noexcept { return *pointer_; }
     constexpr T const& operator*() const noexcept { return *pointer_; }
+
+    constexpr bool operator==(std::nullptr_t) const noexcept
+    {
+        return pointer_ == nullptr;
+    }
 
     ~PImplPointer() noexcept
     {
@@ -52,14 +71,14 @@ private:
 };
 
 template <typename T, typename... Args>
-PImplPointer<T> make_pimplp(Args&&... args)
+constexpr PImplPointer<T> make_pimplp(Args&&... args) noexcept
 {
     T* p = new T(htps::forward<Args>(args)...);
     return PImplPointer<T>(p);
 }
 
 template <typename T, typename... Args>
-PImplPointer<T> make_pimplp_forward(Args&&... args)
+constexpr PImplPointer<T> make_pimplp_forward(Args&&... args) noexcept
 {
     T* p = new T{htps::forward<Args>(args)...};
     return PImplPointer<T>(p);

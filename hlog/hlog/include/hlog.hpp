@@ -22,7 +22,15 @@ public:
     htps::str& operator()() { return data; }
 };
 
-extern template struct logger::MixinCommiter<FileCommiter, COutCommiter>;
+}
+
+namespace logger
+{
+extern template struct MixinCommiter<haf::FileCommiter, haf::COutCommiter>;
+}
+
+namespace haf
+{
 using FileCOutCommiter = logger::MixinCommiter<FileCommiter, COutCommiter>;
 
 extern template struct ThreadCommiter<FileCOutCommiter>;
@@ -31,19 +39,40 @@ using ThreadFileCoutCommiter = ThreadCommiter<FileCOutCommiter>;
 //using CurrentCommiter = ThreadFileCoutCommiter;
 using CurrentCommiter = COutCommiter;
 
-extern template struct logger::LogDisplayer<
-    logger::Log<true, LogStream, CurrentCommiter>,
-    logger::SeverityType>;
+}
 
+namespace logger
+{
+extern template struct LogDisplayer<
+    Log<true, haf::LogStream, haf::CurrentCommiter>,
+    SeverityType>;
+}
+
+namespace haf
+{
 using DisplayLog =
     logger::LogDisplayer<logger::Log<true, LogStream, CurrentCommiter>,
                          logger::SeverityType>;
+}
 
-extern template struct logger::LogAsserter<DisplayLog>;
+namespace logger
+{
+extern template struct LogAsserter<haf::DisplayLog>;
+}
+
+namespace haf
+{
 using LogAsserter = logger::LogAsserter<DisplayLog>;
+}
 
-extern template struct logger::LogInitializer<
-    logger::Log<true, LogStream, CurrentCommiter>>;
+namespace logger
+{
+extern template struct LogInitializer<
+    Log<true, haf::LogStream, haf::CurrentCommiter>>;
+}
+
+namespace haf
+{
 using LogInitializer =
     logger::LogInitializer<logger::Log<true, LogStream, CurrentCommiter>>;
 

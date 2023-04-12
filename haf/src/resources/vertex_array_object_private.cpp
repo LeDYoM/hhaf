@@ -56,9 +56,18 @@ void VertexArrayObject::VertexArrayObjectPriv::
 void VertexArrayObject::VertexArrayObjectPriv::render()
 {
     ogl::bindVAO(m_vao);
+    glBindTextureUnit(0, 1);
     m_shader->bind();
     glDrawArrays(GL_TRIANGLES, 0, m_size);
     ogl::bindVAO(ogl::invalidHandle());
+}
+
+VertexArrayObject::VertexArrayObjectPriv::~VertexArrayObjectPriv() noexcept
+{
+    if (m_vao != ogl::invalidHandle())
+    {
+        ogl::deleteVertexArrayObject(m_vao);
+    }
 }
 
 }  // namespace haf::res

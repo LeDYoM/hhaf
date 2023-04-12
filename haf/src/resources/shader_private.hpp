@@ -143,6 +143,11 @@ void fillData(ogl::Handle const program,
                     format.bufferType  = BufferType::Float;
                     format.numElements = 16U;
                 }
+                else if (type == ogl::LowLevelConstants::sampler2D)
+                {
+                    format.bufferType  = BufferType::Sampler;
+                    format.numElements = 2U;
+                }
 
                 formats.push_back({core::str{name}, {location, format}});
             }

@@ -20,6 +20,7 @@ bool compileShaderImp(Handle const handle, GLchar const* const* code) noexcept
     return true;
 }
 
+/*
 Handle createAndCompileShader(GLenum const shader_type,
                               str_view const code) noexcept
 {
@@ -28,6 +29,7 @@ Handle createAndCompileShader(GLenum const shader_type,
     compileShaderImp(shader_handle, &code_ptr);
     return shader_handle;
 }
+*/
 
 }  // namespace
 

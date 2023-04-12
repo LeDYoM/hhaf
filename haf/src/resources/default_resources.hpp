@@ -4,6 +4,7 @@ HTPS_PRAGMA_ONCE
 
 #include <haf/include/core/types.hpp>
 #include <haf/include/resources/shader.hpp>
+#include <haf/include/resources/texture.hpp>
 #include <haf/include/resources/vertex_buffer_object.hpp>
 #include <haf/include/resources/vertex_array_object.hpp>
 

@@ -1,7 +1,4 @@
-#pragma warning ( push )
-#pragma warning( disable : 4514 4620 4623 4625 4626 4820 5026 5027 5204 )
-#include "catch.hpp"
-#pragma warning ( pop )
+#include "catch_include.hpp"
 
 #include <htypes/include/array.hpp>
 #include <htypes/include/types.hpp>

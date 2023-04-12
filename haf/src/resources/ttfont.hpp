@@ -5,7 +5,7 @@ HTPS_PRAGMA_ONCE
 #include <htypes/include/types.hpp>
 #include <htypes/include/rect.hpp>
 
-#include "texture.hpp"
+#include <haf/include/resources/texture.hpp>
 #include <haf/include/resources/ittfont.hpp>
 
 namespace haf::backend

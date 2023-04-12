@@ -8,11 +8,16 @@ using namespace htps;
 
 namespace haf::ogl
 {
-Handle generateVertexBufferArray() noexcept
+Handle generateVertexArrayObject() noexcept
 {
     Handle result{invalidHandle()};
     glCreateVertexArrays(1, &result);
     return result;
+}
+
+void deleteVertexArrayObject(Handle const handle) noexcept
+{
+    glDeleteVertexArrays(1, &handle);
 }
 
 void bindVAO(Handle const index) noexcept

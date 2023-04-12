@@ -33,19 +33,15 @@ public:
         x{v.x}, y{v.y}, z{static_cast<T>(0)}, w{static_cast<T>(0)}
     {}
 
-    constexpr vector4d(T _x, T _y, T _z, T _w) noexcept :
-        x{htps::move(_x)},
-        y{htps::move(_y)},
-        z{htps::move(_z)},
-        w{htps::move(_w)}
+    constexpr vector4d(T const _x, T const _y, T const _z, T const _w) noexcept :
+        x{_x}, y{_y}, z{_z}, w{_w}
     {}
 
-    constexpr vector4d(T _x, T _y, T _z) noexcept :
-        x{htps::move(_x)}, y{htps::move(_y)}, z{htps::move(_z)}, w{}
+    constexpr vector4d(T const _x, T const _y, T const _z) noexcept :
+        x{_x}, y{_y}, z{_z}, w{}
     {}
 
-    constexpr vector4d(T _x, T _y) noexcept :
-        x{htps::move(_x)}, y{htps::move(_y)}, z{}, w{}
+    constexpr vector4d(T const _x, T const _y) noexcept : x{_x}, y{_y}, z{}, w{}
     {}
 
     // Conversion operator

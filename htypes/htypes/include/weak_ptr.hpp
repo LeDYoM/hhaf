@@ -151,7 +151,7 @@ template <typename T>
 template <typename T>
 [[nodiscard]] bool operator==(wptr<T> const& lhs, wptr<T> const& rhs) noexcept
 {
-    if (lhs.expired() == true() && rhs.expired() == true)
+    if (lhs.expired() == true && rhs.expired() == true)
     {
         return true;
     }

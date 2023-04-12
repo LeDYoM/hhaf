@@ -3,6 +3,7 @@
 #include <hlog/include/hlog.hpp>
 #include <haf/include/resources/vertex_formats.hpp>
 #include <haf/include/scene/color.hpp>
+#include <haf/include/resources/image.hpp>
 
 using namespace haf::res;
 using namespace haf::core;
@@ -70,16 +71,21 @@ bool DefaultResources::loadDefaultShader0(sys::ResourceManager& rManager)
 
         in vec3 haf_position;
         in vec4 haf_color;
+        in vec2 haf_textureuv;
+
         uniform mat4 haf_camera_projection;
         uniform mat4 haf_object_position;
 
         out vec4 haf_out_color;
+        out vec2 haf_out_textureuv;
 
         void main(void)
         {
             gl_Position = haf_camera_projection * haf_object_position *
             vec4(haf_position.xyz, 1.0f);
+
             haf_out_color = haf_color;
+            haf_out_textureuv = haf_textureuv;
         }
     )"});
 
@@ -88,11 +94,15 @@ bool DefaultResources::loadDefaultShader0(sys::ResourceManager& rManager)
                             core::str_view{R"(
         #version 450 core
         in vec4 haf_out_color;
+        in vec2 haf_out_textureuv;
         out vec4 color;
+
+        uniform sampler2D haf_textureuv;
 
         void main(void)
         {
             color = haf_out_color;
+            color = color * texture( haf_textureuv, haf_out_textureuv );
         }
     )"});
 
@@ -282,8 +292,9 @@ bool DefaultResources::loadDefaultCubeMesh(sys::ResourceManager& rManager)
         Cyan,    Cyan,    Cyan,    Cyan,    Cyan,    Cyan,    Blue,   Blue,
         Blue,    Blue,    Blue,    Blue,    Green,   Green,   Green,  Green,
         Green,   Green,   Yellow,  Yellow,  Yellow,  Yellow,  Yellow, Yellow,
-        Magenta, Magenta, Magenta, Magenta, Magenta, Magenta, Red,    Red,
-        Red,     Red,     Red,     Red,
+        Magenta, Magenta, Magenta, Magenta, Magenta, Magenta,
+//        Red,     Red,      Red,     Red,     Red,     Red,
+        White,   White,   White,   White,   White,   White,   White,  White
     };
 
     auto vertex_buffer_cube{core::msptr<res::VertexBufferObject>(
@@ -305,6 +316,11 @@ bool DefaultResources::loadDefaultCubeMesh(sys::ResourceManager& rManager)
     ids = {"default_shader_0", "cube_mesh"};
     ok &= rManager.createResourceFromResources(
         "cube_vao", ResourceType::VertexArrayObject, ids);
+
+
+    auto image{core::msptr<res::Image>("a")};
+    auto texture{core::msptr<res::Texture>(*image)};
+    ok &= rManager.addResource("default_texture", texture);
 
     return ok;
 }

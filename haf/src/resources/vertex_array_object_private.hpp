@@ -19,6 +19,8 @@ struct VertexArrayObject::VertexArrayObjectPriv
         core::vector<core::u32>& associatedAttribsToShader);
 
     void render();
+
+    ~VertexArrayObjectPriv() noexcept;
 };
 
 }  // namespace haf::res

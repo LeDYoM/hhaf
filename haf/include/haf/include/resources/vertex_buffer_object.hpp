@@ -12,7 +12,7 @@ HTPS_PRAGMA_ONCE
 
 namespace haf::res
 {
-class HAF_API VertexBufferObject : public IResource
+class HAF_API VertexBufferObject final : public IResource
 {
 public:
     static constexpr ResourceType const StaticResourceType{

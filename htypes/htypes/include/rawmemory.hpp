@@ -61,8 +61,8 @@ public:
     {
         if (!empty())
         {
-            str result{reinterpret_cast<str::const_iterator const>(cbegin()),
-                       reinterpret_cast<str::const_iterator const>(cend() - 1)};
+            str result{reinterpret_cast<str::const_iterator>(cbegin()),
+                       reinterpret_cast<str::const_iterator>(cend() - 1)};
             result.push_back(0);
             return result;
         }
@@ -74,8 +74,8 @@ public:
         if (!empty())
         {
             str_view result(
-                reinterpret_cast<str_view::const_iterator const>(cbegin()),
-                reinterpret_cast<str_view::const_iterator const>(cend() - 1));
+                reinterpret_cast<str_view::const_iterator>(cbegin()),
+                reinterpret_cast<str_view::const_iterator>(cend() - 1));
         }
         return str_view{};
     }

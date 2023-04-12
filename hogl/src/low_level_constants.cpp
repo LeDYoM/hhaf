@@ -12,5 +12,6 @@ s32 const LowLevelConstants::f32vec4{GL_FLOAT_VEC4};
 s32 const LowLevelConstants::f32vec1{GL_FLOAT};
 s32 const LowLevelConstants::s32vec1{GL_INT};
 s32 const LowLevelConstants::f32mat4x4{GL_FLOAT_MAT4};
+s32 const LowLevelConstants::sampler2D{GL_SAMPLER_2D};
 
 }  // namespace haf::ogl

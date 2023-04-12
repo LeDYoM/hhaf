@@ -18,8 +18,7 @@ public:
 
     constexpr vector2d() noexcept = default;
 
-    constexpr vector2d(T _x, T _y) noexcept :
-        x{htps::move(_x)}, y{htps::move(_y)}
+    constexpr vector2d(T const _x, T const _y) noexcept : x{_x}, y{_y}
     {}
 
     // Conversion operator
@@ -177,6 +176,8 @@ static_assert(std::is_standard_layout_v<vector2d<u8>>,
               "vector2du8 has not standard layout");
 static_assert(std::is_standard_layout_v<vector2d<f64>>,
               "vector2df64 has not standard layout");
+
+static_assert(std::is_trivial_v<vector2d<f32>>, "vector2df32 is not trivial");
 
 using vector2du8  = vector2d<u8>;
 using vector2ds8  = vector2d<s8>;

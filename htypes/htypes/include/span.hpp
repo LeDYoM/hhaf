@@ -27,17 +27,17 @@ public:
         span{&sp_data[0U], sp_data + Size}
     {}
 
-    template <typename T,
-              typename Allocator  = AllocatorType<T>,
+    template <typename T2 = T,
+    typename Allocator  = AllocatorType<T>,
               typename GrowPolicy = GrowPolicyUnary>
-    span(vector_base<T, Allocator, GrowPolicy>& v) noexcept :
+    span(vector_base<T2, Allocator, GrowPolicy>& v) noexcept :
         span{v.begin(), v.end()}
     {}
 
-    template <typename T,
-              typename Allocator  = AllocatorType<T>,
+    template <typename T2 = T,
+    typename Allocator  = AllocatorType<T>,
               typename GrowPolicy = GrowPolicyUnary>
-    span(vector_base<T, Allocator, GrowPolicy> const& v) noexcept :
+    span(vector_base<T2, Allocator, GrowPolicy> const& v) noexcept :
         span{v.begin(), v.end()}
     {}
 

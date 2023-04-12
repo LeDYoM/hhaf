@@ -16,6 +16,7 @@ struct HOGL_API LowLevelConstants
     static htps::s32 const f32vec4;
     static htps::s32 const s32vec1;
     static htps::s32 const f32mat4x4;
+    static htps::s32 const sampler2D;
 };
 
 }  // namespace haf::ogl

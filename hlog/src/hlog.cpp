@@ -13,10 +13,14 @@
 
 #pragma warning(pop)
 
+namespace logger
+{
+template struct MixinCommiter<haf::FileCommiter, haf::COutCommiter>;
+}
+
 namespace haf
 {
-template struct logger::MixinCommiter<FileCommiter, COutCommiter>;
-template struct ThreadCommiter<haf::FileCOutCommiter>;
+template struct ThreadCommiter<FileCOutCommiter>;
 
 }  // namespace haf
 

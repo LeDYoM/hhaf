@@ -11,7 +11,8 @@ enum class BufferType : core::u32
 {
     Unknown = 0U,
     Float   = 1U,
-    Int     = 2
+    Int     = 2U,
+    Sampler = 3U
 };
 
 template <typename T>

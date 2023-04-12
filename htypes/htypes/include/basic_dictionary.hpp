@@ -22,7 +22,6 @@ public:
     using content        = vector<element>;
     using iterator       = typename content::iterator;
     using const_iterator = typename content::const_iterator;
-    using size_type      = size_type;
 
     /**
      * @brief  Default constructor
@@ -137,15 +136,15 @@ public:
         return find_checked(key);
     }
 
-    constexpr pair<bool, size_type> cfind_index(
+    constexpr pair<bool, ssize_type> cfind_index(
         key_type const& key) const noexcept
     {
         auto const index{data_.find_index_if(
             [&key](auto const& element) { return element.first == key; })};
-        return {index > -1 ? true : false, static_cast<size_type>(index)};
+        return {index > -1 ? true : false, static_cast<ssize_type>(index)};
     }
 
-    constexpr pair<bool, size_type> find_index(
+    constexpr pair<bool, ssize_type> find_index(
         key_type const& key) const noexcept
     {
         return cfind_index(key);
@@ -169,7 +168,7 @@ public:
     {
         size_type previous_size{size()};
 
-        data_.erase_if<false>(
+        data_.template erase_if<false>(
             [&key](element const& current) { return current.first == key; });
 
         return (previous_size - size());

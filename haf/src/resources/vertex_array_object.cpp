@@ -10,7 +10,7 @@ using namespace haf::core;
 namespace haf::res
 {
 VertexArrayObject::VertexArrayObject(sptr<Mesh> mesh, sptr<Shader> shader) :
-    m_p{make_pimplp<VertexArrayObjectPriv>(ogl::generateVertexBufferArray(),
+    m_p{make_pimplp<VertexArrayObjectPriv>(ogl::generateVertexArrayObject(),
                                            core::move(mesh),
                                            core::move(shader),
                                            0U)}

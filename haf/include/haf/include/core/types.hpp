@@ -5,6 +5,9 @@ HTPS_PRAGMA_ONCE
 #include <htypes/include/types.hpp>
 #include <htypes/include/str.hpp>
 #include <htypes/include/vector.hpp>
+#include <htypes/include/vector2d.hpp>
+#include <htypes/include/vector3d.hpp>
+#include <htypes/include/vector4d.hpp>
 #include <htypes/include/array.hpp>
 #include <htypes/include/function.hpp>
 #include <htypes/include/rawmemory.hpp>

@@ -24,12 +24,12 @@ public:
         x{v.x}, y{v.y}, z{static_cast<T>(0)}
     {}
 
-    constexpr vector3d(T _x, T _y, T _z) noexcept :
-        x{htps::move(_x)}, y{htps::move(_y)}, z{htps::move(_z)}
+    constexpr vector3d(T const _x, T const _y, T const _z) noexcept :
+        x{_x}, y{_y}, z{_z}
     {}
 
-    constexpr vector3d(T _x, T _y) noexcept :
-        x{htps::move(_x)}, y{htps::move(_y)}, z{}
+    constexpr vector3d(T const _x, T const _y) noexcept :
+        x{_x}, y{_y}, z{}
     {}
 
     // Conversion operator
@@ -221,6 +221,8 @@ static_assert(std::is_standard_layout_v<vector3d<u8>>,
               "vector3du8 has not standard layout");
 static_assert(std::is_standard_layout_v<vector3d<f64>>,
               "vector3df64 has not standard layout");
+
+static_assert(std::is_trivial_v<vector3d<f32>>, "vector3df32 is not trivial");
 
 using vector3du8  = vector3d<u8>;
 using vector3ds8  = vector3d<s8>;

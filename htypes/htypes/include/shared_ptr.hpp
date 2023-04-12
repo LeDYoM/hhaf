@@ -194,17 +194,17 @@ private:
     template <typename T2>
     friend class wptr;
 
-    template <class T, class T2>
-    friend sptr<T> dynamic_pointer_cast(sptr<T2> const& other) noexcept;
+    template <class T1, class T2>
+    friend sptr<T1> dynamic_pointer_cast(sptr<T2> const& other) noexcept;
 
-    template <class T, class T2>
-    friend sptr<T> dynamic_pointer_cast(sptr<T2>&& other) noexcept;
+    template <class T1, class T2>
+    friend sptr<T1> dynamic_pointer_cast(sptr<T2>&& other) noexcept;
 
-    template <class T, class T2>
-    friend sptr<T> static_pointer_cast(sptr<T2> const& other) noexcept;
+    template <class T1, class T2>
+    friend sptr<T1> static_pointer_cast(sptr<T2> const& other) noexcept;
 
-    template <class T, class T2>
-    friend sptr<T> static_pointer_cast(sptr<T2>&& other) noexcept;
+    template <class T1, class T2>
+    friend sptr<T1> static_pointer_cast(sptr<T2>&& other) noexcept;
 
     T* m_ptr{nullptr};
     shptr_detail::counter* m_counter{nullptr};

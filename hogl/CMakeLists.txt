@@ -16,6 +16,7 @@ set(headers
   ${include_dir}/render_system_functions.hpp
   ${include_dir}/render_target.hpp
   ${include_dir}/shader_functions.hpp
+  ${include_dir}/texture_functions.hpp
   ${include_dir}/types.hpp
   ${include_dir}/uniform_functions.hpp
   ${include_dir}/vao_functions.hpp
@@ -27,6 +28,7 @@ set(sources
   src/render_system_functions.cpp
   src/render_target.cpp
   src/shader_functions.cpp
+  src/texture_functions.cpp
   src/types_private.hpp
   src/types.cpp
   src/uniform_functions.cpp

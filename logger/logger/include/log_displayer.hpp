@@ -7,7 +7,7 @@ namespace logger
 {
 static constexpr char const EmptyString[]{""};
 
-template <size_t N>
+template <unsigned int N>
 struct StringLiteral
 {
     constexpr StringLiteral(const char (&str)[N])
