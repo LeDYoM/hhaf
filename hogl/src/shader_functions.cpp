@@ -119,15 +119,16 @@ bool getResourceData(Handle const program,
     }
     else
     {
-        glGetProgramResourceiv(program, type_request, index, properties.size(),
-                               &properties[0], values.size(), nullptr,
-                               values.begin());
+        glGetProgramResourceiv(
+            program, type_request, index, properties.size(), &properties[0],
+            static_cast<GLsizei>(values.size()), nullptr, values.begin());
     }
 
     data.type       = static_cast<s32>(values[1]);
     data.array_size = static_cast<s32>(values[2]);
 
-    glGetProgramResourceName(program, type_request, index, nameData.size() - 1U,
+    glGetProgramResourceName(program, type_request, index,
+                             static_cast<GLsizei>(nameData.size() - 1U),
                              nullptr, nameData.begin());
     data.name     = nameData.cbegin();
     data.location = [type_request]() {
@@ -221,8 +222,8 @@ void bindAttributeIndex(Handle const program,
 }
 
 void bindUniformBlockIndex(Handle const program,
-                           htps::u32 const index,
-                           htps::u32 const bindingPoint) noexcept
+                           u32 const index,
+                           u32 const bindingPoint) noexcept
 {
     glUniformBlockBinding(static_cast<GLuint>(program),
                           static_cast<GLuint>(index),
