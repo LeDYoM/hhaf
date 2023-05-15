@@ -18,6 +18,8 @@ public:
     void beginFrame();
     void endFrame();
 
+    void setCameraMatrix(math::Matrix4x4 const& matrix) override;
+
 private:
     sys::ISystemProvider& m_isystem_provider;
 };

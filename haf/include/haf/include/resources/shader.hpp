@@ -41,7 +41,7 @@ public:
                                      core::u32 const attrib_index);
 
     core::u32 numAttribs() const;
-    VertexFormat vertexFormat(core::u32 const index) const;
+    render::VertexFormat vertexFormat(core::u32 const index) const;
 
     void bind();
     void unbind();
@@ -53,14 +53,14 @@ public:
     void setUniform(core::s32 const index, math::Matrix4x4 const& m4x4);
 
     core::s32 attributeIndex(core::str_view const name) const;
-    VertexFormat attributeFormat(core::u32 const attributeIndex) const;
-    VertexFormat attributeFormat(core::str_view const name) const;
+    render::VertexFormat attributeFormat(core::u32 const attributeIndex) const;
+    render::VertexFormat attributeFormat(core::str_view const name) const;
     core::vector<core::pair<core::str, core::u32>> unusedAttribs(
         core::vector<core::u32> const& usedAttribs);
 
     core::s32 uniformIndex(core::str_view const name) const;
-    VertexFormat uniformFormat(core::u32 const uniformIndex) const;
-    VertexFormat uniformFormat(core::str_view const name) const;
+    render::VertexFormat uniformFormat(core::u32 const uniformIndex) const;
+    render::VertexFormat uniformFormat(core::str_view const name) const;
 
 private:
     struct ShaderPrivate;

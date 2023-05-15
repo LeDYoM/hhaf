@@ -104,31 +104,64 @@ u32 getNumResourcesOfType(Handle const program, GLenum const type) noexcept
 bool getResourceData(Handle const program,
                      GLenum const type_request,
                      u32 const index,
-                     s32& location,
-                     s32& type,
-                     s32& array_size,
-                     str& name) noexcept
+                     GetLowLevelShaderData& data) noexcept
 {
     constexpr u32 kNumElements{3U};
-    array<GLchar, 256U> nameData{};
+    array<GLchar, GL_ACTIVE_UNIFORM_MAX_LENGTH> nameData{};
     array<GLenum, kNumElements> properties{GL_NAME_LENGTH, GL_TYPE,
                                            GL_ARRAY_SIZE};
     array<GLint, kNumElements> values{};
 
-    glGetProgramResourceiv(program, type_request, index, properties.size(),
-                           &properties[0], values.size(), nullptr,
-                           values.begin());
+    if (type_request == GL_UNIFORM_BLOCK)
+    {
+        glGetProgramResourceiv(program, type_request, index, 1, &properties[0],
+                               1, nullptr, values.begin());
+    }
+    else
+    {
+        glGetProgramResourceiv(program, type_request, index, properties.size(),
+                               &properties[0], values.size(), nullptr,
+                               values.begin());
+    }
 
-    type       = static_cast<s32>(values[1]);
-    array_size = static_cast<s32>(values[2]);
+    data.type       = static_cast<s32>(values[1]);
+    data.array_size = static_cast<s32>(values[2]);
 
     glGetProgramResourceName(program, type_request, index, nameData.size() - 1U,
                              nullptr, nameData.begin());
-    name     = nameData.cbegin();
-    location = [type_request]() {
-        return type_request == GL_PROGRAM_INPUT ? glGetAttribLocation
-                                                : glGetUniformLocation;
-    }()(program, name.c_str());
+    data.name     = nameData.cbegin();
+    data.location = [type_request]() {
+        return (type_request == GL_PROGRAM_INPUT
+                    ? glGetAttribLocation
+                    : (type_request == GL_UNIFORM
+                           ? glGetUniformLocation
+                           : [](auto const p0, auto const p1) -> GLint {
+                          return glGetUniformBlockIndex(p0, p1);
+                      }));
+    }()(program, data.name.c_str());
+
+    if (type_request == GL_UNIFORM && data.extra_param0 > -1 &&
+        data.location < 0)
+    {
+        GLuint uniformIndice{0};
+        const char* name_str = data.name.c_str();
+        glGetUniformIndices(program, 1, &name_str, &uniformIndice);
+        data.location = uniformIndice;
+
+        GLint uniformOffset;
+        GLint arrayStride;
+        GLint matrixStride;
+        glGetActiveUniformsiv(program, 1, &uniformIndice, GL_UNIFORM_OFFSET,
+                              &uniformOffset);
+        glGetActiveUniformsiv(program, 1, &uniformIndice,
+                              GL_UNIFORM_ARRAY_STRIDE, &arrayStride);
+        glGetActiveUniformsiv(program, 1, &uniformIndice,
+                              GL_UNIFORM_MATRIX_STRIDE, &matrixStride);
+
+        (void)(uniformOffset);
+        (void)(arrayStride);
+        (void)(matrixStride);
+    }
 
     return true;
 }
@@ -145,26 +178,37 @@ u32 getNumUniforms(Handle const program) noexcept
     return getNumResourcesOfType(program, GL_UNIFORM);
 }
 
+u32 getNumUniformBlocks(Handle const program) noexcept
+{
+    return getNumResourcesOfType(program, GL_UNIFORM_BLOCK);
+}
+
 bool getAttribData(Handle const program,
                    u32 const attrib_index,
-                   s32& location,
-                   s32& attrib_type,
-                   s32& attrib_array_size,
-                   str& name) noexcept
+                   GetLowLevelShaderData& data) noexcept
 {
-    return getResourceData(program, GL_PROGRAM_INPUT, attrib_index, location,
-                           attrib_type, attrib_array_size, name);
+    return getResourceData(program, GL_PROGRAM_INPUT, attrib_index, data);
 }
 
 bool getUniformData(Handle const program,
                     u32 const uniform_index,
-                    s32& location,
-                    s32& uniform_type,
-                    s32& uniform_array_size,
-                    str& name) noexcept
+                    GetLowLevelShaderData& data) noexcept
 {
-    return getResourceData(program, GL_UNIFORM, uniform_index, location,
-                           uniform_type, uniform_array_size, name);
+    return getResourceData(program, GL_UNIFORM, uniform_index, data);
+}
+
+bool getUniformBlocksData(Handle const program,
+                          u32 const uniform_index,
+                          GetLowLevelShaderData& data) noexcept
+{
+    return getResourceData(program, GL_UNIFORM_BLOCK, uniform_index, data);
+}
+
+bool getUniformBlocksElementsData(Handle const program,
+                                  u32 const uniform_index,
+                                  GetLowLevelShaderData& data) noexcept
+{
+    return getResourceData(program, GL_UNIFORM, uniform_index, data);
 }
 
 void bindAttributeIndex(Handle const program,
@@ -174,6 +218,15 @@ void bindAttributeIndex(Handle const program,
     glBindAttribLocation(static_cast<GLuint>(program),
                          static_cast<GLuint>(index),
                          static_cast<GLchar const*>(name.cbegin()));
+}
+
+void bindUniformBlockIndex(Handle const program,
+                           htps::u32 const index,
+                           htps::u32 const bindingPoint) noexcept
+{
+    glUniformBlockBinding(static_cast<GLuint>(program),
+                          static_cast<GLuint>(index),
+                          static_cast<GLuint>(bindingPoint));
 }
 
 }  // namespace haf::ogl

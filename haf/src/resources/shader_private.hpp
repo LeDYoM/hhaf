@@ -15,8 +15,10 @@ namespace haf::res
 struct Shader::ShaderPrivate
 {
     ogl::Handle m_program{ogl::invalidHandle()};
-    NamedIndexedVertexFormatContainer m_attribVertexFormat;
-    NamedIndexedVertexFormatContainer m_uniformFormat;
+    render::BufferSubObjects m_attribVertexFormat;
+    render::BufferSubObjects m_uniformFormat;
+    render::BufferSubObjects m_uniformBlockFormat;
+    render::BufferSubObjects m_uniformBlockElementsFormat;
 };
 
 using SHType =
@@ -67,105 +69,6 @@ constexpr void deleteAllShaders(SHArray<ogl::Handle> const& shader_handles)
             ogl::deleteShader(sh_handle);
         }
     }
-}
-
-template <bool attributes>
-void fillData(ogl::Handle const program,
-              NamedIndexedVertexFormatContainer& formats)
-{
-    auto const numData{[]() {
-        if constexpr (attributes)
-        {
-            return ogl::getNumAttribs;
-        }
-        else
-        {
-            return ogl::getNumUniforms;
-        }
-    }()(program)};
-    formats.clear();
-    if (numData > 0U)
-    {
-        formats.reserve(numData);
-        formats.clear();
-        core::str name(256);
-        for (auto index{0U}; index < numData; ++index)
-        {
-            core::s32 type{};
-            core::s32 location{};
-            core::s32 array_size{};
-            []() {
-                if constexpr (attributes)
-                {
-                    return ogl::getAttribData;
-                }
-                else
-                {
-                    return ogl::getUniformData;
-                }
-            }()(program, index, location, type, array_size, name);
-
-            if (location > -1)
-            {
-                VertexFormat format;
-                if (array_size > -1)
-                {
-                    format.arraySize = static_cast<core::u32>(array_size);
-                }
-
-                if (type == ogl::LowLevelConstants::f32vec4)
-                {
-                    format.bufferType  = BufferType::Float;
-                    format.numElements = 4U;
-                }
-                else if (type == ogl::LowLevelConstants::f32vec3)
-                {
-                    format.bufferType  = BufferType::Float;
-                    format.numElements = 3U;
-                }
-                else if (type == ogl::LowLevelConstants::f32vec2)
-                {
-                    format.bufferType  = BufferType::Float;
-                    format.numElements = 2U;
-                }
-                else if (type == ogl::LowLevelConstants::f32vec1)
-                {
-                    format.bufferType  = BufferType::Float;
-                    format.numElements = 1U;
-                }
-                else if (type == ogl::LowLevelConstants::s32vec1)
-                {
-                    format.bufferType  = BufferType::Float;
-                    format.numElements = 1U;
-                }
-                else if (type == ogl::LowLevelConstants::f32mat4x4)
-                {
-                    format.bufferType  = BufferType::Float;
-                    format.numElements = 16U;
-                }
-                else if (type == ogl::LowLevelConstants::sampler2D)
-                {
-                    format.bufferType  = BufferType::Sampler;
-                    format.numElements = 2U;
-                }
-
-                formats.push_back({core::str{name}, {location, format}});
-            }
-        }
-    }
-}
-
-inline void fillAttributes(
-    ogl::Handle const program,
-    NamedIndexedVertexFormatContainer& attribVertexFormat)
-{
-    fillData<true>(program, attribVertexFormat);
-}
-
-inline void fillUniforms(ogl::Handle const program,
-                         NamedIndexedVertexFormatContainer& uniformsFormat)
-{
-    fillData<false>(program, uniformsFormat);
 }
 
 }  // namespace haf::res

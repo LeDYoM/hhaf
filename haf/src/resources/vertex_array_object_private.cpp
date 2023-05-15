@@ -12,8 +12,11 @@ namespace haf::res
 {
 void VertexArrayObject::VertexArrayObjectPriv::associateBufferToAttib(
     u32 const binding_index,
-    vector<VertexBufferSubObject> const& vertex_buffer_subobjects,
-    vector<u32>& associatedAttribsToShader)
+    vector<render::BufferSubObject> const& vertex_buffer_subobjects,
+    vector<u32>& associatedAttribsToShader,
+    u32 const parentHandle,
+    u32 const parentSizeOfStruct,
+    u32 const parentSize)
 {
     // TODO: We could check that the buffer to associate has the correct
     // vertex format.
@@ -28,18 +31,17 @@ void VertexArrayObject::VertexArrayObjectPriv::associateBufferToAttib(
                 vertex_buffer_subobject.vertexFormat().numElements,
                 static_cast<core::u32>(
                     vertex_buffer_subobject.vertexFormat().bufferType),
-                vertex_buffer_subobject.offset());
+                vertex_buffer_subobject.vertexFormat().offset);
             associatedAttribsToShader.push_back(
                 static_cast<u32>(expected_index));
             DisplayLog::debug("Associating buffer ", expected_index);
         }
     }
 
-    ogl::associateBufferToAttrib(
-        m_vao, binding_index, vertex_buffer_subobjects[0].parent()->handle(),
-        vertex_buffer_subobjects[0].parent()->sizeOfStruct());
+    ogl::associateBufferToAttrib(m_vao, binding_index, parentHandle,
+                                 parentSizeOfStruct);
 
-    m_size = vertex_buffer_subobjects[0].parent()->size();
+    m_size = parentSize;
 }
 
 void VertexArrayObject::VertexArrayObjectPriv::

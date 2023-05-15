@@ -11,18 +11,19 @@ HOGL_API void deleteVertexArrayObject(Handle const handle) noexcept;
 HOGL_API void bindVAO(Handle const index) noexcept;
 
 HOGL_API void bindAttribToBindingIndexForVao(Handle const vao,
-                                    Handle const attrib_index,
-                                    Handle const binding_index,
-                                    htps::u32 const numElements,
-                                    htps::u32 type_index,
-                                    htps::u32 offset) noexcept;
+                                             Handle const attrib_index,
+                                             Handle const binding_index,
+                                             htps::u32 const numElements,
+                                             htps::u32 type_index,
+                                             htps::u32 offset) noexcept;
 
-HOGL_API void disableAttribForVao(Handle const vao, Handle const attrib_index) noexcept;
+HOGL_API void disableAttribForVao(Handle const vao,
+                                  Handle const attrib_index) noexcept;
 
 HOGL_API void associateBufferToAttrib(Handle const vao,
-                             Handle const binding_index,
-                             Handle const buffer_name,
-                             htps::s32 const sizeOfStuct) noexcept;
+                                      Handle const binding_index,
+                                      Handle const buffer_name,
+                                      htps::s32 const sizeOfStuct) noexcept;
 
 }  // namespace haf::ogl
 

@@ -17,6 +17,8 @@ public:
     explicit ShaderManager() noexcept;
     ~ShaderManager() noexcept;
 
+    void init();
+
     void addShader(core::str_view rid, core::sptr<Shader> shader);
 
     core::size_type setUniformForAll(core::str_view uniformName,

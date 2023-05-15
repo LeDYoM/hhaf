@@ -4,11 +4,9 @@ HTPS_PRAGMA_ONCE
 
 #include <haf/include/haf_export.hpp>
 #include <haf/include/core/types.hpp>
-#include <haf/include/core/math_types.hpp>
 #include <haf/include/resources/iresource.hpp>
-#include <haf/include/resources/types.hpp>
-#include <haf/include/resources/vertex_buffer_subobject.hpp>
-#include <haf/include/resources/vertex_formats.hpp>
+#include <haf/include/render/buffer_subobject.hpp>
+#include <haf/include/render/render_object_data.hpp>
 
 namespace haf::res
 {
@@ -23,11 +21,20 @@ public:
         return StaticResourceType;
     }
 
-    VertexBufferObject(core::str index, core::span<core::vector4df> data);
-    VertexBufferObject(core::str index, core::span<core::vector3df> data);
-    VertexBufferObject(core::str index, core::span<core::f32> data);
-    VertexBufferObject(core::array<core::str, 3U> const& indexes,
-                       core::span<Position3fNormal3fTextureCoordinates2f> data);
+    explicit VertexBufferObject(
+        render::BufferObjectConstructParams&& bufferObjectConstructParams);
+
+    template <typename T>
+    VertexBufferObject(render::RenderObjectData<T>&& render_object_data) :
+        VertexBufferObject{
+            core::move(render_object_data.bufferObjectConstructParams())}
+    {}
+
+    template <typename U, typename T>
+    VertexBufferObject(U&& index, core::span<T> data) :
+        VertexBufferObject{render::RenderObjectData<T>{core::forward<U>(index),
+                                                       core::move(data)}}
+    {}
 
     ~VertexBufferObject() override;
 
@@ -36,11 +43,11 @@ public:
     core::u32 size() const noexcept;
     core::u32 sizeOfStruct() const noexcept;
 
-    core::vector<VertexBufferSubObject> const& subObjects() const noexcept;
+    core::vector<render::BufferSubObject> const& subObjects() const noexcept;
 
 private:
-    struct RenderDataBufferPriv;
-    core::PImplPointer<RenderDataBufferPriv> m_p;
+    struct VertexBufferObjectPriv;
+    core::PImplPointer<VertexBufferObjectPriv> m_p;
 };
 }  // namespace haf::res
 

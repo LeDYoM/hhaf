@@ -1,85 +1,66 @@
 #include "default_shader_data.hpp"
+#include <haf/include/render/buffer_subobject.hpp>
+#include <haf/include/render/vertex_formats.hpp>
 #include <hogl/include/shader_functions.hpp>
 #include <hlog/include/hlog.hpp>
 
 using namespace haf::core;
+using namespace haf::render;
 
 namespace haf::res
 {
+namespace
+{
+static render::BufferSubObjects DefaultAttribsTable{
+    {"haf_position", 0U, getVertexFormatWithoutOffset<vector3df>()},
+    {"haf_color", 1U, getVertexFormatWithoutOffset<vector3df>()},
+    {"haf_textureuv", 2U, getVertexFormatWithoutOffset<vector2df>()}};
 
-static NamedIndexedVertexFormatContainer DefaultAttribsTable{
-    {"haf_position", {0U, {BufferType::Float, 3U, 1U}}},
-    {"haf_color", {1U, {BufferType::Float, 4U, 1U}}},
-    {"haf_textureuv", {2U, {BufferType::Float, 2U, 1U}}}};
+static render::BufferSubObjects DefaultUniformBlocks{
+    {"HAFCameraData", 0U, getVertexFormatWithoutOffset<CameraData>()}};
+
+using UniformBlocksBindingType  = pair<str, u32>;
+using UniformBlocksBindingsType = vector<UniformBlocksBindingType>;
+
+static UniformBlocksBindingsType DefaultUniformBlocksBindings{
+    {"HAFCameraData", 1U}};
+
+}  // namespace
 
 void DefaultAttribs::bindDefaultAttributes(ogl::Handle program) noexcept
 {
     for (auto&& default_attrib : DefaultAttribsTable)
     {
-        ogl::bindAttributeIndex(program, default_attrib.second.first,
-                                str_view{default_attrib.first.c_str()});
+        ogl::bindAttributeIndex(program, default_attrib.location(),
+                                str_view{default_attrib.index().c_str()});
         DisplayLog::debug("DefaultAttribs: Setting default attrib ",
-                          default_attrib.first.c_str(), " with index ",
-                          default_attrib.second.first);
+                          default_attrib.index().c_str(), " with index ",
+                          default_attrib.location());
     }
 }
 
 s32 DefaultAttribs::getIndexForName(str const& name)
 {
-    return NamedIndexedVertexFormatFunctions::getIndexForName(
-        DefaultAttribsTable, name);
+    return render::getIndexForName(DefaultAttribsTable, name);
 }
 
-s32 NamedIndexedVertexFormatFunctions::getIndexForName(
-    NamedIndexedVertexFormatContainer const& container,
-    str const& name)
+void DefaultUniformBlocks::bindUniformBlock(
+    ogl::Handle /*program*/,
+    core::str const& /*name*/,
+    core::u32 const /*bindingPoint*/) noexcept
+{}
+
+core::s32 DefaultUniformBlocks::getDefaultUniformBlockBindingPoint(
+    str_view name) noexcept
 {
-    auto const iterator{
-        container.cfind_if([name](NamedIndexedVertexFormat const& element) {
+    auto const iterator{DefaultUniformBlocksBindings.cfind_if(
+        [&name](UniformBlocksBindingType const& element) {
             return name == element.first;
         })};
 
-    return iterator != container.cend()
-        ? static_cast<s32>(iterator->second.first)
+    return iterator != DefaultUniformBlocksBindings.cend()
+        ? static_cast<s32>(iterator->second)
         : -1;
-}
-
-VertexFormat NamedIndexedVertexFormatFunctions::getVertexFormatForIndex(
-    NamedIndexedVertexFormatContainer const& container,
-    u32 const index)
-{
-    auto const iterator{
-        container.cfind_if([index](NamedIndexedVertexFormat const& element) {
-            return index == element.second.first;
-        })};
-
-    return iterator != container.cend() ? iterator->second.second
-                                        : VertexFormat{};
-}
-
-VertexFormat NamedIndexedVertexFormatFunctions::getVertexFormatForName(
-    NamedIndexedVertexFormatContainer const& container,
-    str_view const name)
-{
-    auto const iterator{
-        container.cfind_if([name](NamedIndexedVertexFormat const& element) {
-            return name == element.first;
-        })};
-
-    return iterator != container.cend() ? iterator->second.second
-                                        : VertexFormat{};
-}
-
-bool NamedIndexedVertexFormatFunctions::indexExists(
-    NamedIndexedVertexFormatContainer const& container,
-    core::u32 const index)
-{
-    auto const iterator{
-        container.cfind_if([index](NamedIndexedVertexFormat const& element) {
-            return index == element.second.first;
-        })};
-
-    return iterator != container.cend();
 }
 
 }  // namespace haf::res

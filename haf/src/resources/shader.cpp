@@ -7,11 +7,13 @@
 #include <hogl/include/uniform_functions.hpp>
 #include <hlog/include/hlog.hpp>
 #include "shader_private.hpp"
+#include "shader_data_filler.hpp"
 
 #include <hogl/include/vao_functions.hpp>
 
 using namespace haf::core;
 using namespace haf::math;
+using namespace haf::render;
 
 namespace haf::res
 {
@@ -61,31 +63,58 @@ Shader::Shader(sptr<VertexShaderCode> vsc,
     DisplayLog::debug(staticTypeName(), ": Shader id: ", m_p->m_program);
     fillAttributes(m_p->m_program, m_p->m_attribVertexFormat);
     fillUniforms(m_p->m_program, m_p->m_uniformFormat);
-
-    for (auto const& [name, indexed_format] : m_p->m_attribVertexFormat)
+    fillUniformBlocks(m_p->m_program, m_p->m_uniformBlockFormat);
+    fillUniformBlocksData(m_p->m_program, m_p->m_uniformBlockElementsFormat);
+    bindUniformBlocksToDefaultBindingPoints(m_p->m_program,
+                                            m_p->m_uniformBlockFormat);
+    for (auto const& subObject : m_p->m_attribVertexFormat)
     {
         DisplayLog::debug(
-            staticTypeName(), ": Format for attrib ", indexed_format.first,
-            " (", name,
-            ") is: ", static_cast<int>(indexed_format.second.bufferType),
-            ", number of elements: ", indexed_format.second.numElements,
-            ", array size: ", indexed_format.second.arraySize);
+            staticTypeName(), ": Format for attrib ", subObject.location(),
+            " (", subObject.index(),
+            ") is: ", static_cast<int>(subObject.vertexFormat().bufferType),
+            ", number of elements: ", subObject.vertexFormat().numElements,
+            ", array size: ", subObject.vertexFormat().arraySize);
     }
 
     DisplayLog::debug_if(m_p->m_attribVertexFormat.empty(), staticTypeName(),
                          ": No attributes found");
 
-    for (auto const& [name, indexed_format] : m_p->m_uniformFormat)
+    for (auto const& subObject : m_p->m_uniformFormat)
     {
         DisplayLog::debug(
-            staticTypeName(), ": Format for uniform ", indexed_format.first,
-            " (", name,
-            ") is: ", static_cast<int>(indexed_format.second.bufferType),
-            ", number of elements: ", indexed_format.second.numElements,
-            ", array size: ", indexed_format.second.arraySize);
+            staticTypeName(), ": Format for uniform ", subObject.location(),
+            " (", subObject.index(),
+            ") is: ", static_cast<int>(subObject.vertexFormat().bufferType),
+            ", number of elements: ", subObject.vertexFormat().numElements,
+            ", array size: ", subObject.vertexFormat().arraySize);
     }
     DisplayLog::debug_if(m_p->m_uniformFormat.empty(), staticTypeName(),
                          ": No uniforms found");
+
+    for (auto const& subObject : m_p->m_uniformBlockFormat)
+    {
+        DisplayLog::debug(
+            staticTypeName(), ": Format for uniform block ",
+            subObject.location(), " (", subObject.index(),
+            ") is: ", static_cast<int>(subObject.vertexFormat().bufferType),
+            ", number of elements: ", subObject.vertexFormat().numElements,
+            ", array size: ", subObject.vertexFormat().arraySize);
+    }
+    DisplayLog::debug_if(m_p->m_uniformFormat.empty(), staticTypeName(),
+                         ": No uniform blocks found");
+
+    for (auto const& subObject : m_p->m_uniformBlockElementsFormat)
+    {
+        DisplayLog::debug(
+            staticTypeName(), ": Format for uniform block elements ",
+            subObject.location(), " (", subObject.index(),
+            ") is: ", static_cast<int>(subObject.vertexFormat().bufferType),
+            ", number of elements: ", subObject.vertexFormat().numElements,
+            ", array size: ", subObject.vertexFormat().arraySize);
+    }
+    DisplayLog::debug_if(m_p->m_uniformFormat.empty(), staticTypeName(),
+                         ": No uniform block elements found");
 }
 
 Shader::~Shader()
@@ -126,8 +155,7 @@ u32 Shader::numAttribs() const
 
 VertexFormat Shader::vertexFormat(u32 const index) const
 {
-    return NamedIndexedVertexFormatFunctions::getVertexFormatForIndex(
-        m_p->m_attribVertexFormat, index);
+    return getVertexFormatForIndex(m_p->m_attribVertexFormat, index);
 }
 
 void Shader::setUniform(s32 const index, Matrix4x4 const& m4x4)
@@ -142,38 +170,32 @@ void Shader::setUniform(str_view const name, Matrix4x4 const& m4x4)
 
 s32 Shader::uniformIndex(str_view const name) const
 {
-    return NamedIndexedVertexFormatFunctions::getIndexForName(
-        m_p->m_uniformFormat, name);
+    return getIndexForName(m_p->m_uniformFormat, name);
 }
 
 VertexFormat Shader::uniformFormat(u32 const uniformIndex) const
 {
-    return NamedIndexedVertexFormatFunctions::getVertexFormatForIndex(
-        m_p->m_uniformFormat, uniformIndex);
+    return getVertexFormatForIndex(m_p->m_uniformFormat, uniformIndex);
 }
 
 VertexFormat Shader::uniformFormat(core::str_view const name) const
 {
-    return NamedIndexedVertexFormatFunctions::getVertexFormatForName(
-        m_p->m_uniformFormat, name);
+    return getVertexFormatForName(m_p->m_uniformFormat, name);
 }
 
 s32 Shader::attributeIndex(str_view const name) const
 {
-    return NamedIndexedVertexFormatFunctions::getIndexForName(
-        m_p->m_attribVertexFormat, name);
+    return getIndexForName(m_p->m_attribVertexFormat, name);
 }
 
 VertexFormat Shader::attributeFormat(u32 const attributeIndex) const
 {
-    return NamedIndexedVertexFormatFunctions::getVertexFormatForIndex(
-        m_p->m_attribVertexFormat, attributeIndex);
+    return getVertexFormatForIndex(m_p->m_attribVertexFormat, attributeIndex);
 }
 
 VertexFormat Shader::attributeFormat(core::str_view const name) const
 {
-    return NamedIndexedVertexFormatFunctions::getVertexFormatForName(
-        m_p->m_attribVertexFormat, name);
+    return getVertexFormatForName(m_p->m_attribVertexFormat, name);
 }
 
 vector<pair<str, u32>> Shader::unusedAttribs(vector<u32> const& usedAttribs)
@@ -181,10 +203,10 @@ vector<pair<str, u32>> Shader::unusedAttribs(vector<u32> const& usedAttribs)
     vector<pair<str, u32>> result;
     for (const auto& attrib : m_p->m_attribVertexFormat)
     {
-        auto const iterator{usedAttribs.cfind(attrib.second.first)};
+        auto const iterator{usedAttribs.cfind(attrib.location())};
         if (iterator == usedAttribs.cend())
         {
-            result.emplace_back(attrib.first, attrib.second.first);
+            result.emplace_back(attrib.index(), attrib.location());
         }
     }
     return result;

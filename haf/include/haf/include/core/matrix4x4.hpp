@@ -16,6 +16,8 @@ namespace haf::math
 class HAF__API Matrix4x4 final
 {
 public:
+    static constexpr core::u32 kNumElements{16U};
+
     /**
      * @brief Type of the elements internal data
      */

@@ -45,12 +45,15 @@ u32 VertexArrayObject::handle() const
 void VertexArrayObject::associateBuffersToAttribsInCurrentShader()
 {
     u32 binding_index{0U};
-    vector<u32> currentAssociatedAttribsToShaderForVao;
+    vector<u32> currentAssociatedAttribsToShaderForVao(
+        m_p->m_mesh->vertexBufferObjects().size());
     for (auto const& vertex_buffer_object : m_p->m_mesh->vertexBufferObjects())
     {
-        m_p->associateBufferToAttib(binding_index++,
-                                    vertex_buffer_object->subObjects(),
-                                    currentAssociatedAttribsToShaderForVao);
+        m_p->associateBufferToAttib(
+            binding_index++, vertex_buffer_object->subObjects(),
+            currentAssociatedAttribsToShaderForVao,
+            vertex_buffer_object->handle(),
+            vertex_buffer_object->sizeOfStruct(), vertex_buffer_object->size());
     }
     m_p->disableUnusedAttribsForVaoInShader(
         currentAssociatedAttribsToShaderForVao);

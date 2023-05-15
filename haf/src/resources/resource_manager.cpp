@@ -16,6 +16,7 @@ ResourceManager::~ResourceManager() noexcept = default;
 void ResourceManager::init()
 {
     bool isOk{m_default_resources.loadDefaultResources(*this)};
+    m_shader_manager.init();
     (void)(isOk);
 }
 
@@ -89,11 +90,14 @@ bool ResourceManager::createResource(str_view rid,
                                      ResourceType const r_type,
                                      span<vector4df> data)
 {
+    (void)(rid);
+    (void)(r_type);
+    (void)(data);
     switch (r_type)
     {
         case ResourceType::VertexBufferObject:
         {
-            return addResource(rid, msptr<VertexBufferObject>(0, move(data)));
+//            return addResource(rid, msptr<VertexBufferObject>(0, move(data)));
         }
         break;
     }

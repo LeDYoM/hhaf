@@ -1,12 +1,13 @@
 #include "resource_manager.hpp"
 #include "default_resources.hpp"
 #include <hlog/include/hlog.hpp>
-#include <haf/include/resources/vertex_formats.hpp>
+#include <haf/include/render/vertex_formats.hpp>
 #include <haf/include/scene/color.hpp>
 #include <haf/include/resources/image.hpp>
 
 using namespace haf::res;
 using namespace haf::core;
+using namespace haf::render;
 
 namespace haf::res
 {
@@ -22,44 +23,48 @@ bool DefaultResources::loadDefaultResources(sys::ResourceManager& rManager)
     return result;
 }
 
-bool DefaultResources::loadDefaultShaderNoInput(sys::ResourceManager& rManager)
+bool DefaultResources::loadDefaultShaderNoInput(
+    sys::ResourceManager& /*rManager*/)
 {
-    rManager.createResource("dummy_test_vertex_shader",
-                            res::ResourceType::VertexShaderCode,
-                            core::str_view{R"(
-        #version 450 core
+    /*
+        rManager.createResource("dummy_test_vertex_shader",
+                                res::ResourceType::VertexShaderCode,
+                                core::str_view{R"(
+            #version 450 core
 
-        void main(void)
-        {
-            const vec4 vertices[] = vec4[](vec4( 0.25, -0.25, 0.5, 1.0),
-                                           vec4(-0.25, -0.25, 0.5, 1.0),
-                                           vec4( 0.25,  0.25, 0.5, 1.0));
+            void main(void)
+            {
+                const vec4 vertices[] = vec4[](vec4( 0.25, -0.25, 0.5, 1.0),
+                                               vec4(-0.25, -0.25, 0.5, 1.0),
+                                               vec4( 0.25,  0.25, 0.5, 1.0));
 
-            gl_Position = vertices[gl_VertexID];
-        }
-    )"});
+                gl_Position = vertices[gl_VertexID];
+            }
+        )"});
 
-    rManager.createResource("dummy_test_fragment_shader",
-                            res::ResourceType::FragmentShaderCode,
-                            core::str_view{R"(
-        #version 450 core
+        rManager.createResource("dummy_test_fragment_shader",
+                                res::ResourceType::FragmentShaderCode,
+                                core::str_view{R"(
+            #version 450 core
 
-        out vec4 color;
+            out vec4 color;
 
-        void main(void)
-        {
-            color = vec4(1.0, 0.8, 0.2, 1.0);
-        }
-    )"});
+            void main(void)
+            {
+                color = vec4(1.0, 0.8, 0.2, 1.0);
+            }
+        )"});
 
-    rManager.createResourceFromResources(
-        "dummy_test_shader", res::ResourceType::Shader,
-        {"dummy_test_vertex_shader", "dummy_test_fragment_shader"});
+        rManager.createResourceFromResources(
+            "dummy_test_shader", res::ResourceType::Shader,
+            {"dummy_test_vertex_shader", "dummy_test_fragment_shader"});
 
-    rManager.aquireResource("dummy_test_shader", m_defaultShaderNoInput);
-    LogAsserter::log_assert(m_defaultShaderNoInput != nullptr);
+        rManager.aquireResource("dummy_test_shader", m_defaultShaderNoInput);
+        LogAsserter::log_assert(m_defaultShaderNoInput != nullptr);
 
-    return m_defaultShaderNoInput != nullptr;
+        return m_defaultShaderNoInput != nullptr;
+        */
+    return true;
 }
 
 bool DefaultResources::loadDefaultShader0(sys::ResourceManager& rManager)
@@ -76,13 +81,26 @@ bool DefaultResources::loadDefaultShader0(sys::ResourceManager& rManager)
         uniform mat4 haf_camera_projection;
         uniform mat4 haf_object_position;
 
+        layout(std140,location=1) uniform Foo
+        {
+            float a;
+            float b;
+            float c;
+            float d;
+        };
+
+        layout(std140) uniform HAFCameraData
+        {
+            mat4 haf_projection;
+        };
+
         out vec4 haf_out_color;
         out vec2 haf_out_textureuv;
 
         void main(void)
         {
-            gl_Position = haf_camera_projection * haf_object_position *
-            vec4(haf_position.xyz, 1.0f);
+            gl_Position = haf_projection *
+                haf_object_position * vec4(haf_position.xyz, 1.0f);
 
             haf_out_color = haf_color;
             haf_out_textureuv = haf_textureuv;
@@ -139,7 +157,8 @@ bool DefaultResources::loadDefaultBuffers(sys::ResourceManager& rManager)
         core::span{vertex_data_raw_mesh})};
 
     auto color_buffer{core::msptr<res::VertexBufferObject>(
-        "haf_color", core::span{vertex_color_data_raw})};
+        core::array<core::str, 1U>{"haf_color"},
+        core::span{vertex_color_data_raw})};
 
     rManager.addResource("default_position_buffer", vertex_buffer);
     rManager.addResource("default_color_buffer", color_buffer);
@@ -178,7 +197,7 @@ bool DefaultResources::loadDefaultBuffers(sys::ResourceManager& rManager)
         core::span{quad_data_raw_mesh})};
 
     auto color_buffer_quad{core::msptr<res::VertexBufferObject>(
-        "haf_color", core::span{quad_vertex_color_data_raw})};
+        str{"haf_color"}, core::span{quad_vertex_color_data_raw})};
 
     rManager.addResource("quad_position_buffer", vertex_buffer_quad);
     rManager.addResource("quad_color_buffer", color_buffer_quad);
@@ -289,20 +308,20 @@ bool DefaultResources::loadDefaultCubeMesh(sys::ResourceManager& rManager)
     using namespace scene::colors;
 
     static vector4df cube_vertex_color_data_raw[] = {
-        Cyan,    Cyan,    Cyan,    Cyan,    Cyan,    Cyan,    Blue,   Blue,
-        Blue,    Blue,    Blue,    Blue,    Green,   Green,   Green,  Green,
-        Green,   Green,   Yellow,  Yellow,  Yellow,  Yellow,  Yellow, Yellow,
-        Magenta, Magenta, Magenta, Magenta, Magenta, Magenta,
-//        Red,     Red,      Red,     Red,     Red,     Red,
-        White,   White,   White,   White,   White,   White,   White,  White
-    };
+        Cyan, Cyan, Cyan, Cyan, Cyan, Cyan, Blue, Blue, Blue, Blue, Blue, Blue,
+        Green, Green, Green, Green, Green, Green, Yellow, Yellow, Yellow,
+        Yellow, Yellow, Yellow, Magenta, Magenta, Magenta, Magenta, Magenta,
+        Magenta,
+        //        Red,     Red,      Red,     Red,     Red,     Red,
+        White, White, White, White, White, White, White, White};
 
     auto vertex_buffer_cube{core::msptr<res::VertexBufferObject>(
         array{str{"haf_position"}, str{"haf_normal"}, str{"haf_textureuv"}},
         core::span{cube_data_raw_mesh})};
 
     auto color_buffer_cube{core::msptr<res::VertexBufferObject>(
-        "haf_color", core::span{cube_vertex_color_data_raw})};
+        core::array<core::str, 1U>{"haf_color"},
+        core::span{cube_vertex_color_data_raw})};
 
     bool ok{true};
     ok &= rManager.addResource("default_cube_vertex_data", vertex_buffer_cube);
@@ -316,7 +335,6 @@ bool DefaultResources::loadDefaultCubeMesh(sys::ResourceManager& rManager)
     ids = {"default_shader_0", "cube_mesh"};
     ok &= rManager.createResourceFromResources(
         "cube_vao", ResourceType::VertexArrayObject, ids);
-
 
     auto image{core::msptr<res::Image>("a")};
     auto texture{core::msptr<res::Texture>(*image)};

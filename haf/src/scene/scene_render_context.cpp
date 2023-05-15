@@ -9,7 +9,7 @@ void SceneRenderContext::setNowFrame(time::TimePoint time_point)
 }
 
 void SceneRenderContext::setCameraMatrix(
-    math::Matrix4x4 const& camera_matrix) noexcept
+    math::Matrix4x4 const& camera_matrix)
 {
     m_cameraMatrix = camera_matrix;
 }

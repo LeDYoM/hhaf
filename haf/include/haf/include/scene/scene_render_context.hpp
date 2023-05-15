@@ -19,13 +19,13 @@ protected:
     SceneRenderContext()  = default;
     ~SceneRenderContext() = default;
 
-    void beginFrame();
-    void endFrame();
+    void beginFrame() override;
+    void endFrame() override;
 
     void setNowFrame(time::TimePoint time_point);
 
 public:
-    void setCameraMatrix(math::Matrix4x4 const& matrix) noexcept;
+    virtual void setCameraMatrix(math::Matrix4x4 const& matrix);
     void setCurrentModelViewMatrix(
         math::Matrix4x4 const& camera_matrix) noexcept;
 };

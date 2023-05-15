@@ -159,3 +159,24 @@ TEST_CASE("span::make_span_vector", "[span]")
         CHECK_FALSE(test_element_const.empty());
     }
 }
+
+TEST_CASE("span::span_of_one_element", "[span]")
+{
+    SECTION("const")
+    {
+        int const data{5U};
+        auto test_span{span{data}};
+        CHECK(test_span.size() == 1U);
+        static_assert(decltype(test_span)::is_const_v);
+        CHECK(test_span[0U] == data);
+    }
+
+    SECTION("non-const")
+    {
+        int data{5U};
+        auto test_span{span{data}};
+        CHECK(test_span.size() == 1U);
+        static_assert(!(decltype(test_span)::is_const_v));
+        CHECK(test_span[0U] == data);
+    }
+}

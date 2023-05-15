@@ -25,7 +25,7 @@ public:
 
     constexpr array(std::initializer_list<value_type> iList) noexcept
     {
-//        static_assert(iList.size() <= array_size);
+        //        static_assert(iList.size() <= array_size);
         auto buffer_element{&buffer_[0]};
 
         for (auto&& element : iList)
@@ -39,7 +39,7 @@ public:
             buffer_element = &buffer_[counter];
             while (counter++ < array_size)
             {
-                (*buffer_element++) = buffer_[iList.size() -1U];
+                (*buffer_element++) = buffer_[iList.size() - 1U];
             }
         }
     }
@@ -49,13 +49,19 @@ public:
         assert(array_size >= count);
         size_type index{0U};
 
-        for (auto iterator{source}; iterator != (source + count); ++iterator)
+        auto const iterator_end{source + count};
+        for (auto iterator{source}; iterator != iterator_end; ++iterator)
         {
             buffer_[index++] = *iterator;
         }
     }
 
-    constexpr array(const const_iterator _begin, const const_iterator _end) :
+    constexpr array(array&&) = default;
+    constexpr array( const array&) = default;
+    constexpr array& operator=(array&&) = default;
+    constexpr array& operator=(const array&) = default;
+
+    constexpr array(const_iterator const _begin, const_iterator const _end) :
         array{_begin, static_cast<size_type>(std::distance(_begin, _end))}
     {}
 
@@ -64,7 +70,7 @@ public:
 
     constexpr array(span<T> const rhs) : array{rhs.cbegin(), rhs.cend()} {}
 
-    constexpr void insert(const size_type index, value_type element) noexcept
+    constexpr void insert(size_type const index, value_type element) noexcept
     {
         if (index < array_size)
         {
@@ -77,7 +83,7 @@ public:
         }
     }
 
-    constexpr reference operator[](const size_t index) noexcept
+    constexpr reference operator[](size_t const index) noexcept
     {
         return buffer_[index];
     }
@@ -142,6 +148,10 @@ template <typename _Tp, typename... _Up>
 array(_Tp, _Up...)
     -> array<std::enable_if_t<(std::is_same_v<_Tp, _Up> && ...), _Tp>,
              1 + sizeof...(_Up)>;
+
+template <typename T>
+array(T) -> array<T, 1U>;
+
 }  // namespace htps
 
 #endif

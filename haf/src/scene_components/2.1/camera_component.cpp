@@ -7,7 +7,6 @@
 
 #include "system/get_system.hpp"
 #include "scene/scene_manager.hpp"
-#include "resources/resource_manager.hpp"
 #include <haf/include/scene/color.hpp>
 #include <hogl/include/render_system_functions.hpp>
 #include <haf/include/core/geometry_math.hpp>
@@ -79,11 +78,6 @@ void CameraComponent::cameraDataUpdated()
     sys::getSystem<scene::SceneManager>(attachedNode())
         .sceneRenderContext()
         .setCameraMatrix(m_perspective_matrix);
-
-    [[maybe_unused]] auto const count{
-        sys::getSystem<sys::ResourceManager>(attachedNode())
-            .shaderManager()
-            .setUniformForAll("haf_camera_projection", m_perspective_matrix)};
 
     cameraUpdated();
 }

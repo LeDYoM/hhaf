@@ -28,12 +28,6 @@ void MeshRenderComponent::setMeshRenderContext(
 
 void MeshRenderComponent::updateRender()
 {
-    //    m_vao_object->shader()->
-    /*
-            sys::getSystem<sys::ResourceManager>(attachedNode())
-                .shaderManager()
-                .setUniform("haf_camera_projection", m_perspective_matrix)};
-    */
     m_vao_object->shader()->setUniform("haf_object_position",
                                        meshRenderContext()->modelViewMatrix());
     m_vao_object->render();

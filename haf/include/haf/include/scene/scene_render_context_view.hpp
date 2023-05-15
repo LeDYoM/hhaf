@@ -22,8 +22,8 @@ protected:
     SceneRenderContextView()  = default;
     ~SceneRenderContextView() = default;
 
-    void beginFrame() { m_cameraMatrix.resetHasChanged(); }
-    void endFrame() {}
+    virtual void beginFrame() { m_cameraMatrix.resetHasChanged(); }
+    virtual void endFrame() {}
 
     time::TimePoint m_nowFrame{};
     prop::PropertyState<math::Matrix4x4> m_cameraMatrix{};

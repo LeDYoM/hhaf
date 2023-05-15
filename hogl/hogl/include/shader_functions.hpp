@@ -10,37 +10,55 @@ namespace haf::ogl
 [[nodiscard]] HOGL_API Handle createFragmentShader() noexcept;
 [[nodiscard]] HOGL_API Handle createVertexShader() noexcept;
 [[nodiscard]] HOGL_API bool compileShader(Handle const handle,
-                                 htps::str_view const code) noexcept;
+                                          htps::str_view const code) noexcept;
 [[nodiscard]] HOGL_API Handle createProgram() noexcept;
-void HOGL_API attachShader(Handle const program_handle,
-                  Handle const shader_handle) noexcept;
-void HOGL_API linkProgram(Handle const program_handle) noexcept;
-void HOGL_API deleteShader(Handle const shader_handle) noexcept;
-void HOGL_API deleteProgram(Handle const program_handle) noexcept;
-void HOGL_API useProgram(Handle const program_handle) noexcept;
-void HOGL_API clearUseProgram() noexcept;
+HOGL_API void attachShader(Handle const program_handle,
+                           Handle const shader_handle) noexcept;
+HOGL_API void linkProgram(Handle const program_handle) noexcept;
+HOGL_API void deleteShader(Handle const shader_handle) noexcept;
+HOGL_API void deleteProgram(Handle const program_handle) noexcept;
+HOGL_API void useProgram(Handle const program_handle) noexcept;
+HOGL_API void clearUseProgram() noexcept;
 [[nodiscard]] HOGL_API Handle currentProgram() noexcept;
 
 [[nodiscard]] HOGL_API htps::u32 getNumAttribs(Handle const program) noexcept;
 [[nodiscard]] HOGL_API htps::u32 getNumUniforms(Handle const program) noexcept;
+[[nodiscard]] HOGL_API htps::u32 getNumUniformBlocks(
+    Handle const program) noexcept;
 
-bool HOGL_API getAttribData(Handle const program,
-                   htps::u32 const attrib_index,
-                   htps::s32& location,
-                   htps::s32& attrib_type,
-                   htps::s32& attrib_array_size,
-                   htps::str& name) noexcept;
+struct GetLowLevelShaderData
+{
+    htps::s32 location;
+    htps::s32 type;
+    htps::s32 array_size;
+    htps::s32 extra_param0;
+    htps::str name;
+};
 
-bool HOGL_API getUniformData(Handle const program,
-                    htps::u32 const uniform_index,
-                    htps::s32& location,
-                    htps::s32& uniform_type,
-                    htps::s32& uniform_array_size,
-                    htps::str& name) noexcept;
+HOGL_API bool getAttribData(Handle const program,
+                            htps::u32 const attrib_index,
+                            GetLowLevelShaderData& data) noexcept;
 
-void HOGL_API bindAttributeIndex(Handle const program,
-                        htps::u32 const index,
-                        htps::str_view const name) noexcept;
+HOGL_API bool getUniformData(Handle const program,
+                             htps::u32 const uniform_index,
+                             GetLowLevelShaderData& data) noexcept;
+
+HOGL_API bool getUniformBlocksData(Handle const program,
+                                   htps::u32 const uniform_index,
+                                   GetLowLevelShaderData& data) noexcept;
+
+HOGL_API bool getUniformBlocksElementsData(
+    Handle const program,
+    htps::u32 const uniform_index,
+    GetLowLevelShaderData& data) noexcept;
+
+HOGL_API void bindAttributeIndex(Handle const program,
+                                 htps::u32 const index,
+                                 htps::str_view const name) noexcept;
+
+HOGL_API void bindUniformBlockIndex(Handle const program,
+                                    htps::u32 const index,
+                                    htps::u32 const bindingPoint) noexcept;
 
 }  // namespace haf::ogl
 

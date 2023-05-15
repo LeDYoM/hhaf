@@ -21,6 +21,7 @@ set(SOURCE_TESTS
     properties/propertystate
 
     render/mesh_render_component
+    render/vertex_formats
 
     resources/image
 

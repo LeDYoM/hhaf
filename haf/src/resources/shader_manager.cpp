@@ -1,5 +1,6 @@
 #include "shader_manager.hpp"
 #include <hlog/include/hlog.hpp>
+#include <haf/include/render/buffer_subobject.hpp>
 
 using namespace haf::core;
 
@@ -7,6 +8,11 @@ namespace haf::res
 {
 ShaderManager::ShaderManager() noexcept  = default;
 ShaderManager::~ShaderManager() noexcept = default;
+
+void ShaderManager::init()
+{
+    
+}
 
 void ShaderManager::addShader(str_view rid, sptr<Shader> shader)
 {

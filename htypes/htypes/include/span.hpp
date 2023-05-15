@@ -19,23 +19,26 @@ public:
     using const_iterator  = rptr<T const>;
     using reference       = T&;
     using const_reference = T const&;
+    using value_type      = T;
 
+    constexpr span() noexcept : m_begin{nullptr}, m_end{nullptr} {}
     constexpr span(T* begin, T* end) noexcept : m_begin{begin}, m_end{end} {}
+    constexpr span(T& begin) noexcept : m_begin{&begin}, m_end{m_begin + 1U} {}
 
     template <size_type Size>
     constexpr span(T (&sp_data)[Size]) noexcept :
         span{&sp_data[0U], sp_data + Size}
     {}
 
-    template <typename T2 = T,
-    typename Allocator  = AllocatorType<T>,
+    template <typename T2         = T,
+              typename Allocator  = AllocatorType<T>,
               typename GrowPolicy = GrowPolicyUnary>
     span(vector_base<T2, Allocator, GrowPolicy>& v) noexcept :
         span{v.begin(), v.end()}
     {}
 
-    template <typename T2 = T,
-    typename Allocator  = AllocatorType<T>,
+    template <typename T2         = T,
+              typename Allocator  = AllocatorType<T>,
               typename GrowPolicy = GrowPolicyUnary>
     span(vector_base<T2, Allocator, GrowPolicy> const& v) noexcept :
         span{v.begin(), v.end()}
