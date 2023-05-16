@@ -119,9 +119,11 @@ bool getResourceData(Handle const program,
     }
     else
     {
-        glGetProgramResourceiv(
-            program, type_request, index, properties.size(), &properties[0],
-            static_cast<GLsizei>(values.size()), nullptr, values.begin());
+        glGetProgramResourceiv(program, type_request, index,
+                               static_cast<GLsizei>(properties.size()),
+                               &properties[0],
+                               static_cast<GLsizei>(values.size()),
+                               static_cast<GLsizei*>(nullptr), values.begin());
     }
 
     data.type       = static_cast<s32>(values[1]);
