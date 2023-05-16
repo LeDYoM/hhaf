@@ -24,6 +24,8 @@ public:
     Texture(Image const& image);
     ~Texture() override;
 
+    bool isValid() const override;
+
 private:
     struct TexturePrivate;
     core::PImplPointer<TexturePrivate> m_p;

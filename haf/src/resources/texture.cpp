@@ -1,6 +1,9 @@
 #include <haf/include/resources/texture.hpp>
 #include <hogl/include/types.hpp>
 #include <hogl/include/texture_functions.hpp>
+
+#include <hlog/include/hlog.hpp>
+
 #include "glad/glad.h"
 
 using namespace haf::core;
@@ -37,24 +40,24 @@ Texture::Texture() : m_p{make_pimplp<TexturePrivate>()}
 
     // Specify the amount of storage we want to use for the texture
     glTextureStorage2D(m_p->m_texture,
-                   1,              // 8 mipmap levels
-                   GL_RGBA32F,     // 32-bit floating-point RGBA data
-                   256, 256);      // 256 x 256 texels
+                       1,           // 8 mipmap levels
+                       GL_RGBA32F,  // 32-bit floating-point RGBA data
+                       256, 256);   // 256 x 256 texels
 
     // Define some data to upload into the texture
     float* data = new float[256 * 256 * 4];
 
     // generate_texture() is a function that fills memory with image data
-        generate_texture(data, 256, 256);
+    generate_texture(data, 256, 256);
 
     // Assume the texture is already bound to the GL_TEXTURE_2D target
     glTextureSubImage2D(m_p->m_texture,  // 2D texture
-                    0,              // Level 0
-                    0, 0,           // Offset 0, 0
-                    256, 256,       // 256 x 256 texels, replace entire image
-                    GL_RGBA,        // Four channel data
-                    GL_FLOAT,       // Floating point data
-                    data);          // Pointer to data
+                        0,               // Level 0
+                        0, 0,            // Offset 0, 0
+                        256, 256,  // 256 x 256 texels, replace entire image
+                        GL_RGBA,   // Four channel data
+                        GL_FLOAT,  // Floating point data
+                        data);     // Pointer to data
 
     // Free the memory we allocated before - \GL now has our data
     delete[] data;
@@ -63,49 +66,33 @@ Texture::Texture() : m_p{make_pimplp<TexturePrivate>()}
 Texture::Texture(Image const& image) : m_p{make_pimplp<TexturePrivate>()}
 {
     m_p->m_texture = ogl::createTexture();
-/*
-    // Specify the amount of storage we want to use for the texture
-    glTextureStorage2D(m_p->m_texture,
-                   1,              // 8 mipmap levels
-                   GL_RGBA32F,     // 32-bit floating-point RGBA data
-                   256, 256);      // 256 x 256 texels
-*/
 
-    GLenum internal_format{GL_RGBA8};
-    GLenum format{GL_RGBA};
-    GLenum type{GL_UNSIGNED_BYTE};
-    if (image.channels() == 4)
-    {
-        internal_format = GL_RGBA8;
-        format = GL_RGBA;
-        type = GL_UNSIGNED_BYTE;
-    }
-    else if (image.channels() == 3)
-    {
-        internal_format = GL_RGB8;
-        format = GL_RGB;
-        type = GL_UNSIGNED_BYTE;
-    }
+    ogl::TextureCreationParameters texture_cp;
+    texture_cp.imageFormat =
+        image.channels() == 4U ? ogl::ImageFormat::Rgba : ogl::ImageFormat::Rgb;
+    texture_cp.mipmaps = 1U;
+    texture_cp.size    = image.size();
 
-    glTextureStorage2D(m_p->m_texture,
-                   1,              // 8 mipmap levels
-                   internal_format,     // 32-bit floating-point RGBA data
-                   image.size().x, image.size().y);      // 256 x 256 texels
+    ogl::textureStorage(m_p->m_texture, texture_cp);
 
-    // Assume the texture is already bound to the GL_TEXTURE_2D target
-    glTextureSubImage2D(m_p->m_texture,  // 2D texture
-                    0,              // Level 0
-                    0, 0,           // Offset 0, 0
-                    image.size().x, image.size().y,       // 256 x 256 texels, replace entire image
-                    format,        // Four channel data
-                    type,       // Floating point data
-                    image.data());          // Pointer to data
+    ogl::SubImageCreationParameters sub_image_cp;
+    sub_image_cp.imageFormat =
+        image.channels() == 4U ? ogl::ImageFormat::Rgba : ogl::ImageFormat::Rgb;
+    sub_image_cp.mipmap = 0;
+    sub_image_cp.data = image.data();
+    sub_image_cp.rect = Rectu32{0,0,image.size()};
+    ogl::updateTexture(m_p->m_texture, sub_image_cp);
 }
 
 Texture::~Texture()
 {
     ogl::destroyTexture(m_p->m_texture);
     m_p->m_texture = ogl::invalidHandle();
+}
+
+bool Texture::isValid() const
+{
+    return m_p != nullptr && ogl::isValid(m_p->m_texture);
 }
 
 }  // namespace haf::res
