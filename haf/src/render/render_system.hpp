@@ -2,9 +2,9 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_SYS_SYSTEM_RENDERSYSTEM_INCLUDE_HPP
 #define HAF_SYS_SYSTEM_RENDERSYSTEM_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
-#include <htypes/include/vector.hpp>
+#include <haf/include/core/types.hpp>
 #include "system/system_base.hpp"
+#include <haf/include/render/shared_data_manager.hpp>
 
 namespace haf::sys
 {
@@ -22,10 +22,13 @@ public:
 
     void update();
 
-    htps::sptr<RenderTarget> const& currentRenderTarget() const;
+    core::sptr<RenderTarget> const& currentRenderTarget() const;
 
+    render::SharedDataManager& sharedDataManager() noexcept;
+    render::SharedDataManager const& sharedDataManager() const noexcept;
 private:
-    htps::sptr<RenderTarget> render_target_;
+    core::sptr<RenderTarget> render_target_;
+    render::SharedDataManager m_shared_data_manager;
     bool m_initialized{false};
 };
 }  // namespace haf::sys

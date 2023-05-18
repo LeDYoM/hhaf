@@ -3,6 +3,13 @@
 
 namespace haf::scene
 {
+SceneRenderContext::SceneRenderContext() = default;
+SceneRenderContext::~SceneRenderContext() = default;
+
+void SceneRenderContext::init()
+{
+}
+
 void SceneRenderContext::setNowFrame(time::TimePoint time_point)
 {
     m_nowFrame = core::move(time_point);

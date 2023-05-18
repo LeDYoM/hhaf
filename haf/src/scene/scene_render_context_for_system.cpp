@@ -5,6 +5,7 @@
 
 #include "system/get_system.hpp"
 #include "resources/resource_manager.hpp"
+#include "render/render_system.hpp"
 
 #include "glad/glad.h"
 #include <hogl/include/buffer_functions.hpp>
@@ -15,29 +16,25 @@
 GLuint bufferUniform;
 GLuint bindingpoint = 1;
 
+using namespace haf::core;
+
 namespace haf::scene
 {
-render::SharedDataBuffer* sh_buffer{nullptr};
-
 SceneRenderContextForSystem::SceneRenderContextForSystem(
     sys::ISystemProvider& systemProvider) :
     m_isystem_provider{systemProvider}
 {}
+
+void SceneRenderContextForSystem::init()
+{
+    BaseClass::init();
+}
 
 void SceneRenderContextForSystem::beginFrame()
 {
     auto& timeSystem{sys::getSystem<sys::TimeSystem>(&m_isystem_provider)};
     BaseClass::setNowFrame(timeSystem.nowFrame());
     BaseClass::beginFrame();
-
-    if (!sh_buffer)
-    {
-        using namespace render;
-        CameraData data{};
-        core::span<CameraData> _data(data);
-        sh_buffer =
-            new render::SharedDataBuffer{"HAFCameraData", core::move(_data)};
-    }
 }
 
 void SceneRenderContextForSystem::endFrame()
@@ -48,25 +45,26 @@ void SceneRenderContextForSystem::endFrame()
 void SceneRenderContextForSystem::setCameraMatrix(math::Matrix4x4 const& matrix)
 {
     BaseClass::setCameraMatrix(matrix);
-    /*
-        [[maybe_unused]] auto const count{
-            sys::getSystem<sys::ResourceManager>(&m_isystem_provider)
-                .shaderManager()
-                .setUniformForAll("haf_camera_projection", m_cameraMatrix())};
-    */
+
+    auto sh_buffer = sys::getSystem<sys::RenderSystem>(&m_isystem_provider)
+                         .sharedDataManager()
+                         .get("haf_camera_projection");
+
+    if (!sh_buffer)
+    {
+        sh_buffer = msptr<render::SharedDataBuffer>(
+            "HAFCameraData", core::span<render::CameraData>{});
+        sh_buffer->autoBindToDefault();
+
+        sys::getSystem<sys::RenderSystem>(&m_isystem_provider)
+            .sharedDataManager()
+            .add("haf_camera_projection", sh_buffer);
+        sh_buffer->autoBindToDefault();
+    }
 
     render::CameraData cameraData;
     cameraData.projection = matrix;
-//    sh_buffer->setBindingPoint(bindingpoint);
-    sh_buffer->autoBindToDefault();
     sh_buffer->write<render::CameraData>(cameraData);
-//    glBindBufferBase(GL_UNIFORM_BUFFER, bindingpoint, bufferUniform);
-//    math::Matrix4x4* mat = static_cast<math::Matrix4x4*>(
-//        glMapNamedBufferRange(bufferUniform, 0, sizeof(math::Matrix4x4),
-//                              GL_MAP_WRITE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT));
-
-//    *mat = m_cameraMatrix();  // math::Matrix4x4::Identity;
-//    glUnmapNamedBuffer(bufferUniform);
 }
 
 }  // namespace haf::scene

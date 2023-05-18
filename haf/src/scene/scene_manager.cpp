@@ -28,6 +28,7 @@ void SceneManager::init()
     auto result{m_rootSceneNode->attachComponent<SceneNodesComponent>()};
     LogAsserter::log_assert(result != nullptr,
                             "Cannot attach sceneNodesComponent to root node");
+    m_scene_render_context_for_system.init();
 }
 
 void SceneManager::update()

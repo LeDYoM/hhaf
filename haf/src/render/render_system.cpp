@@ -3,7 +3,8 @@
 #include <hlog/include/hlog.hpp>
 #include <hogl/include/render_system_functions.hpp>
 
-using namespace htps;
+using namespace haf::core;
+using namespace haf::render;
 
 namespace haf::sys
 {
@@ -17,13 +18,23 @@ void RenderSystem::initialize(bool const enableDebug)
 
 void RenderSystem::update()
 {
-//    render_target_->update();
-//    render_target_->clearRenderQueue();
+    //    render_target_->update();
+    //    render_target_->clearRenderQueue();
 }
 
 sptr<RenderTarget> const& RenderSystem::currentRenderTarget() const
 {
     return render_target_;
+}
+
+SharedDataManager& RenderSystem::sharedDataManager() noexcept
+{
+    return m_shared_data_manager;
+}
+
+SharedDataManager const& RenderSystem::sharedDataManager() const noexcept
+{
+    return m_shared_data_manager;
 }
 
 }  // namespace haf::sys

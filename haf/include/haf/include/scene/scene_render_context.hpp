@@ -16,8 +16,10 @@ private:
     using BaseClass = SceneRenderContextView;
 
 protected:
-    SceneRenderContext()  = default;
-    ~SceneRenderContext() = default;
+    SceneRenderContext();
+    ~SceneRenderContext();
+
+    virtual void init();
 
     void beginFrame() override;
     void endFrame() override;

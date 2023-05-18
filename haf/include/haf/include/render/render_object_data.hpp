@@ -31,7 +31,8 @@ struct RenderObjectData
     {
         return BufferObjectUnsizedConstructParams{
             static_cast<const void*>(data.cbegin()),
-            static_cast<core::s32>(data.size() * sizeof(T)),
+            static_cast<core::s32>((data.empty() ? 1U : data.size()) *
+                                   sizeof(T)),
             BufferUsage::Static, BufferMode::Draw,
             make_bufferSubObjects(core::move(index), getVertexFormats<T>())};
     }

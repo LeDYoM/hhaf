@@ -171,20 +171,13 @@ bool DefaultResources::loadDefaultBuffers(sys::ResourceManager& rManager)
     ///////////////////////////////////////////////////////////////////////////////
 
     static Position3fNormal3fTextureCoordinates2f quad_data_raw_mesh[] = {
-        Position3fNormal3fTextureCoordinates2f{
-            vector3df{0.25F, -0.25F, 0.0F}, Vector3dOnesF32, Vector2dOnesF32},
-        Position3fNormal3fTextureCoordinates2f{
-            vector3df{-0.25F, -0.25F, 0.0F}, Vector3dOnesF32, Vector2dOnesF32},
-        Position3fNormal3fTextureCoordinates2f{
-            vector3df{0.25F, 0.25F, 0.0F}, Vector3dOnesF32, Vector2dOnesF32},
+        {{0.25F, -0.25F, 0.0F}, Vector3dOnesF32, Vector2dOnesF32},
+        {{-0.25F, -0.25F, 0.0F}, Vector3dOnesF32, Vector2dOnesF32},
+        {{0.25F, 0.25F, 0.0F}, Vector3dOnesF32, Vector2dOnesF32},
 
-        Position3fNormal3fTextureCoordinates2f{
-            vector3df{0.25F, 0.25F, 1.0F}, Vector3dOnesF32, Vector2dOnesF32},
-        Position3fNormal3fTextureCoordinates2f{
-            vector3df{-0.25F, 0.25F, 5.0F}, Vector3dOnesF32, Vector2dOnesF32},
-        Position3fNormal3fTextureCoordinates2f{vector3df{-0.25F, -0.25F, 10.0F},
-                                               Vector3dOnesF32,
-                                               Vector2dOnesF32}};
+        {{0.25F, 0.25F, 1.0F}, Vector3dOnesF32, Vector2dOnesF32},
+        {{-0.25F, 0.25F, 5.0F}, Vector3dOnesF32, Vector2dOnesF32},
+        {{-0.25F, -0.25F, 10.0F}, Vector3dOnesF32, Vector2dOnesF32}};
 
     static vector4df quad_vertex_color_data_raw[] = {
         vector4df{0.0F, 0.0F, 1.0F, 1.0F}, vector4df{1.0F, 0.0F, 0.0F, 1.0F},

@@ -30,6 +30,12 @@ public:
             RenderObjectData<T>{core::forward<U>(index), core::move(data)}}
     {}
 
+    template <typename T, typename U>
+    SharedDataBuffer(U&& index) :
+        SharedDataBuffer{
+            RenderObjectData<T>{core::forward<U>(index), core::span<T>{}}}
+    {}
+
     ~SharedDataBuffer();
 
     bool autoBindToDefault();
