@@ -12,8 +12,7 @@ struct VertexArrayObject::VertexArrayObjectPriv
 
     void associateBufferToAttib(
         core::u32 const binding_index,
-        core::vector<render::BufferSubObject> const&
-            vertex_buffer_subobjects,
+        render::BufferSubObject const& vertex_buffer_subobjects,
         core::vector<core::u32>& associatedAttribsToShader,
         core::u32 const parentHandle,
         core::u32 const parentSizeOfStruct,

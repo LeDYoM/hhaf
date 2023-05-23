@@ -25,6 +25,7 @@ protected:
     void endFrame() override;
 
     void setNowFrame(time::TimePoint time_point);
+    void setBackgroundColor(core::vector4df const& backgroundColor) noexcept;
 
 public:
     virtual void setCameraMatrix(math::Matrix4x4 const& matrix);

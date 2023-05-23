@@ -1,8 +1,8 @@
 #include "system/subsystem_interface_definitions.hpp"
 #include "scene/scene_manager.hpp"
 
-#include <haf/include/scene_components/2.1/iapp_initializer.hpp>
-#include <haf/include/scene_components/2.1/iapp_finisher.hpp>
+#include <haf/include/scene_components/iapp_initializer.hpp>
+#include <haf/include/scene_components/iapp_finisher.hpp>
 
 namespace haf::sys
 {

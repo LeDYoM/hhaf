@@ -25,7 +25,6 @@ static constexpr Color const Cyan{ZeroF32, OneF32, OneF32, OneF32};
 static constexpr Color const DarkCyan{ZeroF32, 0.25F, 0.25F, OneF32};
 static constexpr Color const Transparent{ZeroF32, ZeroF32, ZeroF32, ZeroF32};
 
-
 }  // namespace haf::scene::colors
 
 #endif

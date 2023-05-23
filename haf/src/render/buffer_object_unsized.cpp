@@ -13,8 +13,8 @@ BufferObjectUnsized::BufferObjectUnsized(
                   core::move(bufferObjectUnsizedConstructParams.dataSize),
                   core::move(bufferObjectUnsizedConstructParams.bufferUsage),
                   core::move(bufferObjectUnsizedConstructParams.bufferMode)},
-    m_vertex_formats{
-        core::move(bufferObjectUnsizedConstructParams.vertexFormats)}
+    m_vertex_format{
+        core::move(bufferObjectUnsizedConstructParams.vertexFormat)}
 {}
 
 BufferObjectUnsized::~BufferObjectUnsized() = default;
@@ -29,14 +29,14 @@ u32 BufferObjectUnsized::handle() const noexcept
     return static_cast<u32>(m_buffer_name.handle());
 }
 
-u32 BufferObjectUnsized::sizeOfStruct() const noexcept
+u32 BufferObjectUnsized::vertexFormatSize() const noexcept
 {
-    return bufferStructSize(m_vertex_formats);
+    return m_vertex_format.vertexFormatSize();
 }
 
-BufferSubObjects const& BufferObjectUnsized::subObjects() const noexcept
+BufferSubObject const& BufferObjectUnsized::subObject() const noexcept
 {
-    return m_vertex_formats;
+    return m_vertex_format;
 }
 
 void *BufferObjectUnsized::lock(core::s32 size) noexcept

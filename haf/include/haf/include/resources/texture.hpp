@@ -29,7 +29,6 @@ public:
 private:
     struct TexturePrivate;
     core::PImplPointer<TexturePrivate> m_p;
-
 };
 
 }  // namespace haf::res

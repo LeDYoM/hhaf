@@ -1,6 +1,6 @@
-#include <haf/include/scene_components/2.1/transformation_component.hpp>
+#include <haf/include/scene_components/transformation_component.hpp>
 #include <haf/include/component/component_definition.hpp>
-#include <haf/include/scene_components/2.1/global_transformation_component.hpp>
+#include <haf/include/scene_components/global_transformation_component.hpp>
 
 #include <haf/include/profiler/code_profiler.hpp>
 #include <haf/include/debug_system/debug_types.hpp>

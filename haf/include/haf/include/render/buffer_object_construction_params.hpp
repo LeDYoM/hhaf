@@ -13,7 +13,7 @@ struct BufferObjectUnsizedConstructParams
     core::s32 const dataSize;
     BufferUsage const bufferUsage;
     BufferMode const bufferMode;
-    BufferSubObjects vertexFormats;
+    BufferSubObject vertexFormat;
 };
 
 struct BufferObjectConstructParams : BufferObjectUnsizedConstructParams

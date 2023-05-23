@@ -26,6 +26,10 @@ public:
 
     render::SharedDataManager& sharedDataManager() noexcept;
     render::SharedDataManager const& sharedDataManager() const noexcept;
+
+    void beginFrame(core::vector4df const& backgroundColor);
+    void endFrame();
+
 private:
     core::sptr<RenderTarget> render_target_;
     render::SharedDataManager m_shared_data_manager;

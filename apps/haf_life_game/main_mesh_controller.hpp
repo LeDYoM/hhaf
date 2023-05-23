@@ -3,7 +3,7 @@
 
 #include <haf/include/core/types.hpp>
 #include <haf/include/component/component_declaration.hpp>
-#include <haf/include/scene_components/2.1/scene_component.hpp>
+#include <haf/include/scene_components/scene_component.hpp>
 #include <haf/include/render/mesh_component.hpp>
 
 namespace hl

@@ -16,26 +16,23 @@ SharedDataBuffer::SharedDataBuffer(
 
 SharedDataBuffer::~SharedDataBuffer() = default;
 
-bool SharedDataBuffer::setBindingPoint(u32 const bindingPoint)
+void SharedDataBuffer::setBindingPoint(u32 const bindingPoint)
 {
-    ogl::bindBufferUniformBlock(bindingPoint, m_buffer_object_unsized.handle());
-    return true;
+    m_bindingPoint = bindingPoint;
 }
 
 bool SharedDataBuffer::autoBindToDefault()
 {
-    for (auto const& bufferSubObject : m_buffer_object_unsized.subObjects())
+    auto const index{
+        res::DefaultUniformBlocks::getDefaultUniformBlockBindingPoint(
+            m_buffer_object_unsized.subObject().index().to_view())};
+    if (index > -1)
     {
-        auto const index{
-            res::DefaultUniformBlocks::getDefaultUniformBlockBindingPoint(
-                bufferSubObject.index().to_view())};
-        if (index > -1)
-        {
-            DisplayLog::debug(StaticTypeName,
-                              ": Binding default uniform group location: ",
-                              bufferSubObject.index(), "with location ", index);
-            setBindingPoint(static_cast<u32>(index));
-        }
+        DisplayLog::debug(StaticTypeName,
+                          ": Binding default uniform group location: ",
+                          m_buffer_object_unsized.subObject().index(),
+                          "with location ", index);
+        setBindingPoint(static_cast<u32>(index));
     }
     return true;
 }
@@ -50,14 +47,14 @@ u32 SharedDataBuffer::handle() const noexcept
     return m_buffer_object_unsized.handle();
 }
 
-u32 SharedDataBuffer::sizeOfStruct() const noexcept
+u32 SharedDataBuffer::vertexFormatSize() const noexcept
 {
-    return m_buffer_object_unsized.sizeOfStruct();
+    return m_buffer_object_unsized.vertexFormatSize();
 }
 
-BufferSubObjects const& SharedDataBuffer::subObjects() const noexcept
+BufferSubObject const& SharedDataBuffer::subObject() const noexcept
 {
-    return m_buffer_object_unsized.subObjects();
+    return m_buffer_object_unsized.subObject();
 }
 
 void* SharedDataBuffer::lockForWrite(core::u32 const size)
@@ -68,6 +65,12 @@ void* SharedDataBuffer::lockForWrite(core::u32 const size)
 void SharedDataBuffer::unlock()
 {
     m_buffer_object_unsized.unlock();
+}
+
+void SharedDataBuffer::bindSharedBuffer()
+{
+    ogl::bindBufferUniformBlock(m_bindingPoint,
+                                m_buffer_object_unsized.handle());
 }
 
 }  // namespace haf::render

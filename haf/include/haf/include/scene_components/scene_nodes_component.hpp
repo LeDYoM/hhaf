@@ -7,7 +7,7 @@ HTPS_PRAGMA_ONCE
 #include <haf/include/events/connection.hpp>
 #include <haf/include/scene/scene_node.hpp>
 #include <haf/include/component/component_declaration.hpp>
-#include <haf/include/scene_components/2.1/transformation_component.hpp>
+#include <haf/include/scene_components/transformation_component.hpp>
 
 namespace haf::scene
 {

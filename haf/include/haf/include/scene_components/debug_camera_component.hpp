@@ -12,7 +12,7 @@ HTPS_PRAGMA_ONCE
 
 namespace haf::input
 {
-    class KeyboardInputComponent;
+class KeyboardInputComponent;
 }
 namespace haf::scene
 {

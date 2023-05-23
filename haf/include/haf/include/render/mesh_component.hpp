@@ -8,7 +8,7 @@ HTPS_PRAGMA_ONCE
 
 namespace haf::scene
 {
-    class TransformationComponent;
+class TransformationComponent;
 }
 namespace haf::render
 {
@@ -22,6 +22,7 @@ class HAF_API MeshComponent final
 {
 public:
     void onAttached() override;
+
 private:
     core::sptr<MeshRenderContext> m_renderContext;
 };

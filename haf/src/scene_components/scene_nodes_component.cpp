@@ -1,4 +1,4 @@
-#include <haf/include/scene_components/2.1/scene_nodes_component.hpp>
+#include <haf/include/scene_components/scene_nodes_component.hpp>
 #include <haf/include/component/component_definition.hpp>
 
 using namespace haf::core;

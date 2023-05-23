@@ -12,30 +12,24 @@ namespace haf::res
 {
 void VertexArrayObject::VertexArrayObjectPriv::associateBufferToAttib(
     u32 const binding_index,
-    vector<render::BufferSubObject> const& vertex_buffer_subobjects,
+    render::BufferSubObject const& vertex_buffer_subobject,
     vector<u32>& associatedAttribsToShader,
     u32 const parentHandle,
     u32 const parentSizeOfStruct,
     u32 const parentSize)
 {
     // TODO: We could check that the buffer to associate has the correct
-    // vertex format.
-    for (auto&& vertex_buffer_subobject : vertex_buffer_subobjects)
+    s32 const expected_index{m_shader->attributeIndex(
+        str_view{vertex_buffer_subobject.index().c_str()})};
+    if (expected_index > -1)
     {
-        s32 const expected_index{m_shader->attributeIndex(
-            str_view{vertex_buffer_subobject.index().c_str()})};
-        if (expected_index > -1)
-        {
-            ogl::bindAttribToBindingIndexForVao(
-                m_vao, static_cast<ogl::Handle>(expected_index), binding_index,
-                vertex_buffer_subobject.vertexFormat().numElements,
-                static_cast<core::u32>(
-                    vertex_buffer_subobject.vertexFormat().bufferType),
-                vertex_buffer_subobject.vertexFormat().offset);
-            associatedAttribsToShader.push_back(
-                static_cast<u32>(expected_index));
-            DisplayLog::debug("Associating buffer ", expected_index);
-        }
+        ogl::bindAttribToBindingIndexForVao(
+            m_vao, static_cast<ogl::Handle>(expected_index), binding_index,
+            vertex_buffer_subobject.vertexFormat().numElements,
+            static_cast<core::u32>(
+                vertex_buffer_subobject.vertexFormat().bufferType));
+        associatedAttribsToShader.push_back(static_cast<u32>(expected_index));
+        DisplayLog::debug("Associating buffer ", expected_index);
     }
 
     ogl::associateBufferToAttrib(m_vao, binding_index, parentHandle,

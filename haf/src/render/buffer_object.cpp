@@ -25,14 +25,14 @@ u32 BufferObject::handle() const noexcept
     return m_bufferObjectUnsized.handle();
 }
 
-u32 BufferObject::sizeOfStruct() const noexcept
+u32 BufferObject::vertexFormatSize() const noexcept
 {
-    return m_bufferObjectUnsized.sizeOfStruct();
+    return m_bufferObjectUnsized.vertexFormatSize();
 }
 
-BufferSubObjects const& BufferObject::subObjects() const noexcept
+BufferSubObject const& BufferObject::subObject() const noexcept
 {
-    return m_bufferObjectUnsized.subObjects();
+    return m_bufferObjectUnsized.subObject();
 }
 
 u32 BufferObject::size() const noexcept

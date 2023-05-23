@@ -12,7 +12,7 @@ HTPS_PRAGMA_ONCE
 
 namespace haf::res
 {
-    class Shader;
+class Shader;
 }
 namespace haf::scene
 {
@@ -30,7 +30,6 @@ public:
     void onAttached() override;
 
     void setPerspective(core::f32 const fovy, core::f32 const aspect);
-    prop::BasicProperty<core::vector4df> backgroundColor;
     prop::PropertyState<CameraMode> cameraMode;
     prop::PropertyState<core::f32> Left;
     prop::PropertyState<core::f32> Right;
@@ -43,9 +42,9 @@ public:
     prop::PropertyState<core::vector3df> Up;
 
     evt::emitter<> cameraUpdated;
+
 private:
     void cameraDataUpdated();
-    void clearBackground();
     math::Matrix4x4 m_perspective_matrix;
     core::vector<res::Shader> m_shaders_with_camera_projection;
 };

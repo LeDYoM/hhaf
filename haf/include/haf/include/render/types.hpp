@@ -29,7 +29,11 @@ enum class BufferMode
 template <typename T>
 consteval BufferType toBufferType() noexcept
 {
-    if constexpr (std::is_same_v<T, htps::f32>)
+    if constexpr (requires { typename T::value_type; })
+    {
+        return toBufferType<typename T::value_type>();
+    }
+    else if constexpr (std::is_same_v<T, htps::f32>)
     {
         return BufferType::Float;
     }
@@ -39,7 +43,6 @@ consteval BufferType toBufferType() noexcept
     }
     else
     {
-        //        static_assert(false);
         return BufferType::Unknown;
     }
 }
@@ -68,34 +71,18 @@ consteval core::u32 toTypeIndex() noexcept
     return static_cast<core::u32>(toBufferType<T>());
 }
 
-struct VertexFormatWithoutOffset
+struct VertexFormat
 {
     BufferType bufferType{BufferType::Unknown};
     core::u32 numElements{0U};
     core::u32 arraySize{1U};
-    bool operator==(VertexFormatWithoutOffset const&) const = default;
+    constexpr core::u32 sizeOfElement() const noexcept
+    {
+        return sizeOfBufferType(bufferType) * arraySize * numElements;
+    }
+
+    constexpr bool operator==(VertexFormat const&) const noexcept = default;
 };
-
-struct VertexFormat : VertexFormatWithoutOffset
-{
-    core::u32 offset{0U};
-    bool operator==(VertexFormat const&) const = default;
-};
-
-constexpr core::u32 sizeOfVertexFormat(
-    VertexFormatWithoutOffset const& vertexFormatWithoutOffset) noexcept
-{
-    return sizeOfBufferType(vertexFormatWithoutOffset.bufferType) *
-        vertexFormatWithoutOffset.arraySize *
-        vertexFormatWithoutOffset.numElements;
-}
-
-constexpr core::u32 sizeOfVertexFormat(
-    VertexFormat const& vertexFormat) noexcept
-{
-    return sizeOfVertexFormat(
-        static_cast<VertexFormatWithoutOffset>(vertexFormat));
-}
 
 }  // namespace haf::render
 

@@ -17,8 +17,9 @@ public:
 
     core::u32 handle() const noexcept { return m_handle; }
 
-    void *lock(core::s32 const size = -1) noexcept;
+    void* lock(core::s32 const size = -1) noexcept;
     void unlock() noexcept;
+
 private:
     core::u32 m_handle;
     core::s32 m_size;

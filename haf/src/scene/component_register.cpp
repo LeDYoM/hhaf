@@ -1,12 +1,12 @@
 #include "component_register.hpp"
 #include "scene_manager.hpp"
 
-#include <haf/include/scene_components/2.1/scene_component.hpp>
-#include <haf/include/scene_components/2.1/scene_nodes_component.hpp>
-#include <haf/include/scene_components/2.1/global_transformation_component.hpp>
-#include <haf/include/scene_components/2.1/transformation_component.hpp>
-#include <haf/include/scene_components/2.1/camera_component.hpp>
-#include <haf/include/scene_components/2.1/debug_camera_component.hpp>
+#include <haf/include/scene_components/scene_component.hpp>
+#include <haf/include/scene_components/scene_nodes_component.hpp>
+#include <haf/include/scene_components/global_transformation_component.hpp>
+#include <haf/include/scene_components/transformation_component.hpp>
+#include <haf/include/scene_components/camera_component.hpp>
+#include <haf/include/scene_components/debug_camera_component.hpp>
 
 #include <haf/include/input/keyboard_input_component.hpp>
 

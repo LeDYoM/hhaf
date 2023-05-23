@@ -30,10 +30,10 @@ public:
             core::move(render_object_data.bufferObjectConstructParams())}
     {}
 
-    template <typename U, typename T>
-    VertexBufferObject(U&& index, core::span<T> data) :
-        VertexBufferObject{render::RenderObjectData<T>{core::forward<U>(index),
-                                                       core::move(data)}}
+    template <typename T>
+    VertexBufferObject(core::str&& index, core::span<T> data) :
+        VertexBufferObject{
+            render::RenderObjectData<T>{core::move(index), core::move(data)}}
     {}
 
     ~VertexBufferObject() override;
@@ -41,9 +41,9 @@ public:
     bool isValid() const override;
     core::u32 handle() const noexcept;
     core::u32 size() const noexcept;
-    core::u32 sizeOfStruct() const noexcept;
+    core::u32 vertexFormatSize() const noexcept;
 
-    core::vector<render::BufferSubObject> const& subObjects() const noexcept;
+    render::BufferSubObject const& subObject() const noexcept;
 
 private:
     struct VertexBufferObjectPriv;

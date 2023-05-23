@@ -1,8 +1,8 @@
-#include <haf/include/scene_components/2.1/debug_camera_component.hpp>
+#include <haf/include/scene_components/debug_camera_component.hpp>
 #include <haf/include/component/component_definition.hpp>
 #include <haf/include/scene/scene_node.hpp>
 
-#include <haf/include/scene_components/2.1/camera_component.hpp>
+#include <haf/include/scene_components/camera_component.hpp>
 #include <haf/include/input/keyboard_input_component.hpp>
 
 #include <hlog/include/hlog.hpp>

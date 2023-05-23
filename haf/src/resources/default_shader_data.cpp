@@ -1,6 +1,8 @@
 #include "default_shader_data.hpp"
+#include <haf/include/core/matrix4x4.hpp>
 #include <haf/include/render/buffer_subobject.hpp>
 #include <haf/include/render/vertex_formats.hpp>
+
 #include <hogl/include/shader_functions.hpp>
 #include <hlog/include/hlog.hpp>
 
@@ -12,12 +14,12 @@ namespace haf::res
 namespace
 {
 static render::BufferSubObjects DefaultAttribsTable{
-    {"haf_position", 0U, getVertexFormatWithoutOffset<vector3df>()},
-    {"haf_color", 1U, getVertexFormatWithoutOffset<vector3df>()},
-    {"haf_textureuv", 2U, getVertexFormatWithoutOffset<vector2df>()}};
+    {"haf_position", 0U, getVertexFormat<vector3df>()},
+    {"haf_color", 1U, getVertexFormat<vector3df>()},
+    {"haf_textureuv", 2U, getVertexFormat<vector2df>()}};
 
 static render::BufferSubObjects DefaultUniformBlocks{
-    {"HAFCameraData", 0U, getVertexFormatWithoutOffset<CameraData>()}};
+    {"HAFCameraData", 0U, getVertexFormat<math::Matrix4x4>()}};
 
 using UniformBlocksBindingType  = pair<str, u32>;
 using UniformBlocksBindingsType = vector<UniformBlocksBindingType>;

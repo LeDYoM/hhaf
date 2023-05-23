@@ -17,10 +17,7 @@ void RenderSystem::initialize(bool const enableDebug)
 }
 
 void RenderSystem::update()
-{
-    //    render_target_->update();
-    //    render_target_->clearRenderQueue();
-}
+{}
 
 sptr<RenderTarget> const& RenderSystem::currentRenderTarget() const
 {
@@ -36,5 +33,14 @@ SharedDataManager const& RenderSystem::sharedDataManager() const noexcept
 {
     return m_shared_data_manager;
 }
+
+void RenderSystem::beginFrame(vector4df const& backgroundColor)
+{
+    ogl::clearBackgroundColor(backgroundColor);
+    ogl::clearDepthBuffer();
+}
+
+void RenderSystem::endFrame()
+{}
 
 }  // namespace haf::sys

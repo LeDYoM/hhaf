@@ -23,6 +23,8 @@ public:
      */
     using Scalar = core::f32;
 
+    using value_type = Scalar;
+
     using iterator       = core::rptr<Scalar>;
     using const_iterator = core::rptr<Scalar const>;
 
@@ -67,9 +69,9 @@ public:
     {
         static_assert(column < 4U, "Column must be smaller that 4");
         constexpr core::u32 startPoint{column * 4U};
-        m_matrix_data[0U + startPoint]  = vx;
-        m_matrix_data[1U + startPoint]  = vy;
-        m_matrix_data[2U + startPoint]  = vz;
+        m_matrix_data[0U + startPoint] = vx;
+        m_matrix_data[1U + startPoint] = vy;
+        m_matrix_data[2U + startPoint] = vz;
         m_matrix_data[3U + startPoint] = vw;
     }
 

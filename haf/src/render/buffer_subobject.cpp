@@ -4,13 +4,13 @@ using namespace haf::core;
 
 namespace haf::render
 {
-BufferSubObject make_bufferSubObject(core::str&& index,
+BufferSubObject make_bufferSubObject(core::str index,
                                      VertexFormat&& data) noexcept
 {
     return BufferSubObject{core::move(index), -1, core::move(data)};
 }
 
-BufferSubObject make_bufferSubObject(core::str&& index,
+BufferSubObject make_bufferSubObject(core::str index,
                                      core::s32 const location,
                                      VertexFormat&& data) noexcept
 {
@@ -60,16 +60,6 @@ bool indexExists(BufferSubObjects const& container, s32 const index)
         })};
 
     return iterator != container.cend();
-}
-
-u32 bufferStructSize(BufferSubObjects const& bufferSubObjects)
-{
-    u32 result{0U};
-    for (auto const& bufferSubObject : bufferSubObjects)
-    {
-        result += sizeOfVertexFormat(bufferSubObject.vertexFormat());
-    }
-    return result;
 }
 
 }  // namespace haf::render

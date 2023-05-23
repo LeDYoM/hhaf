@@ -2,12 +2,12 @@
 #include <haf/include/render/mesh_render_context.hpp>
 
 #include <haf/include/component/component_definition.hpp>
-#include <haf/include/scene_components/2.1/global_transformation_component.hpp>
+#include <haf/include/scene_components/global_transformation_component.hpp>
 
 #include "system/get_system.hpp"
 #include "resources/resource_manager.hpp"
 #include <haf/include/render/mesh_render_component.hpp>
-#include <haf/include/scene_components/2.1/transformation_component.hpp>
+#include <haf/include/scene_components/transformation_component.hpp>
 
 using namespace haf::core;
 

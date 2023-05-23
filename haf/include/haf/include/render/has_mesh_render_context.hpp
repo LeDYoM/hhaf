@@ -18,6 +18,7 @@ public:
 
     bool hasMeshRenderContext() const noexcept;
     core::sptr<MeshRenderContext> meshRenderContext() const noexcept;
+
 private:
     core::wptr<MeshRenderContext> m_mesh_render_context;
 };

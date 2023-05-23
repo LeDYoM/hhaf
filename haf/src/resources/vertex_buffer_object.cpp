@@ -28,9 +28,9 @@ u32 VertexBufferObject::handle() const noexcept
     return m_p->m_buffer_object.handle();
 }
 
-u32 VertexBufferObject::sizeOfStruct() const noexcept
+u32 VertexBufferObject::vertexFormatSize() const noexcept
 {
-    return m_p->m_buffer_object.sizeOfStruct();
+    return m_p->m_buffer_object.vertexFormatSize();
 }
 
 u32 VertexBufferObject::size() const noexcept
@@ -38,10 +38,10 @@ u32 VertexBufferObject::size() const noexcept
     return m_p->m_buffer_object.size();
 }
 
-vector<render::BufferSubObject> const& VertexBufferObject::subObjects()
+render::BufferSubObject const& VertexBufferObject::subObject()
     const noexcept
 {
-    return m_p->m_buffer_object.subObjects();
+    return m_p->m_buffer_object.subObject();
 }
 
 }  // namespace haf::res

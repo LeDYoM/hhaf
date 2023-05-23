@@ -29,9 +29,11 @@ void bindAttribToBindingIndexForVao(Handle const vao,
                                     Handle const attrib_index,
                                     Handle const binding_index,
                                     u32 const numElements,
-                                    u32 type_index,
-                                    u32 offset) noexcept
+                                    u32 type_index) noexcept
 {
+    // We support no offset for buffers
+    static constexpr GLuint offset{0U};
+
     glEnableVertexArrayAttrib(vao, attrib_index);
     glVertexArrayAttribFormat(
         vao, attrib_index, static_cast<GLint>(numElements),

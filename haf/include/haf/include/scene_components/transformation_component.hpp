@@ -18,7 +18,7 @@ class MeshRenderContext;
 
 namespace haf::scene
 {
-    class GlobalTransformationComponent;
+class GlobalTransformationComponent;
 }
 
 namespace haf::scene

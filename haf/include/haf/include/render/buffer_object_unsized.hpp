@@ -19,16 +19,16 @@ public:
 
     bool isValid() const;
     core::u32 handle() const noexcept;
-    core::u32 sizeOfStruct() const noexcept;
+    core::u32 vertexFormatSize() const noexcept;
 
-    BufferSubObjects const& subObjects() const noexcept;
+    BufferSubObject const& subObject() const noexcept;
 
-    void *lock(core::s32 size = -1) noexcept;
+    void* lock(core::s32 size = -1) noexcept;
     void unlock() noexcept;
 
 private:
     RenderBuffer m_buffer_name;
-    BufferSubObjects m_vertex_formats;
+    BufferSubObject m_vertex_format;
 };
 }  // namespace haf::render
 

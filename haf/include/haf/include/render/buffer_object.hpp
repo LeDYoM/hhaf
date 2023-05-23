@@ -22,9 +22,9 @@ public:
     bool isValid() const;
     core::u32 handle() const noexcept;
     core::u32 size() const noexcept;
-    core::u32 sizeOfStruct() const noexcept;
+    core::u32 vertexFormatSize() const noexcept;
 
-    BufferSubObjects const& subObjects() const noexcept;
+    BufferSubObject const& subObject() const noexcept;
 
 private:
     BufferObjectUnsized m_bufferObjectUnsized;

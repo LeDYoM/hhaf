@@ -5,7 +5,7 @@
 
 #include "system/system_provider.hpp"
 #include <hlog/include/hlog.hpp>
-#include <haf/include/scene_components/2.1/scene_nodes_component.hpp>
+#include <haf/include/scene_components/scene_nodes_component.hpp>
 
 using namespace haf::sys;
 using namespace haf::core;

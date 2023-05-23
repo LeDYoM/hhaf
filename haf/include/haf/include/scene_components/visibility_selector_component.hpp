@@ -9,7 +9,7 @@ HTPS_PRAGMA_ONCE
 
 #include <haf/include/component/component_declaration.hpp>
 
-#include <haf/include/scene_components/2.1/scene_nodes_component.hpp>
+#include <haf/include/scene_components/scene_nodes_component.hpp>
 
 namespace haf::scene
 {

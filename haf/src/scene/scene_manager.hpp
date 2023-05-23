@@ -7,8 +7,8 @@ HTPS_PRAGMA_ONCE
 #include <htypes/include/rect.hpp>
 #include <haf/include/types/scene_types.hpp>
 #include "scene_render_context_for_system.hpp"
-#include <haf/include/scene_components/2.1/iapp_initializer.hpp>
-#include <haf/include/scene_components/2.1/iapp_finisher.hpp>
+#include <haf/include/scene_components/iapp_initializer.hpp>
+#include <haf/include/scene_components/iapp_finisher.hpp>
 #include "system/system_base.hpp"
 
 #include <haf/include/component/component_factory.hpp>

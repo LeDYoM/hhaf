@@ -1,7 +1,7 @@
 #include "main_scene.hpp"
 #include <haf/include/component/component_requirements.hpp>
-#include <haf/include/scene_components/2.1/scene_nodes_component.hpp>
-#include <haf/include/scene_components/2.1/scene_component.hpp>
+#include <haf/include/scene_components/scene_nodes_component.hpp>
+#include <haf/include/scene_components/scene_component.hpp>
 #include <haf/include/render/mesh_render_component.hpp>
 #include <haf/include/render/mesh_component.hpp>
 

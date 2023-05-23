@@ -88,8 +88,9 @@ public:
     core::sptr<T> safeComponentConversion(
         core::sptr<Component> source_component)
     {
-        return source_component ? core::dynamic_pointer_cast<T>(source_component)
-                                : nullptr;
+        return source_component
+            ? core::dynamic_pointer_cast<T>(source_component)
+            : nullptr;
     }
 
 private:

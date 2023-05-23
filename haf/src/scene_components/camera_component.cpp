@@ -1,14 +1,8 @@
-#include <haf/include/scene_components/2.1/camera_component.hpp>
+#include <haf/include/scene_components/camera_component.hpp>
 #include <haf/include/component/component_definition.hpp>
-#include <haf/include/scene/scene_node.hpp>
-#include <haf/include/resources/shader.hpp>
-
-#include <hlog/include/hlog.hpp>
 
 #include "system/get_system.hpp"
 #include "scene/scene_manager.hpp"
-#include <haf/include/scene/color.hpp>
-#include <hogl/include/render_system_functions.hpp>
 #include <haf/include/core/geometry_math.hpp>
 
 using namespace haf::core;
@@ -20,8 +14,6 @@ void CameraComponent::onAttached()
     addUpdater({this, &CameraComponent::cameraDataUpdated}, &Left, &Right,
                &Bottom, &Top, &Near, &Far, &cameraMode, &Position, &Center,
                &Up);
-    //    addUpdater({this, &CameraComponent::cameraDataUpdated});
-    addUpdater({this, &CameraComponent::clearBackground});
     Left            = -1.0F;
     Right           = 1.0F;
     Bottom          = -1.0F;
@@ -29,7 +21,6 @@ void CameraComponent::onAttached()
     Near            = 0.0F;
     Far             = 5.0F;
     cameraMode      = CameraMode::Perspective;
-    backgroundColor = colors::DarkGreen;
     Position        = vector3df{0.0F, 0.0F, 1.0F};
     Center          = vector3df{0.0F, 0.0F, 0.0F};
     Up              = vector3df{0.0F, 1.0F, 0.0F};
@@ -82,29 +73,4 @@ void CameraComponent::cameraDataUpdated()
     cameraUpdated();
 }
 
-void CameraComponent::clearBackground()
-{
-    ogl::clearBackgroundColor(backgroundColor());
-    ogl::clearDepthBuffer();
-}
-
 }  // namespace haf::scene
-
-//    static core::f32 mz{1.0F};
-//    mz += 0.001F;
-//    math::Matrix4x4 matrix;
-// core::f32 aspect = 800.0F / 600.0F;
-//    matrix.setDiagonal(core::vector3df{2.0F, 2.0F, 1.0F});
-//    matrix = math::lookat(core::vector3df{0.0F, 0.0F, -0.15F},
-//    core::vector3df{mz, 0.0F, mz},
-//                 core::vector3df{0.0F, 1.0F, 0.0F});
-//        matrix = math::ortho(-2.0F,2.0F, -2.0F, 2.0F, -5.0F, 10.0F);
-//    matrix = math::frustum(-1.0F,1.0F, -1.0F, 1.0F, 1.0F, 10.0F);
-//    matrix = math::perspective(50.0F, aspect, 0.1F, 1000.0F);
-
-//    m_perspective_matrix =
-//        math::frustum(-1.0F, 1.0F, -1.0F, 1.0F, 1.0F, 100.0F);
-//    static core::vector3df position = core::vector3df{0.0F, 0.0F, 0.0F};
-//    position.z -= 0.0001F;
-
-//    math::Matrix4x4 look_at_matrix;

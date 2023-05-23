@@ -17,20 +17,13 @@ VertexArrayObject::VertexArrayObject(sptr<Mesh> mesh, sptr<Shader> shader) :
 {
     DisplayLog::debug(staticTypeName(), ": Creating vao...");
     DisplayLog::debug(staticTypeName(), ": vao id: ", m_p->m_vao);
-    setShader(m_p->m_shader);
-    associateBuffersToAttribsInCurrentShader();
-    ogl::bindVAO(ogl::invalidHandle());
-}
-
-VertexArrayObject::~VertexArrayObject() = default;
-
-bool VertexArrayObject::setShader(core::sptr<Shader> shader)
-{
     DisplayLog::debug(staticTypeName(), ": Setting shader in vao...");
     DisplayLog::debug(staticTypeName(), ": vao ", m_p->m_vao,
                       " associated to shader ", m_p->m_shader->handle());
-    return true;
+    associateBuffersToAttribsInCurrentShader();
 }
+
+VertexArrayObject::~VertexArrayObject() = default;
 
 bool VertexArrayObject::isValid() const
 {
@@ -49,11 +42,12 @@ void VertexArrayObject::associateBuffersToAttribsInCurrentShader()
         m_p->m_mesh->vertexBufferObjects().size());
     for (auto const& vertex_buffer_object : m_p->m_mesh->vertexBufferObjects())
     {
-        m_p->associateBufferToAttib(
-            binding_index++, vertex_buffer_object->subObjects(),
-            currentAssociatedAttribsToShaderForVao,
-            vertex_buffer_object->handle(),
-            vertex_buffer_object->sizeOfStruct(), vertex_buffer_object->size());
+        m_p->associateBufferToAttib(binding_index++,
+                                    vertex_buffer_object->subObject(),
+                                    currentAssociatedAttribsToShaderForVao,
+                                    vertex_buffer_object->handle(),
+                                    vertex_buffer_object->vertexFormatSize(),
+                                    vertex_buffer_object->size());
     }
     m_p->disableUnusedAttribsForVaoInShader(
         currentAssociatedAttribsToShaderForVao);

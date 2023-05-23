@@ -39,11 +39,12 @@ public:
     ~SharedDataBuffer();
 
     bool autoBindToDefault();
-    bool setBindingPoint(core::u32 const bindingPoint);
+    void setBindingPoint(core::u32 const bindingPoint);
 
     template <typename T>
     bool write(T const& element)
     {
+        bindSharedBuffer();
         T* const address{static_cast<T*>(lockForWrite(sizeof(T)))};
         *address = element;
         unlock();
@@ -52,14 +53,16 @@ public:
 
     bool isValid() const;
     core::u32 handle() const noexcept;
-    core::u32 sizeOfStruct() const noexcept;
+    core::u32 vertexFormatSize() const noexcept;
 
-    BufferSubObjects const& subObjects() const noexcept;
+    BufferSubObject const& subObject() const noexcept;
 
 private:
-    void *lockForWrite(core::u32 const size);
+    void bindSharedBuffer();
+    void* lockForWrite(core::u32 const size);
     void unlock();
     BufferObjectUnsized m_buffer_object_unsized;
+    core::u32 m_bindingPoint{static_cast<core::u32>(-1)};
 };
 }  // namespace haf::render
 

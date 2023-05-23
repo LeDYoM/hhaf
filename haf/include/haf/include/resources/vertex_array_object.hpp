@@ -31,8 +31,6 @@ public:
     VertexArrayObject(core::sptr<Mesh> mesh, core::sptr<Shader> shader);
     ~VertexArrayObject() override;
 
-    bool setShader(core::sptr<Shader> shader);
-
     bool isValid() const override;
     core::u32 handle() const;
 

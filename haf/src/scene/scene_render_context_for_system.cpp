@@ -35,6 +35,9 @@ void SceneRenderContextForSystem::beginFrame()
     auto& timeSystem{sys::getSystem<sys::TimeSystem>(&m_isystem_provider)};
     BaseClass::setNowFrame(timeSystem.nowFrame());
     BaseClass::beginFrame();
+
+    auto& renderSystem{sys::getSystem<sys::RenderSystem>(&m_isystem_provider)};
+    renderSystem.beginFrame(m_backgroundColor);
 }
 
 void SceneRenderContextForSystem::endFrame()
@@ -53,18 +56,15 @@ void SceneRenderContextForSystem::setCameraMatrix(math::Matrix4x4 const& matrix)
     if (!sh_buffer)
     {
         sh_buffer = msptr<render::SharedDataBuffer>(
-            "HAFCameraData", core::span<render::CameraData>{});
+            "HAFCameraData", span<math::Matrix4x4>{});
         sh_buffer->autoBindToDefault();
 
         sys::getSystem<sys::RenderSystem>(&m_isystem_provider)
             .sharedDataManager()
             .add("haf_camera_projection", sh_buffer);
-        sh_buffer->autoBindToDefault();
     }
 
-    render::CameraData cameraData;
-    cameraData.projection = matrix;
-    sh_buffer->write<render::CameraData>(cameraData);
+    sh_buffer->write<math::Matrix4x4>(matrix);
 }
 
 }  // namespace haf::scene
