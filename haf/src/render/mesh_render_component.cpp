@@ -1,13 +1,25 @@
 #include <haf/include/render/mesh_render_component.hpp>
 #include <haf/include/component/component_definition.hpp>
-#include <haf/include/render/mesh_render_context.hpp>
 
 #include "system/get_system.hpp"
 #include "resources/resource_manager.hpp"
 #include "scene/scene_manager.hpp"
+#include <haf/include/resources/vertex_array_object.hpp>
+
+using namespace haf::core;
 
 namespace haf::render
 {
+struct MeshRenderComponent::PrivateComponentData
+{
+    core::sptr<res::VertexArrayObject> m_vao_object;
+};
+
+MeshRenderComponent::MeshRenderComponent() :
+    m_p{make_pimplp<PrivateComponentData>()}
+{}
+
+MeshRenderComponent::~MeshRenderComponent() = default;
 
 void MeshRenderComponent::onAttached()
 {
@@ -15,22 +27,23 @@ void MeshRenderComponent::onAttached()
 
     auto& rManager{sys::getSystem<sys::ResourceManager>(attachedNode())};
     //    rManager.aquireResource("quad_vao", m_vao_object);
-    rManager.aquireResource("cube_vao", m_vao_object);
+    rManager.aquireResource("cube_vao", m_p->m_vao_object);
 }
 
-void MeshRenderComponent::setMeshRenderContext(
-    core::wptr<render::MeshRenderContext> wmesh_render_context)
+sptr<res::Shader> MeshRenderComponent::shader() const noexcept
 {
-    HasMeshRenderContext::setMeshRenderContext(wmesh_render_context);
-    auto mrc{meshRenderContext()};
-    mrc->shader = m_vao_object->shader();
+    return m_p->m_vao_object->shader();
 }
 
 void MeshRenderComponent::updateRender()
 {
-    m_vao_object->shader()->setUniform("haf_object_position",
-                                       meshRenderContext()->modelViewMatrix());
-    m_vao_object->render();
+    m_p->m_vao_object->shader()->setUniform(
+        "haf_object_position",
+        sys::getSystem<scene::SceneManager>(attachedNode())
+            .sceneRenderContext()
+            .modelViewMatrix());
+
+    m_p->m_vao_object->render();
 }
 
 }  // namespace haf::render

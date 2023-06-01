@@ -16,9 +16,11 @@ namespace haf::time
  * managed by the returned @b TimerConnectorSptr. They can be of different
  * @b TimerType.
  */
-class TimerComponent : public component::ComponentBase<"TimerComponent">
+class TimerComponent : public component::ComponentBootStrap<TimerComponent>
 {
 public:
+    static constexpr const core::str_view StaticTypeName{"TimerComponent"};
+
     /**
      * @brief Create a Timer and get the connection to it.
      *
@@ -35,7 +37,7 @@ public:
 
     void removeTimer(TimerConnectorSPtr timer_to_remove);
 
-    void update() override;
+    void updateTime();
     void pause();
     void resume();
     void switchPause();

@@ -18,13 +18,16 @@ namespace haf::anim
  * @brief Component designed to store, manage and update animations.
  */
 class AnimationComponent final
-    : public component::ComponentBase<"AnimationComponent">
+    : public component::ComponentBootStrap<AnimationComponent>
 {
 public:
+    static constexpr const core::str_view StaticTypeName{
+        "AnimationComponent"};
+
     AnimationComponent();
     ~AnimationComponent() override;
 
-    void update() override;
+    void updateAnimation();
 
     /**
      * @brief Add an animation that animates a certain property of the node.

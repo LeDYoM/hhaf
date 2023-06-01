@@ -10,7 +10,8 @@ SceneNode::SceneNode(rptr<SceneNode> parent, str_view name) :
     SceneNodeParent{parent},
     sys::SystemAccess{&(parent->isystemProvider())},
     component::ComponentContainer{this},
-    sys::SubSystemViewer{&isystemProvider()}
+    sys::SubSystemViewer{&isystemProvider()},
+    SceneNodesGroup{this}
 {}
 
 SceneNode::SceneNode(rptr<SceneNode> parent, str name) :
@@ -22,7 +23,8 @@ SceneNode::SceneNode(rptr<sys::ISystemProvider> isystem_provider) :
     SceneNodeParent{nullptr},
     sys::SystemAccess{isystem_provider},
     component::ComponentContainer{this},
-    sys::SubSystemViewer{isystem_provider}
+    sys::SubSystemViewer{isystem_provider},
+    SceneNodesGroup{this}
 {}
 
 SceneNode::~SceneNode()
@@ -34,6 +36,7 @@ SceneNode::~SceneNode()
 void SceneNode::update()
 {
     ComponentContainer::updateComponents();
+    SceneNodesGroup::updateNodes();
 }
 
 SceneBox SceneNode::sceneView() const

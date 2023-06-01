@@ -1,19 +1,24 @@
-#include <haf/include/scene_components/scene_nodes_component.hpp>
-#include <haf/include/component/component_definition.hpp>
+#include <haf/include/scene/scene_nodes_group.hpp>
+#include <haf/include/scene/scene_node.hpp>
+#include <haf/include/component/component.hpp>
 
 using namespace haf::core;
 using namespace haf::component;
 
 namespace haf::scene
 {
-SceneNodeSPtr SceneNodesComponent::createSceneNode(str_view name)
+SceneNodesGroup::SceneNodesGroup(core::rptr<SceneNode> sceneNode) :
+    m_scene_node{sceneNode}
+{}
+
+SceneNodeSPtr SceneNodesGroup::createSceneNode(str_view name)
 {
-    sptr<SceneNode> result{msptr<SceneNode>(attachedNode(), str{name})};
+    sptr<SceneNode> result{msptr<SceneNode>(m_scene_node, str{name})};
     addSceneNode(result);
     return result;
 }
 
-sptr<Component> SceneNodesComponent::createSceneNodeWithComponent(
+sptr<Component> SceneNodesGroup::createSceneNodeWithComponent(
     str_view name,
     str_view componentName)
 {
@@ -30,7 +35,7 @@ sptr<Component> SceneNodesComponent::createSceneNodeWithComponent(
     return nullptr;
 }
 
-bool SceneNodesComponent::removeSceneNode(str_view name)
+bool SceneNodesGroup::removeSceneNode(str_view name)
 {
     sptr<SceneNode> scene_node{getByName(name)};
     if (scene_node != nullptr)
@@ -40,7 +45,7 @@ bool SceneNodesComponent::removeSceneNode(str_view name)
     return false;
 }
 
-bool SceneNodesComponent::removeSceneNode(SceneNodeSPtr sceneNode)
+bool SceneNodesGroup::removeSceneNode(SceneNodeSPtr sceneNode)
 {
     LogAsserter::log_assert(sceneNode != nullptr,
                             "Received empty scene node to be deleted");
@@ -55,7 +60,7 @@ bool SceneNodesComponent::removeSceneNode(SceneNodeSPtr sceneNode)
     return result;
 }
 
-bool SceneNodesComponent::removeSceneNode(size_type const index)
+bool SceneNodesGroup::removeSceneNode(size_type const index)
 {
     auto sceneNode{getByIndex(index)};
     if (sceneNode)
@@ -65,7 +70,7 @@ bool SceneNodesComponent::removeSceneNode(size_type const index)
     return false;
 }
 
-SceneNodeSPtr SceneNodesComponent::getByName(str_view name)
+SceneNodeSPtr SceneNodesGroup::getByName(str_view name)
 {
     auto const iterator{m_scene_nodes.find_if(
         [&name](auto const& node) { return node->name() == name; })};
@@ -73,7 +78,7 @@ SceneNodeSPtr SceneNodesComponent::getByName(str_view name)
     return iterator == m_scene_nodes.cend() ? nullptr : *iterator;
 }
 
-SceneNodeSPtr SceneNodesComponent::getByIndex(size_type const index)
+SceneNodeSPtr SceneNodesGroup::getByIndex(size_type const index)
 {
     if (index < m_scene_nodes.size())
     {
@@ -82,7 +87,7 @@ SceneNodeSPtr SceneNodesComponent::getByIndex(size_type const index)
     return nullptr;
 }
 
-void SceneNodesComponent::forEach(
+void SceneNodesGroup::forEach(
     core::function<void(SceneNodeSPtr const&)> f) const
 {
     for (SceneNodeSPtr const& node : m_scene_nodes)
@@ -91,41 +96,35 @@ void SceneNodesComponent::forEach(
     }
 }
 
-size_type SceneNodesComponent::size() const noexcept
+size_type SceneNodesGroup::size() const noexcept
 {
     return m_scene_nodes.size();
 }
 
-bool SceneNodesComponent::empty() const noexcept
+bool SceneNodesGroup::empty() const noexcept
 {
     return m_scene_nodes.empty();
 }
 
-void SceneNodesComponent::addSceneNode(core::sptr<SceneNode>& node)
+void SceneNodesGroup::addSceneNode(core::sptr<SceneNode>& node)
 {
     m_scene_nodes.emplace_back(node);
     node->onCreated();
     onNodeAdded(node);
 }
 
-pair<size_type, bool> SceneNodesComponent::getIndex(
-    SceneNodeSPtr const& sceneNode)
+pair<size_type, bool> SceneNodesGroup::getIndex(SceneNodeSPtr const& sceneNode)
 {
     auto const iterator{m_scene_nodes.cfind(sceneNode)};
     return {static_cast<size_type>(iterator - m_scene_nodes.cbegin()),
             iterator != m_scene_nodes.cend()};
 }
 
-void SceneNodesComponent::onAttached()
-{
-    addUpdater({this, &SceneNodesComponent::updateNodes});
-}
-
-void SceneNodesComponent::updateNodes()
+void SceneNodesGroup::updateNodes()
 {
     for (const auto& node : m_scene_nodes)
     {
-        node->updateComponents();
+        node->update();
     }
 }
 

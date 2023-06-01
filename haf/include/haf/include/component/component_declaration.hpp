@@ -4,8 +4,7 @@ HTPS_PRAGMA_ONCE
 
 #include <haf/include/core/types.hpp>
 #include <haf/include/component/component.hpp>
-#include <haf/include/component/component_with_requirements.hpp>
-#include <haf/include/component/component_base.hpp>
+#include <haf/include/component/component_bootstrap.hpp>
 
 namespace haf
 {

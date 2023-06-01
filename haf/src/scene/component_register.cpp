@@ -2,7 +2,6 @@
 #include "scene_manager.hpp"
 
 #include <haf/include/scene_components/scene_component.hpp>
-#include <haf/include/scene_components/scene_nodes_component.hpp>
 #include <haf/include/scene_components/global_transformation_component.hpp>
 #include <haf/include/scene_components/transformation_component.hpp>
 #include <haf/include/scene_components/camera_component.hpp>
@@ -10,8 +9,8 @@
 
 #include <haf/include/input/keyboard_input_component.hpp>
 
-#include <haf/include/render/mesh_component.hpp>
 #include <haf/include/render/mesh_render_component.hpp>
+#include <haf/include/render/material_data_component.hpp>
 
 namespace haf::scene
 {
@@ -23,7 +22,6 @@ bool ComponentRegister::operator()()
 {
     bool ok{true};
     ok &= m_scene_manager.registerComponent<SceneComponent>();
-    ok &= m_scene_manager.registerComponent<SceneNodesComponent>();
     ok &= m_scene_manager.registerComponent<GlobalTransformationComponent>();
     ok &= m_scene_manager.registerComponent<TransformationComponent>();
     ok &= m_scene_manager.registerComponent<CameraComponent>();
@@ -31,8 +29,8 @@ bool ComponentRegister::operator()()
 
     ok &= m_scene_manager.registerComponent<input::KeyboardInputComponent>();
 
-    ok &= m_scene_manager.registerComponent<render::MeshComponent>();
     ok &= m_scene_manager.registerComponent<render::MeshRenderComponent>();
+    ok &= m_scene_manager.registerComponent<render::MaterialDataComponent>();
 
     return ok;
 }

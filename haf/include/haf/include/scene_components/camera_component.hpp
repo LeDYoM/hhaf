@@ -10,26 +10,29 @@ HTPS_PRAGMA_ONCE
 #include <haf/include/core/matrix4x4.hpp>
 #include <haf/include/component/component_declaration.hpp>
 
-namespace haf::res
-{
-class Shader;
-}
+#include <haf/include/resources/shader.hpp>
+
 namespace haf::scene
 {
 class HAF_API CameraComponent final
-    : public component::ComponentBase<"CameraComponent">
+    : public component::ComponentBootStrap<CameraComponent>
 {
 public:
+    static constexpr const core::str_view StaticTypeName{"CameraComponent"};
+
+    CameraComponent();
+    ~CameraComponent();
+
     enum class CameraMode : core::u32
     {
-        Ortho = 0U,
-        Frustum,
-        Perspective
+        None = 0U,
+        Ortho = 1U,
+        Frustum = 2U,
+        Perspective = 3U
     };
 
     void onAttached() override;
 
-    void setPerspective(core::f32 const fovy, core::f32 const aspect);
     prop::PropertyState<CameraMode> cameraMode;
     prop::PropertyState<core::f32> Left;
     prop::PropertyState<core::f32> Right;
@@ -44,9 +47,12 @@ public:
     evt::emitter<> cameraUpdated;
 
 private:
-    void cameraDataUpdated();
-    math::Matrix4x4 m_perspective_matrix;
-    core::vector<res::Shader> m_shaders_with_camera_projection;
+    void cameraDataPerspectiveUpdated();
+    void cameraDataViewUpdated();
+    void performCameraUpdate();
+
+    struct PrivateComponentData;
+    core::PImplPointer<PrivateComponentData> m_p;
 };
 }  // namespace haf::scene
 

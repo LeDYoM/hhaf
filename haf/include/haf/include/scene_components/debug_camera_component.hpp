@@ -18,18 +18,28 @@ namespace haf::scene
 {
 class CameraComponent;
 class HAF_API DebugCameraComponent final
-    : public component::ComponentBase<"DebugCameraComponent",
-                                      input::KeyboardInputComponent,
-                                      CameraComponent>
+    : public component::ComponentBootStrap<DebugCameraComponent>
 {
 public:
+    static constexpr const core::str_view StaticTypeName{
+        "DebugCameraComponent"};
+
+    DebugCameraComponent();
+    ~DebugCameraComponent() override;
+
     prop::PropertyState<core::f32> Speed;
     void onAttached() override;
 
 private:
+    struct ComponentsRequired;
+    core::PImplPointer<ComponentsRequired> m_components;
+    struct PrivateComponentData;
+    core::PImplPointer<PrivateComponentData> m_p;
+
+    bool addRequirements(component::ComponentRequirements&) override;
+
     void logCameraData();
     void moveCamera(input::Key const& key);
-    evt::ireceiver m_receiver;
 };
 }  // namespace haf::scene
 

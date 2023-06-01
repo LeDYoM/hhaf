@@ -48,7 +48,7 @@ PropertyAnimationBuilder AnimationComponent::make_property_animation_builder()
     return PropertyAnimationBuilder{make_property_animation_data()};
 }
 
-void AnimationComponent::update()
+void AnimationComponent::updateAnimation()
 {
     p_->animations_.performUpdate([this](auto& animation) {
         if (!animation->animate())

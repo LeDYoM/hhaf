@@ -11,9 +11,12 @@ HTPS_PRAGMA_ONCE
 namespace haf::input
 {
 class HAF_API KeyboardInputComponent
-    : public component::ComponentBase<"KeyboardInputComponent">
+    : public component::ComponentBootStrap<KeyboardInputComponent>
 {
 public:
+    static constexpr const core::str_view StaticTypeName{
+        "KeyboardInputComponent"};
+
     void onAttached() override;
 
     evt::emitter<const Key&> KeyPressed;

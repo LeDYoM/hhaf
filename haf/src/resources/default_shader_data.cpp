@@ -25,7 +25,7 @@ using UniformBlocksBindingType  = pair<str, u32>;
 using UniformBlocksBindingsType = vector<UniformBlocksBindingType>;
 
 static UniformBlocksBindingsType DefaultUniformBlocksBindings{
-    {"HAFCameraData", 1U}};
+    {"HAFCameraData", 5U}};
 
 }  // namespace
 

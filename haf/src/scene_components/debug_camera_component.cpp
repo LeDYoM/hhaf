@@ -16,23 +16,52 @@ using namespace haf::input;
 
 namespace haf::scene
 {
+struct DebugCameraComponent::ComponentsRequired
+{
+    sptr<input::KeyboardInputComponent> m_keyboard_input_component;
+    sptr<CameraComponent> m_camera_component;
+};
+
+struct DebugCameraComponent::PrivateComponentData
+{
+    evt::ireceiver m_receiver;
+};
+
+DebugCameraComponent::DebugCameraComponent() :
+    m_components{make_pimplp<ComponentsRequired>()},
+    m_p{make_pimplp<PrivateComponentData>()}
+{}
+
+DebugCameraComponent::~DebugCameraComponent() = default;
+
+bool DebugCameraComponent::addRequirements(
+    component::ComponentRequirements& component_requirements)
+{
+    bool isOk{true};
+    isOk &= component_requirements.getOrCreateComponent(
+        m_components->m_keyboard_input_component);
+    isOk &= component_requirements.getOrCreateComponent(
+        m_components->m_camera_component);
+    return isOk;
+}
+
 void DebugCameraComponent::onAttached()
 {
     Speed = 0.01F;
-    m_receiver.shared_connect(
-        getComponent<KeyboardInputComponent>(),
-        getComponent<KeyboardInputComponent>()->KeyPressed,
+    m_p->m_receiver.shared_connect(
+        m_components->m_keyboard_input_component,
+        m_components->m_keyboard_input_component->KeyPressed,
         make_function(this, &DebugCameraComponent::moveCamera));
 
-    m_receiver.shared_connect(
-        getComponent<CameraComponent>(),
-        getComponent<CameraComponent>()->cameraUpdated,
+    m_p->m_receiver.shared_connect(
+        m_components->m_camera_component,
+        m_components->m_camera_component->cameraUpdated,
         make_function(this, &DebugCameraComponent::logCameraData));
 }
 
 void DebugCameraComponent::moveCamera(Key const& key)
 {
-    auto&& camera{getComponent<CameraComponent>()};
+    auto&& camera{m_components->m_camera_component};
     switch (key)
     {
         case Key::T:
@@ -139,7 +168,7 @@ void DebugCameraComponent::moveCamera(Key const& key)
 
 void DebugCameraComponent::logCameraData()
 {
-    auto camera{getComponent<CameraComponent>()};
+    auto&& camera{m_components->m_camera_component};
 
     DisplayLog::debug(
         StaticTypeName, ": Camera view updated. New values:\nPosition: {",

@@ -5,24 +5,27 @@ HTPS_PRAGMA_ONCE
 #include <haf/include/haf_export.hpp>
 #include <haf/include/core/types.hpp>
 #include <haf/include/component/component_declaration.hpp>
-#include <haf/include/resources/vertex_array_object.hpp>
-#include <haf/include/render/has_mesh_render_context.hpp>
+
+#include <haf/include/resources/shader.hpp>
 
 namespace haf::render
 {
 class HAF_API MeshRenderComponent final
-    : public component::ComponentBase<"MeshRenderComponent">,
-      public HasMeshRenderContext
+    : public component::ComponentBootStrap<MeshRenderComponent>
 {
 public:
-    void setMeshRenderContext(
-        core::wptr<render::MeshRenderContext> wmesh_render_context) override;
+    static constexpr const core::str_view StaticTypeName{"MeshRenderComponent"};
+
+    MeshRenderComponent();
+    ~MeshRenderComponent();
 
     void onAttached() override;
     void updateRender();
 
+    core::sptr<res::Shader> shader() const noexcept;
 private:
-    core::sptr<res::VertexArrayObject> m_vao_object;
+    struct PrivateComponentData;
+    core::PImplPointer<PrivateComponentData> m_p;
 };
 
 }  // namespace haf::render

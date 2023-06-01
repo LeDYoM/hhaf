@@ -3,33 +3,26 @@
 
 #include <haf/include/core/types.hpp>
 #include <haf/include/component/component_declaration.hpp>
-#include <haf/include/scene_components/scene_component.hpp>
-
-namespace haf::render
-{
-    class MeshComponent;
-}
-
-namespace haf::scene
-{
-    class SceneComponent;
-}
 
 namespace hl
 {
-class MainScene final
-    : public haf::component::ComponentBase<"MainScene",
-                                           haf::scene::SceneComponent>
+class MainScene final : public haf::component::ComponentBootStrap<MainScene>
 {
 public:
+    static constexpr const haf::core::str_view StaticTypeName{"MainScene"};
+
     MainScene();
     ~MainScene() override;
 
     void onAttached() override;
 
 private:
-    haf::ComponentSPtr<haf::render::MeshComponent>
-        m_mesh_component;
+    bool addRequirements(haf::component::ComponentRequirements&) override;
+
+    struct ComponentsRequired;
+    haf::core::PImplPointer<ComponentsRequired> m_components;
+    struct PrivateComponentData;
+    haf::core::PImplPointer<PrivateComponentData> m_p;
 };
 }  // namespace hl
 

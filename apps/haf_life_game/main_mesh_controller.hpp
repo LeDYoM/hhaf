@@ -3,22 +3,31 @@
 
 #include <haf/include/core/types.hpp>
 #include <haf/include/component/component_declaration.hpp>
-#include <haf/include/scene_components/scene_component.hpp>
-#include <haf/include/render/mesh_component.hpp>
 
 namespace hl
 {
 class MainMeshController final
-    : public haf::component::ComponentBase<"MainMeshController",
-                                           haf::render::MeshComponent>
+    : public haf::component::ComponentBootStrap<MainMeshController>
 {
 public:
+    static constexpr const haf::core::str_view StaticTypeName{
+        "MainMeshController"};
+
     MainMeshController();
     ~MainMeshController() override;
 
     void onAttached() override;
     void update();
+
+private:
+    bool addRequirements(haf::component::ComponentRequirements&) override;
+
+    struct ComponentsRequired;
+    haf::core::PImplPointer<ComponentsRequired> m_components;
+    struct PrivateComponentData;
+    haf::core::PImplPointer<PrivateComponentData> m_p;
 };
+
 }  // namespace hl
 
 #endif

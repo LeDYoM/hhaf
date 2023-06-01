@@ -6,56 +6,66 @@
 #include <haf/include/core/geometry_math.hpp>
 
 using namespace haf::core;
+using namespace haf::prop;
+using namespace haf::math;
 
 namespace haf::scene
 {
+struct CameraComponent::PrivateComponentData
+{
+    Matrix4x4 m_perspective_matrix;
+    Matrix4x4 m_view_matrix;
+    vector<res::Shader> m_shaders_with_camera_projection;
+    struct CameraComponentsUpdatedStruct
+    {};
+    PropertyState<CameraComponentsUpdatedStruct> cameraComponentsUpdated;
+};
+
+CameraComponent::CameraComponent() : m_p{make_pimplp<PrivateComponentData>()}
+{}
+
+CameraComponent::~CameraComponent() = default;
+
 void CameraComponent::onAttached()
 {
-    addUpdater({this, &CameraComponent::cameraDataUpdated}, &Left, &Right,
-               &Bottom, &Top, &Near, &Far, &cameraMode, &Position, &Center,
-               &Up);
-    Left            = -1.0F;
-    Right           = 1.0F;
-    Bottom          = -1.0F;
-    Top             = 1.0F;
-    Near            = 0.0F;
-    Far             = 5.0F;
-    cameraMode      = CameraMode::Perspective;
-    Position        = vector3df{0.0F, 0.0F, 1.0F};
-    Center          = vector3df{0.0F, 0.0F, 0.0F};
-    Up              = vector3df{0.0F, 1.0F, 0.0F};
+    addUpdater({this, &CameraComponent::cameraDataPerspectiveUpdated}, &Left,
+               &Right, &Bottom, &Top, &Near, &Far, &cameraMode);
 
-    //    setPerspective(50, 1);
+    addUpdater({this, &CameraComponent::cameraDataViewUpdated}, &Position,
+               &Center, &Up);
+
+    addUpdater({this, &CameraComponent::performCameraUpdate},
+               &m_p->cameraComponentsUpdated);
+
+    Left       = -0.05F;
+    Right      = 0.05F;
+    Bottom     = -0.05F;
+    Top        = 0.05F;
+    Near       = 0.01F;
+    Far        = 1.0F;
+    cameraMode = CameraMode::Frustum;
+    Position   = vector3df{0.0F, 0.0F, 0.4F};
+    Center     = vector3df{0.0F, 0.0F, 0.0F};
+    Up         = vector3df{0.0F, 1.0F, 0.0F};
 }
 
-void CameraComponent::setPerspective(core::f32 const fovy,
-                                     core::f32 const aspect)
-{
-    f32 const fH{std::tan((fovy * 0.5F) / 180 * math::PiConstant<f32>) *
-                 Near()};
-    //    fH = std::tan(fovy / 360 * pi) * Near();
-    f32 fW{fH * aspect};
-
-    Left   = -fW;
-    Right  = fW;
-    Bottom = -fH;
-    Top    = fH;
-}
-
-void CameraComponent::cameraDataUpdated()
+void CameraComponent::cameraDataPerspectiveUpdated()
 {
     switch (cameraMode())
     {
+        case CameraMode::None:
+            m_p->m_perspective_matrix.setIdentity();
+            break;
         case CameraMode::Frustum:
-            [[fallthrough]];
+            m_p->m_perspective_matrix =
+                math::frustum(Left(), Right(), Bottom(), Top(), Near(), Far());
+            break;
         case CameraMode::Ortho:
-            m_perspective_matrix =
-                (cameraMode() == CameraMode::Ortho ? math::ortho
-                                                   : math::frustum)(
-                    Left(), Right(), Bottom(), Top(), Near(), Far());
+            m_p->m_perspective_matrix =
+                math::ortho(Left(), Right(), Bottom(), Top(), Near(), Far());
             break;
         case CameraMode::Perspective:
-            m_perspective_matrix =
+            m_p->m_perspective_matrix =
                 math::perspective(60, 800.0F / 600.0F, 0.01F, 10.0F);
             break;
         default:
@@ -63,12 +73,21 @@ void CameraComponent::cameraDataUpdated()
             break;
     }
 
-    m_perspective_matrix =
-        m_perspective_matrix * math::lookat(Position(), Center(), Up());
+    m_p->cameraComponentsUpdated.setChanged();
+}
 
+void CameraComponent::cameraDataViewUpdated()
+{
+    m_p->m_view_matrix = math::lookat(Position(), Center(), Up());
+
+    m_p->cameraComponentsUpdated.setChanged();
+}
+
+void CameraComponent::performCameraUpdate()
+{
     sys::getSystem<scene::SceneManager>(attachedNode())
         .sceneRenderContext()
-        .setCameraMatrix(m_perspective_matrix);
+        .setCameraMatrix(m_p->m_perspective_matrix * m_p->m_view_matrix);
 
     cameraUpdated();
 }

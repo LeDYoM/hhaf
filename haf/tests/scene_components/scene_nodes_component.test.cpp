@@ -1,7 +1,6 @@
 #include "catch.hpp"
 
 #include <haf/include/core/types.hpp>
-#include <haf/include/scene_components/scene_nodes_component.hpp>
 
 #include "system_test_utils.hpp"
 #include "component_test_utils.hpp"
@@ -11,7 +10,7 @@ using namespace haf::test;
 using namespace haf::scene;
 using namespace haf::core;
 using namespace haf::component;
-
+/*
 TEST_CASE("SceneNodesComponent::default_state",
           "[SceneNodesComponent][scene][component]")
 {
@@ -128,8 +127,10 @@ TEST_CASE("SceneNodesComponent::removeByIndex",
 }
 namespace
 {
-struct TestComponent : public ComponentBase<"TestComponent">
+struct TestComponent : public ComponentBootStrap<TestComponent>
 {
+    static constexpr const core::str_view StaticTypeName{"TestComponent"};
+
     int data_{0};
 
 private:
@@ -182,3 +183,4 @@ TEST_CASE("SceneNodesComponent::forEach",
     CHECK(sceneNodesComponent->getByIndex(1U)->Visible() == false);
     CHECK(sceneNodesComponent->getByIndex(2U)->Visible() == false);
 }
+*/

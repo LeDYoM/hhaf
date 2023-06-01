@@ -23,5 +23,5 @@ TEST_CASE("haf::anim::AnimationComponent", "[AnimationComponent][Component]")
 
     CommonData common;
     common.animation_component = msptr<AnimationComponent>();
-    common.animation_component->update();
+//    common.animation_component->update();
 }

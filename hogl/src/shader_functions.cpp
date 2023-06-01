@@ -106,19 +106,21 @@ bool getResourceData(Handle const program,
                      u32 const index,
                      GetLowLevelShaderData& data) noexcept
 {
-    constexpr u32 kNumElements{3U};
     array<GLchar, GL_ACTIVE_UNIFORM_MAX_LENGTH> nameData{};
-    array<GLenum, kNumElements> properties{GL_NAME_LENGTH, GL_TYPE,
-                                           GL_ARRAY_SIZE};
+    constexpr u32 kNumElements{3U};
     array<GLint, kNumElements> values{};
 
     if (type_request == GL_UNIFORM_BLOCK)
     {
+        array<GLenum, kNumElements> properties{GL_NAME_LENGTH, GL_TYPE,
+                                               GL_ARRAY_SIZE};
         glGetProgramResourceiv(program, type_request, index, 1, &properties[0],
                                1, nullptr, values.begin());
     }
     else
     {
+        array<GLenum, kNumElements> properties{GL_NAME_LENGTH, GL_TYPE,
+                                               GL_ARRAY_SIZE};
         glGetProgramResourceiv(program, type_request, index,
                                static_cast<GLsizei>(properties.size()),
                                &properties[0],

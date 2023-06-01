@@ -28,7 +28,7 @@ TimerConnectorSPtr TimerComponent::addFreeTimer()
     return addTimer(TimerType::Free, TimePoint{}, timer_callback_t{});
 }
 
-void TimerComponent::update()
+void TimerComponent::updateTime()
 {
     activeTimers_.performUpdate([this](auto& timerConnector) {
         // Perform update for each timer connector if and only if:

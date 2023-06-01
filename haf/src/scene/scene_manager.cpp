@@ -5,7 +5,6 @@
 
 #include "system/system_provider.hpp"
 #include <hlog/include/hlog.hpp>
-#include <haf/include/scene_components/scene_nodes_component.hpp>
 
 using namespace haf::sys;
 using namespace haf::core;
@@ -25,9 +24,6 @@ void SceneManager::init()
     component_register();
 
     m_rootSceneNode = muptr<SceneNode>(&isystemProvider());
-    auto result{m_rootSceneNode->attachComponent<SceneNodesComponent>()};
-    LogAsserter::log_assert(result != nullptr,
-                            "Cannot attach sceneNodesComponent to root node");
     m_scene_render_context_for_system.init();
 }
 
@@ -51,18 +47,15 @@ bool SceneManager::registerComponent(
 
 bool SceneManager::instanciateRootComponent(str_view componentType)
 {
-    auto inner_scene_nodes_component{
-        m_rootSceneNode->componentOfType<SceneNodesComponent>()};
-    LogAsserter::log_assert(
-        inner_scene_nodes_component != nullptr,
-        "Root scene node does not contain SceneNodesComponent");
-
     return m_rootSceneNode->attachComponent(componentType) != nullptr;
 }
 
 sptr<component::Component> SceneManager::instantiateComponent(str_view name)
 {
-    return m_component_factory.create(name);
+    sptr<component::Component> component{m_component_factory.create(name)};
+    DisplayLog::warn_if(component == nullptr, "Component ", name,
+                        " not found in component factory");
+    return component;
 }
 
 rptr<SceneNode> SceneManager::rootSceneNode() const

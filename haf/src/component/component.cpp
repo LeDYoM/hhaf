@@ -22,9 +22,6 @@ void Component::setAttachedNode(pointer const attachedNode)
     onAttached();
 }
 
-void Component::update()
-{}
-
 void Component::onAttached()
 {}
 

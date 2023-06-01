@@ -19,21 +19,21 @@ public:
                                   bufferObjectUnsizedConstructParams);
 
     template <typename T>
-    SharedDataBuffer(render::RenderObjectData<T>&& render_object_data) :
+    explicit SharedDataBuffer(render::RenderObjectData<T>&& render_object_data) :
         SharedDataBuffer{
             core::move(render_object_data.bufferObjectUnsizedConstructParams())}
     {}
 
-    template <typename U, typename T>
-    SharedDataBuffer(U&& index, core::span<T> data) :
+    template <typename T>
+    SharedDataBuffer(core::str index, core::span<T> data) :
         SharedDataBuffer{
-            RenderObjectData<T>{core::forward<U>(index), core::move(data)}}
+            RenderObjectData<T>{core::move(index), core::move(data)}}
     {}
 
-    template <typename T, typename U>
-    SharedDataBuffer(U&& index) :
+    template <typename T>
+    explicit SharedDataBuffer(core::str index) :
         SharedDataBuffer{
-            RenderObjectData<T>{core::forward<U>(index), core::span<T>{}}}
+            RenderObjectData<T>{core::move(index), core::span<T>{}}}
     {}
 
     ~SharedDataBuffer();

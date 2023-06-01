@@ -23,6 +23,11 @@ public:
         return m_backgroundColor;
     }
 
+    math::Matrix4x4 const& modelViewMatrix() const noexcept
+    {
+        return m_currentModeViewMatrix();
+    }
+
 protected:
     SceneRenderContextView()  = default;
     ~SceneRenderContextView() = default;

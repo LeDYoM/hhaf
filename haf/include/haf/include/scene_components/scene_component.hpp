@@ -6,17 +6,25 @@ HTPS_PRAGMA_ONCE
 #include <haf/include/core/types.hpp>
 #include <haf/include/component/component_declaration.hpp>
 #include <haf/include/scene_components/transformation_component.hpp>
-#include <haf/include/scene_components/scene_nodes_component.hpp>
 #include <haf/include/scene_components/debug_camera_component.hpp>
 
 namespace haf::scene
 {
 class HAF_API SceneComponent final
-    : public component::ComponentBase<"SceneComponent",
-                                      SceneNodesComponent,
-                                      TransformationComponent,
-                                      DebugCameraComponent>
-{};
+    : public component::ComponentBootStrap<SceneComponent>
+{
+public:
+    static constexpr const core::str_view StaticTypeName{"SceneComponent"};
+
+    SceneComponent();
+    ~SceneComponent() override;
+
+private:
+    bool addRequirements(component::ComponentRequirements&) override;
+
+    struct ComponentsRequired;
+    core::PImplPointer<ComponentsRequired> m_components;
+};
 
 }  // namespace haf::scene
 

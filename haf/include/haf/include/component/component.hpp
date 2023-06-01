@@ -30,16 +30,7 @@ public:
 
     void updateComponent();
 
-    /**
-     * @brief Interface to be implemented to update the component
-     */
-    virtual void update();
-
-    /**
-     * @brief Method called after the component is attached to a node.
-     * Override it to perform initialization
-     */
-    virtual void onAttached();
+    virtual ~Component();
 
     /**
      * @brief Get the attached node.
@@ -53,12 +44,16 @@ public:
      */
     pointer attachedNode() noexcept;
 
-    virtual ~Component();
-
 protected:
     Component();
 
 private:
+    /**
+     * @brief Method called after the component is attached to a node.
+     * Override it to perform initialization
+     */
+    virtual void onAttached();
+
     void setAttachedNode(pointer const attachedNode);
     virtual bool addRequirements(ComponentRequirements&);
 

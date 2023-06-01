@@ -14,6 +14,7 @@ VisibilitySelectorComponent::VisibilitySelectorComponent() noexcept :
 
 void VisibilitySelectorComponent::onUpdateVisibleIndex()
 {
+    /*
     auto sceneNodesComponent{getComponent<SceneNodesComponent>()};
 
     sceneNodesComponent->forEach(
@@ -27,10 +28,12 @@ void VisibilitySelectorComponent::onUpdateVisibleIndex()
     {
         DisplayLog::warn("visible_index out of range");
     }
+    */
 }
 
 void VisibilitySelectorComponent::onAttached()
 {
+    /*
     m_receiver
         .connect(getComponent<SceneNodesComponent>()->onNodeAdded,
                  {this, &VisibilitySelectorComponent::onNodeAdded})
@@ -39,6 +42,7 @@ void VisibilitySelectorComponent::onAttached()
 
     addUpdater({this, &VisibilitySelectorComponent::onUpdateVisibleIndex},
                &visible_index);
+               */
 }
 
 void VisibilitySelectorComponent::onNodeAdded(SceneNodeSPtr const&)

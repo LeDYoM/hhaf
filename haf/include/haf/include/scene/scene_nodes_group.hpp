@@ -5,16 +5,19 @@ HTPS_PRAGMA_ONCE
 #include <haf/include/haf_export.hpp>
 #include <haf/include/core/types.hpp>
 #include <haf/include/events/connection.hpp>
-#include <haf/include/scene/scene_node.hpp>
-#include <haf/include/component/component_declaration.hpp>
-#include <haf/include/scene_components/transformation_component.hpp>
 
+namespace haf::component
+{
+    class Component;
+}
 namespace haf::scene
 {
-class HAF_API SceneNodesComponent final
-    : public component::ComponentBase<"SceneNodesComponent">
+class SceneNode;
+
+class HAF_API SceneNodesGroup
 {
 public:
+
     using SceneNodesVector = core::vector<core::sptr<SceneNode>>;
     using size_type        = SceneNodesVector::size_type;
 
@@ -35,7 +38,7 @@ public:
      * @return core::sptr<SceneNode> The created new node is success or nullptr
      * if some failure happened.
      */
-    SceneNodeSPtr createSceneNode(core::str_view name);
+    core::sptr<SceneNode> createSceneNode(core::str_view name);
 
     core::sptr<component::Component> createSceneNodeWithComponent(
         core::str_view name,
@@ -64,7 +67,7 @@ public:
      * @return true The SceneNode was removed successfully
      * @return false Error removing the SceneNode
      */
-    bool removeSceneNode(SceneNodeSPtr sceneNode);
+    bool removeSceneNode(core::sptr<SceneNode> sceneNode);
 
     /**
      * @brief Remove a SceneNode object
@@ -92,7 +95,7 @@ public:
      * @return htps::sptr<SceneNode> Pointer to the node with the
      * specified name or nullptr if not found.
      */
-    SceneNodeSPtr getByName(core::str_view name);
+    core::sptr<SceneNode> getByName(core::str_view name);
 
     /**
      * @brief Get a SceneNode in the group looking for its index
@@ -101,7 +104,7 @@ public:
      * @return htps::sptr<SceneNode> Pointer to the node with the
      * specified index or nullptr if not found.
      */
-    SceneNodeSPtr getByIndex(size_type const index);
+    core::sptr<SceneNode> getByIndex(size_type const index);
 
     /**
      * @brief Get the index data from a corresponding SceneNodeSPtr.
@@ -112,7 +115,7 @@ public:
      * @note If the second member of the return structure is false, the
      * value of the first member says nothing.
      */
-    core::pair<size_type, bool> getIndex(SceneNodeSPtr const& sceneNode);
+    core::pair<size_type, bool> getIndex(core::sptr<SceneNode> const& sceneNode);
 
     /**
      * @brief Execute an action for each scene node in the contained scene
@@ -121,18 +124,22 @@ public:
      * @param f Invokable function with a constant scene node pointer as
      * parameter.
      */
-    void forEach(core::function<void(SceneNodeSPtr const&)> f) const;
-
-private:
-    void onAttached() override;
+    void forEach(core::function<void(core::sptr<SceneNode> const&)> f) const;
 
     void updateNodes();
+
+protected:
+    SceneNodesGroup(core::rptr<SceneNode> sceneNode);
+
+private:
 
     /**
      * @brief Add an already created SceneNode to the group
      * @param node Node to add
      */
     void addSceneNode(core::sptr<SceneNode>& node);
+
+    core::rptr<SceneNode> m_scene_node;
 
     /**
      * @brief Container of a group of @b SceneNode (s)

@@ -9,6 +9,7 @@ HTPS_PRAGMA_ONCE
 #include <haf/include/scene/scenenodeparent.hpp>
 #include <haf/include/scene/hasname.hpp>
 #include <haf/include/system/system_access.hpp>
+#include <haf/include/scene/scene_nodes_group.hpp>
 #include <haf/include/component/component_container.hpp>
 #include <haf/include/system/subsystem_view.hpp>
 
@@ -27,7 +28,8 @@ class HAF_API SceneNode final : public sys::HasName,
                                 public SceneNodeParent<SceneNode>,
                                 public sys::SystemAccess,
                                 public component::ComponentContainer,
-                                public sys::SubSystemViewer
+                                public sys::SubSystemViewer,
+                                public SceneNodesGroup
 {
 public:
     static constexpr char StaticTypeName[] = "SceneNode";

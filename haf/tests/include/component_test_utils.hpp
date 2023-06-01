@@ -3,8 +3,6 @@ HTPS_PRAGMA_ONCE
 #define HAF_COMPONENT_TESTS_UTILS_INCLUDE_HPP
 
 #include <haf/include/core/types.hpp>
-#include <haf/include/component/component_base.hpp>
-#include <haf/include/component/component_with_requirements.hpp>
 #include <haf/include/scene/scene_node.hpp>
 #include "system_test_utils.hpp"
 
@@ -12,6 +10,7 @@ namespace haf::test
 {
 namespace detail
 {
+/*
 template <typename T>
 void autoRegisterComponentRequirements(
     scene::SceneManager& scene_manager,
@@ -48,13 +47,14 @@ void autoRegisterComponentRequirements(
         static_cast<component::ComponentWithRequirements<Args...>::BaseClass&>(
             element));
 }
+*/
 
 template <typename T>
-void autoRegisterComponentRequirements(scene::SceneManager& scene_manager,
-                                       T& element)
+void autoRegisterComponentRequirements(scene::SceneManager& /*scene_manager*/,
+                                       T& /*element*/)
 {
-    autoRegisterComponentRequirements(scene_manager,
-                                      static_cast<T::BaseClass&>(element));
+//    autoRegisterComponentRequirements(scene_manager,
+//                                      static_cast<T::BaseClass&>(element));
 }
 }  // namespace detail
 

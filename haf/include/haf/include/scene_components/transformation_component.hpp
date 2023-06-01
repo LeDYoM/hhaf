@@ -10,15 +10,11 @@ HTPS_PRAGMA_ONCE
 
 #include <haf/include/core/matrix4x4.hpp>
 #include <haf/include/component/component_declaration.hpp>
+#include <haf/include/scene_components/global_transformation_component.hpp>
 
 namespace haf::render
 {
 class MeshRenderContext;
-}
-
-namespace haf::scene
-{
-class GlobalTransformationComponent;
 }
 
 namespace haf::scene
@@ -30,10 +26,15 @@ namespace haf::scene
  * @see Transofrmation
  */
 class HAF_API TransformationComponent final
-    : public component::ComponentBase<"TransformationComponent",
-                                      GlobalTransformationComponent>
+    : public component::ComponentBootStrap<TransformationComponent>
 {
 public:
+    static constexpr const core::str_view StaticTypeName{
+        "TransformationComponent"};
+
+    TransformationComponent();
+    ~TransformationComponent() override;
+
     using Scalar = math::Matrix4x4::Scalar;  ///< Type Scalar for this class
     static constexpr Scalar const One  = math::Matrix4x4::One;
     static constexpr Scalar const Zero = math::Matrix4x4::Zero;
@@ -58,12 +59,19 @@ public:
 
     evt::emitter<math::Matrix4x4 const&> localMatrixChanged;
 
-private:
-    evt::ireceiver m_shared_connection;
-    void updateTransform() noexcept;
-    void onAttached() override;
+    math::Matrix4x4 getGlobalTransformation();
 
-    math::Matrix4x4 m_transform;
+private:
+    struct ComponentsRequired;
+    core::PImplPointer<ComponentsRequired> m_components;
+    struct PrivateComponentData;
+    core::PImplPointer<PrivateComponentData> m_p;
+
+    bool transformationUpdated() const noexcept;
+    void updateLocalTransformation() noexcept;
+    void pollParentGlobalTransformation() noexcept;
+    void updateMyGlobalTransformationIfNecessary() noexcept;
+    void onAttached() override;
 };
 
 }  // namespace haf::scene
