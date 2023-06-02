@@ -74,6 +74,7 @@ void CameraComponent::cameraDataPerspectiveUpdated()
     }
 
     m_p->cameraComponentsUpdated.setChanged();
+    cameraPerspectiveUpdated();
 }
 
 void CameraComponent::cameraDataViewUpdated()
@@ -81,6 +82,7 @@ void CameraComponent::cameraDataViewUpdated()
     m_p->m_view_matrix = math::lookat(Position(), Center(), Up());
 
     m_p->cameraComponentsUpdated.setChanged();
+    cameraViewUpdated();
 }
 
 void CameraComponent::performCameraUpdate()

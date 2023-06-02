@@ -10,13 +10,8 @@ HTPS_PRAGMA_ONCE
 
 #include <haf/include/component/component_declaration.hpp>
 
-namespace haf::input
-{
-class KeyboardInputComponent;
-}
 namespace haf::scene
 {
-class CameraComponent;
 class HAF_API DebugCameraComponent final
     : public component::ComponentBootStrap<DebugCameraComponent>
 {
@@ -28,7 +23,6 @@ public:
     ~DebugCameraComponent() override;
 
     prop::PropertyState<core::f32> Speed;
-    void onAttached() override;
 
 private:
     struct ComponentsRequired;
@@ -36,6 +30,7 @@ private:
     struct PrivateComponentData;
     core::PImplPointer<PrivateComponentData> m_p;
 
+    void onAttached() override;
     bool addRequirements(component::ComponentRequirements&) override;
 
     void logCameraData();

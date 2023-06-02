@@ -44,6 +44,8 @@ public:
     prop::PropertyState<core::vector3df> Center;
     prop::PropertyState<core::vector3df> Up;
 
+    evt::emitter<> cameraPerspectiveUpdated;
+    evt::emitter<> cameraViewUpdated;
     evt::emitter<> cameraUpdated;
 
 private:
