@@ -1,9 +1,9 @@
-HTPS_PRAGMA_ONCE
+HAF_PRAGMA_ONCE
 #ifndef HAF_CORE_RENDER_TARGET_INCLUDE_HPP
 #define HAF_CORE_RENDER_TARGET_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
-#include <htypes/include/rect.hpp>
+#include <facil_math/include/rect.hpp>
 #include <haf/include/properties/property_state.hpp>
 #include <haf/include/core/matrix4x4.hpp>
 
@@ -38,7 +38,7 @@ public:
     void update();
     void clearRenderQueue();
 
-    prop::PropertyState<htps::Rects32> ViewPort;
+    prop::PropertyState<fmath::Rects32> ViewPort;
     prop::PropertyState<math::Matrix4x4> Projection;
 
 private:

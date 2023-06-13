@@ -1,9 +1,9 @@
-HTPS_PRAGMA_ONCE
+HAF_PRAGMA_ONCE
 #ifndef HAF_COMPONENT_TIMER_COMPONENTEMENT_INCLUDE_HPP
 #define HAF_COMPONENT_TIMER_COMPONENTEMENT_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
-#include <htypes/include/lockablevector.hpp>
+#include <htypes/include/lockable_vector.hpp>
 #include <haf/include/time/timer_connector.hpp>
 #include <haf/include/time/timer_type.hpp>
 #include <haf/include/component/component_declaration.hpp>

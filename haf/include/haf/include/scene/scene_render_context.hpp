@@ -1,4 +1,4 @@
-HTPS_PRAGMA_ONCE
+HAF_PRAGMA_ONCE
 #ifndef HAF_SCENE_SCENE_RENDER_CONTEXT_INCLUDE_HPP
 #define HAF_SCENE_SCENE_RENDER_CONTEXT_INCLUDE_HPP
 
@@ -25,7 +25,7 @@ protected:
     void endFrame() override;
 
     void setNowFrame(time::TimePoint time_point);
-    void setBackgroundColor(core::vector4df const& backgroundColor) noexcept;
+    void setBackgroundColor(fmath::vector4df const& backgroundColor) noexcept;
 
 public:
     virtual void setCameraMatrix(math::Matrix4x4 const& matrix);

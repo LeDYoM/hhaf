@@ -10,10 +10,6 @@ project("HAF Types"
 
 set(CURRENT_TARGET htypes)
 
-set(sources
-    src/types.cpp
-)
-
 set(include_dir htypes/include)
 set(headers
     ${include_dir}/memory/alloc_func_memmanager.hpp
@@ -30,16 +26,11 @@ set(headers
     ${include_dir}/dictionary.hpp
     ${include_dir}/function.hpp
     ${include_dir}/growpolicy.hpp
-    ${include_dir}/lockablevector.hpp
+    ${include_dir}/lockable_vector.hpp
     ${include_dir}/hash.hpp
     ${include_dir}/menum.hpp
-    ${include_dir}/object_utils.hpp
-    ${include_dir}/object.hpp
     ${include_dir}/p_impl_pointer.hpp
-    ${include_dir}/parpar.hpp
     ${include_dir}/rawmemory.hpp
-    ${include_dir}/rect.hpp
-    ${include_dir}/serializer.hpp
     ${include_dir}/span.hpp
     ${include_dir}/stack.hpp
     ${include_dir}/str_literal.hpp
@@ -48,31 +39,17 @@ set(headers
     ${include_dir}/types.hpp
     ${include_dir}/vector_base.hpp
     ${include_dir}/vector_storage.hpp
-    ${include_dir}/vector_view.hpp
     ${include_dir}/vector.hpp
-    ${include_dir}/vector2d.hpp
-    ${include_dir}/vector3d.hpp
-    ${include_dir}/vector4d.hpp
 )
 
-build_lib_component(EXPORT_ALL HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}" SOURCES
-                    ${sources} HEADERS ${headers})
+build_lib_component(HEADERS_ONLY HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}"
+              HEADERS ${headers})
 
-#define compile time constants
-target_compile_definitions(${CURRENT_TARGET} PRIVATE htypes_EXPORTS)
-
-set(use_pragma_once 1)
-if (DEFINED use_pragma_once)
-  message("Setting pragma once for htps")
-  target_compile_definitions(${CURRENT_TARGET} PUBLIC HTPS_PRAGMA_ONCE=_Pragma\(\"once\"\))
-else()
-  message("Not Setting pragma once for htps")
-  target_compile_definitions(${CURRENT_TARGET} PUBLIC HTPS_PRAGMA_ONCE=)
-endif()
+set_pragma_once_or_not(HTPS true INTERFACE)
 
 # Use Memmamanger
-target_compile_definitions(${CURRENT_TARGET} PUBLIC USER_MEM_MANAGER)
-target_link_libraries(${CURRENT_TARGET} PUBLIC memmanager)
+target_compile_definitions(${CURRENT_TARGET} INTERFACE USER_MEM_MANAGER)
+target_link_libraries(${CURRENT_TARGET} INTERFACE memmanager)
 target_compile_features(${CURRENT_TARGET} INTERFACE cxx_std_20)
 
 addTestingDirectory(tests)

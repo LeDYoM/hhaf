@@ -8,24 +8,16 @@ set(SOURCE_TESTS
     dictionary
     function
     hash
-    lockablevector
+    lockable_vector
     main
     menum
-    object
-    object_utils
-    parpar
-    rect
     shared_ptr
     span
     str_literal
     str_view
     str
     unique_ptr
-    vector_view
     vector
-    vector2d
-    vector3d
-    vector4d
     weak_ptr
 )
 

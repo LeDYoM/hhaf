@@ -27,7 +27,7 @@ public:
 
     bool canBeMovedTo(BoardPositionType const& dest_position) const override;
 
-    void launchPlayerAnimation(htps::vector2df const& toWhere);
+    void launchPlayerAnimation(fmath::vector2df const& toWhere);
 
     void tileAdded() override;
     void tileChanged(BoardTileData const oldValue,

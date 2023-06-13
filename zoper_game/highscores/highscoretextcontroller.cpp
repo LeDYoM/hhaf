@@ -30,7 +30,7 @@ void HighScoreTextController::onCreated()
     TableSize = {3U, NumHighScore};
 }
 
-void HighScoreTextController::onAllTableElementsCreated(htps::vector2dst const)
+void HighScoreTextController::onAllTableElementsCreated(fmath::vector2dst const)
 {
     set_property_for_each_table_node(&SceneNodeText::TextBaseSizeProperty,
                                      TextBaseSize{'A', 8U});

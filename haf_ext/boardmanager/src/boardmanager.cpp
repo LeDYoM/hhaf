@@ -23,7 +23,7 @@ void BoardManager::initialize(
     initializeTileMatrix(size);
 }
 
-void BoardManager::initializeTileMatrix(htps::vector2dst const& size)
+void BoardManager::initializeTileMatrix(fmath::vector2dst const& size)
 {
     // Create the tiles.
     tiles_.reserve(size.x);
@@ -45,7 +45,7 @@ BoardManager::BackgroundFunction BoardManager::setBackgroundFunction(
 }
 
 BoardManager::BackgroundData BoardManager::backgroundData(
-    htps::vector2dst const& tPosition) const
+    fmath::vector2dst const& tPosition) const
 {
     if (background_function_ && validCoords(tPosition))
     {

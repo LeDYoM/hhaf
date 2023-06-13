@@ -10,7 +10,7 @@
 #include "hosted_app_group.hpp"
 
 #include <haf/include/system/isystem_controller.hpp>
-#include <htypes/include/parpar.hpp>
+#include <parpar/include/parpar.hpp>
 #include <hosted_app/include/iapp.hpp>
 #include <backend/include/backend_creator.hpp>
 

@@ -14,24 +14,6 @@ void BackendRegister::setFactory(uptr<IWindowFactory> window_factory) noexcept
     window_factory_ = htps::move(window_factory);
 }
 
-void BackendRegister::setFactory(
-    uptr<ITTFontFactoryFactory> ttfont_factory_factory) noexcept
-{
-    ttfont_factory_factory_ = htps::move(ttfont_factory_factory);
-}
-
-void BackendRegister::setFactory(
-    uptr<ITextureFactoryFactory> texture_factory_factory) noexcept
-{
-    texture_factory_factory_ = htps::move(texture_factory_factory);
-}
-
-void BackendRegister::setFactory(
-    uptr<IBMPFontFactoryFactory> bmpfont_factory_factory) noexcept
-{
-    bmpfont_factory_factory_ = htps::move(bmpfont_factory_factory);
-}
-
 void BackendRegister::setLibFuncs(
     p_initBackendClient init_lib_func,
     p_finishBackendClient finish_lib_func) noexcept
@@ -61,15 +43,13 @@ bool BackendRegister::finish()
 
 bool BackendRegister::fillRegisteredFactories()
 {
-    return fillFactories(this, &window_, &ttfontFactory_, &textureFactory_,
-                         &bmpFontFactory_);
+    return fillFactories(this, &window_);
 
 }  // namespace haf::backend
 
 bool BackendRegister::emptyRegisteredFactories()
 {
-    return emptyFactories(this, &window_, &textureFactory_, &ttfontFactory_,
-                          &bmpFontFactory_);
+    return emptyFactories(this, &window_);
 }
 
 htps::str const& BackendRegister::moduleName() const noexcept

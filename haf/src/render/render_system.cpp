@@ -34,7 +34,7 @@ SharedDataManager const& RenderSystem::sharedDataManager() const noexcept
     return m_shared_data_manager;
 }
 
-void RenderSystem::beginFrame(vector4df const& backgroundColor)
+void RenderSystem::beginFrame(fmath::vector4df const& backgroundColor)
 {
     ogl::clearBackgroundColor(backgroundColor);
     ogl::clearDepthBuffer();

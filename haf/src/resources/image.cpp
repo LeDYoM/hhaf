@@ -3,6 +3,7 @@
 #include "stb_image/stb_image.h"
 
 using namespace haf::core;
+using namespace fmath;
 
 namespace
 {

@@ -3,7 +3,6 @@
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/str.hpp>
-#include <backend_dev/include/iresourcefactories.hpp>
 
 namespace agloader
 {
@@ -38,17 +37,8 @@ public:
     bool loadBackendFile(htps::str const& file_name);
 
     htps::rptr<IWindow> getWindow() const noexcept;
-    htps::rptr<ITextureFactory> getTextureFactory() const noexcept;
-    htps::rptr<ITTFontFactory> getTTFontFactory() const noexcept;
-    htps::rptr<IBMPFontFactory> getBMPFontFactory() const noexcept;
-    ITextureFactory& textureFactory() const;
-    ITTFontFactory& ttfontFactory() const;
-    IBMPFontFactory& bmpFontFactory() const;
 
     bool isWindowFactoryAvailable() const noexcept;
-    bool isTextureFactoryAvailable() const noexcept;
-    bool isBMPFontFactoryAvailable() const noexcept;
-    bool isTTFontFactoryAvailable() const noexcept;
 
 private:
     using BackendRegisterUptr = htps::uptr<BackendRegister>;
@@ -57,9 +47,6 @@ private:
     void selectFactoriesToUse(
         BackendRegisterUptr const& backend_register) noexcept;
     htps::rptr<IWindow> window_{nullptr};
-    htps::rptr<ITextureFactory> textureFactory_{nullptr};
-    htps::rptr<ITTFontFactory> ttfontFactory_{nullptr};
-    htps::rptr<IBMPFontFactory> bmpFontFactory_{nullptr};
     htps::rptr<agloader::Loader> loader_{nullptr};
 };
 }  // namespace haf::backend

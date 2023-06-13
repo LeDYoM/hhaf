@@ -89,7 +89,16 @@ void DebugCameraComponent::moveCamera(Key const& key)
             m_p->m_cameraMoveType = CameraMoveType::Mode3;
             camera->Position.modify();
             break;
-    };
+        case Key::F3:
+            camera->cameraMode = CameraComponent::CameraMode::Ortho;
+            break;
+        case Key::F4:
+            camera->cameraMode = CameraComponent::CameraMode::Frustum;
+            break;
+        case Key::F5:
+            camera->cameraMode = CameraComponent::CameraMode::Perspective;
+            break;
+    }
 
     switch (m_p->m_cameraMoveType)
     {
@@ -194,24 +203,23 @@ void DebugCameraComponent::moveCamera(Key const& key)
                 case Key::V:
                     camera->Far.modify() -= Speed();
                     break;
+                case Key::T:
+                    camera->FovY.modify() += Speed();
+                    break;
+                case Key::Y:
+                    camera->FovY.modify() -= Speed();
+                    break;
+                case Key::G:
+                    camera->Aspect.modify() += Speed();
+                    break;
+                case Key::H:
+                    camera->Aspect.modify() -= Speed();
+                    break;
             }
         }
         break;
         case CameraMoveType::Mode2:
         {
-            switch (key)
-            {
-                case Key::F3:
-                    camera->cameraMode = CameraComponent::CameraMode::Ortho;
-                    break;
-                case Key::F4:
-                    camera->cameraMode = CameraComponent::CameraMode::Frustum;
-                    break;
-                case Key::F5:
-                    camera->cameraMode =
-                        CameraComponent::CameraMode::Perspective;
-                    break;
-            }
         }
         break;
         case CameraMoveType::Mode3:
@@ -253,12 +261,12 @@ void DebugCameraComponent::logCameraData()
     auto&& camera{m_components->m_camera_component};
 
     DisplayLog::debug(
-        StaticTypeName, ": Camera view updated. New values:\nMode: ",
-        (int)(m_p->m_cameraMoveType), "\nPosition: {", camera->Position().x,
-        ",", camera->Position().y, ",", camera->Position().z, "}\nCenter: {",
-        camera->Center().x, ",", camera->Center().y, ",", camera->Center().z,
-        "}\nUp: {", camera->Up().x, ",", camera->Up().y, ",", camera->Up().z,
-        "}");
+        StaticTypeName,
+        ": Camera view values:\nMode: ", (int)(m_p->m_cameraMoveType),
+        "\nPosition: {", camera->Position().x, ",", camera->Position().y, ",",
+        camera->Position().z, "}\nCenter: {", camera->Center().x, ",",
+        camera->Center().y, ",", camera->Center().z, "}\nUp: {", camera->Up().x,
+        ",", camera->Up().y, ",", camera->Up().z, "}");
 
     DisplayLog::debug(
         StaticTypeName, ": Perspective mode: ",
@@ -268,12 +276,15 @@ void DebugCameraComponent::logCameraData()
                    ? "Frustum"
                    : "Perspective"));
 
+    DisplayLog::debug(
+        StaticTypeName,
+        ": Camera frustum values:\n: Left Right Bottom Top Near Far\n",
+        camera->Left(), ",", camera->Right(), ",", camera->Bottom(), ",",
+        camera->Top(), ",", camera->Near(), ",", camera->Far());
+
     DisplayLog::debug(StaticTypeName,
-                      ": Camera perspectve updated. New values:\n: Left Right "
-                      "Bottom Top Near Far\n",
-                      camera->Left(), ",", camera->Right(), ",",
-                      camera->Bottom(), ",", camera->Top(), ",", camera->Near(),
-                      ",", camera->Far());
+                      ": Camera perspectve values:\n: FovY Aspect\n",
+                      camera->FovY(), ",", camera->Aspect());
 }
 
 }  // namespace haf::scene

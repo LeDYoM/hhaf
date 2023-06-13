@@ -1,4 +1,4 @@
-HTPS_PRAGMA_ONCE
+HAF_PRAGMA_ONCE
 #ifndef HAF_RESOURCEMANAGER_INCLUDE_HPP
 #define HAF_RESOURCEMANAGER_INCLUDE_HPP
 
@@ -39,7 +39,7 @@ public:
 
     bool createResource(core::str_view rid,
                      res::ResourceType const r_type,
-                     core::span<core::vector4df> data);
+                     core::span<fmath::vector4df> data);
 
     bool createResourceFromResources(core::str_view rid,
                                      res::ResourceType const resourceType,

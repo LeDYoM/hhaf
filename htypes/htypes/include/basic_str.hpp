@@ -11,10 +11,6 @@ HTPS_PRAGMA_ONCE
 #include <algorithm>
 #include <cctype>
 
-#if __cpp_lib_format
-#include <format>
-#endif
-
 namespace htps
 {
 /**
@@ -112,51 +108,33 @@ public:
         return result;
     }
 
-    template <typename T>
-    static basic_str to_str_internal(T const n)
+    template <size_type b_size, typename T, size_type N>
+    static int convert_to_imp_imp(char_type (&buffer)[b_size],
+                                  T const n,
+                                  char_type const (&fmt_str)[N])
     {
-#if __cpp_lib_format
-        char buffer[256U];
-        auto const result{std::format_to_n(buffer, 255, "{}", n)};
-        buffer[result.size] = 0;
-        return (result.out != nullptr && result.size > 0)
-            ? basic_str{buffer, static_cast<size_t>(result.size)}
-            : basic_str{};
-#else
-        (void)(n);
-        return {};
-#endif
+        return static_cast<int>(std::snprintf(buffer, b_size, fmt_str, n));
     }
 
-    static basic_str to_str(u64 const n)
+    template <typename T, size_type N>
+    static basic_str convert_to_imp(T const n, char_type const (&fmt_str)[N])
     {
-        return to_str_internal(n);
+        char buffer[32U];
+        auto const size{convert_to_imp_imp(buffer, n, fmt_str)};
+        return basic_str{buffer, static_cast<size_type>(size)};
     }
 
-    static basic_str to_str(s64 const n)
-    {
-        return to_str_internal(n);
-    }
+    static basic_str to_str(u64 const n) { return convert_to_imp(n, "%llu"); }
 
-    static basic_str to_str(u32 const n)
-    {
-        return to_str_internal(n);
-    }
+    static basic_str to_str(s64 const n) { return convert_to_imp(n, "%lld"); }
 
-    static basic_str to_str(s32 const n)
-    {
-        return to_str_internal(n);
-    }
+    static basic_str to_str(u32 const n) { return convert_to_imp(n, "%u"); }
 
-    static basic_str to_str(f32 const n)
-    {
-        return to_str_internal(n);
-    }
+    static basic_str to_str(s32 const n) { return convert_to_imp(n, "%d"); }
 
-    static basic_str to_str(f64 const n)
-    {
-        return to_str_internal(n);
-    }
+    static basic_str to_str(f32 const n) { return convert_to_imp(n, "%f"); }
+
+    static basic_str to_str(f64 const n) { return convert_to_imp(n, "%F"); }
 
     template <typename T>
     bool is() const

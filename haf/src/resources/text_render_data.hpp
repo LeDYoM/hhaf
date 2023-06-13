@@ -1,8 +1,8 @@
-HTPS_PRAGMA_ONCE
+HAF_PRAGMA_ONCE
 #ifndef HAF_RESOURCES_TEXT_RENDER_DATA_INCLUDE_HPP
 #define HAF_RESOURCES_TEXT_RENDER_DATA_INCLUDE_HPP
 
-#include <htypes/include/rect.hpp>
+#include <facil_math/include/rect.hpp>
 #include <htypes/include/vector.hpp>
 #include "character_render_data.hpp"
 
@@ -11,7 +11,7 @@ namespace haf::res
 struct TextRenderData
 {
     htps::vector<CharacterRenderData> character_render_data;
-    htps::vector2df text_size{};
+    fmath::vector2df text_size{};
 
     TextRenderData() = default;
     explicit TextRenderData(htps::size_type const size) :

@@ -26,7 +26,7 @@ public:
     evt::emitter<> Finished;
 
 private:
-    void onAllTableElementsCreated(htps::vector2dst const) override;
+    void onAllTableElementsCreated(fmath::vector2dst const) override;
     void standarizeText(
         const htps::sptr<haf::scene::nodes::SceneNodeText>& ntext);
     void saveHighScores();

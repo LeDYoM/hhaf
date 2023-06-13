@@ -5,10 +5,8 @@ set (CURRENT_TARGET ${PROJECT_NAME})
 
 set(include_dir ${PROJECT_SOURCE_DIR}/backend_dev/include)
 set(headers
-    ${include_dir}/camera_data.hpp
     ${include_dir}/factory_types.hpp
     ${include_dir}/ibackendregister.hpp
-    ${include_dir}/ibmp_font.hpp
     ${include_dir}/ifactory.hpp
     ${include_dir}/ifont.hpp
     ${include_dir}/iinputdriver.hpp
@@ -16,7 +14,6 @@ set(headers
     ${include_dir}/imaterial_data.hpp
     ${include_dir}/iresource_descriptor.hpp
     ${include_dir}/iresource_manager.hpp
-    ${include_dir}/iresourcefactories.hpp
     ${include_dir}/iresourcefactory.hpp
     ${include_dir}/iresourceinfo.hpp
     ${include_dir}/itexture.hpp
@@ -30,3 +27,5 @@ build_lib_component(HEADERS_ONLY
     HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}"
     HEADERS ${headers}
 )
+
+target_link_libraries(${CURRENT_TARGET} INTERFACE facil_math)

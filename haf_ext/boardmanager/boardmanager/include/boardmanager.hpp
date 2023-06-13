@@ -3,7 +3,7 @@
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/function.hpp>
-#include <htypes/include/vector2d.hpp>
+#include <facil_math/include/vector2d.hpp>
 #include <haf/include/component/component.hpp>
 #include "itile.hpp"
 
@@ -23,7 +23,7 @@ public:
     using BoardPositionType = BoardPositionType;
 
     using BackgroundFunction =
-        htps::function<BackgroundData(htps::vector2dst const&)>;
+        htps::function<BackgroundData(fmath::vector2dst const&)>;
 
     /**
      * @brief Method to initialize the component.
@@ -34,7 +34,7 @@ public:
      * @param board_manager_actuator Pointer to a @b IBoardManagerActuator
      * to handle the callbacks.
      */
-    void initialize(htps::vector2dst const& size,
+    void initialize(fmath::vector2dst const& size,
                     htps::rptr<IBoardManagerActuator> board_manager_actuator);
 
     BackgroundFunction setBackgroundFunction(
@@ -52,13 +52,13 @@ public:
 
     bool validCoords(BoardPositionType const& tPosition) const noexcept;
     BackgroundData backgroundData(BoardPositionType const& tPosition) const;
-    htps::vector2dst size() const noexcept;
+    fmath::vector2dst size() const noexcept;
 
     htps::str toStr();
 
 private:
-    void initializeTileMatrix(htps::vector2dst const& size);
-    void _setTile(const htps::vector2dst& position, SITilePointer newTile);
+    void initializeTileMatrix(fmath::vector2dst const& size);
+    void _setTile(const fmath::vector2dst& position, SITilePointer newTile);
 
     BackgroundFunction background_function_{};
     htps::rptr<IBoardManagerActuator> actuator_{nullptr};

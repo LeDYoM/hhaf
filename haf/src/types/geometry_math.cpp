@@ -2,6 +2,7 @@
 #include <cmath>
 
 using namespace haf::core;
+using namespace fmath;
 
 namespace haf::math
 {

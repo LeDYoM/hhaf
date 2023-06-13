@@ -72,13 +72,13 @@ bool KeyMapping::setKey(const u32 index, const input::Key key)
     return true;
 }
 
-bool KeyMapping::serialize(htps::Object& obj) const
+bool KeyMapping::serialize(mcs::Object& obj) const
 {
     obj.set("keys", keys_);
     return true;
 }
 
-bool KeyMapping::deserialize(htps::Object const& obj)
+bool KeyMapping::deserialize(mcs::Object const& obj)
 {
     obj["keys"].getObject() >> keys_;
     return true;

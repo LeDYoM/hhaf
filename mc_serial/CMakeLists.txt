@@ -1,0 +1,27 @@
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/../cmake_modules" ${CMAKE_MODULE_PATH})
+
+cmake_minimum_required(VERSION 3.14)
+project("HAF Types"
+    VERSION 0.0.1.0
+    DESCRIPTION "Modern C++ serialization"
+    # [HOMEPAGE_URL <url-string>]
+    LANGUAGES CXX
+)
+
+set(CURRENT_TARGET mc_serial)
+
+set(include_dir mc_serial/include)
+set(headers
+    ${include_dir}/object_parser.hpp
+    ${include_dir}/object.hpp
+    ${include_dir}/serializer.hpp
+)
+
+build_lib_component(HEADERS_ONLY HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}"
+              HEADERS ${headers})
+
+set_pragma_once_or_not(MCS true INTERFACE)
+
+target_compile_features(${CURRENT_TARGET} INTERFACE cxx_std_20)
+
+addTestingDirectory(tests)

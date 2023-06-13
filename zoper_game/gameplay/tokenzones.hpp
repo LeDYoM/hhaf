@@ -2,7 +2,7 @@
 #define ZOPER_TOKENZONES_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
-#include <htypes/include/rect.hpp>
+#include <facil_math/include/rect.hpp>
 
 #include "direction.hpp"
 
@@ -21,29 +21,29 @@ struct TokenZones
 
     struct TokenZone
     {
-        htps::vector2dst zone_start;
+        fmath::vector2dst zone_start;
         Direction direction;
         htps::size_type size;
     };
 
-    constexpr static htps::vector2dst size{18U, 12U};
-    constexpr static htps::Rectst centerRect{7U, 4U, 4U, 4U};
+    constexpr static fmath::vector2dst size{18U, 12U};
+    constexpr static fmath::Rectst centerRect{7U, 4U, 4U, 4U};
 
     constexpr static TokenZone tokenZones[NumWays] = {
         // From left to right
-        TokenZone{htps::vector2dst{0U, centerRect.top},
+        TokenZone{fmath::vector2dst{0U, centerRect.top},
                   Direction::DirectionData::Right, centerRect.size().y},
         // From top to bottom
-        TokenZone{htps::vector2dst{centerRect.left, 0U},
+        TokenZone{fmath::vector2dst{centerRect.left, 0U},
                   Direction::DirectionData::Down, centerRect.size().x},
         // From right to left
-        TokenZone{htps::vector2dst{size.x - 1U, centerRect.top},
+        TokenZone{fmath::vector2dst{size.x - 1U, centerRect.top},
                   Direction::DirectionData::Left, centerRect.size().y},
         // From bottom to top
-        TokenZone{htps::vector2dst{centerRect.left, size.y - 1},
+        TokenZone{fmath::vector2dst{centerRect.left, size.y - 1},
                   Direction::DirectionData::Up, centerRect.size().x}};
 
-    static bool pointInCenter(const htps::vector2dst& position)
+    static bool pointInCenter(const fmath::vector2dst& position)
     {
         return TokenZones::centerRect.inside(position);
     }
@@ -54,14 +54,14 @@ struct TokenZones
         return static_cast<BoardBackgroundType>(data);
     }
 
-    constexpr static htps::vector2dst displaceFactor(
+    constexpr static fmath::vector2dst displaceFactor(
         const Direction direction) noexcept
     {
-        return htps::vector2dst{(direction.isHorizontal() ? 0U : 1U),
+        return fmath::vector2dst{(direction.isHorizontal() ? 0U : 1U),
                                 (direction.isHorizontal() ? 1U : 0U)};
     }
 
-    static htps::vector2dst displacedStartPoint(
+    static fmath::vector2dst displacedStartPoint(
         const TokenZone& token_zone,
         const htps::size_type displacement)
     {
@@ -70,9 +70,9 @@ struct TokenZones
             (displaceFactor(token_zone.direction) * displacement);
     }
 
-    static htps::vector2dst nearest_point_to_center(
+    static fmath::vector2dst nearest_point_to_center(
         const TokenZone& token_zone,
-        const htps::vector2dst& start_point)
+        const fmath::vector2dst& start_point)
     {
         auto point{start_point};
         while (!pointInCenter(point))

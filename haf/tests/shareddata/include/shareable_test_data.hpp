@@ -1,4 +1,4 @@
-HTPS_PRAGMA_ONCE
+HAF_PRAGMA_ONCE
 #ifndef HAF_TESTS_SHAREABLE_TEST_DATA_INCLUDE_HPP
 #define HAF_TESTS_SHAREABLE_TEST_DATA_INCLUDE_HPP
 
@@ -26,7 +26,7 @@ public:
         return haf::shdata::Address{"/test/data/"};
     }
 
-    bool serialize(htps::Object& obj) const override
+    bool serialize(mcs::Object& obj) const override
     {
         bool result{true};
         result &= obj.set("a", a);
@@ -36,7 +36,7 @@ public:
         return result;
     }
 
-    bool deserialize(htps::Object const& obj) override
+    bool deserialize(mcs::Object const& obj) override
     {
         bool result = true;
         result &= obj.getValue("a").as(a);

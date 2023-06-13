@@ -2,13 +2,13 @@
 #define ZOPER_GAMEPLAY_CONSTANTS_INCLUDE_HPP__
 
 #include <htypes/include/types.hpp>
-#include <htypes/include/vector2d.hpp>
+#include <facil_math/include/vector2d.hpp>
 
 namespace zoper::gameplay::constants
 {
 constexpr htps::u32 MillisAnimationPointsToScore = 600U;
-constexpr htps::vector2df EndPositionPointsToScore =
-    htps::vector2df{-0.275F, -0.4F};
+constexpr fmath::vector2df EndPositionPointsToScore =
+    fmath::vector2df{-0.275F, -0.4F};
 
 constexpr htps::u32 MillisAnimationLaunchPlayerStep = 125U;
 }  // namespace zoper::gameplay::constants

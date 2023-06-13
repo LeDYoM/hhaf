@@ -25,8 +25,8 @@ enum class HOGL_API BufferMode : htps::u32
 
 [[nodiscard]] HOGL_API void* getAddressForWriting(Handle const index,
                                                   htps::s32 const size);
-[[nodiscard]] HOGL_API void unlock(Handle const index);
-[[nodiscard]] HOGL_API void bindBufferUniformBlock(Handle const bindingPoint,
+HOGL_API void unlock(Handle const index);
+HOGL_API void bindBufferUniformBlock(Handle const bindingPoint,
                                                    Handle const bufferUniform);
 
 }  // namespace haf::ogl

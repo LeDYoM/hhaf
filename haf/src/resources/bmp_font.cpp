@@ -1,12 +1,8 @@
 #include "bmp_font.hpp"
 
 #include <hlog/include/hlog.hpp>
-#include <backend_dev/include/ifont.hpp>
-#include <backend_dev/include/ibmp_font.hpp>
-#include <haf/include/resources/texture.hpp>
 
-using namespace htps;
-
+/*
 namespace haf::res
 {
 BMPFont::BMPFont(backend::IBMPFont* font) : ifont_{font}
@@ -45,3 +41,4 @@ str BMPFont::getTexture(char const character)
 }
 
 }  // namespace haf::res
+*/

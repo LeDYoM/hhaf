@@ -1,4 +1,4 @@
-HTPS_PRAGMA_ONCE
+HAF_PRAGMA_ONCE
 #ifndef HAF_SCENE_CAMERA_COMPONENT_INCLUDE_HPP
 #define HAF_SCENE_CAMERA_COMPONENT_INCLUDE_HPP
 
@@ -40,9 +40,11 @@ public:
     prop::PropertyState<core::f32> Top;
     prop::PropertyState<core::f32> Near;
     prop::PropertyState<core::f32> Far;
-    prop::PropertyState<core::vector3df> Position;
-    prop::PropertyState<core::vector3df> Center;
-    prop::PropertyState<core::vector3df> Up;
+    prop::PropertyState<fmath::vector3df> Position;
+    prop::PropertyState<fmath::vector3df> Center;
+    prop::PropertyState<fmath::vector3df> Up;
+    prop::PropertyState<core::f32> FovY;
+    prop::PropertyState<core::f32> Aspect;
 
     evt::emitter<> cameraPerspectiveUpdated;
     evt::emitter<> cameraViewUpdated;

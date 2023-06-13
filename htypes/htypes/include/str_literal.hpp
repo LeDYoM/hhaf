@@ -30,6 +30,12 @@ struct basic_str_literal
 
     constexpr bool empty() const noexcept { return real_size_ == 1U; }
 
+    constexpr char_type * begin() noexcept { return value; }
+    constexpr char_type * end() noexcept
+    {
+        return &(value[real_size_]);
+    }
+
     constexpr char_type const* cbegin() const noexcept { return value; }
     constexpr char_type const* cend() const noexcept
     {

@@ -2,7 +2,7 @@
 #define HAF_BACKEND_ITTFONT_HPP
 
 #include <htypes/include/types.hpp>
-#include <htypes/include/rect.hpp>
+#include <facil_math/include/rect.hpp>
 #include <htypes/include/str.hpp>
 
 namespace haf::backend
@@ -12,9 +12,9 @@ class ITTFont
 public:
     virtual ~ITTFont() = default;
 
-    virtual htps::Rectf32 getBounds(htps::u32 const codePoint,
+    virtual fmath::Rectf32 getBounds(htps::u32 const codePoint,
                                     htps::u32 const characterSize) const = 0;
-    virtual htps::Rectf32 getTextureBounds(
+    virtual fmath::Rectf32 getTextureBounds(
         htps::u32 const codePoint,
         htps::u32 const characterSize) const                              = 0;
     virtual htps::f32 getAdvance(htps::u32 const codePoint,

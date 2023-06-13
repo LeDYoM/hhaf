@@ -1,4 +1,4 @@
-HTPS_PRAGMA_ONCE
+HAF_PRAGMA_ONCE
 #ifndef HAF_RESOURCES_RESOURCE_CODES_INCLUDE_HPP
 #define HAF_RESOURCES_RESOURCE_CODES_INCLUDE_HPP
 
@@ -122,8 +122,10 @@ static constexpr core::str_view resourceTypeName(
         case ResourceType::TextData:
             return kTextData;
             break;
+        default:
+            return "";
+            break;
     }
-    return "";
 }
 
 static constexpr core::str_view resourceTypeId(ResourceType const resource_type)
@@ -181,8 +183,10 @@ static constexpr core::str_view resourceTypeId(ResourceType const resource_type)
         case ResourceType::TextData:
             return kTextDataId;
             break;
+        default:
+            return "";
+            break;
     }
-    return "";
 }
 
 static constexpr ResourceType fromResourceTypeId(core::str_view rid)

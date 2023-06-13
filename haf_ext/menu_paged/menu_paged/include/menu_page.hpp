@@ -48,7 +48,7 @@ protected:
     htps::size_type selected_item_{0U};
 
 private:
-    void onAllTableElementsCreated(htps::vector2dst const) override;
+    void onAllTableElementsCreated(fmath::vector2dst const) override;
     void standarizeText(const htps::sptr<ContainedElement>& ntext);
     void goDown();
     void goUp();

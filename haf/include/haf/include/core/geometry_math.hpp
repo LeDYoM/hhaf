@@ -1,12 +1,12 @@
-HTPS_PRAGMA_ONCE
+HAF_PRAGMA_ONCE
 #ifndef HAF_MATH_GEOMETRY_MATH_INCLUDE_HPP
 #define HAF_MATH_GEOMETRY_MATH_INCLUDE_HPP
 
 #include <haf/include/core/types.hpp>
-#include <htypes/include/vector2d.hpp>
-#include <htypes/include/vector3d.hpp>
-#include <htypes/include/vector4d.hpp>
-#include <htypes/include/rect.hpp>
+#include <facil_math/include/vector2d.hpp>
+#include <facil_math/include/vector3d.hpp>
+#include <facil_math/include/vector4d.hpp>
+#include <facil_math/include/rect.hpp>
 
 namespace haf::math
 {
@@ -22,21 +22,21 @@ static constexpr T PiMDConstant = PiConstant<T>* static_cast<T>(1.5);
 template <typename T>
 static constexpr T ToRadians = PiConstant<T> / static_cast<T>(180);
 
-[[nodiscard]] core::f32 length(core::vector4df const& v);
-[[nodiscard]] core::f32 length(core::vector3df const& v);
-[[nodiscard]] core::f32 length(core::vector2df const& v);
-[[nodiscard]] core::vector4df normalize(core::vector4df const& v);
-[[nodiscard]] core::vector3df normalize(core::vector3df const& v);
-[[nodiscard]] core::vector2df normalize(core::vector2df const& v);
-[[nodiscard]] core::vector4df cross(core::vector4df const& a,
-                                    core::vector4df const& b);
-[[nodiscard]] core::vector3df cross(core::vector3df const& a,
-                                    core::vector3df const& b);
-[[nodiscard]] core::vector2df cross(core::vector2df const& a,
-                                    core::vector2df const& b);
-[[nodiscard]] core::f32 dot(core::vector4df const& a, core::vector4df const& b);
-[[nodiscard]] core::f32 dot(core::vector3df const& a, core::vector3df const& b);
-[[nodiscard]] core::f32 dot(core::vector2df const& a, core::vector2df const& b);
+[[nodiscard]] core::f32 length(fmath::vector4df const& v);
+[[nodiscard]] core::f32 length(fmath::vector3df const& v);
+[[nodiscard]] core::f32 length(fmath::vector2df const& v);
+[[nodiscard]] fmath::vector4df normalize(fmath::vector4df const& v);
+[[nodiscard]] fmath::vector3df normalize(fmath::vector3df const& v);
+[[nodiscard]] fmath::vector2df normalize(fmath::vector2df const& v);
+[[nodiscard]] fmath::vector4df cross(fmath::vector4df const& a,
+                                    fmath::vector4df const& b);
+[[nodiscard]] fmath::vector3df cross(fmath::vector3df const& a,
+                                    fmath::vector3df const& b);
+[[nodiscard]] fmath::vector2df cross(fmath::vector2df const& a,
+                                    fmath::vector2df const& b);
+[[nodiscard]] core::f32 dot(fmath::vector4df const& a, fmath::vector4df const& b);
+[[nodiscard]] core::f32 dot(fmath::vector3df const& a, fmath::vector3df const& b);
+[[nodiscard]] core::f32 dot(fmath::vector2df const& a, fmath::vector2df const& b);
 
 }  // namespace haf::math
 

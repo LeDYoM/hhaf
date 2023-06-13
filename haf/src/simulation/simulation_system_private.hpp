@@ -1,4 +1,4 @@
-HTPS_PRAGMA_ONCE
+HAF_PRAGMA_ONCE
 #ifndef HAF_CORE_SYSTEM_SIMULATIONSYSTEM_PRIVATE_INCLUDE_HPP
 #define HAF_CORE_SYSTEM_SIMULATIONSYSTEM_PRIVATE_INCLUDE_HPP
 
@@ -14,8 +14,8 @@ HTPS_PRAGMA_ONCE
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/str.hpp>
-#include <htypes/include/object.hpp>
-#include <htypes/include/object_utils.hpp>
+#include <mc_serial/include/object.hpp>
+#include <mc_serial/include/object_parser.hpp>
 
 namespace haf::sys
 {
@@ -28,18 +28,18 @@ struct ReplayData : public data::IFullSerializable
     constexpr static char DataBufferName[] = "replay_data";
     constexpr static char InputDataName[]  = "input_data";
 
-    friend const htps::Object& operator>>(const htps::Object& obj,
+    friend const mcs::Object& operator>>(const mcs::Object& obj,
                                           ReplayData& replay_data);
-    friend htps::Object& operator<<(htps::Object& obj,
+    friend mcs::Object& operator<<(mcs::Object& obj,
                                     const ReplayData& replay_data);
 
-    bool serialize(htps::Object& obj) const override
+    bool serialize(mcs::Object& obj) const override
     {
         obj << *this;
         return true;
     }
 
-    bool deserialize(htps::Object const& obj) override
+    bool deserialize(mcs::Object const& obj) override
     {
         obj >> *this;
         return true;
@@ -48,7 +48,7 @@ struct ReplayData : public data::IFullSerializable
     ~ReplayData() override = default;
 };
 
-const htps::Object& operator>>(const htps::Object& obj, ReplayData& replay_data)
+const mcs::Object& operator>>(const mcs::Object& obj, ReplayData& replay_data)
 {
     if (const auto obj_random_generator_data = obj[ReplayData::DataBufferName];
         obj_random_generator_data.isObject())
@@ -65,7 +65,7 @@ const htps::Object& operator>>(const htps::Object& obj, ReplayData& replay_data)
     return obj;
 }
 
-htps::Object& operator<<(htps::Object& obj, const ReplayData& replay_data)
+mcs::Object& operator<<(mcs::Object& obj, const ReplayData& replay_data)
 {
     obj.set(ReplayData::DataBufferName, replay_data.data_buffer_);
     obj.set(ReplayData::InputDataName, replay_data.simulation_actions_);

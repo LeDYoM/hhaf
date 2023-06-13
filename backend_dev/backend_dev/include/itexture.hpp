@@ -2,7 +2,7 @@
 #define HAF_BACKEND_ITEXTURE_HPP
 
 #include <htypes/include/types.hpp>
-#include <htypes/include/vector2d.hpp>
+#include <facil_math/include/vector2d.hpp>
 
 #include "iresourceinfo.hpp"
 
@@ -12,7 +12,7 @@ class ITexture : public IResourceInfo
 {
 public:
     virtual ~ITexture() = default;
-    virtual htps::vector2du32 size() const = 0;
+    virtual fmath::vector2du32 size() const = 0;
     virtual htps::u64 uniqueId() const = 0;
     virtual void bind() const = 0;
 };

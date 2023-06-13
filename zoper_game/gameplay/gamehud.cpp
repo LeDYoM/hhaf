@@ -74,7 +74,7 @@ void GameHudSceneNode::update()
     }
 }
 
-void GameHudSceneNode::onAllScoreElementsCreated(htps::vector2dst const)
+void GameHudSceneNode::onAllScoreElementsCreated(fmath::vector2dst const)
 {
     auto font{subSystem<res::IResourceRetriever>()
                   ->getTTFont(GameResources::ScoreFontId)
@@ -98,7 +98,7 @@ void GameHudSceneNode::onAllScoreElementsCreated(htps::vector2dst const)
     });
 }
 
-void GameHudSceneNode::onAllGoalElementsCreated(htps::vector2dst const)
+void GameHudSceneNode::onAllGoalElementsCreated(fmath::vector2dst const)
 {
     auto font{subSystem<res::IResourceRetriever>()
                   ->getTTFont(GameResources::ScoreFontId)

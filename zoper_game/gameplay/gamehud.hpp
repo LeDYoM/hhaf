@@ -29,8 +29,8 @@ public:
     prop::PropertyState<bool> cde;
 
 private:
-    void onAllScoreElementsCreated(htps::vector2dst const);
-    void onAllGoalElementsCreated(htps::vector2dst const);
+    void onAllScoreElementsCreated(fmath::vector2dst const);
+    void onAllGoalElementsCreated(fmath::vector2dst const);
     bool setLevel(const htps::size_type level);
     bool setScore(htps::size_type const score);
     bool setConsumedTokens(htps::size_type const consumedTokens);

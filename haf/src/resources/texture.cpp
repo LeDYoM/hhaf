@@ -7,6 +7,7 @@
 #include "glad/glad.h"
 
 using namespace haf::core;
+using namespace fmath;
 
 namespace
 {

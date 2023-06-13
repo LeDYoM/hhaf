@@ -1,4 +1,4 @@
-HTPS_PRAGMA_ONCE
+HAF_PRAGMA_ONCE
 #ifndef HAF_RESOURCES_IMAGE_INCLUDE_HPP
 #define HAF_RESOURCES_IMAGE_INCLUDE_HPP
 
@@ -12,9 +12,9 @@ class HAF_API Image final : public IResource
 {
 public:
     using PixelChannel = core::u8;
-    using RGBAPixel    = core::vector4d<PixelChannel>;
-    using Coordinate   = core::vector2du32;
-    using ImageSize    = core::vector2du32;
+    using RGBAPixel    = fmath::vector4d<PixelChannel>;
+    using Coordinate   = fmath::vector2du32;
+    using ImageSize    = fmath::vector2du32;
 
     static constexpr ResourceType const StaticResourceType{ResourceType::Image};
 

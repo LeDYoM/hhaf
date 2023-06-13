@@ -21,14 +21,14 @@ public:
         backend::ResourceLoadParameters const& resource_load_parameters);
     ~DefaultBMPFont();
 
-    htps::Rectf32 getBounds(const htps::u32 codePoint) const override;
-    htps::Rectf32 getTextureBounds(const htps::u32 codePoint) const override;
+    fmath::Rectf32 getBounds(const htps::u32 codePoint) const override;
+    fmath::Rectf32 getTextureBounds(const htps::u32 codePoint) const override;
     htps::f32 getAdvance(const htps::u32 codePoint) const override;
     htps::f32 getLineSpacing() const override;
     htps::f32 getKerning(const htps::u32 first,
                          const htps::u32 second) const override;
     htps::str getTexture(char const character) override;
-    const htps::vector2du32& size() const;
+    const fmath::vector2du32& size() const;
 
     htps::vector<htps::pair<htps::str, htps::str>> texturesToLoad() const;
 

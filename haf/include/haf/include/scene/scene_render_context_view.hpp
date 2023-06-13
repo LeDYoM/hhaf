@@ -1,4 +1,4 @@
-HTPS_PRAGMA_ONCE
+HAF_PRAGMA_ONCE
 #ifndef HAF_SCENE_SCENE_RENDER_CONTEXT_VIEW_INCLUDE_HPP
 #define HAF_SCENE_SCENE_RENDER_CONTEXT_VIEW_INCLUDE_HPP
 
@@ -18,7 +18,7 @@ public:
         return m_cameraMatrix();
     }
 
-    core::vector4df const& backgroundColor() const noexcept
+    fmath::vector4df const& backgroundColor() const noexcept
     {
         return m_backgroundColor;
     }
@@ -38,7 +38,7 @@ protected:
     time::TimePoint m_nowFrame{};
     prop::PropertyState<math::Matrix4x4> m_cameraMatrix{};
     prop::PropertyState<math::Matrix4x4> m_currentModeViewMatrix{};
-    core::vector4df m_backgroundColor;
+    fmath::vector4df m_backgroundColor;
 };
 }  // namespace haf::scene
 

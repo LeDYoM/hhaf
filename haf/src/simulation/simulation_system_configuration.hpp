@@ -1,4 +1,4 @@
-HTPS_PRAGMA_ONCE
+HAF_PRAGMA_ONCE
 #ifndef HAF_SIMULATION_SIMULATION_CONFIGURATION_INCLUDE_HPP
 #define HAF_SIMULATION_SIMULATION_CONFIGURATION_INCLUDE_HPP
 
@@ -24,7 +24,7 @@ struct HAF_PRIVATE DeserializableSimulationData : public data::IDeserializable
     static constexpr char SimulationInputFileStr[] = "read_input";
     static constexpr char SimulationOutputFile[]   = "write_output";
 
-    bool deserialize(htps::Object const& obj)
+    bool deserialize(mcs::Object const& obj)
     {
         data.global_use |=
             obj[SimulationInputFileStr].as(data.simulation_input_file);
@@ -37,7 +37,7 @@ struct HAF_PRIVATE DeserializableSimulationData : public data::IDeserializable
     SimulationData data;
 };
 
-class HAF_PRIVATE SimulationSystemConfiguration
+class SimulationSystemConfiguration
     : public SystemConfiguration<DeserializableSimulationData, SimulationData>
 {
 public:

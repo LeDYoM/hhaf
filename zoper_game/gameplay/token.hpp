@@ -4,7 +4,7 @@
 #include "gamebasetile.hpp"
 
 #include <htypes/include/types.hpp>
-#include <htypes/include/vector2d.hpp>
+#include <facil_math/include/vector2d.hpp>
 
 #include <boardmanager/include/itile.hpp>
 #include <haf/include/animation/animation_component.hpp>
@@ -42,7 +42,7 @@ private:
     void setTokenColor(haf::scene::Color const& token_color) override;
 
     static htps::u32 tile_counter_;
-    htps::vector2df board2SceneFactor_;
+    fmath::vector2df board2SceneFactor_;
     htps::sptr<haf::anim::AnimationComponent> animation_component_;
     htps::sptr<haf::scene::RenderizableSceneNode> m_renderizable;
 };

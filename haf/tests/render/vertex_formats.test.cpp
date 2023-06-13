@@ -6,6 +6,7 @@
 using namespace haf;
 using namespace haf::core;
 using namespace haf::render;
+using namespace fmath;
 
 TEST_CASE("VertexFormats_for_vector_of_float", "[render][vertex_formats]")
 {

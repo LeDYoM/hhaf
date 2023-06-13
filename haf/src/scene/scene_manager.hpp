@@ -1,10 +1,10 @@
-HTPS_PRAGMA_ONCE
+HAF_PRAGMA_ONCE
 #ifndef HAF_SCENE_SCENEMANAGER_INCLUDE_HPP
 #define HAF_SCENE_SCENEMANAGER_INCLUDE_HPP
 
 #include "haf_private.hpp"
 #include <htypes/include/types.hpp>
-#include <htypes/include/rect.hpp>
+#include <facil_math/include/rect.hpp>
 #include <haf/include/types/scene_types.hpp>
 #include "scene_render_context_for_system.hpp"
 #include <haf/include/scene_components/iapp_initializer.hpp>

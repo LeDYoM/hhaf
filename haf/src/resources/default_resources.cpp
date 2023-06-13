@@ -8,6 +8,7 @@
 using namespace haf::res;
 using namespace haf::core;
 using namespace haf::render;
+using namespace fmath;
 
 namespace haf::res
 {

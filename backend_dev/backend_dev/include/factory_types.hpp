@@ -11,9 +11,6 @@ class IWindow;
 namespace haf::backend
 {
 using IWindowFactory         = IFactoryOf<IWindow>;
-using ITTFontFactoryFactory  = IFactoryOf<ITTFontFactory>;
-using ITextureFactoryFactory = IFactoryOf<ITextureFactory>;
-using IBMPFontFactoryFactory = IFactoryOf<IBMPFontFactory>;
 
 }  // namespace haf::backend
 

@@ -140,7 +140,7 @@ void RenderTarget::render(RenderElement const* const)
 #endif
 }
 
-void RenderTarget::setViewPort(htps::Rects32 const& /*viewport*/)
+void RenderTarget::setViewPort(fmath::Rects32 const& /*viewport*/)
 {
     // TODO: Since now we check the view only here, the view is "constant"
     // when the window is resized.

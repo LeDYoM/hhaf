@@ -3,6 +3,8 @@
 #include <hogl/include/types.hpp>
 #include <hlog/include/hlog.hpp>
 
+using namespace fmath;
+
 void APIENTRY message_callback(GLenum source,
                                 GLenum type,
                                 GLuint id,
@@ -101,7 +103,7 @@ void setDefaultRenderState()
     glDepthFunc(GL_LEQUAL);
 }
 
-void clearBackgroundColor(htps::vector4df const& color)
+void clearBackgroundColor(vector4df const& color)
 {
     glClearBufferfv(GL_COLOR, 0, &color.x);
 }

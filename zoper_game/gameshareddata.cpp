@@ -1,8 +1,8 @@
 #include "gameshareddata.hpp"
 
 #include <htypes/include/types.hpp>
-#include <htypes/include/vector2d.hpp>
-#include <htypes/include/rect.hpp>
+#include <facil_math/include/vector2d.hpp>
+#include <facil_math/include/rect.hpp>
 #include <htypes/include/object.hpp>
 #include <htypes/include/str.hpp>
 #include <haf/include/shareddata/ishareable.hpp>
@@ -27,7 +27,7 @@ htps::str GameSharedData::to_str() const
     return temp;
 }
 
-bool GameSharedData::serialize(htps::Object& obj) const
+bool GameSharedData::serialize(mcs::Object& obj) const
 {
     bool result{true};
     result &= obj.set(StartLevel, startLevel);
@@ -39,7 +39,7 @@ bool GameSharedData::serialize(htps::Object& obj) const
     return result;
 }
 
-bool GameSharedData::deserialize(htps::Object const& obj)
+bool GameSharedData::deserialize(mcs::Object const& obj)
 {
     bool result{true};
     result &= obj.getValue(StartLevel).as(startLevel);

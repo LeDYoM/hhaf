@@ -7,6 +7,7 @@
 #include "vmath.h"
 
 using namespace haf::core;
+using namespace fmath;
 
 namespace haf::math
 {
@@ -47,12 +48,12 @@ void Matrix4x4::setIdentity() noexcept
 
 const Matrix4x4 Matrix4x4::Identity = Matrix4x4{};
 
-void Matrix4x4::setDiagonal(core::vector3d<Scalar> const& v) noexcept
+void Matrix4x4::setDiagonal(fmath::vector3d<Scalar> const& v) noexcept
 {
     setDiagonal({v.x, v.y, v.z, One});
 }
 
-void Matrix4x4::setDiagonal(core::vector4d<Scalar> const& v) noexcept
+void Matrix4x4::setDiagonal(fmath::vector4d<Scalar> const& v) noexcept
 {
     m_matrix_data[0]  = v.x;
     m_matrix_data[5]  = v.y;
@@ -60,7 +61,7 @@ void Matrix4x4::setDiagonal(core::vector4d<Scalar> const& v) noexcept
     m_matrix_data[15] = v.w;
 }
 
-void Matrix4x4::setRotation(core::vector3d<Scalar> const& v,
+void Matrix4x4::setRotation(fmath::vector3d<Scalar> const& v,
                             Scalar const angle) noexcept
 {
     setRotation(v.x, v.y, v.z, angle);
@@ -198,62 +199,32 @@ bool isAlmostEqual(Matrix4x4 const& lhs, Matrix4x4 const& rhs) noexcept
     }
     return true;
 }
-/*
+
 Matrix4x4 lookat(vector3df const& eye,
                  vector3df const& center,
                  vector3df const& up)
 {
-    auto const forward_vector{normalize(center - eye)};
-    auto const sideways_vector{normalize(cross(forward_vector, up))};
-    auto const up_camera_vector{cross(sideways_vector, forward_vector)};
+    const auto f   = normalize(center - eye);
+    const auto upN = normalize(up);
+    const auto s   = cross(f, upN);
+    const auto u   = cross(s, f);
 
-    Matrix4x4 temp{sideways_vector.x,
-                   sideways_vector.y,
-                   sideways_vector.z,
-                   Zero<f32>,
+    auto M = Matrix4x4{s.x, u.x, -f.x, 0.0F, s.y,  u.y,  -f.y, 0.0F,
+                       s.z, u.z, -f.z, 0.0F, 0.0F, 0.0F, 0.0F, 1.0F};
 
-                   up_camera_vector.x,
-                   up_camera_vector.y,
-                   up_camera_vector.z,
-                   Zero<f32>,
-
-                   -forward_vector.x,
-                   -forward_vector.y,
-                   -forward_vector.z,
-                   Zero<f32>,
-
-                   ZeroF32,
-                   ZeroF32,
-                   ZeroF32,
-                   OneF32};
-
-    Matrix4x4 translated{OneF32,  ZeroF32, ZeroF32, ZeroF32, ZeroF32, OneF32,
+    return M * Matrix4x4{OneF32,  ZeroF32, ZeroF32, ZeroF32, ZeroF32, OneF32,
                          ZeroF32, ZeroF32, ZeroF32, ZeroF32, OneF32,  ZeroF32,
                          -eye.x,  -eye.y,  -eye.z,  OneF32};
-    return temp * translated;
 }
-*/
+
 Matrix4x4 toMatrix(vmath::mat4 const& m)
 {
-    return Matrix4x4{
-        m[0][0], m[0][1], m[0][2], m[0][3],
-        m[1][0], m[1][1], m[1][2], m[1][3],
-        m[2][0], m[2][1], m[2][2], m[2][3],
-        m[3][0], m[3][1], m[3][2], m[3][3]};
+    return Matrix4x4{m[0][0], m[0][1], m[0][2], m[0][3], m[1][0], m[1][1],
+                     m[1][2], m[1][3], m[2][0], m[2][1], m[2][2], m[2][3],
+                     m[3][0], m[3][1], m[3][2], m[3][3]};
 }
 
-Matrix4x4 lookat(vector3df const& eye,
-                 vector3df const& center,
-                 vector3df const& up)
-{
-    vmath::vec3 _eye{eye.x, eye.y, eye.z};
-    vmath::vec3 _center{center.x, center.y, center.z};
-    vmath::vec3 _up{up.x, up.y, up.z};
-    auto result = vmath::lookat(_eye, _center, _up);
-    return toMatrix(result);
-}
 
-/*
 Matrix4x4 frustum(f32 const left,
                   f32 const right,
                   f32 const bottom,
@@ -287,26 +258,7 @@ Matrix4x4 frustum(f32 const left,
             (-2.0F * f * n) / (f - n),
             ZeroF32};
 }
-*/
 
-Matrix4x4 frustum(f32 const left,
-                  f32 const right,
-                  f32 const bottom,
-                  f32 const top,
-                  f32 const n,
-                  f32 const f)
-{
-    auto result = vmath::frustum(left, right, bottom, top, n, f);
-    return toMatrix(result);
-}
-
-Matrix4x4 perspective(f32 fovy, f32 const aspect, f32 const n, f32 const f)
-{
-    auto result = vmath::perspective(fovy, aspect, n, f);
-    return toMatrix(result);
-}
-
-/*
 Matrix4x4 perspective(f32 fovy, f32 const aspect, f32 const n, f32 const f)
 {
     const f32 q{1.0F / std::tan(ToRadians<f32> * (0.5F * fovy))};
@@ -318,8 +270,8 @@ Matrix4x4 perspective(f32 fovy, f32 const aspect, f32 const n, f32 const f)
             ZeroF32, ZeroF32, ZeroF32, ZeroF32, B,       -1.0F,
             ZeroF32, ZeroF32, C,       ZeroF32};
 }
-*/
-Matrix4x4 ortho(f32 const left,
+
+Matrix4x4 ortho_(f32 const left,
                 f32 const right,
                 f32 const bottom,
                 f32 const top,
@@ -345,6 +297,34 @@ Matrix4x4 ortho(f32 const left,
             (bottom + top) / (bottom - top),
             (n + f) / (f - n),
             1.0F};
+}
+
+Matrix4x4 ortho_v(f32 const left,
+                f32 const right,
+                f32 const bottom,
+                f32 const top,
+                f32 const n,
+                f32 const f)
+{
+    auto const m = vmath::ortho(left, right, bottom, top, n, f);
+    return toMatrix(m);
+}
+
+Matrix4x4 ortho(f32 const left,
+                f32 const right,
+                f32 const bottom,
+                f32 const top,
+                f32 const n,
+                f32 const f)
+{
+    Matrix4x4 m1{ortho_v(left, right, bottom, top, n, f)};
+    Matrix4x4 m2{ortho_(left, right, bottom, top, n, f)};
+    if (!isAlmostEqual(m1,m2))
+    {
+        int b = 0;
+        (void)(b);
+    }
+    return m1;
 }
 
 }  // namespace haf::math

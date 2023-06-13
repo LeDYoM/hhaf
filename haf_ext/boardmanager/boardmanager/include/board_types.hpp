@@ -5,7 +5,7 @@
 
 namespace haf::board
 {
-using BoardPositionType = htps::vector2dst;
+using BoardPositionType = fmath::vector2dst;
 
 }  // namespace haf::board
 

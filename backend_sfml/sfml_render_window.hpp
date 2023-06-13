@@ -4,7 +4,7 @@
 #include <SFML/Window/Window.hpp>
 
 #include <htypes/include/types.hpp>
-#include <htypes/include/vector2d.hpp>
+#include <facil_math/include/vector2d.hpp>
 
 #include <backend_dev/include/iwindow.hpp>
 #include <backend_dev/include/iinputdriver.hpp>

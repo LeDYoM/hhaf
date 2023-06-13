@@ -16,14 +16,14 @@ enum ImageFormat : htps::u32
 struct TextureCreationParameters
 {
     htps::u32 mipmaps;
-    htps::vector2du32 size;
+    fmath::vector2du32 size;
     ImageFormat imageFormat;
 };
 
 struct SubImageCreationParameters
 {
     htps::u32 mipmap;
-    htps::Rectu32 rect;
+    fmath::Rectu32 rect;
     ImageFormat imageFormat;
     const htps::u8* data;
 };

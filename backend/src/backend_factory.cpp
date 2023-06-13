@@ -12,9 +12,6 @@ namespace haf::backend
 {
 BackendFactory::BackendFactory() :
     window_{nullptr},
-    textureFactory_{nullptr},
-    ttfontFactory_{nullptr},
-    bmpFontFactory_{nullptr},
     loader_{agloader::createLoader()}
 {}
 
@@ -91,9 +88,6 @@ void BackendFactory::selectFactoriesToUse(
     BackendRegisterUptr const& backend_register) noexcept
 {
     updateFactory(window_, backend_register->window_);
-    updateFactory(ttfontFactory_, backend_register->ttfontFactory_);
-    updateFactory(bmpFontFactory_, backend_register->bmpFontFactory_);
-    updateFactory(textureFactory_, backend_register->textureFactory_);
 }
 
 bool BackendFactory::isWindowFactoryAvailable() const noexcept
@@ -101,53 +95,9 @@ bool BackendFactory::isWindowFactoryAvailable() const noexcept
     return window_ != nullptr;
 }
 
-bool BackendFactory::isTextureFactoryAvailable() const noexcept
-{
-    return textureFactory_ != nullptr;
-}
-
-bool BackendFactory::isBMPFontFactoryAvailable() const noexcept
-{
-    return bmpFontFactory_ != nullptr;
-}
-
-bool BackendFactory::isTTFontFactoryAvailable() const noexcept
-{
-    return ttfontFactory_ != nullptr;
-}
-
 rptr<IWindow> BackendFactory::getWindow() const noexcept
 {
     return window_;
 }
 
-rptr<ITextureFactory> BackendFactory::getTextureFactory() const noexcept
-{
-    return textureFactory_;
-}
-
-rptr<ITTFontFactory> BackendFactory::getTTFontFactory() const noexcept
-{
-    return ttfontFactory_;
-}
-
-rptr<IBMPFontFactory> BackendFactory::getBMPFontFactory() const noexcept
-{
-    return bmpFontFactory_;
-}
-
-ITextureFactory& BackendFactory::textureFactory() const
-{
-    return *getTextureFactory();
-}
-
-ITTFontFactory& BackendFactory::ttfontFactory() const
-{
-    return *getTTFontFactory();
-}
-
-IBMPFontFactory& BackendFactory::bmpFontFactory() const
-{
-    return *getBMPFontFactory();
-}
 }  // namespace haf::backend

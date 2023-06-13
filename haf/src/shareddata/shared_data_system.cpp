@@ -6,6 +6,7 @@
 #include <utility>
 
 using namespace htps;
+using namespace mcs;
 using namespace haf::shdata;
 
 namespace haf::sys

@@ -21,7 +21,7 @@ public:
 
 private:
     void onTableNodeCreated(
-        htps::vector2dst,
+        fmath::vector2dst,
         htps::sptr<haf::scene::nodes::SceneNodeText> const&);
     void goTimeGame(htps::vector<htps::s32> menu_data);
     void goTokenGame(htps::vector<htps::s32> menu_data);

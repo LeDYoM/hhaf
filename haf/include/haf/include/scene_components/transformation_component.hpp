@@ -1,10 +1,10 @@
-HTPS_PRAGMA_ONCE
+HAF_PRAGMA_ONCE
 #ifndef HAF_SCENE_TRANSFORMATION_COMPONENT_INCLUDE_HPP
 #define HAF_SCENE_TRANSFORMATION_COMPONENT_INCLUDE_HPP
 
 #include <haf/include/haf_export.hpp>
 #include <haf/include/core/types.hpp>
-#include <haf/include/core/math_types.hpp>
+#include <facil_math/include/math_types.hpp>
 #include <haf/include/properties/property_state.hpp>
 #include <haf/include/events/receiver.hpp>
 
@@ -38,15 +38,16 @@ public:
     using Scalar = math::Matrix4x4::Scalar;  ///< Type Scalar for this class
     static constexpr Scalar const One  = math::Matrix4x4::One;
     static constexpr Scalar const Zero = math::Matrix4x4::Zero;
-    static constexpr const core::vector3df DefaultTranslation{
-        Vector3dZeros<Scalar>};
-    static constexpr const core::vector3df DefaultRotation{
-        Vector3dZeros<Scalar>};
-    static constexpr const core::vector3df DefaultScale{Vector3dOnes<Scalar>};
+    static constexpr const fmath::vector3df DefaultTranslation{
+        fmath::Vector3dZeros<Scalar>};
+    static constexpr const fmath::vector3df DefaultRotation{
+        fmath::Vector3dZeros<Scalar>};
+    static constexpr const fmath::vector3df DefaultScale{
+        fmath::Vector3dOnes<Scalar>};
 
-    prop::PropertyState<core::vector3df> Position{DefaultTranslation};
-    prop::PropertyState<core::vector3df> Rotation{DefaultRotation};
-    prop::PropertyState<core::vector3df> Scale{DefaultScale};
+    prop::PropertyState<fmath::vector3df> Position{DefaultTranslation};
+    prop::PropertyState<fmath::vector3df> Rotation{DefaultRotation};
+    prop::PropertyState<fmath::vector3df> Scale{DefaultScale};
 
     bool hasPendingMatrixUpdate() const noexcept;
 

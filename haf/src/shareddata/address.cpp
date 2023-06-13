@@ -1,6 +1,6 @@
 #include <haf/include/shareddata/address.hpp>
 #include <haf/include/core/types.hpp>
-#include <htypes/include/object.hpp>
+#include <mc_serial/include/object.hpp>
 #include <utility>
 
 namespace haf::shdata
@@ -100,7 +100,7 @@ core::str Address::str() const
     if (!private_->address_parts_.empty())
     {
         core::str result{private_->address_parts_.size() * 10U};
-        for (const auto part : private_->address_parts_)
+        for (const auto& part : private_->address_parts_)
         {
             result += part;
         }
@@ -140,12 +140,12 @@ bool Address::removeLast()
     return false;
 }
 
-core::pair<bool, htps::Object> objectFromAddress(Address const& address,
-                                                 htps::Object const& object)
+core::pair<bool, mcs::Object> objectFromAddress(Address const& address,
+                                                 mcs::Object const& object)
 {
     if (address.isFinal())
     {
-        htps::Object const* result{&object};
+        mcs::Object const* result{&object};
         core::size_type size{address.size()};
 
         core::size_type index_start{0U};
@@ -156,7 +156,7 @@ core::pair<bool, htps::Object> objectFromAddress(Address const& address,
 
         for (core::size_type index{index_start}; index < (size - 1U); ++index)
         {
-            htps::Object::Value temp = result->getObject(address[index]);
+            mcs::Object::Value temp = result->getObject(address[index]);
             if (temp.isObject())
             {
                 result = &(temp.getObject());
@@ -173,11 +173,11 @@ core::pair<bool, htps::Object> objectFromAddress(Address const& address,
     return {false, {}};
 }
 
-htps::Object* ensureAddress(Address const& address, htps::Object& object)
+mcs::Object* ensureAddress(Address const& address, mcs::Object& object)
 {
     if (address.isFinal())
     {
-        htps::Object* result{&object};
+        mcs::Object* result{&object};
         core::size_type size{address.size()};
 
         core::size_type index_start{0U};
@@ -188,14 +188,14 @@ htps::Object* ensureAddress(Address const& address, htps::Object& object)
 
         for (core::size_type index{index_start}; index < (size - 1U); ++index)
         {
-            if (htps::Object * temp{result->acquireObject(address[index])};
+            if (mcs::Object * temp{result->acquireObject(address[index])};
                 temp != nullptr)
             {
                 result = temp;
             }
             else
             {
-                result->set(address[index], htps::Object{});
+                result->set(address[index], mcs::Object{});
                 result = result->acquireObject(address[index]);
             }
         }

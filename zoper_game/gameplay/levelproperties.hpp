@@ -2,7 +2,7 @@
 #define ZOPER_LEVELPROPERTIES_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
-#include <htypes/include/vector2d.hpp>
+#include <facil_math/include/vector2d.hpp>
 
 #include <haf/include/time/timer_connector.hpp>
 #include <haf/include/component/component.hpp>

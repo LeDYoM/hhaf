@@ -48,9 +48,9 @@ protected:
     htps::rptr<BoardGroup> getBoardGroup();
     htps::rptr<BoardGroup const> getBoardGroup() const;
 
-    htps::vector2df board2SceneFactor() const;
-    htps::vector2df board2Scene(const htps::vector2dst& bPosition) const;
-    htps::vector2df tileSize() const;
+    fmath::vector2df board2SceneFactor() const;
+    fmath::vector2df board2Scene(const fmath::vector2dst& bPosition) const;
+    fmath::vector2df tileSize() const;
 
 private:
     bool is_in_center{false};

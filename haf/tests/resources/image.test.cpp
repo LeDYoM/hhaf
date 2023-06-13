@@ -5,6 +5,7 @@
 using namespace haf;
 using namespace haf::core;
 using namespace haf::res;
+using namespace fmath;
 
 TEST_CASE("haf::resources::Image", "[haf][resources][Image]")
 {

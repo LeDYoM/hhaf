@@ -22,14 +22,14 @@ Direction Direction::negate() const noexcept
     return DirectionData::Invalid;
 }
 
-htps::vector2dst Direction::applyToVector(htps::vector2dst const& v,
+fmath::vector2dst Direction::applyToVector(fmath::vector2dst const& v,
                                           htps::u32 const scale) const noexcept
 {
-    htps::vector2ds32 const dv{directionVector(scale)};
+    fmath::vector2ds32 const dv{directionVector(scale)};
     return {v.x + dv.x, v.y + dv.y};
 }
 
-htps::vector2ds32 Direction::directionVector(
+fmath::vector2ds32 Direction::directionVector(
     const htps::s32 scale) const noexcept
 {
     switch (data)
@@ -49,7 +49,7 @@ htps::vector2ds32 Direction::directionVector(
     return {};
 }
 
-htps::vector2ds32 Direction::negatedDirectionVector(
+fmath::vector2ds32 Direction::negatedDirectionVector(
     const htps::u32 scale) const noexcept
 {
     return directionVector(scale) * -1;
@@ -74,11 +74,11 @@ htps::f32 Direction::angle() const noexcept
     return 0.f;
 }
 
-Direction fromPositions(htps::vector2dst const& origin,
-                        htps::vector2dst const& dest)
+Direction fromPositions(fmath::vector2dst const& origin,
+                        fmath::vector2dst const& dest)
 {
-    htps::vector2ds32 const delta{static_cast<htps::vector2ds32>(dest) -
-                                  static_cast<htps::vector2ds32>(origin)};
+    fmath::vector2ds32 const delta{static_cast<fmath::vector2ds32>(dest) -
+                                  static_cast<fmath::vector2ds32>(origin)};
     if ((delta.x != 0 && delta.y != 0) || (delta.x == 0 && delta.y == 0))
     {
         haf::DisplayLog::error("Invalid vector diference. Cannot convert");

@@ -2,7 +2,7 @@
 #include "file_system_private_funcs.hpp"
 #include <hlog/include/hlog.hpp>
 
-#include <htypes/include/object_utils.hpp>
+#include <mc_serial/include/object_parser.hpp>
 #include <debug_system/debug_system.hpp>
 #include <system/get_system.hpp>
 #include <haf/include/system/system_access.hpp>
@@ -102,7 +102,7 @@ IFileSerializer::Result FileSystem::deserializeFromFile(
     str const text_data{loadTextFile(file_name)};
     if (!text_data.empty())
     {
-        ObjectCompiler obj_compiler(text_data);
+        mcs::ObjectCompiler obj_compiler(text_data);
         if (obj_compiler.compile())
         {
             // The compilation was correct so, at least we
@@ -126,7 +126,7 @@ IFileSerializer::Result FileSystem::serializeToFile(
     const Path& file_name,
     const data::ISerializable& data)
 {
-    htps::Object obj;
+    mcs::Object obj;
     auto const temp{data.serialize(obj)};
 
     if (temp)

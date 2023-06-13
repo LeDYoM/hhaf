@@ -2,7 +2,7 @@
 #define ZOPER_DIRECTION_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
-#include <htypes/include/vector2d.hpp>
+#include <facil_math/include/vector2d.hpp>
 
 namespace zoper
 {
@@ -56,12 +56,12 @@ public:
 
     Direction negate() const noexcept;
 
-    htps::vector2dst applyToVector(htps::vector2dst const& v,
+    fmath::vector2dst applyToVector(fmath::vector2dst const& v,
                                    htps::u32 const scale = 1U) const noexcept;
 
-    htps::vector2ds32 directionVector(const htps::s32 scale = 1) const noexcept;
+    fmath::vector2ds32 directionVector(const htps::s32 scale = 1) const noexcept;
 
-    htps::vector2ds32 negatedDirectionVector(
+    fmath::vector2ds32 negatedDirectionVector(
         const htps::u32 scale = 1U) const noexcept;
 
     htps::f32 angle() const noexcept;
@@ -70,8 +70,8 @@ private:
     DirectionData data;
 };
 
-Direction fromPositions(htps::vector2dst const& origin,
-                        htps::vector2dst const& dest);
+Direction fromPositions(fmath::vector2dst const& origin,
+                        fmath::vector2dst const& dest);
 }  // namespace zoper
 
 #endif

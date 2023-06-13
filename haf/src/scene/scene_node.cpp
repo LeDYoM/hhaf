@@ -39,16 +39,6 @@ void SceneNode::update()
     SceneNodesGroup::updateNodes();
 }
 
-SceneBox SceneNode::sceneView() const
-{
-    return SceneBox{};
-}
-
-SceneBox::vector_t SceneNode::sceneViewSize() const
-{
-    return sceneView().size();
-}
-
 str SceneNode::completeName() const
 {
     auto const p{parent()};

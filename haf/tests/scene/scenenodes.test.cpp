@@ -2,7 +2,7 @@
 /*
 #include <htypes/include/types.hpp>
 #include <htypes/include/str.hpp>
-#include <htypes/include/vector2d.hpp>
+#include <facil_math/include/vector2d.hpp>
 #include <haf/include/scene/scene_node.hpp>
 #include <haf/include/scene_nodes/transformable_scene_node.hpp>
 #include <haf/include/scene/scene_nodes.hpp>

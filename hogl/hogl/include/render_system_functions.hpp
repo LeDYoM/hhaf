@@ -3,7 +3,7 @@
 
 #include <hogl/include/ogl_export.hpp>
 #include <htypes/include/types.hpp>
-#include <htypes/include/vector4d.hpp>
+#include <facil_math/include/vector4d.hpp>
 
 namespace haf::ogl
 {
@@ -11,7 +11,7 @@ namespace haf::ogl
 HOGL_API void setDebug(bool const enable);
 HOGL_API void setDefaultRenderState();
 
-void HOGL_API clearBackgroundColor(htps::vector4df const& color);
+void HOGL_API clearBackgroundColor(fmath::vector4df const& color);
 void HOGL_API clearDepthBuffer();
 
 }  // namespace haf::ogl

@@ -18,7 +18,7 @@ void SceneRenderContext::setNowFrame(time::TimePoint time_point)
 }
 
 void SceneRenderContext::setBackgroundColor(
-    core::vector4df const& backgroundColor) noexcept
+    fmath::vector4df const& backgroundColor) noexcept
 {
     m_backgroundColor = backgroundColor;
 }

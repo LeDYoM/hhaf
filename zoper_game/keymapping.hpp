@@ -30,13 +30,13 @@ public:
     bool setKey(const htps::u32 index, const haf::input::Key key);
     void apply();
 
-    friend const htps::Object& operator>>(const htps::Object& obj,
+    friend const mcs::Object& operator>>(const mcs::Object& obj,
                                           KeyMapping& key_mapping);
-    friend htps::Object& operator<<(htps::Object& obj,
+    friend mcs::Object& operator<<(mcs::Object& obj,
                                     const KeyMapping& key_mapping);
 
-    bool serialize(htps::Object&) const override;
-    bool deserialize(htps::Object const&) override;
+    bool serialize(mcs::Object&) const override;
+    bool deserialize(mcs::Object const&) override;
 
 private:
     htps::array<haf::input::Key, KeyMapping::TotalKeys> keys_;

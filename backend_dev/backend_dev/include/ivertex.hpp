@@ -2,12 +2,12 @@
 #define HAF_BACKEND_DEV_IVERTEX_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
-#include <htypes/include/vector2d.hpp>
+#include <facil_math/include/vector2d.hpp>
 
 namespace haf::backend
 {
-using iPosition           = htps::vector2d<htps::f32>;
-using iTextureCoordinates = htps::vector2d<htps::f32>;
+using iPosition           = fmath::vector2d<htps::f32>;
+using iTextureCoordinates = fmath::vector2d<htps::f32>;
 
 struct iColor final
 {

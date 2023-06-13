@@ -1,4 +1,4 @@
-HTPS_PRAGMA_ONCE
+HAF_PRAGMA_ONCE
 #ifndef HAF_SCENE_SCENENODE_INCLUDE_HPP
 #define HAF_SCENE_SCENENODE_INCLUDE_HPP
 
@@ -86,9 +86,6 @@ public:
     void update();
 
     core::str completeName() const;
-
-    SceneBox sceneView() const;
-    SceneBox::vector_t sceneViewSize() const;
 };
 
 using SceneNodeSPtr = htps::sptr<SceneNode>;

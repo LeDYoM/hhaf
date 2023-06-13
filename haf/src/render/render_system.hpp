@@ -1,4 +1,4 @@
-HTPS_PRAGMA_ONCE
+HAF_PRAGMA_ONCE
 #ifndef HAF_SYS_SYSTEM_RENDERSYSTEM_INCLUDE_HPP
 #define HAF_SYS_SYSTEM_RENDERSYSTEM_INCLUDE_HPP
 
@@ -27,7 +27,7 @@ public:
     render::SharedDataManager& sharedDataManager() noexcept;
     render::SharedDataManager const& sharedDataManager() const noexcept;
 
-    void beginFrame(core::vector4df const& backgroundColor);
+    void beginFrame(fmath::vector4df const& backgroundColor);
     void endFrame();
 
 private:

@@ -1,4 +1,4 @@
-HTPS_PRAGMA_ONCE
+HAF_PRAGMA_ONCE
 #ifndef HAF_SYSTEM_SYSTEM_PROVIDER_CONFIGURATION_INCLUDE_HPP
 #define HAF_SYSTEM_SYSTEM_PROVIDER_CONFIGURATION_INCLUDE_HPP
 
@@ -25,7 +25,7 @@ struct HAF_PRIVATE DeserializableSystemConfigurationData
     static constexpr char kWindowSystemConfigurationFile[] =
         "window_configuration_file";
 
-    bool deserialize(htps::Object const& obj)
+    bool deserialize(mcs::Object const& obj)
     {
         obj[kSimulationSystemConfigurationFile].as(
             data.simulation_system_configuration_file_);

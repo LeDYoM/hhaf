@@ -1,6 +1,6 @@
 option(use_system_sfml "Use system SFML instead of fetching it" OFF)
 
-if (NOT use_system_sfml)
+if (NOT use_system_sfml AND WIN32)
 
     include(FetchContent)
     message(STATUS "Fetching SFML")

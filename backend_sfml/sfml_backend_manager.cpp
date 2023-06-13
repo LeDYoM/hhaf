@@ -2,8 +2,6 @@
 #include <backend_client/include/default_factory.hpp>
 
 #include "sfml_render_window.hpp"
-#include "sfml_ttfont_factory.hpp"
-#include "sfml_texture_factory.hpp"
 
 void SFMLBackendManager::create()
 {
@@ -12,8 +10,4 @@ void SFMLBackendManager::create()
     using namespace haf::backend::sfmlb;
 
     createFactoryOfFactories<DefaultFactoryOf<IWindow, SFMLRenderWindow>>();
-    createFactoryOfFactories<
-        DefaultFactoryOf<ITTFontFactory, SFMLTTFontFactory>>();
-    createFactoryOfFactories<
-        DefaultFactoryOf<ITextureFactory, SFMLTextureFactory>>();
 }

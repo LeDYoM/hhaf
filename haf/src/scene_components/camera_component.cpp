@@ -8,6 +8,7 @@
 using namespace haf::core;
 using namespace haf::prop;
 using namespace haf::math;
+using namespace fmath;
 
 namespace haf::scene
 {
@@ -29,7 +30,7 @@ CameraComponent::~CameraComponent() = default;
 void CameraComponent::onAttached()
 {
     addUpdater({this, &CameraComponent::cameraDataPerspectiveUpdated}, &Left,
-               &Right, &Bottom, &Top, &Near, &Far, &cameraMode);
+               &Right, &Bottom, &Top, &Near, &Far, &FovY, &Aspect, &cameraMode);
 
     addUpdater({this, &CameraComponent::cameraDataViewUpdated}, &Position,
                &Center, &Up);
@@ -43,6 +44,8 @@ void CameraComponent::onAttached()
     Top        = 0.05F;
     Near       = 0.01F;
     Far        = 1.0F;
+    FovY       = 60.0F;
+    Aspect     = 1.0F;
     cameraMode = CameraMode::Frustum;
     Position   = vector3df{0.0F, 0.0F, 0.4F};
     Center     = vector3df{0.0F, 0.0F, 0.0F};
@@ -66,7 +69,7 @@ void CameraComponent::cameraDataPerspectiveUpdated()
             break;
         case CameraMode::Perspective:
             m_p->m_perspective_matrix =
-                math::perspective(60, 800.0F / 600.0F, 0.01F, 10.0F);
+                math::perspective(FovY(), Aspect(), Near(), Far());
             break;
         default:
             LogAsserter::log_assert(true, "Invalid CameraMode value");

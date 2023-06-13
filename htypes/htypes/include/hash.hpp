@@ -13,11 +13,24 @@ namespace htps
 struct Hasher
 {
     template <typename T = u32, size_type N>
-    static constexpr T hash(char const (&s)[N]) noexcept
+    static consteval T hash(char const (&s)[N]) noexcept
     {
         T hash{5381U};
 
         for (auto&& c : s)
+        {
+            hash = ((hash << 5) + hash) + c; /* hash * 33 + c */
+        }
+
+        return hash;
+    }
+
+    template <typename T = u32, size_type N>
+    static consteval T hash(str_literal<N> s) noexcept
+    {
+        T hash{5381U};
+
+        for (const auto& c : s)
         {
             hash = ((hash << 5) + hash) + c; /* hash * 33 + c */
         }
@@ -72,13 +85,13 @@ struct Hasher
     }
 };
 
-template <htps::str_view Str>
+template <htps::str_literal Str>
 struct StringHash
 {
     static constexpr u32 value{Hasher::hash(Str)};
 };
 
-template <htps::str_view Str>
+template <htps::str_literal Str>
 inline constexpr u32 StringHash_v{StringHash<Str>::value};
 
 }  // namespace htps

@@ -1,6 +1,7 @@
-#include <htypes/include/lockablevector.hpp>
 #include <haf/include/component/component_container.hpp>
 #include <haf/include/component/component_requirements.hpp>
+
+#include <htypes/include/types.hpp>
 
 #include <haf/include/scene/scene_node.hpp>
 
@@ -27,8 +28,7 @@ struct ComponentContainer::ComponentContainerPrivate
     scene::SceneManager& m_scene_manager;
     vector<sptr<Component>> components_;
 
-    ComponentContainer::ComponentContainerPrivate(
-        rptr<scene::SceneNode> attachable) noexcept :
+    ComponentContainerPrivate(rptr<scene::SceneNode> attachable) noexcept :
         attachable_{attachable},
         m_scene_manager{sys::getSystem<scene::SceneManager>(attachable)}
     {}

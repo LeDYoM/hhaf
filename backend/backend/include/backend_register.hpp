@@ -2,7 +2,6 @@
 #define HAF_BACKEND_REGISTER_INCLUDE_HPP
 
 #include <backend_dev/include/iwindow.hpp>
-#include <backend_dev/include/iresourcefactories.hpp>
 #include <backend_dev/include/ibackendregister.hpp>
 
 using p_initBackendClient =
@@ -17,9 +16,6 @@ class BackendRegister final : public client::IBackendRegister
 public:
     explicit BackendRegister(htps::str const& module_name);
     void setFactory(htps::uptr<IWindowFactory>) noexcept override;
-    void setFactory(htps::uptr<ITTFontFactoryFactory>) noexcept override;
-    void setFactory(htps::uptr<ITextureFactoryFactory>) noexcept override;
-    void setFactory(htps::uptr<IBMPFontFactoryFactory>) noexcept override;
 
     void setLibFuncs(p_initBackendClient init_lib_func,
                      p_finishBackendClient finish_lib_func) noexcept;
@@ -29,30 +25,6 @@ public:
     htps::sptr<IWindowFactory> getFactory()
     {
         return window_factory_;
-    }
-
-    template <
-        typename T,
-        typename = std::enable_if_t<std::is_same_v<T, ITTFontFactoryFactory>>>
-    htps::sptr<ITTFontFactoryFactory> getFactory() const
-    {
-        return ttfont_factory_factory_;
-    }
-
-    template <
-        typename T,
-        typename = std::enable_if_t<std::is_same_v<T, ITextureFactoryFactory>>>
-    htps::sptr<ITextureFactoryFactory> getFactory() const
-    {
-        return texture_factory_factory_;
-    }
-
-    template <
-        typename T,
-        typename = std::enable_if_t<std::is_same_v<T, IBMPFontFactoryFactory>>>
-    htps::sptr<IBMPFontFactoryFactory> getFactory() const
-    {
-        return bmpfont_factory_factory_;
     }
 
     bool init();
@@ -68,18 +40,12 @@ public:
 
     htps::str const& moduleName() const noexcept;
     htps::rptr<IWindow> window_{nullptr};
-    htps::rptr<ITextureFactory> textureFactory_{nullptr};
-    htps::rptr<ITTFontFactory> ttfontFactory_{nullptr};
-    htps::rptr<IBMPFontFactory> bmpFontFactory_{nullptr};
 
 private:
     htps::str module_name_{};
     p_initBackendClient init_lib_func_{nullptr};
     p_finishBackendClient finish_lib_func_{nullptr};
     htps::sptr<IWindowFactory> window_factory_;
-    htps::sptr<ITTFontFactoryFactory> ttfont_factory_factory_;
-    htps::sptr<ITextureFactoryFactory> texture_factory_factory_;
-    htps::sptr<IBMPFontFactoryFactory> bmpfont_factory_factory_;
 };
 }  // namespace haf::backend
 

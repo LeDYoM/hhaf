@@ -1,11 +1,11 @@
-HTPS_PRAGMA_ONCE
+HAF_PRAGMA_ONCE
 #ifndef HAF_TYPES_MATRIX4X4_INCLUDE_HPP
 #define HAF_TYPES_MATRIX4X4_INCLUDE_HPP
 
-#include <haf/include/core/types.hpp>
-#include <haf/include/core/math_types.hpp>
-#include <htypes/include/array.hpp>
 #include <haf/include/haf_export.hpp>
+#include <haf/include/core/types.hpp>
+#include <htypes/include/array.hpp>
+#include <facil_math/include/math_types.hpp>
 
 namespace haf::math
 {
@@ -31,12 +31,12 @@ public:
     /**
      * @brief Value "0" for the elements of this matrix
      */
-    static constexpr Scalar const One{haf::One<Scalar>};
+    static constexpr Scalar const One{fmath::One<Scalar>};
 
     /**
      * @brief Value "1" for the elements of this matrix
      */
-    static constexpr Scalar const Zero{haf::Zero<Scalar>};
+    static constexpr Scalar const Zero{fmath::Zero<Scalar>};
 
     Matrix4x4() noexcept;
 
@@ -76,7 +76,7 @@ public:
     }
 
     template <core::u32 column>
-    constexpr void setColumn(core::vector4d<Scalar> v)
+    constexpr void setColumn(fmath::vector4d<Scalar> v)
     {
         setColumn<column>(v.x, v.y, v.z, v.w);
     }
@@ -105,14 +105,14 @@ public:
     }
 
     template <core::u32 column>
-    constexpr void setColumn(core::vector3d<Scalar> v)
+    constexpr void setColumn(fmath::vector3d<Scalar> v)
     {
         setColumn<column>(v.x, v.y, v.z);
     }
 
-    void setDiagonal(core::vector3d<Scalar> const& v) noexcept;
-    void setDiagonal(core::vector4d<Scalar> const& v) noexcept;
-    void setRotation(core::vector3d<Scalar> const& v,
+    void setDiagonal(fmath::vector3d<Scalar> const& v) noexcept;
+    void setDiagonal(fmath::vector4d<Scalar> const& v) noexcept;
+    void setRotation(fmath::vector3d<Scalar> const& v,
                      Scalar const angle) noexcept;
 
     void setRotation(Scalar const x,
@@ -144,9 +144,9 @@ bool operator==(Matrix4x4 const& lhs, Matrix4x4 const& rhs) noexcept;
 [[nodiscard]] bool isAlmostEqual(Matrix4x4 const& lhs,
                                  Matrix4x4 const& rhs) noexcept;
 
-[[nodiscard]] Matrix4x4 lookat(core::vector3df const& eye,
-                               core::vector3df const& center,
-                               core::vector3df const& up);
+[[nodiscard]] Matrix4x4 lookat(fmath::vector3df const& eye,
+                               fmath::vector3df const& center,
+                               fmath::vector3df const& up);
 [[nodiscard]] Matrix4x4 frustum(core::f32 const left,
                                 core::f32 const right,
                                 core::f32 const bottom,

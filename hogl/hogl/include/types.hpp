@@ -3,8 +3,8 @@
 
 #include <hogl/include/ogl_export.hpp>
 #include <htypes/include/types.hpp>
-#include <htypes/include/rect.hpp>
-#include <htypes/include/vector4d.hpp>
+#include <facil_math/include/rect.hpp>
+#include <facil_math/include/vector4d.hpp>
 
 namespace haf::ogl
 {

@@ -33,14 +33,6 @@ void HostInternal::logLoadedFactories()
     DisplayLog::debug(
         StaticTypeName, ": Window loaded loaded...\t\t",
         backend_factory_->isWindowFactoryAvailable() ? "Yes" : "No");
-    DisplayLog::debug(StaticTypeName, ": Texture factory loaded...\t",
-                      backend_factory_->getTextureFactory() ? "Yes" : "No");
-    DisplayLog::debug(
-        StaticTypeName, ": BMPFont factory loaded...\t",
-        backend_factory_->isBMPFontFactoryAvailable() ? "Yes" : "No");
-    DisplayLog::debug(
-        StaticTypeName, ": TTFont factory loaded...\t\t",
-        backend_factory_->isTTFontFactoryAvailable() ? "Yes" : "No");
 }
 
 bool HostInternal::initializeHaf()

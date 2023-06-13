@@ -11,13 +11,13 @@ class IBoardManagerActuator
 public:
     using BoardTileData = ITile::BoardTileData;
 
-    virtual void tileAdded(const htps::vector2dst, SITilePointer&) {}
-    virtual void tileRemoved(const htps::vector2dst, SITilePointer&) {}
-    virtual void tileMoved(const htps::vector2dst,
-                           const htps::vector2dst,
+    virtual void tileAdded(const fmath::vector2dst, SITilePointer&) {}
+    virtual void tileRemoved(const fmath::vector2dst, SITilePointer&) {}
+    virtual void tileMoved(const fmath::vector2dst,
+                           const fmath::vector2dst,
                            SITilePointer&)
     {}
-    virtual void tileChanged(const htps::vector2dst,
+    virtual void tileChanged(const fmath::vector2dst,
                              SITilePointer&,
                              const BoardTileData,
                              const BoardTileData)

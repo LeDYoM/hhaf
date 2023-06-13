@@ -1,4 +1,4 @@
-HTPS_PRAGMA_ONCE
+HAF_PRAGMA_ONCE
 #ifndef HAF_SYSTEM_SHARED_DATA_INCLUDE_HPP
 #define HAF_SYSTEM_SHARED_DATA_INCLUDE_HPP
 
@@ -68,7 +68,7 @@ public:
     bool makeEmpty() override;
 
 private:
-    htps::Object data_object_;
+    mcs::Object data_object_;
 };
 
 }  // namespace haf::sys

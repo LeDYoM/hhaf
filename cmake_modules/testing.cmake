@@ -50,7 +50,6 @@ endfunction()
 
 function(add_haf_test_executable)
   if (BUILD_TESTS)
-  
     file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/main.test.cpp"
     "#define CATCH_CONFIG_RUNNER
       #include <catch.hpp>
@@ -77,6 +76,39 @@ function(add_haf_test_executable)
           return session.run();
       }
       ")
+
+    set(PARAM_LIST ${ARGV})
+    list(APPEND PARAM_LIST "${CMAKE_CURRENT_BINARY_DIR}/main")
+
+    add_test_executable(${PARAM_LIST})
+
+    target_link_libraries(${CURRENT_TARGET} PRIVATE haf)
+  endif()
+endfunction()
+
+function(add_test_executable_with_main)
+  if (BUILD_TESTS)
+    file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/main.test.cpp"
+     "#define CATCH_CONFIG_RUNNER
+      #ifdef _MSC_VER
+      #define CATCH_CONFIG_WINDOWS_CRTDBG
+      #endif
+
+      #pragma warning ( push )
+      #pragma warning( disable : 4514 4620 4623 4625 4626 4820 5026 5027 5204 )
+      #include \"catch.hpp\"
+      #pragma warning ( pop )
+
+      int main(int argc, char* argv[])
+      {
+        Catch::Session session;
+
+        int returnCode = session.applyCommandLine(argc, argv);
+        if (returnCode != 0)
+          return returnCode;
+
+        return session.run();
+    }")
 
     set(PARAM_LIST ${ARGV})
     list(APPEND PARAM_LIST "${CMAKE_CURRENT_BINARY_DIR}/main")

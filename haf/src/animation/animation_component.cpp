@@ -1,6 +1,6 @@
 #include <haf/include/animation/animation_component.hpp>
 #include <hlog/include/hlog.hpp>
-#include <htypes/include/lockablevector.hpp>
+#include <htypes/include/lockable_vector.hpp>
 
 using namespace htps;
 

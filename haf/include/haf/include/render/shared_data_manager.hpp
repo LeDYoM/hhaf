@@ -1,4 +1,4 @@
-HTPS_PRAGMA_ONCE
+HAF_PRAGMA_ONCE
 #ifndef HAF_RENDER_SHARED_DATA_BUFFER_MANAGER_INCLUDE_HPP
 #define HAF_RENDER_SHARED_DATA_BUFFER_MANAGER_INCLUDE_HPP
 
@@ -8,7 +8,7 @@ HTPS_PRAGMA_ONCE
 
 namespace haf::render
 {
-class HAF_PRIVATE SharedDataManager final
+class SharedDataManager final
 {
 public:
     SharedDataManager();
