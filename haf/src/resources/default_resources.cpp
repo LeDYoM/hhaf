@@ -4,6 +4,7 @@
 #include <haf/include/render/vertex_formats.hpp>
 #include <haf/include/scene/color.hpp>
 #include <haf/include/resources/image.hpp>
+#include <haf/include/core/types.hpp>
 
 using namespace haf::res;
 using namespace haf::core;
@@ -111,8 +112,7 @@ bool DefaultResources::loadDefaultMesh(sys::ResourceManager& rManager)
     return ok;
 }
 
-bool DefaultResources::loadDefaultVertexArrayObject(
-    sys::ResourceManager&)
+bool DefaultResources::loadDefaultVertexArrayObject(sys::ResourceManager&)
 {
     return true;
 }
@@ -141,6 +141,34 @@ sptr<VertexBufferObject> DefaultResources::getDefaultColorRenderDataBufer()
 
 bool DefaultResources::loadDefaultCubeMesh(sys::ResourceManager& rManager)
 {
+    fmath::vvector<vector3df> cube_data_raw_mesh_position2;
+    (void)(cube_data_raw_mesh_position2);
+
+    cube_data_raw_mesh_position2.push_back(
+        {{-0.25F, -0.25F, 0.25F},  {-0.25F, -0.25F, -0.25F},
+         {0.25F, -0.25F, -0.25F},  {0.25F, -0.25F, -0.25F},
+         {0.25F, -0.25F, 0.25F},   {-0.25F, -0.25F, 0.25F},
+
+         {0.25F, -0.25F, -0.25F},  {0.25F, 0.25F, -0.25F},
+         {0.25F, -0.25F, 0.25F},   {0.25F, 0.25F, -0.25F},
+         {0.25F, 0.25F, 0.25F},    {0.25F, -0.25F, 0.25F},
+
+         {0.25F, 0.25F, -0.25F},   {-0.25F, 0.25F, -0.25F},
+         {0.25F, 0.25F, 0.25F},    {-0.25F, 0.25F, -0.25F},
+         {-0.25F, 0.25F, 0.25F},   {0.25F, 0.25F, 0.25F},
+
+         {-0.25F, 0.25F, -0.25F},  {-0.25F, -0.25F, -0.25F},
+         {-0.25F, 0.25F, 0.25F},   {-0.25F, -0.25F, -0.25F},
+         {-0.25F, -0.25F, 0.25F},  {-0.25F, 0.25F, 0.25F},
+
+         {-0.25F, 0.25F, -0.25F},  {0.25F, 0.25F, -0.25F},
+         {0.25F, -0.25F, -0.25F},  {0.25F, -0.25F, -0.25F},
+         {-0.25F, -0.25F, -0.25F}, {-0.25F, 0.25F, -0.25F},
+
+         {-0.25F, -0.25F, 0.25F},  {0.25F, -0.25F, 0.25F},
+         {0.25F, 0.25F, 0.25F},    {0.25F, 0.25F, 0.25F},
+         {-0.25F, 0.25F, 0.25F},   {-0.25F, -0.25F, 0.25F}});
+
     static vector3df cube_data_raw_mesh_position[] = {
         {-0.25F, -0.25F, 0.25F},  {-0.25F, -0.25F, -0.25F},
         {0.25F, -0.25F, -0.25F},  {0.25F, -0.25F, -0.25F},
@@ -216,8 +244,10 @@ bool DefaultResources::loadDefaultCubeMesh(sys::ResourceManager& rManager)
     auto color_buffer_cube{core::msptr<res::VertexBufferObject>(
         "haf_color", core::span{cube_vertex_color_data_raw})};
 
+    core::span a{cube_data_raw_mesh_position2};
+    (void)(a);
     auto vertex_buffer_cube_positions{core::msptr<res::VertexBufferObject>(
-        "haf_position", core::span{cube_data_raw_mesh_position})};
+        "haf_position", core::span{cube_data_raw_mesh_position2})};
 
     auto vertex_buffer_cube_normals{core::msptr<res::VertexBufferObject>(
         "haf_normal", core::span{cube_data_raw_mesh_normal})};

@@ -16,6 +16,7 @@ HAF_PRAGMA_ONCE
 #include <facil_math/include/vector3d.hpp>
 #include <facil_math/include/vector4d.hpp>
 #include <facil_math/include/rect.hpp>
+#include <facil_math/include/vvector.hpp>
 
 namespace haf
 {

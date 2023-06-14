@@ -8,6 +8,7 @@ set(SOURCE_TESTS
     vector2d
     vector3d
     vector4d
+    vvector
 )
 
 add_test_executable_with_main(SOURCE_TESTS ${SOURCE_TESTS})

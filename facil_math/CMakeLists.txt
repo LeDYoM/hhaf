@@ -17,6 +17,7 @@ set(headers
     ${include_dir}/vector2d.hpp
     ${include_dir}/vector3d.hpp
     ${include_dir}/vector4d.hpp
+    ${include_dir}/vvector.hpp>
   )
 
 build_lib_component(HEADERS_ONLY HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}"
