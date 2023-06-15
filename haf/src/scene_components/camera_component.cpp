@@ -66,6 +66,7 @@ void CameraComponent::cameraDataPerspectiveUpdated()
         case CameraMode::Ortho:
             m_p->m_perspective_matrix =
                 math::ortho(Left(), Right(), Bottom(), Top(), Near(), Far());
+//            m_p->m_perspective_matrix = Matrix4x4::Identity;
             break;
         case CameraMode::Perspective:
             m_p->m_perspective_matrix =
@@ -82,7 +83,14 @@ void CameraComponent::cameraDataPerspectiveUpdated()
 
 void CameraComponent::cameraDataViewUpdated()
 {
-    m_p->m_view_matrix = math::lookat(Position(), Center(), Up());
+    if (cameraMode() == CameraMode::Ortho)
+    {
+        m_p->m_view_matrix = Matrix4x4::Identity;
+    }
+    else
+    {
+        m_p->m_view_matrix = math::lookat(Position(), Center(), Up());
+    }
 
     m_p->cameraComponentsUpdated.setChanged();
     cameraViewUpdated();

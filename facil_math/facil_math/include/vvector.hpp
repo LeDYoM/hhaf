@@ -4,6 +4,7 @@ FMA_PRAGMA_ONCE
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/vector.hpp>
+#include <htypes/include/span.hpp>
 
 namespace fmath
 {
@@ -13,7 +14,7 @@ template <typename T>
 class vvector
 {
 public:
-    vvector() = default;
+    constexpr vvector() = default;
 
     template <tps::size_type N>
     constexpr void push_back(T const (&elements)[N])
@@ -24,35 +25,44 @@ public:
         }
     }
 
-    void push_back(T const& element)
+    constexpr void push_back(T const& element)
     {
         m_container.push_back(element);
     }
 
-    void push_back(T&& element)
+    constexpr void push_back(T&& element)
     {
         m_container.push_back(tps::move(element));
     }
 
-    void push_triangle(T const& element0, T const& element1, T const& element2)
+    constexpr void push_triangle(T const& element0, T const& element1, T const& element2)
     {
         m_container.push_back(element0);
         m_container.push_back(element1);
         m_container.push_back(element2);
     }
 
-    void push_triangle(T&& element0, T&& element1, T&& element2)
+    constexpr void push_triangle(T&& element0, T&& element1, T&& element2)
     {
         m_container.push_back(tps::move(element0));
         m_container.push_back(tps::move(element1));
         m_container.push_back(tps::move(element2));
     }
 
-    tps::vector<T> const& getVector() const noexcept
+    constexpr tps::vector<T> const& getVector() const noexcept
     {
         return m_container;
     }
 
+    constexpr operator tps::span<T const>() const noexcept
+    {
+        return tps::span{m_container};
+    }
+
+    constexpr tps::span<T const> as_span() const noexcept
+    {
+        return static_cast<tps::span<T const>>(*this);
+    }
 private:
     tps::vector<T> m_container;
 

@@ -142,32 +142,44 @@ sptr<VertexBufferObject> DefaultResources::getDefaultColorRenderDataBufer()
 bool DefaultResources::loadDefaultCubeMesh(sys::ResourceManager& rManager)
 {
     fmath::vvector<vector3df> cube_data_raw_mesh_position2;
-    (void)(cube_data_raw_mesh_position2);
 
-    cube_data_raw_mesh_position2.push_back(
-        {{-0.25F, -0.25F, 0.25F},  {-0.25F, -0.25F, -0.25F},
-         {0.25F, -0.25F, -0.25F},  {0.25F, -0.25F, -0.25F},
-         {0.25F, -0.25F, 0.25F},   {-0.25F, -0.25F, 0.25F},
+    cube_data_raw_mesh_position2.push_triangle({-0.25F, -0.25F, 0.25F},
+                                               {-0.25F, -0.25F, -0.25F},
+                                               {0.25F, -0.25F, -0.25F});
+    cube_data_raw_mesh_position2.push_triangle({0.25F, -0.25F, -0.25F},
+                                               {0.25F, -0.25F, 0.25F},
+                                               {-0.25F, -0.25F, 0.25F});
 
-         {0.25F, -0.25F, -0.25F},  {0.25F, 0.25F, -0.25F},
-         {0.25F, -0.25F, 0.25F},   {0.25F, 0.25F, -0.25F},
-         {0.25F, 0.25F, 0.25F},    {0.25F, -0.25F, 0.25F},
+    cube_data_raw_mesh_position2.push_triangle({0.25F, -0.25F, -0.25F},
+                                               {0.25F, 0.25F, -0.25F},
+                                               {0.25F, -0.25F, 0.25F});
+    cube_data_raw_mesh_position2.push_triangle(
+        {0.25F, 0.25F, -0.25F}, {0.25F, 0.25F, 0.25F}, {0.25F, -0.25F, 0.25F});
 
-         {0.25F, 0.25F, -0.25F},   {-0.25F, 0.25F, -0.25F},
-         {0.25F, 0.25F, 0.25F},    {-0.25F, 0.25F, -0.25F},
-         {-0.25F, 0.25F, 0.25F},   {0.25F, 0.25F, 0.25F},
+    cube_data_raw_mesh_position2.push_triangle(
+        {0.25F, 0.25F, -0.25F}, {-0.25F, 0.25F, -0.25F}, {0.25F, 0.25F, 0.25F});
+    cube_data_raw_mesh_position2.push_triangle(
+        {-0.25F, 0.25F, -0.25F}, {-0.25F, 0.25F, 0.25F}, {0.25F, 0.25F, 0.25F});
 
-         {-0.25F, 0.25F, -0.25F},  {-0.25F, -0.25F, -0.25F},
-         {-0.25F, 0.25F, 0.25F},   {-0.25F, -0.25F, -0.25F},
-         {-0.25F, -0.25F, 0.25F},  {-0.25F, 0.25F, 0.25F},
+    cube_data_raw_mesh_position2.push_triangle({-0.25F, 0.25F, -0.25F},
+                                               {-0.25F, -0.25F, -0.25F},
+                                               {-0.25F, 0.25F, 0.25F});
+    cube_data_raw_mesh_position2.push_triangle({-0.25F, -0.25F, -0.25F},
+                                               {-0.25F, -0.25F, 0.25F},
+                                               {-0.25F, 0.25F, 0.25F});
 
-         {-0.25F, 0.25F, -0.25F},  {0.25F, 0.25F, -0.25F},
-         {0.25F, -0.25F, -0.25F},  {0.25F, -0.25F, -0.25F},
-         {-0.25F, -0.25F, -0.25F}, {-0.25F, 0.25F, -0.25F},
+    cube_data_raw_mesh_position2.push_triangle({-0.25F, 0.25F, -0.25F},
+                                               {0.25F, 0.25F, -0.25F},
+                                               {0.25F, -0.25F, -0.25F});
+    cube_data_raw_mesh_position2.push_triangle({0.25F, -0.25F, -0.25F},
+                                               {-0.25F, -0.25F, -0.25F},
+                                               {-0.25F, 0.25F, -0.25F});
 
-         {-0.25F, -0.25F, 0.25F},  {0.25F, -0.25F, 0.25F},
-         {0.25F, 0.25F, 0.25F},    {0.25F, 0.25F, 0.25F},
-         {-0.25F, 0.25F, 0.25F},   {-0.25F, -0.25F, 0.25F}});
+    cube_data_raw_mesh_position2.push_triangle(
+        {-0.25F, -0.25F, 0.25F}, {0.25F, -0.25F, 0.25F}, {0.25F, 0.25F, 0.25F});
+
+    cube_data_raw_mesh_position2.push_triangle(
+        {0.25F, 0.25F, 0.25F}, {-0.25F, 0.25F, 0.25F}, {-0.25F, -0.25F, 0.25F});
 
     static vector3df cube_data_raw_mesh_position[] = {
         {-0.25F, -0.25F, 0.25F},  {-0.25F, -0.25F, -0.25F},
@@ -247,7 +259,7 @@ bool DefaultResources::loadDefaultCubeMesh(sys::ResourceManager& rManager)
     core::span a{cube_data_raw_mesh_position2};
     (void)(a);
     auto vertex_buffer_cube_positions{core::msptr<res::VertexBufferObject>(
-        "haf_position", core::span{cube_data_raw_mesh_position2})};
+        "haf_position", core::span{cube_data_raw_mesh_position2.as_span()})};
 
     auto vertex_buffer_cube_normals{core::msptr<res::VertexBufferObject>(
         "haf_normal", core::span{cube_data_raw_mesh_normal})};

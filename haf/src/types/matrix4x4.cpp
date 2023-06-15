@@ -1,10 +1,8 @@
 #include <haf/include/core/matrix4x4.hpp>
 #include <haf/include/core/geometry_math.hpp>
 
-#include <limits>
 #include <cmath>
-
-#include "vmath.h"
+#include <cfloat>
 
 using namespace haf::core;
 using namespace fmath;
@@ -40,7 +38,7 @@ Matrix4x4::Matrix4x4(Scalar const a00,
 
 void Matrix4x4::setIdentity() noexcept
 {
-    for (int i{0}; i < 16; ++i)
+    for (int i{0}; i < static_cast<int>(kMatrixNumElements); ++i)
     {
         m_matrix_data[i] = ((i % 5) == 0) ? One : Zero;
     }
@@ -59,52 +57,6 @@ void Matrix4x4::setDiagonal(fmath::vector4d<Scalar> const& v) noexcept
     m_matrix_data[5]  = v.y;
     m_matrix_data[10] = v.z;
     m_matrix_data[15] = v.w;
-}
-
-void Matrix4x4::setRotation(fmath::vector3d<Scalar> const& v,
-                            Scalar const angle) noexcept
-{
-    setRotation(v.x, v.y, v.z, angle);
-}
-
-void Matrix4x4::setRotation(Scalar const x,
-                            Scalar const y,
-                            Scalar const z,
-                            Scalar const angle) noexcept
-{
-    Scalar const c{std::cos(angle * ToRadians<Scalar>)};
-    Scalar const s{std::sin(angle * ToRadians<Scalar>)};
-    Scalar const c1{One - c};
-    Scalar const m0{m_matrix_data[0]}, m4{m_matrix_data[4]},
-        m8{m_matrix_data[8]}, m12{m_matrix_data[12]}, m1{m_matrix_data[1]},
-        m5{m_matrix_data[5]}, m9{m_matrix_data[9]}, m13{m_matrix_data[13]},
-        m2{m_matrix_data[2]}, m6{m_matrix_data[6]}, m10{m_matrix_data[10]},
-        m14{m_matrix_data[14]};
-
-    // build rotation matrix
-    Scalar const r0{(x * x * c1) + c};
-    Scalar const r1{(x * y * c1) + (z * s)};
-    Scalar const r2{(x * z * c1) - (y * s)};
-    Scalar const r4{(x * y * c1) - (z * s)};
-    Scalar const r5{(y * y * c1) + c};
-    Scalar const r6{(y * z * c1) + (x * s)};
-    Scalar const r8{(x * z * c1) + (y * s)};
-    Scalar const r9{(y * z * c1) - (x * s)};
-    Scalar const r10{(z * z * c1) + c};
-
-    // multiply rotation matrix
-    m_matrix_data[0]  = (r0 * m0) + (r4 * m1) + (r8 * m2);
-    m_matrix_data[1]  = (r1 * m0) + (r5 * m1) + (r9 * m2);
-    m_matrix_data[2]  = (r2 * m0) + (r6 * m1) + (r10 * m2);
-    m_matrix_data[4]  = (r0 * m4) + (r4 * m5) + (r8 * m6);
-    m_matrix_data[5]  = (r1 * m4) + (r5 * m5) + (r9 * m6);
-    m_matrix_data[6]  = (r2 * m4) + (r6 * m5) + (r10 * m6);
-    m_matrix_data[8]  = (r0 * m8) + (r4 * m9) + (r8 * m10);
-    m_matrix_data[9]  = (r1 * m8) + (r5 * m9) + (r9 * m10);
-    m_matrix_data[10] = (r2 * m8) + (r6 * m9) + (r10 * m10);
-    m_matrix_data[12] = (r0 * m12) + (r4 * m13) + (r8 * m14);
-    m_matrix_data[13] = (r1 * m12) + (r5 * m13) + (r9 * m14);
-    m_matrix_data[14] = (r2 * m12) + (r6 * m13) + (r10 * m14);
 }
 
 Matrix4x4& Matrix4x4::operator*=(Matrix4x4 const& transform) noexcept
@@ -183,7 +135,7 @@ namespace
 {
 bool isAlmostEqual(htps::f32 const lhs, htps::f32 const rhs) noexcept
 {
-    return std::abs(lhs - rhs) < std::numeric_limits<htps::f32>::epsilon();
+    return std::fabsf(lhs - rhs) < FLT_EPSILON;
 }
 }  // namespace
 
@@ -204,26 +156,19 @@ Matrix4x4 lookat(vector3df const& eye,
                  vector3df const& center,
                  vector3df const& up)
 {
-    const auto f   = normalize(center - eye);
-    const auto upN = normalize(up);
-    const auto s   = cross(f, upN);
-    const auto u   = cross(s, f);
+    const auto forward{normalize(center - eye)};
+    const auto up_normalized{normalize(up)};
+    const auto sideways{cross(forward, up_normalized)};
+    const auto u{cross(sideways, forward)};
 
-    auto M = Matrix4x4{s.x, u.x, -f.x, 0.0F, s.y,  u.y,  -f.y, 0.0F,
-                       s.z, u.z, -f.z, 0.0F, 0.0F, 0.0F, 0.0F, 1.0F};
+    auto M = Matrix4x4{sideways.x, u.x,  -forward.x, 0.0F, sideways.y, u.y,
+                       -forward.y, 0.0F, sideways.z, u.z,  -forward.z, 0.0F,
+                       0.0F,       0.0F, 0.0F,       1.0F};
 
     return M * Matrix4x4{OneF32,  ZeroF32, ZeroF32, ZeroF32, ZeroF32, OneF32,
                          ZeroF32, ZeroF32, ZeroF32, ZeroF32, OneF32,  ZeroF32,
                          -eye.x,  -eye.y,  -eye.z,  OneF32};
 }
-
-Matrix4x4 toMatrix(vmath::mat4 const& m)
-{
-    return Matrix4x4{m[0][0], m[0][1], m[0][2], m[0][3], m[1][0], m[1][1],
-                     m[1][2], m[1][3], m[2][0], m[2][1], m[2][2], m[2][3],
-                     m[3][0], m[3][1], m[3][2], m[3][3]};
-}
-
 
 Matrix4x4 frustum(f32 const left,
                   f32 const right,
@@ -271,12 +216,12 @@ Matrix4x4 perspective(f32 fovy, f32 const aspect, f32 const n, f32 const f)
             ZeroF32, ZeroF32, C,       ZeroF32};
 }
 
-Matrix4x4 ortho_(f32 const left,
-                f32 const right,
-                f32 const bottom,
-                f32 const top,
-                f32 const n,
-                f32 const f)
+Matrix4x4 ortho(f32 const left,
+                 f32 const right,
+                 f32 const bottom,
+                 f32 const top,
+                 f32 const n,
+                 f32 const f)
 {
     return {2.0F / (right - left),
             0.0F,
@@ -298,18 +243,7 @@ Matrix4x4 ortho_(f32 const left,
             (n + f) / (f - n),
             1.0F};
 }
-
-Matrix4x4 ortho_v(f32 const left,
-                f32 const right,
-                f32 const bottom,
-                f32 const top,
-                f32 const n,
-                f32 const f)
-{
-    auto const m = vmath::ortho(left, right, bottom, top, n, f);
-    return toMatrix(m);
-}
-
+/*
 Matrix4x4 ortho(f32 const left,
                 f32 const right,
                 f32 const bottom,
@@ -319,12 +253,13 @@ Matrix4x4 ortho(f32 const left,
 {
     Matrix4x4 m1{ortho_v(left, right, bottom, top, n, f)};
     Matrix4x4 m2{ortho_(left, right, bottom, top, n, f)};
-    if (!isAlmostEqual(m1,m2))
+    if (!isAlmostEqual(m1, m2))
     {
         int b = 0;
         (void)(b);
     }
     return m1;
 }
+*/
 
 }  // namespace haf::math

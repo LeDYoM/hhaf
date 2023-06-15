@@ -29,14 +29,17 @@ static constexpr T ToRadians = PiConstant<T> / static_cast<T>(180);
 [[nodiscard]] fmath::vector3df normalize(fmath::vector3df const& v);
 [[nodiscard]] fmath::vector2df normalize(fmath::vector2df const& v);
 [[nodiscard]] fmath::vector4df cross(fmath::vector4df const& a,
-                                    fmath::vector4df const& b);
+                                     fmath::vector4df const& b);
 [[nodiscard]] fmath::vector3df cross(fmath::vector3df const& a,
-                                    fmath::vector3df const& b);
+                                     fmath::vector3df const& b);
 [[nodiscard]] fmath::vector2df cross(fmath::vector2df const& a,
-                                    fmath::vector2df const& b);
-[[nodiscard]] core::f32 dot(fmath::vector4df const& a, fmath::vector4df const& b);
-[[nodiscard]] core::f32 dot(fmath::vector3df const& a, fmath::vector3df const& b);
-[[nodiscard]] core::f32 dot(fmath::vector2df const& a, fmath::vector2df const& b);
+                                     fmath::vector2df const& b);
+[[nodiscard]] core::f32 dot(fmath::vector4df const& a,
+                            fmath::vector4df const& b);
+[[nodiscard]] core::f32 dot(fmath::vector3df const& a,
+                            fmath::vector3df const& b);
+[[nodiscard]] core::f32 dot(fmath::vector2df const& a,
+                            fmath::vector2df const& b);
 
 }  // namespace haf::math
 

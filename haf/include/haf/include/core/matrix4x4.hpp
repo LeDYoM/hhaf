@@ -112,13 +112,6 @@ public:
 
     void setDiagonal(fmath::vector3d<Scalar> const& v) noexcept;
     void setDiagonal(fmath::vector4d<Scalar> const& v) noexcept;
-    void setRotation(fmath::vector3d<Scalar> const& v,
-                     Scalar const angle) noexcept;
-
-    void setRotation(Scalar const x,
-                     Scalar const y,
-                     Scalar const z,
-                     Scalar const angle) noexcept;
 
     static Matrix4x4 const Identity;
 
