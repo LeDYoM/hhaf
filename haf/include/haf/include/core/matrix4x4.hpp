@@ -3,8 +3,6 @@ HAF_PRAGMA_ONCE
 #define HAF_TYPES_MATRIX4X4_INCLUDE_HPP
 
 #include <haf/include/haf_export.hpp>
-#include <haf/include/core/types.hpp>
-#include <htypes/include/array.hpp>
 #include <facil_math/include/math_types.hpp>
 
 namespace haf::math
@@ -110,8 +108,28 @@ public:
         setColumn<column>(v.x, v.y, v.z);
     }
 
-    void setDiagonal(fmath::vector3d<Scalar> const& v) noexcept;
-    void setDiagonal(fmath::vector4d<Scalar> const& v) noexcept;
+    constexpr void setDiagonal(fmath::vector3d<Scalar> const& v) noexcept
+    {
+        setDiagonal({v.x, v.y, v.z, One});
+    }
+
+    constexpr void setDiagonal(fmath::vector4d<Scalar> const& v) noexcept
+    {
+        m_matrix_data[0]  = v.x;
+        m_matrix_data[5]  = v.y;
+        m_matrix_data[10] = v.z;
+        m_matrix_data[15] = v.w;
+    }
+
+    constexpr Scalar operator[](int32_t const index) const noexcept
+    {
+        return m_matrix_data[index];
+    }
+
+    constexpr Scalar& operator[](int32_t const index) noexcept
+    {
+        return m_matrix_data[index];
+    }
 
     static Matrix4x4 const Identity;
 
@@ -130,6 +148,19 @@ public:
 private:
     Scalar m_matrix_data[kMatrixNumElements];
 };
+
+void setDiagonal(Matrix4x4& m, fmath::vector4d<Matrix4x4::Scalar> const& v) noexcept
+{
+    m[0]  = v.x;
+    m[5]  = v.y;
+    m[10] = v.z;
+    m[15] = v.w;
+}
+
+void setDiagonal(Matrix4x4& m, fmath::vector3d<Matrix4x4::Scalar> const& v) noexcept
+{
+    setDiagonal(m, {v.x, v.y, v.z, Matrix4x4::One});
+}
 
 [[nodiscard]] Matrix4x4 operator*(Matrix4x4 const& lhs,
                                   Matrix4x4 const& rhs) noexcept;
