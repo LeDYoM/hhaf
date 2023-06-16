@@ -7,7 +7,7 @@ HAF_PRAGMA_ONCE
 #include <haf/include/properties/property_state.hpp>
 #include <haf/include/events/emitter.hpp>
 
-#include <haf/include/core/matrix4x4.hpp>
+#include <facil_math/include/matrix4x4.hpp>
 #include <haf/include/component/component_declaration.hpp>
 
 #include <haf/include/resources/shader.hpp>

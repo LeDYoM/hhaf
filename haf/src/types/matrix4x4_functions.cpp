@@ -1,10 +1,9 @@
-#include <haf/include/core/matrix4x4.hpp>
+#include <facil_math/include/matrix4x4.hpp>
 #include <haf/include/core/geometry_math.hpp>
 
 using namespace haf::core;
-using namespace fmath;
 
-namespace haf::math
+namespace fmath
 {
 
 Matrix4x4 lookat(vector3df const& eye,

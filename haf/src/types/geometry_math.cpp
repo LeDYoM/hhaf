@@ -1,11 +1,10 @@
 #include <haf/include/core/geometry_math.hpp>
 #include <cmath>
 
-using namespace haf::core;
-using namespace fmath;
-
-namespace haf::math
+namespace fmath
 {
+using namespace tps;
+
 f32 length(vector4df const& v)
 {
     return std::sqrt((v.x * v.x) + (v.y * v.y) + (v.z * v.z) + (v.w * v.w));

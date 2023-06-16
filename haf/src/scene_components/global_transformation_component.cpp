@@ -14,16 +14,16 @@
 #include <hlog/include/hlog.hpp>
 
 using namespace htps;
-using namespace haf::math;
+using namespace fmath;
 
 namespace haf::scene
 {
 struct GlobalTransformationComponent::PrivateComponentData
 {
     evt::ireceiver m_receiver;
-    math::Matrix4x4 m_transform;
-    prop::PropertyState<math::Matrix4x4> m_localTransformation;
-    prop::PropertyState<math::Matrix4x4> m_parentGlobalTransformation;
+    Matrix4x4 m_transform;
+    prop::PropertyState<Matrix4x4> m_localTransformation;
+    prop::PropertyState<Matrix4x4> m_parentGlobalTransformation;
 };
 
 GlobalTransformationComponent::GlobalTransformationComponent() :

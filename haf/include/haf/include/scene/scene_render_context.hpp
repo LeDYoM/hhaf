@@ -4,7 +4,7 @@ HAF_PRAGMA_ONCE
 
 #include <haf/include/haf_export.hpp>
 #include <haf/include/core/types.hpp>
-#include <haf/include/core/matrix4x4.hpp>
+#include <facil_math/include/matrix4x4.hpp>
 #include <haf/include/time/time_point.hpp>
 #include <haf/include/scene/scene_render_context_view.hpp>
 
@@ -28,9 +28,9 @@ protected:
     void setBackgroundColor(fmath::vector4df const& backgroundColor) noexcept;
 
 public:
-    virtual void setCameraMatrix(math::Matrix4x4 const& matrix);
+    virtual void setCameraMatrix(fmath::Matrix4x4 const& matrix);
     void setCurrentModelViewMatrix(
-        math::Matrix4x4 const& camera_matrix) noexcept;
+        fmath::Matrix4x4 const& camera_matrix) noexcept;
 };
 }  // namespace haf::scene
 

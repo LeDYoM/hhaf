@@ -13,6 +13,7 @@ set(CURRENT_TARGET facil_math)
 set(include_dir facil_math/include)
 set(headers
     ${include_dir}/math_types.hpp
+    ${include_dir}/matrix4x4.hpp
     ${include_dir}/rect.hpp
     ${include_dir}/vector2d.hpp
     ${include_dir}/vector3d.hpp

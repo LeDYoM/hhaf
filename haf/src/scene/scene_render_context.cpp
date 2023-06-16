@@ -2,6 +2,9 @@
 #include <hlog/include/hlog.hpp>
 #include <haf/include/scene/color.hpp>
 
+using namespace fmath;
+using namespace haf::time;
+
 namespace haf::scene
 {
 SceneRenderContext::SceneRenderContext()  = default;
@@ -12,24 +15,24 @@ void SceneRenderContext::init()
     m_backgroundColor = colors::DarkGreen;
 }
 
-void SceneRenderContext::setNowFrame(time::TimePoint time_point)
+void SceneRenderContext::setNowFrame(TimePoint time_point)
 {
     m_nowFrame = core::move(time_point);
 }
 
 void SceneRenderContext::setBackgroundColor(
-    fmath::vector4df const& backgroundColor) noexcept
+    vector4df const& backgroundColor) noexcept
 {
     m_backgroundColor = backgroundColor;
 }
 
-void SceneRenderContext::setCameraMatrix(math::Matrix4x4 const& camera_matrix)
+void SceneRenderContext::setCameraMatrix(Matrix4x4 const& camera_matrix)
 {
     m_cameraMatrix = camera_matrix;
 }
 
 void SceneRenderContext::setCurrentModelViewMatrix(
-    math::Matrix4x4 const& matrix) noexcept
+    Matrix4x4 const& matrix) noexcept
 {
     m_currentModeViewMatrix = matrix;
 }

@@ -5,7 +5,7 @@ HAF_PRAGMA_ONCE
 #include <htypes/include/types.hpp>
 #include <facil_math/include/rect.hpp>
 #include <haf/include/properties/property_state.hpp>
-#include <haf/include/core/matrix4x4.hpp>
+#include <facil_math/include/matrix4x4.hpp>
 
 namespace haf::ogl
 {
@@ -39,7 +39,7 @@ public:
     void clearRenderQueue();
 
     prop::PropertyState<fmath::Rects32> ViewPort;
-    prop::PropertyState<math::Matrix4x4> Projection;
+    prop::PropertyState<fmath::Matrix4x4> Projection;
 
 private:
     htps::sptr<ogl::RenderTarget> irender_target_;
