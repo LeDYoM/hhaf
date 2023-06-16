@@ -1,10 +1,8 @@
 #include "catch.hpp"
 
-#include <htypes/include/types.hpp>
 #include <facil_math/include/matrix4x4.hpp>
 #include <limits>
 
-using namespace haf;
 using namespace fmath;
 
 TEST_CASE("haf::math::Matrix4x4", "[haf][scene][Matrix4x4][Transformable]")

@@ -4,6 +4,7 @@ project(facil_math_utests CXX)
 set(CURRENT_TARGET ${PROJECT_NAME})
 
 set(SOURCE_TESTS
+    matrix4x4
     rect
     vector2d
     vector3d

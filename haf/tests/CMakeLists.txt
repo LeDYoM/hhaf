@@ -25,7 +25,6 @@ set(SOURCE_TESTS
 
     resources/image
 
-    scene/matrix4x4
     scene/scenenode
     scene/scenenodefactory
     scene/scenenodeparent
