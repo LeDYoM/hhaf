@@ -233,7 +233,7 @@ namespace detail
 {
 inline bool isAlmostEqual(tps::f32 const lhs, tps::f32 const rhs) noexcept
 {
-    return std::fabsf(lhs - rhs) < FLT_EPSILON;
+    return std::fabs(lhs - rhs) < FLT_EPSILON;
 }
 }  // namespace detail
 

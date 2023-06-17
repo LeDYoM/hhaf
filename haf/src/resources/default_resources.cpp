@@ -206,6 +206,7 @@ bool DefaultResources::loadDefaultCubeMesh(sys::ResourceManager& rManager)
         {0.25F, 0.25F, 0.25F},    {0.25F, 0.25F, 0.25F},
         {-0.25F, 0.25F, 0.25F},   {-0.25F, -0.25F, 0.25F}};
 
+    (void)(cube_data_raw_mesh_position);
     static vector3df cube_data_raw_mesh_normal[] = {
         Vector3dOnesF32, Vector3dOnesF32, Vector3dOnesF32,
         Vector3dOnesF32, Vector3dOnesF32, Vector3dOnesF32,
