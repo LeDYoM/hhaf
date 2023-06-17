@@ -11,7 +11,7 @@ HAF_PRAGMA_ONCE
 
 namespace haf::sys
 {
-struct HAF_PRIVATE SimulationData
+struct SimulationData
 {
     bool global_use;
     htps::str simulation_input_file;
@@ -19,7 +19,7 @@ struct HAF_PRIVATE SimulationData
     htps::f32 speed;
 };
 
-struct HAF_PRIVATE DeserializableSimulationData : public data::IDeserializable
+struct DeserializableSimulationData : public data::IDeserializable
 {
     static constexpr char SimulationInputFileStr[] = "read_input";
     static constexpr char SimulationOutputFile[]   = "write_output";

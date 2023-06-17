@@ -11,13 +11,13 @@ HAF_PRAGMA_ONCE
 
 namespace haf::sys
 {
-struct HAF_PRIVATE SystemConfigurationData
+struct SystemConfigurationData
 {
     htps::str simulation_system_configuration_file_;
     htps::str window_system_configuration_file_;
 };
 
-struct HAF_PRIVATE DeserializableSystemConfigurationData
+struct DeserializableSystemConfigurationData
     : public data::IDeserializable
 {
     static constexpr char kSimulationSystemConfigurationFile[] =
@@ -39,7 +39,7 @@ struct HAF_PRIVATE DeserializableSystemConfigurationData
     SystemConfigurationData data;
 };
 
-class HAF_PRIVATE SystemProviderConfiguration
+class SystemProviderConfiguration
     : public SystemConfiguration<DeserializableSystemConfigurationData,
                                  SystemConfigurationData>
 {

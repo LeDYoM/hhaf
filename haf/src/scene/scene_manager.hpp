@@ -21,7 +21,7 @@ class SceneNode;
 
 namespace haf::scene
 {
-class HAF_PRIVATE SceneManager final : public sys::SystemBase,
+class SceneManager final : public sys::SystemBase,
                                        public IAppInitializer,
                                        public IAppFinisher
 {

@@ -7,6 +7,7 @@ using namespace fmath;
 
 namespace
 {
+/*
 void generate_texture(float* data, int width, int height)
 {
     int x, y;
@@ -22,6 +23,7 @@ void generate_texture(float* data, int width, int height)
         }
     }
 }
+*/
 }  // namespace
 
 namespace haf::res

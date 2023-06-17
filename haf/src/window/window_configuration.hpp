@@ -12,7 +12,7 @@ HAF_PRAGMA_ONCE
 
 namespace haf::sys
 {
-struct HAF_PRIVATE WindowConfigurationData
+struct WindowConfigurationData
 {
     htps::u32 width{800U};
     htps::u32 height{600U};
@@ -24,7 +24,7 @@ struct HAF_PRIVATE WindowConfigurationData
     htps::u32 bitsPerPixel() const;
 };
 
-struct HAF_PRIVATE DeserializableWindowConfigurationData
+struct DeserializableWindowConfigurationData
     : public data::IDeserializable
 {
     static constexpr char WindowWidthStr[]        = "window_width";
@@ -50,7 +50,7 @@ struct HAF_PRIVATE DeserializableWindowConfigurationData
     WindowConfigurationData data;
 };
 
-class HAF_PRIVATE WindowConfiguration
+class WindowConfiguration
     : public SystemConfiguration<DeserializableWindowConfigurationData,
                                  WindowConfigurationData>
 {
