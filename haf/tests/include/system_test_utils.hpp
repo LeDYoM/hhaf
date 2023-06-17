@@ -90,7 +90,7 @@ template <typename SystemTestType>
 CreateSystemForTestResult<SystemTestType> createSystemForTest()
 {
     auto test_system{makeTestSystem<SystemTestType>()};
-    auto& t_system{test_system->system<typename SystemTestType::SystemType>()};
+    auto& t_system{test_system->template system<typename SystemTestType::SystemType>()};
     return {htps::move(test_system), t_system};
 }
 }  // namespace haf
