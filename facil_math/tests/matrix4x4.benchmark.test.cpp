@@ -1,22 +1,20 @@
-#include "catch.hpp"
+#include "catch_include.hpp"
 
 #include <htypes/include/types.hpp>
 #include <facil_math/include/matrix4x4.hpp>
 
-using namespace haf;
-using namespace haf::math;
-using namespace haf::scene;
-using namespace haf::scene::testing;
+using namespace fmath;
 
-TEST_CASE("haf::math::Matrix4x4 Benchmark",
-          "[haf][scene][Matrix4x4][Transformable][benchmark]")
+TEST_CASE("facil_math::Matrix4x4 Benchmark",
+          "[facil_math][Matrix4x4][benchmark]")
 {
     Matrix4x4 const matrix1(100.0F, 200.0F, 300.0F, 400.0F, 500.0F, 600.0F,
-                            700.0F, 800.0F, 900.0F);
+                            700.0F, 800.0F, 900.0F, 1000.0F, 1100.0F, 1200.0F,
+                            1300.0F, 1400.0F, 1500.0F, 1600.0F);
 
-    Matrix4x4 const matrix2(12345.123F, 245349786.1F, 3456710823.1234F,
-                            4.1298654345F, 5765.51298F, 63703610952.22F,
-                            0.0000124F, 0.9999999990F, 9.0F);
+    Matrix4x4 const matrix2(100.0F, 200.0F, 300.0F, 400.0F, 500.0F, 600.0F,
+                            700.0F, 800.0F, 900.0F, 1000.0F, 1100.0F, 1200.0F,
+                            1300.0F, 1400.0F, 1500.0F, 1600.0F);
 
     BENCHMARK("Matrix4x4 copy constructor")
     {

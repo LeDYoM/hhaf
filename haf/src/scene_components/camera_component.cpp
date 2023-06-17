@@ -3,8 +3,8 @@
 
 #include "system/get_system.hpp"
 #include "scene/scene_manager.hpp"
-#include <haf/include/core/geometry_math.hpp>
-#include <haf/include/core/matrix4x4_functions.hpp>
+#include <facil_math/include/geometry_math.hpp>
+#include <facil_math/include/matrix4x4_functions.hpp>
 
 using namespace haf::core;
 using namespace haf::prop;

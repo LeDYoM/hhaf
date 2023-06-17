@@ -3,7 +3,7 @@
 
 #include <hlog/include/hlog.hpp>
 #include <haf/include/scene/scene_node.hpp>
-#include <haf/include/core/geometry_math.hpp>
+#include <facil_math/include/geometry_math.hpp>
 
 using namespace fmath;
 using namespace haf::core;

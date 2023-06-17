@@ -1,6 +1,6 @@
-HAF_PRAGMA_ONCE
-#ifndef HAF_MATH_GEOMETRY_MATH_INCLUDE_HPP
-#define HAF_MATH_GEOMETRY_MATH_INCLUDE_HPP
+FMA_PRAGMA_ONCE
+#ifndef FACIL_MATH_GEOMETRY_MATH_INCLUDE_HPP
+#define FACIL_MATH_GEOMETRY_MATH_INCLUDE_HPP
 
 #include <facil_math/include/math_types.hpp>
 #include <facil_math/include/vector2d.hpp>
