@@ -5,66 +5,80 @@ FMA_PRAGMA_ONCE
 #include <htypes/include/types.hpp>
 #include <htypes/include/vector.hpp>
 #include <htypes/include/span.hpp>
+#include <facil_math/include/vector3d.hpp>
 
 namespace fmath
 {
 namespace tps = htps;
 
 template <typename T>
-class vvector
+class vvector3d
 {
 public:
-    constexpr vvector() = default;
+    constexpr vvector3d() = default;
 
     template <tps::size_type N>
-    constexpr void push_back(T const (&elements)[N])
+    constexpr void push_back(vector3d<T> const (&elements)[N])
     {
-        for (tps::size_type i=0U;i<N;++i)
+        for (tps::size_type i = 0U; i < N; ++i)
         {
             push_back(elements[i]);
         }
     }
 
-    constexpr void push_back(T const& element)
+    constexpr void push_back(vector3d<T> const& element)
     {
         m_container.push_back(element);
     }
 
-    constexpr void push_back(T&& element)
+    constexpr void push_back(vector3d<T>&& element)
     {
         m_container.push_back(tps::move(element));
     }
 
-    constexpr void push_triangle(T const& element0, T const& element1, T const& element2)
+    constexpr void push_triangle(vector3d<T> const& element0,
+                                 vector3d<T> const& element1,
+                                 vector3d<T> const& element2)
     {
         m_container.push_back(element0);
         m_container.push_back(element1);
         m_container.push_back(element2);
     }
 
-    constexpr void push_triangle(T&& element0, T&& element1, T&& element2)
+    constexpr void push_triangle(vector3d<T>&& element0,
+                                 vector3d<T>&& element1,
+                                 vector3d<T>&& element2)
     {
         m_container.push_back(tps::move(element0));
         m_container.push_back(tps::move(element1));
         m_container.push_back(tps::move(element2));
     }
-
-    constexpr tps::vector<T> const& getVector() const noexcept
+/*
+    constexpr void push_plane(const vector3d<T>& down_left, const vector3d<T>& up_right)
+    {
+        T triangle{down_left};
+        m_container.push_back(tps::move(element0));
+        m_container.push_back(tps::move(element1));
+        m_container.push_back(tps::move(element2));
+    }
+*/
+    constexpr vector3d<T> const& getVector() const noexcept
     {
         return m_container;
     }
 
-    constexpr operator tps::span<T const>() const noexcept
+    constexpr operator tps::span<vector3d<T> const>() const noexcept
     {
         return tps::span{m_container};
     }
 
-    constexpr tps::span<T const> as_span() const noexcept
+    constexpr tps::span<vector3d<T> const> as_span() const noexcept
     {
-        return static_cast<tps::span<T const>>(*this);
+        return static_cast<tps::span<vector3d<T> const>>(*this);
     }
+
 private:
-    tps::vector<T> m_container;
+    tps::vector<vector3d<T>> m_container;
 
 private:
 };

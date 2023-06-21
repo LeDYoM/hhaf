@@ -141,7 +141,7 @@ sptr<VertexBufferObject> DefaultResources::getDefaultColorRenderDataBufer()
 
 bool DefaultResources::loadDefaultCubeMesh(sys::ResourceManager& rManager)
 {
-    fmath::vvector<vector3df> cube_data_raw_mesh_position2;
+    fmath::vvector3d<f32> cube_data_raw_mesh_position2;
 
     cube_data_raw_mesh_position2.push_triangle({-0.25F, -0.25F, 0.25F},
                                                {-0.25F, -0.25F, -0.25F},
