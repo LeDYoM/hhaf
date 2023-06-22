@@ -5,6 +5,7 @@
 #include <haf/include/scene/color.hpp>
 #include <haf/include/resources/image.hpp>
 #include <haf/include/core/types.hpp>
+#include <haf/include/math/types.hpp>
 
 using namespace haf::res;
 using namespace haf::core;
@@ -141,7 +142,7 @@ sptr<VertexBufferObject> DefaultResources::getDefaultColorRenderDataBufer()
 
 bool DefaultResources::loadDefaultCubeMesh(sys::ResourceManager& rManager)
 {
-    fmath::vvector3d<f32> cube_data_raw_mesh_position2;
+    math::vvector3df cube_data_raw_mesh_position2;
 
     cube_data_raw_mesh_position2.push_triangle({-0.25F, -0.25F, 0.25F},
                                                {-0.25F, -0.25F, -0.25F},

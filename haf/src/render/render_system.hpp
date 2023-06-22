@@ -3,6 +3,7 @@ HAF_PRAGMA_ONCE
 #define HAF_SYS_SYSTEM_RENDERSYSTEM_INCLUDE_HPP
 
 #include <haf/include/core/types.hpp>
+#include <haf/include/math/types.hpp>
 #include "system/system_base.hpp"
 #include <haf/include/render/shared_data_manager.hpp>
 

@@ -62,7 +62,7 @@ public:
         m_container.push_back(tps::move(element2));
     }
 */
-    constexpr vector3d<T> const& getVector() const noexcept
+    constexpr tps::vector<vector3d<T>> const& getVector() const noexcept
     {
         return m_container;
     }
