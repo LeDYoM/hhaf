@@ -53,15 +53,22 @@ public:
         m_container.push_back(tps::move(element1));
         m_container.push_back(tps::move(element2));
     }
-/*
-    constexpr void push_plane(const vector3d<T>& down_left, const vector3d<T>& up_right)
+
+    constexpr void push_plane(const vector3d<T>& down_left,
+                              const vector3d<T>& up_right)
     {
-        T triangle{down_left};
-        m_container.push_back(tps::move(element0));
-        m_container.push_back(tps::move(element1));
-        m_container.push_back(tps::move(element2));
+        auto const delta{up_right - down_left};
+        vector3d<T> const triangle_0{down_left.x + delta.x, down_left.y,
+                                     down_left.z};
+        vector3d<T> const triangle_1{down_left.x + delta.x,
+                                     down_left.y + delta.y,
+                                     down_left.z + delta.z};
+        vector3d<T> const triangle_2{down_left.x, down_left.y + delta.y,
+                                     down_left.z + delta.z};
+        push_triangle(down_left, triangle_0, triangle_1);
+        push_triangle(triangle_1, triangle_2, triangle_0);
     }
-*/
+
     constexpr tps::vector<vector3d<T>> const& getVector() const noexcept
     {
         return m_container;
