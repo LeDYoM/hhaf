@@ -58,15 +58,12 @@ public:
                               const vector3d<T>& up_right)
     {
         auto const delta{up_right - down_left};
-        vector3d<T> const triangle_0{down_left.x + delta.x, down_left.y,
+        vector3d<T> const down_right{down_left.x + delta.x, down_left.y,
                                      down_left.z};
-        vector3d<T> const triangle_1{down_left.x + delta.x,
-                                     down_left.y + delta.y,
-                                     down_left.z + delta.z};
-        vector3d<T> const triangle_2{down_left.x, down_left.y + delta.y,
-                                     down_left.z + delta.z};
-        push_triangle(down_left, triangle_0, triangle_1);
-        push_triangle(triangle_1, triangle_2, triangle_0);
+        vector3d<T> const up_left{down_left.x, down_left.y + delta.y,
+                                     down_left.z};
+        push_triangle(down_left, down_right, up_right);
+        push_triangle(up_right, up_left, down_left);
     }
 
     constexpr tps::vector<vector3d<T>> const& getVector() const noexcept

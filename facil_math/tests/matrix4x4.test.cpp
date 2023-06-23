@@ -110,3 +110,8 @@ TEST_CASE("haf::math::Matrix4x4::setColumn", "[haf][scene][Matrix4x4]")
              5.4F, 8.5F, 9.6F, 10.7F, 5.4F, 8.5F, 9.6F, 10.7F}));
     }
 }
+
+TEST_CASE("haf::math::Matrix4x4::operator*", "[haf][scene][Matrix4x4]")
+{
+
+}

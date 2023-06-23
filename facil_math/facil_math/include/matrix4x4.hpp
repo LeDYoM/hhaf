@@ -172,6 +172,17 @@ public:
                    m[3] * n[12] + m[7] * n[13] + m[11] * n[14] + m[15] * n[15]};
     }
 
+    constexpr vector4df operator*(vector4df const& rhs) noexcept
+    {
+        auto const m{getMatrix()};
+
+        return vector4df{
+            m[0] * rhs.x + m[4] * rhs.y + m[8] * rhs.z + m[12] * rhs.w,
+            m[1] * rhs.x + m[5] * rhs.y + m[9] * rhs.z + m[13] * rhs.w,
+            m[2] * rhs.x + m[6] * rhs.y + m[10] * rhs.z + m[14] * rhs.w,
+            m[3] * rhs.x + m[7] * rhs.y + m[11] * rhs.z + m[15] * rhs.w};
+    }
+
     constexpr iterator begin() noexcept { return m_matrix_data; }
     constexpr const_iterator begin() const noexcept { return m_matrix_data; }
     constexpr const_iterator cbegin() const noexcept { return m_matrix_data; }
@@ -250,6 +261,6 @@ inline bool isAlmostEqual(tps::f32 const lhs, tps::f32 const rhs) noexcept
     }
     return true;
 }
-}  // namespace haf::math
+}  // namespace fmath
 
 #endif

@@ -169,12 +169,15 @@ bool DefaultResources::loadDefaultCubeMesh(sys::ResourceManager& rManager)
                                                {-0.25F, -0.25F, 0.25F},
                                                {-0.25F, 0.25F, 0.25F});
 
-    cube_data_raw_mesh_position2.push_triangle({-0.25F, 0.25F, -0.25F},
-                                               {0.25F, 0.25F, -0.25F},
-                                               {0.25F, -0.25F, -0.25F});
-    cube_data_raw_mesh_position2.push_triangle({0.25F, -0.25F, -0.25F},
-                                               {-0.25F, -0.25F, -0.25F},
-                                               {-0.25F, 0.25F, -0.25F});
+    //    cube_data_raw_mesh_position2.push_triangle({-0.25F, 0.25F, -0.25F},
+    //                                               {0.25F, 0.25F, -0.25F},
+    //                                               {0.25F, -0.25F, -0.25F});
+    //    cube_data_raw_mesh_position2.push_triangle({0.25F, -0.25F, -0.25F},
+    //                                               {-0.25F, -0.25F, -0.25F},
+    //                                               {-0.25F, 0.25F, -0.25F});
+
+    cube_data_raw_mesh_position2.push_plane({-0.35F, 0.25F, -0.25F},
+                                            {0.35F, 0.25F, -0.25F});
 
     cube_data_raw_mesh_position2.push_triangle(
         {-0.25F, -0.25F, 0.25F}, {0.25F, -0.25F, 0.25F}, {0.25F, 0.25F, 0.25F});
