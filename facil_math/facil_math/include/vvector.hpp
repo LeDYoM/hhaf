@@ -6,6 +6,7 @@ FMA_PRAGMA_ONCE
 #include <htypes/include/vector.hpp>
 #include <htypes/include/span.hpp>
 #include <facil_math/include/vector3d.hpp>
+#include <facil_math/include/matrix4x4.hpp>
 
 namespace fmath
 {
@@ -28,30 +29,16 @@ public:
 
     constexpr void push_back(vector3d<T> const& element)
     {
-        m_container.push_back(element);
-    }
-
-    constexpr void push_back(vector3d<T>&& element)
-    {
-        m_container.push_back(tps::move(element));
+        m_container.push_back(m_matrix * element);
     }
 
     constexpr void push_triangle(vector3d<T> const& element0,
                                  vector3d<T> const& element1,
                                  vector3d<T> const& element2)
     {
-        m_container.push_back(element0);
-        m_container.push_back(element1);
-        m_container.push_back(element2);
-    }
-
-    constexpr void push_triangle(vector3d<T>&& element0,
-                                 vector3d<T>&& element1,
-                                 vector3d<T>&& element2)
-    {
-        m_container.push_back(tps::move(element0));
-        m_container.push_back(tps::move(element1));
-        m_container.push_back(tps::move(element2));
+        push_back(element0);
+        push_back(element1);
+        push_back(element2);
     }
 
     constexpr void push_plane(const vector3d<T>& down_left,
@@ -81,10 +68,24 @@ public:
         return static_cast<tps::span<vector3d<T> const>>(*this);
     }
 
-private:
-    tps::vector<vector3d<T>> m_container;
+    constexpr void translate(vector3d<T> const& position) noexcept
+    {
+        m_matrix.translate(position);
+    }
+
+    constexpr void scale(vector3d<T> const& scale) noexcept
+    {
+        m_matrix.scale(scale);
+    }
+
+    constexpr void scale(T scale) noexcept
+    {
+        m_matrix.scale(scale);
+    }
 
 private:
+    tps::vector<vector3d<T>> m_container;
+    Matrix4x4 m_matrix;
 };
 
 }  // namespace fmath

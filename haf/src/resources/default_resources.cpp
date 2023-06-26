@@ -176,14 +176,16 @@ bool DefaultResources::loadDefaultCubeMesh(sys::ResourceManager& rManager)
     //                                               {-0.25F, -0.25F, -0.25F},
     //                                               {-0.25F, 0.25F, -0.25F});
 
-    cube_data_raw_mesh_position2.push_plane({-0.35F, 0.25F, -0.25F},
-                                            {0.35F, 0.25F, -0.25F});
+    cube_data_raw_mesh_position2.scale(0.25F);
+
+    cube_data_raw_mesh_position2.push_plane({-1.0F, 1.0F, -1.0F},
+                                            {1.0F, 1.0F, -1.0F});
 
     cube_data_raw_mesh_position2.push_triangle(
-        {-0.25F, -0.25F, 0.25F}, {0.25F, -0.25F, 0.25F}, {0.25F, 0.25F, 0.25F});
+        {-1.0F, -1.0F, 1.0F}, {1.0F, -1.0F, 1.0F}, {1.0F, 1.0F, 1.0F});
 
     cube_data_raw_mesh_position2.push_triangle(
-        {0.25F, 0.25F, 0.25F}, {-0.25F, 0.25F, 0.25F}, {-0.25F, -0.25F, 0.25F});
+        {1.0F, 1.0F, 1.0F}, {-1.0F, 1.0F, 1.0F}, {-1.0F, -1.0F, 1.0F});
 
     static vector3df cube_data_raw_mesh_position[] = {
         {-0.25F, -0.25F, 0.25F},  {-0.25F, -0.25F, -0.25F},

@@ -30,12 +30,12 @@ public:
     using const_iterator = tps::rptr<Scalar const>;
 
     /**
-     * @brief Value "0" for the elements of this matrix
+     * @brief Value "1" for the elements of this matrix
      */
     static constexpr Scalar const One{One<Scalar>};
 
     /**
-     * @brief Value "1" for the elements of this matrix
+     * @brief Value "0" for the elements of this matrix
      */
     static constexpr Scalar const Zero{Zero<Scalar>};
 
@@ -172,7 +172,7 @@ public:
                    m[3] * n[12] + m[7] * n[13] + m[11] * n[14] + m[15] * n[15]};
     }
 
-    constexpr vector4df operator*(vector4df const& rhs) noexcept
+    constexpr vector4d<Scalar> operator*(vector4d<Scalar> const& rhs) noexcept
     {
         auto const m{getMatrix()};
 
@@ -181,6 +181,12 @@ public:
             m[1] * rhs.x + m[5] * rhs.y + m[9] * rhs.z + m[13] * rhs.w,
             m[2] * rhs.x + m[6] * rhs.y + m[10] * rhs.z + m[14] * rhs.w,
             m[3] * rhs.x + m[7] * rhs.y + m[11] * rhs.z + m[15] * rhs.w};
+    }
+
+    constexpr vector3d<Scalar> operator*(vector3d<Scalar> const& rhs) noexcept
+    {
+        auto result{*this * vector4d<Scalar>{rhs.x, rhs.y, rhs.z, One}};
+        return {result.x, result.y, result.z};
     }
 
     constexpr iterator begin() noexcept { return m_matrix_data; }
@@ -199,6 +205,41 @@ public:
     constexpr const_iterator cend() const noexcept
     {
         return &m_matrix_data[kMatrixNumElements];
+    }
+
+    static constexpr Matrix4x4 translatelationMatrix(
+        vector3d<Scalar> const& pos)
+    {
+        return Matrix4x4{OneF32,  ZeroF32, ZeroF32, ZeroF32, ZeroF32, OneF32,
+                         ZeroF32, ZeroF32, ZeroF32, ZeroF32, OneF32,  ZeroF32,
+                         pos.x,   pos.y,   pos.z,   OneF32};
+    }
+
+    constexpr void translate(vector3d<Scalar> const& pos)
+    {
+        *this *= translatelationMatrix(pos);
+    }
+
+    static constexpr Matrix4x4 scaleMatrix(vector3d<Scalar> const& scale)
+    {
+        return Matrix4x4{scale.x, ZeroF32, ZeroF32, ZeroF32, ZeroF32, scale.y,
+                         ZeroF32, ZeroF32, ZeroF32, ZeroF32, scale.z, ZeroF32,
+                         ZeroF32, ZeroF32, ZeroF32, OneF32};
+    }
+
+    static constexpr Matrix4x4 scaleMatrix(Scalar scale)
+    {
+        return scaleMatrix(vector3d{scale, scale, scale});
+    }
+
+    constexpr void scale(vector3d<Scalar> const& pos)
+    {
+        *this *= scaleMatrix(pos);
+    }
+
+    constexpr void scale(Scalar pos)
+    {
+        *this *= scaleMatrix(pos);
     }
 
     static constexpr tps::size_type const kMatrixNumElements{16U};
