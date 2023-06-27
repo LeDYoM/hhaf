@@ -237,10 +237,7 @@ public:
         *this *= scaleMatrix(pos);
     }
 
-    constexpr void scale(Scalar pos)
-    {
-        *this *= scaleMatrix(pos);
-    }
+    constexpr void scale(Scalar pos) { *this *= scaleMatrix(pos); }
 
     static constexpr tps::size_type const kMatrixNumElements{16U};
 
@@ -281,13 +278,18 @@ constexpr bool operator==(Matrix4x4 const& lhs, Matrix4x4 const& rhs) noexcept
     return true;
 }
 
-namespace detail
-{
-inline bool isAlmostEqual(tps::f32 const lhs, tps::f32 const rhs) noexcept
+[[nodiscard]] inline bool isAlmostEqual(tps::f32 const lhs,
+                                        tps::f32 const rhs) noexcept
 {
     return std::fabs(lhs - rhs) < FLT_EPSILON;
 }
-}  // namespace detail
+
+[[nodiscard]] inline bool isAlmostEqual(vector3df const lhs,
+                                        vector3df const rhs) noexcept
+{
+    return isAlmostEqual(lhs.x, rhs.x) &&
+        isAlmostEqual(lhs.y, rhs.y) && isAlmostEqual(lhs.z, rhs.z);
+}
 
 [[nodiscard]] constexpr bool isAlmostEqual(Matrix4x4 const& lhs,
                                            Matrix4x4 const& rhs) noexcept
@@ -295,7 +297,7 @@ inline bool isAlmostEqual(tps::f32 const lhs, tps::f32 const rhs) noexcept
     for (auto lhs_ci{lhs.cbegin()}, rhs_ci{rhs.cbegin()};
          lhs_ci != lhs.cend() && rhs_ci != rhs.cend(); ++lhs_ci, ++rhs_ci)
     {
-        if (!detail::isAlmostEqual(*lhs_ci, *rhs_ci))
+        if (!isAlmostEqual(*lhs_ci, *rhs_ci))
         {
             return false;
         }

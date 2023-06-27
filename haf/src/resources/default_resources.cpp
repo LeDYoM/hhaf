@@ -143,71 +143,31 @@ sptr<VertexBufferObject> DefaultResources::getDefaultColorRenderDataBufer()
 bool DefaultResources::loadDefaultCubeMesh(sys::ResourceManager& rManager)
 {
     math::vvector3df cube_data_raw_mesh_position2;
-    cube_data_raw_mesh_position2.scale(0.25F);
+    cube_data_raw_mesh_position2.push_back({
+        {-0.25F, -0.25F, 0.25F},  {-0.25F, -0.25F, -0.25F},
+        {0.25F, -0.25F, -0.25F},  {0.25F, -0.25F, -0.25F},
+        {0.25F, -0.25F, 0.25F},   {-0.25F, -0.25F, 0.25F},
 
-    for (int i = 0; i < 6; ++i)
-    {
-        cube_data_raw_mesh_position2.push_triangle(
-            {-1.0F, -1.0F, 1.0F}, {1.0F, -1.0F, 1.0F}, {1.0F, 1.0F, 1.0F});
+        {0.25F, -0.25F, -0.25F},  {0.25F, 0.25F, -0.25F},
+        {0.25F, -0.25F, 0.25F},   {0.25F, 0.25F, -0.25F},
+        {0.25F, 0.25F, 0.25F},    {0.25F, -0.25F, 0.25F},
 
-        cube_data_raw_mesh_position2.push_triangle(
-            {1.0F, 1.0F, 1.0F}, {-1.0F, 1.0F, 1.0F}, {-1.0F, -1.0F, 1.0F});
+        {0.25F, 0.25F, -0.25F},   {-0.25F, 0.25F, -0.25F},
+        {0.25F, 0.25F, 0.25F},    {-0.25F, 0.25F, -0.25F},
+        {-0.25F, 0.25F, 0.25F},   {0.25F, 0.25F, 0.25F},
 
-        //        cube_data_raw_mesh_position2.push_plane({-1.0F, 1.0F, 1.0F},
-        //                                                {1.0F, 1.0F, 1.0F});
-    }
+        {-0.25F, 0.25F, -0.25F},  {-0.25F, -0.25F, -0.25F},
+        {-0.25F, 0.25F, 0.25F},   {-0.25F, -0.25F, -0.25F},
+        {-0.25F, -0.25F, 0.25F},  {-0.25F, 0.25F, 0.25F},
 
-    /*
-        cube_data_raw_mesh_position2.push_triangle({-0.25F, -0.25F, 0.25F},
-                                                   {-0.25F, -0.25F, -0.25F},
-                                                   {0.25F, -0.25F, -0.25F});
-        cube_data_raw_mesh_position2.push_triangle({0.25F, -0.25F, -0.25F},
-                                                   {0.25F, -0.25F, 0.25F},
-                                                   {-0.25F, -0.25F, 0.25F});
+        {-0.25F, 0.25F, -0.25F},  {0.25F, 0.25F, -0.25F},
+        {0.25F, -0.25F, -0.25F},  {0.25F, -0.25F, -0.25F},
+        {-0.25F, -0.25F, -0.25F}, {-0.25F, 0.25F, -0.25F},
 
-        cube_data_raw_mesh_position2.push_triangle({0.25F, -0.25F, -0.25F},
-                                                   {0.25F, 0.25F, -0.25F},
-                                                   {0.25F, -0.25F, 0.25F});
-        cube_data_raw_mesh_position2.push_triangle(
-            {0.25F, 0.25F, -0.25F}, {0.25F, 0.25F, 0.25F}, {0.25F, -0.25F,
-       0.25F});
+        {-0.25F, -0.25F, 0.25F},  {0.25F, -0.25F, 0.25F},
+        {0.25F, 0.25F, 0.25F},    {0.25F, 0.25F, 0.25F},
+        {-0.25F, 0.25F, 0.25F},   {-0.25F, -0.25F, 0.25F}});
 
-        cube_data_raw_mesh_position2.push_triangle(
-            {0.25F, 0.25F, -0.25F}, {-0.25F, 0.25F, -0.25F}, {0.25F, 0.25F,
-       0.25F}); cube_data_raw_mesh_position2.push_triangle(
-            {-0.25F, 0.25F, -0.25F}, {-0.25F, 0.25F, 0.25F}, {0.25F, 0.25F,
-       0.25F});
-
-        cube_data_raw_mesh_position2.push_triangle({-0.25F, 0.25F, -0.25F},
-                                                   {-0.25F, -0.25F, -0.25F},
-                                                   {-0.25F, 0.25F, 0.25F});
-        cube_data_raw_mesh_position2.push_triangle({-0.25F, -0.25F, -0.25F},
-                                                   {-0.25F, -0.25F, 0.25F},
-                                                   {-0.25F, 0.25F, 0.25F});
-
-        //    cube_data_raw_mesh_position2.push_triangle({-0.25F, 0.25F,
-       -0.25F},
-        //                                               {0.25F, 0.25F, -0.25F},
-        //                                               {0.25F, -0.25F,
-       -0.25F});
-        //    cube_data_raw_mesh_position2.push_triangle({0.25F, -0.25F,
-       -0.25F},
-        //                                               {-0.25F, -0.25F,
-       -0.25F},
-        //                                               {-0.25F, 0.25F,
-       -0.25F});
-
-        cube_data_raw_mesh_position2.scale(0.25F);
-
-        cube_data_raw_mesh_position2.push_plane({-1.0F, 1.0F, -1.0F},
-                                                {1.0F, 1.0F, -1.0F});
-
-        cube_data_raw_mesh_position2.push_triangle(
-            {-1.0F, -1.0F, 1.0F}, {1.0F, -1.0F, 1.0F}, {1.0F, 1.0F, 1.0F});
-
-        cube_data_raw_mesh_position2.push_triangle(
-            {1.0F, 1.0F, 1.0F}, {-1.0F, 1.0F, 1.0F}, {-1.0F, -1.0F, 1.0F});
-    */
     static vector3df cube_data_raw_mesh_position[] = {
         {-0.25F, -0.25F, 0.25F},  {-0.25F, -0.25F, -0.25F},
         {0.25F, -0.25F, -0.25F},  {0.25F, -0.25F, -0.25F},
