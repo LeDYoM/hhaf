@@ -84,10 +84,12 @@ void addFace(vvector3d<T>& v, FaceDirection const fDirection)
     switch (fDirection)
     {
         case FaceDirection::Front:
-            v.push_triangle({-0.25F, -0.25F, 0.25F}, {0.25F, -0.25F, 0.25F},
-                            {0.25F, 0.25F, 0.25F});
-            v.push_triangle({0.25F, 0.25F, 0.25F}, {-0.25F, 0.25F, 0.25F},
-                            {-0.25F, -0.25F, 0.25F});
+            v.push_triangle({MinusOne<T>, MinusOne<T>, One<T>},
+                            {One<T>, MinusOne<T>, One<T>},
+                            {One<T>, One<T>, One<T>});
+            v.push_triangle({One<T>, One<T>, One<T>},
+                            {MinusOne<T>, One<T>, One<T>},
+                            {MinusOne<T>, MinusOne<T>, One<T>});
             break;
         default:
             break;
