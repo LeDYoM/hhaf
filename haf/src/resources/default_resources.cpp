@@ -167,6 +167,8 @@ bool DefaultResources::loadDefaultCubeMesh(sys::ResourceManager& rManager)
 //        {-0.25F, -0.25F, 0.25F},  {0.25F, -0.25F, 0.25F},
 //        {0.25F, 0.25F, 0.25F},    {0.25F, 0.25F, 0.25F},
 //        {-0.25F, 0.25F, 0.25F},   {-0.25F, -0.25F, 0.25F}});
+
+    cube_data_raw_mesh_position2.scale(0.25F);
     addFace(cube_data_raw_mesh_position2, FaceDirection::Front);
 
     static vector3df cube_data_raw_mesh_position[] = {
