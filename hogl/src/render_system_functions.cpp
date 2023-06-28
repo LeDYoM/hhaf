@@ -97,11 +97,11 @@ void setDebug(bool const enable)
 
 void setDefaultRenderState()
 {
-//    glFrontFace(GL_CCW);
-//    glEnable(GL_CULL_FACE);
+    glFrontFace(GL_CCW);
+    glEnable(GL_CULL_FACE);
 
-//    glEnable(GL_DEPTH_TEST);
-//    glDepthFunc(GL_LEQUAL);
+    glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LEQUAL);
 }
 
 void clearBackgroundColor(vector4df const& color)
