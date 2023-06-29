@@ -2,6 +2,6 @@
 
 namespace haf::math
 {
-template class fmath::vvector3d<core::f32>;
+//template class fmath::vvector3d<core::f32>;
 
 }

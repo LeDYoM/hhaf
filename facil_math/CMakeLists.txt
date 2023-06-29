@@ -17,6 +17,7 @@ set(headers
     ${include_dir}/matrix4x4_functions.hpp
     ${include_dir}/matrix4x4.hpp
     ${include_dir}/rect.hpp
+    ${include_dir}/vector_types.hpp
     ${include_dir}/vector2d.hpp
     ${include_dir}/vector3d.hpp
     ${include_dir}/vector4d.hpp

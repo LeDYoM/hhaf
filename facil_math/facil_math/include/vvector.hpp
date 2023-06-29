@@ -3,57 +3,75 @@ FMA_PRAGMA_ONCE
 #define FACIL_MATH_VVECTOR_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
+#include <htypes/include/array.hpp>
 #include <htypes/include/vector.hpp>
 #include <htypes/include/span.hpp>
-#include <facil_math/include/vector3d.hpp>
+#include <facil_math/include/vector_types.hpp>
 #include <facil_math/include/matrix4x4.hpp>
 
 namespace fmath
 {
 namespace tps = htps;
 
-template <typename T>
-class vvector3d
+template <tps::u8 SIZE, typename T>
+class vvector
 {
 public:
-    constexpr vvector3d() = default;
+    constexpr vvector() = default;
 
     template <tps::size_type N>
-    constexpr void push_back(vector3d<T> const (&elements)[N])
+    constexpr void push_back(vector_type<SIZE, T> const (&elements)[N])
     {
-        for (tps::size_type i = 0U; i < N; ++i)
+        for (tps::size_type i{0U}; i < N; ++i)
         {
             push_back(elements[i]);
         }
     }
 
-    constexpr void push_back(vector3d<T> const& element)
+    constexpr void push_back(vector_type<SIZE, T> const& element)
     {
         m_container.push_back(m_matrix * element);
     }
 
-    constexpr void push_triangle(vector3d<T> const& element0,
-                                 vector3d<T> const& element1,
-                                 vector3d<T> const& element2)
+    constexpr void push_triangle(vector_type<SIZE, T> const& element0,
+                                 vector_type<SIZE, T> const& element1,
+                                 vector_type<SIZE, T> const& element2)
     {
         push_back(element0);
         push_back(element1);
         push_back(element2);
     }
 
-    constexpr tps::vector<vector3d<T>> const& getVector() const noexcept
+    constexpr void push_triangle(vector_type<SIZE, T>&& element0,
+                                 vector_type<SIZE, T>&& element1,
+                                 vector_type<SIZE, T>&& element2)
+    {
+        push_back(tps::move(element0));
+        push_back(tps::move(element1));
+        push_back(tps::move(element2));
+    }
+
+    constexpr void push_triangle(tps::array<vector_type<SIZE, T>, 3U> elements)
+    {
+        push_back(tps::move(elements[0]));
+        push_back(tps::move(elements[1]));
+        push_back(tps::move(elements[2]));
+    }
+
+    constexpr tps::vector<vector_type<SIZE, T>> const& getVector()
+        const noexcept
     {
         return m_container;
     }
 
-    constexpr operator tps::span<vector3d<T> const>() const noexcept
+    constexpr operator tps::span<vector_type<SIZE, T> const>() const noexcept
     {
         return tps::span{m_container};
     }
 
-    constexpr tps::span<vector3d<T> const> as_span() const noexcept
+    constexpr tps::span<vector_type<SIZE, T> const> as_span() const noexcept
     {
-        return static_cast<tps::span<vector3d<T> const>>(*this);
+        return static_cast<tps::span<vector_type<SIZE, T> const>>(*this);
     }
 
     constexpr void translate(vector3d<T> const& position) noexcept
@@ -69,9 +87,12 @@ public:
     constexpr void scale(T scale) noexcept { m_matrix.scale(scale); }
 
 private:
-    tps::vector<vector3d<T>> m_container;
+    tps::vector<vector_type<SIZE, T>> m_container;
     Matrix4x4 m_matrix;
 };
+
+template <typename T>
+using vvector3d = vvector<3U, T>;
 
 enum class FaceDirection : tps::u32
 {

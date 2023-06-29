@@ -9,7 +9,6 @@ HAF_PRAGMA_ONCE
 
 namespace haf::math
 {
-HAF_EXPORT_TEMPLATE template class HAF_API fmath::vvector3d<core::f32>;
 using vvector3df = fmath::vvector3d<core::f32>;
 
 }  // namespace haf::math
