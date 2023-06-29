@@ -76,6 +76,11 @@ private:
 enum class FaceDirection : tps::u32
 {
     Front = 0U,
+    Back,
+    Left,
+    Up,
+    Right,
+    Down
 };
 
 template <typename T>
@@ -89,6 +94,46 @@ void addFace(vvector3d<T>& v, FaceDirection const fDirection)
                             {One<T>, One<T>, One<T>});
             v.push_triangle({One<T>, One<T>, One<T>},
                             {MinusOne<T>, One<T>, One<T>},
+                            {MinusOne<T>, MinusOne<T>, One<T>});
+            break;
+        case FaceDirection::Back:
+            v.push_triangle({MinusOne<T>, One<T>, MinusOne<T>},
+                            {One<T>, One<T>, MinusOne<T>},
+                            {One<T>, MinusOne<T>, MinusOne<T>});
+            v.push_triangle({One<T>, MinusOne<T>, MinusOne<T>},
+                            {MinusOne<T>, MinusOne<T>, MinusOne<T>},
+                            {MinusOne<T>, One<T>, MinusOne<T>});
+            break;
+        case FaceDirection::Left:
+            v.push_triangle({MinusOne<T>, One<T>, MinusOne<T>},
+                            {MinusOne<T>, MinusOne<T>, MinusOne<T>},
+                            {MinusOne<T>, One<T>, One<T>});
+            v.push_triangle({MinusOne<T>, MinusOne<T>, MinusOne<T>},
+                            {MinusOne<T>, MinusOne<T>, One<T>},
+                            {MinusOne<T>, One<T>, One<T>});
+            break;
+        case FaceDirection::Up:
+            v.push_triangle({One<T>, One<T>, MinusOne<T>},
+                            {MinusOne<T>, One<T>, MinusOne<T>},
+                            {One<T>, One<T>, One<T>});
+            v.push_triangle({MinusOne<T>, One<T>, MinusOne<T>},
+                            {MinusOne<T>, One<T>, One<T>},
+                            {One<T>, One<T>, One<T>});
+            break;
+        case FaceDirection::Right:
+            v.push_triangle({One<T>, MinusOne<T>, MinusOne<T>},
+                            {One<T>, One<T>, MinusOne<T>},
+                            {One<T>, MinusOne<T>, One<T>});
+            v.push_triangle({One<T>, One<T>, MinusOne<T>},
+                            {One<T>, One<T>, One<T>},
+                            {One<T>, MinusOne<T>, One<T>});
+            break;
+        case FaceDirection::Down:
+            v.push_triangle({MinusOne<T>, MinusOne<T>, One<T>},
+                            {MinusOne<T>, MinusOne<T>, MinusOne<T>},
+                            {One<T>, MinusOne<T>, MinusOne<T>});
+            v.push_triangle({One<T>, MinusOne<T>, MinusOne<T>},
+                            {One<T>, MinusOne<T>, One<T>},
                             {MinusOne<T>, MinusOne<T>, One<T>});
             break;
         default:
