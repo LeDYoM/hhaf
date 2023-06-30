@@ -31,6 +31,9 @@ struct vector_type<4U, T>
     using type = vector4d<T>;
 };
 
+template <tps::u8 Size, typename T>
+using vector_type_t = vector_type<Size, T>::type;
+
 }  // namespace fmath
 
 #endif

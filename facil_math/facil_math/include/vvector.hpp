@@ -17,10 +17,12 @@ template <tps::u8 SIZE, typename T>
 class vvector
 {
 public:
+    using this_vector = vector_type_t<SIZE, T>;
+
     constexpr vvector() = default;
 
     template <tps::size_type N>
-    constexpr void push_back(vector_type<SIZE, T> const (&elements)[N])
+    constexpr void push_back(this_vector const (&elements)[N])
     {
         for (tps::size_type i{0U}; i < N; ++i)
         {
@@ -28,50 +30,57 @@ public:
         }
     }
 
-    constexpr void push_back(vector_type<SIZE, T> const& element)
+    constexpr void push_back(this_vector const& element)
     {
         m_container.push_back(m_matrix * element);
     }
 
-    constexpr void push_triangle(vector_type<SIZE, T> const& element0,
-                                 vector_type<SIZE, T> const& element1,
-                                 vector_type<SIZE, T> const& element2)
+    template <typename V>
+    constexpr void push_triangle(V&& element0, V&& element1, V&& element2)
+    {
+        push_back(this_vector{element0});
+        push_back(this_vector{element1});
+        push_back(this_vector{element2});
+    }
+
+    constexpr void push_triangle(this_vector const& element0,
+                                 this_vector const& element1,
+                                 this_vector const& element2)
     {
         push_back(element0);
         push_back(element1);
         push_back(element2);
     }
 
-    constexpr void push_triangle(vector_type<SIZE, T>&& element0,
-                                 vector_type<SIZE, T>&& element1,
-                                 vector_type<SIZE, T>&& element2)
+    constexpr void push_triangle(this_vector&& element0,
+                                 this_vector&& element1,
+                                 this_vector&& element2)
     {
         push_back(tps::move(element0));
         push_back(tps::move(element1));
         push_back(tps::move(element2));
     }
 
-    constexpr void push_triangle(tps::array<vector_type<SIZE, T>, 3U> elements)
+    constexpr void push_triangle(tps::array<this_vector, 3U> elements)
     {
         push_back(tps::move(elements[0]));
         push_back(tps::move(elements[1]));
         push_back(tps::move(elements[2]));
     }
 
-    constexpr tps::vector<vector_type<SIZE, T>> const& getVector()
-        const noexcept
+    constexpr tps::vector<this_vector> const& getVector() const noexcept
     {
         return m_container;
     }
 
-    constexpr operator tps::span<vector_type<SIZE, T> const>() const noexcept
+    constexpr operator tps::span<this_vector const>() const noexcept
     {
         return tps::span{m_container};
     }
 
-    constexpr tps::span<vector_type<SIZE, T> const> as_span() const noexcept
+    constexpr tps::span<this_vector const> as_span() const noexcept
     {
-        return static_cast<tps::span<vector_type<SIZE, T> const>>(*this);
+        return static_cast<tps::span<this_vector const>>(*this);
     }
 
     constexpr void translate(vector3d<T> const& position) noexcept
@@ -87,7 +96,7 @@ public:
     constexpr void scale(T scale) noexcept { m_matrix.scale(scale); }
 
 private:
-    tps::vector<vector_type<SIZE, T>> m_container;
+    tps::vector<this_vector> m_container;
     Matrix4x4 m_matrix;
 };
 
