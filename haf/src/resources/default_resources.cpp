@@ -153,22 +153,30 @@ bool DefaultResources::loadDefaultCubeMesh(sys::ResourceManager& rManager)
     addTextureUVCube(cube_data_raw_mesh_textureuv);
 
     using namespace scene::colors;
+    math::vvector4df cube_vertex_color_data_raw;
+    addColorFace(cube_vertex_color_data_raw, FaceDirection::Down, Cyan);
+    addColorFace(cube_vertex_color_data_raw, FaceDirection::Right, Blue);
+    addColorFace(cube_vertex_color_data_raw, FaceDirection::Up, Green);
+    addColorFace(cube_vertex_color_data_raw, FaceDirection::Left, Yellow);
+    addColorFace(cube_vertex_color_data_raw, FaceDirection::Back, Magenta);
+    addColorFace(cube_vertex_color_data_raw, FaceDirection::Front, White);
 
+    /*
     static vector4df cube_vertex_color_data_raw[] = {
         Cyan,    Cyan,    Cyan,    Cyan,    Cyan,    Cyan,    Blue,   Blue,
         Blue,    Blue,    Blue,    Blue,    Green,   Green,   Green,  Green,
         Green,   Green,   Yellow,  Yellow,  Yellow,  Yellow,  Yellow, Yellow,
         Magenta, Magenta, Magenta, Magenta, Magenta, Magenta, White,  White,
         White,   White,   White,   White,   White,   White};
-
+*/
     auto color_buffer_cube{core::msptr<res::VertexBufferObject>(
-        "haf_color", core::span{cube_vertex_color_data_raw})};
+        "haf_color", cube_vertex_color_data_raw.as_span())};
 
     auto vertex_buffer_cube_positions{core::msptr<res::VertexBufferObject>(
         "haf_position", cube_data_raw_mesh_position.as_span())};
 
     auto vertex_buffer_cube_normals{core::msptr<res::VertexBufferObject>(
-        "haf_normal", core::span{cube_data_raw_mesh_normal})};
+        "haf_normal", cube_data_raw_mesh_normal.as_span())};
 
     auto vertex_buffer_cube_textureuvs{core::msptr<res::VertexBufferObject>(
         "haf_textureuv", cube_data_raw_mesh_textureuv.as_span())};
