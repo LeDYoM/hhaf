@@ -133,6 +133,17 @@ void addPositionsCube(vvector3d<T>& v)
     addPositionsFace(v, FaceDirection::Front);
 }
 
+template <typename T>
+void addTextureUVCube(vvector2d<T>& v)
+{
+    addTextureUVFace(v, FaceDirection::Down);
+    addTextureUVFace(v, FaceDirection::Right);
+    addTextureUVFace(v, FaceDirection::Up);
+    addTextureUVFace(v, FaceDirection::Left);
+    addTextureUVFace(v, FaceDirection::Back);
+    addTextureUVFace(v, FaceDirection::Front);
+}
+
 }  // namespace fmath
 
 #endif

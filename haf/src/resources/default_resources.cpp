@@ -185,6 +185,7 @@ bool DefaultResources::loadDefaultCubeMesh(sys::ResourceManager& rManager)
         {1.0F, 1.0F}, {0.0F, 1.0F}, {0.0F, 0.0F}};
 
     math::vvector2df cube_data_raw_mesh_textureuv;
+    addTextureUVCube(cube_data_raw_mesh_textureuv);
 
     using namespace scene::colors;
 
@@ -205,7 +206,7 @@ bool DefaultResources::loadDefaultCubeMesh(sys::ResourceManager& rManager)
         "haf_normal", core::span{cube_data_raw_mesh_normal})};
 
     auto vertex_buffer_cube_textureuvs{core::msptr<res::VertexBufferObject>(
-        "haf_textureuv", core::span{cube_data_raw_mesh_textureuv})};
+        "haf_textureuv", cube_data_raw_mesh_textureuv.as_span())};
 
     bool ok{true};
     ok &= rManager.addResource("default_cube_color_data", color_buffer_cube);

@@ -189,6 +189,12 @@ public:
         return {result.x, result.y, result.z};
     }
 
+    constexpr vector2d<Scalar> operator*(vector2d<Scalar> const& rhs) noexcept
+    {
+        auto result{*this * vector4d<Scalar>{rhs.x, rhs.y, Zero, One}};
+        return {result.x, result.y};
+    }
+
     constexpr iterator begin() noexcept { return m_matrix_data; }
     constexpr const_iterator begin() const noexcept { return m_matrix_data; }
     constexpr const_iterator cbegin() const noexcept { return m_matrix_data; }
