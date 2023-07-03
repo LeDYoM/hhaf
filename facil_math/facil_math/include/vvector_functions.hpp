@@ -19,7 +19,7 @@ enum class FaceDirection : tps::u32
 };
 
 template <typename T>
-void addFace(vvector3d<T>& v, FaceDirection const fDirection)
+void addPositionsFace(vvector3d<T>& v, FaceDirection const fDirection)
 {
     switch (fDirection)
     {
@@ -77,14 +77,60 @@ void addFace(vvector3d<T>& v, FaceDirection const fDirection)
 }
 
 template <typename T>
-void addCube(vvector3d<T>& v)
+void addTextureUVFace(vvector2d<T>& v, FaceDirection const fDirection)
 {
-    addFace(v, FaceDirection::Down);
-    addFace(v, FaceDirection::Right);
-    addFace(v, FaceDirection::Up);
-    addFace(v, FaceDirection::Left);
-    addFace(v, FaceDirection::Back);
-    addFace(v, FaceDirection::Front);
+    switch (fDirection)
+    {
+        case FaceDirection::Front:
+            v.push_triangle({Zero<T>, Zero<T>}, {One<T>, Zero<T>},
+                            {One<T>, One<T>});
+            v.push_triangle({One<T>, One<T>}, {Zero<T>, One<T>},
+                            {Zero<T>, Zero<T>});
+            break;
+        case FaceDirection::Back:
+            v.push_triangle({Zero<T>, One<T>}, {One<T>, One<T>},
+                            {One<T>, Zero<T>});
+            v.push_triangle({One<T>, Zero<T>}, {Zero<T>, Zero<T>},
+                            {Zero<T>, One<T>});
+            break;
+        case FaceDirection::Left:
+            v.push_triangle({One<T>, Zero<T>}, {Zero<T>, Zero<T>},
+                            {One<T>, One<T>});
+            v.push_triangle({Zero<T>, Zero<T>}, {Zero<T>, One<T>},
+                            {One<T>, One<T>});
+            break;
+        case FaceDirection::Up:
+            v.push_triangle({One<T>, Zero<T>}, {Zero<T>, Zero<T>},
+                            {One<T>, One<T>});
+            v.push_triangle({Zero<T>, Zero<T>}, {Zero<T>, One<T>},
+                            {One<T>, One<T>});
+            break;
+        case FaceDirection::Right:
+            v.push_triangle({Zero<T>, Zero<T>}, {One<T>, Zero<T>},
+                            {Zero<T>, One<T>});
+            v.push_triangle({One<T>, Zero<T>}, {One<T>, One<T>},
+                            {Zero<T>, One<T>});
+            break;
+        case FaceDirection::Down:
+            v.push_triangle({Zero<T>, One<T>}, {Zero<T>, Zero<T>},
+                            {One<T>, Zero<T>});
+            v.push_triangle({One<T>, Zero<T>}, {One<T>, One<T>},
+                            {Zero<T>, One<T>});
+            break;
+        default:
+            break;
+    }
+}
+
+template <typename T>
+void addPositionsCube(vvector3d<T>& v)
+{
+    addPositionsFace(v, FaceDirection::Down);
+    addPositionsFace(v, FaceDirection::Right);
+    addPositionsFace(v, FaceDirection::Up);
+    addPositionsFace(v, FaceDirection::Left);
+    addPositionsFace(v, FaceDirection::Back);
+    addPositionsFace(v, FaceDirection::Front);
 }
 
 }  // namespace fmath

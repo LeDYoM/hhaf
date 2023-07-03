@@ -10,6 +10,7 @@ HAF_PRAGMA_ONCE
 namespace haf::math
 {
 using vvector3df = fmath::vvector3d<core::f32>;
+using vvector2df = fmath::vvector2d<core::f32>;
 
 }  // namespace haf::math
 

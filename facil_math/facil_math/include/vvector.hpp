@@ -101,13 +101,13 @@ private:
 };
 
 template <typename T>
-using vvector2d = vvector<3U, T>;
+using vvector2d = vvector<2U, T>;
 
 template <typename T>
 using vvector3d = vvector<3U, T>;
 
 template <typename T>
-using vvector4d = vvector<3U, T>;
+using vvector4d = vvector<4U, T>;
 
 }  // namespace fmath
 

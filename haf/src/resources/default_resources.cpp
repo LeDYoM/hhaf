@@ -144,7 +144,7 @@ bool DefaultResources::loadDefaultCubeMesh(sys::ResourceManager& rManager)
 {
     math::vvector3df cube_data_raw_mesh_position;
     cube_data_raw_mesh_position.scale(0.25F);
-    addCube(cube_data_raw_mesh_position);
+    addPositionsCube(cube_data_raw_mesh_position);
 
     static vector3df cube_data_raw_mesh_normal[] = {
         Vector3dOnesF32, Vector3dOnesF32, Vector3dOnesF32,
@@ -165,7 +165,7 @@ bool DefaultResources::loadDefaultCubeMesh(sys::ResourceManager& rManager)
         Vector3dOnesF32, Vector3dOnesF32, Vector3dOnesF32,
         Vector3dOnesF32, Vector3dOnesF32, Vector3dOnesF32};
 
-    static vector2df cube_data_raw_mesh_textureuv[] = {
+    static vector2df cube_data_raw_mesh_textureuv2[] = {
         {0.0F, 1.0F}, {0.0F, 0.0F}, {1.0F, 0.0F},
         {1.0F, 0.0F}, {1.0F, 1.0F}, {0.0F, 1.0F},
 
@@ -183,6 +183,8 @@ bool DefaultResources::loadDefaultCubeMesh(sys::ResourceManager& rManager)
 
         {0.0F, 0.0F}, {1.0F, 0.0F}, {1.0F, 1.0F},
         {1.0F, 1.0F}, {0.0F, 1.0F}, {0.0F, 0.0F}};
+
+    math::vvector2df cube_data_raw_mesh_textureuv;
 
     using namespace scene::colors;
 
