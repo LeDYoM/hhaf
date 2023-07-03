@@ -146,43 +146,8 @@ bool DefaultResources::loadDefaultCubeMesh(sys::ResourceManager& rManager)
     cube_data_raw_mesh_position.scale(0.25F);
     addPositionsCube(cube_data_raw_mesh_position);
 
-    static vector3df cube_data_raw_mesh_normal[] = {
-        Vector3dOnesF32, Vector3dOnesF32, Vector3dOnesF32,
-        Vector3dOnesF32, Vector3dOnesF32, Vector3dOnesF32,
-
-        Vector3dOnesF32, Vector3dOnesF32, Vector3dOnesF32,
-        Vector3dOnesF32, Vector3dOnesF32, Vector3dOnesF32,
-
-        Vector3dOnesF32, Vector3dOnesF32, Vector3dOnesF32,
-        Vector3dOnesF32, Vector3dOnesF32, Vector3dOnesF32,
-
-        Vector3dOnesF32, Vector3dOnesF32, Vector3dOnesF32,
-        Vector3dOnesF32, Vector3dOnesF32, Vector3dOnesF32,
-
-        Vector3dOnesF32, Vector3dOnesF32, Vector3dOnesF32,
-        Vector3dOnesF32, Vector3dOnesF32, Vector3dOnesF32,
-
-        Vector3dOnesF32, Vector3dOnesF32, Vector3dOnesF32,
-        Vector3dOnesF32, Vector3dOnesF32, Vector3dOnesF32};
-
-    static vector2df cube_data_raw_mesh_textureuv2[] = {
-        {0.0F, 1.0F}, {0.0F, 0.0F}, {1.0F, 0.0F},
-        {1.0F, 0.0F}, {1.0F, 1.0F}, {0.0F, 1.0F},
-
-        {0.0F, 0.0F}, {1.0F, 0.0F}, {0.0F, 1.0F},
-        {1.0F, 0.0F}, {1.0F, 1.0F}, {0.0F, 1.0F},
-
-        {1.0F, 0.0F}, {0.0F, 0.0F}, {1.0F, 1.0F},
-        {0.0F, 0.0F}, {0.0F, 1.0F}, {1.0F, 1.0F},
-
-        {1.0F, 0.0F}, {0.0F, 0.0F}, {1.0F, 1.0F},
-        {0.0F, 0.0F}, {0.0F, 1.0F}, {1.0F, 1.0F},
-
-        {0.0F, 1.0F}, {1.0F, 1.0F}, {1.0F, 0.0F},
-        {1.0F, 0.0F}, {0.0F, 0.0F}, {0.0F, 1.0F},
-
-        {0.0F, 0.0F}, {1.0F, 0.0F}, {1.0F, 1.0F},
-        {1.0F, 1.0F}, {0.0F, 1.0F}, {0.0F, 0.0F}};
+    math::vvector3df cube_data_raw_mesh_normal;
+    addNormalCube(cube_data_raw_mesh_normal);
 
     math::vvector2df cube_data_raw_mesh_textureuv;
     addTextureUVCube(cube_data_raw_mesh_textureuv);

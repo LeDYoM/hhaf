@@ -19,7 +19,7 @@ enum class FaceDirection : tps::u32
 };
 
 template <typename T>
-void addPositionsFace(vvector3d<T>& v, FaceDirection const fDirection)
+void addPositionFace(vvector3d<T>& v, FaceDirection const fDirection)
 {
     switch (fDirection)
     {
@@ -123,14 +123,132 @@ void addTextureUVFace(vvector2d<T>& v, FaceDirection const fDirection)
 }
 
 template <typename T>
+void addNormalFace(vvector3d<T>& v, FaceDirection const fDirection)
+{
+    switch (fDirection)
+    {
+        case FaceDirection::Front:
+            v.push_triangle({MinusOne<T>, MinusOne<T>, One<T>},
+                            {One<T>, MinusOne<T>, One<T>},
+                            {One<T>, One<T>, One<T>});
+            v.push_triangle({One<T>, One<T>, One<T>},
+                            {MinusOne<T>, One<T>, One<T>},
+                            {MinusOne<T>, MinusOne<T>, One<T>});
+            break;
+        case FaceDirection::Back:
+            v.push_triangle({MinusOne<T>, One<T>, MinusOne<T>},
+                            {One<T>, One<T>, MinusOne<T>},
+                            {One<T>, MinusOne<T>, MinusOne<T>});
+            v.push_triangle({One<T>, MinusOne<T>, MinusOne<T>},
+                            {MinusOne<T>, MinusOne<T>, MinusOne<T>},
+                            {MinusOne<T>, One<T>, MinusOne<T>});
+            break;
+        case FaceDirection::Left:
+            v.push_triangle({MinusOne<T>, One<T>, MinusOne<T>},
+                            {MinusOne<T>, MinusOne<T>, MinusOne<T>},
+                            {MinusOne<T>, One<T>, One<T>});
+            v.push_triangle({MinusOne<T>, MinusOne<T>, MinusOne<T>},
+                            {MinusOne<T>, MinusOne<T>, One<T>},
+                            {MinusOne<T>, One<T>, One<T>});
+            break;
+        case FaceDirection::Up:
+            v.push_triangle({One<T>, One<T>, MinusOne<T>},
+                            {MinusOne<T>, One<T>, MinusOne<T>},
+                            {One<T>, One<T>, One<T>});
+            v.push_triangle({MinusOne<T>, One<T>, MinusOne<T>},
+                            {MinusOne<T>, One<T>, One<T>},
+                            {One<T>, One<T>, One<T>});
+            break;
+        case FaceDirection::Right:
+            v.push_triangle({One<T>, MinusOne<T>, MinusOne<T>},
+                            {One<T>, One<T>, MinusOne<T>},
+                            {One<T>, MinusOne<T>, One<T>});
+            v.push_triangle({One<T>, One<T>, MinusOne<T>},
+                            {One<T>, One<T>, One<T>},
+                            {One<T>, MinusOne<T>, One<T>});
+            break;
+        case FaceDirection::Down:
+            v.push_triangle({MinusOne<T>, MinusOne<T>, One<T>},
+                            {MinusOne<T>, MinusOne<T>, MinusOne<T>},
+                            {One<T>, MinusOne<T>, MinusOne<T>});
+            v.push_triangle({One<T>, MinusOne<T>, MinusOne<T>},
+                            {One<T>, MinusOne<T>, One<T>},
+                            {MinusOne<T>, MinusOne<T>, One<T>});
+            break;
+        default:
+            break;
+    }
+}
+
+template <typename T>
+void addColorFace(vvector4d<T>& v,
+                  FaceDirection const fDirection,
+                  const vector4df32& color)
+{
+    switch (fDirection)
+    {
+        case FaceDirection::Front:
+            v.push_triangle({MinusOne<T>, MinusOne<T>, One<T>},
+                            {One<T>, MinusOne<T>, One<T>},
+                            {One<T>, One<T>, One<T>});
+            v.push_triangle({One<T>, One<T>, One<T>},
+                            {MinusOne<T>, One<T>, One<T>},
+                            {MinusOne<T>, MinusOne<T>, One<T>});
+            break;
+        case FaceDirection::Back:
+            v.push_triangle({MinusOne<T>, One<T>, MinusOne<T>},
+                            {One<T>, One<T>, MinusOne<T>},
+                            {One<T>, MinusOne<T>, MinusOne<T>});
+            v.push_triangle({One<T>, MinusOne<T>, MinusOne<T>},
+                            {MinusOne<T>, MinusOne<T>, MinusOne<T>},
+                            {MinusOne<T>, One<T>, MinusOne<T>});
+            break;
+        case FaceDirection::Left:
+            v.push_triangle({MinusOne<T>, One<T>, MinusOne<T>},
+                            {MinusOne<T>, MinusOne<T>, MinusOne<T>},
+                            {MinusOne<T>, One<T>, One<T>});
+            v.push_triangle({MinusOne<T>, MinusOne<T>, MinusOne<T>},
+                            {MinusOne<T>, MinusOne<T>, One<T>},
+                            {MinusOne<T>, One<T>, One<T>});
+            break;
+        case FaceDirection::Up:
+            v.push_triangle({One<T>, One<T>, MinusOne<T>},
+                            {MinusOne<T>, One<T>, MinusOne<T>},
+                            {One<T>, One<T>, One<T>});
+            v.push_triangle({MinusOne<T>, One<T>, MinusOne<T>},
+                            {MinusOne<T>, One<T>, One<T>},
+                            {One<T>, One<T>, One<T>});
+            break;
+        case FaceDirection::Right:
+            v.push_triangle({One<T>, MinusOne<T>, MinusOne<T>},
+                            {One<T>, One<T>, MinusOne<T>},
+                            {One<T>, MinusOne<T>, One<T>});
+            v.push_triangle({One<T>, One<T>, MinusOne<T>},
+                            {One<T>, One<T>, One<T>},
+                            {One<T>, MinusOne<T>, One<T>});
+            break;
+        case FaceDirection::Down:
+            v.push_triangle({MinusOne<T>, MinusOne<T>, One<T>},
+                            {MinusOne<T>, MinusOne<T>, MinusOne<T>},
+                            {One<T>, MinusOne<T>, MinusOne<T>});
+            v.push_triangle({One<T>, MinusOne<T>, MinusOne<T>},
+                            {One<T>, MinusOne<T>, One<T>},
+                            {MinusOne<T>, MinusOne<T>, One<T>});
+            break;
+        default:
+            break;
+    }
+}
+
+template <typename T>
 void addPositionsCube(vvector3d<T>& v)
 {
-    addPositionsFace(v, FaceDirection::Down);
-    addPositionsFace(v, FaceDirection::Right);
-    addPositionsFace(v, FaceDirection::Up);
-    addPositionsFace(v, FaceDirection::Left);
-    addPositionsFace(v, FaceDirection::Back);
-    addPositionsFace(v, FaceDirection::Front);
+    addPositionFace(v, FaceDirection::Down);
+    addPositionFace(v, FaceDirection::Right);
+    addPositionFace(v, FaceDirection::Up);
+    addPositionFace(v, FaceDirection::Left);
+    addPositionFace(v, FaceDirection::Back);
+    addPositionFace(v, FaceDirection::Front);
 }
 
 template <typename T>
@@ -142,6 +260,28 @@ void addTextureUVCube(vvector2d<T>& v)
     addTextureUVFace(v, FaceDirection::Left);
     addTextureUVFace(v, FaceDirection::Back);
     addTextureUVFace(v, FaceDirection::Front);
+}
+
+template <typename T>
+void addNormalCube(vvector3d<T>& v)
+{
+    addNormalFace(v, FaceDirection::Down);
+    addNormalFace(v, FaceDirection::Right);
+    addNormalFace(v, FaceDirection::Up);
+    addNormalFace(v, FaceDirection::Left);
+    addNormalFace(v, FaceDirection::Back);
+    addNormalFace(v, FaceDirection::Front);
+}
+
+template <typename T>
+void addColorCube(vvector4d<T>& v)
+{
+    addColorFace(v, FaceDirection::Down);
+    addColorFace(v, FaceDirection::Right);
+    addColorFace(v, FaceDirection::Up);
+    addColorFace(v, FaceDirection::Left);
+    addColorFace(v, FaceDirection::Back);
+    addColorFace(v, FaceDirection::Front);
 }
 
 }  // namespace fmath
