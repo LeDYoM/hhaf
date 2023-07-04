@@ -13,6 +13,7 @@ HAF_PRAGMA_ONCE
 
 #include <haf/include/component/component_factory.hpp>
 #include <hlog/include/hlog.hpp>
+#include <haf/include/scene/mesh_creator.hpp>
 
 namespace haf::scene
 {
@@ -72,9 +73,13 @@ public:
     SceneRenderContextView& sceneRenderContextView() noexcept;
     SceneRenderContextView const& sceneRenderContextView() const noexcept;
 
+    MeshCreator& meshCreator() noexcept;
+    MeshCreator const& meshCreator() const noexcept;
+
 private:
     SceneRenderContextForSystem m_scene_render_context_for_system;
     component::ComponentFactory m_component_factory;
+    MeshCreator m_mesh_creator;
     core::uptr<SceneNode> m_rootSceneNode;
 };
 }  // namespace haf::scene
