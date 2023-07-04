@@ -27,7 +27,6 @@ void bindVAO(Handle const index) noexcept
 
 void bindAttribToBindingIndexForVao(Handle const vao,
                                     Handle const attrib_index,
-                                    Handle const binding_index,
                                     u32 const numElements,
                                     u32 type_index) noexcept
 {
@@ -38,6 +37,12 @@ void bindAttribToBindingIndexForVao(Handle const vao,
     glVertexArrayAttribFormat(
         vao, attrib_index, static_cast<GLint>(numElements),
         toOGLEnumType(type_index), GL_FALSE, static_cast<GLuint>(offset));
+}
+
+void setbindingIndex(Handle const vao,
+                     Handle const attrib_index,
+                     Handle const binding_index)
+{
     glVertexArrayAttribBinding(vao, attrib_index, binding_index);
 }
 

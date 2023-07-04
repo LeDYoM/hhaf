@@ -24,12 +24,15 @@ void VertexArrayObject::VertexArrayObjectPriv::associateBufferToAttib(
     if (expected_index > -1)
     {
         ogl::bindAttribToBindingIndexForVao(
-            m_vao, static_cast<ogl::Handle>(expected_index), binding_index,
+            m_vao, static_cast<ogl::Handle>(expected_index),
             vertex_buffer_subobject.vertexFormat().numElements,
             static_cast<core::u32>(
                 vertex_buffer_subobject.vertexFormat().bufferType));
         associatedAttribsToShader.push_back(static_cast<u32>(expected_index));
+        ogl::setbindingIndex(m_vao, static_cast<ogl::Handle>(expected_index),
+                             binding_index);
         DisplayLog::debug("Associating buffer ", expected_index);
+        DisplayLog::debug("\t To binding index: ", binding_index);
     }
 
     ogl::associateBufferToAttrib(m_vao, binding_index, parentHandle,
