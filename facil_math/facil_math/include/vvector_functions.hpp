@@ -260,6 +260,17 @@ void addColorCube(vvector4d<T>& v, const vector4df& color)
     addColorFace(v, FaceDirection::Front, color);
 }
 
+template <typename T>
+void addColorCube(vvector4d<T>& v, const tps::array<vector4df, 6>& colors)
+{
+    addColorFace(v, FaceDirection::Down, colors[0]);
+    addColorFace(v, FaceDirection::Right, colors[1]);
+    addColorFace(v, FaceDirection::Up, colors[2]);
+    addColorFace(v, FaceDirection::Left, colors[3]);
+    addColorFace(v, FaceDirection::Back, colors[4]);
+    addColorFace(v, FaceDirection::Front, colors[5]);
+}
+
 }  // namespace fmath
 
 #endif

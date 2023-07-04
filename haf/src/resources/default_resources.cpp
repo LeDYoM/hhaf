@@ -154,21 +154,9 @@ bool DefaultResources::loadDefaultCubeMesh(sys::ResourceManager& rManager)
 
     using namespace scene::colors;
     math::vvector4df cube_vertex_color_data_raw;
-    addColorFace(cube_vertex_color_data_raw, FaceDirection::Down, Cyan);
-    addColorFace(cube_vertex_color_data_raw, FaceDirection::Right, Blue);
-    addColorFace(cube_vertex_color_data_raw, FaceDirection::Up, Green);
-    addColorFace(cube_vertex_color_data_raw, FaceDirection::Left, Yellow);
-    addColorFace(cube_vertex_color_data_raw, FaceDirection::Back, Magenta);
-    addColorFace(cube_vertex_color_data_raw, FaceDirection::Front, White);
+    addColorCube(cube_vertex_color_data_raw,
+                 {Cyan, Blue, Green, Yellow, Magenta, White});
 
-    /*
-    static vector4df cube_vertex_color_data_raw[] = {
-        Cyan,    Cyan,    Cyan,    Cyan,    Cyan,    Cyan,    Blue,   Blue,
-        Blue,    Blue,    Blue,    Blue,    Green,   Green,   Green,  Green,
-        Green,   Green,   Yellow,  Yellow,  Yellow,  Yellow,  Yellow, Yellow,
-        Magenta, Magenta, Magenta, Magenta, Magenta, Magenta, White,  White,
-        White,   White,   White,   White,   White,   White};
-*/
     auto color_buffer_cube{core::msptr<res::VertexBufferObject>(
         "haf_color", cube_vertex_color_data_raw.as_span())};
 
