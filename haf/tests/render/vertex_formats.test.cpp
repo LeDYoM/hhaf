@@ -1,12 +1,13 @@
 #include "catch.hpp"
 
 #include <haf/include/core/types.hpp>
+#include <haf/include/math/types.hpp>
 #include <haf/include/render/vertex_formats.hpp>
 
 using namespace haf;
 using namespace haf::core;
 using namespace haf::render;
-using namespace fmath;
+using namespace haf::math;
 
 TEST_CASE("VertexFormats_for_vector_of_float", "[render][vertex_formats]")
 {

@@ -98,6 +98,8 @@ void DebugCameraComponent::moveCamera(Key const& key)
         case Key::F5:
             camera->cameraMode = CameraComponent::CameraMode::Perspective;
             break;
+        default:
+        break;
     }
 
     switch (m_p->m_cameraMoveType)
@@ -160,6 +162,8 @@ void DebugCameraComponent::moveCamera(Key const& key)
                 case Key::O:
                     camera->Up.modify().moveX(-Speed());
                     break;
+                default:
+                break;
             }
         }
         break;
@@ -215,6 +219,8 @@ void DebugCameraComponent::moveCamera(Key const& key)
                 case Key::H:
                     camera->Aspect.modify() -= Speed();
                     break;
+                default:
+                break;
             }
         }
         break;
@@ -250,6 +256,8 @@ void DebugCameraComponent::moveCamera(Key const& key)
                     camera->Center.modify().moveY(Speed());
                     camera->Position.modify().moveY(Speed());
                     break;
+                default:
+                break;
             }
         }
         break;

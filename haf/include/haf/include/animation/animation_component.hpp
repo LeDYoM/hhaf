@@ -46,8 +46,8 @@ public:
         PropertyValue const& end_value)
     {
         auto builder{make_property_animation_builder()};
-        builder.deltaProperty(make_delta_property(
-            attachedNodeAs<ObjectType>(), property_v, start_value, end_value));
+//        builder.deltaProperty(make_delta_property(
+//            attachedNodeAs<ObjectType>(), property_v, start_value, end_value));
         return builder;
     }
 

@@ -4,6 +4,7 @@ HAF_PRAGMA_ONCE
 
 #include <haf/include/haf_export.hpp>
 #include <haf/include/core/types.hpp>
+#include <haf/include/math/types.hpp>
 #include <haf/include/resources/iresource.hpp>
 
 namespace haf::res
@@ -12,9 +13,9 @@ class HAF_API Image final : public IResource
 {
 public:
     using PixelChannel = core::u8;
-    using RGBAPixel    = fmath::vector4d<PixelChannel>;
-    using Coordinate   = fmath::vector2du32;
-    using ImageSize    = fmath::vector2du32;
+    using RGBAPixel    = math::vector4d<PixelChannel>;
+    using Coordinate   = math::vector2du32;
+    using ImageSize    = math::vector2du32;
 
     static constexpr ResourceType const StaticResourceType{ResourceType::Image};
 

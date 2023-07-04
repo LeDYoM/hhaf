@@ -7,7 +7,6 @@
 #include "component_test_utils.hpp"
 
 using namespace haf;
-using namespace haf::math;
 using namespace haf::test;
 using namespace haf::scene;
 using namespace haf::core;
@@ -28,8 +27,8 @@ TEST_CASE("KeyboardInputComponent::KeyboardInputComponent::KeyPressed",
     auto test_data{createComponentForTest<KeyboardInputComponent>()};
     auto keyboardInputComponent{test_data.component};
     CHECK(keyboardInputComponent != nullptr);
-    static Key k;
-    keyboardInputComponent->KeyPressed += [](const Key& key)
+    Key k;
+    keyboardInputComponent->KeyPressed += [&k](const Key& key)
     {
         k = key;
     };

@@ -7,7 +7,6 @@
 #include "component_test_utils.hpp"
 
 using namespace haf;
-using namespace haf::math;
 using namespace haf::test;
 using namespace haf::scene;
 using namespace haf::core;

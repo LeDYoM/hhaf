@@ -4,7 +4,7 @@ HAF_PRAGMA_ONCE
 
 #include <haf/include/haf_export.hpp>
 #include <haf/include/core/types.hpp>
-#include <haf/include/core/matrix4x4.hpp>
+#include <facil_math/include/matrix4x4.hpp>
 #include <haf/include/component/component_declaration.hpp>
 
 namespace haf::render

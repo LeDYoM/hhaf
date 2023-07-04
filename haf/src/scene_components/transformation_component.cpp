@@ -3,9 +3,9 @@
 
 #include <hlog/include/hlog.hpp>
 #include <haf/include/scene/scene_node.hpp>
-#include <haf/include/core/geometry_math.hpp>
+#include <facil_math/include/geometry_math.hpp>
 
-using namespace haf::math;
+using namespace fmath;
 using namespace haf::core;
 
 namespace haf::scene
@@ -15,8 +15,8 @@ struct TransformationComponent::ComponentsRequired
 
 struct TransformationComponent::PrivateComponentData
 {
-    math::Matrix4x4 m_transform;
-    math::Matrix4x4 m_globalTransform;
+    Matrix4x4 m_transform;
+    Matrix4x4 m_globalTransform;
     bool m_transformation_updated{true};
 
     rptr<TransformationComponent> parentTransformationComponent(
@@ -95,7 +95,7 @@ Matrix4x4 const& TransformationComponent::matrix() const noexcept
     return m_p->m_transform;
 }
 
-math::Matrix4x4 TransformationComponent::getGlobalTransformation()
+Matrix4x4 TransformationComponent::getGlobalTransformation()
 {
     return m_p->m_globalTransform;
 }

@@ -20,7 +20,7 @@ public:
 
     void init() override;
 
-    void setCameraMatrix(math::Matrix4x4 const& matrix) override;
+    void setCameraMatrix(fmath::Matrix4x4 const& matrix) override;
 
 private:
     sys::ISystemProvider& m_isystem_provider;

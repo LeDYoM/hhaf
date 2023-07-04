@@ -13,10 +13,13 @@ namespace fmath
 namespace tps = htps;
 
 template <typename Scalar>
-inline static constexpr Scalar const One = static_cast<Scalar>(1.0);
+inline static constexpr Scalar const One = static_cast<Scalar>(1);
 
 template <typename Scalar>
-inline static constexpr Scalar const Zero = static_cast<Scalar>(0.0);
+inline static constexpr Scalar const MinusOne = static_cast<Scalar>(-1);
+
+template <typename Scalar>
+inline static constexpr Scalar const Zero = static_cast<Scalar>(0);
 
 template <typename Scalar>
 inline static constexpr vector2d<Scalar> Vector2dOnes{One<Scalar>, One<Scalar>};

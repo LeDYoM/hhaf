@@ -8,7 +8,7 @@ HAF_PRAGMA_ONCE
 #include <haf/include/properties/property_state.hpp>
 #include <haf/include/events/receiver.hpp>
 
-#include <haf/include/core/matrix4x4.hpp>
+#include <facil_math/include/matrix4x4.hpp>
 #include <haf/include/component/component_declaration.hpp>
 #include <haf/include/scene_components/global_transformation_component.hpp>
 
@@ -35,9 +35,9 @@ public:
     TransformationComponent();
     ~TransformationComponent() override;
 
-    using Scalar = math::Matrix4x4::Scalar;  ///< Type Scalar for this class
-    static constexpr Scalar const One  = math::Matrix4x4::One;
-    static constexpr Scalar const Zero = math::Matrix4x4::Zero;
+    using Scalar = fmath::Matrix4x4::Scalar;  ///< Type Scalar for this class
+    static constexpr Scalar const One  = fmath::Matrix4x4::One;
+    static constexpr Scalar const Zero = fmath::Matrix4x4::Zero;
     static constexpr const fmath::vector3df DefaultTranslation{
         fmath::Vector3dZeros<Scalar>};
     static constexpr const fmath::vector3df DefaultRotation{
@@ -56,11 +56,11 @@ public:
      * updates will be performed.
      * @return Matrix4x4 const& The local transformation.
      */
-    math::Matrix4x4 const& matrix() const noexcept;
+    fmath::Matrix4x4 const& matrix() const noexcept;
 
-    evt::emitter<math::Matrix4x4 const&> localMatrixChanged;
+    evt::emitter<fmath::Matrix4x4 const&> localMatrixChanged;
 
-    math::Matrix4x4 getGlobalTransformation();
+    fmath::Matrix4x4 getGlobalTransformation();
 
 private:
     struct ComponentsRequired;

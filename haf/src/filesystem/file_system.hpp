@@ -12,7 +12,7 @@ HAF_PRAGMA_ONCE
 
 namespace haf::sys
 {
-class HAF_PRIVATE FileSystem final : public SystemBase,
+class FileSystem final : public SystemBase,
                                      public IFileSerializer,
                                      public fs::IBinaryFileReader
 {

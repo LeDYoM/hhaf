@@ -11,9 +11,11 @@
 
 #include <hogl/include/vao_functions.hpp>
 
+#include <facil_math/include/math_types.hpp>
+
 using namespace haf::core;
-using namespace haf::math;
 using namespace haf::render;
+using namespace fmath;
 
 namespace haf::res
 {

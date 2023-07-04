@@ -80,6 +80,8 @@ bool ResourceManager::createResource(str_view rid,
                                msptr<FragmentShaderCode>(core::move(data)));
         }
         break;
+        default:
+        break;
     }
     LogAsserter::log_assert(false,
                             "[ResourceManager]: Invalid parameters for create "
@@ -100,6 +102,8 @@ bool ResourceManager::createResource(str_view rid,
         {
 //            return addResource(rid, msptr<VertexBufferObject>(0, move(data)));
         }
+        break;
+        default:
         break;
     }
     LogAsserter::log_assert(false,
@@ -195,6 +199,8 @@ bool ResourceManager::createResourceFromResources(
             auto mesh{msptr<Mesh>(core::move(vertex_buffer_objects))};
             return addResource(rid, core::move(mesh));
         }
+        break;
+        default:
         break;
     }
 

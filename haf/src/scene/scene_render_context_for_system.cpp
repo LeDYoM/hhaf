@@ -13,10 +13,8 @@
 #include <haf/include/render/shared_data_buffer.hpp>
 #include <haf/include/render/vertex_formats.hpp>
 
-GLuint bufferUniform;
-GLuint bindingpoint = 1;
-
 using namespace haf::core;
+using namespace fmath;
 
 namespace haf::scene
 {
@@ -45,7 +43,7 @@ void SceneRenderContextForSystem::endFrame()
     BaseClass::endFrame();
 }
 
-void SceneRenderContextForSystem::setCameraMatrix(math::Matrix4x4 const& matrix)
+void SceneRenderContextForSystem::setCameraMatrix(Matrix4x4 const& matrix)
 {
     BaseClass::setCameraMatrix(matrix);
 
@@ -56,7 +54,7 @@ void SceneRenderContextForSystem::setCameraMatrix(math::Matrix4x4 const& matrix)
     if (!sh_buffer)
     {
         sh_buffer = msptr<render::SharedDataBuffer>(
-            "HAFCameraData", span<math::Matrix4x4>{});
+            "HAFCameraData", span<Matrix4x4>{});
         sh_buffer->autoBindToDefault();
 
         sys::getSystem<sys::RenderSystem>(&m_isystem_provider)
@@ -64,7 +62,7 @@ void SceneRenderContextForSystem::setCameraMatrix(math::Matrix4x4 const& matrix)
             .add("haf_camera_projection", sh_buffer);
     }
 
-    sh_buffer->write<math::Matrix4x4>(matrix);
+    sh_buffer->write<Matrix4x4>(matrix);
 }
 
 }  // namespace haf::scene

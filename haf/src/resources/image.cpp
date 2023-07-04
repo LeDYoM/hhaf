@@ -3,10 +3,11 @@
 #include "stb_image/stb_image.h"
 
 using namespace haf::core;
-using namespace fmath;
+using namespace haf::math;
 
 namespace
 {
+/*
 void generate_texture(float* data, int width, int height)
 {
     int x, y;
@@ -22,6 +23,7 @@ void generate_texture(float* data, int width, int height)
         }
     }
 }
+*/
 }  // namespace
 
 namespace haf::res

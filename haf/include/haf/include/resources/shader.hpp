@@ -6,7 +6,7 @@ HAF_PRAGMA_ONCE
 #include <haf/include/resources/shader_code.hpp>
 #include <haf/include/resources/iresource.hpp>
 #include <haf/include/resources/vertex_buffer_object.hpp>
-#include <haf/include/core/matrix4x4.hpp>
+#include <facil_math/include/matrix4x4.hpp>
 
 namespace haf::res
 {
@@ -49,8 +49,8 @@ public:
     bool isValid() const override;
     core::u32 handle() const;
 
-    void setUniform(core::str_view const name, math::Matrix4x4 const& m4x4);
-    void setUniform(core::s32 const index, math::Matrix4x4 const& m4x4);
+    void setUniform(core::str_view const name, fmath::Matrix4x4 const& m4x4);
+    void setUniform(core::s32 const index, fmath::Matrix4x4 const& m4x4);
 
     core::s32 attributeIndex(core::str_view const name) const;
     render::VertexFormat attributeFormat(core::u32 const attributeIndex) const;

@@ -13,7 +13,7 @@ namespace haf::backend
 
 namespace haf::sys
 {
-struct HAF_PRIVATE FPSCounter
+struct FPSCounter
 {
     time::TimePoint lastTimeFps{0U};
     core::fast_u16 lastFps{0U};

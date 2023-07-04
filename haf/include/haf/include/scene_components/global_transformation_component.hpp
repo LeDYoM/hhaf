@@ -5,7 +5,7 @@ HAF_PRAGMA_ONCE
 #include <haf/include/haf_export.hpp>
 #include <haf/include/core/types.hpp>
 #include <haf/include/properties/property_state.hpp>
-#include <haf/include/core/matrix4x4.hpp>
+#include <facil_math/include/matrix4x4.hpp>
 
 #include <haf/include/events/receiver.hpp>
 #include <haf/include/component/component_declaration.hpp>
@@ -22,14 +22,14 @@ public:
     GlobalTransformationComponent();
     ~GlobalTransformationComponent() override;
 
-    void localTransformationChanged(math::Matrix4x4 const& localTransform);
+    void localTransformationChanged(fmath::Matrix4x4 const& localTransform);
     bool hasPendingMatrixUpdate() const noexcept;
 
 private:
-    evt::emitter<math::Matrix4x4 const&> m_globalTransformationChanged;
+    evt::emitter<fmath::Matrix4x4 const&> m_globalTransformationChanged;
     void updateMatrix();
     void setModelViewMatrix();
-    void globalTransformationChanged(math::Matrix4x4 const& parentMatrix);
+    void globalTransformationChanged(fmath::Matrix4x4 const& parentMatrix);
 
     void onAttached() override;
 

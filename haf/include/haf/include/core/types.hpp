@@ -12,11 +12,6 @@ HAF_PRAGMA_ONCE
 #include <htypes/include/p_impl_pointer.hpp>
 #include <htypes/include/dictionary.hpp>
 
-#include <facil_math/include/vector2d.hpp>
-#include <facil_math/include/vector3d.hpp>
-#include <facil_math/include/vector4d.hpp>
-#include <facil_math/include/rect.hpp>
-
 namespace haf
 {
 namespace core = htps;

@@ -1,5 +1,5 @@
 #include "default_shader_data.hpp"
-#include <haf/include/core/matrix4x4.hpp>
+#include <facil_math/include/matrix4x4.hpp>
 #include <haf/include/render/buffer_subobject.hpp>
 #include <haf/include/render/vertex_formats.hpp>
 
@@ -20,7 +20,7 @@ static render::BufferSubObjects DefaultAttribsTable{
     {"haf_textureuv", 2U, getVertexFormat<vector2df>()}};
 
 static render::BufferSubObjects DefaultUniformBlocks{
-    {"HAFCameraData", 0U, getVertexFormat<math::Matrix4x4>()}};
+    {"HAFCameraData", 0U, getVertexFormat<fmath::Matrix4x4>()}};
 
 using UniformBlocksBindingType  = pair<str, u32>;
 using UniformBlocksBindingsType = vector<UniformBlocksBindingType>;

@@ -3,11 +3,11 @@
 
 #include "system/get_system.hpp"
 #include "scene/scene_manager.hpp"
-#include <haf/include/core/geometry_math.hpp>
+#include <facil_math/include/geometry_math.hpp>
+#include <facil_math/include/matrix4x4_functions.hpp>
 
 using namespace haf::core;
 using namespace haf::prop;
-using namespace haf::math;
 using namespace fmath;
 
 namespace haf::scene
@@ -61,15 +61,16 @@ void CameraComponent::cameraDataPerspectiveUpdated()
             break;
         case CameraMode::Frustum:
             m_p->m_perspective_matrix =
-                math::frustum(Left(), Right(), Bottom(), Top(), Near(), Far());
+                fmath::frustum(Left(), Right(), Bottom(), Top(), Near(), Far());
             break;
         case CameraMode::Ortho:
             m_p->m_perspective_matrix =
-                math::ortho(Left(), Right(), Bottom(), Top(), Near(), Far());
+                fmath::ortho(Left(), Right(), Bottom(), Top(), Near(), Far());
+//            m_p->m_perspective_matrix = Matrix4x4::Identity;
             break;
         case CameraMode::Perspective:
             m_p->m_perspective_matrix =
-                math::perspective(FovY(), Aspect(), Near(), Far());
+                fmath::perspective(FovY(), Aspect(), Near(), Far());
             break;
         default:
             LogAsserter::log_assert(true, "Invalid CameraMode value");
@@ -82,7 +83,14 @@ void CameraComponent::cameraDataPerspectiveUpdated()
 
 void CameraComponent::cameraDataViewUpdated()
 {
-    m_p->m_view_matrix = math::lookat(Position(), Center(), Up());
+    if (cameraMode() == CameraMode::Ortho)
+    {
+        m_p->m_view_matrix = Matrix4x4::Identity;
+    }
+    else
+    {
+        m_p->m_view_matrix = fmath::lookat(Position(), Center(), Up());
+    }
 
     m_p->cameraComponentsUpdated.setChanged();
     cameraViewUpdated();

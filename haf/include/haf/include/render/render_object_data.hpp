@@ -32,7 +32,7 @@ struct RenderObjectData
     BufferObjectConstructParams bufferObjectConstructParams() const noexcept
     {
         return BufferObjectConstructParams{bufferObjectUnsizedConstructParams(),
-                                           data.size()};
+                                           static_cast<core::u32>(data.size())};
     }
 };
 

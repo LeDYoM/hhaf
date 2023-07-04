@@ -96,4 +96,14 @@ SceneRenderContextView const& SceneManager::sceneRenderContextView()
     return m_scene_render_context_for_system;
 }
 
+MeshCreator& SceneManager::meshCreator() noexcept
+{
+    return m_mesh_creator;
+}
+
+MeshCreator const& SceneManager::meshCreator() const noexcept
+{
+    return m_mesh_creator;
+}
+
 }  // namespace haf::scene

@@ -4,6 +4,8 @@
 #include <haf/include/render/vertex_formats.hpp>
 #include <haf/include/scene/color.hpp>
 #include <haf/include/resources/image.hpp>
+#include <haf/include/core/types.hpp>
+#include <haf/include/math/types.hpp>
 
 using namespace haf::res;
 using namespace haf::core;
@@ -111,8 +113,7 @@ bool DefaultResources::loadDefaultMesh(sys::ResourceManager& rManager)
     return ok;
 }
 
-bool DefaultResources::loadDefaultVertexArrayObject(
-    sys::ResourceManager&)
+bool DefaultResources::loadDefaultVertexArrayObject(sys::ResourceManager&)
 {
     return true;
 }
@@ -141,89 +142,32 @@ sptr<VertexBufferObject> DefaultResources::getDefaultColorRenderDataBufer()
 
 bool DefaultResources::loadDefaultCubeMesh(sys::ResourceManager& rManager)
 {
-    static vector3df cube_data_raw_mesh_position[] = {
-        {-0.25F, -0.25F, 0.25F},  {-0.25F, -0.25F, -0.25F},
-        {0.25F, -0.25F, -0.25F},  {0.25F, -0.25F, -0.25F},
-        {0.25F, -0.25F, 0.25F},   {-0.25F, -0.25F, 0.25F},
+    math::vvector3df cube_data_raw_mesh_position;
+    cube_data_raw_mesh_position.scale(0.25F);
+    addPositionsCube(cube_data_raw_mesh_position);
 
-        {0.25F, -0.25F, -0.25F},  {0.25F, 0.25F, -0.25F},
-        {0.25F, -0.25F, 0.25F},   {0.25F, 0.25F, -0.25F},
-        {0.25F, 0.25F, 0.25F},    {0.25F, -0.25F, 0.25F},
+    math::vvector3df cube_data_raw_mesh_normal;
+    addNormalCube(cube_data_raw_mesh_normal);
 
-        {0.25F, 0.25F, -0.25F},   {-0.25F, 0.25F, -0.25F},
-        {0.25F, 0.25F, 0.25F},    {-0.25F, 0.25F, -0.25F},
-        {-0.25F, 0.25F, 0.25F},   {0.25F, 0.25F, 0.25F},
-
-        {-0.25F, 0.25F, -0.25F},  {-0.25F, -0.25F, -0.25F},
-        {-0.25F, 0.25F, 0.25F},   {-0.25F, -0.25F, -0.25F},
-        {-0.25F, -0.25F, 0.25F},  {-0.25F, 0.25F, 0.25F},
-
-        {-0.25F, 0.25F, -0.25F},  {0.25F, 0.25F, -0.25F},
-        {0.25F, -0.25F, -0.25F},  {0.25F, -0.25F, -0.25F},
-        {-0.25F, -0.25F, -0.25F}, {-0.25F, 0.25F, -0.25F},
-
-        {-0.25F, -0.25F, 0.25F},  {0.25F, -0.25F, 0.25F},
-        {0.25F, 0.25F, 0.25F},    {0.25F, 0.25F, 0.25F},
-        {-0.25F, 0.25F, 0.25F},   {-0.25F, -0.25F, 0.25F}};
-
-    static vector3df cube_data_raw_mesh_normal[] = {
-        Vector3dOnesF32, Vector3dOnesF32, Vector3dOnesF32,
-        Vector3dOnesF32, Vector3dOnesF32, Vector3dOnesF32,
-
-        Vector3dOnesF32, Vector3dOnesF32, Vector3dOnesF32,
-        Vector3dOnesF32, Vector3dOnesF32, Vector3dOnesF32,
-
-        Vector3dOnesF32, Vector3dOnesF32, Vector3dOnesF32,
-        Vector3dOnesF32, Vector3dOnesF32, Vector3dOnesF32,
-
-        Vector3dOnesF32, Vector3dOnesF32, Vector3dOnesF32,
-        Vector3dOnesF32, Vector3dOnesF32, Vector3dOnesF32,
-
-        Vector3dOnesF32, Vector3dOnesF32, Vector3dOnesF32,
-        Vector3dOnesF32, Vector3dOnesF32, Vector3dOnesF32,
-
-        Vector3dOnesF32, Vector3dOnesF32, Vector3dOnesF32,
-        Vector3dOnesF32, Vector3dOnesF32, Vector3dOnesF32};
-
-    static vector2df cube_data_raw_mesh_textureuv[] = {
-        {0.0F, 1.0F}, {0.0F, 0.0F}, {1.0F, 0.0F},
-        {1.0F, 0.0F}, {1.0F, 1.0F}, {0.0F, 1.0F},
-
-        {0.0F, 0.0F}, {1.0F, 0.0F}, {0.0F, 1.0F},
-        {1.0F, 0.0F}, {1.0F, 1.0F}, {0.0F, 1.0F},
-
-        {1.0F, 0.0F}, {0.0F, 0.0F}, {1.0F, 1.0F},
-        {0.0F, 0.0F}, {0.0F, 1.0F}, {1.0F, 1.0F},
-
-        {1.0F, 0.0F}, {0.0F, 0.0F}, {1.0F, 1.0F},
-        {0.0F, 0.0F}, {0.0F, 1.0F}, {1.0F, 1.0F},
-
-        {0.0F, 1.0F}, {1.0F, 1.0F}, {1.0F, 0.0F},
-        {1.0F, 0.0F}, {0.0F, 0.0F}, {0.0F, 1.0F},
-
-        {0.0F, 0.0F}, {1.0F, 0.0F}, {1.0F, 1.0F},
-        {1.0F, 1.0F}, {0.0F, 1.0F}, {0.0F, 0.0F}};
+    math::vvector2df cube_data_raw_mesh_textureuv;
+    addTextureUVCube(cube_data_raw_mesh_textureuv);
 
     using namespace scene::colors;
-
-    static vector4df cube_vertex_color_data_raw[] = {
-        Cyan,    Cyan,    Cyan,    Cyan,    Cyan,    Cyan,    Blue,   Blue,
-        Blue,    Blue,    Blue,    Blue,    Green,   Green,   Green,  Green,
-        Green,   Green,   Yellow,  Yellow,  Yellow,  Yellow,  Yellow, Yellow,
-        Magenta, Magenta, Magenta, Magenta, Magenta, Magenta, White,  White,
-        White,   White,   White,   White,   White,   White};
+    math::vvector4df cube_vertex_color_data_raw;
+    addColorCube(cube_vertex_color_data_raw,
+                 {Cyan, Blue, Green, Yellow, Magenta, White});
 
     auto color_buffer_cube{core::msptr<res::VertexBufferObject>(
-        "haf_color", core::span{cube_vertex_color_data_raw})};
+        "haf_color", cube_vertex_color_data_raw.as_span())};
 
     auto vertex_buffer_cube_positions{core::msptr<res::VertexBufferObject>(
-        "haf_position", core::span{cube_data_raw_mesh_position})};
+        "haf_position", cube_data_raw_mesh_position.as_span())};
 
     auto vertex_buffer_cube_normals{core::msptr<res::VertexBufferObject>(
-        "haf_normal", core::span{cube_data_raw_mesh_normal})};
+        "haf_normal", cube_data_raw_mesh_normal.as_span())};
 
     auto vertex_buffer_cube_textureuvs{core::msptr<res::VertexBufferObject>(
-        "haf_textureuv", core::span{cube_data_raw_mesh_textureuv})};
+        "haf_textureuv", cube_data_raw_mesh_textureuv.as_span())};
 
     bool ok{true};
     ok &= rManager.addResource("default_cube_color_data", color_buffer_cube);

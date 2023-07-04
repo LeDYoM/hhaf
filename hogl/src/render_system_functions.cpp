@@ -97,6 +97,7 @@ void setDebug(bool const enable)
 
 void setDefaultRenderState()
 {
+    glFrontFace(GL_CCW);
     glEnable(GL_CULL_FACE);
 
     glEnable(GL_DEPTH_TEST);

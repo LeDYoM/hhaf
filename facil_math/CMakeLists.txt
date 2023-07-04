@@ -12,11 +12,17 @@ set(CURRENT_TARGET facil_math)
 
 set(include_dir facil_math/include)
 set(headers
+    ${include_dir}/geometry_math.hpp
     ${include_dir}/math_types.hpp
+    ${include_dir}/matrix4x4_functions.hpp
+    ${include_dir}/matrix4x4.hpp
     ${include_dir}/rect.hpp
+    ${include_dir}/vector_types.hpp
     ${include_dir}/vector2d.hpp
     ${include_dir}/vector3d.hpp
     ${include_dir}/vector4d.hpp
+    ${include_dir}/vvector_functions.hpp
+    ${include_dir}/vvector.hpp
   )
 
 build_lib_component(HEADERS_ONLY HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}"
