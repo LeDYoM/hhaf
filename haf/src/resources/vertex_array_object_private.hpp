@@ -21,6 +21,8 @@ struct VertexArrayObject::VertexArrayObjectPriv
     void disableUnusedAttribsForVaoInShader(
         core::vector<core::u32>& associatedAttribsToShader);
 
+    void associateBuffersToAttribsInCurrentShader(core::sptr<Mesh> mesh);
+
     void render();
 
     ~VertexArrayObjectPriv() noexcept;

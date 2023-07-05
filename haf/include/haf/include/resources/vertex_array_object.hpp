@@ -40,8 +40,6 @@ public:
     friend struct ShaderVaoHelper;
 
 private:
-    void associateBuffersToAttribsInCurrentShader();
-
     struct VertexArrayObjectPriv;
     core::PImplPointer<VertexArrayObjectPriv> m_p;
 };

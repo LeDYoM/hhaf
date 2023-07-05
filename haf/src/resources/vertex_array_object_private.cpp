@@ -10,6 +10,24 @@ using namespace haf::core;
 
 namespace haf::res
 {
+void VertexArrayObject::VertexArrayObjectPriv::
+    associateBuffersToAttribsInCurrentShader(sptr<Mesh> mesh)
+{
+    u32 binding_index{0U};
+    vector<u32> currentAssociatedAttribsToShaderForVao(
+        mesh->vertexBufferObjects().size());
+    for (auto const& vertex_buffer_object : mesh->vertexBufferObjects())
+    {
+        associateBufferToAttib(binding_index++,
+                               vertex_buffer_object->subObject(),
+                               currentAssociatedAttribsToShaderForVao,
+                               vertex_buffer_object->handle(),
+                               vertex_buffer_object->vertexFormatSize(),
+                               vertex_buffer_object->size());
+    }
+    disableUnusedAttribsForVaoInShader(currentAssociatedAttribsToShaderForVao);
+}
+
 void VertexArrayObject::VertexArrayObjectPriv::associateBufferToAttib(
     u32 const binding_index,
     render::BufferSubObject const& vertex_buffer_subobject,
