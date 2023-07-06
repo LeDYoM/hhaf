@@ -37,7 +37,7 @@ void VertexArrayObject::VertexArrayObjectPriv::associateBufferToAttib(
     u32 const parentSize)
 {
     // TODO: We could check that the buffer to associate has the correct
-    s32 const expected_index{m_shader->attributeIndex(
+    s32 const expected_index{m_shader->m_shader_metadata.attributeIndex(
         str_view{vertex_buffer_subobject.index().c_str()})};
     if (expected_index > -1)
     {
@@ -64,7 +64,7 @@ void VertexArrayObject::VertexArrayObjectPriv::
     disableUnusedAttribsForVaoInShader(vector<u32>& associatedAttribsToShader)
 {
     auto const unused_attribs_in_shader{
-        m_shader->unusedAttribs(associatedAttribsToShader)};
+        m_shader->m_shader_metadata.unusedAttribs(associatedAttribsToShader)};
     for (auto&& unused_attrib_in_shader : unused_attribs_in_shader)
     {
         ogl::disableAttribForVao(m_vao, unused_attrib_in_shader.second);
