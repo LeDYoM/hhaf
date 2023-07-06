@@ -37,7 +37,6 @@ public:
     void render();
 
     core::sptr<Shader>& shader() noexcept;
-    friend struct ShaderVaoHelper;
 
 private:
     struct VertexArrayObjectPriv;

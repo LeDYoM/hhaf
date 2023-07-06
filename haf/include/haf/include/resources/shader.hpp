@@ -25,8 +25,6 @@ public:
 
     ~Shader() override;
 
-    friend struct ShaderVaoHelper;
-
     constexpr ResourceType resourceType() const noexcept override
     {
         return StaticResourceType;
