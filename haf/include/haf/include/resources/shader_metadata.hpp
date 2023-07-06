@@ -13,10 +13,10 @@ namespace haf::res
 class ShaderMetadata final
 {
 public:
+    static constexpr const haf::core::str_view StaticTypeName{
+        "ShaderMetadata"};
 
     ShaderMetadata() = default;
-
-    bool init(core::u32 const program);
 
     core::u32 numAttribs() const;
     render::VertexFormat vertexFormat(core::u32 const index) const;
@@ -31,7 +31,10 @@ public:
     render::VertexFormat uniformFormat(core::u32 const uniformIndex) const;
     render::VertexFormat uniformFormat(core::str_view const name) const;
 
-//private:
+private:
+    void init(core::u32 const program);
+    friend class Shader;
+
     render::BufferSubObjects m_attribVertexFormat;
     render::BufferSubObjects m_uniformFormat;
     render::BufferSubObjects m_uniformBlockFormat;

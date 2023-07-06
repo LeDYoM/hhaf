@@ -7,7 +7,6 @@
 #include <hogl/include/uniform_functions.hpp>
 #include <hlog/include/hlog.hpp>
 #include "shader_private.hpp"
-#include "shader_data_filler.hpp"
 
 #include <hogl/include/vao_functions.hpp>
 
