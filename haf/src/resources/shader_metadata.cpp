@@ -88,25 +88,6 @@ void ShaderMetadata::init(ShaderId const program)
                          ": No uniform block elements found");
 }
 
-/*
-Shader::Shader(sptr<VertexShaderCode> vsc,
-               sptr<TessellationControlShaderCode> tcsc,
-               sptr<TessellationEvaluationShaderCode> tesc,
-               sptr<GeometryShaderCode> gsc,
-               sptr<FragmentShaderCode> fsc,
-               sptr<ComputeShaderCode> csc) :
-    m_p{make_pimplp<ShaderPrivate>()}
-{
-    DefaultAttribs::bindDefaultAttributes(m_p->m_program);
-
-    attachAllShaders(m_p->m_program, shader_handles);
-    ogl::linkProgram(m_p->m_program);
-    deleteAllShaders(shader_handles);
-
-    DisplayLog::debug(staticTypeName(), ": Shader id: ", m_p->m_program);
-}
-*/
-
 u32 ShaderMetadata::numAttribs() const
 {
     return static_cast<u32>(m_p->m_attribVertexFormat.size());
