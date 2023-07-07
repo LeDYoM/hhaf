@@ -16,7 +16,8 @@ public:
     static constexpr const haf::core::str_view StaticTypeName{
         "ShaderMetadata"};
 
-    ShaderMetadata() = default;
+    ShaderMetadata();
+    ~ShaderMetadata();
 
     core::u32 numAttribs() const;
     render::VertexFormat vertexFormat(core::u32 const index) const;
@@ -35,13 +36,8 @@ private:
     void init(core::u32 const program);
     friend class Shader;
 
-    render::BufferSubObjects m_attribVertexFormat;
-    render::BufferSubObjects m_uniformFormat;
-    render::BufferSubObjects m_uniformBlockFormat;
-    render::BufferSubObjects m_uniformBlockElementsFormat;
-
-//    struct ShaderMetadataPrivate;
-//    core::PImplPointer<ShaderMetadataPrivate> m_p;
+    struct ShaderMetadataPrivate;
+    core::PImplPointer<ShaderMetadataPrivate> m_p;
 };
 }  // namespace haf::res
 
