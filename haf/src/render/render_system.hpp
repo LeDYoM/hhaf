@@ -31,6 +31,7 @@ public:
     void beginFrame(fmath::vector4df const& backgroundColor);
     void endFrame();
 
+    void finish();
 private:
     core::sptr<RenderTarget> render_target_;
     render::SharedDataManager m_shared_data_manager;

@@ -266,6 +266,7 @@ void SystemProvider::terminate()
     p_->scene_manager_.reset();
     p_->simulation_system_.reset();
     p_->random_system_.reset();
+    p_->render_system_->finish();
     p_->render_system_.reset();
     p_->resource_manager_.reset();
     p_->scene_manager_.reset();
