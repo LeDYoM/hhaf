@@ -31,11 +31,12 @@ void update()
 
     ImGui::NewFrame();
 
+    ImGui::SetNextWindowPos({0,0});
+    ImGui::SetNextWindowSize({400, 400});
     ImGui::Begin("Demo window");
-    if (ImGui::Button("Hello world!"))
-    {
-        ImGui::Text("abc");
-    }
+    ImGui::Text("abc");
+    ImGui::Text("abcd");
+    ImGui::Text("abce");
     ImGui::End();
 
     // Render dear imgui into screen
