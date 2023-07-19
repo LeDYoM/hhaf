@@ -2,6 +2,7 @@ HAF_PRAGMA_ONCE
 #ifndef HAF_DEBUG_DEBUG_SYSTEM_INCLUDE_HPP
 #define HAF_DEBUG_DEBUG_SYSTEM_INCLUDE_HPP
 
+#include <haf/include/core/types.hpp>
 #include "system/system_base.hpp"
 #include <haf/include/profiler/imemory_data_viewer.hpp>
 #include <haf/include/debug_system/idebug_variables.hpp>
@@ -24,10 +25,13 @@ public:
 
     void logBuildStaticData();
 
+    void init();
+    void finish();
+
     void onStartPreUpdate();
     void onFinishPreUpdate() {}
     void onStartUpdate() {}
-    void onFinishUpdate() {}
+    void onFinishUpdate();
     void onStartPostUpdate() {}
     void onFinishPostUpdate();
 
@@ -37,10 +41,10 @@ public:
     bool popMemoryDataStatistics() override;
     bool canAddNode() const noexcept override;
 
-    htps::size_type getHeadAllocations() const noexcept override;
-    htps::size_type getHeadDeallocations() const noexcept override;
-    htps::size_type getHeadAllocatedByes() const noexcept override;
-    htps::size_type getHeadDeallocatedByes() const noexcept override;
+    core::size_type getHeadAllocations() const noexcept override;
+    core::size_type getHeadDeallocations() const noexcept override;
+    core::size_type getHeadAllocatedByes() const noexcept override;
+    core::size_type getHeadDeallocatedByes() const noexcept override;
 
     debug::DebugVariables& debugVariables();
 

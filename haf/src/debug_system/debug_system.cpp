@@ -6,7 +6,9 @@
 #include "static_build_data_display.hpp"
 #include <hlog/include/hlog.hpp>
 
-using namespace htps;
+#include "haf_imgui.hpp"
+
+using namespace haf::core;
 
 namespace haf::sys
 {
@@ -100,6 +102,21 @@ void DebugSystem::setVariable(debug::DebugVariableHandle const index,
                               debug::DebugVariable::value_type const newValue)
 {
     m_debug_variables.setVariable(index, newValue);
+}
+
+void DebugSystem::init()
+{
+    himgui::init();
+}
+
+void DebugSystem::onFinishUpdate()
+{
+    himgui::update();
+}
+
+void DebugSystem::finish()
+{
+    himgui::shutdown();
 }
 
 }  // namespace haf::sys

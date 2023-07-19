@@ -3,8 +3,6 @@
 #include <hlog/include/hlog.hpp>
 #include <hogl/include/render_system_functions.hpp>
 
-#include "haf_imgui.hpp"
-
 using namespace haf::core;
 using namespace haf::render;
 
@@ -16,18 +14,14 @@ void RenderSystem::initialize(bool const enableDebug)
     LogAsserter::log_assert(m_initialized == true);
     ogl::setDebug(enableDebug);
     ogl::setDefaultRenderState();
-
-    himgui::init();
 }
 
 void RenderSystem::update()
 {
-    himgui::update();
 }
 
 void RenderSystem::finish()
 {
-    himgui::shutdown();
 }
 
 sptr<RenderTarget> const& RenderSystem::currentRenderTarget() const
