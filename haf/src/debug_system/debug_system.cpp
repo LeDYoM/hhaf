@@ -112,6 +112,10 @@ void DebugSystem::init()
 void DebugSystem::onFinishUpdate()
 {
     himgui::update();
+    for (auto const& debug_variable : m_debug_variables)
+    {
+        
+    }
 }
 
 void DebugSystem::finish()
