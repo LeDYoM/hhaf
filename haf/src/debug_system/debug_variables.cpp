@@ -1,6 +1,6 @@
 #include "debug_variables.hpp"
 
-using namespace htps;
+using namespace haf::core;
 using DebugVariableHandle = haf::debug::DebugVariableHandle;
 using DebugVariable_t     = haf::debug::DebugVariable;
 

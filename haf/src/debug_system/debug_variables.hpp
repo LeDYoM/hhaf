@@ -2,9 +2,7 @@ HAF_PRAGMA_ONCE
 #ifndef HAF_DEBUG_DEBUG_VARIABLES_INCLUDE_HPP
 #define HAF_DEBUG_DEBUG_VARIABLES_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
-#include <htypes/include/str.hpp>
-#include <htypes/include/dictionary.hpp>
+#include <haf/include/core/types.hpp>
 #include <haf/include/time/time_point.hpp>
 #include <haf/include/debug_system/debug_variable.hpp>
 #include <haf/include/debug_system/debug_types.hpp>
@@ -26,19 +24,19 @@ public:
                      DebugVariable::value_type const newValue =
                          static_cast<DebugVariable::value_type>(0));
 
-    htps::str state() const;
+    core::str state() const;
 
     void startFrame(time::TimePoint const& now);
     void endFrame();
 
-    htps::size_type size() const noexcept;
+    core::size_type size() const noexcept;
     bool empty() const noexcept;
-    htps::Dictionary<DebugVariable> const& debugVariables() const noexcept;
+    core::Dictionary<DebugVariable> const& debugVariables() const noexcept;
 
 private:
-    htps::Dictionary<DebugVariable> m_debug_variables;
+    core::Dictionary<DebugVariable> m_debug_variables;
     time::TimePoint m_last_time_update{0U};
-    htps::u64 m_frames{0U};
+    core::u64 m_frames{0U};
 };
 
 }  // namespace haf::debug
