@@ -38,6 +38,7 @@ private:
     time::TimePoint m_last_time_update{0U};
     core::u64 m_frames{0U};
     DebugVariableHandle m_frames_debug_var;
+    DebugVariableHandle m_frameTime;
 };
 
 }  // namespace haf::debug

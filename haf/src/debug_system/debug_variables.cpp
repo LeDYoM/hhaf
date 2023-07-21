@@ -12,6 +12,8 @@ void DebugVariables::startFrame(time::TimePoint const& now)
 
     getVariable(m_frames_debug_var, "FrameNum");
     incrementVariable(m_frames_debug_var);
+    getVariable(m_frameTime, "FrameTime");
+    setVariable(m_frameTime,now.nanoseconds());
 
     for (auto& element : m_debug_variables)
     {
