@@ -9,6 +9,10 @@ namespace haf::debug
 void DebugVariables::startFrame(time::TimePoint const& now)
 {
     ++m_frames;
+
+    getVariable(m_frames_debug_var, "FrameNum");
+    incrementVariable(m_frames_debug_var);
+
     for (auto& element : m_debug_variables)
     {
         element.second.incrementFrame();
