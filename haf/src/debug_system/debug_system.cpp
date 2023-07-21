@@ -111,11 +111,18 @@ void DebugSystem::init()
 
 void DebugSystem::onFinishUpdate()
 {
-    himgui::update();
-    for (auto const& debug_variable : m_debug_variables)
+    himgui::initFrame();
+    himgui::initWindow();
+    himgui::addMessage("Test message");
+    /*
+    for (auto const [name, value] : m_debug_variables.debugVariables())
     {
-        
+
     }
+    */
+
+   himgui::finishWindow();
+   himgui::finishFrame();
 }
 
 void DebugSystem::finish()
