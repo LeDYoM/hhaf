@@ -91,15 +91,8 @@ bool DebugSystem::getVariableValue(debug::DebugVariableHandle& index,
     return m_debug_variables.getVariableValue(index, value);
 }
 
-void DebugSystem::incrementVariable(
-    debug::DebugVariableHandle const index,
-    debug::DebugVariable::value_type const increment)
-{
-    m_debug_variables.incrementVariable(index, increment);
-}
-
 void DebugSystem::setVariable(debug::DebugVariableHandle const index,
-                              debug::DebugVariable::value_type const newValue)
+                              debug::DebugVariable const& newValue)
 {
     m_debug_variables.setVariable(index, newValue);
 }

@@ -12,22 +12,18 @@ public:
     using value_type = htps::s64;
 
     DebugVariable() noexcept;
-    explicit DebugVariable(value_type value) noexcept;
+    DebugVariable(value_type value) noexcept;
     void incrementFrame() noexcept;
 
     value_type value() const noexcept;
     htps::u64 frame() const noexcept;
 
     void operator=(value_type const other_value) noexcept;
-//    void operator+=(value_type const other_value) noexcept;
 
 private:
     value_type m_value{};
     htps::u64 m_frame{0U};
 };
-
-DebugVariable operator+(DebugVariable const& lhs,
-                        DebugVariable::value_type const& rhs);
 
 }  // namespace haf::debug
 

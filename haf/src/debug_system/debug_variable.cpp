@@ -29,23 +29,5 @@ void DebugVariable::operator=(value_type const other_value) noexcept
 {
     m_value = other_value;
 }
-/*
-void DebugVariable::operator+=(value_type const other_value) noexcept
-{
-    m_value += other_value;
-}
-*/
-
-DebugVariable operator+(DebugVariable const& lhs,
-                        DebugVariable::value_type const& rhs)
-{
-    return DebugVariable{lhs.value() + rhs};
-}
-
-DebugVariable operator+(DebugVariable::value_type const& lhs,
-                        DebugVariable const& rhs)
-{
-    return DebugVariable{lhs + rhs.value()};
-}
 
 }  // namespace haf::debug

@@ -36,8 +36,8 @@ TEST_CASE("DebugVariable::operator+()")
     DebugVariable debug_variable2{5U};
     CHECK(debug_variable.value() == 0);
     CHECK(debug_variable2.value() == 5);
-    debug_variable = debug_variable2 + 3;
-    CHECK(debug_variable.value() == 8);
+//    debug_variable = debug_variable2 + 3;
+//    CHECK(debug_variable.value() == 8);
 }
 /*
 TEST_CASE("DebugVariable::valuePerFrame")

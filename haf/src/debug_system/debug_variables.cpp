@@ -12,9 +12,9 @@ void DebugVariables::startFrame(time::TimePoint const& now)
     ++m_frames;
 
     getVariable(m_frames_debug_var, "FrameNum");
-    incrementVariable(m_frames_debug_var);
+    //incrementVariable(m_frames_debug_var);
     getVariable(m_frameTime, "FrameTime");
-    setVariable(m_frameTime,now.nanoseconds());
+    setVariable(m_frameTime,DebugVariable(now.nanoseconds()));
 
     for (auto& element : m_debug_variables)
     {
@@ -43,17 +43,8 @@ bool DebugVariables::getVariableValue(DebugVariableHandle& index,
     return false;
 }
 
-void DebugVariables::incrementVariable(
-    DebugVariableHandle const index,
-    DebugVariable::value_type const increment)
-{
-    auto const value{m_debug_variables.index(static_cast<size_type>(index))};
-    m_debug_variables.index(static_cast<size_type>(index)) =
-        (value + increment);
-}
-
 void DebugVariables::setVariable(DebugVariableHandle const index,
-                                 DebugVariable::value_type const newValue)
+                                 DebugVariable const& newValue)
 {
     m_debug_variables.index(static_cast<size_type>(index)) = newValue;
 }

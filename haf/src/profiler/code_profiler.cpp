@@ -41,6 +41,7 @@ CodeProfiler::CodeProfiler(scene::SceneNode& scene_node,
 
 CodeProfiler::~CodeProfiler()
 {
+    /*
     auto const time_dif{
         sys::getSystem<sys::TimeSystem>(&m_system_provider).now() - m_start};
     sys::getSystem<sys::DebugSystem>(&m_system_provider)
@@ -48,5 +49,6 @@ CodeProfiler::~CodeProfiler()
         .incrementVariable(
             m_variable_id_ref,
             static_cast<DebugVariable::value_type>(time_dif.nanoseconds()));
+            */
 }
 }  // namespace haf::debug
