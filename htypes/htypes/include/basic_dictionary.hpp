@@ -65,7 +65,7 @@ public:
     }
 
     constexpr bool add(key_type const& key,
-                       T value,
+                       T value = {},
                        const bool overwrite = true)
     {
         auto it(find(key));

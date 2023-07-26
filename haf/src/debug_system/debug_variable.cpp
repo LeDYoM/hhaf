@@ -4,6 +4,7 @@ using namespace htps;
 
 namespace haf::debug
 {
+DebugVariable::DebugVariable() noexcept = default;
 
 DebugVariable::DebugVariable(value_type value) noexcept :
     m_value{htps::move(value)}

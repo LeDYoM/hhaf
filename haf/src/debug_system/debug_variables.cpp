@@ -1,4 +1,5 @@
 #include "debug_variables.hpp"
+#include "debug_variables_general.hpp"
 
 using namespace haf::core;
 using DebugVariableHandle = haf::debug::DebugVariableHandle;
@@ -28,24 +29,7 @@ void DebugVariables::startFrame(time::TimePoint const& now)
 void DebugVariables::getVariable(DebugVariableHandle& index,
                                  char const* const name)
 {
-    if (index < 0 ||
-        index > static_cast<DebugVariableHandle>(m_debug_variables.size()))
-    {
-        str str_name{name};
-        if (auto const index_found{m_debug_variables.cfind_index(str_name)};
-            index_found.first)
-        {
-            index = static_cast<s64>(index_found.second);
-        }
-        else
-        {
-            m_debug_variables.add(
-                str_name,
-                DebugVariable{static_cast<DebugVariable::value_type>(0)});
-            index =
-                static_cast<DebugVariableHandle>(m_debug_variables.size() - 1);
-        }
-    }
+    detail::getVariable(m_debug_variables, index, name);
 }
 
 bool DebugVariables::getVariableValue(DebugVariableHandle& index,

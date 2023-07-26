@@ -11,6 +11,7 @@ class DebugVariable
 public:
     using value_type = htps::s64;
 
+    DebugVariable() noexcept;
     explicit DebugVariable(value_type value) noexcept;
     void incrementFrame() noexcept;
 
@@ -22,7 +23,7 @@ public:
     void operator+=(value_type const other_value) noexcept;
 
 private:
-    value_type m_value;
+    value_type m_value{};
     htps::u64 m_frame{0U};
 };
 
