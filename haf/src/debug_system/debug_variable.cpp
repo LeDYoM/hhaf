@@ -7,8 +7,7 @@ namespace haf::debug
 struct DebugVariable::DebugVariablePriv
 {
     value_type m_value{};
-    htps::u64 m_frame{0U};
-
+ 
 //    DebugVariablePriv(value_type a) : m_value{a} {}
 };
 
@@ -46,7 +45,7 @@ DebugVariable& DebugVariable::operator=(DebugVariable&&)
 
 void DebugVariable::incrementFrame() noexcept
 {
-    ++m_p->m_frame;
+    ++m_frame;
 }
 
 DebugVariable::value_type DebugVariable::value() const noexcept
@@ -56,7 +55,7 @@ DebugVariable::value_type DebugVariable::value() const noexcept
 
 u64 DebugVariable::frame() const noexcept
 {
-    return m_p->m_frame;
+    return m_frame;
 }
 
 }  // namespace haf::debug

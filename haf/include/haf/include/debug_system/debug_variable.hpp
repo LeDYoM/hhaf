@@ -22,8 +22,9 @@ public:
 
     void incrementFrame() noexcept;
     value_type value() const noexcept;
-    htps::u64 frame() const noexcept;
+    core::u64 frame() const noexcept;
 private:
+    core::u64 m_frame{0U};
     struct DebugVariablePriv;
     core::PImplPointer<DebugVariablePriv> m_p;
 };
