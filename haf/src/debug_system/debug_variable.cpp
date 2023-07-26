@@ -25,9 +25,4 @@ u64 DebugVariable::frame() const noexcept
     return m_frame;
 }
 
-void DebugVariable::operator=(value_type const other_value) noexcept
-{
-    m_value = other_value;
-}
-
 }  // namespace haf::debug

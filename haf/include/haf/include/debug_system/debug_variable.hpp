@@ -18,8 +18,6 @@ public:
     value_type value() const noexcept;
     htps::u64 frame() const noexcept;
 
-    void operator=(value_type const other_value) noexcept;
-
 private:
     value_type m_value{};
     htps::u64 m_frame{0U};
