@@ -29,17 +29,12 @@ void DebugVariable::operator=(value_type const other_value) noexcept
 {
     m_value = other_value;
 }
-
+/*
 void DebugVariable::operator+=(value_type const other_value) noexcept
 {
     m_value += other_value;
 }
-
-f64 DebugVariable::valuePerFrame() const noexcept
-{
-    return m_frame ? (static_cast<f64>(m_value) / static_cast<f64>(m_frame))
-                   : static_cast<f64>(m_value);
-}
+*/
 
 DebugVariable operator+(DebugVariable const& lhs,
                         DebugVariable::value_type const& rhs)

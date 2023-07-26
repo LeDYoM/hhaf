@@ -17,10 +17,9 @@ public:
 
     value_type value() const noexcept;
     htps::u64 frame() const noexcept;
-    htps::f64 valuePerFrame() const noexcept;
 
     void operator=(value_type const other_value) noexcept;
-    void operator+=(value_type const other_value) noexcept;
+//    void operator+=(value_type const other_value) noexcept;
 
 private:
     value_type m_value{};
