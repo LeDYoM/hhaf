@@ -4,6 +4,7 @@ HAF_PRAGMA_ONCE
 
 #include <haf/include/core/types.hpp>
 #include <haf/include/debug_system/debug_types.hpp>
+#include <haf/include/debug_system/debug_variable.hpp>
 
 namespace haf::debug::detail
 {
@@ -22,7 +23,7 @@ void getVariable(auto& debug_variables,
         }
         else
         {
-            debug_variables.add(core::str{name});
+            debug_variables.add(core::str{name}, DebugVariable{});
             index =
                 static_cast<DebugVariableHandle>(debug_variables.size() - 1);
         }

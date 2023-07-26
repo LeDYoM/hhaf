@@ -33,20 +33,20 @@ void DebugVariables::getVariable(DebugVariableHandle& index,
 }
 
 bool DebugVariables::getVariableValue(DebugVariableHandle& index,
-                                      DebugVariable& value)
+                                      DebugVariable& /*value*/)
 {
     if (index > -1)
     {
-        value = m_debug_variables.index(static_cast<size_type>(index));
+//        value = m_debug_variables.index(static_cast<size_type>(index));
         return true;
     }
     return false;
 }
 
-void DebugVariables::setVariable(DebugVariableHandle const index,
-                                 DebugVariable const& newValue)
+void DebugVariables::setVariable(DebugVariableHandle const /*index*/,
+                                 DebugVariable const& /*newValue*/)
 {
-    m_debug_variables.index(static_cast<size_type>(index)) = newValue;
+//    m_debug_variables.index(static_cast<size_type>(index)) = newValue;
 }
 
 htps::size_type DebugVariables::size() const noexcept

@@ -77,7 +77,7 @@ public:
         }
         else if (overwrite)
         {
-            (*it) = element(key, value);
+            (*it) = element(key, htps::move(value));
             return true;
         }
         return false;
