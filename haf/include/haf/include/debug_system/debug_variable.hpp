@@ -33,8 +33,8 @@ public:
     ~DebugVariable();
 
     DebugVariable(DebugVariable const&) = delete;
-    DebugVariable(DebugVariable&&);
     DebugVariable& operator=(DebugVariable const&) = delete;
+    DebugVariable(DebugVariable&&);
     DebugVariable& operator=(DebugVariable&&);
 
     void incrementFrame() noexcept;

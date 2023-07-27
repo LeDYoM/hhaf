@@ -1,10 +1,11 @@
 To format from command line:
 find haf/ -iname *.hpp -o -iname *.cpp| xargs clang-format -i
 
-- Points to score go to somewhere on top
-#- Make transformations explicit of rotation, scalation, position, etc...
-#   that should help to not store the entire matrix always.
-- Create CodeProfiler
+1.0.2:
+    - Fix debug variables.
+        - Add imggui.
+        - Add defines calling just a function
+        - Logic to display vars with advanced features
 
-For 0.5
-- Add cameraListenerComponent to change camera.
+1.0.3:
+    - Minimize backend and backend_dev

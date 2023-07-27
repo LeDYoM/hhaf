@@ -71,13 +71,8 @@ DebugVariable::DebugVariable(char const* const value) noexcept :
 
 DebugVariable::~DebugVariable() = default;
 
-DebugVariable::DebugVariable(DebugVariable&&) : DebugVariable{}
-{}
-
-DebugVariable& DebugVariable::operator=(DebugVariable&&)
-{
-    return *this;
-}
+DebugVariable::DebugVariable(DebugVariable&&) = default;
+DebugVariable& DebugVariable::operator=(DebugVariable&&) = default;
 
 void DebugVariable::incrementFrame() noexcept
 {
