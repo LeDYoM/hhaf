@@ -12,9 +12,9 @@ void DebugVariables::startFrame(time::TimePoint const& now)
     ++m_frames;
 
     getVariable(m_frames_debug_var, "FrameNum");
-    //incrementVariable(m_frames_debug_var);
+    // incrementVariable(m_frames_debug_var);
     getVariable(m_frameTime, "FrameTime");
-    setVariable(m_frameTime,DebugVariable(now.nanoseconds()));
+    setVariable(m_frameTime, DebugVariable(now));
 
     for (auto& element : m_debug_variables)
     {
@@ -37,7 +37,8 @@ bool DebugVariables::getVariableValue(DebugVariableHandle& index,
 {
     if (index > -1)
     {
-//        value = m_debug_variables.index(static_cast<size_type>(index));
+        //        value =
+        //        m_debug_variables.index(static_cast<size_type>(index));
         return true;
     }
     return false;
@@ -46,7 +47,7 @@ bool DebugVariables::getVariableValue(DebugVariableHandle& index,
 void DebugVariables::setVariable(DebugVariableHandle const /*index*/,
                                  DebugVariable const& /*newValue*/)
 {
-//    m_debug_variables.index(static_cast<size_type>(index)) = newValue;
+    //    m_debug_variables.index(static_cast<size_type>(index)) = newValue;
 }
 
 htps::size_type DebugVariables::size() const noexcept
@@ -64,7 +65,7 @@ str DebugVariables::state() const
     str result{"Frames: "};
     result += m_frames;
     result += "\n";
-
+/*
     for (auto const& element : m_debug_variables)
     {
         result += element.first;
@@ -74,6 +75,7 @@ str DebugVariables::state() const
         result += element.second.value() / m_frames;
         result += "\n";
     }
+    */
     return result;
 }
 

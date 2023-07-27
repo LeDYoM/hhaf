@@ -108,10 +108,12 @@ void DebugSystem::onFinishUpdate()
     himgui::initWindow();
     himgui::addMessage("Test message");
     core::str temp;
+    core::str temp_value;
 
     for (auto const& [name, value] : m_debug_variables.debugVariables())
     {
-        temp = name + ":" + core::str::to_str(value.value());
+        value.getStr(temp_value);
+        temp = name + ":" + temp_value;
         himgui::addMessage(temp.c_str());
     }
 
