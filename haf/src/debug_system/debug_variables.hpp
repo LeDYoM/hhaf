@@ -15,7 +15,9 @@ public:
     void getVariable(DebugVariableHandle& index, char const* const name);
     bool getVariableValue(DebugVariableHandle& index, DebugVariable& value);
     void setVariableValue(DebugVariableHandle const index,
-                     DebugVariable const& newValue);
+                          DebugVariable const& newValue);
+    void setVariableValue(DebugVariableHandle const index,
+                          DebugVariable&& newValue);
 
     core::str state() const;
 

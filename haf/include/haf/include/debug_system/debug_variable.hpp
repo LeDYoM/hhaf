@@ -9,17 +9,18 @@ namespace haf::debug
 {
 enum class DebugVariableType : core::u32
 {
-    Integer = 0U,
-    Float,
-    String
+    Unknown = 0U,
+    Integer = 1U,
+    Float   = 2U,
+    String  = 3U
 };
 
 class DebugVariable
 {
 public:
     using ValueTypeInteger = core::s64;
-    using ValueTypeFloat = core::f64;
-    using ValueTypeString = core::str;
+    using ValueTypeFloat   = core::f64;
+    using ValueTypeString  = core::str;
 
     DebugVariable() noexcept;
     DebugVariable(ValueTypeInteger value) noexcept;
@@ -37,6 +38,17 @@ public:
     DebugVariable(DebugVariable&&);
     DebugVariable& operator=(DebugVariable&&);
 
+    void setValue(ValueTypeInteger value) noexcept;
+    void setValue(time::TimePoint value) noexcept;
+    void setValue(core::s32 value) noexcept;
+    void setValue(core::u32 value) noexcept;
+    void setValue(ValueTypeFloat value) noexcept;
+    void setValue(ValueTypeString value) noexcept;
+    void setValue(ValueTypeString const& value) noexcept;
+    void setValue(char const* const value) noexcept;
+    void setValueFrom(DebugVariable const& debug_variable_value) noexcept;
+    void setValueFrom(DebugVariable&& debug_variable_value) noexcept;
+
     void incrementFrame() noexcept;
     ValueTypeInteger valueInteger() const noexcept;
     ValueTypeFloat valueFloat() const noexcept;
@@ -45,6 +57,7 @@ public:
     core::u64 frame() const noexcept;
 
     void getStr(core::str& dest) const noexcept;
+
 private:
     struct DebugVariablePriv;
     core::PImplPointer<DebugVariablePriv> m_p;

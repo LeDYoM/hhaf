@@ -44,10 +44,18 @@ bool DebugVariables::getVariableValue(DebugVariableHandle& index,
     return false;
 }
 
-void DebugVariables::setVariableValue(DebugVariableHandle const /*index*/,
-                                 DebugVariable const& /*newValue*/)
+void DebugVariables::setVariableValue(DebugVariableHandle const index,
+                                      DebugVariable const& newValue)
 {
-    //    m_debug_variables.index(static_cast<size_type>(index)) = newValue;
+    m_debug_variables.index(static_cast<size_type>(index))
+        .setValueFrom(newValue);
+}
+
+void DebugVariables::setVariableValue(DebugVariableHandle const index,
+                                      DebugVariable&& newValue)
+{
+    m_debug_variables.index(static_cast<size_type>(index))
+        .setValueFrom(core::move(newValue));
 }
 
 htps::size_type DebugVariables::size() const noexcept
@@ -65,17 +73,17 @@ str DebugVariables::state() const
     str result{"Frames: "};
     result += m_frames;
     result += "\n";
-/*
-    for (auto const& element : m_debug_variables)
-    {
-        result += element.first;
-        result += ":\t";
-        result += element.second.value();
-        result += "\t";
-        result += element.second.value() / m_frames;
-        result += "\n";
-    }
-    */
+    /*
+        for (auto const& element : m_debug_variables)
+        {
+            result += element.first;
+            result += ":\t";
+            result += element.second.value();
+            result += "\t";
+            result += element.second.value() / m_frames;
+            result += "\n";
+        }
+        */
     return result;
 }
 

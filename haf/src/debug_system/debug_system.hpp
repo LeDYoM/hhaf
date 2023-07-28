@@ -57,6 +57,9 @@ public:
     void setVariableValue(debug::DebugVariableHandle const index,
                      debug::DebugVariable const& newValue) override;
 
+    void setVariableValue(debug::DebugVariableHandle const index,
+                     debug::DebugVariable&& newValue) override;
+
 private:
     debug::DebugVariables m_debug_variables;
 };
