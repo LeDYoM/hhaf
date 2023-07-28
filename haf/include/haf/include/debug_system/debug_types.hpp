@@ -20,7 +20,7 @@ using DebugVariableHandle = htps::s64;
 
 #define FROM_COMPONENT_SET_DEBUG_VARIABLE_VALUE(v_id, value) \
     FROM_COMPONENT_GET_DEBUG_VARIABLE(v_id, value) \
-    attachedNode()->subSystem<debug::IDebugVariables>()->setVariable( \
+    attachedNode()->subSystem<debug::IDebugVariables>()->setVariableValue( \
         HAF_DEBUG_VARIABLE_NAME(v_id), value);
 #else
 #define HAF_DECLARE_DEBUG_VARIABLE(v_id)

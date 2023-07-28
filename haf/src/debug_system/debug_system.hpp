@@ -54,7 +54,7 @@ public:
     bool getVariableValue(debug::DebugVariableHandle& index,
                           debug::DebugVariable& value) override;
 
-    void setVariable(debug::DebugVariableHandle const index,
+    void setVariableValue(debug::DebugVariableHandle const index,
                      debug::DebugVariable const& newValue) override;
 
 private:

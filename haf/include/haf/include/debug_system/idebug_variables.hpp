@@ -16,8 +16,8 @@ public:
     virtual bool getVariableValue(DebugVariableHandle& index,
                                   DebugVariable& value) = 0;
 
-    virtual void setVariable(DebugVariableHandle const index,
-                             DebugVariable const& newValue) = 0;
+    virtual void setVariableValue(DebugVariableHandle const index,
+                                  DebugVariable const& newValue) = 0;
 
 protected:
     ~IDebugVariables() = default;

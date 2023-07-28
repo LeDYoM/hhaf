@@ -91,10 +91,10 @@ bool DebugSystem::getVariableValue(debug::DebugVariableHandle& index,
     return m_debug_variables.getVariableValue(index, value);
 }
 
-void DebugSystem::setVariable(debug::DebugVariableHandle const index,
+void DebugSystem::setVariableValue(debug::DebugVariableHandle const index,
                               debug::DebugVariable const& newValue)
 {
-    m_debug_variables.setVariable(index, newValue);
+    m_debug_variables.setVariableValue(index, newValue);
 }
 
 void DebugSystem::init()
