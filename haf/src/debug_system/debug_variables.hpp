@@ -9,15 +9,34 @@ HAF_PRAGMA_ONCE
 
 namespace haf::debug
 {
+enum class DebugVariablesAction : core::u32
+{
+    Set       = 0U,
+    Add       = 1U,
+    Substract = 2U
+};
+
 class DebugVariables final
 {
 public:
     void getVariable(DebugVariableHandle& index, char const* const name);
-    bool getVariableValue(DebugVariableHandle& index, DebugVariable& value);
-    void setVariableValue(DebugVariableHandle const index,
-                          DebugVariable const& newValue);
-    void setVariableValue(DebugVariableHandle const index,
-                          DebugVariable&& newValue);
+
+    void setVariableValue(DebugVariableHandle const& index,
+                          DebugVariable::ValueTypeInteger value) noexcept;
+    void setVariableValue(DebugVariableHandle const& index,
+                          time::TimePoint value) noexcept;
+    void setVariableValue(DebugVariableHandle const& index,
+                          core::s32 value) noexcept;
+    void setVariableValue(DebugVariableHandle const& index,
+                          core::u32 value) noexcept;
+    void setVariableValue(DebugVariableHandle const& index,
+                          DebugVariable::ValueTypeFloat value) noexcept;
+    void setVariableValue(DebugVariableHandle const& index,
+                          DebugVariable::ValueTypeString&& value) noexcept;
+    void setVariableValue(DebugVariableHandle const& index,
+                          DebugVariable::ValueTypeString const& value) noexcept;
+    void setVariableValue(DebugVariableHandle const& index,
+                          char const* const value) noexcept;
 
     core::str state() const;
 

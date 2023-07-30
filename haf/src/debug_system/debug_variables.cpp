@@ -14,7 +14,7 @@ void DebugVariables::startFrame(time::TimePoint const& now)
     getVariable(m_frames_debug_var, "FrameNum");
     // incrementVariable(m_frames_debug_var);
     getVariable(m_frameTime, "FrameTime");
-    setVariableValue(m_frameTime, DebugVariable(now));
+    setVariableValue(m_frameTime, now);
 
     for (auto& element : m_debug_variables)
     {
@@ -29,36 +29,83 @@ void DebugVariables::startFrame(time::TimePoint const& now)
 void DebugVariables::getVariable(DebugVariableHandle& index,
                                  char const* const name)
 {
-    detail::getVariable(m_debug_variables, index, name);
-}
-
-bool DebugVariables::getVariableValue(DebugVariableHandle& index,
-                                      DebugVariable& /*value*/)
-{
-    if (index > -1)
+    if (index < 0 ||
+        index > static_cast<DebugVariableHandle>(m_debug_variables.size()))
     {
-        //        value =
-        //        m_debug_variables.index(static_cast<size_type>(index));
-        return true;
+        if (auto const index_found{
+                m_debug_variables.cfind_index(core::str{name})};
+            index_found.first)
+        {
+            index = static_cast<DebugVariableHandle>(index_found.second);
+        }
+        else
+        {
+            m_debug_variables.add(core::str{name}, DebugVariable{});
+            index =
+                static_cast<DebugVariableHandle>(m_debug_variables.size() - 1U);
+        }
     }
-    return false;
 }
 
-void DebugVariables::setVariableValue(DebugVariableHandle const index,
-                                      DebugVariable const& newValue)
+void DebugVariables::setVariableValue(
+    DebugVariableHandle const& index,
+    DebugVariable::ValueTypeInteger value) noexcept
 {
     m_debug_variables.index(static_cast<size_type>(index))
-        .setValueFrom(newValue);
+        .setValue(core::move(value));
 }
 
-void DebugVariables::setVariableValue(DebugVariableHandle const index,
-                                      DebugVariable&& newValue)
+void DebugVariables::setVariableValue(DebugVariableHandle const& index,
+                                      time::TimePoint value) noexcept
 {
     m_debug_variables.index(static_cast<size_type>(index))
-        .setValueFrom(core::move(newValue));
+        .setValue(core::move(value));
 }
 
-htps::size_type DebugVariables::size() const noexcept
+void DebugVariables::setVariableValue(DebugVariableHandle const& index,
+                                      s32 value) noexcept
+{
+    m_debug_variables.index(static_cast<size_type>(index))
+        .setValue(core::move(value));
+}
+
+void DebugVariables::setVariableValue(DebugVariableHandle const& index,
+                                      u32 value) noexcept
+{
+    m_debug_variables.index(static_cast<size_type>(index))
+        .setValue(core::move(value));
+}
+
+void DebugVariables::setVariableValue(
+    DebugVariableHandle const& index,
+    DebugVariable::ValueTypeFloat value) noexcept
+{
+    m_debug_variables.index(static_cast<size_type>(index))
+        .setValue(core::move(value));
+}
+
+void DebugVariables::setVariableValue(
+    DebugVariableHandle const& index,
+    DebugVariable::ValueTypeString&& value) noexcept
+{
+    m_debug_variables.index(static_cast<size_type>(index))
+        .setValue(core::move(value));
+}
+
+void DebugVariables::setVariableValue(
+    DebugVariableHandle const& index,
+    DebugVariable::ValueTypeString const& value) noexcept
+{
+    m_debug_variables.index(static_cast<size_type>(index)).setValue(value);
+}
+
+void DebugVariables::setVariableValue(DebugVariableHandle const& index,
+                                      char const* const value) noexcept
+{
+    m_debug_variables.index(static_cast<size_type>(index)).setValue(value);
+}
+
+size_type DebugVariables::size() const noexcept
 {
     return m_debug_variables.size();
 }

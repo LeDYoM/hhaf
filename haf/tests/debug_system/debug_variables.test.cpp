@@ -23,6 +23,7 @@ TEST_CASE("DebugVariables::DebugVariables::addVariable")
     CHECK(debug_variables.size() == 1U);
     CHECK_FALSE(debug_variables.empty());
 
+/*
     SECTION("Load existing variable")
     {
         DebugVariable value{10};
@@ -38,7 +39,8 @@ TEST_CASE("DebugVariables::DebugVariables::addVariable")
         CHECK_FALSE(debug_variables.getVariableValue(handle2, value));
     }
 }
-
+*/
+/*
 TEST_CASE("DebugVariables::DebugVariables::incrementVariable")
 {
     DebugVariables debug_variables;
@@ -53,7 +55,7 @@ TEST_CASE("DebugVariables::DebugVariables::incrementVariable")
     CHECK(debug_variables.getVariableValue(handle, value));
     CHECK(value.valueInteger() == 10);
     CHECK(value.type() == DebugVariableType::Integer);
-/*
+
     SECTION("Increment positive")
     {
         DebugVariable::value_type value_to_increment{10};
@@ -81,7 +83,6 @@ TEST_CASE("DebugVariables::DebugVariables::incrementVariable")
     }
 */
 }
-
 TEST_CASE("DebugVariables::DebugVariables::setVariable")
 {
     DebugVariables debug_variables;

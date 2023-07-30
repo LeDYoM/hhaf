@@ -10,6 +10,7 @@
 
 using namespace haf::core;
 using namespace haf::debug;
+using namespace haf::time;
 
 namespace haf::sys
 {
@@ -86,22 +87,50 @@ void DebugSystem::getVariable(DebugVariableHandle& index,
     m_debug_variables.getVariable(index, name);
 }
 
-bool DebugSystem::getVariableValue(DebugVariableHandle& index,
-                                   DebugVariable& value)
+void DebugSystem::setVariableValue(DebugVariableHandle const& index,
+                                   DebugVariable::ValueTypeInteger value)
 {
-    return m_debug_variables.getVariableValue(index, value);
+    m_debug_variables.setVariableValue(index, core::move(value));
 }
 
-void DebugSystem::setVariableValue(DebugVariableHandle const index,
-                                   DebugVariable const& newValue)
+void DebugSystem::setVariableValue(DebugVariableHandle const& index,
+                                   time::TimePoint value)
 {
-    m_debug_variables.setVariableValue(index, newValue);
+    m_debug_variables.setVariableValue(index, core::move(value));
 }
 
-void DebugSystem::setVariableValue(DebugVariableHandle const index,
-                                   DebugVariable&& newValue)
+void DebugSystem::setVariableValue(DebugVariableHandle const& index, s32 value)
 {
-    m_debug_variables.setVariableValue(index, core::move(newValue));
+    m_debug_variables.setVariableValue(index, core::move(value));
+}
+
+void DebugSystem::setVariableValue(DebugVariableHandle const& index, u32 value)
+{
+    m_debug_variables.setVariableValue(index, core::move(value));
+}
+
+void DebugSystem::setVariableValue(DebugVariableHandle const& index,
+                                   DebugVariable::ValueTypeFloat value)
+{
+    m_debug_variables.setVariableValue(index, core::move(value));
+}
+
+void DebugSystem::setVariableValue(DebugVariableHandle const& index,
+                                   DebugVariable::ValueTypeString&& value)
+{
+    m_debug_variables.setVariableValue(index, core::move(value));
+}
+
+void DebugSystem::setVariableValue(DebugVariableHandle const& index,
+                                   DebugVariable::ValueTypeString const& value)
+{
+    m_debug_variables.setVariableValue(index, value);
+}
+
+void DebugSystem::setVariableValue(DebugVariableHandle const& index,
+                                   char const* const value)
+{
+    m_debug_variables.setVariableValue(index, value);
 }
 
 void DebugSystem::init()

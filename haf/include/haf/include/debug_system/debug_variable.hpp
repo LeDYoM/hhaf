@@ -28,7 +28,7 @@ public:
     DebugVariable(core::s32 value) noexcept;
     DebugVariable(core::u32 value) noexcept;
     DebugVariable(ValueTypeFloat value) noexcept;
-    DebugVariable(ValueTypeString value) noexcept;
+    DebugVariable(ValueTypeString&& value) noexcept;
     DebugVariable(ValueTypeString const& value) noexcept;
     DebugVariable(char const* const value) noexcept;
     ~DebugVariable();
@@ -43,7 +43,7 @@ public:
     void setValue(core::s32 value) noexcept;
     void setValue(core::u32 value) noexcept;
     void setValue(ValueTypeFloat value) noexcept;
-    void setValue(ValueTypeString value) noexcept;
+    void setValue(ValueTypeString&& value) noexcept;
     void setValue(ValueTypeString const& value) noexcept;
     void setValue(char const* const value) noexcept;
     void setValueFrom(DebugVariable const& debug_variable_value) noexcept;

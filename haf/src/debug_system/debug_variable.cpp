@@ -57,7 +57,7 @@ DebugVariable::DebugVariable(ValueTypeFloat value) noexcept :
     m_p{make_pimplp<DebugVariablePriv>(core::move(value))}
 {}
 
-DebugVariable::DebugVariable(ValueTypeString value) noexcept :
+DebugVariable::DebugVariable(ValueTypeString&& value) noexcept :
     m_p{make_pimplp<DebugVariablePriv>(core::move(value))}
 {}
 
@@ -130,7 +130,7 @@ void DebugVariable::setValue(ValueTypeFloat value) noexcept
     m_p->m_variableType = DebugVariableType::Float;
 }
 
-void DebugVariable::setValue(ValueTypeString value) noexcept
+void DebugVariable::setValue(ValueTypeString&& value) noexcept
 {
     m_p->m_value_string = core::move(value);
     m_p->m_variableType = DebugVariableType::String;

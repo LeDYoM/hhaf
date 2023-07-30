@@ -51,14 +51,25 @@ public:
     void getVariable(debug::DebugVariableHandle& index,
                      char const* const name) override;
 
-    bool getVariableValue(debug::DebugVariableHandle& index,
-                          debug::DebugVariable& value) override;
-
-    void setVariableValue(debug::DebugVariableHandle const index,
-                     debug::DebugVariable const& newValue) override;
-
-    void setVariableValue(debug::DebugVariableHandle const index,
-                     debug::DebugVariable&& newValue) override;
+    void setVariableValue(
+        debug::DebugVariableHandle const& index,
+        debug::DebugVariable::ValueTypeInteger value) override;
+    void setVariableValue(debug::DebugVariableHandle const& index,
+                          time::TimePoint value) override;
+    void setVariableValue(debug::DebugVariableHandle const& index,
+                          core::s32 value) override;
+    void setVariableValue(debug::DebugVariableHandle const& index,
+                          core::u32 value) override;
+    void setVariableValue(debug::DebugVariableHandle const& index,
+                          debug::DebugVariable::ValueTypeFloat value) override;
+    void setVariableValue(
+        debug::DebugVariableHandle const& index,
+        debug::DebugVariable::ValueTypeString&& value) override;
+    void setVariableValue(
+        debug::DebugVariableHandle const& index,
+        debug::DebugVariable::ValueTypeString const& value) override;
+    void setVariableValue(debug::DebugVariableHandle const& index,
+                          char const* const value) override;
 
 private:
     debug::DebugVariables m_debug_variables;
