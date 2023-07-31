@@ -2,11 +2,17 @@ HAF_PRAGMA_ONCE
 #ifndef HAF_DEBUG_DEBUG_TYPES_INCLUDE_HPP
 #define HAF_DEBUG_DEBUG_TYPES_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
+#include <haf/include/core/types.hpp>
 
 namespace haf::debug
 {
 using DebugVariableHandle = htps::s64;
+
+enum class DebugVariablesAction : core::u32
+{
+    Set       = 0U,
+    Add       = 1U
+};
 
 }  // namespace haf::debug
 
@@ -22,6 +28,10 @@ using DebugVariableHandle = htps::s64;
     FROM_COMPONENT_GET_DEBUG_VARIABLE(v_id, value) \
     attachedNode()->subSystem<debug::IDebugVariables>()->setVariableValue( \
         HAF_DEBUG_VARIABLE_NAME(v_id), value);
+#define FROM_COMPONENT_ADD_DEBUG_VARIABLE_VALUE(v_id, value) \
+    FROM_COMPONENT_GET_DEBUG_VARIABLE(v_id, value) \
+    attachedNode()->subSystem<debug::IDebugVariables>()->setVariableValue( \
+        HAF_DEBUG_VARIABLE_NAME(v_id), value DebugVariablesAction::Add);
 #else
 #define HAF_DECLARE_DEBUG_VARIABLE(v_id)
 #define FROM_COMPONENT_GET_DEBUG_VARIABLE(v_id, value) \

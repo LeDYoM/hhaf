@@ -56,6 +56,27 @@ public:
     DebugVariableType type() const noexcept;
     core::u64 frame() const noexcept;
 
+    template <typename T>
+    T value() const noexcept;
+
+    template <>
+    ValueTypeInteger value<ValueTypeInteger>() const noexcept
+    {
+        return valueInteger();
+    }
+
+    template <>
+    ValueTypeFloat value<ValueTypeFloat>() const noexcept
+    {
+        return valueFloat();
+    }
+
+    template <>
+    ValueTypeString value<ValueTypeString>() const noexcept
+    {
+        return valueString();
+    }
+
     void getStr(core::str& dest) const noexcept;
 
 private:

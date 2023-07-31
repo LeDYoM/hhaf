@@ -9,34 +9,44 @@ HAF_PRAGMA_ONCE
 
 namespace haf::debug
 {
-enum class DebugVariablesAction : core::u32
-{
-    Set       = 0U,
-    Add       = 1U,
-    Substract = 2U
-};
-
 class DebugVariables final
 {
 public:
     void getVariable(DebugVariableHandle& index, char const* const name);
+    void incrementVariableValue(DebugVariableHandle const& index) noexcept;
 
-    void setVariableValue(DebugVariableHandle const& index,
-                          DebugVariable::ValueTypeInteger value) noexcept;
-    void setVariableValue(DebugVariableHandle const& index,
-                          time::TimePoint value) noexcept;
-    void setVariableValue(DebugVariableHandle const& index,
-                          core::s32 value) noexcept;
-    void setVariableValue(DebugVariableHandle const& index,
-                          core::u32 value) noexcept;
-    void setVariableValue(DebugVariableHandle const& index,
-                          DebugVariable::ValueTypeFloat value) noexcept;
-    void setVariableValue(DebugVariableHandle const& index,
-                          DebugVariable::ValueTypeString&& value) noexcept;
-    void setVariableValue(DebugVariableHandle const& index,
-                          DebugVariable::ValueTypeString const& value) noexcept;
-    void setVariableValue(DebugVariableHandle const& index,
-                          char const* const value) noexcept;
+    void setVariableValue(
+        DebugVariableHandle const& index,
+        DebugVariable::ValueTypeInteger value,
+        DebugVariablesAction const action = DebugVariablesAction::Set) noexcept;
+    void setVariableValue(
+        DebugVariableHandle const& index,
+        time::TimePoint value,
+        DebugVariablesAction const action = DebugVariablesAction::Set) noexcept;
+    void setVariableValue(
+        DebugVariableHandle const& index,
+        core::s32 value,
+        DebugVariablesAction const action = DebugVariablesAction::Set) noexcept;
+    void setVariableValue(
+        DebugVariableHandle const& index,
+        core::u32 value,
+        DebugVariablesAction const action = DebugVariablesAction::Set) noexcept;
+    void setVariableValue(
+        DebugVariableHandle const& index,
+        DebugVariable::ValueTypeFloat value,
+        DebugVariablesAction const action = DebugVariablesAction::Set) noexcept;
+    void setVariableValue(
+        DebugVariableHandle const& index,
+        DebugVariable::ValueTypeString&& value,
+        DebugVariablesAction const action = DebugVariablesAction::Set) noexcept;
+    void setVariableValue(
+        DebugVariableHandle const& index,
+        DebugVariable::ValueTypeString const& value,
+        DebugVariablesAction const action = DebugVariablesAction::Set) noexcept;
+    void setVariableValue(
+        DebugVariableHandle const& index,
+        char const* const value,
+        DebugVariablesAction const action = DebugVariablesAction::Set) noexcept;
 
     core::str state() const;
 
