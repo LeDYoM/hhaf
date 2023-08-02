@@ -55,10 +55,14 @@ void DebugVariables::incrementVariableValue(
 
     switch (dv.type())
     {
+        case DebugVariableType::Unknown:
+        {
+            setVariableValue(index, 1, DebugVariablesAction::Set);
+        }
+        break;
         case DebugVariableType::Integer:
         {
-            setVariableValue(index, dv.valueInteger() + 1,
-                             DebugVariablesAction::Add);
+            setVariableValue(index, 1, DebugVariablesAction::Add);
         }
         break;
         case DebugVariableType::Float:
