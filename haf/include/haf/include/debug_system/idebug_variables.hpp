@@ -15,21 +15,11 @@ public:
                              char const* const name) = 0;
 
     virtual void setVariableValue(DebugVariableHandle const& index,
-                          DebugVariable::ValueTypeInteger value) = 0;
+                                  core::str&& value) noexcept = 0;
     virtual void setVariableValue(DebugVariableHandle const& index,
-                          time::TimePoint value) = 0;
+                                  core::str const& value)     = 0;
     virtual void setVariableValue(DebugVariableHandle const& index,
-                          core::s32 value) = 0;
-    virtual void setVariableValue(DebugVariableHandle const& index,
-                          core::u32 value) = 0;
-    virtual void setVariableValue(DebugVariableHandle const& index,
-                          DebugVariable::ValueTypeFloat value) = 0;
-    virtual void setVariableValue(DebugVariableHandle const& index,
-                          DebugVariable::ValueTypeString&& value) = 0;
-    virtual void setVariableValue(DebugVariableHandle const& index,
-                          DebugVariable::ValueTypeString const& value) = 0;
-    virtual void setVariableValue(DebugVariableHandle const& index,
-                          char const* const value) = 0;
+                                  char const* const value)    = 0;
 
 protected:
     ~IDebugVariables() = default;

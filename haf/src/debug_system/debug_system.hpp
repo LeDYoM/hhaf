@@ -51,26 +51,12 @@ public:
     void getVariable(debug::DebugVariableHandle& index,
                      char const* const name) override;
 
-    void setVariableValue(
-        debug::DebugVariableHandle const& index,
-        debug::DebugVariable::ValueTypeInteger value) override;
     void setVariableValue(debug::DebugVariableHandle const& index,
-                          time::TimePoint value) override;
+                          core::str&& value) noexcept override;
     void setVariableValue(debug::DebugVariableHandle const& index,
-                          core::s32 value) override;
-    void setVariableValue(debug::DebugVariableHandle const& index,
-                          core::u32 value) override;
-    void setVariableValue(debug::DebugVariableHandle const& index,
-                          debug::DebugVariable::ValueTypeFloat value) override;
-    void setVariableValue(
-        debug::DebugVariableHandle const& index,
-        debug::DebugVariable::ValueTypeString&& value) override;
-    void setVariableValue(
-        debug::DebugVariableHandle const& index,
-        debug::DebugVariable::ValueTypeString const& value) override;
+                          core::str const& value) override;
     void setVariableValue(debug::DebugVariableHandle const& index,
                           char const* const value) override;
-
 private:
     debug::DebugVariables m_debug_variables;
 };

@@ -88,41 +88,13 @@ void DebugSystem::getVariable(DebugVariableHandle& index,
 }
 
 void DebugSystem::setVariableValue(DebugVariableHandle const& index,
-                                   DebugVariable::ValueTypeInteger value)
+                                   str&& value) noexcept
 {
     m_debug_variables.setVariableValue(index, core::move(value));
 }
 
 void DebugSystem::setVariableValue(DebugVariableHandle const& index,
-                                   time::TimePoint value)
-{
-    m_debug_variables.setVariableValue(index, core::move(value));
-}
-
-void DebugSystem::setVariableValue(DebugVariableHandle const& index, s32 value)
-{
-    m_debug_variables.setVariableValue(index, core::move(value));
-}
-
-void DebugSystem::setVariableValue(DebugVariableHandle const& index, u32 value)
-{
-    m_debug_variables.setVariableValue(index, core::move(value));
-}
-
-void DebugSystem::setVariableValue(DebugVariableHandle const& index,
-                                   DebugVariable::ValueTypeFloat value)
-{
-    m_debug_variables.setVariableValue(index, core::move(value));
-}
-
-void DebugSystem::setVariableValue(DebugVariableHandle const& index,
-                                   DebugVariable::ValueTypeString&& value)
-{
-    m_debug_variables.setVariableValue(index, core::move(value));
-}
-
-void DebugSystem::setVariableValue(DebugVariableHandle const& index,
-                                   DebugVariable::ValueTypeString const& value)
+                                   str const& value)
 {
     m_debug_variables.setVariableValue(index, value);
 }
@@ -148,8 +120,7 @@ void DebugSystem::onFinishUpdate()
 
     for (auto const& [name, value] : m_debug_variables.debugVariables())
     {
-        value.getStr(temp_value);
-        temp = name + ":" + temp_value;
+        temp = name + ":" + value.value();
         himgui::addMessage(temp.c_str());
     }
 

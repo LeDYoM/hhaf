@@ -5,7 +5,7 @@
 
 using namespace haf::debug;
 using namespace haf::core;
-
+/*
 TEST_CASE("DebugVariable::DebugVariable")
 {
     SECTION("Integer")
@@ -67,6 +67,7 @@ TEST_CASE("DebugVariable::incrementFrame()")
     debug_variable.incrementFrame();
     CHECK(debug_variable.frame() == 1);
 }
+*/
 /*
 TEST_CASE("DebugVariable::operator+=()")
 {
@@ -76,7 +77,7 @@ TEST_CASE("DebugVariable::operator+=()")
     CHECK(debug_variable.value() == 4);
 }
 */
-
+/*
 TEST_CASE("DebugVariable::operator+()")
 {
     DebugVariable debug_variable{0U};
@@ -88,6 +89,7 @@ TEST_CASE("DebugVariable::operator+()")
     //    debug_variable = debug_variable2 + 3;
     //    CHECK(debug_variable.value() == 8);
 }
+*/
 /*
 TEST_CASE("DebugVariable::valuePerFrame")
 {

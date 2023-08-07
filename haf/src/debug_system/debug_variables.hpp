@@ -13,40 +13,13 @@ class DebugVariables final
 {
 public:
     void getVariable(DebugVariableHandle& index, char const* const name);
-    void incrementVariableValue(DebugVariableHandle const& index) noexcept;
 
-    void setVariableValue(
-        DebugVariableHandle const& index,
-        DebugVariable::ValueTypeInteger value,
-        DebugVariablesAction const action = DebugVariablesAction::Set) noexcept;
-    void setVariableValue(
-        DebugVariableHandle const& index,
-        time::TimePoint value,
-        DebugVariablesAction const action = DebugVariablesAction::Set) noexcept;
-    void setVariableValue(
-        DebugVariableHandle const& index,
-        core::s32 value,
-        DebugVariablesAction const action = DebugVariablesAction::Set) noexcept;
-    void setVariableValue(
-        DebugVariableHandle const& index,
-        core::u32 value,
-        DebugVariablesAction const action = DebugVariablesAction::Set) noexcept;
-    void setVariableValue(
-        DebugVariableHandle const& index,
-        DebugVariable::ValueTypeFloat value,
-        DebugVariablesAction const action = DebugVariablesAction::Set) noexcept;
-    void setVariableValue(
-        DebugVariableHandle const& index,
-        DebugVariable::ValueTypeString&& value,
-        DebugVariablesAction const action = DebugVariablesAction::Set) noexcept;
-    void setVariableValue(
-        DebugVariableHandle const& index,
-        DebugVariable::ValueTypeString const& value,
-        DebugVariablesAction const action = DebugVariablesAction::Set) noexcept;
-    void setVariableValue(
-        DebugVariableHandle const& index,
-        char const* const value,
-        DebugVariablesAction const action = DebugVariablesAction::Set) noexcept;
+    void setVariableValue(DebugVariableHandle const& index,
+                          core::str&& value) noexcept;
+    void setVariableValue(DebugVariableHandle const& index,
+                          core::str const& value);
+    void setVariableValue(DebugVariableHandle const& index,
+                          char const* const value);
 
     core::str state() const;
 
