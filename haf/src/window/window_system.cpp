@@ -75,8 +75,6 @@ bool WindowSystem::initialize(str const& window_config_file)
         }
 
         DisplayLog::debug(StaticTypeName,
-                          ": Window driver info: ", backend_window.info());
-        DisplayLog::debug(StaticTypeName,
                           ": Window settings: ", backend_window.settingsInfo());
 
         // If window created successfully, extract the render target

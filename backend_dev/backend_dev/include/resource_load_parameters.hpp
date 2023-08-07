@@ -5,7 +5,6 @@
 #include <htypes/include/rawmemory.hpp>
 #include <htypes/include/str.hpp>
 #include <htypes/include/rawmemory.hpp>
-#include <backend_dev/include/iresource_manager.hpp>
 
 namespace haf::backend
 {
