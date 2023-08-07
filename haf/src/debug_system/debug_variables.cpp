@@ -1,9 +1,6 @@
 #include "debug_variables.hpp"
-#include "debug_variables_general.hpp"
 
 using namespace haf::core;
-using DebugVariableHandle = haf::debug::DebugVariableHandle;
-using DebugVariable_t     = haf::debug::DebugVariable;
 
 namespace haf::debug
 {
