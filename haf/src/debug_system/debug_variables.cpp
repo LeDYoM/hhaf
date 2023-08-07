@@ -9,9 +9,9 @@ void DebugVariables::startFrame(time::TimePoint const& now)
     ++m_frames;
 
     getVariable(m_frames_debug_var, "FrameNum");
-    // incrementVariableValue(m_frames_debug_var);
+    setVariableValue(m_frames_debug_var, m_frames);
     getVariable(m_frameTime, "FrameTime");
-    // setVariableValue(m_frameTime, now);
+    setVariableValue(m_frameTime, now.microseconds());
 
     for (auto& element : m_debug_variables)
     {

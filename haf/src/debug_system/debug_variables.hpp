@@ -21,6 +21,12 @@ public:
     void setVariableValue(DebugVariableHandle const& index,
                           char const* const value);
 
+    template <typename T>
+    void setVariableValue(DebugVariableHandle const& index, T&& value)
+    {
+        setVariableValue(index, core::str::to_str(core::move(value)));
+    }
+
     core::str state() const;
 
     void startFrame(time::TimePoint const& now);
