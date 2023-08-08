@@ -10,8 +10,8 @@ namespace haf::backend::client
 class IBackendRegister
 {
 public:
-    virtual void setFactory(htps::uptr<IWindowFactory>) noexcept         = 0;
-    virtual ~IBackendRegister() {}
+    virtual void setFactory(htps::uptr<IWindowFactory>) noexcept = 0;
+    virtual ~IBackendRegister() = default;
 };
 
 }  // namespace haf::backend::client
