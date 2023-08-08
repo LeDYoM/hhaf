@@ -11,7 +11,6 @@ set(headers
     ${include_dir}/iinputdriver.hpp
     ${include_dir}/ikey.hpp
     ${include_dir}/iwindow.hpp
-    ${include_dir}/resource_load_parameters.hpp
 )
 
 build_lib_component(HEADERS_ONLY

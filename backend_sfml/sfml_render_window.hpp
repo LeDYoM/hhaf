@@ -37,7 +37,7 @@ public:
 
     htps::rptr<IInputDriver> inputDriver() override;
     htps::str info() const override;
-    htps::str settingsInfo() override;
+    htps::str settingsInfo() const override;
 
 private:
     htps::uptr<sf::Window> m_render_window;
