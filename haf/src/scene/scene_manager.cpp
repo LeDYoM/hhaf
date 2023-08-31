@@ -42,7 +42,7 @@ bool SceneManager::registerComponent(
     component::ComponentCreateFunction component_create_function)
 {
     return m_component_factory.registerObjectType(
-        componentType, htps::move(component_create_function));
+        componentType, core::move(component_create_function));
 }
 
 bool SceneManager::instanciateRootComponent(str_view componentType)

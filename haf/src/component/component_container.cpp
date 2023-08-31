@@ -9,13 +9,13 @@
 #include "system/get_system.hpp"
 #include "debug_system/debug_displayers.hpp"
 
-using namespace htps;
+using namespace haf::core;
 
 namespace haf::component
 {
 struct ComponentContainer::ComponentContainerPrivate
 {
-    sptr<Component> getExistingComponent(core::str_view typeName) const
+    sptr<Component> getExistingComponent(str_view typeName) const
     {
         auto iterator{
             components_.find_if([&typeName](sptr<Component> const& component) {
@@ -41,6 +41,7 @@ struct ComponentContainer::ComponentContainerPrivate
     }
 
     void clearComponents() { components_.clear(); }
+
     void clearComponentsBackwards()
     {
         while (!components_.empty())
@@ -70,10 +71,9 @@ void ComponentContainer::clearComponents() noexcept
     p_->clearComponentsBackwards();
 }
 
-sptr<Component> ComponentContainer::getOrCreateComponent(
-    core::str_view typeName)
+sptr<Component> ComponentContainer::getOrCreateComponent(str_view typeName)
 {
-    core::sptr<Component> result{componentOfType(typeName)};
+    sptr<Component> result{componentOfType(typeName)};
     if (!result)
     {
         result = createComponent(typeName);
@@ -92,7 +92,7 @@ sptr<Component> ComponentContainer::getOrCreateComponent(
     return result;
 }
 
-sptr<Component> ComponentContainer::attachComponent(core::str_view typeName)
+sptr<Component> ComponentContainer::attachComponent(str_view typeName)
 {
     auto component{getOrCreateComponent(typeName)};
     DisplayLog::debug(StaticTypeName, [this]() {
@@ -101,7 +101,7 @@ sptr<Component> ComponentContainer::attachComponent(core::str_view typeName)
     return component;
 }
 
-sptr<Component> ComponentContainer::createComponent(core::str_view typeName)
+sptr<Component> ComponentContainer::createComponent(str_view typeName)
 {
     return p_->m_scene_manager.instantiateComponent(typeName);
 }
@@ -120,19 +120,17 @@ bool ComponentContainer::applyRequirements(Component& _thisComponent)
     return _thisComponent.addRequirements(component_requierements);
 }
 
-sptr<Component> ComponentContainer::componentOfType(
-    core::str_view typeName) const
+sptr<Component> ComponentContainer::componentOfType(str_view typeName) const
 {
     return p_->getExistingComponent(typeName);
 }
 
-core::size_type ComponentContainer::components() const noexcept
+size_type ComponentContainer::components() const noexcept
 {
     return p_->components_.size();
 }
 
-core::str_view ComponentContainer::componentNameAt(
-    core::size_type const index) const
+str_view ComponentContainer::componentNameAt(size_type const index) const
 {
     return (index < p_->components_.size())
         ? p_->components_[index]->staticTypeName()
