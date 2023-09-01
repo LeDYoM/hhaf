@@ -13,7 +13,9 @@ include(functions)
 setOptions()
 includeForOptions()
 
-set(_REPO_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
+message("CMAKE_SOURCE_DIR:" ${CMAKE_SOURCE_DIR})
+message("CMAKE_BINARY_DIR:" ${CMAKE_BINARY_DIR})
+set(_REPO_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 # First for the generic no-config case (e.g. with mingw, Ninja, Makefiles...)
 if(DEFINED CMAKE_BUILD_TYPE)
