@@ -1,14 +1,18 @@
 #include "debug_variables.hpp"
 
-using namespace htps;
-using DebugVariableHandle = haf::debug::DebugVariableHandle;
-using DebugVariable_t     = haf::debug::DebugVariable;
+using namespace haf::core;
 
 namespace haf::debug
 {
 void DebugVariables::startFrame(time::TimePoint const& now)
 {
     ++m_frames;
+
+    getVariable(m_frames_debug_var, "FrameNum");
+    setVariableValue(m_frames_debug_var, m_frames);
+    getVariable(m_frameTime, "FrameTime");
+    setVariableValue(m_frameTime, now.microseconds());
+
     for (auto& element : m_debug_variables)
     {
         element.second.incrementFrame();
@@ -25,50 +29,43 @@ void DebugVariables::getVariable(DebugVariableHandle& index,
     if (index < 0 ||
         index > static_cast<DebugVariableHandle>(m_debug_variables.size()))
     {
-        str str_name{name};
-        if (auto const index_found{m_debug_variables.cfind_index(str_name)};
+        if (auto const index_found{
+                m_debug_variables.cfind_index(core::str{name})};
             index_found.first)
         {
-            index = static_cast<s64>(index_found.second);
+            index = static_cast<DebugVariableHandle>(index_found.second);
         }
         else
         {
-            m_debug_variables.add(
-                str_name,
-                DebugVariable{static_cast<DebugVariable::value_type>(0)});
+            m_debug_variables.add(core::str{name}, DebugVariable{});
             index =
-                static_cast<DebugVariableHandle>(m_debug_variables.size() - 1);
+                static_cast<DebugVariableHandle>(m_debug_variables.size() - 1U);
         }
     }
 }
 
-bool DebugVariables::getVariableValue(DebugVariableHandle& index,
-                                      DebugVariable& value)
+void DebugVariables::setVariableValue(DebugVariableHandle const& index,
+                                      str&& value) noexcept
 {
-    if (index > -1)
-    {
-        value = m_debug_variables.index(static_cast<size_type>(index));
-        return true;
-    }
-    return false;
+    m_debug_variables.index(static_cast<core::size_type>(index))
+        .setValue(core::move(value));
 }
 
-void DebugVariables::incrementVariable(
-    DebugVariableHandle const index,
-    DebugVariable::value_type const increment)
+void DebugVariables::setVariableValue(DebugVariableHandle const& index,
+                                      str const& value)
 {
-    auto const value{m_debug_variables.index(static_cast<size_type>(index))};
-    m_debug_variables.index(static_cast<size_type>(index)) =
-        (value + increment);
+    m_debug_variables.index(static_cast<core::size_type>(index))
+        .setValue(value);
 }
 
-void DebugVariables::setVariable(DebugVariableHandle const index,
-                                 DebugVariable::value_type const newValue)
+void DebugVariables::setVariableValue(DebugVariableHandle const& index,
+                                      char const* const value)
 {
-    m_debug_variables.index(static_cast<size_type>(index)) = newValue;
+    m_debug_variables.index(static_cast<core::size_type>(index))
+        .setValue(value);
 }
 
-htps::size_type DebugVariables::size() const noexcept
+size_type DebugVariables::size() const noexcept
 {
     return m_debug_variables.size();
 }
@@ -83,16 +80,17 @@ str DebugVariables::state() const
     str result{"Frames: "};
     result += m_frames;
     result += "\n";
-
-    for (auto const& element : m_debug_variables)
-    {
-        result += element.first;
-        result += ":\t";
-        result += element.second.value();
-        result += "\t";
-        result += element.second.value() / m_frames;
-        result += "\n";
-    }
+    /*
+        for (auto const& element : m_debug_variables)
+        {
+            result += element.first;
+            result += ":\t";
+            result += element.second.value();
+            result += "\t";
+            result += element.second.value() / m_frames;
+            result += "\n";
+        }
+        */
     return result;
 }
 

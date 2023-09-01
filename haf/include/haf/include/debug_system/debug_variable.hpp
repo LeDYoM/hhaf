@@ -2,32 +2,30 @@ HAF_PRAGMA_ONCE
 #ifndef HAF_DEBUG_DEBUG_VARIABLE_INCLUDE_HPP
 #define HAF_DEBUG_DEBUG_VARIABLE_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
+#include <haf/include/core/types.hpp>
 
 namespace haf::debug
 {
 class DebugVariable
 {
 public:
-    using value_type = htps::s64;
+    DebugVariable() noexcept;
+    DebugVariable(core::str&& value) noexcept;
+    DebugVariable(core::str const& value);
+    DebugVariable(char const* const value);
 
-    explicit DebugVariable(value_type value) noexcept;
+    void setValue(core::str&& value) noexcept;
+    void setValue(core::str const& value);
+    void setValue(char const* const value);
+
     void incrementFrame() noexcept;
-
-    value_type value() const noexcept;
-    htps::u64 frame() const noexcept;
-    htps::f64 valuePerFrame() const noexcept;
-
-    void operator=(value_type const other_value) noexcept;
-    void operator+=(value_type const other_value) noexcept;
+    core::u64 frame() const noexcept;
+    core::str const& value() const noexcept;
 
 private:
-    value_type m_value;
-    htps::u64 m_frame{0U};
+    core::str m_value;
+    core::u64 m_frame{0U};
 };
-
-DebugVariable operator+(DebugVariable const& lhs,
-                        DebugVariable::value_type const& rhs);
 
 }  // namespace haf::debug
 

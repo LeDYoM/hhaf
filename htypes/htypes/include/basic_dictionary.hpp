@@ -65,7 +65,7 @@ public:
     }
 
     constexpr bool add(key_type const& key,
-                       T value,
+                       T value = {},
                        const bool overwrite = true)
     {
         auto it(find(key));
@@ -77,7 +77,7 @@ public:
         }
         else if (overwrite)
         {
-            (*it) = element(key, value);
+            (*it) = element(key, htps::move(value));
             return true;
         }
         return false;

@@ -12,7 +12,7 @@ struct VertexArrayObject::VertexArrayObjectPriv
 
     void associateBufferToAttib(
         core::u32 const binding_index,
-        render::BufferSubObject const& vertex_buffer_subobjects,
+        render::BufferSubObject const& vertex_buffer_subobject,
         core::vector<core::u32>& associatedAttribsToShader,
         core::u32 const parentHandle,
         core::u32 const parentSizeOfStruct,
@@ -20,6 +20,8 @@ struct VertexArrayObject::VertexArrayObjectPriv
 
     void disableUnusedAttribsForVaoInShader(
         core::vector<core::u32>& associatedAttribsToShader);
+
+    void associateBuffersToAttribsInCurrentShader(core::sptr<Mesh> mesh);
 
     void render();
 

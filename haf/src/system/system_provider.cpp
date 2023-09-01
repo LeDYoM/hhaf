@@ -209,6 +209,11 @@ void SystemProvider::initializeSystems(
             p_->input_system_->setInputDriverWrapper(
                 p_->window_system_->window()->inputDriverWrapper());
         }
+
+        if (init_system_options.init_debug_system)
+        {
+            p_->debug_system_->init();
+        }
     }
 
     if (init_system_options.init_resource_manager)
@@ -266,6 +271,9 @@ void SystemProvider::terminate()
     p_->scene_manager_.reset();
     p_->simulation_system_.reset();
     p_->random_system_.reset();
+    p_->debug_system_->finish();
+    p_->debug_system_.reset();
+    p_->render_system_->finish();
     p_->render_system_.reset();
     p_->resource_manager_.reset();
     p_->scene_manager_.reset();

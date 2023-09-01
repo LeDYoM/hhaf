@@ -6,7 +6,7 @@
 
 #include <random>
 
-using namespace htps;
+using namespace haf::core;
 
 namespace haf::sys
 {
@@ -28,7 +28,7 @@ public:
 };
 
 RandomSystem::RandomSystem(sys::SystemProvider& system_provider) :
-    SystemBase{system_provider}, priv_{muptr<RandomSystemPrivate>()}
+    SystemBase{system_provider}, priv_{make_pimplp<RandomSystemPrivate>()}
 {}
 
 RandomSystem::~RandomSystem() = default;

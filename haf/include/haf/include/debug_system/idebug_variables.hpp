@@ -4,6 +4,7 @@ HAF_PRAGMA_ONCE
 
 #include <haf/include/debug_system/debug_types.hpp>
 #include <haf/include/debug_system/debug_variable.hpp>
+#include <haf/include/time/time_point.hpp>
 
 namespace haf::debug
 {
@@ -13,17 +14,12 @@ public:
     virtual void getVariable(DebugVariableHandle& index,
                              char const* const name) = 0;
 
-    virtual bool getVariableValue(DebugVariableHandle& index,
-                                  DebugVariable& value) = 0;
-
-    virtual void incrementVariable(
-        DebugVariableHandle const index,
-        DebugVariable::value_type const increment =
-            static_cast<DebugVariable::value_type>(1)) = 0;
-
-    virtual void setVariable(DebugVariableHandle const index,
-                             DebugVariable::value_type const newValue =
-                                 static_cast<DebugVariable::value_type>(0)) = 0;
+    virtual void setVariableValue(DebugVariableHandle const& index,
+                                  core::str&& value) noexcept = 0;
+    virtual void setVariableValue(DebugVariableHandle const& index,
+                                  core::str const& value)     = 0;
+    virtual void setVariableValue(DebugVariableHandle const& index,
+                                  char const* const value)    = 0;
 
 protected:
     ~IDebugVariables() = default;

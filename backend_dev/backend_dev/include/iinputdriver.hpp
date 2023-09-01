@@ -2,7 +2,7 @@
 #define HAF_BACKEND_IINPUTDRIVER_INCLUDE_HPP
 
 #include <htypes/include/vector.hpp>
-#include "ikey.hpp"
+#include <backend_dev/include/ikey.hpp>
 
 namespace haf::backend
 {
@@ -16,7 +16,7 @@ public:
     /**
      * @brief Destroy the IInputDriver object
      */
-    virtual ~IInputDriver() {}
+    virtual ~IInputDriver() = default;
 
     /**
      * @brief Users of this class should call this method to add any

@@ -12,13 +12,12 @@ HAF_PRAGMA_ONCE
 
 namespace haf::res
 {
+static_assert(std::is_same_v<ShaderId, ogl::Handle>,
+              "ShaderId should be equal to ogl::Handle");
+
 struct Shader::ShaderPrivate
 {
     ogl::Handle m_program{ogl::invalidHandle()};
-    render::BufferSubObjects m_attribVertexFormat;
-    render::BufferSubObjects m_uniformFormat;
-    render::BufferSubObjects m_uniformBlockFormat;
-    render::BufferSubObjects m_uniformBlockElementsFormat;
 };
 
 using SHType =

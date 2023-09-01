@@ -10,6 +10,24 @@ using namespace haf::core;
 
 namespace haf::res
 {
+void VertexArrayObject::VertexArrayObjectPriv::
+    associateBuffersToAttribsInCurrentShader(sptr<Mesh> mesh)
+{
+    u32 binding_index{0U};
+    vector<u32> currentAssociatedAttribsToShaderForVao(
+        mesh->vertexBufferObjects().size());
+    for (auto const& vertex_buffer_object : mesh->vertexBufferObjects())
+    {
+        associateBufferToAttib(binding_index++,
+                               vertex_buffer_object->subObject(),
+                               currentAssociatedAttribsToShaderForVao,
+                               vertex_buffer_object->handle(),
+                               vertex_buffer_object->vertexFormatSize(),
+                               vertex_buffer_object->size());
+    }
+    disableUnusedAttribsForVaoInShader(currentAssociatedAttribsToShaderForVao);
+}
+
 void VertexArrayObject::VertexArrayObjectPriv::associateBufferToAttib(
     u32 const binding_index,
     render::BufferSubObject const& vertex_buffer_subobject,
@@ -19,17 +37,21 @@ void VertexArrayObject::VertexArrayObjectPriv::associateBufferToAttib(
     u32 const parentSize)
 {
     // TODO: We could check that the buffer to associate has the correct
-    s32 const expected_index{m_shader->attributeIndex(
+    s32 const expected_index{m_shader->m_shader_metadata.attributeIndex(
         str_view{vertex_buffer_subobject.index().c_str()})};
     if (expected_index > -1)
     {
         ogl::bindAttribToBindingIndexForVao(
-            m_vao, static_cast<ogl::Handle>(expected_index), binding_index,
+            m_vao, static_cast<ogl::Handle>(expected_index),
             vertex_buffer_subobject.vertexFormat().numElements,
             static_cast<core::u32>(
                 vertex_buffer_subobject.vertexFormat().bufferType));
+        ogl::setbindingIndex(m_vao, static_cast<ogl::Handle>(expected_index),
+                             binding_index);
+
         associatedAttribsToShader.push_back(static_cast<u32>(expected_index));
         DisplayLog::debug("Associating buffer ", expected_index);
+        DisplayLog::debug("\t To binding index: ", binding_index);
     }
 
     ogl::associateBufferToAttrib(m_vao, binding_index, parentHandle,
@@ -42,7 +64,7 @@ void VertexArrayObject::VertexArrayObjectPriv::
     disableUnusedAttribsForVaoInShader(vector<u32>& associatedAttribsToShader)
 {
     auto const unused_attribs_in_shader{
-        m_shader->unusedAttribs(associatedAttribsToShader)};
+        m_shader->m_shader_metadata.unusedAttribs(associatedAttribsToShader)};
     for (auto&& unused_attrib_in_shader : unused_attribs_in_shader)
     {
         ogl::disableAttribForVao(m_vao, unused_attrib_in_shader.second);

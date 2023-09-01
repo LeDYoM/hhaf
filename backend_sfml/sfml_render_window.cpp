@@ -126,7 +126,7 @@ str SFMLRenderWindow::info() const
                     SFML_VERSION_PATCH, ";version:0;subversion:2:patch:4");
 }
 
-str SFMLRenderWindow::settingsInfo()
+str SFMLRenderWindow::settingsInfo() const
 {
     sf::ContextSettings settings = m_render_window->getSettings();
 

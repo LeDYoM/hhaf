@@ -38,7 +38,8 @@ bool ShaderManager::setUniform(sptr<Shader> const& shader,
                                str_view uniformName,
                                Matrix4x4 const& matrix)
 {
-    if (auto const index{shader->uniformIndex(uniformName)}; index > -1)
+    if (auto const index{shader->m_shader_metadata.uniformIndex(uniformName)};
+        index > -1)
     {
         shader->setUniform(index, matrix);
         return true;

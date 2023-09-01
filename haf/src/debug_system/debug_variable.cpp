@@ -1,12 +1,18 @@
 #include <haf/include/debug_system/debug_variable.hpp>
 
-using namespace htps;
+using namespace haf::core;
 
 namespace haf::debug
 {
+DebugVariable::DebugVariable() noexcept = default;
 
-DebugVariable::DebugVariable(value_type value) noexcept :
-    m_value{htps::move(value)}
+DebugVariable::DebugVariable(str&& value) noexcept : m_value{core::move(value)}
+{}
+
+DebugVariable::DebugVariable(str const& value) : m_value{value}
+{}
+
+DebugVariable::DebugVariable(char const* const value) : m_value{value}
 {}
 
 void DebugVariable::incrementFrame() noexcept
@@ -14,7 +20,7 @@ void DebugVariable::incrementFrame() noexcept
     ++m_frame;
 }
 
-DebugVariable::value_type DebugVariable::value() const noexcept
+str const& DebugVariable::value() const noexcept
 {
     return m_value;
 }
@@ -24,32 +30,19 @@ u64 DebugVariable::frame() const noexcept
     return m_frame;
 }
 
-void DebugVariable::operator=(value_type const other_value) noexcept
+void DebugVariable::setValue(str&& value) noexcept
 {
-    m_value = other_value;
+    m_value = core::move(value);
 }
 
-void DebugVariable::operator+=(value_type const other_value) noexcept
+void DebugVariable::setValue(str const& value)
 {
-    m_value += other_value;
+    m_value = value;
 }
 
-f64 DebugVariable::valuePerFrame() const noexcept
+void DebugVariable::setValue(char const* const value)
 {
-    return m_frame ? (static_cast<f64>(m_value) / static_cast<f64>(m_frame))
-                   : static_cast<f64>(m_value);
-}
-
-DebugVariable operator+(DebugVariable const& lhs,
-                        DebugVariable::value_type const& rhs)
-{
-    return DebugVariable{lhs.value() + rhs};
-}
-
-DebugVariable operator+(DebugVariable::value_type const& lhs,
-                        DebugVariable const& rhs)
-{
-    return DebugVariable{lhs + rhs.value()};
+    m_value = value;
 }
 
 }  // namespace haf::debug

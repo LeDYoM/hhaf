@@ -111,6 +111,13 @@ template <typename T>
     return lhs.get() == nullptr;
 }
 
+template <typename T>
+[[nodiscard]] constexpr bool operator!=(uptr<T> const& lhs,
+                                        std::nullptr_t) noexcept
+{
+    return lhs.get() != nullptr;
+}
+
 template <typename T, typename... Args>
 [[nodiscard]] uptr<T> muptr(Args&&... args)
 {

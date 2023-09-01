@@ -5,8 +5,9 @@ HAF_PRAGMA_ONCE
 #include <haf/include/haf_export.hpp>
 #include <haf/include/core/types.hpp>
 #include <haf/include/component/component_declaration.hpp>
-
 #include <haf/include/resources/shader.hpp>
+
+#include <haf/include/debug_system/debug_variables_client.hpp>
 
 namespace haf::render
 {
@@ -26,6 +27,7 @@ public:
 private:
     struct PrivateComponentData;
     core::PImplPointer<PrivateComponentData> m_p;
+    HAF_DECLARE_DEBUG_VARIABLE(vertex_render)
 };
 
 }  // namespace haf::render

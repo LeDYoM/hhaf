@@ -17,7 +17,12 @@ void RenderSystem::initialize(bool const enableDebug)
 }
 
 void RenderSystem::update()
-{}
+{
+}
+
+void RenderSystem::finish()
+{
+}
 
 sptr<RenderTarget> const& RenderSystem::currentRenderTarget() const
 {

@@ -6,7 +6,11 @@
 #include "static_build_data_display.hpp"
 #include <hlog/include/hlog.hpp>
 
-using namespace htps;
+#include "haf_imgui.hpp"
+
+using namespace haf::core;
+using namespace haf::debug;
+using namespace haf::time;
 
 namespace haf::sys
 {
@@ -29,9 +33,9 @@ void DebugSystem::onStartPreUpdate()
 void DebugSystem::onFinishPostUpdate()
 {}
 
-debug::MemoryDataInitializer DebugSystem::startMemoryCounter()
+MemoryDataInitializer DebugSystem::startMemoryCounter()
 {
-    return debug::MemoryDataInitializer{this};
+    return MemoryDataInitializer{this};
 }
 
 bool DebugSystem::pushMemoryDataStatistics()
@@ -72,34 +76,61 @@ size_type DebugSystem::getHeadDeallocatedByes() const noexcept
         memm::getHeadMemoryStatistics()->bytes_dealloc_);
 }
 
-debug::DebugVariables& DebugSystem::debugVariables()
+DebugVariables& DebugSystem::debugVariables()
 {
     return m_debug_variables;
 }
 
-void DebugSystem::getVariable(debug::DebugVariableHandle& index,
+void DebugSystem::getVariable(DebugVariableHandle& index,
                               char const* const name)
 {
     m_debug_variables.getVariable(index, name);
 }
 
-bool DebugSystem::getVariableValue(debug::DebugVariableHandle& index,
-                                   debug::DebugVariable& value)
+void DebugSystem::setVariableValue(DebugVariableHandle const& index,
+                                   str&& value) noexcept
 {
-    return m_debug_variables.getVariableValue(index, value);
+    m_debug_variables.setVariableValue(index, core::move(value));
 }
 
-void DebugSystem::incrementVariable(
-    debug::DebugVariableHandle const index,
-    debug::DebugVariable::value_type const increment)
+void DebugSystem::setVariableValue(DebugVariableHandle const& index,
+                                   str const& value)
 {
-    m_debug_variables.incrementVariable(index, increment);
+    m_debug_variables.setVariableValue(index, value);
 }
 
-void DebugSystem::setVariable(debug::DebugVariableHandle const index,
-                              debug::DebugVariable::value_type const newValue)
+void DebugSystem::setVariableValue(DebugVariableHandle const& index,
+                                   char const* const value)
 {
-    m_debug_variables.setVariable(index, newValue);
+    m_debug_variables.setVariableValue(index, value);
+}
+
+void DebugSystem::init()
+{
+    himgui::init();
+}
+
+void DebugSystem::onFinishUpdate()
+{
+    himgui::initFrame();
+    himgui::initWindow();
+    himgui::addMessage("Test message");
+    str temp;
+    str temp_value;
+
+    for (auto const& [name, value] : m_debug_variables.debugVariables())
+    {
+        temp = name + ":" + value.value();
+        himgui::addMessage(temp.c_str());
+    }
+
+    himgui::finishWindow();
+    himgui::finishFrame();
+}
+
+void DebugSystem::finish()
+{
+    himgui::shutdown();
 }
 
 }  // namespace haf::sys

@@ -2,9 +2,7 @@ HAF_PRAGMA_ONCE
 #ifndef HAF_CORE_SYSTEM_RANDOMSYSTEM_INCLUDE_HPP
 #define HAF_CORE_SYSTEM_RANDOMSYSTEM_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
-#include <htypes/include/vector.hpp>
-#include <htypes/include/str.hpp>
+#include <haf/include/core/types.hpp>
 #include "system/system_base.hpp"
 
 namespace haf::sys
@@ -19,13 +17,13 @@ public:
     RandomSystem(sys::SystemProvider& system_provider);
     ~RandomSystem();
 
-    htps::size_type getNext(const htps::str& name,
-                            const htps::size_type min,
-                            const htps::size_type max);
+    core::size_type getNext(const core::str& name,
+                            const core::size_type min,
+                            const core::size_type max);
 
 private:
     class RandomSystemPrivate;
-    htps::uptr<RandomSystemPrivate> priv_;
+    core::PImplPointer<RandomSystemPrivate> priv_;
 };
 }  // namespace haf::sys
 

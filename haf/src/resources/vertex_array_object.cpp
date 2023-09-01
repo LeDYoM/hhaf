@@ -20,7 +20,7 @@ VertexArrayObject::VertexArrayObject(sptr<Mesh> mesh, sptr<Shader> shader) :
     DisplayLog::debug(staticTypeName(), ": Setting shader in vao...");
     DisplayLog::debug(staticTypeName(), ": vao ", m_p->m_vao,
                       " associated to shader ", m_p->m_shader->handle());
-    associateBuffersToAttribsInCurrentShader();
+    m_p->associateBuffersToAttribsInCurrentShader(m_p->m_mesh);
 }
 
 VertexArrayObject::~VertexArrayObject() = default;
@@ -33,24 +33,6 @@ bool VertexArrayObject::isValid() const
 u32 VertexArrayObject::handle() const
 {
     return static_cast<u32>(m_p->m_vao);
-}
-
-void VertexArrayObject::associateBuffersToAttribsInCurrentShader()
-{
-    u32 binding_index{0U};
-    vector<u32> currentAssociatedAttribsToShaderForVao(
-        m_p->m_mesh->vertexBufferObjects().size());
-    for (auto const& vertex_buffer_object : m_p->m_mesh->vertexBufferObjects())
-    {
-        m_p->associateBufferToAttib(binding_index++,
-                                    vertex_buffer_object->subObject(),
-                                    currentAssociatedAttribsToShaderForVao,
-                                    vertex_buffer_object->handle(),
-                                    vertex_buffer_object->vertexFormatSize(),
-                                    vertex_buffer_object->size());
-    }
-    m_p->disableUnusedAttribsForVaoInShader(
-        currentAssociatedAttribsToShaderForVao);
 }
 
 void VertexArrayObject::render()

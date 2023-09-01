@@ -12,9 +12,12 @@ HOGL_API void bindVAO(Handle const index) noexcept;
 
 HOGL_API void bindAttribToBindingIndexForVao(Handle const vao,
                                              Handle const attrib_index,
-                                             Handle const binding_index,
                                              htps::u32 const numElements,
                                              htps::u32 type_index) noexcept;
+
+HOGL_API void setbindingIndex(Handle const vao,
+                              Handle const attrib_index,
+                              Handle const binding_index);
 
 HOGL_API void disableAttribForVao(Handle const vao,
                                   Handle const attrib_index) noexcept;

@@ -18,7 +18,7 @@ class IHostConnector;
 
 namespace haf::sys
 {
-class SystemController final : public ISystemController, SystemProvider
+class SystemController final : public ISystemController, private SystemProvider
 {
 public:
     SystemController();
@@ -26,7 +26,7 @@ public:
 
     SystemController(SystemController const&) = delete;
     SystemController& operator=(SystemController const&) = delete;
-    SystemController(SystemController&&) = default;
+    SystemController(SystemController&&)                 = default;
     SystemController& operator=(SystemController&&) = default;
 
     void init(htps::rptr<IApp> iapp,

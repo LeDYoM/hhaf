@@ -2,9 +2,7 @@ HAF_PRAGMA_ONCE
 #ifndef HAF_DEBUG_DEBUG_VARIABLES_INCLUDE_HPP
 #define HAF_DEBUG_DEBUG_VARIABLES_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
-#include <htypes/include/str.hpp>
-#include <htypes/include/dictionary.hpp>
+#include <haf/include/core/types.hpp>
 #include <haf/include/time/time_point.hpp>
 #include <haf/include/debug_system/debug_variable.hpp>
 #include <haf/include/debug_system/debug_types.hpp>
@@ -16,29 +14,34 @@ class DebugVariables final
 public:
     void getVariable(DebugVariableHandle& index, char const* const name);
 
-    bool getVariableValue(DebugVariableHandle& index, DebugVariable& value);
+    void setVariableValue(DebugVariableHandle const& index,
+                          core::str&& value) noexcept;
+    void setVariableValue(DebugVariableHandle const& index,
+                          core::str const& value);
+    void setVariableValue(DebugVariableHandle const& index,
+                          char const* const value);
 
-    void incrementVariable(DebugVariableHandle const index,
-                           DebugVariable::value_type const increment =
-                               static_cast<DebugVariable::value_type>(1));
+    template <typename T>
+    void setVariableValue(DebugVariableHandle const& index, T&& value)
+    {
+        setVariableValue(index, core::str::to_str(core::move(value)));
+    }
 
-    void setVariable(DebugVariableHandle const index,
-                     DebugVariable::value_type const newValue =
-                         static_cast<DebugVariable::value_type>(0));
-
-    htps::str state() const;
+    core::str state() const;
 
     void startFrame(time::TimePoint const& now);
     void endFrame();
 
-    htps::size_type size() const noexcept;
+    core::size_type size() const noexcept;
     bool empty() const noexcept;
-    htps::Dictionary<DebugVariable> const& debugVariables() const noexcept;
+    core::Dictionary<DebugVariable> const& debugVariables() const noexcept;
 
 private:
-    htps::Dictionary<DebugVariable> m_debug_variables;
+    core::Dictionary<DebugVariable> m_debug_variables;
     time::TimePoint m_last_time_update{0U};
-    htps::u64 m_frames{0U};
+    core::u64 m_frames{0U};
+    DebugVariableHandle m_frames_debug_var;
+    DebugVariableHandle m_frameTime;
 };
 
 }  // namespace haf::debug
