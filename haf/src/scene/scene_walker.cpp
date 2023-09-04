@@ -11,7 +11,6 @@ void SceneWalker::walk(SceneNode& node)
 {
     node.componentContainer().updateComponents();
 
-
     for (sptr<SceneNode> const& sceneNode : node.sceneNodesGroup())
     {
         walk(*sceneNode);

@@ -79,7 +79,7 @@ public:
      */
     void clearComponents() noexcept;
 
-    core::size_type components() const noexcept;
+    core::size_type size() const noexcept;
     core::str_view componentNameAt(core::size_type const index) const;
 
     core::sptr<Component> getOrCreateComponent(core::str_view typeName);
@@ -92,6 +92,8 @@ public:
             ? core::dynamic_pointer_cast<T>(source_component)
             : nullptr;
     }
+
+    core::vector<core::sptr<Component>> const& components() const;
 
 private:
     /**
@@ -112,7 +114,7 @@ private:
 
     core::sptr<Component> createComponent(core::str_view typeName);
     bool applyRequirements(Component& _thisComponent);
-    bool addComponent(htps::sptr<Component> nc);
+    bool addComponent(core::sptr<Component> nc);
 
     struct ComponentContainerPrivate;
     htps::PImplPointer<ComponentContainerPrivate> p_;

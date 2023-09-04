@@ -125,7 +125,7 @@ sptr<Component> ComponentContainer::componentOfType(str_view typeName) const
     return p_->getExistingComponent(typeName);
 }
 
-size_type ComponentContainer::components() const noexcept
+size_type ComponentContainer::size() const noexcept
 {
     return p_->components_.size();
 }
@@ -135,6 +135,11 @@ str_view ComponentContainer::componentNameAt(size_type const index) const
     return (index < p_->components_.size())
         ? p_->components_[index]->staticTypeName()
         : "";
+}
+
+vector<sptr<Component>> const& ComponentContainer::components() const
+{
+    return p_->components_;
 }
 
 }  // namespace haf::component

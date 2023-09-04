@@ -114,7 +114,7 @@ TEST_CASE("haf::scene::ComponentContainer", "[ComponentContainer][constructor]")
         auto data_copy(component->data_);
         component_container.clearComponents();
         CHECK(data_copy == component->data_);
-        CHECK(component_container.components() == 0U);
+        CHECK(component_container.size() == 0U);
     }
 }
 
