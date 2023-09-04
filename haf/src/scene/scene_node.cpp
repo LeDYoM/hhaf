@@ -33,12 +33,6 @@ SceneNode::~SceneNode()
     component::ComponentContainer::clearComponents();
 }
 
-void SceneNode::update()
-{
-    ComponentContainer::updateComponents();
-    SceneNodesGroup::updateNodes();
-}
-
 str SceneNode::completeName() const
 {
     auto const p{parent()};

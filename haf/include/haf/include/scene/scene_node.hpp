@@ -72,18 +72,13 @@ public:
     /**
      * @brief Destroy the Scene Node object.
      */
-    virtual ~SceneNode();
+    ~SceneNode() override;
 
     /**
      * @brief Method called when adding a new node just after creation.
      * Override it to add code on creation.
      */
     virtual void onCreated() {}
-
-    /**
-     * @brief Method called every frame
-     */
-    void update();
 
     core::str completeName() const;
 };
