@@ -27,7 +27,6 @@ namespace haf::scene
 class HAF_API SceneNode final : public sys::HasName,
                                 public SceneNodeParent<SceneNode>,
                                 public sys::SystemAccess,
-                                public component::ComponentContainer,
                                 public sys::SubSystemViewer
 {
 public:
@@ -88,7 +87,18 @@ public:
 
     SceneNodesGroup& sceneNodesGroup() { return m_scene_nodes_group; }
 
+    component::ComponentContainer& componentContainer()
+    {
+        return m_component_container;
+    }
+
+    component::ComponentContainer const& componentContainer() const
+    {
+        return m_component_container;
+    }
+
 private:
+    component::ComponentContainer m_component_container;
     SceneNodesGroup m_scene_nodes_group;
 };
 

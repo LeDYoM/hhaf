@@ -26,7 +26,8 @@ sptr<Component> SceneNodesGroup::createSceneNodeWithComponent(
     LogAsserter::log_assert(sceneNode != nullptr, "Invalid nullptr parameter");
     if (sceneNode != nullptr)
     {
-        auto component{sceneNode->attachComponent(core::move(componentName))};
+        auto component{sceneNode->componentContainer().attachComponent(
+            core::move(componentName))};
 
         return component;
     }

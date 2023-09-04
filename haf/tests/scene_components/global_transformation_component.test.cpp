@@ -28,7 +28,7 @@ TEST_CASE("GlobalTransformationComponent::DefaultValues",
     CHECK(globalTransformationComponent != nullptr);
 
     CHECK(globalTransformationComponent->hasPendingMatrixUpdate());
-    test_data.system.rootSceneNode()->updateComponents();
+    test_data.system.rootSceneNode()->componentContainer().updateComponents();
     CHECK_FALSE(globalTransformationComponent->hasPendingMatrixUpdate());
 }
 /*

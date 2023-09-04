@@ -47,7 +47,8 @@ bool SceneManager::registerComponent(
 
 bool SceneManager::instanciateRootComponent(str_view componentType)
 {
-    return m_rootSceneNode->attachComponent(componentType) != nullptr;
+    return m_rootSceneNode->componentContainer().attachComponent(
+               componentType) != nullptr;
 }
 
 sptr<component::Component> SceneManager::instantiateComponent(str_view name)
