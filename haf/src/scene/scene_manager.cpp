@@ -30,7 +30,7 @@ void SceneManager::init()
 void SceneManager::update()
 {
     m_scene_render_context_for_system.beginFrame();
-    m_rootSceneNode->update();
+    m_scene_walker.walk(*m_rootSceneNode);
     m_scene_render_context_for_system.endFrame();
 }
 

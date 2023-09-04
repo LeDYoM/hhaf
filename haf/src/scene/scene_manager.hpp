@@ -14,6 +14,7 @@ HAF_PRAGMA_ONCE
 #include <haf/include/component/component_factory.hpp>
 #include <hlog/include/hlog.hpp>
 #include <haf/include/scene/mesh_creator.hpp>
+#include "scene_walker.hpp"
 
 namespace haf::scene
 {
@@ -81,6 +82,7 @@ private:
     component::ComponentFactory m_component_factory;
     MeshCreator m_mesh_creator;
     core::uptr<SceneNode> m_rootSceneNode;
+    SceneWalker m_scene_walker;
 };
 }  // namespace haf::scene
 
