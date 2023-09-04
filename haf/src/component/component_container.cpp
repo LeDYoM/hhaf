@@ -142,4 +142,35 @@ vector<sptr<Component>> const& ComponentContainer::components() const
     return p_->components_;
 }
 
+vector<sptr<Component>>::iterator ComponentContainer::begin()
+{
+    return p_->components_.begin();
+}
+
+vector<sptr<Component>>::const_iterator ComponentContainer::begin() const
+{
+    return p_->components_.begin();
+}
+
+core::vector<core::sptr<Component>>::const_iterator ComponentContainer::cbegin()
+    const
+{
+    return p_->components_.cbegin();
+}
+
+vector<sptr<Component>>::iterator ComponentContainer::end()
+{
+    return p_->components_.end();
+}
+
+vector<sptr<Component>>::const_iterator ComponentContainer::end() const
+{
+    return p_->components_.end();
+}
+
+vector<sptr<Component>>::const_iterator ComponentContainer::cend() const
+{
+    return p_->components_.cend();
+}
+
 }  // namespace haf::component

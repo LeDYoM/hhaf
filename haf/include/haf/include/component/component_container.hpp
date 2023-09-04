@@ -95,6 +95,14 @@ public:
 
     core::vector<core::sptr<Component>> const& components() const;
 
+    core::vector<core::sptr<Component>>::iterator begin();
+    core::vector<core::sptr<Component>>::const_iterator begin() const;
+    core::vector<core::sptr<Component>>::const_iterator cbegin() const;
+
+    core::vector<core::sptr<Component>>::iterator end();
+    core::vector<core::sptr<Component>>::const_iterator end() const;
+    core::vector<core::sptr<Component>>::const_iterator cend() const;
+
 private:
     /**
      * @brief Create or get a pointer to a component type. This method
