@@ -22,8 +22,7 @@ struct MainScene::ComponentsRequired
 };
 
 struct MainScene::PrivateComponentData
-{
-};
+{};
 
 MainScene::MainScene() :
     m_components{make_pimplp<ComponentsRequired>()},
@@ -43,8 +42,9 @@ bool MainScene::addRequirements(
 
 void MainScene::onAttached()
 {
-    attachedNode()->createSceneNodeWithComponent<MainMeshController>(
-        "MainMeshController");
+    attachedNode()
+        ->sceneNodesGroup()
+        .createSceneNodeWithComponent<MainMeshController>("MainMeshController");
 }
 
 }  // namespace hl

@@ -28,8 +28,7 @@ class HAF_API SceneNode final : public sys::HasName,
                                 public SceneNodeParent<SceneNode>,
                                 public sys::SystemAccess,
                                 public component::ComponentContainer,
-                                public sys::SubSystemViewer,
-                                public SceneNodesGroup
+                                public sys::SubSystemViewer
 {
 public:
     static constexpr char StaticTypeName[] = "SceneNode";
@@ -81,6 +80,16 @@ public:
     virtual void onCreated() {}
 
     core::str completeName() const;
+
+    SceneNodesGroup const& sceneNodesGroup() const
+    {
+        return m_scene_nodes_group;
+    }
+
+    SceneNodesGroup& sceneNodesGroup() { return m_scene_nodes_group; }
+
+private:
+    SceneNodesGroup m_scene_nodes_group;
 };
 
 using SceneNodeSPtr = htps::sptr<SceneNode>;

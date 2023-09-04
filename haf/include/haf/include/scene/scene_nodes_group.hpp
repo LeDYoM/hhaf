@@ -20,6 +20,8 @@ public:
     using SceneNodesVector = core::vector<core::sptr<SceneNode>>;
     using size_type        = SceneNodesVector::size_type;
 
+    SceneNodesGroup(core::rptr<SceneNode> sceneNode);
+
     /**
      * @brief Emitter that will be called when a new node is added
      */
@@ -135,9 +137,6 @@ public:
     {
         return m_scene_nodes.cend();
     }
-
-protected:
-    SceneNodesGroup(core::rptr<SceneNode> sceneNode);
 
 private:
     /**
