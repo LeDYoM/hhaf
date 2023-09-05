@@ -11,12 +11,18 @@ namespace haf::scene
 class SceneNode;
 }  // namespace haf::scene
 
+namespace haf::component
+{
+class Component;
+}
+
 namespace haf::scene
 {
 class SceneWalker final
 {
 public:
     void walk(SceneNode& node);
+    void walkComponent(component::Component& component);
 };
 
 }  // namespace haf::scene

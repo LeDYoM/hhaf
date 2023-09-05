@@ -11,13 +11,24 @@ namespace haf::scene
 
 void SceneWalker::walk(SceneNode& node)
 {
-    node.componentContainer().components().for_each_backwards(
-        [](sptr<Component> const& component) { component->updateComponent(); });
+    if (!node.componentContainer().components().empty())
+    {
+        auto current{node.componentContainer().components().end()};
+        while (current-- != node.componentContainer().components().begin())
+        {
+            walkComponent(**current);
+        }
+    }
 
     for (sptr<SceneNode> const& sceneNode : node.sceneNodesGroup())
     {
         walk(*sceneNode);
     }
+}
+
+void SceneWalker::walkComponent(Component& component)
+{
+    component.updateComponent();
 }
 
 }  // namespace haf::scene
