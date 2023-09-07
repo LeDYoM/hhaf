@@ -76,8 +76,8 @@ public:
 
     constexpr size_type size() const noexcept { return size_; }
 
-    const_iterator const begin_;
-    size_type const size_;
+    const_iterator begin_;
+    size_type size_;
 };
 
 template <typename T>
