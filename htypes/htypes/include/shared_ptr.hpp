@@ -144,8 +144,7 @@ public:
     {
         sptr _other{htps::move(other)};
         other = htps::move(*this);
-        this = htps::move(_other);
-        return *this;
+        *this = htps::move(_other);
     }
     [[nodiscard]] constexpr u32 use_count() const noexcept
     {

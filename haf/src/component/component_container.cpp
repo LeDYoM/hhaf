@@ -105,7 +105,7 @@ void sort(vector<sptr<Component>>& components)
 
     for (str_view const& component_name : component_names_ordered)
     {
-        for (uint_fast32_t i{start_index}; i < components.size(); ++i)
+        for (core::size_type i{start_index}; i < components.size(); ++i)
         {
             if (components[i]->staticTypeName() == component_name)
             {
