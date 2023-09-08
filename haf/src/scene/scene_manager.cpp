@@ -13,7 +13,8 @@ namespace haf::scene
 {
 SceneManager::SceneManager(sys::SystemProvider& system_provider) :
     SystemBase{system_provider},
-    m_scene_render_context_for_system{this->isystemProvider()}
+    m_scene_render_context_for_system{this->isystemProvider()},
+    m_keyboard_input_manager{this->isystemProvider()}
 {}
 
 SceneManager::~SceneManager() = default;

@@ -9,9 +9,6 @@
 #include "system/get_system.hpp"
 #include "debug_system/debug_displayers.hpp"
 
-// TODO: Just for sorting. Remove
-#include <haf/include/input/keyboard_input_component.hpp>
-
 using namespace haf::core;
 
 namespace haf::component
@@ -94,7 +91,7 @@ sptr<Component> ComponentContainer::getOrCreateComponent(str_view typeName)
     }
     return result;
 }
-
+/*
 void sort(vector<sptr<Component>>& components)
 {
 
@@ -119,7 +116,7 @@ void sort(vector<sptr<Component>>& components)
         }
     }
 }
-
+*/
 sptr<Component> ComponentContainer::attachComponent(str_view typeName)
 {
     auto component{createComponent(typeName)};
