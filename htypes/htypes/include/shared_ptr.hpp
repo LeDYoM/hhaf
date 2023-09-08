@@ -146,6 +146,7 @@ public:
         other = htps::move(*this);
         *this = htps::move(_other);
     }
+
     [[nodiscard]] constexpr u32 use_count() const noexcept
     {
         return m_counter == nullptr ? 0U : static_cast<u32>(m_counter->get());
