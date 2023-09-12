@@ -43,7 +43,7 @@ DebugCameraComponent::DebugCameraComponent() :
 DebugCameraComponent::~DebugCameraComponent() = default;
 
 bool DebugCameraComponent::addRequirements(
-    component::ComponentRequirements& component_requirements)
+    component::ComponentRequirements& /*component_requirements*/)
 {
     bool isOk{true};
 //    isOk &= component_requirements.getOrCreateComponent(
@@ -55,17 +55,17 @@ bool DebugCameraComponent::addRequirements(
 
 void DebugCameraComponent::onAttached()
 {
-    sys::getSystem<scene::SceneManager>(attachedNode()).
-    Speed = 0.01F;
-    m_p->m_receiver.shared_connect(
-        m_components->m_keyboard_input_component,
-        m_components->m_keyboard_input_component->KeyPressed,
-        make_function(this, &DebugCameraComponent::moveCamera));
+//    sys::getSystem<scene::SceneManager>(attachedNode()).
+ //   Speed = 0.01F;
+ //   m_p->m_receiver.shared_connect(
+ //       m_components->m_keyboard_input_component,
+ //       m_components->m_keyboard_input_component->KeyPressed,
+//        make_function(this, &DebugCameraComponent::moveCamera));
 
-    m_p->m_receiver.shared_connect(
-        m_components->m_camera_component,
-        m_components->m_camera_component->cameraUpdated,
-        make_function(this, &DebugCameraComponent::logCameraData));
+//    m_p->m_receiver.shared_connect(
+//        m_components->m_camera_component,
+//        m_components->m_camera_component->cameraUpdated,
+//        make_function(this, &DebugCameraComponent::logCameraData));
 }
 
 void DebugCameraComponent::moveCamera(Key const& key)
