@@ -78,6 +78,9 @@ public:
     MeshCreator& meshCreator() noexcept;
     MeshCreator const& meshCreator() const noexcept;
 
+    evt::emitter<const input::Key&>& KeyPressed();
+    evt::emitter<const input::Key&>& KeyReleased();
+
 private:
     SceneRenderContextForSystem m_scene_render_context_for_system;
     input::KeyboardInputManager m_keyboard_input_manager;

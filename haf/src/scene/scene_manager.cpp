@@ -31,6 +31,7 @@ void SceneManager::init()
 void SceneManager::update()
 {
     m_scene_render_context_for_system.beginFrame();
+    m_keyboard_input_manager.update();
     m_scene_walker.walk(*m_rootSceneNode);
     m_scene_render_context_for_system.endFrame();
 }
@@ -106,6 +107,16 @@ MeshCreator& SceneManager::meshCreator() noexcept
 MeshCreator const& SceneManager::meshCreator() const noexcept
 {
     return m_mesh_creator;
+}
+
+evt::emitter<const input::Key&>& SceneManager::KeyPressed()
+{
+    return m_keyboard_input_manager.KeyPressed;
+}
+
+evt::emitter<const input::Key&>& SceneManager::KeyReleased()
+{
+    return m_keyboard_input_manager.KeyReleased;
 }
 
 }  // namespace haf::scene

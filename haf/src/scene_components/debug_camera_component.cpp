@@ -3,7 +3,7 @@
 #include <haf/include/scene/scene_node.hpp>
 
 #include <haf/include/scene_components/camera_component.hpp>
-#include <haf/include/input/keyboard_input_component.hpp>
+#include <haf/include/input/keyboard_input_manager.hpp>
 
 #include <hlog/include/hlog.hpp>
 
@@ -18,7 +18,6 @@ namespace haf::scene
 {
 struct DebugCameraComponent::ComponentsRequired
 {
-    sptr<input::KeyboardInputComponent> m_keyboard_input_component;
     sptr<CameraComponent> m_camera_component;
 };
 
@@ -47,15 +46,16 @@ bool DebugCameraComponent::addRequirements(
     component::ComponentRequirements& component_requirements)
 {
     bool isOk{true};
-    isOk &= component_requirements.getOrCreateComponent(
-        m_components->m_keyboard_input_component);
-    isOk &= component_requirements.getOrCreateComponent(
-        m_components->m_camera_component);
+//    isOk &= component_requirements.getOrCreateComponent(
+//        m_components->m_keyboard_input_component);
+//    isOk &= component_requirements.getOrCreateComponent(
+//        m_components->m_camera_component);
     return isOk;
 }
 
 void DebugCameraComponent::onAttached()
 {
+    sys::getSystem<scene::SceneManager>(attachedNode()).
     Speed = 0.01F;
     m_p->m_receiver.shared_connect(
         m_components->m_keyboard_input_component,
