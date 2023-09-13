@@ -44,6 +44,10 @@ void MainScene::onAttached()
 {
     attachedNode()
         ->sceneNodesGroup()
+        .createSceneNodeWithComponent<DebugCameraComponent>("DebugCameraComponent");
+
+    attachedNode()
+        ->sceneNodesGroup()
         .createSceneNodeWithComponent<MainMeshController>("MainMeshController");
 }
 

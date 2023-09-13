@@ -91,35 +91,10 @@ sptr<Component> ComponentContainer::getOrCreateComponent(str_view typeName)
     }
     return result;
 }
-/*
-void sort(vector<sptr<Component>>& components)
-{
 
-    core::array<str_view, 1U> component_names_ordered{
-        input::KeyboardInputComponent::StaticTypeName};
-
-    uint_fast32_t start_index{0U};
-
-    for (str_view const& component_name : component_names_ordered)
-    {
-        for (core::size_type i{start_index}; i < components.size(); ++i)
-        {
-            if (components[i]->staticTypeName() == component_name)
-            {
-                if (i != start_index)
-                {
-                    components[start_index].swap(components[i]);
-                }
-                i = components.size();
-                ++start_index;
-            }
-        }
-    }
-}
-*/
 sptr<Component> ComponentContainer::attachComponent(str_view typeName)
 {
-    auto component{createComponent(typeName)};
+    auto component{getOrCreateComponent(typeName)};
 
     DisplayLog::debug(StaticTypeName, [this]() {
         return debug::showComponentList(p_->attachable_);

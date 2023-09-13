@@ -43,29 +43,32 @@ DebugCameraComponent::DebugCameraComponent() :
 DebugCameraComponent::~DebugCameraComponent() = default;
 
 bool DebugCameraComponent::addRequirements(
-    component::ComponentRequirements& /*component_requirements*/)
+    component::ComponentRequirements& component_requirements)
 {
     bool isOk{true};
-//    isOk &= component_requirements.getOrCreateComponent(
-//        m_components->m_keyboard_input_component);
-//    isOk &= component_requirements.getOrCreateComponent(
-//        m_components->m_camera_component);
+    //    isOk &= component_requirements.getOrCreateComponent(
+    //        m_components->m_keyboard_input_component);
+    isOk &= component_requirements.getOrCreateComponent(
+        m_components->m_camera_component);
     return isOk;
 }
 
 void DebugCameraComponent::onAttached()
 {
-//    sys::getSystem<scene::SceneManager>(attachedNode()).
- //   Speed = 0.01F;
- //   m_p->m_receiver.shared_connect(
- //       m_components->m_keyboard_input_component,
- //       m_components->m_keyboard_input_component->KeyPressed,
-//        make_function(this, &DebugCameraComponent::moveCamera));
+    sys::getSystem<scene::SceneManager>(attachedNode())
+        .KeyPressed().connect(
+            make_function(this, &DebugCameraComponent::moveCamera));
+    Speed = 0.01F;
 
 //    m_p->m_receiver.shared_connect(
-//        m_components->m_camera_component,
-//        m_components->m_camera_component->cameraUpdated,
-//        make_function(this, &DebugCameraComponent::logCameraData));
+//        m_components->m_keyboard_input_component,
+//        m_components->m_keyboard_input_component->KeyPressed,
+//        make_function(this, &DebugCameraComponent::moveCamera));
+
+    m_p->m_receiver.shared_connect(
+        m_components->m_camera_component,
+        m_components->m_camera_component->cameraUpdated,
+        make_function(this, &DebugCameraComponent::logCameraData));
 }
 
 void DebugCameraComponent::moveCamera(Key const& key)
@@ -99,7 +102,7 @@ void DebugCameraComponent::moveCamera(Key const& key)
             camera->cameraMode = CameraComponent::CameraMode::Perspective;
             break;
         default:
-        break;
+            break;
     }
 
     switch (m_p->m_cameraMoveType)
@@ -163,7 +166,7 @@ void DebugCameraComponent::moveCamera(Key const& key)
                     camera->Up.modify().moveX(-Speed());
                     break;
                 default:
-                break;
+                    break;
             }
         }
         break;
@@ -220,7 +223,7 @@ void DebugCameraComponent::moveCamera(Key const& key)
                     camera->Aspect.modify() -= Speed();
                     break;
                 default:
-                break;
+                    break;
             }
         }
         break;
@@ -257,7 +260,7 @@ void DebugCameraComponent::moveCamera(Key const& key)
                     camera->Position.modify().moveY(Speed());
                     break;
                 default:
-                break;
+                    break;
             }
         }
         break;
