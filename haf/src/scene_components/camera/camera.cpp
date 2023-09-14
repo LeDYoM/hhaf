@@ -6,7 +6,7 @@ namespace haf::scene
 bool CameraBuilder::addDebugMovableCamera(SceneNode& node)
 {
     bool isOk{true};
-    isOk &= (node.componentContainer().attachComponent("MovableCameraComponent") != nullptr);
+    isOk &= (node.componentContainer().attachComponent("MoveCameraComponent") != nullptr);
     isOk &= (node.componentContainer().attachComponent("DebugCameraComponent") != nullptr);
     return isOk;
 }
