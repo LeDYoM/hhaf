@@ -4,6 +4,7 @@
 #include <haf/include/render/mesh_render_component.hpp>
 #include <haf/include/scene_components/scene_component.hpp>
 #include <haf/include/scene/scene_node.hpp>
+#include <haf/include/scene_components/camera/camera.hpp>
 
 #include "main_mesh_controller.hpp"
 
@@ -42,10 +43,15 @@ bool MainScene::addRequirements(
 
 void MainScene::onAttached()
 {
+    auto node{attachedNode()->sceneNodesGroup().createSceneNode("node")};
+    CameraBuilder cbuilder;
+    cbuilder.addDebugMovableCamera(*node);
+/*
     attachedNode()
         ->sceneNodesGroup()
-        .createSceneNodeWithComponent<DebugCameraComponent>("DebugCameraComponent");
-
+        .createSceneNodeWithComponent<DebugCameraComponent>(
+            "DebugCameraComponent");
+*/
     attachedNode()
         ->sceneNodesGroup()
         .createSceneNodeWithComponent<MainMeshController>("MainMeshController");
