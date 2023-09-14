@@ -1,4 +1,4 @@
-#include <haf/include/scene_components/camera_component.hpp>
+#include <haf/include/scene_components/camera/camera_component.hpp>
 #include <haf/include/component/component_definition.hpp>
 
 #include "system/get_system.hpp"

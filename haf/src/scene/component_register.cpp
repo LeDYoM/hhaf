@@ -4,8 +4,8 @@
 #include <haf/include/scene_components/scene_component.hpp>
 #include <haf/include/scene_components/global_transformation_component.hpp>
 #include <haf/include/scene_components/transformation_component.hpp>
-#include <haf/include/scene_components/camera_component.hpp>
-#include <haf/include/scene_components/debug_camera_component.hpp>
+#include <haf/include/scene_components/camera/camera_component.hpp>
+#include <haf/include/scene_components/camera/debug_camera_component.hpp>
 
 #include <haf/include/render/mesh_render_component.hpp>
 #include <haf/include/render/material_data_component.hpp>

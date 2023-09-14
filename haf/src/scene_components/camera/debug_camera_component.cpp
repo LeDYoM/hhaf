@@ -1,8 +1,8 @@
-#include <haf/include/scene_components/debug_camera_component.hpp>
+#include <haf/include/scene_components/camera/debug_camera_component.hpp>
 #include <haf/include/component/component_definition.hpp>
 #include <haf/include/scene/scene_node.hpp>
 
-#include <haf/include/scene_components/camera_component.hpp>
+#include <haf/include/scene_components/camera/camera_component.hpp>
 #include <haf/include/input/keyboard_input_manager.hpp>
 
 #include <hlog/include/hlog.hpp>
@@ -46,8 +46,6 @@ bool DebugCameraComponent::addRequirements(
     component::ComponentRequirements& component_requirements)
 {
     bool isOk{true};
-    //    isOk &= component_requirements.getOrCreateComponent(
-    //        m_components->m_keyboard_input_component);
     isOk &= component_requirements.getOrCreateComponent(
         m_components->m_camera_component);
     return isOk;
@@ -59,11 +57,6 @@ void DebugCameraComponent::onAttached()
         .KeyPressed().connect(
             make_function(this, &DebugCameraComponent::moveCamera));
     Speed = 0.01F;
-
-//    m_p->m_receiver.shared_connect(
-//        m_components->m_keyboard_input_component,
-//        m_components->m_keyboard_input_component->KeyPressed,
-//        make_function(this, &DebugCameraComponent::moveCamera));
 
     m_p->m_receiver.shared_connect(
         m_components->m_camera_component,
