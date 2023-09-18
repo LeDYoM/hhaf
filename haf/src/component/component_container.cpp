@@ -33,7 +33,7 @@ struct ComponentContainer::ComponentContainerPrivate
         m_scene_manager{sys::getSystem<scene::SceneManager>(attachable)}
     {}
 
-    void updateComponentsBackwards()
+    void updateComponents()
     {
         components_.for_each_backwards([](sptr<Component> const& component) {
             component->updateComponent();
@@ -63,7 +63,7 @@ ComponentContainer::~ComponentContainer()
 
 void ComponentContainer::updateComponents()
 {
-    p_->updateComponentsBackwards();
+    p_->updateComponents();
 }
 
 void ComponentContainer::clearComponents() noexcept
