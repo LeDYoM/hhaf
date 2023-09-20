@@ -24,6 +24,17 @@ void ComponentUpdater::addUpdater(UpdateAction updateAction)
     m_propertiesToUpdate.emplace_back(nullptr, core::move(updateAction));
 }
 
+void ComponentUpdater::update(scene::SceneUpdateTime)
+{
+    for (auto&& updater : m_propertiesToUpdate)
+    {
+        if (!updater.first || (updater.first)())
+        {
+            (updater.second)();
+        }
+    }
+}
+
 void ComponentUpdater::update()
 {
     for (auto&& updater : m_propertiesToUpdate)

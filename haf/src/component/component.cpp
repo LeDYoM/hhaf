@@ -11,6 +11,11 @@ void Component::updateComponent()
     ComponentUpdater::update();
 }
 
+void Component::updateComponent(scene::SceneUpdateTime const sceneUpdateTime)
+{
+    ComponentUpdater::update(sceneUpdateTime);
+}
+
 bool Component::addRequirements(ComponentRequirements&)
 {
     return true;

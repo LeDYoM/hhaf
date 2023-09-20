@@ -4,6 +4,7 @@
 #include <htypes/include/types.hpp>
 
 #include <haf/include/scene/scene_node.hpp>
+#include <haf/include/scene/scene_update_time.hpp>
 
 #include "scene/scene_manager.hpp"
 #include "system/get_system.hpp"
@@ -40,6 +41,14 @@ struct ComponentContainer::ComponentContainerPrivate
         });
     }
 
+    void updateComponents(scene::SceneUpdateTime const sceneUpdateTime)
+    {
+        components_.for_each_backwards(
+            [sceneUpdateTime](sptr<Component> const& component) {
+                component->updateComponent(sceneUpdateTime);
+            });
+    }
+
     void clearComponents() { components_.clear(); }
 
     void clearComponentsBackwards()
@@ -64,6 +73,12 @@ ComponentContainer::~ComponentContainer()
 void ComponentContainer::updateComponents()
 {
     p_->updateComponents();
+}
+
+void ComponentContainer::updateComponents(
+    scene::SceneUpdateTime const sceneUpdateTime)
+{
+    p_->updateComponents(sceneUpdateTime);
 }
 
 void ComponentContainer::clearComponents() noexcept

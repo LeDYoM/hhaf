@@ -5,6 +5,11 @@ HAF_PRAGMA_ONCE
 #include <haf/include/core/types.hpp>
 #include <haf/include/properties/iproperty_state.hpp>
 
+namespace haf::scene
+{
+enum class SceneUpdateTime : core::u32;
+}
+
 namespace haf::component
 {
 class ComponentUpdater
@@ -15,6 +20,7 @@ protected:
     using UpdateAction   = core::function<void()>;
 
     void update();
+    void update(scene::SceneUpdateTime sceneUpdateTime);
 
     /**
      * @brief Add an updater of a property

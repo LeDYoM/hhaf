@@ -12,6 +12,7 @@ HAF_PRAGMA_ONCE
 namespace haf::scene
 {
 class SceneNode;
+enum class SceneUpdateTime : core::u32;
 }
 
 namespace haf::component
@@ -73,6 +74,7 @@ public:
      * @brief Update componentents of this container
      */
     void updateComponents();
+    void updateComponents(scene::SceneUpdateTime const sceneUpdateTime);
 
     /**
      * @brief Clear all elements of this container
