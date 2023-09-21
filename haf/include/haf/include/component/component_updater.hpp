@@ -19,8 +19,7 @@ protected:
     using UpdateProperty = core::rptr<prop::IPropertyState>;
     using UpdateAction   = core::function<void()>;
 
-    void update();
-    void update(scene::SceneUpdateTime sceneUpdateTime);
+    void update(scene::SceneUpdateTime const sceneUpdateTime);
 
     /**
      * @brief Add an updater of a property
@@ -41,8 +40,14 @@ protected:
 
     void addUpdater(UpdateAction updateAction);
 
+    void setSceneUpdateTime(
+        scene::SceneUpdateTime const sceneUpdateTime) noexcept;
+
 private:
+    void update();
+
     core::vector<core::pair<UpdateFunction, UpdateAction>> m_propertiesToUpdate;
+    scene::SceneUpdateTime m_sceneUpdateTime;
 };
 
 }  // namespace haf::component

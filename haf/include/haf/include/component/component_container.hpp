@@ -72,9 +72,10 @@ public:
 
     /**
      * @brief Update componentents of this container
+     * @param sceneUpdateTime Update time to update
      */
-    void updateComponents();
     void updateComponents(scene::SceneUpdateTime const sceneUpdateTime);
+    void updateComponents();
 
     /**
      * @brief Clear all elements of this container

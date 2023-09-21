@@ -12,8 +12,40 @@ enum class SceneUpdateTime : core::u32
     BeginFrame = 1U,
     EndFrame   = 2U,
     Render     = 3U,
-    Count      = 4U
+    Begin      = Controller,
+    End        = Render + 1U
 };
+
+template <typename T>
+consteval SceneUpdateTime begin() noexcept
+{
+    return SceneUpdateTime::Begin;
+}
+
+template <typename T>
+consteval SceneUpdateTime end() noexcept
+{
+    return SceneUpdateTime::End;
+}
+
+template <typename T>
+consteval core::u32 num_begin() noexcept
+{
+    return static_cast<core::u32>(begin<T>());
+}
+
+template <typename T>
+consteval core::u32 num_end() noexcept
+{
+    return static_cast<core::u32>(end<T>());
+}
+
+template <typename T>
+constexpr SceneUpdateTime toEnum(core::u32 const index) noexcept
+{
+    return static_cast<T>(index);
+}
+
 }
 
 #endif

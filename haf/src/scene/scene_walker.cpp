@@ -11,7 +11,7 @@ namespace haf::scene
 
 void SceneWalker::walk(SceneNode& node)
 {
-    node.componentContainer().updateComponents();
+//    node.componentContainer().updateComponents();
 
     for (sptr<SceneNode> const& sceneNode : node.sceneNodesGroup())
     {
@@ -21,7 +21,7 @@ void SceneWalker::walk(SceneNode& node)
 
 void SceneWalker::walk(SceneNode& node, SceneUpdateTime const sceneUpdateTime)
 {
-    node.componentContainer().updateComponents();
+    node.componentContainer().updateComponents(sceneUpdateTime);
 
     for (sptr<SceneNode> const& sceneNode : node.sceneNodesGroup())
     {

@@ -34,13 +34,6 @@ struct ComponentContainer::ComponentContainerPrivate
         m_scene_manager{sys::getSystem<scene::SceneManager>(attachable)}
     {}
 
-    void updateComponents()
-    {
-        components_.for_each_backwards([](sptr<Component> const& component) {
-            component->updateComponent();
-        });
-    }
-
     void updateComponents(scene::SceneUpdateTime const sceneUpdateTime)
     {
         components_.for_each_backwards(
@@ -70,15 +63,23 @@ ComponentContainer::~ComponentContainer()
     p_->clearComponentsBackwards();
 }
 
-void ComponentContainer::updateComponents()
-{
-    p_->updateComponents();
-}
-
 void ComponentContainer::updateComponents(
     scene::SceneUpdateTime const sceneUpdateTime)
 {
     p_->updateComponents(sceneUpdateTime);
+}
+
+void ComponentContainer::updateComponents()
+{
+    using scene::num_begin;
+    using scene::num_end;
+    using scene::SceneUpdateTime;
+    using scene::toEnum;
+    for (auto i{num_begin<SceneUpdateTime>()}; i < num_end<SceneUpdateTime>();
+         ++i)
+    {
+        p_->updateComponents(toEnum<SceneUpdateTime>(i));
+    }
 }
 
 void ComponentContainer::clearComponents() noexcept

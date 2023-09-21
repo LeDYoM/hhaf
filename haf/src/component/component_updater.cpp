@@ -24,14 +24,11 @@ void ComponentUpdater::addUpdater(UpdateAction updateAction)
     m_propertiesToUpdate.emplace_back(nullptr, core::move(updateAction));
 }
 
-void ComponentUpdater::update(scene::SceneUpdateTime)
+void ComponentUpdater::update(scene::SceneUpdateTime const sceneUpdateTime)
 {
-    for (auto&& updater : m_propertiesToUpdate)
+    if (m_sceneUpdateTime == sceneUpdateTime)
     {
-        if (!updater.first || (updater.first)())
-        {
-            (updater.second)();
-        }
+        update();
     }
 }
 
@@ -44,6 +41,12 @@ void ComponentUpdater::update()
             (updater.second)();
         }
     }
+}
+
+void ComponentUpdater::setSceneUpdateTime(
+    scene::SceneUpdateTime const sceneUpdateTime) noexcept
+{
+    m_sceneUpdateTime = sceneUpdateTime;
 }
 
 }  // namespace haf::component

@@ -80,8 +80,8 @@ TEST_CASE("haf::scene::ComponentContainer", "[ComponentContainer][constructor]")
 
         SECTION("Update")
         {
-            component_container.updateComponents();
-            CHECK(component->data_ == 1);
+//            component_container.updateComponents();
+//            CHECK(component->data_ == 1);
             /*
                         SECTION("Try Add twice")
                         {

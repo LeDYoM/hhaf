@@ -10,7 +10,7 @@ namespace haf::scene
 {
 class SceneNode;
 enum class SceneUpdateTime : core::u32;
-}
+}  // namespace haf::scene
 
 namespace haf::component
 {
@@ -29,7 +29,6 @@ public:
     Component(Component&&)                 = default;
     Component& operator=(Component&&) = default;
 
-    void updateComponent();
     void updateComponent(scene::SceneUpdateTime const sceneUpdateTime);
 
     virtual ~Component();
@@ -48,6 +47,9 @@ public:
 
 protected:
     Component();
+
+    void setSceneUpdateTime(
+        scene::SceneUpdateTime const sceneUpdateTime) noexcept;
 
 private:
     /**
