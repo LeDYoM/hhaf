@@ -4,11 +4,7 @@ HAF_PRAGMA_ONCE
 
 #include <haf/include/core/types.hpp>
 #include <haf/include/properties/iproperty_state.hpp>
-
-namespace haf::scene
-{
-enum class SceneUpdateTime : core::u32;
-}
+#include <haf/include/scene/scene_update_time.hpp>
 
 namespace haf::component
 {
@@ -47,7 +43,8 @@ private:
     void update();
 
     core::vector<core::pair<UpdateFunction, UpdateAction>> m_propertiesToUpdate;
-    scene::SceneUpdateTime m_sceneUpdateTime;
+    scene::SceneUpdateTime m_sceneUpdateTime{
+        scene::SceneUpdateTime::Controller};
 };
 
 }  // namespace haf::component
