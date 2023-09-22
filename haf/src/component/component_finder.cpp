@@ -15,7 +15,7 @@ sptr<Component> ComponentFinder::findParentComponent(str_view name) const
     // Connect to receive the updates from a parent global transformation
     if (auto parentNode{m_node->parent()}; parentNode != nullptr)
     {
-        return parentNode->componentOfType(name);
+        return parentNode->componentContainer().getExistingComponent(name);
     }
     return {};
 }
@@ -26,7 +26,7 @@ sptr<Component> ComponentFinder::findAncestorComponent(str_view name) const
     for (auto parentNode{m_node->parent()}; parentNode != nullptr;
          parentNode = parentNode->parent())
     {
-        auto result{parentNode->componentOfType(name)};
+        auto result{parentNode->componentContainer().getExistingComponent(name)};
         if (result)
         {
             return result;

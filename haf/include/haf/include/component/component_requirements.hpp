@@ -47,6 +47,16 @@ private:
         return element != nullptr;
     }
 
+    template <typename T>
+    bool getExistingComponentImp(core::sptr<T>& element)
+    {
+        element = m_component_container.safeComponentConversion<T>(
+            m_component_container.
+            getOrCreateComponent(T::StaticTypeName));
+
+        return element != nullptr;
+    }
+
     ComponentContainer& m_component_container;
 };
 }  // namespace haf::component

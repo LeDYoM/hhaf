@@ -21,6 +21,12 @@ public:
     virtual void setVariableValue(DebugVariableHandle const& index,
                                   char const* const value)    = 0;
 
+    template <typename T>
+    void setVariableValue(DebugVariableHandle const& index, T&& value)
+    {
+        setVariableValue(index, core::str::to_str(core::move(value)));
+    }
+
 protected:
     ~IDebugVariables() = default;
 };

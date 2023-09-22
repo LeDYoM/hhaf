@@ -1,24 +1,23 @@
-#include <haf/include/scene_components/debug_camera_component.hpp>
+#include <haf/include/scene_components/camera/move_camera_component.hpp>
 #include <haf/include/component/component_definition.hpp>
 #include <haf/include/scene/scene_node.hpp>
 
-#include <haf/include/scene_components/camera_component.hpp>
-#include <haf/include/input/keyboard_input_component.hpp>
+#include <haf/include/scene_components/camera/camera_component.hpp>
+#include <haf/include/input/keyboard_input_manager.hpp>
 
 #include <hlog/include/hlog.hpp>
+#include <haf/include/events/receiver.hpp>
 
 #include "system/get_system.hpp"
 #include "scene/scene_manager.hpp"
-#include "resources/resource_manager.hpp"
 
 using namespace haf::core;
 using namespace haf::input;
 
 namespace haf::scene
 {
-struct DebugCameraComponent::ComponentsRequired
+struct MoveCameraComponent::ComponentsRequired
 {
-    sptr<input::KeyboardInputComponent> m_keyboard_input_component;
     sptr<CameraComponent> m_camera_component;
 };
 
@@ -30,45 +29,37 @@ enum class CameraMoveType
     Mode3 = 3
 };
 
-struct DebugCameraComponent::PrivateComponentData
+struct MoveCameraComponent::PrivateComponentData
 {
     evt::ireceiver m_receiver;
     CameraMoveType m_cameraMoveType{CameraMoveType::Mode0};
 };
 
-DebugCameraComponent::DebugCameraComponent() :
+MoveCameraComponent::MoveCameraComponent() :
     m_components{make_pimplp<ComponentsRequired>()},
     m_p{make_pimplp<PrivateComponentData>()}
 {}
 
-DebugCameraComponent::~DebugCameraComponent() = default;
+MoveCameraComponent::~MoveCameraComponent() = default;
 
-bool DebugCameraComponent::addRequirements(
+bool MoveCameraComponent::addRequirements(
     component::ComponentRequirements& component_requirements)
 {
     bool isOk{true};
-    isOk &= component_requirements.getOrCreateComponent(
-        m_components->m_keyboard_input_component);
     isOk &= component_requirements.getOrCreateComponent(
         m_components->m_camera_component);
     return isOk;
 }
 
-void DebugCameraComponent::onAttached()
+void MoveCameraComponent::onAttached()
 {
+    sys::getSystem<scene::SceneManager>(attachedNode())
+        .KeyPressed().connect(
+            make_function(this, &MoveCameraComponent::moveCamera));
     Speed = 0.01F;
-    m_p->m_receiver.shared_connect(
-        m_components->m_keyboard_input_component,
-        m_components->m_keyboard_input_component->KeyPressed,
-        make_function(this, &DebugCameraComponent::moveCamera));
-
-    m_p->m_receiver.shared_connect(
-        m_components->m_camera_component,
-        m_components->m_camera_component->cameraUpdated,
-        make_function(this, &DebugCameraComponent::logCameraData));
 }
 
-void DebugCameraComponent::moveCamera(Key const& key)
+void MoveCameraComponent::moveCamera(Key const& key)
 {
     auto&& camera{m_components->m_camera_component};
     switch (key)
@@ -99,7 +90,7 @@ void DebugCameraComponent::moveCamera(Key const& key)
             camera->cameraMode = CameraComponent::CameraMode::Perspective;
             break;
         default:
-        break;
+            break;
     }
 
     switch (m_p->m_cameraMoveType)
@@ -163,7 +154,7 @@ void DebugCameraComponent::moveCamera(Key const& key)
                     camera->Up.modify().moveX(-Speed());
                     break;
                 default:
-                break;
+                    break;
             }
         }
         break;
@@ -220,7 +211,7 @@ void DebugCameraComponent::moveCamera(Key const& key)
                     camera->Aspect.modify() -= Speed();
                     break;
                 default:
-                break;
+                    break;
             }
         }
         break;
@@ -257,42 +248,11 @@ void DebugCameraComponent::moveCamera(Key const& key)
                     camera->Position.modify().moveY(Speed());
                     break;
                 default:
-                break;
+                    break;
             }
         }
         break;
     }
-}
-
-void DebugCameraComponent::logCameraData()
-{
-    auto&& camera{m_components->m_camera_component};
-
-    DisplayLog::debug(
-        StaticTypeName,
-        ": Camera view values:\nMode: ", (int)(m_p->m_cameraMoveType),
-        "\nPosition: {", camera->Position().x, ",", camera->Position().y, ",",
-        camera->Position().z, "}\nCenter: {", camera->Center().x, ",",
-        camera->Center().y, ",", camera->Center().z, "}\nUp: {", camera->Up().x,
-        ",", camera->Up().y, ",", camera->Up().z, "}");
-
-    DisplayLog::debug(
-        StaticTypeName, ": Perspective mode: ",
-        camera->cameraMode() == CameraComponent::CameraMode::Ortho
-            ? "Ortho"
-            : (camera->cameraMode() == CameraComponent::CameraMode::Frustum
-                   ? "Frustum"
-                   : "Perspective"));
-
-    DisplayLog::debug(
-        StaticTypeName,
-        ": Camera frustum values:\n: Left Right Bottom Top Near Far\n",
-        camera->Left(), ",", camera->Right(), ",", camera->Bottom(), ",",
-        camera->Top(), ",", camera->Near(), ",", camera->Far());
-
-    DisplayLog::debug(StaticTypeName,
-                      ": Camera perspectve values:\n: FovY Aspect\n",
-                      camera->FovY(), ",", camera->Aspect());
 }
 
 }  // namespace haf::scene

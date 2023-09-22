@@ -15,8 +15,7 @@ namespace hl
 {
 
 struct MainMeshController::ComponentsRequired
-{
-};
+{};
 
 struct MainMeshController::PrivateComponentData
 {};
@@ -33,29 +32,32 @@ void MainMeshController::onAttached()
     addUpdater({this, &MainMeshController::update});
     auto transform{
         attachedNode()
-            ->createSceneNodeWithComponent<scene::TransformationComponent>(
+            ->sceneNodesGroup()
+            .createSceneNodeWithComponent<scene::TransformationComponent>(
                 "Transformation_0")};
     auto material_{
         transform->attachedNode()
-            ->createSceneNodeWithComponent<render::MaterialDataComponent>(
+            ->sceneNodesGroup()
+            .createSceneNodeWithComponent<render::MaterialDataComponent>(
                 "Material_0")};
     auto mesh{material_->attachedNode()
-            ->createSceneNodeWithComponent<render::MeshRenderComponent>(
-                "Mesh_0")};
+                  ->sceneNodesGroup()
+                  .createSceneNodeWithComponent<render::MeshRenderComponent>(
+                      "Mesh_0")};
 }
 
 bool MainMeshController::addRequirements(
     component::ComponentRequirements& /*component_requirements*/)
 {
     bool isOk{true};
-//    isOk &= component_requirements.getOrCreateComponent(
-//        m_components->m_mesh_component);
+    //    isOk &= component_requirements.getOrCreateComponent(
+    //        m_components->m_mesh_component);
     return isOk;
 }
 
 void MainMeshController::update()
 {
-    int a=0;
+    int a = 0;
     (void)(a);
     /*
         auto p{getComponent<MeshComponentTest>()

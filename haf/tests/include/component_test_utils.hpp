@@ -53,8 +53,8 @@ template <typename T>
 void autoRegisterComponentRequirements(scene::SceneManager& /*scene_manager*/,
                                        T& /*element*/)
 {
-//    autoRegisterComponentRequirements(scene_manager,
-//                                      static_cast<T::BaseClass&>(element));
+    //    autoRegisterComponentRequirements(scene_manager,
+    //                                      static_cast<T::BaseClass&>(element));
 }
 }  // namespace detail
 
@@ -77,7 +77,7 @@ CreateComponentForTestResult<T> createComponentForTest()
     T a{};
     detail::autoRegisterComponentRequirements(scene_manager, a);
 
-    auto component{root_scene_node->attachComponent<T>()};
+    auto component{root_scene_node->componentContainer().attachComponent<T>()};
     CHECK(component != nullptr);
 
     return {{core::move(t_system)}, core::move(component)};

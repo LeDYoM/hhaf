@@ -180,8 +180,8 @@ private:
         }
 
     private:
-        T* const obj;
-        const HandlerFunctionPtr function_;
+        T* obj;
+        HandlerFunctionPtr function_;
     };
 
     template <class T>
@@ -215,8 +215,8 @@ private:
         }
 
     private:
-        T const* const obj;
-        const HandlerFunctionPtr function_;
+        T const* obj;
+        HandlerFunctionPtr function_;
     };
 
     sptr<ICallable> callable_;

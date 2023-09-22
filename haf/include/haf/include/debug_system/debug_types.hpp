@@ -6,13 +6,7 @@ HAF_PRAGMA_ONCE
 
 namespace haf::debug
 {
-using DebugVariableHandle = htps::s64;
-
-enum class DebugVariablesAction : core::u32
-{
-    Set       = 0U,
-    Add       = 1U
-};
+using DebugVariableHandle = core::s64;
 
 }  // namespace haf::debug
 
@@ -20,18 +14,14 @@ enum class DebugVariablesAction : core::u32
 #define HAF_DEBUG_VARIABLE_NAME(v_id) debug_variable_id##v_id
 #define HAF_DECLARE_DEBUG_VARIABLE(v_id) \
     haf::debug::DebugVariableHandle HAF_DEBUG_VARIABLE_NAME(v_id){-1};
-#define FROM_COMPONENT_GET_DEBUG_VARIABLE(v_id, value) \
+#define FROM_COMPONENT_GET_DEBUG_VARIABLE(v_id) \
     attachedNode()->subSystem<debug::IDebugVariables>()->getVariable( \
         HAF_DEBUG_VARIABLE_NAME(v_id), #v_id);
 
 #define FROM_COMPONENT_SET_DEBUG_VARIABLE_VALUE(v_id, value) \
-    FROM_COMPONENT_GET_DEBUG_VARIABLE(v_id, value) \
+    FROM_COMPONENT_GET_DEBUG_VARIABLE(v_id) \
     attachedNode()->subSystem<debug::IDebugVariables>()->setVariableValue( \
         HAF_DEBUG_VARIABLE_NAME(v_id), value);
-#define FROM_COMPONENT_ADD_DEBUG_VARIABLE_VALUE(v_id, value) \
-    FROM_COMPONENT_GET_DEBUG_VARIABLE(v_id, value) \
-    attachedNode()->subSystem<debug::IDebugVariables>()->setVariableValue( \
-        HAF_DEBUG_VARIABLE_NAME(v_id), value DebugVariablesAction::Add);
 #else
 #define HAF_DECLARE_DEBUG_VARIABLE(v_id)
 #define FROM_COMPONENT_GET_DEBUG_VARIABLE(v_id, value) \

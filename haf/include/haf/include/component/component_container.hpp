@@ -12,6 +12,7 @@ HAF_PRAGMA_ONCE
 namespace haf::scene
 {
 class SceneNode;
+enum class SceneUpdateTime : core::u32;
 }
 
 namespace haf::component
@@ -48,9 +49,9 @@ public:
      * @return Pointer to the component or nullptr
      */
     template <typename T>
-    htps::sptr<T> componentOfType() const
+    htps::sptr<T> getExistingComponent() const
     {
-        auto cot{componentOfType(T::StaticTypeName)};
+        auto cot{getExistingComponent(T::StaticTypeName)};
         return cot ? core::dynamic_pointer_cast<T>(cot) : nullptr;
     }
 
@@ -62,16 +63,18 @@ public:
      * if the component does not exist.
      */
     template <typename T>
-    void componentOfType(htps::sptr<T>& element) const
+    void getExistingComponent(htps::sptr<T>& element) const
     {
-        element = componentOfType<T>();
+        element = getExistingComponent<T>();
     }
 
-    core::sptr<Component> componentOfType(core::str_view typeName) const;
+    core::sptr<Component> getExistingComponent(core::str_view typeName) const;
 
     /**
      * @brief Update componentents of this container
+     * @param sceneUpdateTime Update time to update
      */
+    void updateComponents(scene::SceneUpdateTime const sceneUpdateTime);
     void updateComponents();
 
     /**
@@ -79,7 +82,7 @@ public:
      */
     void clearComponents() noexcept;
 
-    core::size_type components() const noexcept;
+    core::size_type size() const noexcept;
     core::str_view componentNameAt(core::size_type const index) const;
 
     core::sptr<Component> getOrCreateComponent(core::str_view typeName);
@@ -92,6 +95,16 @@ public:
             ? core::dynamic_pointer_cast<T>(source_component)
             : nullptr;
     }
+
+    core::vector<core::sptr<Component>> const& components() const;
+
+    core::vector<core::sptr<Component>>::iterator begin();
+    core::vector<core::sptr<Component>>::const_iterator begin() const;
+    core::vector<core::sptr<Component>>::const_iterator cbegin() const;
+
+    core::vector<core::sptr<Component>>::iterator end();
+    core::vector<core::sptr<Component>>::const_iterator end() const;
+    core::vector<core::sptr<Component>>::const_iterator cend() const;
 
 private:
     /**
@@ -112,7 +125,7 @@ private:
 
     core::sptr<Component> createComponent(core::str_view typeName);
     bool applyRequirements(Component& _thisComponent);
-    bool addComponent(htps::sptr<Component> nc);
+    bool addComponent(core::sptr<Component> nc);
 
     struct ComponentContainerPrivate;
     htps::PImplPointer<ComponentContainerPrivate> p_;

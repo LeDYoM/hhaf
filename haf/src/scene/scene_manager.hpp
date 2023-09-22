@@ -14,6 +14,8 @@ HAF_PRAGMA_ONCE
 #include <haf/include/component/component_factory.hpp>
 #include <hlog/include/hlog.hpp>
 #include <haf/include/scene/mesh_creator.hpp>
+#include "scene_walker.hpp"
+#include <haf/include/input/keyboard_input_manager.hpp>
 
 namespace haf::scene
 {
@@ -76,11 +78,17 @@ public:
     MeshCreator& meshCreator() noexcept;
     MeshCreator const& meshCreator() const noexcept;
 
+    evt::emitter<const input::Key&>& KeyPressed();
+    evt::emitter<const input::Key&>& KeyReleased();
+
 private:
     SceneRenderContextForSystem m_scene_render_context_for_system;
+    input::KeyboardInputManager m_keyboard_input_manager;
     component::ComponentFactory m_component_factory;
     MeshCreator m_mesh_creator;
     core::uptr<SceneNode> m_rootSceneNode;
+    SceneWalker m_scene_walker;
+
 };
 }  // namespace haf::scene
 

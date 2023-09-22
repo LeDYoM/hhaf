@@ -4,6 +4,7 @@
 #include <haf/include/render/mesh_render_component.hpp>
 #include <haf/include/scene_components/scene_component.hpp>
 #include <haf/include/scene/scene_node.hpp>
+#include <haf/include/scene_components/camera/camera.hpp>
 
 #include "main_mesh_controller.hpp"
 
@@ -22,8 +23,7 @@ struct MainScene::ComponentsRequired
 };
 
 struct MainScene::PrivateComponentData
-{
-};
+{};
 
 MainScene::MainScene() :
     m_components{make_pimplp<ComponentsRequired>()},
@@ -43,8 +43,18 @@ bool MainScene::addRequirements(
 
 void MainScene::onAttached()
 {
-    attachedNode()->createSceneNodeWithComponent<MainMeshController>(
-        "MainMeshController");
+    auto node{attachedNode()->sceneNodesGroup().createSceneNode("node")};
+    CameraBuilder cbuilder;
+    cbuilder.addDebugMovableCamera(*node);
+/*
+    attachedNode()
+        ->sceneNodesGroup()
+        .createSceneNodeWithComponent<DebugCameraComponent>(
+            "DebugCameraComponent");
+*/
+    attachedNode()
+        ->sceneNodesGroup()
+        .createSceneNodeWithComponent<MainMeshController>("MainMeshController");
 }
 
 }  // namespace hl

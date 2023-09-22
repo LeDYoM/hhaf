@@ -217,7 +217,7 @@ public:
     }
 
     template <typename F>
-    constexpr void for_each_backwards(F f)
+    constexpr void for_each_backwards(F f) const
     {
         if (!empty())
         {

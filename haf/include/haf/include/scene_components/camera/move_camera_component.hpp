@@ -1,26 +1,23 @@
 HAF_PRAGMA_ONCE
-#ifndef HAF_SCENE_DEBUG_CAMERA_COMPONENT_INCLUDE_HPP
-#define HAF_SCENE_DEBUG_CAMERA_COMPONENT_INCLUDE_HPP
+#ifndef HAF_SCENE_MOVE_CAMERA_COMPONENT_INCLUDE_HPP
+#define HAF_SCENE_MOVE_CAMERA_COMPONENT_INCLUDE_HPP
 
 #include <haf/include/haf_export.hpp>
 #include <haf/include/core/types.hpp>
 #include <haf/include/properties/property_state.hpp>
-#include <haf/include/events/receiver.hpp>
 #include <haf/include/input/key.hpp>
-
 #include <haf/include/component/component_declaration.hpp>
 
 namespace haf::scene
 {
-class HAF_API DebugCameraComponent final
-    : public component::ComponentBootStrap<DebugCameraComponent>
+class HAF_API MoveCameraComponent final
+    : public component::ComponentBootStrap<MoveCameraComponent>
 {
 public:
-    static constexpr const core::str_view StaticTypeName{
-        "DebugCameraComponent"};
+    static constexpr const core::str_view StaticTypeName{"MoveCameraComponent"};
 
-    DebugCameraComponent();
-    ~DebugCameraComponent() override;
+    MoveCameraComponent();
+    ~MoveCameraComponent() override;
 
     prop::PropertyState<core::f32> Speed;
 
@@ -33,7 +30,6 @@ private:
     void onAttached() override;
     bool addRequirements(component::ComponentRequirements&) override;
 
-    void logCameraData();
     void moveCamera(input::Key const& key);
 };
 }  // namespace haf::scene

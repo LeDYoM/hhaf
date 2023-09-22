@@ -14,11 +14,11 @@ str showComponentList(rptr<scene::SceneNode> node)
     data += "Node: ";
     data += node->name() + "\n\t";
 
-    auto const numComponents{node->components()};
+    auto const numComponents{node->componentContainer().size()};
 
     for (size_type i{0U}; i < numComponents; ++i)
     {
-        data += node->componentNameAt(i);
+        data += node->componentContainer().componentNameAt(i);
         data += ", ";
     }
     return data;

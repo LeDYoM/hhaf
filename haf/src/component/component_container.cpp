@@ -4,6 +4,7 @@
 #include <htypes/include/types.hpp>
 
 #include <haf/include/scene/scene_node.hpp>
+#include <haf/include/scene/scene_update_time.hpp>
 
 #include "scene/scene_manager.hpp"
 #include "system/get_system.hpp"
@@ -33,11 +34,12 @@ struct ComponentContainer::ComponentContainerPrivate
         m_scene_manager{sys::getSystem<scene::SceneManager>(attachable)}
     {}
 
-    void updateComponentsBackwards()
+    void updateComponents(scene::SceneUpdateTime const sceneUpdateTime)
     {
-        components_.for_each_backwards([](sptr<Component> const& component) {
-            component->updateComponent();
-        });
+        components_.for_each_backwards(
+            [sceneUpdateTime](sptr<Component> const& component) {
+                component->updateComponent(sceneUpdateTime);
+            });
     }
 
     void clearComponents() { components_.clear(); }
@@ -61,9 +63,23 @@ ComponentContainer::~ComponentContainer()
     p_->clearComponentsBackwards();
 }
 
+void ComponentContainer::updateComponents(
+    scene::SceneUpdateTime const sceneUpdateTime)
+{
+    p_->updateComponents(sceneUpdateTime);
+}
+
 void ComponentContainer::updateComponents()
 {
-    p_->updateComponentsBackwards();
+    using scene::num_begin;
+    using scene::num_end;
+    using scene::SceneUpdateTime;
+    using scene::toEnum;
+    for (auto i{num_begin<SceneUpdateTime>()}; i < num_end<SceneUpdateTime>();
+         ++i)
+    {
+        p_->updateComponents(toEnum<SceneUpdateTime>(i));
+    }
 }
 
 void ComponentContainer::clearComponents() noexcept
@@ -73,7 +89,7 @@ void ComponentContainer::clearComponents() noexcept
 
 sptr<Component> ComponentContainer::getOrCreateComponent(str_view typeName)
 {
-    sptr<Component> result{componentOfType(typeName)};
+    sptr<Component> result{getExistingComponent(typeName)};
     if (!result)
     {
         result = createComponent(typeName);
@@ -95,6 +111,7 @@ sptr<Component> ComponentContainer::getOrCreateComponent(str_view typeName)
 sptr<Component> ComponentContainer::attachComponent(str_view typeName)
 {
     auto component{getOrCreateComponent(typeName)};
+
     DisplayLog::debug(StaticTypeName, [this]() {
         return debug::showComponentList(p_->attachable_);
     });
@@ -120,12 +137,12 @@ bool ComponentContainer::applyRequirements(Component& _thisComponent)
     return _thisComponent.addRequirements(component_requierements);
 }
 
-sptr<Component> ComponentContainer::componentOfType(str_view typeName) const
+sptr<Component> ComponentContainer::getExistingComponent(str_view typeName) const
 {
     return p_->getExistingComponent(typeName);
 }
 
-size_type ComponentContainer::components() const noexcept
+size_type ComponentContainer::size() const noexcept
 {
     return p_->components_.size();
 }
@@ -135,6 +152,42 @@ str_view ComponentContainer::componentNameAt(size_type const index) const
     return (index < p_->components_.size())
         ? p_->components_[index]->staticTypeName()
         : "";
+}
+
+vector<sptr<Component>> const& ComponentContainer::components() const
+{
+    return p_->components_;
+}
+
+vector<sptr<Component>>::iterator ComponentContainer::begin()
+{
+    return p_->components_.begin();
+}
+
+vector<sptr<Component>>::const_iterator ComponentContainer::begin() const
+{
+    return p_->components_.begin();
+}
+
+core::vector<core::sptr<Component>>::const_iterator ComponentContainer::cbegin()
+    const
+{
+    return p_->components_.cbegin();
+}
+
+vector<sptr<Component>>::iterator ComponentContainer::end()
+{
+    return p_->components_.end();
+}
+
+vector<sptr<Component>>::const_iterator ComponentContainer::end() const
+{
+    return p_->components_.end();
+}
+
+vector<sptr<Component>>::const_iterator ComponentContainer::cend() const
+{
+    return p_->components_.cend();
 }
 
 }  // namespace haf::component

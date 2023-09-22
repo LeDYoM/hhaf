@@ -8,7 +8,7 @@ HAF_PRAGMA_ONCE
 
 namespace haf::component
 {
-    class Component;
+class Component;
 }
 namespace haf::scene
 {
@@ -17,9 +17,10 @@ class SceneNode;
 class HAF_API SceneNodesGroup
 {
 public:
-
     using SceneNodesVector = core::vector<core::sptr<SceneNode>>;
     using size_type        = SceneNodesVector::size_type;
+
+    SceneNodesGroup(core::rptr<SceneNode> sceneNode);
 
     /**
      * @brief Emitter that will be called when a new node is added
@@ -115,24 +116,29 @@ public:
      * @note If the second member of the return structure is false, the
      * value of the first member says nothing.
      */
-    core::pair<size_type, bool> getIndex(core::sptr<SceneNode> const& sceneNode);
+    core::pair<size_type, bool> getIndex(
+        core::sptr<SceneNode> const& sceneNode);
 
-    /**
-     * @brief Execute an action for each scene node in the contained scene
-     * nodes.
-     *
-     * @param f Invokable function with a constant scene node pointer as
-     * parameter.
-     */
-    void forEach(core::function<void(core::sptr<SceneNode> const&)> f) const;
+    SceneNodesVector const& sceneNodes() const;
 
-    void updateNodes();
+    SceneNodesVector::iterator begin() { return m_scene_nodes.begin(); }
+    SceneNodesVector::const_iterator begin() const
+    {
+        return m_scene_nodes.begin();
+    }
+    SceneNodesVector::const_iterator cbegin() const
+    {
+        return m_scene_nodes.cbegin();
+    }
 
-protected:
-    SceneNodesGroup(core::rptr<SceneNode> sceneNode);
+    SceneNodesVector::iterator end() { return m_scene_nodes.end(); }
+    SceneNodesVector::const_iterator end() const { return m_scene_nodes.end(); }
+    SceneNodesVector::const_iterator cend() const
+    {
+        return m_scene_nodes.cend();
+    }
 
 private:
-
     /**
      * @brief Add an already created SceneNode to the group
      * @param node Node to add

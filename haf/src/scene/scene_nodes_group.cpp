@@ -26,7 +26,8 @@ sptr<Component> SceneNodesGroup::createSceneNodeWithComponent(
     LogAsserter::log_assert(sceneNode != nullptr, "Invalid nullptr parameter");
     if (sceneNode != nullptr)
     {
-        auto component{sceneNode->attachComponent(core::move(componentName))};
+        auto component{sceneNode->componentContainer().attachComponent(
+            core::move(componentName))};
 
         return component;
     }
@@ -87,13 +88,9 @@ SceneNodeSPtr SceneNodesGroup::getByIndex(size_type const index)
     return nullptr;
 }
 
-void SceneNodesGroup::forEach(
-    core::function<void(SceneNodeSPtr const&)> f) const
+SceneNodesGroup::SceneNodesVector const& SceneNodesGroup::sceneNodes() const
 {
-    for (SceneNodeSPtr const& node : m_scene_nodes)
-    {
-        f(node);
-    }
+    return m_scene_nodes;
 }
 
 size_type SceneNodesGroup::size() const noexcept
@@ -118,14 +115,6 @@ pair<size_type, bool> SceneNodesGroup::getIndex(SceneNodeSPtr const& sceneNode)
     auto const iterator{m_scene_nodes.cfind(sceneNode)};
     return {static_cast<size_type>(iterator - m_scene_nodes.cbegin()),
             iterator != m_scene_nodes.cend()};
-}
-
-void SceneNodesGroup::updateNodes()
-{
-    for (const auto& node : m_scene_nodes)
-    {
-        node->update();
-    }
 }
 
 }  // namespace haf::scene

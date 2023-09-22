@@ -4,6 +4,7 @@ HAF_PRAGMA_ONCE
 
 #include <haf/include/core/types.hpp>
 #include <haf/include/properties/iproperty_state.hpp>
+#include <haf/include/scene/scene_update_time.hpp>
 
 namespace haf::component
 {
@@ -14,7 +15,7 @@ protected:
     using UpdateProperty = core::rptr<prop::IPropertyState>;
     using UpdateAction   = core::function<void()>;
 
-    void update();
+    void update(scene::SceneUpdateTime const sceneUpdateTime);
 
     /**
      * @brief Add an updater of a property
@@ -35,8 +36,15 @@ protected:
 
     void addUpdater(UpdateAction updateAction);
 
+    void setSceneUpdateTime(
+        scene::SceneUpdateTime const sceneUpdateTime) noexcept;
+
 private:
+    void update();
+
     core::vector<core::pair<UpdateFunction, UpdateAction>> m_propertiesToUpdate;
+    scene::SceneUpdateTime m_sceneUpdateTime{
+        scene::SceneUpdateTime::Controller};
 };
 
 }  // namespace haf::component

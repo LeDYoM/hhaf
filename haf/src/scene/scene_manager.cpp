@@ -13,7 +13,8 @@ namespace haf::scene
 {
 SceneManager::SceneManager(sys::SystemProvider& system_provider) :
     SystemBase{system_provider},
-    m_scene_render_context_for_system{this->isystemProvider()}
+    m_scene_render_context_for_system{this->isystemProvider()},
+    m_keyboard_input_manager{this->isystemProvider()}
 {}
 
 SceneManager::~SceneManager() = default;
@@ -30,7 +31,8 @@ void SceneManager::init()
 void SceneManager::update()
 {
     m_scene_render_context_for_system.beginFrame();
-    m_rootSceneNode->update();
+    m_keyboard_input_manager.update();
+    m_scene_walker.startWalk(*m_rootSceneNode);
     m_scene_render_context_for_system.endFrame();
 }
 
@@ -47,7 +49,8 @@ bool SceneManager::registerComponent(
 
 bool SceneManager::instanciateRootComponent(str_view componentType)
 {
-    return m_rootSceneNode->attachComponent(componentType) != nullptr;
+    return m_rootSceneNode->componentContainer().attachComponent(
+               componentType) != nullptr;
 }
 
 sptr<component::Component> SceneManager::instantiateComponent(str_view name)
@@ -104,6 +107,16 @@ MeshCreator& SceneManager::meshCreator() noexcept
 MeshCreator const& SceneManager::meshCreator() const noexcept
 {
     return m_mesh_creator;
+}
+
+evt::emitter<const input::Key&>& SceneManager::KeyPressed()
+{
+    return m_keyboard_input_manager.KeyPressed;
+}
+
+evt::emitter<const input::Key&>& SceneManager::KeyReleased()
+{
+    return m_keyboard_input_manager.KeyReleased;
 }
 
 }  // namespace haf::scene
