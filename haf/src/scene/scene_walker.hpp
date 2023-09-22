@@ -15,6 +15,7 @@ namespace haf::scene
 class SceneWalker final
 {
 public:
+    void startWalk(SceneNode& rootNode);
     void walk(SceneNode& node);
     void walk(SceneNode& node, SceneUpdateTime const sceneUpdateTime);
 };
