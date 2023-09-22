@@ -18,13 +18,13 @@ SceneComponent::SceneComponent() :
 SceneComponent::~SceneComponent() = default;
 
 bool SceneComponent::addRequirements(
-    component::ComponentRequirements& component_requirements)
+    component::ComponentRequirements&)
 {
     bool isOk{true};
 //    isOk &= component_requirements.getOrCreateComponent(
 //        m_components->m_transformation_component);
-    isOk &= component_requirements.getOrCreateComponent(
-        m_components->m_debug_camera_component);
+//    isOk &= component_requirements.getOrCreateComponent(
+//        m_components->m_debug_camera_component);
     return isOk;
 }
 
