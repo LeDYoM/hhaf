@@ -49,9 +49,9 @@ public:
      * @return Pointer to the component or nullptr
      */
     template <typename T>
-    htps::sptr<T> componentOfType() const
+    htps::sptr<T> getExistingComponent() const
     {
-        auto cot{componentOfType(T::StaticTypeName)};
+        auto cot{getExistingComponent(T::StaticTypeName)};
         return cot ? core::dynamic_pointer_cast<T>(cot) : nullptr;
     }
 
@@ -63,12 +63,12 @@ public:
      * if the component does not exist.
      */
     template <typename T>
-    void componentOfType(htps::sptr<T>& element) const
+    void getExistingComponent(htps::sptr<T>& element) const
     {
-        element = componentOfType<T>();
+        element = getExistingComponent<T>();
     }
 
-    core::sptr<Component> componentOfType(core::str_view typeName) const;
+    core::sptr<Component> getExistingComponent(core::str_view typeName) const;
 
     /**
      * @brief Update componentents of this container

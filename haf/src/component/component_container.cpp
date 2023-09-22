@@ -89,7 +89,7 @@ void ComponentContainer::clearComponents() noexcept
 
 sptr<Component> ComponentContainer::getOrCreateComponent(str_view typeName)
 {
-    sptr<Component> result{componentOfType(typeName)};
+    sptr<Component> result{getExistingComponent(typeName)};
     if (!result)
     {
         result = createComponent(typeName);
@@ -137,7 +137,7 @@ bool ComponentContainer::applyRequirements(Component& _thisComponent)
     return _thisComponent.addRequirements(component_requierements);
 }
 
-sptr<Component> ComponentContainer::componentOfType(str_view typeName) const
+sptr<Component> ComponentContainer::getExistingComponent(str_view typeName) const
 {
     return p_->getExistingComponent(typeName);
 }
