@@ -6,12 +6,12 @@ using namespace htps;
 
 namespace haf::backend::glfwb
 {
-GLFWRenderWindow::GLFWRenderWindow() //: m_render_window{muptr<sf::Window>()}
+GLFWRenderWindow::GLFWRenderWindow()  //: m_render_window{muptr<sf::Window>()}
 {}
 
 GLFWRenderWindow::~GLFWRenderWindow()
 {
-//    m_render_window->close();
+    //    m_render_window->close();
 }
 
 class ParamExtractor
@@ -91,6 +91,7 @@ bool GLFWRenderWindow::createWindow(u32 const width,
 
 bool GLFWRenderWindow::processEvents()
 {
+    /*
     input_driver_.clearInternalInputBuffer();
     sf::Event event;
     while (m_render_window->pollEvent(event))
@@ -105,38 +106,43 @@ bool GLFWRenderWindow::processEvents()
             input_driver_.keyEvent(event);
         }
     }
+    */
     return false;
 }
 
 void GLFWRenderWindow::display()
 {
-    m_render_window->display();
+    //    m_render_window->display();
 }
 
-void GLFWRenderWindow::setWindowTitle(str const& newTitle)
+void GLFWRenderWindow::setWindowTitle(str const& /*newTitle*/)
 {
-    m_render_window->setTitle(to_sf_type(newTitle));
+    //    m_render_window->setTitle(to_sf_type(newTitle));
 }
 
 void GLFWRenderWindow::closeWindow()
 {
-    m_render_window->close();
+    //    m_render_window->close();
 }
 
 rptr<IInputDriver> GLFWRenderWindow::inputDriver()
 {
-    return &input_driver_;
+    //    return &input_driver_;
+    return nullptr;
 }
 
 str GLFWRenderWindow::info() const
 {
-    return make_str("name:SFMLWindow;provider:SFML;provider_version:",
-                    SFML_VERSION_MAJOR, ".", SFML_VERSION_MINOR, ".",
-                    SFML_VERSION_PATCH, ";version:0;subversion:2:patch:4");
+    //    return make_str("name:SFMLWindow;provider:SFML;provider_version:",
+    //                    SFML_VERSION_MAJOR, ".", SFML_VERSION_MINOR, ".",
+    //                    SFML_VERSION_PATCH,
+    //                    ";version:0;subversion:2:patch:4");
+    return "";
 }
 
 str GLFWRenderWindow::settingsInfo() const
 {
+    /*
     sf::ContextSettings settings = m_render_window->getSettings();
 
     return make_str("Depth bits: ", settings.depthBits,
@@ -146,6 +152,8 @@ str GLFWRenderWindow::settingsInfo() const
                     ", sRGB capable: ", settings.sRgbCapable,
                     ", version: ", settings.majorVersion, ".",
                     settings.minorVersion);
+                    */
+    return "";
 }
 
-}  // namespace haf::backend::sfmlb
+}  // namespace haf::backend::glfwb
