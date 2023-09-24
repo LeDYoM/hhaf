@@ -9,50 +9,12 @@
 #include "scene/scene_manager.hpp"
 #include "system/get_system.hpp"
 #include "debug_system/debug_displayers.hpp"
+#include "component/component_container_private.hpp"
 
 using namespace haf::core;
 
 namespace haf::component
 {
-struct ComponentContainer::ComponentContainerPrivate
-{
-    sptr<Component> getExistingComponent(str_view typeName) const
-    {
-        auto iterator{
-            components_.find_if([&typeName](sptr<Component> const& component) {
-                return component->staticTypeName() == typeName;
-            })};
-        return (iterator == components_.cend()) ? nullptr : (*iterator);
-    }
-
-    rptr<scene::SceneNode> const attachable_;
-    scene::SceneManager& m_scene_manager;
-    vector<sptr<Component>> components_;
-
-    ComponentContainerPrivate(rptr<scene::SceneNode> attachable) noexcept :
-        attachable_{attachable},
-        m_scene_manager{sys::getSystem<scene::SceneManager>(attachable)}
-    {}
-
-    void updateComponents(scene::SceneUpdateTime const sceneUpdateTime)
-    {
-        components_.for_each_backwards(
-            [sceneUpdateTime](sptr<Component> const& component) {
-                component->updateComponent(sceneUpdateTime);
-            });
-    }
-
-    void clearComponents() { components_.clear(); }
-
-    void clearComponentsBackwards()
-    {
-        while (!components_.empty())
-        {
-            components_.pop_back();
-        }
-    }
-};
-
 ComponentContainer::ComponentContainer(rptr<scene::SceneNode> attachable) :
     p_{make_pimplp<ComponentContainerPrivate>(attachable)}
 {}
@@ -60,7 +22,7 @@ ComponentContainer::ComponentContainer(rptr<scene::SceneNode> attachable) :
 ComponentContainer::~ComponentContainer()
 {
     DisplayLog::debug(StaticTypeName, ": Destroying");
-    p_->clearComponentsBackwards();
+    clearComponents();
 }
 
 void ComponentContainer::updateComponents(
@@ -84,7 +46,7 @@ void ComponentContainer::updateComponents()
 
 void ComponentContainer::clearComponents() noexcept
 {
-    p_->clearComponentsBackwards();
+    p_->clearComponents();
 }
 
 sptr<Component> ComponentContainer::getOrCreateComponent(str_view typeName)
