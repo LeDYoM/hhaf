@@ -4,6 +4,8 @@
 #include <haf/include/render/mesh_render_component.hpp>
 #include <haf/include/render/material_data_component.hpp>
 #include <haf/include/scene/scene_node.hpp>
+#include <haf/include/scene_components/transformation_component.hpp>
+#include <haf/include/scene_components/camera/debug_camera_component.hpp>
 
 using namespace haf;
 using namespace haf::core;

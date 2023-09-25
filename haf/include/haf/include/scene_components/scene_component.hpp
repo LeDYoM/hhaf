@@ -5,8 +5,6 @@ HAF_PRAGMA_ONCE
 #include <haf/include/haf_export.hpp>
 #include <haf/include/core/types.hpp>
 #include <haf/include/component/component_declaration.hpp>
-#include <haf/include/scene_components/transformation_component.hpp>
-#include <haf/include/scene_components/camera/debug_camera_component.hpp>
 
 namespace haf::scene
 {
