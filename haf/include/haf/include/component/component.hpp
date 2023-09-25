@@ -48,12 +48,12 @@ public:
 protected:
     Component();
 
+private:
     virtual scene::SceneUpdateTime defaultSceneUpdateTime() const = 0;
 
     void setSceneUpdateTime(
         scene::SceneUpdateTime const sceneUpdateTime) noexcept;
 
-private:
     /**
      * @brief Method called after the component is attached to a node.
      * Override it to perform initialization
