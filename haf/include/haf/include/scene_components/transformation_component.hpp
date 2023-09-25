@@ -26,7 +26,8 @@ namespace haf::scene
  * @see Transofrmation
  */
 class HAF_API TransformationComponent final
-    : public component::ComponentBootStrap<TransformationComponent>
+    : public component::ComponentBootStrap<TransformationComponent,
+                                           scene::SceneUpdateTime::Render>
 {
 public:
     static constexpr const core::str_view StaticTypeName{
