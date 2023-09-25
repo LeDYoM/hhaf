@@ -35,6 +35,11 @@ Component::pointer Component::attachedNode() noexcept
     return attachedNode_;
 }
 
+void Component::setDefaultSceneUpdateTime()
+{
+    setSceneUpdateTime(defaultSceneUpdateTime());
+}
+
 void Component::setSceneUpdateTime(scene::SceneUpdateTime const sceneUpdateTime) noexcept
 {
     ComponentUpdater::setSceneUpdateTime(sceneUpdateTime);

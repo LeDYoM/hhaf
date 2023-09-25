@@ -3,12 +3,14 @@ HAF_PRAGMA_ONCE
 #define HAF_COMPONENT_COMPONENT_BOOTSTRAP_INCLUDE_HPP
 
 #include <haf/include/core/types.hpp>
-#include <haf/include/properties/iproperty_state.hpp>
 #include <haf/include/component/component.hpp>
+#include <haf/include/scene/scene_update_time.hpp>
 
 namespace haf::component
 {
-template <typename T>
+template <typename T,
+          scene::SceneUpdateTime sceneUpdateTime =
+              scene::SceneUpdateTime::Controller>
 class ComponentBootStrap : public Component
 {
 public:
@@ -18,7 +20,12 @@ public:
     }
 
 protected:
-    using Component::Component;
+        using Component::Component;
+
+    scene::SceneUpdateTime defaultSceneUpdateTime() const override
+    {
+        return sceneUpdateTime;
+    }
 
 public:
     ~ComponentBootStrap() override{};

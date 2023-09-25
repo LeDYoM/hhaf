@@ -48,6 +48,8 @@ public:
 protected:
     Component();
 
+    virtual scene::SceneUpdateTime defaultSceneUpdateTime() const = 0;
+
     void setSceneUpdateTime(
         scene::SceneUpdateTime const sceneUpdateTime) noexcept;
 
@@ -58,6 +60,7 @@ private:
      */
     virtual void onAttached();
 
+    void setDefaultSceneUpdateTime();
     void setAttachedNode(pointer const attachedNode);
     virtual bool addRequirements(ComponentRequirements&);
 
