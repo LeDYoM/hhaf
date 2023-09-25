@@ -13,7 +13,7 @@ enum class SceneUpdateTime : core::u32
     EndFrame   = 2U,
     Render     = 3U,
     Begin      = Controller,
-    End        = Render + 1U
+    End        = Render + 1U,
 };
 
 template <typename T>
@@ -41,11 +41,17 @@ consteval core::u32 num_end() noexcept
 }
 
 template <typename T>
+consteval core::u32 size() noexcept
+{
+    return num_end<T>();
+}
+
+template <typename T>
 constexpr SceneUpdateTime toEnum(core::u32 const index) noexcept
 {
     return static_cast<T>(index);
 }
 
-}
+}  // namespace haf::scene
 
 #endif

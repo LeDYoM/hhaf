@@ -5,6 +5,7 @@ HAF_PRAGMA_ONCE
 #include <haf/include/core/types.hpp>
 #include <haf/include/properties/iproperty_state.hpp>
 #include <haf/include/scene/scene_update_time.hpp>
+#include <haf/include/debug_system/debug_types.hpp>
 
 namespace haf::component
 {
@@ -45,6 +46,9 @@ private:
     core::vector<core::pair<UpdateFunction, UpdateAction>> m_propertiesToUpdate;
     scene::SceneUpdateTime m_sceneUpdateTime{
         scene::SceneUpdateTime::Controller};
+
+    HAF_DEBUG_VARIABLES_CODE(
+        static uint32_t m_updateCount[scene::size<scene::SceneUpdateTime>()]);
 };
 
 }  // namespace haf::component

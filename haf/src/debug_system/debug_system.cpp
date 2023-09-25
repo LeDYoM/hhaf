@@ -27,7 +27,8 @@ void DebugSystem::logBuildStaticData()
 void DebugSystem::onStartPreUpdate()
 {
     m_debug_variables.startFrame(
-        getSystem<TimeSystem>(systemAccessPtr()).nowFrame());
+        getSystem<TimeSystem>(systemAccessPtr()).nowFrame(),
+        getSystem<TimeSystem>(systemAccessPtr()).currentFrame());
 }
 
 void DebugSystem::onFinishPostUpdate()

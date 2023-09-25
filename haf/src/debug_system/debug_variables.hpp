@@ -29,7 +29,8 @@ public:
 
     core::str state() const;
 
-    void startFrame(time::TimePoint const& now);
+    void startFrame(time::TimePoint const& now,
+                    core::u64 const frameNumber);
     void endFrame();
 
     core::size_type size() const noexcept;
