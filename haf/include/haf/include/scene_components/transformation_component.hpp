@@ -6,15 +6,10 @@ HAF_PRAGMA_ONCE
 #include <haf/include/core/types.hpp>
 #include <facil_math/include/math_types.hpp>
 #include <haf/include/properties/property_state.hpp>
-#include <haf/include/events/receiver.hpp>
+#include <haf/include/events/emitter.hpp>
 
 #include <facil_math/include/matrix4x4.hpp>
 #include <haf/include/component/component_declaration.hpp>
-
-namespace haf::render
-{
-class MeshRenderContext;
-}
 
 namespace haf::scene
 {
