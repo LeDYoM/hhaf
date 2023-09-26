@@ -16,7 +16,6 @@ struct TransformationComponent::ComponentsRequired
 struct TransformationComponent::PrivateComponentData
 {
     Matrix4x4 m_transform;
-    Matrix4x4 m_globalTransform;
     bool m_transformation_updated{true};
 
     rptr<TransformationComponent> parentTransformationComponent(
@@ -37,13 +36,6 @@ void TransformationComponent::onAttached()
 {
     addUpdater({this, &TransformationComponent::updateLocalTransformation},
                &Position, &Scale, &Rotation);
-
-    addUpdater(
-        {this, &TransformationComponent::pollParentGlobalTransformation});
-
-    addUpdater(
-        {this,
-         &TransformationComponent::updateMyGlobalTransformationIfNecessary});
 }
 
 void TransformationComponent::updateLocalTransformation() noexcept
@@ -56,35 +48,6 @@ void TransformationComponent::updateLocalTransformation() noexcept
     localMatrixChanged(m_p->m_transform);
 }
 
-void TransformationComponent::pollParentGlobalTransformation() noexcept
-{
-    if (auto const& parentTransformation{
-            m_p->parentTransformationComponent(attachedNode())};
-        parentTransformation != nullptr)
-    {
-        if (parentTransformation->transformationUpdated())
-        {
-            m_p->m_transformation_updated = true;
-        }
-    }
-}
-
-void TransformationComponent::updateMyGlobalTransformationIfNecessary() noexcept
-{
-    if (m_p->m_transformation_updated)
-    {
-        if (auto const& parentTransformation{
-                m_p->parentTransformationComponent(attachedNode())};
-            parentTransformation != nullptr)
-        {
-
-            m_p->m_globalTransform = m_p->m_globalTransform =
-                parentTransformation->getGlobalTransformation() *
-                m_p->m_transform;
-        }
-    }
-}
-
 bool TransformationComponent::transformationUpdated() const noexcept
 {
     return m_p->m_transformation_updated;
@@ -93,11 +56,6 @@ bool TransformationComponent::transformationUpdated() const noexcept
 Matrix4x4 const& TransformationComponent::matrix() const noexcept
 {
     return m_p->m_transform;
-}
-
-Matrix4x4 TransformationComponent::getGlobalTransformation()
-{
-    return m_p->m_globalTransform;
 }
 
 bool TransformationComponent::hasPendingMatrixUpdate() const noexcept

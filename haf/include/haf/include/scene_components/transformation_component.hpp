@@ -10,7 +10,6 @@ HAF_PRAGMA_ONCE
 
 #include <facil_math/include/matrix4x4.hpp>
 #include <haf/include/component/component_declaration.hpp>
-#include <haf/include/scene_components/global_transformation_component.hpp>
 
 namespace haf::render
 {
@@ -27,7 +26,7 @@ namespace haf::scene
  */
 class HAF_API TransformationComponent final
     : public component::ComponentBootStrap<TransformationComponent,
-                                           scene::SceneUpdateTime::Render>
+                                           scene::SceneUpdateTime::EndFrame>
 {
 public:
     static constexpr const core::str_view StaticTypeName{
@@ -61,8 +60,6 @@ public:
 
     evt::emitter<fmath::Matrix4x4 const&> localMatrixChanged;
 
-    fmath::Matrix4x4 getGlobalTransformation();
-
 private:
     struct ComponentsRequired;
     core::PImplPointer<ComponentsRequired> m_components;
@@ -71,8 +68,6 @@ private:
 
     bool transformationUpdated() const noexcept;
     void updateLocalTransformation() noexcept;
-    void pollParentGlobalTransformation() noexcept;
-    void updateMyGlobalTransformationIfNecessary() noexcept;
     void onAttached() override;
 };
 

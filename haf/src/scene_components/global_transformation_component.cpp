@@ -6,6 +6,7 @@
 #include <haf/include/debug_system/idebug_variables.hpp>
 #include <haf/include/scene/scene_node.hpp>
 #include <haf/include/component/component_finder.hpp>
+#include <haf/include/scene_components/global_transformation_component.hpp>
 
 #include "system/get_system.hpp"
 #include "debug_system/debug_system.hpp"
@@ -39,7 +40,7 @@ void GlobalTransformationComponent::onAttached()
             finder.findParentComponent<GlobalTransformationComponent>()};
         parentComponent != nullptr)
     {
-        m_p->m_receiver.connect(
+        m_p->m_receiver.shared_connect(
             parentComponent, parentComponent->m_globalTransformationChanged,
             make_function(
                 this,
@@ -53,6 +54,39 @@ void GlobalTransformationComponent::onAttached()
     addUpdater({this, &GlobalTransformationComponent::updateMatrix},
                &m_p->m_localTransformation, &m_p->m_parentGlobalTransformation);
     addUpdater({this, &GlobalTransformationComponent::setModelViewMatrix});
+}
+
+void GlobalTransformationComponent::pollParentGlobalTransformation() noexcept
+{
+    /*
+    if (auto const& parentTransformation{
+            m_p->parentTransformationComponent(attachedNode())};
+        parentTransformation != nullptr)
+    {
+        if (parentTransformation->transformationUpdated())
+        {
+            m_p->m_transformation_updated = true;
+        }
+    }
+    */
+}
+
+void GlobalTransformationComponent::updateMyGlobalTransformationIfNecessary() noexcept
+{
+    /*
+    if (m_p->m_transformation_updated)
+    {
+        if (auto const& parentTransformation{
+                m_p->parentTransformationComponent(attachedNode())};
+            parentTransformation != nullptr)
+        {
+
+            m_p->m_globalTransform = m_p->m_globalTransform =
+                parentTransformation->getGlobalTransformation() *
+                m_p->m_transform;
+        }
+    }
+    */
 }
 
 void GlobalTransformationComponent::localTransformationChanged(
