@@ -4,6 +4,7 @@
 #include <hlog/include/hlog.hpp>
 #include <haf/include/scene/scene_node.hpp>
 #include <facil_math/include/geometry_math.hpp>
+#include <haf/include/scene_components/global_transformation_component.hpp>
 
 using namespace fmath;
 using namespace haf::core;
@@ -11,7 +12,9 @@ using namespace haf::core;
 namespace haf::scene
 {
 struct TransformationComponent::ComponentsRequired
-{};
+{
+    sptr<GlobalTransformationComponent> m_globalTransformationComponent;
+};
 
 struct TransformationComponent::PrivateComponentData
 {
@@ -31,6 +34,15 @@ TransformationComponent::TransformationComponent() :
 {}
 
 TransformationComponent::~TransformationComponent() = default;
+
+bool TransformationComponent::addRequirements(
+    component::ComponentRequirements& component_requirements)
+{
+    bool isOk{true};
+    isOk &= component_requirements.getOrCreateComponent(
+        m_components->m_globalTransformationComponent);
+    return isOk;
+}
 
 void TransformationComponent::onAttached()
 {

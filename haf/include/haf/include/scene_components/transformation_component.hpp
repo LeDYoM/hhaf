@@ -61,6 +61,9 @@ private:
     struct PrivateComponentData;
     core::PImplPointer<PrivateComponentData> m_p;
 
+    bool addRequirements(
+        component::ComponentRequirements& component_requirements) override;
+
     bool transformationUpdated() const noexcept;
     void updateLocalTransformation() noexcept;
     void onAttached() override;
