@@ -106,7 +106,7 @@ void GlobalTransformationComponent::globalTransformationChanged(
 void GlobalTransformationComponent::updateMatrix()
 {
     m_p->m_transform =
-        m_p->m_parentGlobalTransformation() * m_p->m_localTransformation();
+        m_p->m_parentGlobalTransformation() * m_p->m_localTransformation_copy();
 
     /*    if (auto meshRenderContext_{meshRenderContext()};
             !meshRenderContext_.empty())
@@ -127,7 +127,7 @@ void GlobalTransformationComponent::setModelViewMatrix()
 bool GlobalTransformationComponent::hasPendingMatrixUpdate() const noexcept
 {
     return prop::ps_hasChanged(m_p->m_parentGlobalTransformation,
-                               m_p->m_localTransformation);
+                               m_p->m_localTransformation_copy);
 }
 
 }  // namespace haf::scene
