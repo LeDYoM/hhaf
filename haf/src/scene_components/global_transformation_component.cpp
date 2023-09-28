@@ -23,7 +23,7 @@ struct GlobalTransformationComponent::PrivateComponentData
 {
     evt::ireceiver m_receiver;
     Matrix4x4 m_transform;
-    prop::PropertyState<Matrix4x4> m_localTransformation;
+    prop::PropertyState<Matrix4x4> m_localTransformation_copy;
     prop::PropertyState<Matrix4x4> m_parentGlobalTransformation;
 };
 
@@ -52,7 +52,7 @@ void GlobalTransformationComponent::onAttached()
     }
 
     addUpdater({this, &GlobalTransformationComponent::updateMatrix},
-               &m_p->m_localTransformation, &m_p->m_parentGlobalTransformation);
+               &m_p->m_localTransformation_copy, &m_p->m_parentGlobalTransformation);
     addUpdater({this, &GlobalTransformationComponent::setModelViewMatrix});
 }
 
@@ -92,7 +92,7 @@ void GlobalTransformationComponent::updateMyGlobalTransformationIfNecessary() no
 void GlobalTransformationComponent::localTransformationChanged(
     Matrix4x4 const& localTransform)
 {
-    m_p->m_localTransformation = localTransform;
+    m_p->m_localTransformation_copy = localTransform;
 }
 
 void GlobalTransformationComponent::globalTransformationChanged(

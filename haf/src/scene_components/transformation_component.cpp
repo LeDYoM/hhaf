@@ -48,6 +48,10 @@ void TransformationComponent::onAttached()
 {
     addUpdater({this, &TransformationComponent::updateLocalTransformation},
                &Position, &Scale, &Rotation);
+
+    localMatrixChanged.connect(make_function(
+        m_components->m_globalTransformationComponent.get(),
+        &GlobalTransformationComponent::localTransformationChanged));
 }
 
 void TransformationComponent::updateLocalTransformation() noexcept
