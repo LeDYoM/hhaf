@@ -52,7 +52,8 @@ void GlobalTransformationComponent::onAttached()
     }
 
     addUpdater({this, &GlobalTransformationComponent::updateMatrix},
-               &m_p->m_localTransformation_copy, &m_p->m_parentGlobalTransformation);
+               &m_p->m_localTransformation_copy,
+               &m_p->m_parentGlobalTransformation);
     addUpdater({this, &GlobalTransformationComponent::setModelViewMatrix});
 }
 
@@ -71,7 +72,8 @@ void GlobalTransformationComponent::pollParentGlobalTransformation() noexcept
     */
 }
 
-void GlobalTransformationComponent::updateMyGlobalTransformationIfNecessary() noexcept
+void GlobalTransformationComponent::
+    updateMyGlobalTransformationIfNecessary() noexcept
 {
     /*
     if (m_p->m_transformation_updated)
@@ -106,19 +108,20 @@ void GlobalTransformationComponent::updateMatrix()
     m_p->m_transform =
         m_p->m_parentGlobalTransformation() * m_p->m_localTransformation();
 
-/*    if (auto meshRenderContext_{meshRenderContext()};
-        !meshRenderContext_.empty())
-    {
-        meshRenderContext_->modelViewMatrix = m_p->m_transform;
-    }
-*/
+    /*    if (auto meshRenderContext_{meshRenderContext()};
+            !meshRenderContext_.empty())
+        {
+            meshRenderContext_->modelViewMatrix = m_p->m_transform;
+        }
+    */
     m_globalTransformationChanged(m_p->m_transform);
 }
 
 void GlobalTransformationComponent::setModelViewMatrix()
 {
     sys::getSystem<scene::SceneManager>(attachedNode())
-        .sceneRenderContext().setCurrentModelViewMatrix(m_p->m_transform);
+        .sceneRenderContext()
+        .setCurrentModelViewMatrix(m_p->m_transform);
 }
 
 bool GlobalTransformationComponent::hasPendingMatrixUpdate() const noexcept
