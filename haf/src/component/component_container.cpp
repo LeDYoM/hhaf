@@ -57,12 +57,11 @@ sptr<Component> ComponentContainer::getOrCreateComponent(str_view typeName)
         result = createComponent(typeName);
         if (result)
         {
-            if (applyRequirements(*result))
+            addComponent(result);
+            if (!applyRequirements(*result))
             {
-                addComponent(result);
-            }
-            else
-            {
+                LogAsserter::log_assert(true, "Cannot create component ",
+                                        typeName);
                 result.reset();
             }
         }
@@ -99,7 +98,8 @@ bool ComponentContainer::applyRequirements(Component& _thisComponent)
     return _thisComponent.addRequirements(component_requierements);
 }
 
-sptr<Component> ComponentContainer::getExistingComponent(str_view typeName) const
+sptr<Component> ComponentContainer::getExistingComponent(
+    str_view typeName) const
 {
     return p_->getExistingComponent(typeName);
 }
