@@ -57,6 +57,8 @@ void MainMeshController::update()
 {
     int a = 0;
     (void)(a);
+
+    m_components->m_transformation->Position = {0.5F, 0.0F, 0.0F};
     /*
         auto p{getComponent<MeshComponentTest>()
                    ->getComponent<TransformationComponent>()

@@ -8,16 +8,13 @@ namespace haf::scene
 {
 enum class SceneUpdateTime : core::u32
 {
-    UserController = 0U,
-    Controller     = 1U,
-    UserBeginFrame = 2U,
-    BeginFrame     = 3U,
-    UserEndFrame   = 4U,
-    EndFrame       = 5U,
-    UserRender     = 6U,
-    Render         = 7U,
-    Begin          = UserController,
-    End            = Render + 1U,
+    Controller         = 0U,
+    InternalController = 1U,
+    BeginFrame         = 2U,
+    EndFrame           = 3U,
+    Render             = 4U,
+    Begin              = Controller,
+    End                = Render + 1U,
 };
 
 template <typename T>
