@@ -20,7 +20,9 @@ struct MainMeshController::ComponentsRequired
 {};
 
 struct MainMeshController::PrivateComponentData
-{};
+{
+    sptr<scene::TransformationComponent> m_transformation;
+};
 
 MainMeshController::MainMeshController() :
     m_components{make_pimplp<ComponentsRequired>()},
@@ -32,20 +34,17 @@ MainMeshController::~MainMeshController() = default;
 void MainMeshController::onAttached()
 {
     addUpdater({this, &MainMeshController::update});
-    auto transform{
+    m_p->m_transformation =
         attachedNode()
             ->sceneNodesGroup()
             .createSceneNodeWithComponent<scene::TransformationComponent>(
-                "Transformation_0")};
-    auto material_{
-        transform->attachedNode()
-            ->sceneNodesGroup()
-            .createSceneNodeWithComponent<render::MaterialDataComponent>(
-                "Material_0")};
-    auto mesh{material_->attachedNode()
-                  ->sceneNodesGroup()
-                  .createSceneNodeWithComponent<render::MeshRenderComponent>(
-                      "Mesh_0")};
+                "Transformation_0");
+
+    auto node = m_p->m_transformation->attachedNode();
+    node->componentContainer()
+        .getOrCreateComponent<render::MaterialDataComponent>();
+    node->componentContainer()
+        .getOrCreateComponent<render::MeshRenderComponent>();
 }
 
 bool MainMeshController::addRequirements(

@@ -87,6 +87,22 @@ public:
 
     core::sptr<Component> getOrCreateComponent(core::str_view typeName);
 
+    /**
+     * @brief Create or get a pointer to a component type. This method
+     * could create an instance of the component and add it to the component
+     * list or retrieve a pointer to it
+     *
+     * @tparam T Type of the component
+     * @return Pointer to the component type. Either newly created or already
+     * existing
+     */
+    template <typename T>
+    core::sptr<T> getOrCreateComponent()
+    {
+        core::sptr<Component> result{getOrCreateComponent(T::StaticTypeName)};
+        return result ? core::dynamic_pointer_cast<T>(result) : nullptr;
+    }
+
     template <typename T>
     core::sptr<T> safeComponentConversion(
         core::sptr<Component> source_component)
@@ -107,21 +123,6 @@ public:
     core::vector<core::sptr<Component>>::const_iterator cend() const;
 
 private:
-    /**
-     * @brief Create or get a pointer to a component type. This method
-     * could create an instance of the component and add it to the component
-     * list or retrieve a pointer to it
-     *
-     * @tparam T Type of the component
-     * @return Pointer to the component type. Either newly created or already
-     * existing
-     */
-    template <typename T>
-    core::sptr<T> getOrCreateComponent()
-    {
-        core::sptr<Component> result{getOrCreateComponent(T::StaticTypeName)};
-        return result ? core::dynamic_pointer_cast<T>(result) : nullptr;
-    }
 
     core::sptr<Component> createComponent(core::str_view typeName);
     bool applyRequirements(Component& _thisComponent);

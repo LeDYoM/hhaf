@@ -58,11 +58,12 @@ void MainScene::onAttached()
             ->sceneNodesGroup()
             .createSceneNodeWithComponent<MainMeshController>(
                 "MainMeshController");
-
+/*
     scene_node_component->attachedNode()
         ->componentContainer()
         .getExistingComponent<TransformationComponent>()
         ->Position = {0.5F, 0.5F, 0.0F};
+*/
 }
 
 }  // namespace hl
