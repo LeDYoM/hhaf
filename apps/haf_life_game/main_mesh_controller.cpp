@@ -34,17 +34,13 @@ MainMeshController::~MainMeshController() = default;
 void MainMeshController::onAttached()
 {
     addUpdater({this, &MainMeshController::update});
-    m_p->m_transformation =
-        attachedNode()
-            ->sceneNodesGroup()
-            .createSceneNodeWithComponent<scene::TransformationComponent>(
-                "Transformation_0");
+    auto& c_container = attachedNode()->componentContainer();
 
-    auto node = m_p->m_transformation->attachedNode();
-    node->componentContainer()
-        .getOrCreateComponent<render::MaterialDataComponent>();
-    node->componentContainer()
-        .getOrCreateComponent<render::MeshRenderComponent>();
+    m_p->m_transformation =
+        c_container.getOrCreateComponent<scene::TransformationComponent>();
+
+    c_container.getOrCreateComponent<render::MaterialDataComponent>();
+    c_container.getOrCreateComponent<render::MeshRenderComponent>();
 }
 
 bool MainMeshController::addRequirements(
