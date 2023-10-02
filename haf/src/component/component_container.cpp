@@ -64,6 +64,10 @@ sptr<Component> ComponentContainer::getOrCreateComponent(str_view typeName)
                                         typeName);
                 result.reset();
             }
+            else
+            {
+                result->setAttachedNode(p_->attachable_);
+            }
         }
     }
     return result;
@@ -87,7 +91,6 @@ sptr<Component> ComponentContainer::createComponent(str_view typeName)
 bool ComponentContainer::addComponent(sptr<Component> nc)
 {
     LogAsserter::log_assert(nc != nullptr, "Trying to add a nullptr component");
-    nc->setAttachedNode(p_->attachable_);
     p_->components_.push_back(htps::move(nc));
     return true;
 }
