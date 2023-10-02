@@ -17,12 +17,14 @@ namespace hl
 {
 
 struct MainMeshController::ComponentsRequired
-{};
-
-struct MainMeshController::PrivateComponentData
 {
     sptr<scene::TransformationComponent> m_transformation;
+    sptr<render::MaterialDataComponent> m_material_data_component;
+    sptr<render::MeshRenderComponent> m_mesh_render_component;
 };
+
+struct MainMeshController::PrivateComponentData
+{};
 
 MainMeshController::MainMeshController() :
     m_components{make_pimplp<ComponentsRequired>()},
@@ -34,21 +36,20 @@ MainMeshController::~MainMeshController() = default;
 void MainMeshController::onAttached()
 {
     addUpdater({this, &MainMeshController::update});
-    auto& c_container = attachedNode()->componentContainer();
-
-    m_p->m_transformation =
-        c_container.getOrCreateComponent<scene::TransformationComponent>();
-
-    c_container.getOrCreateComponent<render::MaterialDataComponent>();
-    c_container.getOrCreateComponent<render::MeshRenderComponent>();
 }
 
 bool MainMeshController::addRequirements(
-    component::ComponentRequirements& /*component_requirements*/)
+    component::ComponentRequirements& component_requirements)
 {
     bool isOk{true};
-    //    isOk &= component_requirements.getOrCreateComponent(
-    //        m_components->m_mesh_component);
+
+    component_requirements.getOrCreateComponent(m_components->m_transformation);
+
+    component_requirements.getOrCreateComponent(
+        m_components->m_material_data_component);
+    component_requirements.getOrCreateComponent(
+        m_components->m_mesh_render_component);
+
     return isOk;
 }
 
