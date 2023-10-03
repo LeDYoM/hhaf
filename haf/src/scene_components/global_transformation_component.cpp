@@ -31,9 +31,22 @@ GlobalTransformationComponent::GlobalTransformationComponent() :
     m_p{make_pimplp<PrivateComponentData>()}
 {}
 
-GlobalTransformationComponent::~GlobalTransformationComponent() = default;
+GlobalTransformationComponent::~GlobalTransformationComponent()
+{
+    m_p->m_receiver.clear();
+}
 
 void GlobalTransformationComponent::onAttached()
+{
+    connectToParentGlobalTransformationChanged();
+
+    addUpdater({this, &GlobalTransformationComponent::updateMatrix},
+               &m_p->m_localTransformation_copy,
+               &m_p->m_parentGlobalTransformation);
+    addUpdater({this, &GlobalTransformationComponent::setModelViewMatrix});
+}
+
+void GlobalTransformationComponent::connectToParentGlobalTransformationChanged()
 {
     component::ComponentFinder finder{attachedNode()};
     if (auto parentComponent{
@@ -50,45 +63,6 @@ void GlobalTransformationComponent::onAttached()
     {
         DisplayLog::verbose("No parent GlobalTransformationComponent found");
     }
-
-    addUpdater({this, &GlobalTransformationComponent::updateMatrix},
-               &m_p->m_localTransformation_copy,
-               &m_p->m_parentGlobalTransformation);
-    addUpdater({this, &GlobalTransformationComponent::setModelViewMatrix});
-}
-
-void GlobalTransformationComponent::pollParentGlobalTransformation() noexcept
-{
-    /*
-    if (auto const& parentTransformation{
-            m_p->parentTransformationComponent(attachedNode())};
-        parentTransformation != nullptr)
-    {
-        if (parentTransformation->transformationUpdated())
-        {
-            m_p->m_transformation_updated = true;
-        }
-    }
-    */
-}
-
-void GlobalTransformationComponent::
-    updateMyGlobalTransformationIfNecessary() noexcept
-{
-    /*
-    if (m_p->m_transformation_updated)
-    {
-        if (auto const& parentTransformation{
-                m_p->parentTransformationComponent(attachedNode())};
-            parentTransformation != nullptr)
-        {
-
-            m_p->m_globalTransform = m_p->m_globalTransform =
-                parentTransformation->getGlobalTransformation() *
-                m_p->m_transform;
-        }
-    }
-    */
 }
 
 void GlobalTransformationComponent::localTransformationChanged(
@@ -108,12 +82,6 @@ void GlobalTransformationComponent::updateMatrix()
     m_p->m_transform =
         m_p->m_parentGlobalTransformation() * m_p->m_localTransformation_copy();
 
-    /*    if (auto meshRenderContext_{meshRenderContext()};
-            !meshRenderContext_.empty())
-        {
-            meshRenderContext_->modelViewMatrix = m_p->m_transform;
-        }
-    */
     m_globalTransformationChanged(m_p->m_transform);
 }
 

@@ -59,6 +59,8 @@ public:
 
     constexpr bool empty() const noexcept { return connections_.empty(); }
 
+    constexpr void clear() noexcept { return connections_.clear(); }
+
 private:
     core::vector<core::sptr<iconnection>> connections_;
 };

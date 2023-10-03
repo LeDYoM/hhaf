@@ -7,8 +7,7 @@ HAF_PRAGMA_ONCE
 #include <facil_math/include/math_types.hpp>
 #include <haf/include/properties/property_state.hpp>
 #include <haf/include/events/emitter.hpp>
-
-#include <facil_math/include/matrix4x4.hpp>
+#include <haf/include/math/types.hpp>
 #include <haf/include/component/component_declaration.hpp>
 
 namespace haf::scene
@@ -30,19 +29,19 @@ public:
     TransformationComponent();
     ~TransformationComponent() override;
 
-    using Scalar = fmath::Matrix4x4::Scalar;  ///< Type Scalar for this class
-    static constexpr Scalar const One  = fmath::Matrix4x4::One;
-    static constexpr Scalar const Zero = fmath::Matrix4x4::Zero;
-    static constexpr const fmath::vector3df DefaultTranslation{
-        fmath::Vector3dZeros<Scalar>};
-    static constexpr const fmath::vector3df DefaultRotation{
-        fmath::Vector3dZeros<Scalar>};
-    static constexpr const fmath::vector3df DefaultScale{
-        fmath::Vector3dOnes<Scalar>};
+    using Scalar = math::Matrix4x4::Scalar;  ///< Type Scalar for this class
+    static constexpr Scalar const One  = math::Matrix4x4::One;
+    static constexpr Scalar const Zero = math::Matrix4x4::Zero;
+    static constexpr const math::vector3df DefaultTranslation{
+        math::Vector3dZeros<Scalar>};
+    static constexpr const math::vector3df DefaultRotation{
+        math::Vector3dZeros<Scalar>};
+    static constexpr const math::vector3df DefaultScale{
+        math::Vector3dOnes<Scalar>};
 
-    prop::PropertyState<fmath::vector3df> Position{DefaultTranslation};
-    prop::PropertyState<fmath::vector3df> Rotation{DefaultRotation};
-    prop::PropertyState<fmath::vector3df> Scale{DefaultScale};
+    prop::PropertyState<math::vector3df> Position{DefaultTranslation};
+    prop::PropertyState<math::vector3df> Rotation{DefaultRotation};
+    prop::PropertyState<math::vector3df> Scale{DefaultScale};
 
     bool hasPendingMatrixUpdate() const noexcept;
 
@@ -51,9 +50,9 @@ public:
      * updates will be performed.
      * @return Matrix4x4 const& The local transformation.
      */
-    fmath::Matrix4x4 const& matrix() const noexcept;
+    math::Matrix4x4 const& matrix() const noexcept;
 
-    evt::emitter<fmath::Matrix4x4 const&> localMatrixChanged;
+    evt::emitter<math::Matrix4x4 const&> localMatrixChanged;
 
 private:
     struct ComponentsRequired;

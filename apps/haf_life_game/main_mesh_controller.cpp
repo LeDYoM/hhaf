@@ -6,6 +6,7 @@
 #include <haf/include/scene/scene_node.hpp>
 #include <haf/include/scene_components/transformation_component.hpp>
 #include <haf/include/scene_components/camera/debug_camera_component.hpp>
+#include <haf/include/math/types.hpp>
 
 using namespace haf;
 using namespace haf::core;
@@ -58,7 +59,7 @@ void MainMeshController::update()
     int a = 0;
     (void)(a);
 
-    m_components->m_transformation->Position = {0.5F, 0.0F, 0.0F};
+    m_components->m_transformation->Position = math::vector3df{0.5F, 0.0F, 0.0F};
     /*
         auto p{getComponent<MeshComponentTest>()
                    ->getComponent<TransformationComponent>()

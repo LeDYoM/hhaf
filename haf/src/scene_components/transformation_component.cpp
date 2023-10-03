@@ -6,7 +6,7 @@
 #include <facil_math/include/geometry_math.hpp>
 #include <haf/include/scene_components/global_transformation_component.hpp>
 
-using namespace fmath;
+using namespace haf::math;
 using namespace haf::core;
 
 namespace haf::scene

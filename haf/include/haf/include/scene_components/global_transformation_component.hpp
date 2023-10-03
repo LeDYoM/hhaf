@@ -30,9 +30,7 @@ private:
     void updateMatrix();
     void setModelViewMatrix();
     void globalTransformationChanged(fmath::Matrix4x4 const& parentMatrix);
-    void pollParentGlobalTransformation() noexcept;
-    void updateMyGlobalTransformationIfNecessary() noexcept;
-
+    void connectToParentGlobalTransformationChanged();
     void onAttached() override;
 
     struct PrivateComponentData;
