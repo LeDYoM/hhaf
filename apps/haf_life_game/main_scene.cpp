@@ -6,7 +6,7 @@
 #include <haf/include/scene/scene_node.hpp>
 #include <haf/include/scene_components/camera/camera.hpp>
 #include <haf/include/scene_components/transformation_component.hpp>
-
+#include <haf/include/scene/scene_node_component_management.hpp>
 #include "main_mesh_controller.hpp"
 
 using namespace haf;
@@ -47,24 +47,9 @@ void MainScene::onAttached()
     auto node{attachedNode()->sceneNodesGroup().createSceneNode("node")};
     CameraBuilder cbuilder;
     cbuilder.addDebugMovableCamera(*node);
-//    node->componentContainer().attachComponent()
-    /*
-        attachedNode()
-            ->sceneNodesGroup()
-            .createSceneNodeWithComponent<DebugCameraComponent>(
-                "DebugCameraComponent");
-    */
-    auto scene_node_component =
-        attachedNode()
-            ->sceneNodesGroup()
-            .createSceneNodeWithComponent<MainMeshController>(
-                "MainMeshController");
-/*
-    scene_node_component->attachedNode()
-        ->componentContainer()
-        .getExistingComponent<TransformationComponent>()
-        ->Position = {0.5F, 0.5F, 0.0F};
-*/
+
+    SceneNodeComponentManagerment scc{attachedNode()};
+    scc.createSceneNodeWithComponent<MainMeshController>("MainMeshController");
 }
 
 }  // namespace hl
