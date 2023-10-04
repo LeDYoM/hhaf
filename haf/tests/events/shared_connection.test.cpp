@@ -34,12 +34,40 @@ struct StructToReceive
 TEST_CASE("emitter_to_shared", "[emitter][connection]")
 {
     auto test_emmiter{msptr<StructWithEmmiter>()};
+    {
+        StructToReceive receiver{};
+
+        receiver.connectTo(test_emmiter);
+        CHECK(test_emmiter->m_emitter.size() == 1U);
+
+        CHECK(receiver.m_data == 0);
+        CHECK(test_emmiter->m_data == 0);
+
+        test_emmiter->m_emitter(-5);
+        CHECK(receiver.m_data == -5);
+    }
+    CHECK(test_emmiter->m_emitter.empty());
+    CHECK(test_emmiter->m_emitter.size() == 0U);
+}
+
+TEST_CASE("emitter_to_shared_clear", "[emitter][connection]")
+{
+    auto test_emmiter{msptr<StructWithEmmiter>()};
     StructToReceive receiver{};
 
     receiver.connectTo(test_emmiter);
-    CHECK(0 == receiver.m_data);
-    CHECK(0 == test_emmiter->m_data);
+    CHECK(test_emmiter->m_emitter.size() == 1U);
+
+    CHECK(receiver.m_data == 0);
+    CHECK(test_emmiter->m_data == 0);
 
     test_emmiter->m_emitter(-5);
-    CHECK(-5 == receiver.m_data);
+    CHECK(receiver.m_data == -5);
+
+    test_emmiter->m_emitter.clear();
+    test_emmiter->m_emitter(67);
+
+    CHECK(receiver.m_data == -5);
+    CHECK(test_emmiter->m_emitter.empty());
+    CHECK(test_emmiter->m_emitter.size() == 0U);
 }
