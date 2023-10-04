@@ -23,6 +23,8 @@ public:
     explicit SceneNodeComponentManagerment(
         core::rptr<SceneNode> scene_node) noexcept;
 
+    explicit SceneNodeComponentManagerment(SceneNode& scene_node) noexcept;
+
     core::pair<core::sptr<SceneNode>, core::sptr<component::Component>>
     createSceneNodeWithComponent(core::str_view name,
                                  core::str_view componentName);
@@ -37,7 +39,7 @@ public:
     }
 
 private:
-    core::rptr<SceneNode> m_scene_node;
+    SceneNode& m_scene_node;
 };
 
 }  // namespace haf::scene

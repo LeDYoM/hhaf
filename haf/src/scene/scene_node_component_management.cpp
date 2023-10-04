@@ -9,12 +9,17 @@ namespace haf::scene
 {
 SceneNodeComponentManagerment::SceneNodeComponentManagerment(
     sptr<SceneNode> scene_node) noexcept :
-    m_scene_node{scene_node.get()}
+    m_scene_node{*scene_node}
 {}
 
 SceneNodeComponentManagerment::SceneNodeComponentManagerment(
     rptr<SceneNode> scene_node) noexcept :
-    m_scene_node{core::move(scene_node)}
+    m_scene_node{*scene_node}
+{}
+
+SceneNodeComponentManagerment::SceneNodeComponentManagerment(
+    SceneNode& scene_node) noexcept :
+    m_scene_node{scene_node}
 {}
 
 pair<SceneNodeSPtr, sptr<component::Component>>
@@ -23,7 +28,7 @@ SceneNodeComponentManagerment::createSceneNodeWithComponent(
     str_view componentName)
 {
     SceneNodeSPtr sceneNode{
-        m_scene_node->sceneNodesGroup().createSceneNode(name)};
+        m_scene_node.sceneNodesGroup().createSceneNode(name)};
     LogAsserter::log_assert(sceneNode != nullptr, "Invalid nullptr parameter");
     if (sceneNode != nullptr)
     {
@@ -33,7 +38,7 @@ SceneNodeComponentManagerment::createSceneNodeWithComponent(
         return {sceneNode, component};
     }
 
-    m_scene_node->sceneNodesGroup().removeSceneNode(name);
+    m_scene_node.sceneNodesGroup().removeSceneNode(name);
     return {nullptr, nullptr};
 }
 
