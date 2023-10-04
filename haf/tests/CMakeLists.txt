@@ -12,6 +12,7 @@ set(SOURCE_TESTS
     debug_system/debug_variables
 
     events/connection
+    events/shared_connection
 
     file_system/file_system
 
