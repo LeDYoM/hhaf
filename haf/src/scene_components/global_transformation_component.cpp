@@ -31,10 +31,7 @@ GlobalTransformationComponent::GlobalTransformationComponent() :
     m_p{make_pimplp<PrivateComponentData>()}
 {}
 
-GlobalTransformationComponent::~GlobalTransformationComponent()
-{
-    m_p->m_receiver.clear();
-}
+GlobalTransformationComponent::~GlobalTransformationComponent() = default;
 
 void GlobalTransformationComponent::onAttached()
 {
