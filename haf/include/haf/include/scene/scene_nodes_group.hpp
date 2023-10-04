@@ -41,15 +41,17 @@ public:
      */
     core::sptr<SceneNode> createSceneNode(core::str_view name);
 
-    core::sptr<component::Component> createSceneNodeWithComponent(
-        core::str_view name,
-        core::str_view componentName);
+    core::pair<core::sptr<SceneNode>, core::sptr<component::Component>>
+    createSceneNodeWithComponent(core::str_view name,
+                                 core::str_view componentName);
 
     template <typename T>
-    core::sptr<T> createSceneNodeWithComponent(core::str_view name)
+    core::pair<core::sptr<SceneNode>, core::sptr<T>>
+    createSceneNodeWithComponent(core::str_view name)
     {
-        return core::static_pointer_cast<T>(
-            createSceneNodeWithComponent(core::move(name), T::StaticTypeName));
+        auto result{
+            createSceneNodeWithComponent(core::move(name), T::StaticTypeName)};
+        return {result.first, core::static_pointer_cast<T>(result.second)};
     }
 
     /**

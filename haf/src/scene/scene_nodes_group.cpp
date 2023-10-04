@@ -18,9 +18,9 @@ SceneNodeSPtr SceneNodesGroup::createSceneNode(str_view name)
     return result;
 }
 
-sptr<Component> SceneNodesGroup::createSceneNodeWithComponent(
-    str_view name,
-    str_view componentName)
+pair<SceneNodeSPtr, sptr<component::Component>>
+SceneNodesGroup::createSceneNodeWithComponent(str_view name,
+                                              str_view componentName)
 {
     SceneNodeSPtr sceneNode{createSceneNode(name)};
     LogAsserter::log_assert(sceneNode != nullptr, "Invalid nullptr parameter");
@@ -29,11 +29,11 @@ sptr<Component> SceneNodesGroup::createSceneNodeWithComponent(
         auto component{sceneNode->componentContainer().attachComponent(
             core::move(componentName))};
 
-        return component;
+        return {sceneNode, component};
     }
 
     removeSceneNode(name);
-    return nullptr;
+    return {nullptr, nullptr};
 }
 
 bool SceneNodesGroup::removeSceneNode(str_view name)

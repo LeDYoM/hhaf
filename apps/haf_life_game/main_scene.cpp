@@ -47,6 +47,7 @@ void MainScene::onAttached()
     auto node{attachedNode()->sceneNodesGroup().createSceneNode("node")};
     CameraBuilder cbuilder;
     cbuilder.addDebugMovableCamera(*node);
+//    node->componentContainer().attachComponent()
     /*
         attachedNode()
             ->sceneNodesGroup()
