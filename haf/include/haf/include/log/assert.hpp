@@ -38,4 +38,7 @@ constexpr void log_assert(
     }
 }
 }  // namespace haf::log
+
+#define LOG_ASSERT(...) log::log_assert();
+
 #endif

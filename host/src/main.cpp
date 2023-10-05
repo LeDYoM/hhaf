@@ -1,4 +1,4 @@
-#include <hlog/include/hlog.hpp>
+#include <haf/include/log/log.hpp>
 #include "host.hpp"
 
 #include "host_export.hpp"

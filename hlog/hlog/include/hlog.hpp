@@ -35,5 +35,6 @@ using DisplayLog = LogDisplayer<CurrentLog, SeverityType, false>;
 namespace haf
 {
     using LogAsserter = logger::LogAsserter<logger::DisplayLog>;
+    using LogInitializer = logger::CurrentLogInitializer;
 }
 #endif

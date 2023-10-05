@@ -3,6 +3,7 @@ HAF_PRAGMA_ONCE
 #define HAF_LOG_LOG_INCLUDE_HPP
 
 #include <hlog/include/hlog.hpp>
+#include <haf/include/core/types.hpp>
 
 namespace haf
 {
@@ -72,7 +73,7 @@ static constexpr void error(Args&&... args) noexcept
 }
 
 template <bool Condition, typename... Args>
-static constexpr void error_if_ce([[maybe_unused]] Args&&... args) noexcept
+static constexpr void error_if_ce(Args&&... args) noexcept
 {
     LogDisplayer::error_if_ce<Condition>(core::forward<Args>(args)...);
 }
@@ -82,5 +83,22 @@ static constexpr void error_if(bool const cond, Args&&... args) noexcept
 {
     LogDisplayer::error_if(cond, core::forward<Args>(args)...);
 }
+
 }  // namespace haf::log
+#define LOG_DEBUG(...) log::debug()
+#define LOG_DEBUG_IF(cond,...) log::debug_if(cond)
+#define LOG_DEBUG_IF_CE(cond, ...) log::debug_if_ce<cond>()
+
+#define LOG_INFO(...) log::info()
+#define LOG_INFO_IF(cond,...) log::info_if(cond)
+#define LOG_INFO_IF_CE(cond, ...) log::info_if_ce<cond>()
+
+#define LOG_WARN(...) log::warn()
+#define LOG_WARN_IF(cond,...) log::warn_if(cond)
+#define LOG_WARN_IF_CE(cond, ...) log::warn_if_ce<cond>()
+
+#define LOG_ERROR(...) log::error()
+#define LOG_ERROR_IF(cond,...) log::error_if(cond)
+#define LOG_ERROR_IF_CE(cond, ...) log::error_if_ce<cond>()
+
 #endif
