@@ -16,15 +16,15 @@ bool HostedAppGroup::try_add_app(ManagedApp managed_app,
     // Store if the app is not already registered
     bool const is_new_app{!appExists(name)};
 
-    DisplayLog::error_if(!is_new_app, StaticTypeName,
+    logger::DisplayLog::error_if(!is_new_app, StaticTypeName,
                          ": Application already registered");
 
     if (is_new_app)
     {
-        DisplayLog::info(StaticTypeName, ": Starting Registering app...");
+        logger::DisplayLog::info(StaticTypeName, ": Starting Registering app...");
         auto& new_app = add_app(htps::move(managed_app), htps::move(name),
                                 htps::move(host_connector));
-        DisplayLog::verbose(StaticTypeName, ": Starting new app...");
+        logger::DisplayLog::verbose(StaticTypeName, ": Starting new app...");
         new_app.app_state = AppState::ReadyToStart;
     }
 
@@ -45,10 +45,10 @@ bool HostedAppGroup::removeApp(str const& app_name)
         auto const new_size{app_.size()};
 
         // Show logs informing the user
-        DisplayLog::info_if(old_size != new_size, StaticTypeName,
+        logger::DisplayLog::info_if(old_size != new_size, StaticTypeName,
                             ": Application ", app_name, " unloaded");
 
-        DisplayLog::info_if(old_size == new_size, StaticTypeName,
+        logger::DisplayLog::info_if(old_size == new_size, StaticTypeName,
                             ": Application ", app_name,
                             " unloaded, but cannot be deleted");
 

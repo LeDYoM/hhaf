@@ -15,10 +15,10 @@ VertexArrayObject::VertexArrayObject(sptr<Mesh> mesh, sptr<Shader> shader) :
                                            core::move(shader),
                                            0U)}
 {
-    DisplayLog::debug(staticTypeName(), ": Creating vao...");
-    DisplayLog::debug(staticTypeName(), ": vao id: ", m_p->m_vao);
-    DisplayLog::debug(staticTypeName(), ": Setting shader in vao...");
-    DisplayLog::debug(staticTypeName(), ": vao ", m_p->m_vao,
+    logger::DisplayLog::debug(staticTypeName(), ": Creating vao...");
+    logger::DisplayLog::debug(staticTypeName(), ": vao id: ", m_p->m_vao);
+    logger::DisplayLog::debug(staticTypeName(), ": Setting shader in vao...");
+    logger::DisplayLog::debug(staticTypeName(), ": vao ", m_p->m_vao,
                       " associated to shader ", m_p->m_shader->handle());
     m_p->associateBuffersToAttribsInCurrentShader(m_p->m_mesh);
 }

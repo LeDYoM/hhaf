@@ -1,13 +1,13 @@
 #include <hlog/include/file_commiter.hpp>
 
-#pragma warning( push )
-#pragma warning( disable : 4668 )
+#pragma warning(push)
+#pragma warning(disable : 4668)
 
 #include <fstream>
 
-#pragma warning( pop )
+#pragma warning(pop)
 
-namespace haf
+namespace logger
 {
 std::ofstream* f{nullptr};
 
@@ -29,4 +29,4 @@ void FileCommiter::commitlog(const char* const log_stream)
     (*f) << log_stream << std::endl;
 }
 
-}  // namespace haf
+}  // namespace logger

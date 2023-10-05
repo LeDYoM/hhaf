@@ -7,7 +7,6 @@ HAF_PRAGMA_ONCE
 #include <htypes/include/p_impl_pointer.hpp>
 
 #include <haf/include/component/component.hpp>
-#include <hlog/include/hlog.hpp>
 
 namespace haf::scene
 {

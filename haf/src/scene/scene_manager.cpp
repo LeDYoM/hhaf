@@ -56,7 +56,7 @@ bool SceneManager::instanciateRootComponent(str_view componentType)
 sptr<component::Component> SceneManager::instantiateComponent(str_view name)
 {
     sptr<component::Component> component{m_component_factory.create(name)};
-    DisplayLog::warn_if(component == nullptr, "Component ", name,
+    logger::DisplayLog::warn_if(component == nullptr, "Component ", name,
                         " not found in component factory");
     return component;
 }

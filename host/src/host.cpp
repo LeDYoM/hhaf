@@ -16,20 +16,20 @@ struct Host::HostPrivate : public HostInternal
 
 Host::Host(int argc, char* argv[]) : p_{make_pimplp<HostPrivate>(argc, argv)}
 {
-    DisplayLog::info("Starting HostController...");
-    DisplayLog::info("Host version: ", host_VERSION, ".", host_SUBVERSION, ".",
+    logger::DisplayLog::info("Starting HostController...");
+    logger::DisplayLog::info("Host version: ", host_VERSION, ".", host_SUBVERSION, ".",
                      host_PATCH, ".", host_TWEAK);
 }
 
 Host::~Host()
 {
-    DisplayLog::info("Terminating Host...");
-    DisplayLog::verbose_if(!p_->app_group_.empty(), p_->app_group_.size(),
+    logger::DisplayLog::info("Terminating Host...");
+    logger::DisplayLog::verbose_if(!p_->app_group_.empty(), p_->app_group_.size(),
                            " pending apps to be terminated");
 
     [[maybe_unused]] auto const result{p_->unloadAllApplications()};
 
-    DisplayLog::info(result ? "All applications unloaded successfully"
+    logger::DisplayLog::info(result ? "All applications unloaded successfully"
                             : "Problem unloading some applications");
 }
 
@@ -51,11 +51,11 @@ int Host::run()
     }
     catch (const std::exception& e)
     {
-        DisplayLog::error(e.what());
+        logger::DisplayLog::error(e.what());
     }
     catch (...)
     {
-        DisplayLog::error("Unknown object thrown");
+        logger::DisplayLog::error("Unknown object thrown");
     }
     return 1;
 }

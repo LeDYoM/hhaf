@@ -42,7 +42,7 @@ bool ResourceManager::addResource(str_view rid, sptr<IResource> resource)
     bool const resourceExists{findResource(rid)};
     if (resourceExists)
     {
-        DisplayLog::warn(StaticTypeName, ": Resource ", rid, " already exists");
+        logger::DisplayLog::warn(StaticTypeName, ": Resource ", rid, " already exists");
     }
     else
     {
@@ -121,7 +121,7 @@ void setIfResource(
 {
     if (res == nullptr)
     {
-        DisplayLog::info(ResourceManager::StaticTypeName,
+        logger::DisplayLog::info(ResourceManager::StaticTypeName,
                          ": Looking for resource ", id);
 
         sptr<IResource> r{findResourceOfType(res_type, id)};

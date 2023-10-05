@@ -26,24 +26,24 @@ Shader::Shader(sptr<VertexShaderCode> vsc,
                sptr<ComputeShaderCode> csc) :
     m_p{make_pimplp<ShaderPrivate>()}
 {
-    DisplayLog::debug(staticTypeName(), ": Creating Shader...");
+    logger::DisplayLog::debug(staticTypeName(), ": Creating Shader...");
 
-    DisplayLog::debug_if(vsc != nullptr, staticTypeName(),
+    logger::DisplayLog::debug_if(vsc != nullptr, staticTypeName(),
                          ": Fragment shader:\n",
                          vsc != nullptr ? vsc->data() : str{});
-    DisplayLog::debug_if(tcsc != nullptr, staticTypeName(),
+    logger::DisplayLog::debug_if(tcsc != nullptr, staticTypeName(),
                          ": Tesellation control shader:\n",
                          tcsc != nullptr ? tcsc->data() : str{});
-    DisplayLog::debug_if(tesc != nullptr, staticTypeName(),
+    logger::DisplayLog::debug_if(tesc != nullptr, staticTypeName(),
                          ": Tesellation evaluation shader:\n",
                          tesc != nullptr ? tesc->data() : str{});
-    DisplayLog::debug_if(gsc != nullptr, staticTypeName(),
+    logger::DisplayLog::debug_if(gsc != nullptr, staticTypeName(),
                          ": Geometry shader:\n",
                          gsc != nullptr ? gsc->data() : str{});
-    DisplayLog::debug_if(fsc != nullptr, staticTypeName(),
+    logger::DisplayLog::debug_if(fsc != nullptr, staticTypeName(),
                          ": Fragment shader:\n",
                          fsc != nullptr ? fsc->data() : str{});
-    DisplayLog::debug_if(csc != nullptr, staticTypeName(),
+    logger::DisplayLog::debug_if(csc != nullptr, staticTypeName(),
                          ": Compute shader:\n",
                          csc != nullptr ? csc->data() : str{});
 
@@ -68,7 +68,7 @@ Shader::~Shader()
 {
     if (ogl::isValid(m_p->m_program))
     {
-        DisplayLog::debug(staticTypeName(),
+        logger::DisplayLog::debug(staticTypeName(),
                           "Deleting program: ", m_p->m_program);
         ogl::deleteProgram(m_p->m_program);
         m_p->m_program = ogl::invalidHandle();

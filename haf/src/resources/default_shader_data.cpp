@@ -36,7 +36,7 @@ void DefaultAttribs::bindDefaultAttributes(ogl::Handle program) noexcept
     {
         ogl::bindAttributeIndex(program, default_attrib.location(),
                                 str_view{default_attrib.index().c_str()});
-        DisplayLog::debug("DefaultAttribs: Setting default attrib ",
+        logger::DisplayLog::debug("DefaultAttribs: Setting default attrib ",
                           default_attrib.index().c_str(), " with index ",
                           default_attrib.location());
     }

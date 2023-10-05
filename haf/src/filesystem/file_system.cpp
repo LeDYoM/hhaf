@@ -22,20 +22,20 @@ bool FileSystem::processResult(IFileSerializer::Result const result,
     {
         if (result == IFileSerializer::Result::FileIOError)
         {
-            DisplayLog::debug(pre_message, file, " not found");
+            logger::DisplayLog::debug(pre_message, file, " not found");
             LogAsserter::log_assert(!assert_on_error, pre_message, file,
                                     " not found");
         }
         else if (result == IFileSerializer::Result::ParsingError)
         {
-            DisplayLog::debug(pre_message, file,
+            logger::DisplayLog::debug(pre_message, file,
                               " found, but contains invalid format");
             LogAsserter::log_assert(!assert_on_error, pre_message, file,
                                     " found, but contains invalid format");
         }
         else
         {
-            DisplayLog::debug(pre_message, file,
+            logger::DisplayLog::debug(pre_message, file,
                               " : Unknown error trying to read file");
             LogAsserter::log_assert(!assert_on_error, pre_message, file,
                                     " : Unknown error trying to read file");
@@ -89,7 +89,7 @@ bool FileSystem::saveTextFile(const Path& file_name, const str& data)
 
     if (!file || !correct)
     {
-        DisplayLog::error("Cannot write text file ", file_name);
+        logger::DisplayLog::error("Cannot write text file ", file_name);
     }
 
     return (file && correct);

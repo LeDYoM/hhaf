@@ -1,8 +1,8 @@
 #include <haf/include/random/randomnumberscomponent.hpp>
 #include "randomsystem.hpp"
 
-#include <hlog/include/hlog.hpp>
 #include "system/get_system.hpp"
+#include <hlog/include/hlog.hpp>
 
 #include <limits>
 
@@ -51,7 +51,7 @@ const str& RandomNumbersComponent::name() const noexcept
 u32 RandomNumbersComponent::getUInt(size_type const max,
                                     size_type const min) const
 {
-    DisplayLog::info("Asked for random number between ", min, " and ", max);
+    logger::DisplayLog::info("Asked for random number between ", min, " and ", max);
 
     LogAsserter::log_assert(min != max,
                             "The min and max parameters must be different");
@@ -59,10 +59,10 @@ u32 RandomNumbersComponent::getUInt(size_type const max,
                             "The max paramter must be greater than min");
 
     const auto next(priv_->randomsystem().getNext(name(), min, max));
-    DisplayLog::verbose("Fetch next element from queue: ", next);
+    logger::DisplayLog::verbose("Fetch next element from queue: ", next);
     const size_type generated(next % (max - min));
-    DisplayLog::verbose("\tGot ", generated);
-    DisplayLog::info("\tReturning ", min + generated);
+    logger::DisplayLog::verbose("\tGot ", generated);
+    logger::DisplayLog::info("\tReturning ", min + generated);
     return (min + generated) % std::numeric_limits<u32>::max();
 }
 

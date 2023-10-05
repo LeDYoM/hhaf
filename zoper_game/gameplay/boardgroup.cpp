@@ -60,7 +60,7 @@ void BoardGroup::onAttached()
 
 void BoardGroup::addPlayer()
 {
-    DisplayLog::info("Adding player tile at ",
+    logger::DisplayLog::info("Adding player tile at ",
                      TokenZones::centerRect.leftTop());
     LogAsserter::log_assert(player_ == nullptr, "Player already initialized");
 
@@ -78,7 +78,7 @@ void BoardGroup::createNewToken(BoardTileData const data,
 {
     using namespace haf::board;
 
-    DisplayLog::info("BoardGroup:: Adding new token at ", board_position,
+    logger::DisplayLog::info("BoardGroup:: Adding new token at ", board_position,
                      " with value ", data);
 
     // Create a new Tile instance

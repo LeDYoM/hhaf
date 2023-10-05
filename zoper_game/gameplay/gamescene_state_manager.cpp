@@ -43,7 +43,7 @@ void GameSceneStateManager::onEnterState(GameSceneStates const& state)
         }
         break;
     }
-    DisplayLog::info("Entered state: ", make_str(state));
+    logger::DisplayLog::info("Entered state: ", make_str(state));
 }
 
 void GameSceneStateManager::onExitState(GameSceneStates const& state)
@@ -67,7 +67,7 @@ void GameSceneStateManager::onExitState(GameSceneStates const& state)
         }
         break;
     }
-    DisplayLog::info("Exited state: ", make_str(state));
+    logger::DisplayLog::info("Exited state: ", make_str(state));
 }
 
 }  // namespace zoper

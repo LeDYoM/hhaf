@@ -30,7 +30,7 @@ struct TimeSystem::TimeSystemPrivate final : public TimeSystemAcceleration
     TimeSystemPrivate() :
         TimeSystemAcceleration{}, globalStart_{timepoint_global_now()}
     {
-        DisplayLog::info("TimeSystem started at: ", globalStart_.seconds());
+        logger::DisplayLog::info("TimeSystem started at: ", globalStart_.seconds());
     }
 
     TimePoint timeSinceStart() const

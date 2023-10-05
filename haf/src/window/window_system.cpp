@@ -32,7 +32,7 @@ WindowSystem::~WindowSystem()
             p_backend_window->closeWindow();
         }
     }
-    DisplayLog::info_if(p_backend_window != nullptr, StaticTypeName,
+    logger::DisplayLog::info_if(p_backend_window != nullptr, StaticTypeName,
                         ": Window closed");
 }
 
@@ -41,7 +41,7 @@ bool WindowSystem::initialize(str const& window_config_file)
     m_window_configuration.loadConfiguration(subSystemViewer(),
                                              window_config_file);
 
-    DisplayLog::info(StaticTypeName, ": Creating window...");
+    logger::DisplayLog::info(StaticTypeName, ": Creating window...");
 
     // Create window object
     auto* p_backend_window{systemProvider().backendFactory().getWindow()};
@@ -49,7 +49,7 @@ bool WindowSystem::initialize(str const& window_config_file)
     {
         backend::IWindow& backend_window{*p_backend_window};
 
-        DisplayLog::info_if(backend_window.isAlreadyCreated(), StaticTypeName,
+        logger::DisplayLog::info_if(backend_window.isAlreadyCreated(), StaticTypeName,
                             ": Window was already created.");
 
         // Create physical window if not already done
@@ -64,17 +64,17 @@ bool WindowSystem::initialize(str const& window_config_file)
                                             config.configuredBitsPerAlpha(), 0U,
                                             nullptr))
             {
-                DisplayLog::info(StaticTypeName, ": Window creation completed");
+                logger::DisplayLog::info(StaticTypeName, ": Window creation completed");
             }
             else
             {
-                DisplayLog::error(
+                logger::DisplayLog::error(
                     StaticTypeName,
                     ": Cannot create window with the set properties");
             }
         }
 
-        DisplayLog::debug(StaticTypeName,
+        logger::DisplayLog::debug(StaticTypeName,
                           ": Window settings: ", backend_window.settingsInfo());
 
         // If window created successfully, extract the render target
@@ -82,13 +82,13 @@ bool WindowSystem::initialize(str const& window_config_file)
         //        auto
         //        render_target{msptr<RenderTarget>(backend_window.renderTarget())};
 
-        DisplayLog::debug(StaticTypeName, ": Extracted render target");
+        logger::DisplayLog::debug(StaticTypeName, ": Extracted render target");
 
         // Also take the input driver.
         auto input_driver_wrapper{
             msptr<input::InputDriverWrapper>(p_backend_window->inputDriver())};
 
-        DisplayLog::debug(StaticTypeName, ": Extracted input driver");
+        logger::DisplayLog::debug(StaticTypeName, ": Extracted input driver");
 
         m_window =
             msptr<Window>(p_backend_window, htps::move(input_driver_wrapper));
@@ -97,7 +97,7 @@ bool WindowSystem::initialize(str const& window_config_file)
     }
     else
     {
-        DisplayLog::error(StaticTypeName, ": Backend window is nullptr!");
+        logger::DisplayLog::error(StaticTypeName, ": Backend window is nullptr!");
         return false;
     }
 }

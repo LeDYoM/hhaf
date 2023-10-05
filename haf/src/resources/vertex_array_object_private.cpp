@@ -50,8 +50,8 @@ void VertexArrayObject::VertexArrayObjectPriv::associateBufferToAttib(
                              binding_index);
 
         associatedAttribsToShader.push_back(static_cast<u32>(expected_index));
-        DisplayLog::debug("Associating buffer ", expected_index);
-        DisplayLog::debug("\t To binding index: ", binding_index);
+        logger::DisplayLog::debug("Associating buffer ", expected_index);
+        logger::DisplayLog::debug("\t To binding index: ", binding_index);
     }
 
     ogl::associateBufferToAttrib(m_vao, binding_index, parentHandle,

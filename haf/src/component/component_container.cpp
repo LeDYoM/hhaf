@@ -10,6 +10,7 @@
 #include "system/get_system.hpp"
 #include "debug_system/debug_displayers.hpp"
 #include "component/component_container_private.hpp"
+#include <haf/include/log/log.hpp>
 
 using namespace haf::core;
 
@@ -21,7 +22,7 @@ ComponentContainer::ComponentContainer(rptr<scene::SceneNode> attachable) :
 
 ComponentContainer::~ComponentContainer()
 {
-    DisplayLog::debug(StaticTypeName, ": Destroying");
+    logger::DisplayLog::debug(StaticTypeName, ": Destroying");
     clearComponents();
 }
 
@@ -77,7 +78,7 @@ sptr<Component> ComponentContainer::attachComponent(str_view typeName)
 {
     auto component{getOrCreateComponent(typeName)};
 
-    DisplayLog::debug(StaticTypeName, [this]() {
+    logger::DisplayLog::debug(StaticTypeName, [this]() {
         return debug::showComponentList(p_->attachable_);
     });
     return component;

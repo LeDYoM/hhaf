@@ -69,7 +69,7 @@ void APIENTRY message_callback(GLenum source,
         }
         return "";
     }();
-    haf::DisplayLog::debug("[RenderSystem] ", src_str, ", ", type_str, ", ",
+    logger::DisplayLog::debug("[RenderSystem] ", src_str, ", ", type_str, ", ",
                            severity_str, ", ", id, ": ", message);
 }
 

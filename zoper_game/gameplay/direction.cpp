@@ -17,7 +17,7 @@ Direction Direction::negate() const noexcept
             return DirectionData::Up;
         case DirectionData::Invalid:
         default:
-            haf::DisplayLog::error("Invalid direction. Cannot convert");
+            logger::DisplayLog::error("Invalid direction. Cannot convert");
     }
     return DirectionData::Invalid;
 }
@@ -44,7 +44,7 @@ fmath::vector2ds32 Direction::directionVector(
             return {0, scale};
         case DirectionData::Invalid:
         default:
-            haf::DisplayLog::error("Invalid direction. Cannot convert");
+            logger::DisplayLog::error("Invalid direction. Cannot convert");
     }
     return {};
 }
@@ -69,7 +69,7 @@ htps::f32 Direction::angle() const noexcept
             return 90.F;
         case DirectionData::Invalid:
         default:
-            haf::DisplayLog::error("Invalid direction. Cannot convert");
+            logger::DisplayLog::error("Invalid direction. Cannot convert");
     }
     return 0.f;
 }
@@ -81,7 +81,7 @@ Direction fromPositions(fmath::vector2dst const& origin,
                                   static_cast<fmath::vector2ds32>(origin)};
     if ((delta.x != 0 && delta.y != 0) || (delta.x == 0 && delta.y == 0))
     {
-        haf::DisplayLog::error("Invalid vector diference. Cannot convert");
+        logger::DisplayLog::error("Invalid vector diference. Cannot convert");
         return Direction::DirectionData::Invalid;
     }
     else if (delta.x > 0)
@@ -102,7 +102,7 @@ Direction fromPositions(fmath::vector2dst const& origin,
     }
     else
     {
-        haf::DisplayLog::error("Invalid vector diference. Cannot convert");
+        logger::DisplayLog::error("Invalid vector diference. Cannot convert");
         return Direction::DirectionData::Invalid;
     }
 }

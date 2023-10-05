@@ -29,8 +29,8 @@ SimulationSystem::~SimulationSystem()
 {
     if (simulation_system_configuration_.useOutputSimulation())
     {
-        DisplayLog::info("Serializing play data...");
-        DisplayLog::info(
+        logger::DisplayLog::info("Serializing play data...");
+        logger::DisplayLog::info(
             "Going to write play data into file ",
             simulation_system_configuration_.simulationOutputFileName());
 
@@ -44,33 +44,33 @@ SimulationSystem::~SimulationSystem()
         {
             if (result == IFileSerializer::Result::FileIOError)
             {
-                DisplayLog::debug("Cannot write ",
+                logger::DisplayLog::debug("Cannot write ",
                                   simulation_system_configuration_
                                       .simulationOutputFileName());
             }
             else if (result == IFileSerializer::Result::ParsingError)
             {
-                DisplayLog::error("Error parsing oputput for ",
+                logger::DisplayLog::error("Error parsing oputput for ",
                                   simulation_system_configuration_
                                       .simulationOutputFileName());
             }
             else
             {
-                DisplayLog::error("Unknow error outputting file: ",
+                logger::DisplayLog::error("Unknow error outputting file: ",
                                   simulation_system_configuration_
                                       .simulationOutputFileName());
             }
         }
         else
         {
-            DisplayLog::info(
+            logger::DisplayLog::info(
                 "Play data written correctly to ",
                 simulation_system_configuration_.simulationOutputFileName());
         }
     }
     else
     {
-        DisplayLog::debug("Not writing output simulation. Filename not set");
+        logger::DisplayLog::debug("Not writing output simulation. Filename not set");
     }
 }
 
@@ -97,7 +97,7 @@ void SimulationSystem::initialize(str const& simulation_config_file_name)
         }
 #endif
 
-        DisplayLog::info(
+        logger::DisplayLog::info(
             "Trying to load ",
             simulation_system_configuration_.simulationInputFileName(),
             " to read simulation data");
@@ -123,7 +123,7 @@ void SimulationSystem::initialize(str const& simulation_config_file_name)
     }
     else
     {
-        DisplayLog::debug("No simulation input file configured");
+        logger::DisplayLog::debug("No simulation input file configured");
     }
 }
 
@@ -170,7 +170,7 @@ void SimulationSystem::updateSimulationInput()
 
             if (simulation_action.type == SimulationActionType::KeyPressed)
             {
-                DisplayLog::info("SimulationSystem: Pressing key: ",
+                logger::DisplayLog::info("SimulationSystem: Pressing key: ",
                                  keyIndex(simulation_action.key));
                 systemProvider().system<InputSystem>().simulatePressKey(
                     simulation_action.key);
@@ -178,14 +178,14 @@ void SimulationSystem::updateSimulationInput()
             else if (simulation_action.type ==
                      SimulationActionType::KeyReleased)
             {
-                DisplayLog::info("SimulationSystem: releasing key: ",
+                logger::DisplayLog::info("SimulationSystem: releasing key: ",
                                  keyIndex(simulation_action.key));
                 systemProvider().system<InputSystem>().simulateReleaseKey(
                     simulation_action.key);
             }
             else
             {
-                DisplayLog::error("Unknown SimulationActionType enum value: ",
+                logger::DisplayLog::error("Unknown SimulationActionType enum value: ",
                                   (int)simulation_action.type);
             }
         }
@@ -240,12 +240,12 @@ bool SimulationSystem::getNext(str const& name, size_type& pre_selected)
     {
         pre_selected = (*(priv_->current_simulable_data_buffer_iterator++));
         generated    = true;
-        DisplayLog::info("Returning simulated data: ", pre_selected);
+        logger::DisplayLog::info("Returning simulated data: ", pre_selected);
     }
 
     // Store the generated buffer into the play data.
     priv_->next_replay_data_.data_buffer_.push_back(pre_selected);
-    DisplayLog::info("Generated data added to buffer for ", name);
+    logger::DisplayLog::info("Generated data added to buffer for ", name);
     return generated;
 }
 }  // namespace haf::sys

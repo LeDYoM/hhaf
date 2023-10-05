@@ -7,6 +7,11 @@ HAF_PRAGMA_ONCE
 #include <source_location>
 #endif
 
+namespace haf
+{
+using LogAsserter = logger::LogAsserter<DisplayLog>;
+}
+
 namespace haf::log
 {
 template <typename T>
@@ -31,7 +36,6 @@ constexpr void log_assert(
     {
         LogAsserter::log_assert(condition, core::forward<Args>(args)...);
     }
-
 }
 }  // namespace haf::log
 #endif

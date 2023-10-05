@@ -28,7 +28,7 @@ bool SharedDataBuffer::autoBindToDefault()
             m_buffer_object_unsized.subObject().index().to_view())};
     if (index > -1)
     {
-        DisplayLog::debug(StaticTypeName,
+        logger::DisplayLog::debug(StaticTypeName,
                           ": Binding default uniform group location: ",
                           m_buffer_object_unsized.subObject().index(),
                           "with location ", index);

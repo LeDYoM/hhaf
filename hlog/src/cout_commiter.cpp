@@ -1,6 +1,6 @@
 #include <hlog/include/cout_commiter.hpp>
 
-namespace haf
+namespace logger
 {
 // template logger::StreamCommiter<&(std::cout)>;
-}  // namespace haf
+}  // namespace logger

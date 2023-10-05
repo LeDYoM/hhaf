@@ -24,7 +24,7 @@ public:
         auto const result{
             file_serializer->deserializeFromFile(configuration_file, current)};
 
-        DisplayLog::debug_if(result != IFileSerializer::Result::Success,
+        logger::DisplayLog::debug_if(result != IFileSerializer::Result::Success,
                              "Cannot parse ", configuration_file);
 
         if (result == IFileSerializer::Result::Success)

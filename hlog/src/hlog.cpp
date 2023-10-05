@@ -15,35 +15,22 @@
 
 namespace logger
 {
-template struct MixinCommiter<haf::FileCommiter, haf::COutCommiter>;
-}
-
-namespace haf
-{
-template struct ThreadCommiter<FileCOutCommiter>;
-
-}  // namespace haf
-
-namespace logger
-{
-template struct Log<true, haf::LogStream, haf::ThreadFileCoutCommiter>;
-template struct Log<true, haf::LogStream, haf::COutCommiter>;
+template struct MixinCommiter<FileCommiter, COutCommiter>;
+template struct Log<true, LogStream, ThreadFileCoutCommiter>;
+template struct Log<true, LogStream, COutCommiter>;
 
 template struct LogDisplayer<
-    Log<true, haf::LogStream, haf::ThreadCommiter<haf::FileCOutCommiter>>,
+    Log<true, LogStream, ThreadCommiter<FileCOutCommiter>>,
     SeverityType>;
-template struct LogDisplayer<Log<true, haf::LogStream, haf::COutCommiter>,
-                             SeverityType>;
-
-template struct LogAsserter<LogDisplayer<
-    Log<true, haf::LogStream, haf::ThreadCommiter<haf::FileCOutCommiter>>,
-    SeverityType>>;
+template struct LogDisplayer<Log<true, LogStream, COutCommiter>, SeverityType>;
 
 template struct LogAsserter<
-    LogDisplayer<Log<true, haf::LogStream, haf::COutCommiter>, SeverityType>>;
+    LogDisplayer<Log<true, LogStream, ThreadCommiter<FileCOutCommiter>>,
+                 SeverityType>>;
 
-template struct LogInitializer<
-    Log<true, haf::LogStream, haf::ThreadFileCoutCommiter>>;
-template struct LogInitializer<
-    Log<true, haf::LogStream, haf::COutCommiter>>;
+template struct LogAsserter<
+    LogDisplayer<Log<true, LogStream, COutCommiter>, SeverityType>>;
+
+template struct LogInitializer<Log<true, LogStream, ThreadFileCoutCommiter>>;
+template struct LogInitializer<Log<true, LogStream, COutCommiter>>;
 }  // namespace logger

@@ -6,11 +6,11 @@
 #define __STDC_WANT_SECURE_LIB__ 1
 #include <iostream>
 
-namespace haf
+namespace logger
 {
-struct COutCommiter : public logger::StreamCommiter<&(std::cout)>
+struct COutCommiter : public StreamCommiter<&(std::cout)>
 {};
 
-}  // namespace haf
+}  // namespace logger
 
 #endif

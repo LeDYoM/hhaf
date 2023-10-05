@@ -12,7 +12,7 @@
 #include <logger/include/stream_commiter.hpp>
 #include <logger/include/mixin_commiter.hpp>
 
-namespace haf
+namespace logger
 {
 using Message = std::string;
 
@@ -27,7 +27,7 @@ struct InnerData
     InnerData()                 = default;
     InnerData(InnerData const&) = delete;
     InnerData& operator=(InnerData const&) = delete;
-    InnerData(InnerData&&) = default;
+    InnerData(InnerData&&)                 = default;
     InnerData& operator=(InnerData&&) = default;
 };
 
@@ -90,4 +90,4 @@ void ThreadCommiterImpl::commitlog(const char* const log_stream)
     data_->msg_queue_.emplace(std::move(log_stream));
 }
 
-}  // namespace haf
+}  // namespace logger

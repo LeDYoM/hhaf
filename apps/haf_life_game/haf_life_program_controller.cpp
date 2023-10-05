@@ -13,7 +13,7 @@ namespace hl
 void HLProgramController::onInit(
     haf::scene::IAppInitializer& app_initializer)
 {
-    haf::DisplayLog::verbose("Initializing HLProgramController");
+    logger::DisplayLog::verbose("Initializing HLProgramController");
     app_initializer.registerComponent<MainScene>();
     app_initializer.registerComponent<MainMeshController>();
 

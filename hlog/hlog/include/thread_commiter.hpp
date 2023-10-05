@@ -1,7 +1,7 @@
 #ifndef HLOG_THREAD_COMMITER_INCLUDE_HPP
 #define HLOG_THREAD_COMMITER_INCLUDE_HPP
 
-namespace haf
+namespace logger
 {
 struct ThreadCommiterImpl
 {
@@ -23,7 +23,6 @@ struct ThreadCommiter
         ThreadCommiterImpl::init(&Commiter::commitlog);
     }
 
-
     static void finish()
     {
         ThreadCommiterImpl::finish();
@@ -36,6 +35,6 @@ struct ThreadCommiter
     }
 };
 
-}  // namespace haf
+}  // namespace logger
 
 #endif

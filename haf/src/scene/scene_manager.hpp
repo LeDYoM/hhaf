@@ -50,7 +50,7 @@ public:
                                             []() { return core::msptr<T>(); })};
         if (result)
         {
-            DisplayLog::verbose("Registered component of type: <",
+            logger::DisplayLog::verbose("Registered component of type: <",
                                 T::StaticTypeName, "> with size: ", sizeof(T));
         }
         return result;

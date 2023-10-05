@@ -13,7 +13,7 @@ namespace zoper
 void ZoperProgramController::onInit(
     haf::scene::IAppInitializer& app_initializer)
 {
-    DisplayLog::verbose("Initializing ZoperProgramController");
+    logger::DisplayLog::verbose("Initializing ZoperProgramController");
     app_initializer.registerSceneType<MenuScene>();
     app_initializer.registerSceneType<GameScene>();
     app_initializer.registerSceneType<HighScoresScene>();
