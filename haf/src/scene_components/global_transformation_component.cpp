@@ -58,7 +58,8 @@ void GlobalTransformationComponent::connectToParentGlobalTransformationChanged()
     }
     else
     {
-        logger::DisplayLog::verbose("No parent GlobalTransformationComponent found");
+        logger::DisplayLog::verbose(
+            "No parent GlobalTransformationComponent found");
     }
 }
 
