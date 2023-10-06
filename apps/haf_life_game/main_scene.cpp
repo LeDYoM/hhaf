@@ -48,6 +48,10 @@ void MainScene::onAttached()
     CameraBuilder cbuilder;
     cbuilder.addDebugMovableCamera(*node);
 
+    auto component = attachedNode()
+                         ->componentContainer()
+                         .attachComponent<TransformationComponent>();
+    component->Position = {-0.5F, 0.5F, 0.0F};
     SceneNodeComponentManagerment scc{attachedNode()};
     scc.createSceneNodeWithComponent<MainMeshController>("MainMeshController");
 }
