@@ -7,7 +7,7 @@
 #include <haf/include/scene_components/camera/camera.hpp>
 #include <haf/include/scene_components/transformation_component.hpp>
 #include <haf/include/scene/scene_node_component_management.hpp>
-#include "main_mesh_controller.hpp"
+#include <haf/include/scene_components/main_mesh_controller.hpp>
 
 using namespace haf;
 using namespace haf::core;

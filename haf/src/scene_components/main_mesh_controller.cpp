@@ -1,4 +1,4 @@
-#include "main_mesh_controller.hpp"
+#include <haf/include/scene_components/main_mesh_controller.hpp>
 #include <haf/include/component/component_requirements.hpp>
 #include <haf/include/scene_components/scene_component.hpp>
 #include <haf/include/render/mesh_render_component.hpp>
@@ -8,18 +8,16 @@
 #include <haf/include/scene_components/camera/debug_camera_component.hpp>
 #include <haf/include/math/types.hpp>
 
-using namespace haf;
 using namespace haf::core;
-using namespace haf::scene;
 using namespace haf::component;
 using namespace haf::render;
 
-namespace hl
+namespace haf::scene
 {
 
 struct MainMeshController::ComponentsRequired
 {
-    sptr<scene::TransformationComponent> m_transformation;
+    sptr<TransformationComponent> m_transformation;
     sptr<render::MaterialDataComponent> m_material_data_component;
     sptr<render::MeshRenderComponent> m_mesh_render_component;
 };
