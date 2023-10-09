@@ -19,9 +19,6 @@ TEST_CASE("TransformationComponent::TransformationComponent",
     auto test_data{createComponentForTest<TransformationComponent>()};
     auto transformableComponent{test_data.component};
     CHECK(transformableComponent != nullptr);
-    //    CHECK(
-    //        transformableComponent->getComponent<GlobalTransformationComponent>()
-    //        != nullptr);
 }
 
 TEST_CASE("TransformationComponent::DefaultValues",
