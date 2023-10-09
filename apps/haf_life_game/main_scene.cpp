@@ -50,7 +50,7 @@ void MainScene::onAttached()
 
     auto component =
         node->componentContainer().attachComponent<TransformationComponent>();
-    component->Position = {-0.5F, 0.5F, 0.0F};
+    component->Position = {0.0F, 0.5F, 0.0F};
     SceneNodeComponentManagerment scc{*node};
     scc.createSceneNodeWithComponent<MainMeshController>("MainMeshController");
 }

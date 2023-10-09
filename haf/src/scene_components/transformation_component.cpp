@@ -19,7 +19,6 @@ struct TransformationComponent::ComponentsRequired
 struct TransformationComponent::PrivateComponentData
 {
     Matrix4x4 m_transform;
-    bool m_transformation_updated{true};
 
     rptr<TransformationComponent> parentTransformationComponent(
         rptr<SceneNode> attachedNode) const noexcept
@@ -60,13 +59,7 @@ void TransformationComponent::updateLocalTransformation() noexcept
     m_p->m_transform.setColumn<3>(Position());
     m_p->m_transform.setDiagonal(Scale());
     //    m_p->m_transform.setRotation(Rotation(), 1.0F);
-    m_p->m_transformation_updated = true;
     localMatrixChanged(m_p->m_transform);
-}
-
-bool TransformationComponent::transformationUpdated() const noexcept
-{
-    return m_p->m_transformation_updated;
 }
 
 Matrix4x4 const& TransformationComponent::matrix() const noexcept

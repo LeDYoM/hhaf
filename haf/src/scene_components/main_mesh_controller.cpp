@@ -49,25 +49,14 @@ bool MainMeshController::addRequirements(
     component_requirements.getOrCreateComponent(
         m_components->m_mesh_render_component);
 
+    m_components->m_transformation->Position =
+        math::vector3df{0.5F, 0.0F, 0.0F};
+
     return isOk;
 }
 
 void MainMeshController::update()
 {
-    int a = 0;
-    (void)(a);
-
-    m_components->m_transformation->Position =
-        math::vector3df{0.5F, 0.0F, 0.0F};
-    /*
-        auto p{getComponent<MeshComponentTest>()
-                   ->getComponent<TransformationComponent>()
-                   ->Position()};
-    //    p.x += 0.0001F;
-        getComponent<MeshComponent>()
-            ->getComponent<TransformationComponent>()
-            ->Position = p;
-    */
 }
 
 }  // namespace hl

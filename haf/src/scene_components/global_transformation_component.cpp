@@ -14,8 +14,8 @@
 
 #include <hlog/include/hlog.hpp>
 
-using namespace htps;
-using namespace fmath;
+using namespace haf::core;
+using namespace haf::math;
 
 namespace haf::scene
 {
