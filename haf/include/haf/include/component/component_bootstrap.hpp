@@ -19,8 +19,10 @@ public:
         return T::StaticTypeName;
     }
 
+    static constexpr scene::SceneUpdateTime StaticSceneUpdateTime{sceneUpdateTime};
+
 protected:
-        using Component::Component;
+    using Component::Component;
 
     scene::SceneUpdateTime defaultSceneUpdateTime() const override
     {
