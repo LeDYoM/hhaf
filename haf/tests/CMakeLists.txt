@@ -36,6 +36,7 @@ set(SOURCE_TESTS
     scene_components/global_transformation_component
     scene_components/scene_nodes_component
     scene_components/states_controller_component
+    scene_components/transformation_and_global_component
     scene_components/transformation_component
     scene_components/visibility_selector_component
 
