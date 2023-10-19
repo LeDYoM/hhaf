@@ -12,7 +12,7 @@ namespace haf::scene
 {
 class SceneNode;
 enum class SceneUpdateTime : core::u32;
-}
+}  // namespace haf::scene
 
 namespace haf::component
 {
@@ -98,8 +98,8 @@ public:
     template <typename T>
     core::sptr<T> getOrCreateComponent()
     {
-        core::sptr<Component> result{getOrCreateComponent(T::StaticTypeName)};
-        return result ? core::dynamic_pointer_cast<T>(result) : nullptr;
+        return safeComponentConversion<T>(
+            getOrCreateComponent(T::StaticTypeName));
     }
 
     template <typename T>
@@ -122,7 +122,6 @@ public:
     core::vector<core::sptr<Component>>::const_iterator cend() const;
 
 private:
-
     core::sptr<Component> createComponent(core::str_view typeName);
     bool applyRequirements(Component& _thisComponent);
     bool addComponent(core::sptr<Component> nc);

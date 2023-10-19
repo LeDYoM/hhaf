@@ -13,7 +13,7 @@ using namespace haf::scene;
 using namespace haf::core;
 using namespace haf::component;
 
-TEST_CASE("TransformationComponent::TransformationComponent",
+TEST_CASE("TransformationAndGlobalComponent::TransformationAndGlobalComponent",
           "[TransformationComponent][scene][component]")
 {
     auto test_data{createComponentForTest<TransformationComponent>()};
@@ -21,8 +21,8 @@ TEST_CASE("TransformationComponent::TransformationComponent",
     CHECK(transformableComponent != nullptr);
 }
 
-TEST_CASE("TransformationComponent::DefaultValues",
-          "[TransformationComponent][scene][component]")
+TEST_CASE("TransformationAndGlobalComponent::DefaultValues",
+          "[TransformationAndGlobalComponent][scene][component]")
 {
     auto test_data{createComponentForTest<TransformationComponent>()};
     auto transformableComponent{test_data.component};
@@ -34,7 +34,7 @@ TEST_CASE("TransformationComponent::DefaultValues",
     CHECK_FALSE(transformableComponent->hasPendingMatrixUpdate());
 }
 
-TEST_CASE("TransformationComponent::SimpleTransformation",
+TEST_CASE("TransformationAndGlobalComponent::SimpleTransformation",
           "[TransformationComponent][scene][component]")
 {
     auto test_data{createComponentForTest<TransformationComponent>()};
