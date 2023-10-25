@@ -3,7 +3,7 @@ HAF_PRAGMA_ONCE
 #define HAF_SCENE_SCENEMANAGER_INCLUDE_HPP
 
 #include "haf_private.hpp"
-#include <htypes/include/types.hpp>
+#include <haf/include/core/types.hpp>
 #include <facil_math/include/rect.hpp>
 #include <haf/include/types/scene_types.hpp>
 #include "scene_render_context_for_system.hpp"

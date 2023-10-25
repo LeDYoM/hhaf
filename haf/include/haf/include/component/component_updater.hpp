@@ -7,16 +7,24 @@ HAF_PRAGMA_ONCE
 #include <haf/include/scene/scene_update_time.hpp>
 #include <haf/include/debug_system/debug_types.hpp>
 
+namespace haf::scene
+{
+    class ISceneManagerSubSystem;
+}
+
 namespace haf::component
 {
 class ComponentUpdater
 {
+public:
+    void update(scene::SceneUpdateTime const sceneUpdateTime);
+
 protected:
     using UpdateFunction = core::function<bool()>;
     using UpdateProperty = core::rptr<prop::IPropertyState>;
     using UpdateAction   = core::function<void()>;
 
-    void update(scene::SceneUpdateTime const sceneUpdateTime);
+    void update(scene::ISceneManagerSubSystem& isceneManagerSubSystem);
 
     /**
      * @brief Add an updater of a property
@@ -40,10 +48,13 @@ protected:
     void setSceneUpdateTime(
         scene::SceneUpdateTime const sceneUpdateTime) noexcept;
 
+    void setParentSubSystem(core::str parent_sub_system_name) noexcept;
+
 private:
     void update();
 
     core::vector<core::pair<UpdateFunction, UpdateAction>> m_propertiesToUpdate;
+    core::str m_sceneParentSubSystem;
     scene::SceneUpdateTime m_sceneUpdateTime{
         scene::SceneUpdateTime::Controller};
 
