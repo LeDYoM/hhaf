@@ -17,14 +17,13 @@ namespace haf::component
 class ComponentUpdater
 {
 public:
-    void update(scene::SceneUpdateTime const sceneUpdateTime);
-
+    void update(scene::ISceneManagerSubSystem& isceneManagerSubSystem);
 protected:
     using UpdateFunction = core::function<bool()>;
     using UpdateProperty = core::rptr<prop::IPropertyState>;
     using UpdateAction   = core::function<void()>;
 
-    void update(scene::ISceneManagerSubSystem& isceneManagerSubSystem);
+    void update(scene::SceneUpdateTime const sceneUpdateTime);
 
     /**
      * @brief Add an updater of a property
