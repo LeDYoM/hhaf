@@ -4,7 +4,6 @@ HAF_PRAGMA_ONCE
 
 #include <haf/include/core/types.hpp>
 #include <haf/include/properties/iproperty_state.hpp>
-#include <haf/include/scene/scene_update_time.hpp>
 #include <haf/include/debug_system/debug_types.hpp>
 
 namespace haf::scene
@@ -22,8 +21,6 @@ protected:
     using UpdateFunction = core::function<bool()>;
     using UpdateProperty = core::rptr<prop::IPropertyState>;
     using UpdateAction   = core::function<void()>;
-
-    void update(scene::SceneUpdateTime const sceneUpdateTime);
 
     /**
      * @brief Add an updater of a property
@@ -44,21 +41,16 @@ protected:
 
     void addUpdater(UpdateAction updateAction);
 
-    void setSceneUpdateTime(
-        scene::SceneUpdateTime const sceneUpdateTime) noexcept;
-
     void setParentSubSystem(core::str parent_sub_system_name) noexcept;
 
 private:
     void update();
 
     core::vector<core::pair<UpdateFunction, UpdateAction>> m_propertiesToUpdate;
-    core::str m_sceneParentSubSystem;
-    scene::SceneUpdateTime m_sceneUpdateTime{
-        scene::SceneUpdateTime::Controller};
+    core::str m_sceneParentSubSystemName;
 
-    HAF_DEBUG_VARIABLES_CODE(
-        static uint32_t m_updateCount[scene::size<scene::SceneUpdateTime>()]);
+//    HAF_DEBUG_VARIABLES_CODE(
+//        static uint32_t m_updateCount[scene::size<scene::SceneUpdateTime>()]);
 };
 
 }  // namespace haf::component

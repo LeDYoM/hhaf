@@ -4,13 +4,10 @@ HAF_PRAGMA_ONCE
 
 #include <haf/include/core/types.hpp>
 #include <haf/include/component/component.hpp>
-#include <haf/include/scene/scene_update_time.hpp>
 
 namespace haf::component
 {
-template <typename T,
-          scene::SceneUpdateTime sceneUpdateTime =
-              scene::SceneUpdateTime::Controller>
+template <typename T, core::str_literal subSystemUpdateName = "">
 class ComponentBootStrap : public Component
 {
 public:
@@ -19,18 +16,19 @@ public:
         return T::StaticTypeName;
     }
 
-    static constexpr scene::SceneUpdateTime StaticSceneUpdateTime{sceneUpdateTime};
+    static constexpr core::str_literal StaticSubSystemUpdateName{
+        subSystemUpdateName};
 
 protected:
     using Component::Component;
 
-    scene::SceneUpdateTime defaultSceneUpdateTime() const override
+    core::str_view defaultSubSystemUpdateName() const override
     {
-        return sceneUpdateTime;
+        return core::str_view{StaticSubSystemUpdateName.cbegin()};
     }
 
 public:
-    ~ComponentBootStrap() override{};
+    ~ComponentBootStrap() override {}
 };
 
 }  // namespace haf::component

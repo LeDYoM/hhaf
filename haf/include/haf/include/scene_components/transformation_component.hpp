@@ -20,7 +20,7 @@ namespace haf::scene
  */
 class HAF_API TransformationComponent final
     : public component::ComponentBootStrap<TransformationComponent,
-                                           scene::SceneUpdateTime::BeginFrame>
+                                           "LocalTransformation">
 {
 public:
     static constexpr const core::str_view StaticTypeName{

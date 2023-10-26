@@ -2,15 +2,15 @@
 #include <haf/include/scene/scene_node.hpp>
 #include <haf/include/scene/scene_nodes_group.hpp>
 #include <haf/include/component/component.hpp>
-#include <haf/include/scene/scene_update_time.hpp>
 
 using namespace haf::core;
 using namespace haf::component;
 
 namespace haf::scene
 {
-void SceneWalker::startWalk(SceneNode& rootNode)
+void SceneWalker::startWalk(SceneNode& /*rootNode*/)
 {
+/*
     using scene::num_begin;
     using scene::num_end;
     using scene::SceneUpdateTime;
@@ -20,6 +20,7 @@ void SceneWalker::startWalk(SceneNode& rootNode)
     {
         walk(rootNode, toEnum<SceneUpdateTime>(i));
     }
+    */
 }
 
 void SceneWalker::walk(SceneNode& node)
@@ -32,13 +33,13 @@ void SceneWalker::walk(SceneNode& node)
     }
 }
 
-void SceneWalker::walk(SceneNode& node, SceneUpdateTime const sceneUpdateTime)
+void SceneWalker::walk(SceneNode& node, ISceneManagerSubSystem& iSceneManagerSubSystem)
 {
-    node.componentContainer().updateComponents(sceneUpdateTime);
+    node.componentContainer().updateComponents(iSceneManagerSubSystem);
 
     for (sptr<SceneNode> const& sceneNode : node.sceneNodesGroup())
     {
-        walk(*sceneNode, sceneUpdateTime);
+        walk(*sceneNode, iSceneManagerSubSystem);
     }
 }
 

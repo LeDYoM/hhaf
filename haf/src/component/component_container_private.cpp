@@ -1,5 +1,6 @@
 #include "component_container_private.hpp"
 #include "scene/scene_manager.hpp"
+#include "scene/iscene_manager subsystem.hpp"
 
 #include "system/get_system.hpp"
 
@@ -25,11 +26,11 @@ ComponentContainer::ComponentContainerPrivate::ComponentContainerPrivate(
 {}
 
 void ComponentContainer::ComponentContainerPrivate::updateComponents(
-    scene::SceneUpdateTime const sceneUpdateTime)
+    scene::ISceneManagerSubSystem& iSceneManagerSubSystem)
 {
     for (auto&& component : components_)
     {
-        component->updateComponent(sceneUpdateTime);
+        component->update(iSceneManagerSubSystem);
     }
 }
 

@@ -5,11 +5,11 @@ HAF_PRAGMA_ONCE
 #include <htypes/include/types.hpp>
 
 #include <haf/include/scene/scene_node.hpp>
-#include <haf/include/scene/scene_update_time.hpp>
 
 namespace haf::scene
 {
-    class SceneManager;
+class SceneManager;
+class ISceneManagerSubSystem;
 }
 
 namespace haf::component
@@ -23,7 +23,8 @@ struct ComponentContainer::ComponentContainerPrivate
     core::vector<core::sptr<Component>> components_;
 
     ComponentContainerPrivate(core::rptr<scene::SceneNode> attachable) noexcept;
-    void updateComponents(scene::SceneUpdateTime const sceneUpdateTime);
+    void updateComponents(
+        scene::ISceneManagerSubSystem& iSceneManagerSubSystem);
     void clearComponents();
 };
 

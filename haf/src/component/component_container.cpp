@@ -4,7 +4,6 @@
 #include <htypes/include/types.hpp>
 
 #include <haf/include/scene/scene_node.hpp>
-#include <haf/include/scene/scene_update_time.hpp>
 
 #include "scene/scene_manager.hpp"
 #include "system/get_system.hpp"
@@ -27,13 +26,14 @@ ComponentContainer::~ComponentContainer()
 }
 
 void ComponentContainer::updateComponents(
-    scene::SceneUpdateTime const sceneUpdateTime)
+    scene::ISceneManagerSubSystem& iSceneManagerSubSystem)
 {
-    p_->updateComponents(sceneUpdateTime);
+    p_->updateComponents(iSceneManagerSubSystem);
 }
 
 void ComponentContainer::updateComponents()
 {
+    /*
     using scene::num_begin;
     using scene::num_end;
     using scene::SceneUpdateTime;
@@ -43,6 +43,7 @@ void ComponentContainer::updateComponents()
     {
         p_->updateComponents(toEnum<SceneUpdateTime>(i));
     }
+    */
 }
 
 void ComponentContainer::clearComponents() noexcept

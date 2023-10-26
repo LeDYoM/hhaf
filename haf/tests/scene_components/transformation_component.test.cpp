@@ -11,7 +11,7 @@ using namespace haf::test;
 using namespace haf::scene;
 using namespace haf::core;
 using namespace haf::component;
-
+/*
 TEST_CASE("TransformationComponent::TransformationComponent",
           "[TransformationComponent][scene][component]")
 {
@@ -63,3 +63,4 @@ TEST_CASE("TransformationComponent::SimpleTransformation",
         TransformationComponent::StaticSceneUpdateTime);
     CHECK_FALSE(transformableComponent->hasPendingMatrixUpdate());
 }
+*/

@@ -73,7 +73,8 @@ public:
      * @brief Update componentents of this container
      * @param sceneUpdateTime Update time to update
      */
-    void updateComponents(scene::SceneUpdateTime const sceneUpdateTime);
+    void updateComponents(
+        scene::ISceneManagerSubSystem& iSceneManagerSubSystem);
     void updateComponents();
 
     /**

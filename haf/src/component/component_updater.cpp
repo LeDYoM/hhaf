@@ -25,17 +25,10 @@ void ComponentUpdater::addUpdater(UpdateAction updateAction)
     m_propertiesToUpdate.emplace_back(nullptr, core::move(updateAction));
 }
 
-void ComponentUpdater::update(scene::SceneUpdateTime const sceneUpdateTime)
+void ComponentUpdater::update(
+    scene::ISceneManagerSubSystem& isceneManagerSubSystem)
 {
-    if (m_sceneUpdateTime == sceneUpdateTime)
-    {
-        update();
-    }
-}
-
- void ComponentUpdater::update(scene::ISceneManagerSubSystem& isceneManagerSubSystem)
-{
-    if (m_sceneParentSubSystem == isceneManagerSubSystem.subSystemName())
+    if (m_sceneParentSubSystemName == isceneManagerSubSystem.subSystemName())
     {
         update();
     }
@@ -52,16 +45,10 @@ void ComponentUpdater::update()
     }
 }
 
-void ComponentUpdater::setSceneUpdateTime(
-    scene::SceneUpdateTime const sceneUpdateTime) noexcept
-{
-    m_sceneUpdateTime = sceneUpdateTime;
-}
-
 void ComponentUpdater::setParentSubSystem(
     core::str parent_sub_system_name) noexcept
 {
-    m_sceneParentSubSystem = core::move(parent_sub_system_name);
+    m_sceneParentSubSystemName = core::move(parent_sub_system_name);
 }
 
 }  // namespace haf::component
