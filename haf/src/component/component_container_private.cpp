@@ -1,6 +1,6 @@
 #include "component_container_private.hpp"
 #include "scene/scene_manager.hpp"
-#include "scene/iscene_manager subsystem.hpp"
+#include "scene_subsystems/iscene_manager subsystem.hpp"
 
 #include "system/get_system.hpp"
 

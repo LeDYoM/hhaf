@@ -8,6 +8,7 @@ namespace haf::scene
 {
 class SceneNode;
 class ISceneManagerSubSystem;
+class SceneManagerSubSystemGroup;
 
 }  // namespace haf::scene
 
@@ -16,7 +17,7 @@ namespace haf::scene
 class SceneWalker final
 {
 public:
-    void startWalk(SceneNode& rootNode);
+    void startWalk(SceneNode& rootNode, SceneManagerSubSystemGroup& sceneManagerSubSystemGroup);
     void walk(SceneNode& node);
     void walk(SceneNode& node, ISceneManagerSubSystem& iSceneManagerSubSystem);
 };

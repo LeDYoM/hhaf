@@ -7,6 +7,7 @@ HAF_PRAGMA_ONCE
 #include <facil_math/include/rect.hpp>
 #include <haf/include/types/scene_types.hpp>
 #include "scene_render_context_for_system.hpp"
+#include "scene_subsystems/scene_manager subsystem_group.hpp"
 #include <haf/include/scene_components/iapp_initializer.hpp>
 #include <haf/include/scene_components/iapp_finisher.hpp>
 #include "system/system_base.hpp"
@@ -88,6 +89,7 @@ private:
     MeshCreator m_mesh_creator;
     core::uptr<SceneNode> m_rootSceneNode;
     SceneWalker m_scene_walker;
+    SceneManagerSubSystemGroup m_subsystems;
 
 };
 }  // namespace haf::scene

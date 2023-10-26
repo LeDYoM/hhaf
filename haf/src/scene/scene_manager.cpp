@@ -32,7 +32,7 @@ void SceneManager::update()
 {
     m_scene_render_context_for_system.beginFrame();
     m_keyboard_input_manager.update();
-    m_scene_walker.startWalk(*m_rootSceneNode);
+    m_scene_walker.startWalk(*m_rootSceneNode, m_subsystems);
     m_scene_render_context_for_system.endFrame();
 }
 

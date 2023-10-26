@@ -1,5 +1,5 @@
 #include <haf/include/component/component_updater.hpp>
-#include "scene/iscene_manager subsystem.hpp"
+#include "scene_subsystems/iscene_manager subsystem.hpp"
 
 namespace haf::component
 {
