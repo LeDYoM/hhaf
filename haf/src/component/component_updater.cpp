@@ -28,10 +28,15 @@ void ComponentUpdater::addUpdater(UpdateAction updateAction)
 void ComponentUpdater::update(
     scene::ISceneManagerSubSystem& isceneManagerSubSystem)
 {
-    if (m_sceneParentSubSystemName == isceneManagerSubSystem.subSystemName())
+    if (acceptSubSystem(isceneManagerSubSystem))
     {
         update();
     }
+}
+
+bool acceptSubSystem(scene::ISceneManagerSubSystem& scene_subSystem)
+{
+    return m_sceneParentSubSystemName == isceneManagerSubSystem.subSystemName();
 }
 
 void ComponentUpdater::update()

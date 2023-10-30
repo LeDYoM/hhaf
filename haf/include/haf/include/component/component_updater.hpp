@@ -8,7 +8,7 @@ HAF_PRAGMA_ONCE
 
 namespace haf::scene
 {
-    class ISceneManagerSubSystem;
+class ISceneManagerSubSystem;
 }
 
 namespace haf::component
@@ -51,12 +51,15 @@ protected:
 
 private:
     void update();
+    virtual bool acceptSubSystem(
+        scene::ISceneManagerSubSystem& scene_subSystem);
 
     core::vector<core::pair<UpdateFunction, UpdateAction>> m_propertiesToUpdate;
     core::str m_sceneParentSubSystemName;
 
-//    HAF_DEBUG_VARIABLES_CODE(
-//        static uint32_t m_updateCount[scene::size<scene::SceneUpdateTime>()]);
+    //    HAF_DEBUG_VARIABLES_CODE(
+    //        static uint32_t
+    //        m_updateCount[scene::size<scene::SceneUpdateTime>()]);
 };
 
 }  // namespace haf::component
