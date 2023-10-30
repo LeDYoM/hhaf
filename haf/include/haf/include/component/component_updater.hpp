@@ -52,7 +52,7 @@ protected:
 private:
     void update();
     virtual bool acceptSubSystem(
-        scene::ISceneManagerSubSystem& scene_subSystem);
+        scene::ISceneManagerSubSystem& isceneManagerSubSystem);
 
     core::vector<core::pair<UpdateFunction, UpdateAction>> m_propertiesToUpdate;
     core::str m_sceneParentSubSystemName;
