@@ -14,8 +14,18 @@ ISceneManagerSubSystem::~ISceneManagerSubSystem() = default;
 bool ISceneManagerSubSystem::update(
     component::ComponentUpdater& component_updater)
 {
-    component_updater.update(*this);
-    return true;
+    if (isComponentAcceptable(component_updater))
+    {
+        component_updater.update(*this);
+        return true;
+    }
+    return false;
+}
+
+bool ISceneManagerSubSystem::isComponentAcceptable(
+    component::ComponentUpdater& component_updater)
+{
+    return subSystemName() == component_updater.parentSubSystemName();
 }
 
 }  // namespace haf::scene

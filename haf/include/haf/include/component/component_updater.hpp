@@ -17,6 +17,12 @@ class ComponentUpdater
 {
 public:
     void update(scene::ISceneManagerSubSystem& isceneManagerSubSystem);
+
+    core::str_view parentSubSystemName() const noexcept
+    {
+        return core::str_view{m_sceneParentSubSystemName.c_str()};
+    }
+
 protected:
     using UpdateFunction = core::function<bool()>;
     using UpdateProperty = core::rptr<prop::IPropertyState>;

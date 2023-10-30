@@ -17,11 +17,12 @@ class ISceneManagerSubSystem
 public:
     explicit ISceneManagerSubSystem(core::str subsystem_name);
     virtual ~ISceneManagerSubSystem();
-    virtual bool update(component::ComponentUpdater& component_updater);
+    bool update(component::ComponentUpdater& component_updater);
 
     core::str const& subSystemName() const noexcept { return m_subsystem_name; }
 
 private:
+    virtual bool isComponentAcceptable(component::ComponentUpdater& component_updater);
     core::str m_subsystem_name;
 };
 }  // namespace haf::scene

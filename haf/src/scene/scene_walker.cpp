@@ -16,17 +16,6 @@ void SceneWalker::startWalk(SceneNode& /*rootNode*/, SceneManagerSubSystemGroup&
     {
         (void)(sub_systen);
     }
-/*
-    using scene::num_begin;
-    using scene::num_end;
-    using scene::SceneUpdateTime;
-    using scene::toEnum;
-    for (auto i{num_begin<SceneUpdateTime>()}; i < num_end<SceneUpdateTime>();
-         ++i)
-    {
-        walk(rootNode, toEnum<SceneUpdateTime>(i));
-    }
-    */
 }
 
 void SceneWalker::walk(SceneNode& node)
