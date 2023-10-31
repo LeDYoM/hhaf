@@ -10,25 +10,18 @@ using namespace haf::component;
 
 namespace haf::scene
 {
-void SceneWalker::startWalk(SceneNode& /*rootNode*/, SceneManagerSubSystemGroup& sceneManagerSubSystemGroup)
+void SceneWalker::startWalk(
+    SceneNode& rootNode,
+    SceneManagerSubSystemGroup& sceneManagerSubSystemGroup)
 {
     for (auto&& sub_systen : sceneManagerSubSystemGroup.subsystems())
     {
-        (void)(sub_systen);
+        walk(rootNode, *sub_systen);
     }
 }
 
-void SceneWalker::walk(SceneNode& node)
-{
-//    node.componentContainer().updateComponents();
-
-    for (sptr<SceneNode> const& sceneNode : node.sceneNodesGroup())
-    {
-        walk(*sceneNode);
-    }
-}
-
-void SceneWalker::walk(SceneNode& node, ISceneManagerSubSystem& iSceneManagerSubSystem)
+void SceneWalker::walk(SceneNode& node,
+                       ISceneManagerSubSystem& iSceneManagerSubSystem)
 {
     node.componentContainer().updateComponents(iSceneManagerSubSystem);
 

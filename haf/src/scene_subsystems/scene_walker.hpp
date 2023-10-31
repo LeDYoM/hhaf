@@ -18,7 +18,6 @@ class SceneWalker final
 {
 public:
     void startWalk(SceneNode& rootNode, SceneManagerSubSystemGroup& sceneManagerSubSystemGroup);
-    void walk(SceneNode& node);
     void walk(SceneNode& node, ISceneManagerSubSystem& iSceneManagerSubSystem);
 };
 

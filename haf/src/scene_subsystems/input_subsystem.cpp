@@ -1,4 +1,5 @@
-#include "input_subsystem"
+#include "input_subsystem.hpp"
+#include <haf/include/component/component_updater.hpp>
 
 using namespace haf::core;
 
@@ -6,11 +7,7 @@ namespace haf::scene
 {
 InputSubSystem::InputSubSystem() : ISceneManagerSubSystem{"Input"} {}
 
-ISceneManagerSubSystem::ISceneManagerSubSystem(str subsystem_name) :
-    m_subsystem_name{core::move(subsystem_name)}
-{}
-
-bool ISceneManagerSubSystem::update(
+bool InputSubSystem::update(
     component::ComponentUpdater& component_updater)
 {
     component_updater.update(*this);

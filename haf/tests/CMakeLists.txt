@@ -40,6 +40,8 @@ set(SOURCE_TESTS
     scene_components/transformation_component
     scene_components/visibility_selector_component
 
+    scene_subsystems/scene_walker
+
     shareddata/address
     shareddata/shared_data_system
     shareddata/shared_data_updater

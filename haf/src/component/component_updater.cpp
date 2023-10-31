@@ -37,7 +37,9 @@ void ComponentUpdater::update(
 bool ComponentUpdater::acceptSubSystem(
     scene::ISceneManagerSubSystem& isceneManagerSubSystem)
 {
-    return m_sceneParentSubSystemName == isceneManagerSubSystem.subSystemName();
+    (void)(isceneManagerSubSystem);
+    return true;
+//    return m_sceneParentSubSystemName == isceneManagerSubSystem.subSystemName();
 }
 
 void ComponentUpdater::update()
