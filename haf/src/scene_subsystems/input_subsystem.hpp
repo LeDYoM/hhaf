@@ -12,10 +12,6 @@ class InputSubSystem final : public ISceneManagerSubSystem
 {
 public:
     InputSubSystem();
-    virtual bool update(component::ComponentUpdater& component_updater);
-
-private:
-    core::str m_subsystem_name;
 };
 }  // namespace haf::scene
 

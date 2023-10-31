@@ -1,10 +1,12 @@
-#include "input_subsystem.hpp"
+#include "render_subsystem.hpp"
 #include <haf/include/component/component_updater.hpp>
 
 using namespace haf::core;
 
 namespace haf::scene
 {
-InputSubSystem::InputSubSystem() : ISceneManagerSubSystem{"Input"} {}
+RenderSubSystem::RenderSubSystem() :
+    ISceneManagerSubSystem{"RenderSubSystem"}
+{}
 
 }  // namespace haf::scene

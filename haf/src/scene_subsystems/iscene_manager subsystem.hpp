@@ -7,7 +7,7 @@ HAF_PRAGMA_ONCE
 
 namespace haf::component
 {
-    class ComponentUpdater;
+class ComponentUpdater;
 }
 
 namespace haf::scene
@@ -17,12 +17,15 @@ class ISceneManagerSubSystem
 public:
     explicit ISceneManagerSubSystem(core::str subsystem_name);
     virtual ~ISceneManagerSubSystem();
-    bool update(component::ComponentUpdater& component_updater);
 
     core::str const& subSystemName() const noexcept { return m_subsystem_name; }
+    virtual bool isComponentAcceptable(
+        component::ComponentUpdater& component_updater);
+
+    virtual void performUpdateAction(
+        component::ComponentUpdater& component_updater);
 
 private:
-    virtual bool isComponentAcceptable(component::ComponentUpdater& component_updater);
     core::str m_subsystem_name;
 };
 }  // namespace haf::scene

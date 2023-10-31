@@ -1,6 +1,6 @@
 #include "scene_manager.hpp"
 #include "component_register.hpp"
-
+#include "../scene_subsystems/subsystem_register.hpp"
 #include <haf/include/scene/scene_node.hpp>
 
 #include "system/system_provider.hpp"
@@ -23,6 +23,9 @@ void SceneManager::init()
 {
     ComponentRegister component_register{*this};
     component_register();
+
+    SubSystemRegister subsystem_register{m_subsystems};
+    subsystem_register();
 
     m_rootSceneNode = muptr<SceneNode>(&isystemProvider());
     m_scene_render_context_for_system.init();
