@@ -4,13 +4,19 @@ HAF_PRAGMA_ONCE
 
 #include <haf/include/core/types.hpp>
 #include <haf/include/component/component.hpp>
+#include <haf/include/component/component_updater.hpp>
 
 namespace haf::component
 {
-template <typename T, core::str_literal subSystemUpdateName = "">
+template <typename T, core::str_literal subSystemUpdateName>
 class ComponentBootStrap : public Component
 {
 public:
+    ComponentBootStrap()
+    {
+        ComponentUpdater::setParentSubSystem(defaultSubSystemUpdateName());
+    }
+
     constexpr core::str_view const staticTypeName() const noexcept override
     {
         return T::StaticTypeName;

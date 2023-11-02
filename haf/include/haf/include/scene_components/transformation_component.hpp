@@ -20,7 +20,7 @@ namespace haf::scene
  */
 class HAF_API TransformationComponent final
     : public component::ComponentBootStrap<TransformationComponent,
-                                           "LocalTransformation">
+                                           "LocalViewUpdaterSubSystem">
 {
 public:
     static constexpr const core::str_view StaticTypeName{

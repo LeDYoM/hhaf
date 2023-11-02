@@ -8,7 +8,8 @@ HAF_PRAGMA_ONCE
 namespace haf::scene
 {
 class MainMeshController final
-    : public component::ComponentBootStrap<MainMeshController>
+    : public component::ComponentBootStrap<MainMeshController,
+                                           "InternalControllerSubSystem">
 {
 public:
     static constexpr const haf::core::str_view StaticTypeName{

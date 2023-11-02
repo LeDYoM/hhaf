@@ -21,11 +21,11 @@ SceneManager::~SceneManager() = default;
 
 void SceneManager::init()
 {
-    ComponentRegister component_register{*this};
-    component_register();
-
     SubSystemRegister subsystem_register{m_subsystems};
     subsystem_register();
+
+    ComponentRegister component_register{*this};
+    component_register();
 
     m_rootSceneNode = muptr<SceneNode>(&isystemProvider());
     m_scene_render_context_for_system.init();

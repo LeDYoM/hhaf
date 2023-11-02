@@ -13,7 +13,8 @@ HAF_PRAGMA_ONCE
 namespace haf::scene
 {
 class HAF_API GlobalTransformationComponent final
-    : public component::ComponentBootStrap<GlobalTransformationComponent>
+    : public component::ComponentBootStrap<GlobalTransformationComponent,
+                                           "GlobalViewUpdaterSubSystem">
 {
 public:
     static constexpr const core::str_view StaticTypeName{

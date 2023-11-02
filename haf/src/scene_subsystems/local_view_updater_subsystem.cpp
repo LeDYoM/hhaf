@@ -6,7 +6,7 @@ using namespace haf::core;
 namespace haf::scene
 {
 LocalViewUpdaterSubSystem::LocalViewUpdaterSubSystem() :
-    ISceneManagerSubSystem{"InternalControllerSubSystem"}
+    ISceneManagerSubSystem{"LocalViewUpdaterSubSystem"}
 {}
 
 }  // namespace haf::scene

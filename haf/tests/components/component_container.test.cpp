@@ -18,7 +18,7 @@ using namespace haf::prop;
 
 namespace
 {
-struct TestComponent : public ComponentBootStrap<TestComponent>
+struct TestComponent : public ComponentBootStrap<TestComponent, "Test">
 {
     static constexpr const core::str_view StaticTypeName{"TestComponent"};
 
@@ -30,7 +30,7 @@ private:
     void updater() { ++data_; }
 };
 
-struct TestComponent2 : public ComponentBootStrap<TestComponent2>
+struct TestComponent2 : public ComponentBootStrap<TestComponent2, "Test">
 {
     static constexpr const core::str_view StaticTypeName{"TestComponent2"};
 
@@ -40,7 +40,7 @@ private:
     //    void update() override { ++data_; }
 };
 
-struct TestComponent3 : public ComponentBootStrap<TestComponent3>
+struct TestComponent3 : public ComponentBootStrap<TestComponent3, "Test">
 {
     static constexpr const core::str_view StaticTypeName{"TestComponent3"};
     int data_{0};
@@ -80,8 +80,8 @@ TEST_CASE("haf::scene::ComponentContainer", "[ComponentContainer][constructor]")
 
         SECTION("Update")
         {
-//            component_container.updateComponents();
-//            CHECK(component->data_ == 1);
+            //            component_container.updateComponents();
+            //            CHECK(component->data_ == 1);
             /*
                         SECTION("Try Add twice")
                         {
@@ -120,7 +120,8 @@ TEST_CASE("haf::scene::ComponentContainer", "[ComponentContainer][constructor]")
 
 namespace
 {
-struct TestComposedComponent : public ComponentBootStrap<TestComposedComponent>
+struct TestComposedComponent
+    : public ComponentBootStrap<TestComposedComponent, "Test">
 //, TestComponent>
 {
     static constexpr const core::str_view StaticTypeName{
@@ -133,7 +134,7 @@ private:
 };
 
 struct TestComposedComposedComponent
-    : public ComponentBootStrap<TestComposedComposedComponent>
+    : public ComponentBootStrap<TestComposedComposedComponent, "Test">
 //    ,                          TestComposedComponent>
 {
     static constexpr const core::str_view StaticTypeName{
@@ -146,7 +147,7 @@ private:
 };
 
 struct TestComposedComponentRequirements
-    : public ComponentBootStrap<TestComposedComponentRequirements>
+    : public ComponentBootStrap<TestComposedComponentRequirements, "Test">
 // , TestComponent2,
 //                           TestComponent3,
 //                           TestComponent>

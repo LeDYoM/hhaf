@@ -47,6 +47,7 @@ protected:
 
     void addUpdater(UpdateAction updateAction);
 
+protected:
     void setParentSubSystem(core::str parent_sub_system_name) noexcept;
 
 private:

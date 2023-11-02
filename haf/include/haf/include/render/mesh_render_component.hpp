@@ -12,7 +12,8 @@ HAF_PRAGMA_ONCE
 namespace haf::render
 {
 class HAF_API MeshRenderComponent final
-    : public component::ComponentBootStrap<MeshRenderComponent>
+    : public component::ComponentBootStrap<MeshRenderComponent,
+                                           "RenderSubSystem">
 {
 public:
     static constexpr const core::str_view StaticTypeName{"MeshRenderComponent"};
@@ -24,6 +25,7 @@ public:
     void updateRender();
 
     core::sptr<res::Shader> shader() const noexcept;
+
 private:
     struct PrivateComponentData;
     core::PImplPointer<PrivateComponentData> m_p;

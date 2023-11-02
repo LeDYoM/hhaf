@@ -18,11 +18,11 @@ namespace haf::anim
  * @brief Component designed to store, manage and update animations.
  */
 class AnimationComponent final
-    : public component::ComponentBootStrap<AnimationComponent>
+    : public component::ComponentBootStrap<AnimationComponent,
+                                           "InternalControllerSubSystem">
 {
 public:
-    static constexpr const core::str_view StaticTypeName{
-        "AnimationComponent"};
+    static constexpr const core::str_view StaticTypeName{"AnimationComponent"};
 
     AnimationComponent();
     ~AnimationComponent() override;
@@ -46,8 +46,9 @@ public:
         PropertyValue const& end_value)
     {
         auto builder{make_property_animation_builder()};
-//        builder.deltaProperty(make_delta_property(
-//            attachedNodeAs<ObjectType>(), property_v, start_value, end_value));
+        //        builder.deltaProperty(make_delta_property(
+        //            attachedNodeAs<ObjectType>(), property_v, start_value,
+        //            end_value));
         return builder;
     }
 

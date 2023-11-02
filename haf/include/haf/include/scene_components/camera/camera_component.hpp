@@ -15,7 +15,8 @@ HAF_PRAGMA_ONCE
 namespace haf::scene
 {
 class HAF_API CameraComponent final
-    : public component::ComponentBootStrap<CameraComponent>
+    : public component::ComponentBootStrap<CameraComponent,
+                                           "ViewUpdaterSubSystem">
 {
 public:
     static constexpr const core::str_view StaticTypeName{"CameraComponent"};
@@ -25,9 +26,9 @@ public:
 
     enum class CameraMode : core::u32
     {
-        None = 0U,
-        Ortho = 1U,
-        Frustum = 2U,
+        None        = 0U,
+        Ortho       = 1U,
+        Frustum     = 2U,
         Perspective = 3U
     };
 

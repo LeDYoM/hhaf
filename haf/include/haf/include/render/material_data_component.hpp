@@ -10,13 +10,15 @@ HAF_PRAGMA_ONCE
 namespace haf::render
 {
 class HAF_API MaterialDataComponent final
-    : public component::ComponentBootStrap<MaterialDataComponent>
+    : public component::ComponentBootStrap<MaterialDataComponent,
+                                           "MaterialUpdaterSubSystem">
 {
 public:
     MaterialDataComponent();
     ~MaterialDataComponent();
 
-    static constexpr const core::str_view StaticTypeName{"MaterialDataComponent"};
+    static constexpr const core::str_view StaticTypeName{
+        "MaterialDataComponent"};
 
 private:
     struct ComponentsRequired;

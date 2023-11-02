@@ -9,7 +9,8 @@ HAF_PRAGMA_ONCE
 namespace haf::scene
 {
 class HAF_API SceneComponent final
-    : public component::ComponentBootStrap<SceneComponent>
+    : public component::ComponentBootStrap<SceneComponent,
+                                           "InternalControllerSubSystem">
 {
 public:
     static constexpr const core::str_view StaticTypeName{"SceneComponent"};
