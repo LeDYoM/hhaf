@@ -1,4 +1,4 @@
-#include <haf/include/scene_components/camera/camera.hpp>
+#include <haf/include/scene_components/camera/camera_builder.hpp>
 #include <haf/include/scene/scene_node.hpp>
 
 namespace haf::scene
