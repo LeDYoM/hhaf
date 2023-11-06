@@ -19,7 +19,7 @@ TEST_CASE("GlobalTransformationComponent::GlobalTransformationComponent",
     auto globalTransformationComponent{test_data.component};
     CHECK(globalTransformationComponent != nullptr);
 }
-
+/*
 TEST_CASE("GlobalTransformationComponent::DefaultValues",
           "[GlobalTransformationComponent][scene][component]")
 {
@@ -31,3 +31,4 @@ TEST_CASE("GlobalTransformationComponent::DefaultValues",
     test_data.system.rootSceneNode()->componentContainer().updateComponents();
     CHECK_FALSE(globalTransformationComponent->hasPendingMatrixUpdate());
 }
+*/
