@@ -18,8 +18,9 @@ set(SOURCE_TESTS
 
     input/keyboard_input_component
 
+    properties/named_property_state
     properties/properties
-    properties/propertystate
+    properties/property_state
 
     render/mesh_render_component
     render/vertex_formats
