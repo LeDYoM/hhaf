@@ -22,7 +22,7 @@ public:
     static constexpr const core::str_view StaticTypeName{"CameraComponent"};
 
     CameraComponent();
-    ~CameraComponent();
+    ~CameraComponent() override;
 
     enum class CameraMode : core::u32
     {
