@@ -12,6 +12,7 @@ namespace haf::scene
 {
 struct SceneRenderPropertiesComponent::PrivateComponentData
 {
+    SceneRenderContext* m_sceneRenderContext{nullptr};
 };
 
 SceneRenderPropertiesComponent::SceneRenderPropertiesComponent() :
@@ -22,6 +23,16 @@ SceneRenderPropertiesComponent::~SceneRenderPropertiesComponent() = default;
 
 void SceneRenderPropertiesComponent::onAttached()
 {
+    m_p->m_sceneRenderContext =
+        &(sys::getSystem<scene::SceneManager>(attachedNode())
+              .sceneRenderContext());
+}
+
+void SceneRenderPropertiesComponent::setViewMatrix(
+    math::Matrix4x4 const& matrix)
+{
+    LogAsserter::log_assert(m_p->m_sceneRenderContext != nullptr);
+    m_p->m_sceneRenderContext->setCameraMatrix(matrix);
 }
 
 }  // namespace haf::scene
