@@ -55,6 +55,11 @@ private:
     void cameraDataPerspectiveUpdated();
     void cameraDataViewUpdated();
     void performCameraUpdate();
+    bool addRequirements(
+        component::ComponentRequirements& component_requirements) override;
+
+    struct ComponentsRequired;
+    haf::core::PImplPointer<ComponentsRequired> m_components;
 
     struct PrivateComponentData;
     core::PImplPointer<PrivateComponentData> m_p;

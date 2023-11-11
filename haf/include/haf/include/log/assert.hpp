@@ -2,15 +2,10 @@ HAF_PRAGMA_ONCE
 #ifndef HAF_LOG_ASSERT_INCLUDE_HPP
 #define HAF_LOG_ASSERT_INCLUDE_HPP
 
-#include <hlog/include/hlog.hpp>
+#include <haf/include/log/log.hpp>
 #ifdef __cpp_lib_source_location
 #include <source_location>
 #endif
-
-namespace haf
-{
-using LogAsserter = logger::LogAsserter<DisplayLog>;
-}
 
 namespace haf::log
 {
@@ -30,12 +25,12 @@ constexpr void log_assert(
                             source
 #endif
     );
+}
 
-    template <typename... Args>
-    constexpr void log_assert(const bool condition, Args&&... args)
-    {
-        LogAsserter::log_assert(condition, core::forward<Args>(args)...);
-    }
+template <typename... Args>
+constexpr void log_assert(const bool condition, Args&&... args)
+{
+    LogAsserter::log_assert(condition, core::forward<Args>(args)...);
 }
 }  // namespace haf::log
 
