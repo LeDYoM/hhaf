@@ -23,7 +23,7 @@ public:
     void onAttached() override;
 
     void setViewMatrix(math::Matrix4x4 const& matrix);
-
+    void setModelMatrix(math::Matrix4x4 const& matrix);
 private:
     struct PrivateComponentData;
     core::PImplPointer<PrivateComponentData> m_p;

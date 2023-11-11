@@ -6,7 +6,7 @@
 #include <haf/include/debug_system/idebug_variables.hpp>
 #include <haf/include/scene/scene_node.hpp>
 #include <haf/include/component/component_finder.hpp>
-#include <haf/include/scene_components/global_transformation_component.hpp>
+#include <haf/include/scene_components/scene_render_properties_component.hpp>
 
 #include "system/get_system.hpp"
 #include "debug_system/debug_system.hpp"
@@ -19,6 +19,11 @@ using namespace haf::math;
 
 namespace haf::scene
 {
+struct GlobalTransformationComponent::ComponentsRequired
+{
+    sptr<haf::scene::SceneRenderPropertiesComponent> m_scene_render_properties;
+};
+
 struct GlobalTransformationComponent::PrivateComponentData
 {
     evt::ireceiver m_receiver;
@@ -28,10 +33,20 @@ struct GlobalTransformationComponent::PrivateComponentData
 };
 
 GlobalTransformationComponent::GlobalTransformationComponent() :
+    m_components{make_pimplp<ComponentsRequired>()},
     m_p{make_pimplp<PrivateComponentData>()}
 {}
 
 GlobalTransformationComponent::~GlobalTransformationComponent() = default;
+
+bool GlobalTransformationComponent::addRequirements(
+    component::ComponentRequirements& component_requirements)
+{
+    bool isOk{true};
+    isOk &= component_requirements.getOrCreateComponent(
+        m_components->m_scene_render_properties);
+    return isOk;
+}
 
 void GlobalTransformationComponent::onAttached()
 {
@@ -91,9 +106,7 @@ void GlobalTransformationComponent::updateMatrix()
 
 void GlobalTransformationComponent::setModelViewMatrix()
 {
-    sys::getSystem<scene::SceneManager>(attachedNode())
-        .sceneRenderContext()
-        .setCurrentModelViewMatrix(m_p->m_transform);
+    m_components->m_scene_render_properties->setModelMatrix(m_p->m_transform);
 }
 
 bool GlobalTransformationComponent::hasPendingMatrixUpdate() const noexcept

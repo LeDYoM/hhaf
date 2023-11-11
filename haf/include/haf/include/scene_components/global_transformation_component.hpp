@@ -33,6 +33,11 @@ private:
     void globalTransformationChanged(math::Matrix4x4 const& parentMatrix);
     void connectToParentGlobalTransformationChanged();
     void onAttached() override;
+    bool addRequirements(
+        component::ComponentRequirements& component_requirements) override;
+
+    struct ComponentsRequired;
+    haf::core::PImplPointer<ComponentsRequired> m_components;
 
     struct PrivateComponentData;
     core::PImplPointer<PrivateComponentData> m_p;

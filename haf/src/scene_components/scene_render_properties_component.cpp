@@ -35,4 +35,11 @@ void SceneRenderPropertiesComponent::setViewMatrix(
     m_p->m_sceneRenderContext->setCameraMatrix(matrix);
 }
 
+void SceneRenderPropertiesComponent::setModelMatrix(
+    math::Matrix4x4 const& matrix)
+{
+    LogAsserter::log_assert(m_p->m_sceneRenderContext != nullptr);
+    m_p->m_sceneRenderContext->setCurrentModelViewMatrix(matrix);
+}
+
 }  // namespace haf::scene
