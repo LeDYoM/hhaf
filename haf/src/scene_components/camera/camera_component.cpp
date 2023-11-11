@@ -91,7 +91,7 @@ void CameraComponent::cameraDataPerspectiveUpdated()
                 fmath::perspective(FovY(), Aspect(), Near(), Far());
             break;
         default:
-            LogAsserter::log_assert(true, "Invalid CameraMode value");
+            LOG_ASSERT(false, "Invalid CameraMode value");
             break;
     }
 
