@@ -1,18 +1,10 @@
 #include <haf/include/scene_components/global_transformation_component.hpp>
 #include <haf/include/component/component_definition.hpp>
 #include <haf/include/profiler/code_profiler.hpp>
-#include <haf/include/debug_system/debug_types.hpp>
-#include <hlog/include/hlog.hpp>
-#include <haf/include/debug_system/idebug_variables.hpp>
+#include <haf/include/log/log.hpp>
 #include <haf/include/scene/scene_node.hpp>
 #include <haf/include/component/component_finder.hpp>
 #include <haf/include/scene_components/scene_render_properties_component.hpp>
-
-#include "system/get_system.hpp"
-#include "debug_system/debug_system.hpp"
-#include "scene/scene_manager.hpp"
-
-#include <hlog/include/hlog.hpp>
 
 using namespace haf::core;
 using namespace haf::math;

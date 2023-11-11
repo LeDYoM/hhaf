@@ -10,8 +10,6 @@ HAF_PRAGMA_ONCE
 #include <haf/include/math/types.hpp>
 #include <haf/include/component/component_declaration.hpp>
 
-#include <haf/include/resources/shader.hpp>
-
 namespace haf::scene
 {
 class HAF_API CameraComponent final

@@ -1,6 +1,7 @@
 #include <haf/include/scene_components/camera/camera_component.hpp>
 #include <haf/include/component/component_definition.hpp>
 #include <haf/include/scene_components/scene_render_properties_component.hpp>
+#include <haf/include/resources/shader.hpp>
 
 #include <haf/include/log/assert.hpp>
 
