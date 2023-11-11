@@ -2,15 +2,11 @@
 #include <haf/include/component/component_definition.hpp>
 #include <haf/include/scene_components/scene_render_properties_component.hpp>
 
-#include <facil_math/include/geometry_math.hpp>
-#include <facil_math/include/matrix4x4_functions.hpp>
-
-#include <haf/include/log/log.hpp>
 #include <haf/include/log/assert.hpp>
 
 using namespace haf::core;
 using namespace haf::prop;
-using namespace fmath;
+using namespace haf::math;
 
 namespace haf::scene
 {
