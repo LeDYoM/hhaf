@@ -24,6 +24,10 @@ public:
 
     void setViewMatrix(math::Matrix4x4 const& matrix);
     void setModelMatrix(math::Matrix4x4 const& matrix);
+
+    math::Matrix4x4 const& viewMatrix() const noexcept;
+    math::Matrix4x4 const& modelMatrix() const noexcept;
+
 private:
     struct PrivateComponentData;
     core::PImplPointer<PrivateComponentData> m_p;

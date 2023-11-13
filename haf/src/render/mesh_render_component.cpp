@@ -8,21 +8,37 @@
 
 #include <haf/include/debug_system/idebug_variables.hpp>
 #include <haf/include/scene/scene_node.hpp>
+#include <haf/include/scene_components/scene_render_properties_component.hpp>
 
 using namespace haf::core;
 
 namespace haf::render
 {
+struct MeshRenderComponent::ComponentsRequired
+{
+    sptr<haf::scene::SceneRenderPropertiesComponent> m_scene_render_properties;
+};
+
 struct MeshRenderComponent::PrivateComponentData
 {
     core::sptr<res::VertexArrayObject> m_vao_object;
 };
 
 MeshRenderComponent::MeshRenderComponent() :
+    m_components{make_pimplp<ComponentsRequired>()},
     m_p{make_pimplp<PrivateComponentData>()}
 {}
 
 MeshRenderComponent::~MeshRenderComponent() = default;
+
+bool MeshRenderComponent::addRequirements(
+    component::ComponentRequirements& component_requirements)
+{
+    bool isOk{true};
+    isOk &= component_requirements.getOrCreateComponent(
+        m_components->m_scene_render_properties);
+    return isOk;
+}
 
 void MeshRenderComponent::onAttached()
 {
@@ -47,9 +63,7 @@ void MeshRenderComponent::updateRender()
 
     m_p->m_vao_object->shader()->setUniform(
         "haf_object_position",
-        sys::getSystem<scene::SceneManager>(attachedNode())
-            .sceneRenderContext()
-            .modelViewMatrix());
+        m_components->m_scene_render_properties->modelMatrix());
 
     m_p->m_vao_object->render();
 }
