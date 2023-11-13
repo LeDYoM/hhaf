@@ -52,9 +52,6 @@ void GlobalTransformationComponent::onAttached()
 
 void GlobalTransformationComponent::connectToParentGlobalTransformationChanged()
 {
-    auto const node_name = attachedNode()->name();
-    (void)(node_name);
-
     component::ComponentFinder finder{attachedNode()};
     if (auto parentComponent{
             finder.findParentComponent<GlobalTransformationComponent>()};
@@ -87,9 +84,6 @@ void GlobalTransformationComponent::globalTransformationChanged(
 
 void GlobalTransformationComponent::updateMatrix()
 {
-    auto const node_name = attachedNode()->name();
-    (void)(node_name);
-
     m_p->m_transform =
         m_p->m_parentGlobalTransformation() * m_p->m_localTransformation_copy();
 
