@@ -6,6 +6,7 @@ HAF_PRAGMA_ONCE
 #include <haf/include/math/types.hpp>
 #include "system/system_base.hpp"
 #include <haf/include/render/shared_data_manager.hpp>
+#include "render_data.hpp"
 
 namespace haf::sys
 {
@@ -28,14 +29,19 @@ public:
     render::SharedDataManager& sharedDataManager() noexcept;
     render::SharedDataManager const& sharedDataManager() const noexcept;
 
+    void getOrUpdateRenderDataIndex(core::size_type& index,
+                                    render::RenderData*& render_data) noexcept;
+
     void beginFrame(fmath::vector4df const& backgroundColor);
     void endFrame();
 
     void finish();
+
 private:
     core::sptr<RenderTarget> render_target_;
     render::SharedDataManager m_shared_data_manager;
     bool m_initialized{false};
+    core::vector<render::RenderData> m_render_data;
 };
 }  // namespace haf::sys
 
