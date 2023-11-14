@@ -7,6 +7,7 @@ HAF_PRAGMA_ONCE
 #include <facil_math/include/matrix4x4.hpp>
 #include <haf/include/time/time_point.hpp>
 #include <haf/include/properties/property_state.hpp>
+#include <haf/include/render/render_data.hpp>
 
 namespace haf::scene
 {
@@ -39,6 +40,7 @@ protected:
     prop::PropertyState<fmath::Matrix4x4> m_cameraMatrix{};
     prop::PropertyState<fmath::Matrix4x4> m_currentModeViewMatrix{};
     fmath::vector4df m_backgroundColor;
+    core::vector<render::RenderData> m_render_data;
 };
 }  // namespace haf::scene
 

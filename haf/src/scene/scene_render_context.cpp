@@ -37,9 +37,22 @@ void SceneRenderContext::setCurrentModelViewMatrix(
     m_currentModeViewMatrix = matrix;
 }
 
+void SceneRenderContext::getOrUpdateRenderDataIndex(
+    core::size_type& index,
+    render::RenderData*& render_data) noexcept
+{
+    if (render_data == nullptr)
+    {
+        index = m_render_data.size();
+        m_render_data.emplace_back();
+        render_data = &(m_render_data.back());
+    }
+}
+
 void SceneRenderContext::beginFrame()
 {
     BaseClass::beginFrame();
+    m_render_data.clear();
 }
 
 void SceneRenderContext::endFrame()

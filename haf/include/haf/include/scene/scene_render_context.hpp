@@ -28,6 +28,9 @@ protected:
     void setBackgroundColor(fmath::vector4df const& backgroundColor) noexcept;
 
 public:
+    void getOrUpdateRenderDataIndex(core::size_type& index,
+                                    render::RenderData*& render_data) noexcept;
+
     virtual void setCameraMatrix(fmath::Matrix4x4 const& matrix);
     void setCurrentModelViewMatrix(
         fmath::Matrix4x4 const& camera_matrix) noexcept;

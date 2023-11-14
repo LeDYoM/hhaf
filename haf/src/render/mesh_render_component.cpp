@@ -22,6 +22,8 @@ struct MeshRenderComponent::ComponentsRequired
 struct MeshRenderComponent::PrivateComponentData
 {
     core::sptr<res::VertexArrayObject> m_vao_object;
+    core::size_type m_render_data_index;
+    render::RenderData* m_render_data{nullptr};
 };
 
 MeshRenderComponent::MeshRenderComponent() :
@@ -65,6 +67,8 @@ void MeshRenderComponent::updateRender()
         "haf_object_position",
         m_components->m_scene_render_properties->modelMatrix());
 
+    m_components->m_scene_render_properties->getOrUpdateRenderDataIndex(
+        m_p->m_render_data_index, m_p->m_render_data);
     m_p->m_vao_object->render();
 }
 

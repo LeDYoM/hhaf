@@ -37,17 +37,6 @@ SharedDataManager const& RenderSystem::sharedDataManager() const noexcept
     return m_shared_data_manager;
 }
 
-void RenderSystem::getOrUpdateRenderDataIndex(core::size_type& index,
-                                              RenderData*& render_data) noexcept
-{
-    if (render_data == nullptr)
-    {
-        index = m_render_data.size();
-        m_render_data.emplace_back();
-        render_data = &(m_render_data.back());
-    }
-}
-
 void RenderSystem::beginFrame(fmath::vector4df const& backgroundColor)
 {
     ogl::clearBackgroundColor(backgroundColor);

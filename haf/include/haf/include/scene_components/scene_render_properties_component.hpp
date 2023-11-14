@@ -7,6 +7,7 @@ HAF_PRAGMA_ONCE
 #include <haf/include/properties/property_state.hpp>
 #include <haf/include/math/types.hpp>
 #include <haf/include/component/component_declaration.hpp>
+#include <haf/include/render/render_data.hpp>
 
 namespace haf::scene
 {
@@ -27,6 +28,9 @@ public:
 
     math::Matrix4x4 const& viewMatrix() const noexcept;
     math::Matrix4x4 const& modelMatrix() const noexcept;
+
+    void getOrUpdateRenderDataIndex(core::size_type& index,
+                                    render::RenderData*& render_data) noexcept;
 
 private:
     struct PrivateComponentData;

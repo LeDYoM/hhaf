@@ -54,4 +54,11 @@ math::Matrix4x4 const& SceneRenderPropertiesComponent::modelMatrix()
     return m_p->m_sceneRenderContext->modelViewMatrix();
 }
 
+void SceneRenderPropertiesComponent::getOrUpdateRenderDataIndex(
+    core::size_type& index,
+    render::RenderData*& render_data) noexcept
+{
+    m_p->m_sceneRenderContext->getOrUpdateRenderDataIndex(index, render_data);
+}
+
 }  // namespace haf::scene
