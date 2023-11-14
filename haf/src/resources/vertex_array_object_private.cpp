@@ -4,6 +4,7 @@
 #include <hogl/include/vao_functions.hpp>
 #include <hlog/include/hlog.hpp>
 #include "default_shader_data.hpp"
+#include "render/render_data.hpp"
 #include <glad/glad.h>
 
 using namespace haf::core;
@@ -73,11 +74,8 @@ void VertexArrayObject::VertexArrayObjectPriv::
 
 void VertexArrayObject::VertexArrayObjectPriv::render()
 {
-    ogl::bindVAO(m_vao);
-    glBindTextureUnit(0, 1);
-    m_shader->bind();
-    glDrawArrays(GL_TRIANGLES, 0, m_size);
-    ogl::bindVAO(ogl::invalidHandle());
+    render::RenderData r_data{m_vao, 1, m_shader->handle(), m_size};
+    r_data.render();
 }
 
 VertexArrayObject::VertexArrayObjectPriv::~VertexArrayObjectPriv() noexcept
