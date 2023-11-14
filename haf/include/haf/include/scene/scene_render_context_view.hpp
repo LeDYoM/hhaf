@@ -40,7 +40,7 @@ protected:
     prop::PropertyState<fmath::Matrix4x4> m_cameraMatrix{};
     prop::PropertyState<fmath::Matrix4x4> m_currentModeViewMatrix{};
     fmath::vector4df m_backgroundColor;
-    core::vector<render::RenderData> m_render_data;
+    render::RenderDataVector m_render_data;
 };
 }  // namespace haf::scene
 

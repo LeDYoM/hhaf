@@ -41,12 +41,12 @@ void SceneRenderContext::getOrUpdateRenderDataIndex(
     core::size_type& index,
     render::RenderData*& render_data) noexcept
 {
-    if (render_data == nullptr)
-    {
+//    if (render_data == nullptr)
+//    {
         index = m_render_data.size();
         m_render_data.emplace_back();
         render_data = &(m_render_data.back());
-    }
+//    }
 }
 
 void SceneRenderContext::beginFrame()

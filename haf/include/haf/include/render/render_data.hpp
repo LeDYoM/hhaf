@@ -13,8 +13,10 @@ struct RenderData
     core::u32 shader;
     core::u32 sizeCount;
 
-    void render();
+    void render() const;
 };
+
+using RenderDataVector = core::vector<RenderData>;
 
 }  // namespace haf::render
 

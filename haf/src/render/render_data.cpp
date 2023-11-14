@@ -10,7 +10,7 @@ using namespace haf::core;
 
 namespace haf::render
 {
-void RenderData::render()
+void RenderData::render() const
 {
     ogl::bindVAO(vao);
     glBindTextureUnit(0, textureId);

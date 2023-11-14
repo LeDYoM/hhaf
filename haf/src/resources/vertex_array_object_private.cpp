@@ -4,7 +4,7 @@
 #include <hogl/include/vao_functions.hpp>
 #include <hlog/include/hlog.hpp>
 #include "default_shader_data.hpp"
-#include "render/render_data.hpp"
+#include <haf/include/render/render_data.hpp>
 #include <glad/glad.h>
 
 using namespace haf::core;

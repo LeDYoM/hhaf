@@ -3,7 +3,6 @@
 #include "simulation/simulation_system.hpp"
 #include "input/input_system.hpp"
 #include "scene/scene_manager.hpp"
-#include "render/render_system.hpp"
 #include "time/time_system.hpp"
 #include "debug_system/debug_system.hpp"
 #include <hlog/include/hlog.hpp>
@@ -52,7 +51,6 @@ bool SystemController::update()
     system<InputSystem>().update();
     system<SimulationSystem>().updateSimulationOutput();
     system<scene::SceneManager>().update();
-    system<RenderSystem>().update();
     system<DebugSystem>().onFinishUpdate();
 
     return false;

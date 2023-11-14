@@ -10,6 +10,8 @@ HAF_PRAGMA_ONCE
 #include <haf/include/resources/mesh.hpp>
 #include <haf/include/resources/shader.hpp>
 
+#include <haf/include/render/render_data.hpp>
+
 namespace haf::res
 {
 class HAF_API VertexArrayObject : public IResource
@@ -38,6 +40,7 @@ public:
 
     core::sptr<Shader>& shader() noexcept;
 
+    void fillRenderData(render::RenderData& render_data);
 private:
     struct VertexArrayObjectPriv;
     core::PImplPointer<VertexArrayObjectPriv> m_p;

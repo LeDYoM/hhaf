@@ -45,4 +45,12 @@ sptr<Shader>& VertexArrayObject::shader() noexcept
     return m_p->m_shader;
 }
 
+void VertexArrayObject::fillRenderData(render::RenderData& render_data)
+{
+    render_data.vao = handle();
+    render_data.textureId = 1;
+    render_data.shader = shader()->handle();
+    render_data.sizeCount = m_p->m_size;
+}
+
 }  // namespace haf::res

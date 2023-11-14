@@ -43,7 +43,12 @@ void RenderSystem::beginFrame(fmath::vector4df const& backgroundColor)
     ogl::clearDepthBuffer();
 }
 
-void RenderSystem::endFrame()
-{}
+void RenderSystem::endFrame(RenderDataVector const& render_datas)
+{
+    for (auto&& render_data : render_datas)
+    {
+        render_data.render();
+    }
+}
 
 }  // namespace haf::sys

@@ -6,6 +6,7 @@ HAF_PRAGMA_ONCE
 #include <haf/include/math/types.hpp>
 #include "system/system_base.hpp"
 #include <haf/include/render/shared_data_manager.hpp>
+#include <haf/include/render/render_data.hpp>
 
 namespace haf::sys
 {
@@ -29,7 +30,7 @@ public:
     render::SharedDataManager const& sharedDataManager() const noexcept;
 
     void beginFrame(fmath::vector4df const& backgroundColor);
-    void endFrame();
+    void endFrame(render::RenderDataVector const& render_datas);
 
     void finish();
 

@@ -41,6 +41,8 @@ void SceneRenderContextForSystem::beginFrame()
 void SceneRenderContextForSystem::endFrame()
 {
     BaseClass::endFrame();
+    auto& renderSystem{sys::getSystem<sys::RenderSystem>(&m_isystem_provider)};
+    renderSystem.endFrame(m_render_data);
 }
 
 void SceneRenderContextForSystem::setCameraMatrix(Matrix4x4 const& matrix)

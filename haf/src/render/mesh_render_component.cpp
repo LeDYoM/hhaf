@@ -69,7 +69,11 @@ void MeshRenderComponent::updateRender()
 
     m_components->m_scene_render_properties->getOrUpdateRenderDataIndex(
         m_p->m_render_data_index, m_p->m_render_data);
-    m_p->m_vao_object->render();
+    m_p->m_vao_object->fillRenderData(*m_p->m_render_data);
+//    m_p->m_render_data->vao = m_p->m_vao_object->handle();
+//    m_p->m_render_data->textureId = 1;
+//    m_p->m_render_data->shader = m_p->m_vao_object->shader()->handle();
+//    m_p->m_vao_object->render();
 }
 
 }  // namespace haf::render

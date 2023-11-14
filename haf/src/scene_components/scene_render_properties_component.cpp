@@ -59,6 +59,7 @@ void SceneRenderPropertiesComponent::getOrUpdateRenderDataIndex(
     render::RenderData*& render_data) noexcept
 {
     m_p->m_sceneRenderContext->getOrUpdateRenderDataIndex(index, render_data);
+    
 }
 
 }  // namespace haf::scene
