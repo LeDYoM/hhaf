@@ -1,4 +1,4 @@
-option(use_system_glfw "Use system SFML instead of fetching it" OFF)
+option(use_system_glfw "Use system glfw instead of fetching it" OFF)
 
 if (NOT use_system_glfw AND WIN32)
 
