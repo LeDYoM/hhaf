@@ -36,8 +36,6 @@ public:
     bool isValid() const override;
     core::u32 handle() const;
 
-    void render();
-
     core::sptr<Shader>& shader() noexcept;
 
     void fillRenderData(render::RenderData& render_data);

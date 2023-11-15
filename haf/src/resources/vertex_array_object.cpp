@@ -35,11 +35,6 @@ u32 VertexArrayObject::handle() const
     return static_cast<u32>(m_p->m_vao);
 }
 
-void VertexArrayObject::render()
-{
-    m_p->render();
-}
-
 sptr<Shader>& VertexArrayObject::shader() noexcept
 {
     return m_p->m_shader;

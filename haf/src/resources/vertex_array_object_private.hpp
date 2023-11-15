@@ -23,8 +23,6 @@ struct VertexArrayObject::VertexArrayObjectPriv
 
     void associateBuffersToAttribsInCurrentShader(core::sptr<Mesh> mesh);
 
-    void render();
-
     ~VertexArrayObjectPriv() noexcept;
 };
 

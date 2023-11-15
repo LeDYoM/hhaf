@@ -72,12 +72,6 @@ void VertexArrayObject::VertexArrayObjectPriv::
     }
 }
 
-void VertexArrayObject::VertexArrayObjectPriv::render()
-{
-    render::RenderData r_data{m_vao, 1, m_shader->handle(), m_size};
-    r_data.render();
-}
-
 VertexArrayObject::VertexArrayObjectPriv::~VertexArrayObjectPriv() noexcept
 {
     if (m_vao != ogl::invalidHandle())
