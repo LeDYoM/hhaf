@@ -29,16 +29,14 @@ public:
     render::SharedDataManager& sharedDataManager() noexcept;
     render::SharedDataManager const& sharedDataManager() const noexcept;
 
-    void renderFrame(render::FrameRenderData const& frame_render_data);
+    void beginFrame(render::FrameRenderStartData const& frame_render_start_data);
+    void endFrame(render::FrameRenderData const& frame_render_data);
     void finish();
 
 private:
     core::sptr<RenderTarget> render_target_;
     render::SharedDataManager m_shared_data_manager;
     bool m_initialized{false};
-
-    void beginFrame(math::vector4df const& backgroundColor);
-    void endFrame(render::RenderDataVector const& render_datas);
 };
 }  // namespace haf::sys
 

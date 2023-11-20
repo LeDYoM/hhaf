@@ -12,7 +12,7 @@ SceneRenderContext::~SceneRenderContext() = default;
 
 void SceneRenderContext::init()
 {
-    m_frame_render_data.backgroundColor = colors::DarkGreen;
+    m_frame_render_start_data.backgroundColor = colors::DarkGreen;
 }
 
 void SceneRenderContext::setNowFrame(TimePoint time_point)
@@ -23,7 +23,7 @@ void SceneRenderContext::setNowFrame(TimePoint time_point)
 void SceneRenderContext::setBackgroundColor(
     vector4df const& backgroundColor) noexcept
 {
-    m_frame_render_data.backgroundColor = backgroundColor;
+    m_frame_render_start_data.backgroundColor = backgroundColor;
 }
 
 void SceneRenderContext::setCameraMatrix(Matrix4x4 const& camera_matrix)

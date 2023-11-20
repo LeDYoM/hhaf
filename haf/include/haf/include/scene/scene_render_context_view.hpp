@@ -34,6 +34,7 @@ protected:
     time::TimePoint m_nowFrame{};
     prop::PropertyState<fmath::Matrix4x4> m_cameraMatrix{};
     prop::PropertyState<fmath::Matrix4x4> m_currentModeViewMatrix{};
+    render::FrameRenderStartData m_frame_render_start_data;
     render::FrameRenderData m_frame_render_data;
 };
 }  // namespace haf::scene

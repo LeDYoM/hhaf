@@ -19,9 +19,13 @@ struct RenderData
 
 using RenderDataVector = core::vector<RenderData>;
 
-struct FrameRenderData
+struct FrameRenderStartData
 {
     math::vector4df backgroundColor;
+};
+
+struct FrameRenderData
+{
     RenderDataVector elements;
 };
 

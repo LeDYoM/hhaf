@@ -37,21 +37,16 @@ SharedDataManager const& RenderSystem::sharedDataManager() const noexcept
     return m_shared_data_manager;
 }
 
-void RenderSystem::renderFrame(FrameRenderData const& frame_render_data)
+void RenderSystem::beginFrame(
+    FrameRenderStartData const& frame_render_start_data)
 {
-    beginFrame(frame_render_data.backgroundColor);
-    endFrame(frame_render_data.elements);
-}
-
-void RenderSystem::beginFrame(math::vector4df const& backgroundColor)
-{
-    ogl::clearBackgroundColor(backgroundColor);
+    ogl::clearBackgroundColor(frame_render_start_data.backgroundColor);
     ogl::clearDepthBuffer();
 }
 
-void RenderSystem::endFrame(RenderDataVector const& render_datas)
+void RenderSystem::endFrame(FrameRenderData const& frame_render_data)
 {
-    for (auto&& render_data : render_datas)
+    for (auto&& render_data : frame_render_data.elements)
     {
         render_data.render();
     }
