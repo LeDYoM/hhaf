@@ -33,16 +33,13 @@ void SceneRenderContextForSystem::beginFrame()
     auto& timeSystem{sys::getSystem<sys::TimeSystem>(&m_isystem_provider)};
     BaseClass::setNowFrame(timeSystem.nowFrame());
     BaseClass::beginFrame();
-
-    auto& renderSystem{sys::getSystem<sys::RenderSystem>(&m_isystem_provider)};
-    renderSystem.beginFrame(m_backgroundColor);
 }
 
 void SceneRenderContextForSystem::endFrame()
 {
     BaseClass::endFrame();
     auto& renderSystem{sys::getSystem<sys::RenderSystem>(&m_isystem_provider)};
-    renderSystem.endFrame(m_render_data);
+    renderSystem.renderFrame(m_frame_render_data);
 }
 
 void SceneRenderContextForSystem::setCameraMatrix(Matrix4x4 const& matrix)

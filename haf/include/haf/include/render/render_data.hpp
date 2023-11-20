@@ -3,6 +3,7 @@ HAF_PRAGMA_ONCE
 #define HAF_RENDER_RENDERDATA_INCLUDE_HPP
 
 #include <haf/include/core/types.hpp>
+#include <haf/include/math/types.hpp>
 
 namespace haf::render
 {
@@ -17,6 +18,12 @@ struct RenderData
 };
 
 using RenderDataVector = core::vector<RenderData>;
+
+struct FrameRenderData
+{
+    math::vector4df backgroundColor;
+    RenderDataVector elements;
+};
 
 }  // namespace haf::render
 
