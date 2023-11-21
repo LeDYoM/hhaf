@@ -27,8 +27,6 @@ public:
 
     void updateRender();
 
-    core::sptr<res::Shader> shader() const noexcept;
-
 private:
     struct ComponentsRequired;
     haf::core::PImplPointer<ComponentsRequired> m_components;

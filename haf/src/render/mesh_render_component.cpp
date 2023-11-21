@@ -51,11 +51,6 @@ void MeshRenderComponent::onAttached()
     rManager.aquireResource("cube_vao", m_p->m_vao_object);
 }
 
-sptr<res::Shader> MeshRenderComponent::shader() const noexcept
-{
-    return m_p->m_vao_object->shader();
-}
-
 void MeshRenderComponent::updateRender()
 {
     static int a = 0;
