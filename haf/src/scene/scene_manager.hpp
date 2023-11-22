@@ -3,10 +3,11 @@ HAF_PRAGMA_ONCE
 #define HAF_SCENE_SCENEMANAGER_INCLUDE_HPP
 
 #include "haf_private.hpp"
-#include <htypes/include/types.hpp>
+#include <haf/include/core/types.hpp>
 #include <facil_math/include/rect.hpp>
 #include <haf/include/types/scene_types.hpp>
 #include "scene_render_context_for_system.hpp"
+#include "scene_subsystems/scene_manager subsystem_group.hpp"
 #include <haf/include/scene_components/iapp_initializer.hpp>
 #include <haf/include/scene_components/iapp_finisher.hpp>
 #include "system/system_base.hpp"
@@ -14,7 +15,7 @@ HAF_PRAGMA_ONCE
 #include <haf/include/component/component_factory.hpp>
 #include <hlog/include/hlog.hpp>
 #include <haf/include/scene/mesh_creator.hpp>
-#include "scene_walker.hpp"
+#include "scene_subsystems/scene_walker.hpp"
 #include <haf/include/input/keyboard_input_manager.hpp>
 
 namespace haf::scene
@@ -50,7 +51,7 @@ public:
                                             []() { return core::msptr<T>(); })};
         if (result)
         {
-            DisplayLog::verbose("Registered component of type: <",
+            logger::DisplayLog::verbose("Registered component of type: <",
                                 T::StaticTypeName, "> with size: ", sizeof(T));
         }
         return result;
@@ -88,6 +89,7 @@ private:
     MeshCreator m_mesh_creator;
     core::uptr<SceneNode> m_rootSceneNode;
     SceneWalker m_scene_walker;
+    SceneManagerSubSystemGroup m_subsystems;
 
 };
 }  // namespace haf::scene

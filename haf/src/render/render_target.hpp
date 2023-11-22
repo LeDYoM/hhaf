@@ -13,11 +13,6 @@ class RenderTarget;
 class RenderElement;
 }  // namespace haf::ogl
 
-namespace haf::render
-{
-class RenderData;
-}
-
 namespace haf::sys
 {
 /**

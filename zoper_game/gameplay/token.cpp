@@ -53,7 +53,7 @@ void Token::resetTileCounter()
 void Token::tileAdded()
 {
     BaseClass::tileAdded();
-    DisplayLog::info("Token ", name(), " appeared at ", boardPosition());
+    logger::DisplayLog::info("Token ", name(), " appeared at ", boardPosition());
 
     auto const AppearTokenTime = time::TimePoint_as_miliseconds(1000U);
     auto const endScale{Scale()};
@@ -76,7 +76,7 @@ void Token::setTokenColor(scene::Color const& token_color)
 void Token::tileRemoved()
 {
     BaseClass::tileRemoved();
-    DisplayLog::info("Deleting token ", name(), " from scene at position ",
+    logger::DisplayLog::info("Deleting token ", name(), " from scene at position ",
                      boardPosition());
 }
 
@@ -84,7 +84,7 @@ void Token::tileChanged(const BoardTileData oldValue,
                         const BoardTileData newValue)
 {
     BaseClass::tileChanged(oldValue, newValue);
-    DisplayLog::info("Token at position ", boardPosition(), " changed from ",
+    logger::DisplayLog::info("Token at position ", boardPosition(), " changed from ",
                      oldValue, " to ", newValue);
 }
 

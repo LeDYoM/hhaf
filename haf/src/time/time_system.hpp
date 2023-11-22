@@ -4,12 +4,13 @@ HAF_PRAGMA_ONCE
 
 #include "system/system_base.hpp"
 
-#include <htypes/include/types.hpp>
+#include <haf/include/core/types.hpp>
 #include <haf/include/time/time_point.hpp>
 #include <haf/include/time/time_view.hpp>
 
 namespace haf::sys
 {
+using FrameNumberType = core::u64;
 /**
  * @brief System class to manage everything related to time.
  */
@@ -29,8 +30,9 @@ public:
 
     time::TimePoint now() const override;
 
-    time::TimePoint lastFrameTime() const;
-    time::TimePoint nowFrame() const;
+    time::TimePoint lastFrameTime() const noexcept;
+    time::TimePoint nowFrame() const noexcept;
+    FrameNumberType currentFrame() const noexcept;
 
     void startFrame();
     void endFrame();

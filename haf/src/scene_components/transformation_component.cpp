@@ -4,20 +4,21 @@
 #include <hlog/include/hlog.hpp>
 #include <haf/include/scene/scene_node.hpp>
 #include <facil_math/include/geometry_math.hpp>
+#include <haf/include/scene_components/global_transformation_component.hpp>
 
-using namespace fmath;
+using namespace haf::math;
 using namespace haf::core;
 
 namespace haf::scene
 {
 struct TransformationComponent::ComponentsRequired
-{};
+{
+    sptr<GlobalTransformationComponent> m_globalTransformationComponent;
+};
 
 struct TransformationComponent::PrivateComponentData
 {
     Matrix4x4 m_transform;
-    Matrix4x4 m_globalTransform;
-    bool m_transformation_updated{true};
 
     rptr<TransformationComponent> parentTransformationComponent(
         rptr<SceneNode> attachedNode) const noexcept
@@ -33,17 +34,23 @@ TransformationComponent::TransformationComponent() :
 
 TransformationComponent::~TransformationComponent() = default;
 
+bool TransformationComponent::addRequirements(
+    component::ComponentRequirements& component_requirements)
+{
+    bool isOk{true};
+    isOk &= component_requirements.getOrCreateComponent(
+        m_components->m_globalTransformationComponent);
+    return isOk;
+}
+
 void TransformationComponent::onAttached()
 {
     addUpdater({this, &TransformationComponent::updateLocalTransformation},
                &Position, &Scale, &Rotation);
 
-    addUpdater(
-        {this, &TransformationComponent::pollParentGlobalTransformation});
-
-    addUpdater(
-        {this,
-         &TransformationComponent::updateMyGlobalTransformationIfNecessary});
+    localMatrixChanged.connect(make_function(
+        m_components->m_globalTransformationComponent.get(),
+        &GlobalTransformationComponent::localTransformationChanged));
 }
 
 void TransformationComponent::updateLocalTransformation() noexcept
@@ -52,52 +59,12 @@ void TransformationComponent::updateLocalTransformation() noexcept
     m_p->m_transform.setColumn<3>(Position());
     m_p->m_transform.setDiagonal(Scale());
     //    m_p->m_transform.setRotation(Rotation(), 1.0F);
-    m_p->m_transformation_updated = true;
     localMatrixChanged(m_p->m_transform);
-}
-
-void TransformationComponent::pollParentGlobalTransformation() noexcept
-{
-    if (auto const& parentTransformation{
-            m_p->parentTransformationComponent(attachedNode())};
-        parentTransformation != nullptr)
-    {
-        if (parentTransformation->transformationUpdated())
-        {
-            m_p->m_transformation_updated = true;
-        }
-    }
-}
-
-void TransformationComponent::updateMyGlobalTransformationIfNecessary() noexcept
-{
-    if (m_p->m_transformation_updated)
-    {
-        if (auto const& parentTransformation{
-                m_p->parentTransformationComponent(attachedNode())};
-            parentTransformation != nullptr)
-        {
-
-            m_p->m_globalTransform = m_p->m_globalTransform =
-                parentTransformation->getGlobalTransformation() *
-                m_p->m_transform;
-        }
-    }
-}
-
-bool TransformationComponent::transformationUpdated() const noexcept
-{
-    return m_p->m_transformation_updated;
 }
 
 Matrix4x4 const& TransformationComponent::matrix() const noexcept
 {
     return m_p->m_transform;
-}
-
-Matrix4x4 TransformationComponent::getGlobalTransformation()
-{
-    return m_p->m_globalTransform;
 }
 
 bool TransformationComponent::hasPendingMatrixUpdate() const noexcept

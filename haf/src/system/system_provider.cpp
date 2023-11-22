@@ -61,7 +61,7 @@ struct SystemProvider::SystemProviderPrivate final
             if (haf_configuration_file_value.first)
             {
                 haf_configuration_file_ = haf_configuration_file_value.second;
-                DisplayLog::debug(
+                logger::DisplayLog::debug(
                     "Parameter ", kHafConfigurationFileParameter,
                     " found with value: ", haf_configuration_file_);
             }
@@ -92,7 +92,7 @@ void configureSystem(T& system, str const& file_name)
 
     if (!configuration_file.empty())
     {
-        DisplayLog::debug("Using configuration file: ", configuration_file);
+        logger::DisplayLog::debug("Using configuration file: ", configuration_file);
     }
 
     system->initialize(configuration_file);
@@ -112,67 +112,67 @@ void SystemProvider::instanciateSystems(
 {
     if (init_system_options.init_file_system)
     {
-        DisplayLog::debug("Initializing File System");
+        logger::DisplayLog::debug("Initializing File System");
         p_->file_system_ = muptr<FileSystem>(*this);
     }
 
     if (init_system_options.init_debug_system)
     {
-        DisplayLog::debug("Initializing DebugSystem");
+        logger::DisplayLog::debug("Initializing DebugSystem");
         p_->debug_system_ = muptr<DebugSystem>(*this);
     }
 
     if (init_system_options.init_shared_data_system)
     {
-        DisplayLog::debug("Initializing SharedDataSystem");
+        logger::DisplayLog::debug("Initializing SharedDataSystem");
         p_->shared_data_system_ = muptr<SharedDataSystem>(*this);
     }
 
     if (init_system_options.init_time_system)
     {
-        DisplayLog::debug("Initializing Time System");
+        logger::DisplayLog::debug("Initializing Time System");
         p_->time_system_ = muptr<TimeSystem>(*this);
     }
 
     if (init_system_options.init_window_system)
     {
-        DisplayLog::debug("Initializing Window");
+        logger::DisplayLog::debug("Initializing Window");
         p_->window_system_ = muptr<WindowSystem>(*this);
     }
 
     if (init_system_options.init_input_system)
     {
-        DisplayLog::debug("Initializing Input System");
+        logger::DisplayLog::debug("Initializing Input System");
         p_->input_system_ = muptr<InputSystem>(*this);
     }
 
     if (init_system_options.init_scene_manager)
     {
-        DisplayLog::debug("Initializing Scene Manager");
+        logger::DisplayLog::debug("Initializing Scene Manager");
         p_->scene_manager_ = muptr<scene::SceneManager>(*this);
     }
 
     if (init_system_options.init_resource_manager)
     {
-        DisplayLog::debug("Initializing Resource Manager");
+        logger::DisplayLog::debug("Initializing Resource Manager");
         p_->resource_manager_ = muptr<sys::ResourceManager>(*this);
     }
 
     if (init_system_options.init_render_system)
     {
-        DisplayLog::debug("Initializing Render System");
+        logger::DisplayLog::debug("Initializing Render System");
         p_->render_system_ = muptr<sys::RenderSystem>(*this);
     }
 
     if (init_system_options.init_random_system)
     {
-        DisplayLog::debug("Initializing Random System");
+        logger::DisplayLog::debug("Initializing Random System");
         p_->random_system_ = muptr<RandomSystem>(*this);
     }
 
     if (init_system_options.init_simulation_system)
     {
-        DisplayLog::debug("Initializing Simulation System");
+        logger::DisplayLog::debug("Initializing Simulation System");
         p_->simulation_system_ = muptr<SimulationSystem>(*this);
     }
 }
@@ -193,7 +193,7 @@ void SystemProvider::initializeSystems(
 
     if (init_system_options.init_window_system)
     {
-        DisplayLog::debug("Initializing Window");
+        logger::DisplayLog::debug("Initializing Window");
 
         configureSystem(
             p_->window_system_,

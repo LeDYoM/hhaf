@@ -14,7 +14,7 @@ namespace haf::app_middleware
 void HafAppMiddleware::onInit(IAppInitializer& app_initializer)
 {
     (void)(app_initializer);
-    DisplayLog::verbose("Initializing HafAppFirmware");
+    logger::DisplayLog::verbose("Initializing HafAppFirmware");
 }
 
 void HafAppMiddleware::onFinish(IAppFinisher&)

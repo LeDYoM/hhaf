@@ -17,12 +17,10 @@ void RenderSystem::initialize(bool const enableDebug)
 }
 
 void RenderSystem::update()
-{
-}
+{}
 
 void RenderSystem::finish()
-{
-}
+{}
 
 sptr<RenderTarget> const& RenderSystem::currentRenderTarget() const
 {
@@ -39,13 +37,19 @@ SharedDataManager const& RenderSystem::sharedDataManager() const noexcept
     return m_shared_data_manager;
 }
 
-void RenderSystem::beginFrame(fmath::vector4df const& backgroundColor)
+void RenderSystem::beginFrame(
+    FrameRenderStartData const& frame_render_start_data)
 {
-    ogl::clearBackgroundColor(backgroundColor);
+    ogl::clearBackgroundColor(frame_render_start_data.backgroundColor);
     ogl::clearDepthBuffer();
 }
 
-void RenderSystem::endFrame()
-{}
+void RenderSystem::endFrame(FrameRenderData const& frame_render_data)
+{
+    for (auto&& render_data : frame_render_data.elements)
+    {
+        render_data.render();
+    }
+}
 
 }  // namespace haf::sys

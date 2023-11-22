@@ -4,73 +4,36 @@
 #include <htypes/include/types.hpp>
 
 #include <haf/include/scene/scene_node.hpp>
-#include <haf/include/scene/scene_update_time.hpp>
 
 #include "scene/scene_manager.hpp"
 #include "system/get_system.hpp"
 #include "debug_system/debug_displayers.hpp"
+#include "component/component_container_private.hpp"
+#include <haf/include/log/log.hpp>
 
 using namespace haf::core;
 
 namespace haf::component
 {
-struct ComponentContainer::ComponentContainerPrivate
-{
-    sptr<Component> getExistingComponent(str_view typeName) const
-    {
-        auto iterator{
-            components_.find_if([&typeName](sptr<Component> const& component) {
-                return component->staticTypeName() == typeName;
-            })};
-        return (iterator == components_.cend()) ? nullptr : (*iterator);
-    }
-
-    rptr<scene::SceneNode> const attachable_;
-    scene::SceneManager& m_scene_manager;
-    vector<sptr<Component>> components_;
-
-    ComponentContainerPrivate(rptr<scene::SceneNode> attachable) noexcept :
-        attachable_{attachable},
-        m_scene_manager{sys::getSystem<scene::SceneManager>(attachable)}
-    {}
-
-    void updateComponents(scene::SceneUpdateTime const sceneUpdateTime)
-    {
-        components_.for_each_backwards(
-            [sceneUpdateTime](sptr<Component> const& component) {
-                component->updateComponent(sceneUpdateTime);
-            });
-    }
-
-    void clearComponents() { components_.clear(); }
-
-    void clearComponentsBackwards()
-    {
-        while (!components_.empty())
-        {
-            components_.pop_back();
-        }
-    }
-};
-
 ComponentContainer::ComponentContainer(rptr<scene::SceneNode> attachable) :
     p_{make_pimplp<ComponentContainerPrivate>(attachable)}
 {}
 
 ComponentContainer::~ComponentContainer()
 {
-    DisplayLog::debug(StaticTypeName, ": Destroying");
-    p_->clearComponentsBackwards();
+    logger::DisplayLog::debug(StaticTypeName, ": Destroying");
+    clearComponents();
 }
 
 void ComponentContainer::updateComponents(
-    scene::SceneUpdateTime const sceneUpdateTime)
+    scene::ISceneManagerSubSystem& iSceneManagerSubSystem)
 {
-    p_->updateComponents(sceneUpdateTime);
+    p_->updateComponents(iSceneManagerSubSystem);
 }
 
 void ComponentContainer::updateComponents()
 {
+    /*
     using scene::num_begin;
     using scene::num_end;
     using scene::SceneUpdateTime;
@@ -80,11 +43,12 @@ void ComponentContainer::updateComponents()
     {
         p_->updateComponents(toEnum<SceneUpdateTime>(i));
     }
+    */
 }
 
 void ComponentContainer::clearComponents() noexcept
 {
-    p_->clearComponentsBackwards();
+    p_->clearComponents();
 }
 
 sptr<Component> ComponentContainer::getOrCreateComponent(str_view typeName)
@@ -95,13 +59,16 @@ sptr<Component> ComponentContainer::getOrCreateComponent(str_view typeName)
         result = createComponent(typeName);
         if (result)
         {
-            if (applyRequirements(*result))
+            addComponent(result);
+            if (!applyRequirements(*result))
             {
-                addComponent(result);
+                LogAsserter::log_assert(true, "Cannot create component ",
+                                        typeName);
+                result.reset();
             }
             else
             {
-                result.reset();
+                result->setAttachedNode(p_->attachable_);
             }
         }
     }
@@ -112,7 +79,7 @@ sptr<Component> ComponentContainer::attachComponent(str_view typeName)
 {
     auto component{getOrCreateComponent(typeName)};
 
-    DisplayLog::debug(StaticTypeName, [this]() {
+    logger::DisplayLog::debug(StaticTypeName, [this]() {
         return debug::showComponentList(p_->attachable_);
     });
     return component;
@@ -126,7 +93,6 @@ sptr<Component> ComponentContainer::createComponent(str_view typeName)
 bool ComponentContainer::addComponent(sptr<Component> nc)
 {
     LogAsserter::log_assert(nc != nullptr, "Trying to add a nullptr component");
-    nc->setAttachedNode(p_->attachable_);
     p_->components_.push_back(htps::move(nc));
     return true;
 }
@@ -137,7 +103,8 @@ bool ComponentContainer::applyRequirements(Component& _thisComponent)
     return _thisComponent.addRequirements(component_requierements);
 }
 
-sptr<Component> ComponentContainer::getExistingComponent(str_view typeName) const
+sptr<Component> ComponentContainer::getExistingComponent(
+    str_view typeName) const
 {
     return p_->getExistingComponent(typeName);
 }

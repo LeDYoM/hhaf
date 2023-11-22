@@ -30,7 +30,7 @@ bool HostInternal::initializeBackend()
 void HostInternal::logLoadedFactories()
 {
     LogAsserter::log_assert(backend_factory_ != nullptr, "No backend loaded!");
-    DisplayLog::debug(
+    logger::DisplayLog::debug(
         StaticTypeName, ": Window loaded loaded...\t\t",
         backend_factory_->isWindowFactoryAvailable() ? "Yes" : "No");
 }
@@ -38,7 +38,7 @@ void HostInternal::logLoadedFactories()
 bool HostInternal::initializeHaf()
 {
     auto const result_load_functions{system_loader_.loadFunctions()};
-    DisplayLog::error_if(
+    logger::DisplayLog::error_if(
         result_load_functions != SystemControllerLoader::ResultType::Success,
         StaticTypeName, ": Cannot load haf system!");
 
@@ -96,7 +96,7 @@ bool HostInternal::updateApp(HostedApplication& app)
             break;
         case AppState::ReadyToStart:
         {
-            DisplayLog::info(StaticTypeName,
+            logger::DisplayLog::info(StaticTypeName,
                              ": Starting initialization of new App...");
             app.app_state = AppState::Executing;
         }
@@ -106,14 +106,14 @@ bool HostInternal::updateApp(HostedApplication& app)
             if (app.app_system_controller->update())
             {
                 app.app_state = AppState::ReadyToTerminate;
-                DisplayLog::info(StaticTypeName, ": ",
+                logger::DisplayLog::info(StaticTypeName, ": ",
                                  appDisplayNameAndVersion(app),
                                  ": is now ready to terminate");
             }
         }
         break;
         case AppState::ReadyToTerminate:
-            DisplayLog::info(StaticTypeName, ": ",
+            logger::DisplayLog::info(StaticTypeName, ": ",
                              appDisplayNameAndVersion(app),
                              ": ready to terminate");
             app.app_state = AppState::Terminated;
@@ -152,7 +152,7 @@ bool HostInternal::loadApplication(htps::str const& app_name)
         {
             // Remove the newly added app
             app_group_.pop_back();
-            DisplayLog::error(StaticTypeName, ": Cannot create haf system!");
+            logger::DisplayLog::error(StaticTypeName, ": Cannot create haf system!");
         }
         else
         {
@@ -162,7 +162,7 @@ bool HostInternal::loadApplication(htps::str const& app_name)
                                             backend_factory_.get(), argc_,
                                             argv_);
 
-            DisplayLog::info(StaticTypeName, ": ",
+            logger::DisplayLog::info(StaticTypeName, ": ",
                              appDisplayNameAndVersion(app),
                              ": Starting execution...");
             return true;

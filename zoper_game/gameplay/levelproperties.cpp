@@ -57,7 +57,7 @@ void LevelProperties::setScore(size_type const new_score)
 
         if (!game_shared_data)
         {
-            DisplayLog::debug("Cannot retrieve GameSharedData");
+            logger::DisplayLog::debug("Cannot retrieve GameSharedData");
         }
         else
         {
@@ -87,7 +87,7 @@ void LevelProperties::setLevel(LevelType const currentLevel)
 
         if (game_shared_data == nullptr)
         {
-            DisplayLog::debug("Cannot retrieve GameSharedData");
+            logger::DisplayLog::debug("Cannot retrieve GameSharedData");
         }
 
         game_shared_data->endLevel = current_level_;
@@ -114,10 +114,10 @@ void LevelProperties::setLevel(LevelType const currentLevel)
     updateLevelData();
     increaseScore(0U);
 
-    DisplayLog::info("Level set: ", current_level_);
-    DisplayLog::info("Millis between tokens: ", millisBetweenTokens());
-    DisplayLog::info("Current base score: ", baseScore());
-    DisplayLog::info("Seconds or tokens to next level: ", stayCounter());
+    logger::DisplayLog::info("Level set: ", current_level_);
+    logger::DisplayLog::info("Millis between tokens: ", millisBetweenTokens());
+    logger::DisplayLog::info("Current base score: ", baseScore());
+    logger::DisplayLog::info("Seconds or tokens to next level: ", stayCounter());
 }
 
 void LevelProperties::tokenConsumed()

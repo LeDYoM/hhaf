@@ -5,7 +5,6 @@
 #include <hlog/include/hlog.hpp>
 
 #include "main_scene.hpp"
-#include "main_mesh_controller.hpp"
 
 namespace hl
 {
@@ -13,9 +12,8 @@ namespace hl
 void HLProgramController::onInit(
     haf::scene::IAppInitializer& app_initializer)
 {
-    haf::DisplayLog::verbose("Initializing HLProgramController");
+    logger::DisplayLog::verbose("Initializing HLProgramController");
     app_initializer.registerComponent<MainScene>();
-    app_initializer.registerComponent<MainMeshController>();
 
     app_initializer.instanciateRootComponent("MainScene");
 //    app_initializer.registerSceneType<MenuScene>();

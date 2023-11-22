@@ -7,7 +7,8 @@
 #include <haf/include/scene_components/camera/camera_component.hpp>
 #include <haf/include/scene_components/camera/debug_camera_component.hpp>
 #include <haf/include/scene_components/camera/move_camera_component.hpp>
-
+#include <haf/include/scene_components/main_mesh_controller.hpp>
+#include <haf/include/scene_components/scene_render_properties_component.hpp>
 #include <haf/include/render/mesh_render_component.hpp>
 #include <haf/include/render/material_data_component.hpp>
 
@@ -26,6 +27,8 @@ bool ComponentRegister::operator()()
     ok &= m_scene_manager.registerComponent<CameraComponent>();
     ok &= m_scene_manager.registerComponent<DebugCameraComponent>();
     ok &= m_scene_manager.registerComponent<MoveCameraComponent>();
+    ok &= m_scene_manager.registerComponent<MainMeshController>();
+    ok &= m_scene_manager.registerComponent<SceneRenderPropertiesComponent>();
 
     ok &= m_scene_manager.registerComponent<render::MeshRenderComponent>();
     ok &= m_scene_manager.registerComponent<render::MaterialDataComponent>();

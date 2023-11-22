@@ -1,17 +1,21 @@
 #include <haf/include/scene_components/camera/camera_component.hpp>
 #include <haf/include/component/component_definition.hpp>
+#include <haf/include/scene_components/scene_render_properties_component.hpp>
+#include <haf/include/resources/shader.hpp>
 
-#include "system/get_system.hpp"
-#include "scene/scene_manager.hpp"
-#include <facil_math/include/geometry_math.hpp>
-#include <facil_math/include/matrix4x4_functions.hpp>
+#include <haf/include/log/assert.hpp>
 
 using namespace haf::core;
 using namespace haf::prop;
-using namespace fmath;
+using namespace haf::math;
 
 namespace haf::scene
 {
+struct CameraComponent::ComponentsRequired
+{
+    sptr<haf::scene::SceneRenderPropertiesComponent> m_scene_render_properties;
+};
+
 struct CameraComponent::PrivateComponentData
 {
     Matrix4x4 m_perspective_matrix;
@@ -22,10 +26,21 @@ struct CameraComponent::PrivateComponentData
     PropertyState<CameraComponentsUpdatedStruct> cameraComponentsUpdated;
 };
 
-CameraComponent::CameraComponent() : m_p{make_pimplp<PrivateComponentData>()}
+CameraComponent::CameraComponent() :
+    m_components{make_pimplp<ComponentsRequired>()},
+    m_p{make_pimplp<PrivateComponentData>()}
 {}
 
 CameraComponent::~CameraComponent() = default;
+
+bool CameraComponent::addRequirements(
+    component::ComponentRequirements& component_requirements)
+{
+    bool isOk{true};
+    isOk &= component_requirements.getOrCreateComponent(
+        m_components->m_scene_render_properties);
+    return isOk;
+}
 
 void CameraComponent::onAttached()
 {
@@ -66,14 +81,14 @@ void CameraComponent::cameraDataPerspectiveUpdated()
         case CameraMode::Ortho:
             m_p->m_perspective_matrix =
                 fmath::ortho(Left(), Right(), Bottom(), Top(), Near(), Far());
-//            m_p->m_perspective_matrix = Matrix4x4::Identity;
+            //            m_p->m_perspective_matrix = Matrix4x4::Identity;
             break;
         case CameraMode::Perspective:
             m_p->m_perspective_matrix =
                 fmath::perspective(FovY(), Aspect(), Near(), Far());
             break;
         default:
-            LogAsserter::log_assert(true, "Invalid CameraMode value");
+            LOG_ASSERT(false, "Invalid CameraMode value");
             break;
     }
 
@@ -98,10 +113,8 @@ void CameraComponent::cameraDataViewUpdated()
 
 void CameraComponent::performCameraUpdate()
 {
-    sys::getSystem<scene::SceneManager>(attachedNode())
-        .sceneRenderContext()
-        .setCameraMatrix(m_p->m_perspective_matrix * m_p->m_view_matrix);
-
+    m_components->m_scene_render_properties->setViewMatrix(
+        m_p->m_perspective_matrix * m_p->m_view_matrix);
     cameraUpdated();
 }
 

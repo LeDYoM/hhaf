@@ -8,7 +8,7 @@
 
 #include <chrono>
 
-using namespace htps;
+using namespace haf::core;
 
 namespace haf::sys
 {
@@ -30,7 +30,7 @@ struct TimeSystem::TimeSystemPrivate final : public TimeSystemAcceleration
     TimeSystemPrivate() :
         TimeSystemAcceleration{}, globalStart_{timepoint_global_now()}
     {
-        DisplayLog::info("TimeSystem started at: ", globalStart_.seconds());
+        logger::DisplayLog::info("TimeSystem started at: ", globalStart_.seconds());
     }
 
     TimePoint timeSinceStart() const
@@ -53,15 +53,18 @@ struct TimeSystem::TimeSystemPrivate final : public TimeSystemAcceleration
     }
 
     void updateEndFrameTime() { last_end_frame_ = timeSinceStart(); }
+    void incrementFrame() noexcept { ++m_currentFrame; }
 
     TimePoint lastFrameTime() const noexcept { return last_frame_time_; }
     TimePoint lastStartFrame() const noexcept { return last_start_frame_; }
+    FrameNumberType currentFrame() const noexcept { return m_currentFrame; }
 
 private:
     TimePoint globalStart_;
     TimePoint last_frame_time_{0U};
     TimePoint last_start_frame_{0U};
     TimePoint last_end_frame_{0U};
+    FrameNumberType m_currentFrame{0UL};
 };
 
 TimeSystem::TimeSystem(sys::ISystemProvider& system_provider) :
@@ -85,6 +88,7 @@ void TimeSystem::setAcceleration(f32 const acceleration)
 
 void TimeSystem::startFrame()
 {
+    priv_->incrementFrame();
     priv_->updateStartFrameTime();
 }
 
@@ -93,14 +97,19 @@ void TimeSystem::endFrame()
     priv_->updateEndFrameTime();
 }
 
-TimePoint TimeSystem::lastFrameTime() const
+TimePoint TimeSystem::lastFrameTime() const noexcept
 {
     return priv_->lastFrameTime();
 }
 
-time::TimePoint TimeSystem::nowFrame() const
+time::TimePoint TimeSystem::nowFrame() const noexcept
 {
     return priv_->lastStartFrame();
+}
+
+FrameNumberType TimeSystem::currentFrame() const noexcept
+{
+    return priv_->currentFrame();
 }
 
 }  // namespace haf::sys

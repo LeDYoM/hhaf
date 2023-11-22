@@ -17,10 +17,10 @@ BackendFactory::BackendFactory() :
 
 BackendFactory::~BackendFactory()
 {
-    DisplayLog::debug(StaticTypeName, ": Destroying backend factory");
+    logger::DisplayLog::debug(StaticTypeName, ": Destroying backend factory");
     for (auto&& loaded_module : loaded_modules_)
     {
-        DisplayLog::debug(StaticTypeName,
+        logger::DisplayLog::debug(StaticTypeName,
                             ": Destroying backend loaded module: ",
                             loaded_module->moduleName());
         loaded_module->emptyRegisteredFactories();
@@ -32,12 +32,12 @@ BackendFactory::~BackendFactory()
 
     agloader::destroyLoader();
     loader_ = nullptr;
-    DisplayLog::debug(StaticTypeName, ": backend factory destroyed");
+    logger::DisplayLog::debug(StaticTypeName, ": backend factory destroyed");
 }
 
 bool BackendFactory::loadBackendFile(htps::str const& file_name)
 {
-    DisplayLog::debug(StaticTypeName,
+    logger::DisplayLog::debug(StaticTypeName,
                         ": Going to load backend module: ", file_name);
 
     if (loader_->loadModule(file_name.c_str()))

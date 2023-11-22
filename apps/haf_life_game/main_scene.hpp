@@ -6,7 +6,9 @@
 
 namespace hl
 {
-class MainScene final : public haf::component::ComponentBootStrap<MainScene>
+class MainScene final
+    : public haf::component::ComponentBootStrap<MainScene,
+                                                "InternalControllerSubSystem">
 {
 public:
     static constexpr const haf::core::str_view StaticTypeName{"MainScene"};

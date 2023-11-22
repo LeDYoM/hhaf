@@ -41,17 +41,6 @@ public:
      */
     core::sptr<SceneNode> createSceneNode(core::str_view name);
 
-    core::sptr<component::Component> createSceneNodeWithComponent(
-        core::str_view name,
-        core::str_view componentName);
-
-    template <typename T>
-    core::sptr<T> createSceneNodeWithComponent(core::str_view name)
-    {
-        return core::static_pointer_cast<T>(
-            createSceneNodeWithComponent(core::move(name), T::StaticTypeName));
-    }
-
     /**
      * @brief Remove a SceneNode object
      *

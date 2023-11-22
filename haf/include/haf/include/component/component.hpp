@@ -29,8 +29,6 @@ public:
     Component(Component&&)                 = default;
     Component& operator=(Component&&) = default;
 
-    void updateComponent(scene::SceneUpdateTime const sceneUpdateTime);
-
     virtual ~Component();
 
     /**
@@ -48,10 +46,9 @@ public:
 protected:
     Component();
 
-    void setSceneUpdateTime(
-        scene::SceneUpdateTime const sceneUpdateTime) noexcept;
-
 private:
+    virtual core::str_view defaultSubSystemUpdateName() const = 0;
+
     /**
      * @brief Method called after the component is attached to a node.
      * Override it to perform initialization

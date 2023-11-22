@@ -12,13 +12,15 @@ set(SOURCE_TESTS
     debug_system/debug_variables
 
     events/connection
+    events/shared_connection
 
     file_system/file_system
 
     input/keyboard_input_component
 
+    properties/named_property_state
     properties/properties
-    properties/propertystate
+    properties/property_state
 
     render/mesh_render_component
     render/vertex_formats
@@ -35,8 +37,11 @@ set(SOURCE_TESTS
     scene_components/global_transformation_component
     scene_components/scene_nodes_component
     scene_components/states_controller_component
+    scene_components/transformation_and_global_component
     scene_components/transformation_component
     scene_components/visibility_selector_component
+
+    scene_subsystems/scene_walker
 
     shareddata/address
     shareddata/shared_data_system

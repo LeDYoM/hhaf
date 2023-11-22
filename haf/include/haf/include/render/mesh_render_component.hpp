@@ -12,7 +12,8 @@ HAF_PRAGMA_ONCE
 namespace haf::render
 {
 class HAF_API MeshRenderComponent final
-    : public component::ComponentBootStrap<MeshRenderComponent>
+    : public component::ComponentBootStrap<MeshRenderComponent,
+                                           "RenderSubSystem">
 {
 public:
     static constexpr const core::str_view StaticTypeName{"MeshRenderComponent"};
@@ -21,12 +22,18 @@ public:
     ~MeshRenderComponent();
 
     void onAttached() override;
+    bool addRequirements(
+        component::ComponentRequirements& component_requirements) override;
+
     void updateRender();
 
-    core::sptr<res::Shader> shader() const noexcept;
 private:
+    struct ComponentsRequired;
+    haf::core::PImplPointer<ComponentsRequired> m_components;
+
     struct PrivateComponentData;
     core::PImplPointer<PrivateComponentData> m_p;
+
     HAF_DECLARE_DEBUG_VARIABLE(vertex_render)
 };
 

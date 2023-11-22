@@ -5,7 +5,7 @@ HAF_PRAGMA_ONCE
 #include <haf/include/haf_export.hpp>
 #include <haf/include/core/types.hpp>
 #include <haf/include/properties/property_state.hpp>
-#include <facil_math/include/matrix4x4.hpp>
+#include <haf/include/math/types.hpp>
 
 #include <haf/include/events/receiver.hpp>
 #include <haf/include/component/component_declaration.hpp>
@@ -13,7 +13,8 @@ HAF_PRAGMA_ONCE
 namespace haf::scene
 {
 class HAF_API GlobalTransformationComponent final
-    : public component::ComponentBootStrap<GlobalTransformationComponent>
+    : public component::ComponentBootStrap<GlobalTransformationComponent,
+                                           "GlobalViewUpdaterSubSystem">
 {
 public:
     static constexpr const core::str_view StaticTypeName{
@@ -22,16 +23,21 @@ public:
     GlobalTransformationComponent();
     ~GlobalTransformationComponent() override;
 
-    void localTransformationChanged(fmath::Matrix4x4 const& localTransform);
+    void localTransformationChanged(math::Matrix4x4 const& localTransform);
     bool hasPendingMatrixUpdate() const noexcept;
 
 private:
-    evt::emitter<fmath::Matrix4x4 const&> m_globalTransformationChanged;
+    evt::emitter<math::Matrix4x4 const&> m_globalTransformationChanged;
     void updateMatrix();
     void setModelViewMatrix();
-    void globalTransformationChanged(fmath::Matrix4x4 const& parentMatrix);
-
+    void globalTransformationChanged(math::Matrix4x4 const& parentMatrix);
+    void connectToParentGlobalTransformationChanged();
     void onAttached() override;
+    bool addRequirements(
+        component::ComponentRequirements& component_requirements) override;
+
+    struct ComponentsRequired;
+    haf::core::PImplPointer<ComponentsRequired> m_components;
 
     struct PrivateComponentData;
     core::PImplPointer<PrivateComponentData> m_p;

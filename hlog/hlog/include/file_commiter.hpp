@@ -3,7 +3,7 @@
 
 #include <logger/include/stream_commiter.hpp>
 
-namespace haf
+namespace logger
 {
 struct FileCommiter
 {
@@ -14,6 +14,6 @@ struct FileCommiter
     static void commitlog(const char* const log_stream);
 };
 
-}  // namespace haf
+}  // namespace logger
 
 #endif

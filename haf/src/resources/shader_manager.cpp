@@ -16,8 +16,8 @@ void ShaderManager::init()
 void ShaderManager::addShader(str_view rid, sptr<Shader> shader)
 {
     m_shaders.add(rid, core::move(shader), false);
-    DisplayLog::info(StaticTypeName, ": Added shader");
-    DisplayLog::info(StaticTypeName, ": Number of shaders: ", m_shaders.size());
+    logger::DisplayLog::info(StaticTypeName, ": Added shader");
+    logger::DisplayLog::info(StaticTypeName, ": Number of shaders: ", m_shaders.size());
 }
 
 size_type ShaderManager::setUniformForAll(str_view uniformName,

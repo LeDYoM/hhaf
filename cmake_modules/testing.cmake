@@ -54,7 +54,7 @@ function(add_haf_test_executable)
     "#define CATCH_CONFIG_RUNNER
       #include <catch.hpp>
 
-      #include <hlog/include/hlog.hpp>
+      #include <haf/include/log/log.hpp>
 
       int main(int argc, char* argv[])
       {

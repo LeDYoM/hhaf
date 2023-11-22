@@ -9,7 +9,6 @@ set(sources
   include/KHR/khrplatform.h
 )
 
-message("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA: ${sources}")
 add_library(${CURRENT_TARGET} SHARED ${sources})
 #set_target_properties(${CURRENT_TARGET} PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS true)
 target_include_directories(${CURRENT_TARGET} PUBLIC include)

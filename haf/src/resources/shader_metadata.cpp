@@ -40,7 +40,7 @@ void ShaderMetadata::init(ShaderId const program)
 
     for (auto const& subObject : m_p->m_attribVertexFormat)
     {
-        DisplayLog::debug(
+        logger::DisplayLog::debug(
             StaticTypeName, ": Format for attrib ", subObject.location(), " (",
             subObject.index(),
             ") is: ", static_cast<int>(subObject.vertexFormat().bufferType),
@@ -48,43 +48,43 @@ void ShaderMetadata::init(ShaderId const program)
             ", array size: ", subObject.vertexFormat().arraySize);
     }
 
-    DisplayLog::debug_if(m_p->m_attribVertexFormat.empty(), StaticTypeName,
+    logger::DisplayLog::debug_if(m_p->m_attribVertexFormat.empty(), StaticTypeName,
                          ": No attributes found");
 
     for (auto const& subObject : m_p->m_uniformFormat)
     {
-        DisplayLog::debug(
+        logger::DisplayLog::debug(
             StaticTypeName, ": Format for uniform ", subObject.location(), " (",
             subObject.index(),
             ") is: ", static_cast<int>(subObject.vertexFormat().bufferType),
             ", number of elements: ", subObject.vertexFormat().numElements,
             ", array size: ", subObject.vertexFormat().arraySize);
     }
-    DisplayLog::debug_if(m_p->m_uniformFormat.empty(), StaticTypeName,
+    logger::DisplayLog::debug_if(m_p->m_uniformFormat.empty(), StaticTypeName,
                          ": No uniforms found");
 
     for (auto const& subObject : m_p->m_uniformBlockFormat)
     {
-        DisplayLog::debug(
+        logger::DisplayLog::debug(
             StaticTypeName, ": Format for uniform block ", subObject.location(),
             " (", subObject.index(),
             ") is: ", static_cast<int>(subObject.vertexFormat().bufferType),
             ", number of elements: ", subObject.vertexFormat().numElements,
             ", array size: ", subObject.vertexFormat().arraySize);
     }
-    DisplayLog::debug_if(m_p->m_uniformFormat.empty(), StaticTypeName,
+    logger::DisplayLog::debug_if(m_p->m_uniformFormat.empty(), StaticTypeName,
                          ": No uniform blocks found");
 
     for (auto const& subObject : m_p->m_uniformBlockElementsFormat)
     {
-        DisplayLog::debug(
+        logger::DisplayLog::debug(
             StaticTypeName, ": Format for uniform block elements ",
             subObject.location(), " (", subObject.index(),
             ") is: ", static_cast<int>(subObject.vertexFormat().bufferType),
             ", number of elements: ", subObject.vertexFormat().numElements,
             ", array size: ", subObject.vertexFormat().arraySize);
     }
-    DisplayLog::debug_if(m_p->m_uniformFormat.empty(), StaticTypeName,
+    logger::DisplayLog::debug_if(m_p->m_uniformFormat.empty(), StaticTypeName,
                          ": No uniform block elements found");
 }
 

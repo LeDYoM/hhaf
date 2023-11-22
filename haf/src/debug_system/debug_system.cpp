@@ -16,7 +16,7 @@ namespace haf::sys
 {
 DebugSystem::~DebugSystem()
 {
-    DisplayLog::debug(StaticTypeName, ": ", m_debug_variables.state());
+    logger::DisplayLog::debug(StaticTypeName, ": ", m_debug_variables.state());
 }
 
 void DebugSystem::logBuildStaticData()
@@ -27,7 +27,8 @@ void DebugSystem::logBuildStaticData()
 void DebugSystem::onStartPreUpdate()
 {
     m_debug_variables.startFrame(
-        getSystem<TimeSystem>(systemAccessPtr()).nowFrame());
+        getSystem<TimeSystem>(systemAccessPtr()).nowFrame(),
+        getSystem<TimeSystem>(systemAccessPtr()).currentFrame());
 }
 
 void DebugSystem::onFinishPostUpdate()

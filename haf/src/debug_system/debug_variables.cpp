@@ -4,16 +4,17 @@ using namespace haf::core;
 
 namespace haf::debug
 {
-void DebugVariables::startFrame(time::TimePoint const& now)
+void DebugVariables::startFrame(time::TimePoint const& now,
+                                core::u64 const frameNumber)
 {
-    ++m_frames;
+    m_frames = frameNumber;
 
     getVariable(m_frames_debug_var, "FrameNum");
     setVariableValue(m_frames_debug_var, m_frames);
     getVariable(m_frameTime, "FrameTime");
     setVariableValue(m_frameTime, now.microseconds());
 
-    for (auto& element : m_debug_variables)
+    for (auto&& element : m_debug_variables)
     {
         element.second.incrementFrame();
     }

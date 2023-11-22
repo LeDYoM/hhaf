@@ -54,7 +54,7 @@ void DebugCameraComponent::logCameraData()
 {
     auto&& camera{m_components->m_camera_component};
 
-    DisplayLog::debug(
+    logger::DisplayLog::debug(
         StaticTypeName,
 //        ": Camera view values:\nMode: ", (int)(m_p->m_cameraMoveType),
         "\nPosition: {", camera->Position().x, ",", camera->Position().y, ",",
@@ -62,7 +62,7 @@ void DebugCameraComponent::logCameraData()
         camera->Center().y, ",", camera->Center().z, "}\nUp: {", camera->Up().x,
         ",", camera->Up().y, ",", camera->Up().z, "}");
 
-    DisplayLog::debug(
+    logger::DisplayLog::debug(
         StaticTypeName, ": Perspective mode: ",
         camera->cameraMode() == CameraComponent::CameraMode::Ortho
             ? "Ortho"
@@ -70,13 +70,13 @@ void DebugCameraComponent::logCameraData()
                    ? "Frustum"
                    : "Perspective"));
 
-    DisplayLog::debug(
+    logger::DisplayLog::debug(
         StaticTypeName,
         ": Camera frustum values:\n: Left Right Bottom Top Near Far\n",
         camera->Left(), ",", camera->Right(), ",", camera->Bottom(), ",",
         camera->Top(), ",", camera->Near(), ",", camera->Far());
 
-    DisplayLog::debug(StaticTypeName,
+    logger::DisplayLog::debug(StaticTypeName,
                       ": Camera perspectve values:\n: FovY Aspect\n",
                       camera->FovY(), ",", camera->Aspect());
 }

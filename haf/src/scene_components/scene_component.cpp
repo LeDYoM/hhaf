@@ -7,8 +7,6 @@ namespace haf::scene
 {
 struct SceneComponent::ComponentsRequired
 {
-    sptr<TransformationComponent> m_transformation_component;
-    sptr<DebugCameraComponent> m_debug_camera_component;
 };
 
 SceneComponent::SceneComponent() :
@@ -21,10 +19,6 @@ bool SceneComponent::addRequirements(
     component::ComponentRequirements&)
 {
     bool isOk{true};
-//    isOk &= component_requirements.getOrCreateComponent(
-//        m_components->m_transformation_component);
-//    isOk &= component_requirements.getOrCreateComponent(
-//        m_components->m_debug_camera_component);
     return isOk;
 }
 

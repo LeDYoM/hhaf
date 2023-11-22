@@ -1,4 +1,5 @@
 #include <haf/include/component/component_updater.hpp>
+#include "scene_subsystems/iscene_manager subsystem.hpp"
 
 namespace haf::component
 {
@@ -24,12 +25,23 @@ void ComponentUpdater::addUpdater(UpdateAction updateAction)
     m_propertiesToUpdate.emplace_back(nullptr, core::move(updateAction));
 }
 
-void ComponentUpdater::update(scene::SceneUpdateTime const sceneUpdateTime)
+void ComponentUpdater::update(
+    scene::ISceneManagerSubSystem& isceneManagerSubSystem)
 {
-    if (m_sceneUpdateTime == sceneUpdateTime)
+    if (acceptSubSystem(isceneManagerSubSystem) &&
+        isceneManagerSubSystem.isComponentAcceptable(*this))
     {
+        isceneManagerSubSystem.performUpdateAction(*this);
         update();
     }
+}
+
+bool ComponentUpdater::acceptSubSystem(
+    scene::ISceneManagerSubSystem& isceneManagerSubSystem)
+{
+    //    (void)(isceneManagerSubSystem);
+    //    return true;
+    return m_sceneParentSubSystemName == isceneManagerSubSystem.subSystemName();
 }
 
 void ComponentUpdater::update()
@@ -43,10 +55,10 @@ void ComponentUpdater::update()
     }
 }
 
-void ComponentUpdater::setSceneUpdateTime(
-    scene::SceneUpdateTime const sceneUpdateTime) noexcept
+void ComponentUpdater::setParentSubSystem(
+    core::str parent_sub_system_name) noexcept
 {
-    m_sceneUpdateTime = sceneUpdateTime;
+    m_sceneParentSubSystemName = core::move(parent_sub_system_name);
 }
 
 }  // namespace haf::component

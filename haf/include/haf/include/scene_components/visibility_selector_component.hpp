@@ -16,7 +16,8 @@ namespace haf::scene
  * only one visible node.
  */
 class HAF_API VisibilitySelectorComponent final
-    : public component::ComponentBootStrap<VisibilitySelectorComponent>
+    : public component::ComponentBootStrap<VisibilitySelectorComponent,
+                                           "InternalControllerSubSystem">
 {
 public:
     static constexpr const core::str_view StaticTypeName{

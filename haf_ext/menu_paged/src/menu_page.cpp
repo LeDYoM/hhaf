@@ -121,13 +121,13 @@ size_type MenuPage::SelectedOptionAtRow(const size_type row) const
         }
         else
         {
-            DisplayLog::error("The is no discrete text at ",
+            logger::DisplayLog::error("The is no discrete text at ",
                               vector2dst{columnForOptions, row});
         }
     }
     else
     {
-        DisplayLog::error("Invalid row index parameter");
+        logger::DisplayLog::error("Invalid row index parameter");
     }
     return static_cast<size_type>(-1);
 }

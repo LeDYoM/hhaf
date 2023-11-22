@@ -34,7 +34,7 @@ public:
         std::ifstream config_file{config_file_name_.c_str()};
         if (config_file)
         {
-            DisplayLog::info("Reading config file ", config_file_name_);
+            logger::DisplayLog::info("Reading config file ", config_file_name_);
             std::string key;
             std::string value;
             while (config_file >> key >> value)
@@ -47,7 +47,7 @@ public:
         }
         else
         {
-            DisplayLog::debug("Config file ", config_file_name_, " not found");
+            logger::DisplayLog::debug("Config file ", config_file_name_, " not found");
         }
     }
 
@@ -62,15 +62,15 @@ public:
             if (start_file.first)
             {
                 config_file_name_ = start_file.second;
-                DisplayLog::debug("Parameter ", kConfigFileParameter,
+                logger::DisplayLog::debug("Parameter ", kConfigFileParameter,
                                   " found with value: ", config_file_name_);
             }
             else
             {
-                DisplayLog::debug("Config file: ", config_file_name_);
+                logger::DisplayLog::debug("Config file: ", config_file_name_);
             }
 
-            DisplayLog::debug("Loading config file ", config_file_name_, "...");
+            logger::DisplayLog::debug("Loading config file ", config_file_name_, "...");
             loadConfigFile();
         }
     }

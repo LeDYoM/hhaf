@@ -11,7 +11,8 @@ HAF_PRAGMA_ONCE
 namespace haf::scene
 {
 class HAF_API DebugCameraComponent final
-    : public component::ComponentBootStrap<DebugCameraComponent>
+    : public component::ComponentBootStrap<DebugCameraComponent,
+                                           "InternalControllerSubSystem">
 {
 public:
     static constexpr const core::str_view StaticTypeName{

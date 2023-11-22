@@ -15,10 +15,10 @@ VertexArrayObject::VertexArrayObject(sptr<Mesh> mesh, sptr<Shader> shader) :
                                            core::move(shader),
                                            0U)}
 {
-    DisplayLog::debug(staticTypeName(), ": Creating vao...");
-    DisplayLog::debug(staticTypeName(), ": vao id: ", m_p->m_vao);
-    DisplayLog::debug(staticTypeName(), ": Setting shader in vao...");
-    DisplayLog::debug(staticTypeName(), ": vao ", m_p->m_vao,
+    logger::DisplayLog::debug(staticTypeName(), ": Creating vao...");
+    logger::DisplayLog::debug(staticTypeName(), ": vao id: ", m_p->m_vao);
+    logger::DisplayLog::debug(staticTypeName(), ": Setting shader in vao...");
+    logger::DisplayLog::debug(staticTypeName(), ": vao ", m_p->m_vao,
                       " associated to shader ", m_p->m_shader->handle());
     m_p->associateBuffersToAttribsInCurrentShader(m_p->m_mesh);
 }
@@ -35,14 +35,17 @@ u32 VertexArrayObject::handle() const
     return static_cast<u32>(m_p->m_vao);
 }
 
-void VertexArrayObject::render()
-{
-    m_p->render();
-}
-
 sptr<Shader>& VertexArrayObject::shader() noexcept
 {
     return m_p->m_shader;
+}
+
+void VertexArrayObject::fillRenderData(render::RenderData& render_data)
+{
+    render_data.vao = handle();
+    render_data.textureId = 1;
+    render_data.shader = shader()->handle();
+    render_data.sizeCount = m_p->m_size;
 }
 
 }  // namespace haf::res

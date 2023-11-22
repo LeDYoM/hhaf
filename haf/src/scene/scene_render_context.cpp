@@ -12,7 +12,7 @@ SceneRenderContext::~SceneRenderContext() = default;
 
 void SceneRenderContext::init()
 {
-    m_backgroundColor = colors::DarkGreen;
+    m_frame_render_start_data.backgroundColor = colors::DarkGreen;
 }
 
 void SceneRenderContext::setNowFrame(TimePoint time_point)
@@ -23,7 +23,7 @@ void SceneRenderContext::setNowFrame(TimePoint time_point)
 void SceneRenderContext::setBackgroundColor(
     vector4df const& backgroundColor) noexcept
 {
-    m_backgroundColor = backgroundColor;
+    m_frame_render_start_data.backgroundColor = backgroundColor;
 }
 
 void SceneRenderContext::setCameraMatrix(Matrix4x4 const& camera_matrix)
@@ -37,9 +37,22 @@ void SceneRenderContext::setCurrentModelViewMatrix(
     m_currentModeViewMatrix = matrix;
 }
 
+void SceneRenderContext::getOrUpdateRenderDataIndex(
+    core::size_type& index,
+    render::RenderData*& render_data) noexcept
+{
+    //    if (render_data == nullptr)
+    //    {
+    index = m_frame_render_data.elements.size();
+    m_frame_render_data.elements.emplace_back();
+    render_data = &(m_frame_render_data.elements.back());
+    //    }
+}
+
 void SceneRenderContext::beginFrame()
 {
     BaseClass::beginFrame();
+    m_frame_render_data.elements.clear();
 }
 
 void SceneRenderContext::endFrame()

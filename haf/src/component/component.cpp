@@ -6,11 +6,6 @@ namespace haf::component
 Component::Component()  = default;
 Component::~Component() = default;
 
-void Component::updateComponent(scene::SceneUpdateTime const sceneUpdateTime)
-{
-    ComponentUpdater::update(sceneUpdateTime);
-}
-
 bool Component::addRequirements(ComponentRequirements&)
 {
     return true;
@@ -33,11 +28,6 @@ Component::const_pointer Component::attachedNode() const noexcept
 Component::pointer Component::attachedNode() noexcept
 {
     return attachedNode_;
-}
-
-void Component::setSceneUpdateTime(scene::SceneUpdateTime const sceneUpdateTime) noexcept
-{
-    ComponentUpdater::setSceneUpdateTime(sceneUpdateTime);
 }
 
 }  // namespace haf::component

@@ -12,7 +12,7 @@
 #include <hlog/include/cout_commiter.hpp>
 #include <hlog/include/file_commiter.hpp>
 
-namespace haf
+namespace logger
 {
 class LogStream
 {
@@ -22,60 +22,19 @@ public:
     htps::str& operator()() { return data; }
 };
 
-}
-
-namespace logger
-{
-extern template struct MixinCommiter<haf::FileCommiter, haf::COutCommiter>;
-}
-
-namespace haf
-{
-using FileCOutCommiter = logger::MixinCommiter<FileCommiter, COutCommiter>;
-
-extern template struct ThreadCommiter<FileCOutCommiter>;
+using FileCOutCommiter       = MixinCommiter<FileCommiter, COutCommiter>;
 using ThreadFileCoutCommiter = ThreadCommiter<FileCOutCommiter>;
-
-//using CurrentCommiter = ThreadFileCoutCommiter;
+// using CurrentCommiter = ThreadFileCoutCommiter;
 using CurrentCommiter = COutCommiter;
 
-}
-
-namespace logger
-{
-extern template struct LogDisplayer<
-    Log<true, haf::LogStream, haf::CurrentCommiter>,
-    SeverityType>;
-}
+using CurrentLog             = Log<true, LogStream, CurrentCommiter>;
+using CurrentLogInitializer = LogInitializer<CurrentLog>;
+using DisplayLog = LogDisplayer<CurrentLog, SeverityType, false>;
+}  // namespace logger
 
 namespace haf
 {
-using DisplayLog =
-    logger::LogDisplayer<logger::Log<true, LogStream, CurrentCommiter>,
-                         logger::SeverityType>;
+    using LogAsserter = logger::LogAsserter<logger::DisplayLog>;
+    using LogInitializer = logger::CurrentLogInitializer;
 }
-
-namespace logger
-{
-extern template struct LogAsserter<haf::DisplayLog>;
-}
-
-namespace haf
-{
-using LogAsserter = logger::LogAsserter<DisplayLog>;
-}
-
-namespace logger
-{
-extern template struct LogInitializer<
-    Log<true, haf::LogStream, haf::CurrentCommiter>>;
-}
-
-namespace haf
-{
-using LogInitializer =
-    logger::LogInitializer<logger::Log<true, LogStream, CurrentCommiter>>;
-
-}  // namespace haf
-
 #endif

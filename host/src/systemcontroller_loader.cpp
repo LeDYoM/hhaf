@@ -19,8 +19,8 @@ SystemControllerLoader::SystemControllerLoader() :
 SystemControllerLoader::~SystemControllerLoader()
 {
 /*
-    DisplayLog::debug("SystemControllers created: ", created_);
-    DisplayLog::debug("SystemControllers deleted: ", deleted_);
+    logger::DisplayLog::debug("SystemControllers created: ", created_);
+    logger::DisplayLog::debug("SystemControllers deleted: ", deleted_);
     LogAsserter::log_assert(
         created_ == deleted_,
         "Different number of created and deleted system controllers: ",

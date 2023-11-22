@@ -4,18 +4,29 @@ HAF_PRAGMA_ONCE
 
 #include <haf/include/core/types.hpp>
 #include <haf/include/properties/iproperty_state.hpp>
-#include <haf/include/scene/scene_update_time.hpp>
+#include <haf/include/debug_system/debug_types.hpp>
+
+namespace haf::scene
+{
+class ISceneManagerSubSystem;
+}
 
 namespace haf::component
 {
 class ComponentUpdater
 {
+public:
+    void update(scene::ISceneManagerSubSystem& isceneManagerSubSystem);
+
+    core::str_view parentSubSystemName() const noexcept
+    {
+        return core::str_view{m_sceneParentSubSystemName.c_str()};
+    }
+
 protected:
     using UpdateFunction = core::function<bool()>;
     using UpdateProperty = core::rptr<prop::IPropertyState>;
     using UpdateAction   = core::function<void()>;
-
-    void update(scene::SceneUpdateTime const sceneUpdateTime);
 
     /**
      * @brief Add an updater of a property
@@ -36,15 +47,20 @@ protected:
 
     void addUpdater(UpdateAction updateAction);
 
-    void setSceneUpdateTime(
-        scene::SceneUpdateTime const sceneUpdateTime) noexcept;
+protected:
+    void setParentSubSystem(core::str parent_sub_system_name) noexcept;
 
 private:
     void update();
+    virtual bool acceptSubSystem(
+        scene::ISceneManagerSubSystem& isceneManagerSubSystem);
 
     core::vector<core::pair<UpdateFunction, UpdateAction>> m_propertiesToUpdate;
-    scene::SceneUpdateTime m_sceneUpdateTime{
-        scene::SceneUpdateTime::Controller};
+    core::str m_sceneParentSubSystemName;
+
+    //    HAF_DEBUG_VARIABLES_CODE(
+    //        static uint32_t
+    //        m_updateCount[scene::size<scene::SceneUpdateTime>()]);
 };
 
 }  // namespace haf::component

@@ -29,7 +29,7 @@ SceneNode::SceneNode(rptr<sys::ISystemProvider> isystem_provider) :
 
 SceneNode::~SceneNode()
 {
-    DisplayLog::debug(StaticTypeName, ": ", name(), ": Destroying");
+    logger::DisplayLog::debug(StaticTypeName, ": ", name(), ": Destroying");
     m_component_container.clearComponents();
 }
 

@@ -26,7 +26,7 @@ void VisibilitySelectorComponent::onUpdateVisibleIndex()
     }
     else
     {
-        DisplayLog::warn("visible_index out of range");
+        logger::DisplayLog::warn("visible_index out of range");
     }
     */
 }

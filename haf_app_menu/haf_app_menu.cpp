@@ -15,7 +15,7 @@ namespace haf::app_menu
 void HafAppMenu::onInit(IAppInitializer& app_initializer)
 {
     (void)(app_initializer);
-    DisplayLog::verbose("Initializing HafAppMenu");
+    logger::DisplayLog::verbose("Initializing HafAppMenu");
 }
 
 void HafAppMenu::onFinish(IAppFinisher& finisher)

@@ -16,7 +16,9 @@ namespace haf::time
  * managed by the returned @b TimerConnectorSptr. They can be of different
  * @b TimerType.
  */
-class TimerComponent : public component::ComponentBootStrap<TimerComponent>
+class TimerComponent
+    : public component::ComponentBootStrap<TimerComponent,
+                                           "InternalControllerSubSystem">
 {
 public:
     static constexpr const core::str_view StaticTypeName{"TimerComponent"};

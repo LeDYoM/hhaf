@@ -13,8 +13,8 @@ void BoardManager::initialize(
     vector2dst const& size,
     rptr<IBoardManagerActuator> board_manager_actuator)
 {
-    DisplayLog::info("BoardManager initialize with size: ", size);
-    DisplayLog::info("IBoardManagerActuator received: ",
+    logger::DisplayLog::info("BoardManager initialize with size: ", size);
+    logger::DisplayLog::info("IBoardManagerActuator received: ",
                      (board_manager_actuator != nullptr));
 
     LogAsserter::log_assert(actuator_ == nullptr,
@@ -62,7 +62,7 @@ SITilePointer BoardManager::getTile(
         return tiles_[position.x][position.y];
     }
 
-    DisplayLog::error("Error getting tile in coordinates: ", position);
+    logger::DisplayLog::error("Error getting tile in coordinates: ", position);
     return SITilePointer();
 }
 
@@ -158,7 +158,7 @@ bool BoardManager::moveTile(BoardPositionType const source,
 {
     if (!tileEmpty(source))
     {
-        DisplayLog::info("Moving tile from ", source, " to ", dest);
+        logger::DisplayLog::info("Moving tile from ", source, " to ", dest);
 
         SITilePointer sourceTile{getTile(source)};
 
@@ -171,7 +171,7 @@ bool BoardManager::moveTile(BoardPositionType const source,
             }
 
             SITilePointer destTile{getTile(dest)};
-            DisplayLog::info("Source Value: ", sourceTile->value());
+            logger::DisplayLog::info("Source Value: ", sourceTile->value());
             LogAsserter::log_assert(
                 destTile == nullptr,
                 "Trying to move to a not empty tile: ", dest);
@@ -190,14 +190,14 @@ bool BoardManager::moveTile(BoardPositionType const source,
             }
             else
             {
-                DisplayLog::error("Trying to move to non empty tile");
+                logger::DisplayLog::error("Trying to move to non empty tile");
                 return false;
             }
         }
     }
     else
     {
-        DisplayLog::info("Trying to move empty tile: ", source.x, ",", source.y,
+        logger::DisplayLog::info("Trying to move empty tile: ", source.x, ",", source.y,
                          " ignoring it");
     }
     return false;

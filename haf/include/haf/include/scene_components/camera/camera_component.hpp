@@ -7,27 +7,26 @@ HAF_PRAGMA_ONCE
 #include <haf/include/properties/property_state.hpp>
 #include <haf/include/events/emitter.hpp>
 
-#include <facil_math/include/matrix4x4.hpp>
+#include <haf/include/math/types.hpp>
 #include <haf/include/component/component_declaration.hpp>
-
-#include <haf/include/resources/shader.hpp>
 
 namespace haf::scene
 {
 class HAF_API CameraComponent final
-    : public component::ComponentBootStrap<CameraComponent>
+    : public component::ComponentBootStrap<CameraComponent,
+                                           "ViewUpdaterSubSystem">
 {
 public:
     static constexpr const core::str_view StaticTypeName{"CameraComponent"};
 
     CameraComponent();
-    ~CameraComponent();
+    ~CameraComponent() override;
 
     enum class CameraMode : core::u32
     {
-        None = 0U,
-        Ortho = 1U,
-        Frustum = 2U,
+        None        = 0U,
+        Ortho       = 1U,
+        Frustum     = 2U,
         Perspective = 3U
     };
 
@@ -40,9 +39,9 @@ public:
     prop::PropertyState<core::f32> Top;
     prop::PropertyState<core::f32> Near;
     prop::PropertyState<core::f32> Far;
-    prop::PropertyState<fmath::vector3df> Position;
-    prop::PropertyState<fmath::vector3df> Center;
-    prop::PropertyState<fmath::vector3df> Up;
+    prop::PropertyState<math::vector3df> Position;
+    prop::PropertyState<math::vector3df> Center;
+    prop::PropertyState<math::vector3df> Up;
     prop::PropertyState<core::f32> FovY;
     prop::PropertyState<core::f32> Aspect;
 
@@ -54,6 +53,11 @@ private:
     void cameraDataPerspectiveUpdated();
     void cameraDataViewUpdated();
     void performCameraUpdate();
+    bool addRequirements(
+        component::ComponentRequirements& component_requirements) override;
+
+    struct ComponentsRequired;
+    haf::core::PImplPointer<ComponentsRequired> m_components;
 
     struct PrivateComponentData;
     core::PImplPointer<PrivateComponentData> m_p;

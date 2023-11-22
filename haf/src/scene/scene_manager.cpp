@@ -1,6 +1,6 @@
 #include "scene_manager.hpp"
 #include "component_register.hpp"
-
+#include "../scene_subsystems/subsystem_register.hpp"
 #include <haf/include/scene/scene_node.hpp>
 
 #include "system/system_provider.hpp"
@@ -21,6 +21,9 @@ SceneManager::~SceneManager() = default;
 
 void SceneManager::init()
 {
+    SubSystemRegister subsystem_register{m_subsystems};
+    subsystem_register();
+
     ComponentRegister component_register{*this};
     component_register();
 
@@ -32,7 +35,7 @@ void SceneManager::update()
 {
     m_scene_render_context_for_system.beginFrame();
     m_keyboard_input_manager.update();
-    m_scene_walker.startWalk(*m_rootSceneNode);
+    m_scene_walker.startWalk(*m_rootSceneNode, m_subsystems);
     m_scene_render_context_for_system.endFrame();
 }
 
@@ -56,7 +59,7 @@ bool SceneManager::instanciateRootComponent(str_view componentType)
 sptr<component::Component> SceneManager::instantiateComponent(str_view name)
 {
     sptr<component::Component> component{m_component_factory.create(name)};
-    DisplayLog::warn_if(component == nullptr, "Component ", name,
+    logger::DisplayLog::warn_if(component == nullptr, "Component ", name,
                         " not found in component factory");
     return component;
 }
