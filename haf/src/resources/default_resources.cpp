@@ -39,11 +39,10 @@ bool DefaultResources::loadDefaultShader0(sys::ResourceManager& rManager)
                             core::str_view{R"(
         #version 450 core
 
-        in vec3 haf_position;
+        layout (location = 0) in vec3 haf_position;
         in vec4 haf_color;
         in vec2 haf_textureuv;
 
-        uniform mat4 haf_camera_projection;
         uniform mat4 haf_object_position;
 
         layout(std140,location=1) uniform Foo
