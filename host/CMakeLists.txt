@@ -12,6 +12,7 @@ set(sources
   src/app_loader.cpp
   src/app_loader.hpp
   src/app_state.hpp
+  src/host_config.cpp
   src/host_config.hpp
   src/host_connector.cpp
   src/host_connector.hpp

@@ -1,5 +1,6 @@
 #include "host.hpp"
 
+#include <hlog/include/hlog.hpp>
 #include "host_internal.hpp"
 #include <hosted_app/include/iapp.hpp>
 
