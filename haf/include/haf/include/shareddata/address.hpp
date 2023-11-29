@@ -3,7 +3,7 @@ HAF_PRAGMA_ONCE
 #define HAF_SHAREDDATA_ADRESS_INCLUDE_HPP
 
 #include <haf/include/core/types.hpp>
-#include <mc_serial/include/object.hpp>
+#include <mc_serial/include/interfaces/ifullserializable.hpp>
 #include <haf/include/haf_export.hpp>
 
 namespace haf::shdata
