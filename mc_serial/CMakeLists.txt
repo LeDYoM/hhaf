@@ -18,6 +18,7 @@ set(headers
     ${include_dir}/object_parser.hpp
     ${include_dir}/object.hpp
     ${include_dir}/serializer.hpp
+    ${include_dir}/text_serializer.hpp
 )
 
 build_lib_component(HEADERS_ONLY HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}"

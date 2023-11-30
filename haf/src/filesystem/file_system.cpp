@@ -2,12 +2,12 @@
 #include "file_system_private_funcs.hpp"
 #include <hlog/include/hlog.hpp>
 
-#include <mc_serial/include/object_parser.hpp>
 #include <debug_system/debug_system.hpp>
 #include <system/get_system.hpp>
 #include <haf/include/system/system_access.hpp>
 #include <system/system_provider.hpp>
 #include <haf/include/system/subsystem_view.hpp>
+#include <haf/include/data/types.hpp>
 
 using namespace haf::core;
 
@@ -102,8 +102,10 @@ IFileSerializer::Result FileSystem::deserializeFromFile(
     str const text_data{loadTextFile(file_name)};
     if (!text_data.empty())
     {
-        return (deserializeFromText(text_data, data) ? Result::Success
-                                                     : Result::ParsingError);
+        data::TextSerializer text_serializer;
+        return (text_serializer.deserializeFromText(text_data, data)
+                    ? Result::Success
+                    : Result::ParsingError);
     }
     else
     {
@@ -116,7 +118,9 @@ IFileSerializer::Result FileSystem::serializeToFile(
     const data::ISerializable& data)
 {
     str data_str;
-    auto const result{serializeToText(data_str, data)};
+    data::TextSerializer text_serializer;
+
+    auto const result{text_serializer.serializeToText(data_str, data)};
 
     if (result)
     {
@@ -125,37 +129,6 @@ IFileSerializer::Result FileSystem::serializeToFile(
                     : Result::FileIOError);
     }
     return Result::ParsingError;
-}
-
-bool FileSystem::deserializeFromText(str const& text_data,
-                                     data::IDeserializable& data)
-{
-    mcs::ObjectCompiler obj_compiler(text_data);
-    if (obj_compiler.compile())
-    {
-        // The compilation was correct so, at least we
-        // have a valid Object.
-        return data.deserialize(obj_compiler.result());
-    }
-    else
-    {
-        return false;
-    }
-}
-
-bool FileSystem::serializeToText(str& data_str, data::ISerializable const& data)
-{
-    mcs::Object obj;
-    auto const temp{data.serialize(obj)};
-
-    if (temp)
-    {
-        data_str.clear();
-        data_str << obj;
-
-        return true;
-    }
-    return false;
 }
 
 }  // namespace haf::sys

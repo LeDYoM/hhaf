@@ -37,11 +37,6 @@ public:
     IFileSerializer::Result serializeToFile(
         const Path& file_name,
         const data::ISerializable& data) override;
-
-    bool deserializeFromText(core::str const& text_data,
-                             data::IDeserializable& data);
-
-    bool serializeToText(core::str& data_str, data::ISerializable const& data);
 };
 }  // namespace haf::sys
 

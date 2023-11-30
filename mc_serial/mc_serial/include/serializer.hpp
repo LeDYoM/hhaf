@@ -39,6 +39,6 @@ public:
     }
 };
 
-}  // namespace htps
+}  // namespace mcs
 
 #endif
