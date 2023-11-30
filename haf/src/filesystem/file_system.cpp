@@ -29,14 +29,14 @@ bool FileSystem::processResult(IFileSerializer::Result const result,
         else if (result == IFileSerializer::Result::ParsingError)
         {
             logger::DisplayLog::debug(pre_message, file,
-                              " found, but contains invalid format");
+                                      " found, but contains invalid format");
             LogAsserter::log_assert(!assert_on_error, pre_message, file,
                                     " found, but contains invalid format");
         }
         else
         {
             logger::DisplayLog::debug(pre_message, file,
-                              " : Unknown error trying to read file");
+                                      " : Unknown error trying to read file");
             LogAsserter::log_assert(!assert_on_error, pre_message, file,
                                     " : Unknown error trying to read file");
         }
@@ -102,19 +102,8 @@ IFileSerializer::Result FileSystem::deserializeFromFile(
     str const text_data{loadTextFile(file_name)};
     if (!text_data.empty())
     {
-        mcs::ObjectCompiler obj_compiler(text_data);
-        if (obj_compiler.compile())
-        {
-            // The compilation was correct so, at least we
-            // have a valid Object.
-            return ((data.deserialize(obj_compiler.result()))
-                        ? Result::Success
-                        : Result::ParsingError);
-        }
-        else
-        {
-            return Result::ParsingError;
-        }
+        return (deserializeFromText(text_data, data) ? Result::Success
+                                                     : Result::ParsingError);
     }
     else
     {
@@ -126,19 +115,47 @@ IFileSerializer::Result FileSystem::serializeToFile(
     const Path& file_name,
     const data::ISerializable& data)
 {
-    mcs::Object obj;
-    auto const temp{data.serialize(obj)};
+    str data_str;
+    auto const result{serializeToText(data_str, data)};
 
-    if (temp)
+    if (result)
     {
-        htps::str data_str;
-        data_str << obj;
-
         return ((saveTextFile(file_name, htps::move(data_str)))
                     ? Result::Success
                     : Result::FileIOError);
     }
     return Result::ParsingError;
+}
+
+bool FileSystem::deserializeFromText(str const& text_data,
+                                     data::IDeserializable& data)
+{
+    mcs::ObjectCompiler obj_compiler(text_data);
+    if (obj_compiler.compile())
+    {
+        // The compilation was correct so, at least we
+        // have a valid Object.
+        return data.deserialize(obj_compiler.result());
+    }
+    else
+    {
+        return false;
+    }
+}
+
+bool FileSystem::serializeToText(str& data_str, data::ISerializable const& data)
+{
+    mcs::Object obj;
+    auto const temp{data.serialize(obj)};
+
+    if (temp)
+    {
+        data_str.clear();
+        data_str << obj;
+
+        return true;
+    }
+    return false;
 }
 
 }  // namespace haf::sys
