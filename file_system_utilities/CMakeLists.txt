@@ -11,10 +11,12 @@ set(CURRENT_TARGET fsu)
 
 set(include_dir fsu/include)
 set(headers
+    ${include_dir}/file_system.hpp
     ${include_dir}/file.hpp
 )
 
 set(sources
+    src/file_system.cpp
     src/file.cpp
 )
 

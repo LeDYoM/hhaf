@@ -4,10 +4,10 @@ FSU_PRAGMA_ONCE
 
 namespace fsu
 {
-class FileSystem
+class File
 {
 public:
-    FileSystem() = default;
+    File() = default;
 };
 }  // namespace fsu
 
