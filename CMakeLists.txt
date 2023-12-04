@@ -55,6 +55,7 @@ add_subdirectory(glad)
 
 set(hhaf_core_module_list
   agloader
+  file_system_utilities
   mc_serial
   parpar
   logger
