@@ -12,12 +12,18 @@ set(CURRENT_TARGET fsu)
 set(include_dir fsu/include)
 set(headers
     ${include_dir}/file_system.hpp
-    ${include_dir}/file.hpp
+    ${include_dir}/in_file.hpp
+    ${include_dir}/out_file.hpp
 )
 
 set(sources
     src/file_system.cpp
-    src/file.cpp
+    src/in_file.cpp
+    src/in_file_private.cpp
+    src/in_file_private.hpp
+    src/out_file_private.cpp
+    src/out_file_private.hpp
+    src/out_file.cpp
 )
 
 build_lib_component(STATIC HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}" SOURCES
@@ -26,5 +32,6 @@ ${sources} HEADERS ${headers})
 set_pragma_once_or_not(FSU true PUBLIC)
 
 target_compile_features(${CURRENT_TARGET} PRIVATE cxx_std_20)
+target_link_libraries(${CURRENT_TARGET} PUBLIC htypes)
 
 addTestingDirectory(tests)

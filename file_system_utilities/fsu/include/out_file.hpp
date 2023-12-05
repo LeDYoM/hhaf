@@ -2,12 +2,13 @@ FSU_PRAGMA_ONCE
 #ifndef FSU_FILE_INCLUDE_HPP
 #define FSU_FILE_INCLUDE_HPP
 
+#include <htypes/include/types.hpp>
+
 namespace fsu
 {
-class FileSystem
+class OutFile
 {
 public:
-    FileSystem() = default;
 };
 }  // namespace fsu
 
