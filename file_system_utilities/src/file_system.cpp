@@ -1,4 +1,6 @@
 #include <fsu/include/file_system.hpp>
+#include <fsu/include/in_file.hpp>
+#include <fsu/include/out_file.hpp>
 
 using namespace htps;
 
@@ -9,17 +11,17 @@ uptr<InFile> FileSystem::openFile(str const& fileName, OperationRead)
     return openFileForRead(fileName);
 }
 
-uptr<OutFile> oFileSystem::penFile(htps::str const& fileName, OperationWrite)
+uptr<OutFile> FileSystem::openFile(str const& fileName, OperationWrite)
 {
-    return openFile
+    return openFileForWriting(fileName);
 }
 
-uptr<InFile> FileSystem::openFileForRead(htps::str const& fileName)
+uptr<InFile> FileSystem::openFileForRead(str const&)
 {
     return htps::uptr<InFile>{};
 }
 
-uptr<OutFile> FileSystem::openFileForWriting(htps::str const& fileName)
+uptr<OutFile> FileSystem::openFileForWriting(str const&)
 {
     return htps::uptr<OutFile>{};
 }

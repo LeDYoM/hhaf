@@ -6,6 +6,7 @@ if (NOT use_system_sfml AND WIN32)
     message(STATUS "Fetching SFML")
 
     set(SFML_VERSION 2.5.1)
+    set(SFML_COMMIT 2f11710) # 2.5.1
 
     # It's nice to get stripped-down release zips instead of cloning
     # a repo and checking out a tag
@@ -16,9 +17,9 @@ if (NOT use_system_sfml AND WIN32)
 
     FetchContent_Declare(SFML
         GIT_REPOSITORY https://github.com/SFML/SFML.git
-        GIT_TAG ${SFML_VERSION} #Always build with this tag, so we're sure it is stable.
+        GIT_TAG ${SFML_COMMIT} #Always build with this tag, so we're sure it is stable.
+        CMAKE_ARGS -Wno-dev
         CMAKE_CACHE_ARGS -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX} -DBUILD_SHARED_LIBS=ON
-        CMAKE_ARGS "-Wno-dev"
     )
 
     FetchContent_MakeAvailable(SFML)

@@ -2,4 +2,6 @@
 
 namespace fsu
 {
+class OutFile::OutFilePrivate
+{};
 }
