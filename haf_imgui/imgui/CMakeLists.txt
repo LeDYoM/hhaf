@@ -1,9 +1,10 @@
 include(FetchContent)
 message(STATUS "Fetching Imggui")
 
+set(IMGUI_COMMIT 9d8de45)
 FetchContent_Declare(imgui
     GIT_REPOSITORY https://github.com/ocornut/imgui.git
-    GIT_TAG master
+    GIT_TAG ${IMGUI_COMMIT}
     CMAKE_ARGS "-Wno-dev"
 )
 

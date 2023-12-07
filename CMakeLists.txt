@@ -34,6 +34,7 @@ endif()
 
 # Second, for multi-config builds (e.g. msvc)
 foreach(OUTPUTCONFIG ${CMAKE_CONFIGURATION_TYPES})
+  message("Multi config generator")
   message("For config " ${OUTPUTCONFIG} " we have "
           ${_REPO_OUTPUT_DIRECTORY}/${OUTPUTCONFIG})
   string(TOUPPER ${OUTPUTCONFIG} OUTPUTCONFIG)
