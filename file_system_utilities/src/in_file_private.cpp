@@ -5,32 +5,23 @@ using namespace htps;
 
 namespace fsu
 {
+InFile::InFilePrivate::InFilePrivate(htps::uptr<IInFile> file_driver) :
+    m_file_driver{htps::move(file_driver)}
+{}
+
 str InFile::InFilePrivate::readLine()
 {
-    if (m_file)
-    {
-        std::string temp;
-        std::getline(m_file, temp);
-        return str{temp.c_str()};
-    }
-    return {};
+    return m_file_driver->readLine();
 }
 
 bool InFile::InFilePrivate::readLine(str& line)
 {
-    if (m_file)
-    {
-        std::string temp;
-        std::getline(m_file, temp);
-        line = temp.c_str();
-        return true;
-    }
-    return false;
+    return m_file_driver->readLine(line);
 }
 
 InFile::InFilePrivate::operator bool() const noexcept
 {
-    return static_cast<bool>(m_file);
+    return m_file_driver->isOk();
 }
 
 }  // namespace fsu

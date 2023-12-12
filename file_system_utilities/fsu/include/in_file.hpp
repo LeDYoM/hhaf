@@ -4,16 +4,18 @@ FSU_PRAGMA_ONCE
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/str.hpp>
+#include <htypes/include/unique_ptr.hpp>
 #include <htypes/include/p_impl_pointer.hpp>
 
 namespace fsu
 {
 class FileSystem;
+class IInFile;
 
 class InFile
 {
 public:
-    explicit InFile(FileSystem& file_system_parent, htps::str const& file_name);
+    explicit InFile(htps::uptr<IInFile> in_file_driver);
     ~InFile();
 
     htps::string_vector readTextFile();

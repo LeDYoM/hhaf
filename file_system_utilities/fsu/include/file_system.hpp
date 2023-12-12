@@ -5,6 +5,7 @@ FSU_PRAGMA_ONCE
 #include <htypes/include/types.hpp>
 #include <htypes/include/str.hpp>
 #include <htypes/include/unique_ptr.hpp>
+#include <htypes/include/p_impl_pointer.hpp>
 
 namespace fsu
 {
@@ -17,11 +18,17 @@ struct OperationWrite {};
 class FileSystem
 {
 public:
+    FileSystem();
+    ~FileSystem();
+
     htps::uptr<InFile> openFile(htps::str const& fileName, OperationRead);
     htps::uptr<OutFile> openFile(htps::str const& fileName, OperationWrite);
 
     htps::uptr<InFile> openFileForRead(htps::str const& fileName);
     htps::uptr<OutFile> openFileForWriting(htps::str const& fileName);
+private:
+    struct FileSystemPrivate;
+    htps::PImplPointer<FileSystemPrivate> m_p;
 };
 }  // namespace fsu
 

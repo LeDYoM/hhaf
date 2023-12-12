@@ -17,10 +17,17 @@ set(headers
 )
 
 set(sources
+    src/file_factory.cpp
+    src/file_factory.hpp
+    src/file_system_private.cpp
+    src/file_system_private.hpp
     src/file_system.cpp
-    src/in_file.cpp
+    src/iin_file.hpp
+    src/in_file_normal.cpp
+    src/in_file_normal.hpp
     src/in_file_private.cpp
     src/in_file_private.hpp
+    src/in_file.cpp
     src/out_file_private.cpp
     src/out_file_private.hpp
     src/out_file.cpp

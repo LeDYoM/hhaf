@@ -8,9 +8,8 @@ using namespace htps;
 
 namespace fsu
 {
-InFile::InFile(FileSystem& file_system_parent, str const& file_name) :
-    m_p{make_pimplp<InFilePrivate>(file_system_parent,
-        std::fstream{file_name.c_str(), std::ios::in})}
+InFile::InFile(htps::uptr<IInFile> in_file_driver) :
+    m_p{make_pimplp<InFilePrivate>(htps::move(in_file_driver))}
 {}
 
 InFile::~InFile() = default;
