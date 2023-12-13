@@ -1,15 +1,33 @@
 #include "file_factory.hpp"
 #include "in_file_normal.hpp"
+#include "ifile_manager.hpp"
+#include <htypes/include/vector.hpp>
 #include <fstream>
 
 using namespace htps;
 
 namespace fsu
 {
-uptr<IInFile> FileSystemFileFactory::inFile(str const& file_name)
+struct FileFactory::FileFactoryPrivate
 {
-    return htps::muptr<InFileNormal>(
-        std::ifstream{file_name.c_str(), std::ios::in});
+    vector<uptr<IFileManager>> m_file_managers;
+};
+
+FileFactory::FileFactory() : m_p{htps::make_pimplp<FileFactoryPrivate>()}
+{}
+
+FileFactory::~FileFactory() = default;
+
+uptr<IInFile> FileFactory::inFile(str const& file_name)
+{
+    for (auto&& file_manager : m_p->m_file_managers)
+    {
+        if (file_manager->exists(file_name))
+        {
+            return file_manager->openForRead(file_name);
+        }
+    }
+    return nullptr;
 }
 
 }  // namespace fsu

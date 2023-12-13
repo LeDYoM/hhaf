@@ -9,7 +9,7 @@ namespace fsu
 {
 struct FileSystem::FileSystemPrivate
 {
-    FileSystemFileFactory m_file_factory;
+    FileFactory m_file_factory;
 };
 
 }  // namespace fsu

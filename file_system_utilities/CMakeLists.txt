@@ -19,9 +19,12 @@ set(headers
 set(sources
     src/file_factory.cpp
     src/file_factory.hpp
+    src/file_manager_normal.cpp
+    src/file_manager_normal.hpp
     src/file_system_private.cpp
     src/file_system_private.hpp
     src/file_system.cpp
+    src/ifile_manager.hpp
     src/iin_file.hpp
     src/in_file_normal.cpp
     src/in_file_normal.hpp

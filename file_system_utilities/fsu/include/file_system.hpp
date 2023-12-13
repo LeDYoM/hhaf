@@ -7,11 +7,11 @@ FSU_PRAGMA_ONCE
 #include <htypes/include/unique_ptr.hpp>
 #include <htypes/include/p_impl_pointer.hpp>
 
+#include <fsu/include/in_file.hpp>
+#include <fsu/include/out_file.hpp>
+
 namespace fsu
 {
-class InFile;
-class OutFile;
-
 struct OperationRead {};
 struct OperationWrite {};
 
@@ -30,6 +30,9 @@ private:
     struct FileSystemPrivate;
     htps::PImplPointer<FileSystemPrivate> m_p;
 };
+
+FileSystem createNullFileSystem();
+
 }  // namespace fsu
 
 #endif

@@ -14,6 +14,7 @@ public:
     virtual bool readLine(htps::str& line) = 0;
 
     virtual bool isOk() const = 0;
+    virtual ~IInFile() = default;
 };
 }  // namespace fsu
 

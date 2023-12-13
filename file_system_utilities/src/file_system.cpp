@@ -1,6 +1,4 @@
 #include <fsu/include/file_system.hpp>
-#include <fsu/include/in_file.hpp>
-#include <fsu/include/out_file.hpp>
 
 #include "file_system_private.hpp"
 
@@ -32,6 +30,11 @@ uptr<InFile> FileSystem::openFileForRead(str const& fileName)
 uptr<OutFile> FileSystem::openFileForWriting(str const&)
 {
     return htps::uptr<OutFile>{};
+}
+
+FileSystem createNullFileSystem()
+{
+    return {};
 }
 
 }  // namespace fsu

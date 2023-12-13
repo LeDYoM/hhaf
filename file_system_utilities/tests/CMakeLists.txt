@@ -4,7 +4,7 @@ project(fsu_utests CXX)
 set(CURRENT_TARGET ${PROJECT_NAME})
 
 set(SOURCE_TESTS
-    file
+    file_system
 )
 
 add_test_executable_with_main(SOURCE_TESTS ${SOURCE_TESTS})
