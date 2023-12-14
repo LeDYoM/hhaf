@@ -12,8 +12,11 @@ FSU_PRAGMA_ONCE
 
 namespace fsu
 {
-struct OperationRead {};
-struct OperationWrite {};
+struct OperationRead_t {};
+struct OperationWrite_t {};
+
+constexpr OperationRead_t OperationRead{};
+constexpr OperationWrite_t OperationWrite{};
 
 class FileSystem
 {
@@ -21,8 +24,8 @@ public:
     FileSystem();
     ~FileSystem();
 
-    htps::uptr<InFile> openFile(htps::str const& fileName, OperationRead);
-    htps::uptr<OutFile> openFile(htps::str const& fileName, OperationWrite);
+    htps::uptr<InFile> openFile(htps::str const& fileName, OperationRead_t);
+    htps::uptr<OutFile> openFile(htps::str const& fileName, OperationWrite_t);
 
     htps::uptr<InFile> openFileForRead(htps::str const& fileName);
     htps::uptr<OutFile> openFileForWriting(htps::str const& fileName);

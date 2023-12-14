@@ -12,12 +12,12 @@ FileSystem::FileSystem() : m_p{make_pimplp<FileSystemPrivate>()}
 
 FileSystem::~FileSystem() = default;
 
-uptr<InFile> FileSystem::openFile(str const& fileName, OperationRead)
+uptr<InFile> FileSystem::openFile(str const& fileName, OperationRead_t)
 {
     return openFileForRead(fileName);
 }
 
-uptr<OutFile> FileSystem::openFile(str const& fileName, OperationWrite)
+uptr<OutFile> FileSystem::openFile(str const& fileName, OperationWrite_t)
 {
     return openFileForWriting(fileName);
 }
