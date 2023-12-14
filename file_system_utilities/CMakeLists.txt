@@ -17,17 +17,18 @@ set(headers
 )
 
 set(sources
+    src/driver_normal/file_manager_normal.cpp
+    src/driver_normal/file_manager_normal.hpp
+    src/driver_normal/in_file_normal.cpp
+    src/driver_normal/in_file_normal.hpp
+
     src/file_factory.cpp
     src/file_factory.hpp
-    src/file_manager_normal.cpp
-    src/file_manager_normal.hpp
     src/file_system_private.cpp
     src/file_system_private.hpp
     src/file_system.cpp
     src/ifile_manager.hpp
     src/iin_file.hpp
-    src/in_file_normal.cpp
-    src/in_file_normal.hpp
     src/in_file_private.cpp
     src/in_file_private.hpp
     src/in_file.cpp

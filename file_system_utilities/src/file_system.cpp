@@ -24,7 +24,9 @@ uptr<OutFile> FileSystem::openFile(str const& fileName, OperationWrite_t)
 
 uptr<InFile> FileSystem::openFileForRead(str const& fileName)
 {
-    return htps::muptr<InFile>(m_p->m_file_factory.inFile(fileName));
+    auto&& file_driver{m_p->m_file_factory.inFile(fileName)};
+    return file_driver != nullptr ? htps::muptr<InFile>(htps::move(file_driver))
+                                  : nullptr;
 }
 
 uptr<OutFile> FileSystem::openFileForWriting(str const&)

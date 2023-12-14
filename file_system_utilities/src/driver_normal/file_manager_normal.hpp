@@ -2,7 +2,7 @@ FSU_PRAGMA_ONCE
 #ifndef FSU_FILE_MANAGER_NORMAL_INCLUDE_HPP
 #define FSU_FILE_MANAGER_NORMAL_INCLUDE_HPP
 
-#include "ifile_manager.hpp"
+#include "src/ifile_manager.hpp"
 
 namespace fsu
 {
