@@ -10,4 +10,11 @@ FileSystem createNullFileSystem()
     return {};
 }
 
+FileSystem createDiskFileSystem()
+{
+    auto file_system{createNullFileSystem()};
+    return file_system;
+
+}
+
 }  // namespace fsu

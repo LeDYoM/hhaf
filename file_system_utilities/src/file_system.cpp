@@ -12,6 +12,10 @@ FileSystem::FileSystem() : m_p{make_pimplp<FileSystemPrivate>()}
 
 FileSystem::~FileSystem() = default;
 
+FileSystem::FileSystem(FileSystem&& other) = default;
+
+FileSystem& FileSystem::operator=(FileSystem&&) = default;
+
 uptr<InFile> FileSystem::openFile(str const& fileName, OperationRead_t)
 {
     return openFileForRead(fileName);
@@ -32,11 +36,6 @@ uptr<InFile> FileSystem::openFileForRead(str const& fileName)
 uptr<OutFile> FileSystem::openFileForWriting(str const&)
 {
     return htps::uptr<OutFile>{};
-}
-
-FileSystem createNullFileSystem()
-{
-    return {};
 }
 
 }  // namespace fsu

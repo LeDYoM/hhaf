@@ -1,7 +1,7 @@
 #include "catch_include.hpp"
 
 #include <htypes/include/types.hpp>
-#include <fsu/include/file_system.hpp>
+#include <fsu/include/fsu.hpp>
 
 using namespace htps;
 using namespace fsu;

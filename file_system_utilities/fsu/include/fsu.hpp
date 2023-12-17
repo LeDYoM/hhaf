@@ -4,10 +4,12 @@ FSU_PRAGMA_ONCE
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/str.hpp>
+#include <fsu/include/file_system.hpp>
 
 namespace fsu
 {
 FileSystem createNullFileSystem();
+FileSystem createDiskFileSystem();
 
 }  // namespace fsu
 

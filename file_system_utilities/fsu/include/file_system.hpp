@@ -24,6 +24,12 @@ public:
     FileSystem();
     ~FileSystem();
 
+    FileSystem(FileSystem const&) = delete;
+    FileSystem(FileSystem&&);
+
+    FileSystem& operator=(FileSystem const&) = delete;
+    FileSystem& operator=(FileSystem&&);
+
     htps::uptr<InFile> openFile(htps::str const& fileName, OperationRead_t);
     htps::uptr<OutFile> openFile(htps::str const& fileName, OperationWrite_t);
 
@@ -34,8 +40,6 @@ private:
     htps::PImplPointer<FileSystemPrivate> m_p;
 };
 
-FileSystem createNullFileSystem();
-
-}  // namespace fsu
+ }  // namespace fsu
 
 #endif
