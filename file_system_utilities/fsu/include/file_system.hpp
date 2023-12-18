@@ -7,10 +7,17 @@ FSU_PRAGMA_ONCE
 #include <htypes/include/unique_ptr.hpp>
 #include <htypes/include/p_impl_pointer.hpp>
 
-#include <fsu/include/directory.hpp>
+#include <fsu/include/in_file.hpp>
+#include <fsu/include/out_file.hpp>
 
 namespace fsu
 {
+struct OperationRead_t {};
+struct OperationWrite_t {};
+
+constexpr OperationRead_t OperationRead{};
+constexpr OperationWrite_t OperationWrite{};
+
 class FileSystem
 {
 public:

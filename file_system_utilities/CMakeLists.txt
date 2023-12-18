@@ -11,7 +11,6 @@ set(CURRENT_TARGET fsu)
 
 set(include_dir fsu/include)
 set(headers
-    ${include_dir}/directory.hpp
     ${include_dir}/file_system.hpp
     ${include_dir}/fsu.hpp
     ${include_dir}/in_file.hpp
@@ -24,7 +23,6 @@ set(sources
     src/driver_normal/in_file_normal.cpp
     src/driver_normal/in_file_normal.hpp
 
-    src/directory.cpp
     src/file_factory.cpp
     src/file_factory.hpp
     src/file_system_private.cpp
