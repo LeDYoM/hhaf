@@ -21,3 +21,13 @@ TEST_CASE("FileSystem::createNullFileSystem", "[fsu]")
                                    OperationWrite) == nullptr);
     }
 }
+
+TEST_CASE("FileSystem::createDiskFileSystem", "[fsu]")
+{
+    auto file_system{createDiskFileSystem()};
+    {
+        CHECK(file_system.openFile("", OperationRead) == nullptr);
+        CHECK(file_system.openFile("file_that_does_not_exist.not",
+                                   OperationRead) == nullptr);
+    }
+}
