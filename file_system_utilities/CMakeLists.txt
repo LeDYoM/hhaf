@@ -13,6 +13,7 @@ set(include_dir fsu/include)
 set(headers
     ${include_dir}/file_system.hpp
     ${include_dir}/fsu.hpp
+    ${include_dir}/ifile_driver.hpp
     ${include_dir}/in_file.hpp
     ${include_dir}/out_file.hpp
 )
@@ -29,7 +30,6 @@ set(sources
     src/file_system_private.hpp
     src/file_system.cpp
     src/fsu.cpp
-    src/ifile_manager.hpp
     src/iin_file.hpp
     src/in_file_private.cpp
     src/in_file_private.hpp

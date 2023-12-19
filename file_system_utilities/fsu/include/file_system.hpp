@@ -9,6 +9,7 @@ FSU_PRAGMA_ONCE
 
 #include <fsu/include/in_file.hpp>
 #include <fsu/include/out_file.hpp>
+#include <fsu/include/ifile_driver.hpp>
 
 namespace fsu
 {
@@ -17,6 +18,8 @@ struct OperationWrite_t {};
 
 constexpr OperationRead_t OperationRead{};
 constexpr OperationWrite_t OperationWrite{};
+
+class IFileDriver;
 
 class FileSystem
 {

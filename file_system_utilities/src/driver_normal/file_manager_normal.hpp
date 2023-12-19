@@ -2,11 +2,11 @@ FSU_PRAGMA_ONCE
 #ifndef FSU_FILE_MANAGER_NORMAL_INCLUDE_HPP
 #define FSU_FILE_MANAGER_NORMAL_INCLUDE_HPP
 
-#include "src/ifile_manager.hpp"
+#include <fsu/include/ifile_driver.hpp>
 
 namespace fsu
 {
-class FileManagerNormal : public IFileManager
+class FileManagerNormal : public IFileDriver
 {
 public:
     bool exists(htps::str const& fileName) override;

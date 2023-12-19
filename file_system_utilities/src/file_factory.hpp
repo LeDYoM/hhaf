@@ -17,6 +17,8 @@ public:
     ~FileFactory();
 
     htps::uptr<IInFile> inFile(htps::str const& file_name);
+
+    bool addDriver(htps::uptr<IFileDriver> ifile_manager);
 private:
     struct FileFactoryPrivate;
     htps::PImplPointer<FileFactoryPrivate> m_p;

@@ -10,7 +10,6 @@ namespace fsu
 {
 struct FileSystem::FileSystemPrivate
 {
-    htps::str parent_directory;
     FileFactory m_file_factory;
 };
 
