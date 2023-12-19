@@ -38,4 +38,9 @@ uptr<OutFile> FileSystem::openFileForWriting(str const&)
     return htps::uptr<OutFile>{};
 }
 
+bool FileSystem::addFileDriver(htps::uptr<IFileDriver> ifile_driver)
+{
+    return m_p->m_file_factory.addDriver(htps::move(ifile_driver));
+}
+
 }  // namespace fsu

@@ -19,8 +19,8 @@ set(headers
 )
 
 set(sources
-    src/driver_normal/file_manager_normal.cpp
-    src/driver_normal/file_manager_normal.hpp
+    src/driver_normal/file_driver_normal.cpp
+    src/driver_normal/file_driver_normal.hpp
     src/driver_normal/in_file_normal.cpp
     src/driver_normal/in_file_normal.hpp
 

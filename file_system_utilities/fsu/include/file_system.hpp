@@ -38,6 +38,9 @@ public:
 
     htps::uptr<InFile> openFileForRead(htps::str const& fileName);
     htps::uptr<OutFile> openFileForWriting(htps::str const& fileName);
+
+    bool addFileDriver(htps::uptr<IFileDriver> ifile_driver);
+
 private:
     struct FileSystemPrivate;
     htps::PImplPointer<FileSystemPrivate> m_p;
