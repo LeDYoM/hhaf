@@ -4,15 +4,14 @@ FSU_PRAGMA_ONCE
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/str.hpp>
+#include <fsu/include/iin_file.hpp>
 
 namespace fsu
 {
-class IInFile;
 
 class IFileDriver
 {
 public:
-    virtual bool exists(htps::str const& fileName) = 0;
     virtual htps::uptr<IInFile> openForRead(htps::str const& fileName) = 0;
 
     virtual ~IFileDriver() = default;

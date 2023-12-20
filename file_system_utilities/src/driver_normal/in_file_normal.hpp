@@ -2,7 +2,7 @@ FSU_PRAGMA_ONCE
 #ifndef FSU_FILE_SYSTEM_IN_FILE_NORMAL_INCLUDE_HPP
 #define FSU_FILE_SYSTEM_IN_FILE_NORMAL_INCLUDE_HPP
 
-#include "src/iin_file.hpp"
+#include <fsu/include/iin_file.hpp>
 #include <fstream>
 
 namespace fsu

@@ -29,9 +29,9 @@ uptr<IInFile> FileFactory::inFile(str const& file_name)
 {
     for (auto&& file_manager : m_p->m_file_managers)
     {
-        if (file_manager->exists(file_name))
+        if (auto file{file_manager->openForRead(file_name)}; file != nullptr)
         {
-            return file_manager->openForRead(file_name);
+            return file;
         }
     }
     return nullptr;

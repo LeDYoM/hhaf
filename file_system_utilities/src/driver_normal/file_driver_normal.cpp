@@ -6,11 +6,6 @@ using namespace htps;
 
 namespace fsu
 {
-bool FileDriverNormal::exists(htps::str const& /*fileName*/)
-{
-    return true;
-}
-
 htps::uptr<IInFile> FileDriverNormal::openForRead(htps::str const& fileName)
 {
     return htps::muptr<InFileNormal>(

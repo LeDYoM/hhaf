@@ -9,7 +9,6 @@ namespace fsu
 class FileDriverNormal : public IFileDriver
 {
 public:
-    bool exists(htps::str const& fileName) override;
     htps::uptr<IInFile> openForRead(htps::str const& fileName) override;
 };
 }  // namespace fsu

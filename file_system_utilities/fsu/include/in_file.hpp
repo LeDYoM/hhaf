@@ -6,11 +6,11 @@ FSU_PRAGMA_ONCE
 #include <htypes/include/str.hpp>
 #include <htypes/include/unique_ptr.hpp>
 #include <htypes/include/p_impl_pointer.hpp>
+#include <fsu/include/iin_file.hpp>
 
 namespace fsu
 {
 class FileSystem;
-class IInFile;
 
 class InFile
 {

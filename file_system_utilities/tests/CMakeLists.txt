@@ -10,4 +10,5 @@ set(SOURCE_TESTS
 add_test_executable_with_main(SOURCE_TESTS ${SOURCE_TESTS})
 set_compile_warning_level_and_cxx_properties_for_tests(${CURRENT_TARGET})
 
+target_sources(${CURRENT_TARGET} PRIVATE file_driver_test.hpp)
 target_link_libraries(${CURRENT_TARGET} PRIVATE fsu)

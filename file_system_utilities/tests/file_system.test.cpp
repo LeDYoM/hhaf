@@ -2,6 +2,7 @@
 
 #include <htypes/include/types.hpp>
 #include <fsu/include/fsu.hpp>
+#include "file_driver_test.hpp"
 
 using namespace htps;
 using namespace fsu;
