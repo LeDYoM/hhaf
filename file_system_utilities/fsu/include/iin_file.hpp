@@ -10,10 +10,10 @@ namespace fsu
 class IInFile
 {
 public:
-    virtual htps::str readLine() = 0;
     virtual bool readLine(htps::str& line) = 0;
-
+    virtual bool eof() const = 0;
     virtual bool isOk() const = 0;
+
     virtual ~IInFile() = default;
 };
 }  // namespace fsu

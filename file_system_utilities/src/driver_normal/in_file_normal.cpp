@@ -8,17 +8,6 @@ namespace fsu
 InFileNormal::InFileNormal(std::ifstream file) : m_file{htps::move(file)}
 {}
 
-str InFileNormal::readLine()
-{
-    if (m_file)
-    {
-        std::string temp;
-        std::getline(m_file, temp);
-        return str{temp.c_str()};
-    }
-    return {};
-}
-
 bool InFileNormal::readLine(str& line)
 {
     if (m_file)
@@ -29,6 +18,11 @@ bool InFileNormal::readLine(str& line)
         return true;
     }
     return false;
+}
+
+bool InFileNormal::eof() const
+{
+    return m_file.eof();
 }
 
 bool InFileNormal::isOk() const

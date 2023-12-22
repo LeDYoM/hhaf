@@ -8,8 +8,11 @@ namespace fsu
 {
 htps::uptr<IInFile> FileDriverNormal::openForRead(htps::str const& fileName)
 {
-    return htps::muptr<InFileNormal>(
-        std::ifstream{fileName.c_str(), std::ios::in});
+    std::ifstream file_stream{fileName.c_str(), std::ios::in};
+
+    return file_stream.good()
+        ? htps::muptr<InFileNormal>(htps::move(file_stream))
+        : nullptr;
 }
 
 }  // namespace fsu

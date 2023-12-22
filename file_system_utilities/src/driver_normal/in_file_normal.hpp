@@ -12,10 +12,10 @@ class InFileNormal : public IInFile
 public:
     explicit InFileNormal(std::ifstream file);
 
-    htps::str readLine() override;
     bool readLine(htps::str& line) override;
-
+    virtual bool eof() const override;
     bool isOk() const override;
+
 private:
     std::ifstream m_file;
 };

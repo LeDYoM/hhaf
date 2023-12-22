@@ -11,7 +11,9 @@ InFile::InFilePrivate::InFilePrivate(htps::uptr<IInFile> file_driver) :
 
 str InFile::InFilePrivate::readLine()
 {
-    return m_file_driver->readLine();
+    str temp;
+    m_file_driver->readLine(temp);
+    return temp;
 }
 
 bool InFile::InFilePrivate::readLine(str& line)
