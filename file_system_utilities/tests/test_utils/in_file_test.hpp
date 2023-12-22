@@ -14,7 +14,7 @@ public:
     {
         if (m_file_name == "test1.txt")
         {
-
+            m_max_lines = 3U;
         }
     }
 
@@ -24,7 +24,7 @@ public:
         {
             line = "abc";
             ++m_lines_read;
-            return true;
+            return !eof();
         }
         return false;
     }
