@@ -11,11 +11,7 @@
       "displayName": "Visual Stdudio 17 2022 Windows x64 Debug",
       "description": "Visual Stdudio 17 2022 Windows x64 Debug",
       "generator": "Visual Studio 17 2022",
-      "binaryDir": "${sourceDir}/build/${presetName}",
-      "architecture": {
-        "value": "x64",
-        "strategy": "external"
-      }
+      "binaryDir": "${sourceDir}/../${presetName}"
     }
   ]
 }
