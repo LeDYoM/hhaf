@@ -1,6 +1,7 @@
 #include "glfw_render_window.hpp"
 #include "conversions.hpp"
 #include <string>
+#include <GLFW/glfw3.h>
 
 using namespace htps;
 
@@ -11,7 +12,10 @@ GLFWRenderWindow::GLFWRenderWindow()  //: m_render_window{muptr<sf::Window>()}
 
 GLFWRenderWindow::~GLFWRenderWindow()
 {
-    //    m_render_window->close();
+    if (already_created_)
+    {
+        glfwTerminate();
+    }
 }
 
 class ParamExtractor
@@ -61,29 +65,31 @@ bool GLFWRenderWindow::createWindow(u32 const width,
     (void)(extra_parameters);
     if (!already_created_)
     {
-        /*
-        sf::Uint32 style{sf::Style::Default};
-        //        if (wcp.fullScreen)
-        //            style = sf::Style::Fullscreen;
-
-        ParamExtractor prm_xtr{num_extra_parameters, extra_parameters};
-        //    uint width = prm_xtr.getParam(800U);
-        //    uint height = prm_xtr.getParam(600U);
-        //    uint bpp = prm_xtr.getParam(32U);
-
-        unsigned int w   = static_cast<unsigned int>(width);
-        unsigned int h   = static_cast<unsigned int>(height);
-        unsigned int bpp = static_cast<unsigned int>(red_bpp + green_bpp +
-                                                     blue_bpp + alpha_bpp);
-
-        sf::ContextSettings context_settings = sf::ContextSettings();
-        m_render_window->create(sf::VideoMode(w, h, bpp), "", style,
-                                context_settings);
-
-        m_render_window->setVerticalSyncEnabled(false);
         already_created_ = true;
-//        m_window_render_target.setInternalRenderTarget();
-*/
+        if (glfwInit() != 0)
+        {
+            sf::Uint32 style{sf::Style::Default};
+            //        if (wcp.fullScreen)
+            //            style = sf::Style::Fullscreen;
+
+            ParamExtractor prm_xtr{num_extra_parameters, extra_parameters};
+            //    uint width = prm_xtr.getParam(800U);
+            //    uint height = prm_xtr.getParam(600U);
+            //    uint bpp = prm_xtr.getParam(32U);
+
+            unsigned int w   = static_cast<unsigned int>(width);
+            unsigned int h   = static_cast<unsigned int>(height);
+            unsigned int bpp = static_cast<unsigned int>(red_bpp + green_bpp +
+                                                         blue_bpp + alpha_bpp);
+
+            sf::ContextSettings context_settings = sf::ContextSettings();
+            m_render_window->create(sf::VideoMode(w, h, bpp), "", style,
+                                    context_settings);
+
+            m_render_window->setVerticalSyncEnabled(false);
+            already_created_ = true;
+            //        m_window_render_target.setInternalRenderTarget();
+        }
         return true;
     }
     return false;
