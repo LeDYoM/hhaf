@@ -9,7 +9,6 @@ class GLFWBackendManager : public haf::backend::client::DefaultBackendManager
 {
 public:
     void create() override;
-    void destroy() override;
 
 };
 }  // namespace haf::backend::glfwb

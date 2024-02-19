@@ -15,9 +15,4 @@ void GLFWBackendManager::create()
         DefaultFactoryOf<IWindow, GLFWRenderWindow>>();
 }
 
-void GLFWBackendManager::destroy()
-{
-
-}
-
 }  // namespace haf::backend::glfwb
