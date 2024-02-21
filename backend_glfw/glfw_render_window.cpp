@@ -68,10 +68,6 @@ bool GLFWRenderWindow::createWindow(u32 const width,
         already_created_ = true;
         if (glfwInit() != 0)
         {
-            sf::Uint32 style{sf::Style::Default};
-            //        if (wcp.fullScreen)
-            //            style = sf::Style::Fullscreen;
-
             ParamExtractor prm_xtr{num_extra_parameters, extra_parameters};
             //    uint width = prm_xtr.getParam(800U);
             //    uint height = prm_xtr.getParam(600U);
@@ -82,7 +78,11 @@ bool GLFWRenderWindow::createWindow(u32 const width,
             unsigned int bpp = static_cast<unsigned int>(red_bpp + green_bpp +
                                                          blue_bpp + alpha_bpp);
 
-            sf::ContextSettings context_settings = sf::ContextSettings();
+            //sf::ContextSettings context_settings = sf::ContextSettings();
+            m_render_window = htps::muptr<GL
+            GLFWwindow* window = glfwCreateWindow(640, 480, "My Title", NULL, NULL);
+
+
             m_render_window->create(sf::VideoMode(w, h, bpp), "", style,
                                     context_settings);
 

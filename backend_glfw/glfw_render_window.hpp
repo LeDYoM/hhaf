@@ -9,6 +9,8 @@
 
 #include "glfw_input_driver.hpp"
 
+#include <GLFW/glfw3.h>
+
 namespace haf::backend::glfwb
 {
 class GLFWRenderWindow : public IWindow
@@ -38,7 +40,7 @@ public:
     htps::str settingsInfo() const override;
 
 private:
-//    htps::uptr<sf::Window> m_render_window;
+    htps::uptr<GLFWwindow> m_render_window;
     bool already_created_{false};
 //    SFMLInputDriver input_driver_;
 };
