@@ -74,20 +74,19 @@ bool GLFWRenderWindow::createWindow(u32 const width,
             //    uint height = prm_xtr.getParam(600U);
             //    uint bpp = prm_xtr.getParam(32U);
 
-            unsigned int w   = static_cast<unsigned int>(width);
-            unsigned int h   = static_cast<unsigned int>(height);
-            unsigned int bpp = static_cast<unsigned int>(red_bpp + green_bpp +
-                                                         blue_bpp + alpha_bpp);
+            const unsigned int w   = static_cast<unsigned int>(width);
+            const unsigned int h   = static_cast<unsigned int>(height);
+//            const unsigned int bpp = static_cast<unsigned int>(
+//                red_bpp + green_bpp + blue_bpp + alpha_bpp);
 
-            // sf::ContextSettings context_settings = sf::ContextSettings();
-            //            m_render_window = htps::muptr<GL
-            m_render_window =
-                glfwCreateWindow(640, 480, "My Title", NULL, NULL);
+            //glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+            m_render_window = glfwCreateWindow(w, h, "", NULL, NULL);
+            glfwMakeContextCurrent(m_render_window);
 
-            m_render_window->create(sf::VideoMode(w, h, bpp), "", style,
-                                    context_settings);
+//            m_render_window->create(sf::VideoMode(w, h, bpp), "", style,
+//                                    context_settings);
 
-            m_render_window->setVerticalSyncEnabled(false);
+//            m_render_window->setVerticalSyncEnabled(false);
             m_already_created = true;
             //        m_window_render_target.setInternalRenderTarget();
         }
