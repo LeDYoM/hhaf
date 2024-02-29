@@ -42,7 +42,7 @@ public:
 private:
     GLFWwindow* m_render_window;
     bool m_already_created;
-//    SFMLInputDriver input_driver_;
+    GLFWInputDriver input_driver_;
 };
 
 }  // namespace haf::backend::glfwb

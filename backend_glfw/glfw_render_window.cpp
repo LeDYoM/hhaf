@@ -133,8 +133,7 @@ void GLFWRenderWindow::closeWindow()
 
 rptr<IInputDriver> GLFWRenderWindow::inputDriver()
 {
-    //    return &input_driver_;
-    return nullptr;
+    return &input_driver_;
 }
 
 str GLFWRenderWindow::info() const
