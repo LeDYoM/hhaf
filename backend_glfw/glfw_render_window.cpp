@@ -118,7 +118,7 @@ bool GLFWRenderWindow::processEvents()
 
 void GLFWRenderWindow::display()
 {
-    //    m_render_window->display();
+    glfwSwapBuffers(m_render_window);
 }
 
 void GLFWRenderWindow::setWindowTitle(str const& /*newTitle*/)
