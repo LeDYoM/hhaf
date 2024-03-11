@@ -108,9 +108,9 @@ void GLFWRenderWindow::display()
     glfwSwapBuffers(m_render_window);
 }
 
-void GLFWRenderWindow::setWindowTitle(str const& /*newTitle*/)
+void GLFWRenderWindow::setWindowTitle(str const& newTitle)
 {
-    //    m_render_window->setTitle(to_sf_type(newTitle));
+    glfwSetWindowTitle(m_render_window, newTitle.c_str());
 }
 
 void GLFWRenderWindow::closeWindow()
