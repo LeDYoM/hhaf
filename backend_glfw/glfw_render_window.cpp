@@ -97,22 +97,9 @@ bool GLFWRenderWindow::createWindow(u32 const width,
 
 bool GLFWRenderWindow::processEvents()
 {
-    /*
     input_driver_.clearInternalInputBuffer();
-    sf::Event event;
-    while (m_render_window->pollEvent(event))
-    {
-        if (event.type == sf::Event::Closed)
-        {
-            return true;
-        }
-        else if (event.type == sf::Event::KeyPressed ||
-                 event.type == sf::Event::KeyReleased)
-        {
-            input_driver_.keyEvent(event);
-        }
-    }
-    */
+
+    glfwPollEvents();
     return false;
 }
 
