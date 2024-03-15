@@ -18,9 +18,6 @@ public:
     explicit InputDriverWrapper(core::rptr<backend::IInputDriver> input_driver);
     ~InputDriverWrapper();
 
-    void keyPressed(const Key);
-    void keyReleased(const Key);
-
     void readKeyPressed(core::vector<Key>& keys_pressed);
     void readKeyReleased(core::vector<Key>& keys_released);
 

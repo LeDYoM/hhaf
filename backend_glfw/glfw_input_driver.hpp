@@ -12,8 +12,8 @@ public:
     GLFWInputDriver();
     ~GLFWInputDriver() override;
 
-    void keyPressed(IKey const) override;
-    void keyReleased(IKey const) override;
+    void keyPressed(IKey const);
+    void keyReleased(IKey const);
 
     //    void keyEvent(sf::Event const& e);
 

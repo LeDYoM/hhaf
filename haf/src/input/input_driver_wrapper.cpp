@@ -61,14 +61,4 @@ void InputDriverWrapper::readKeyReleased(vector<Key>& keys_released)
     }
 }
 
-void InputDriverWrapper::keyPressed(Key const key)
-{
-    return p_->input_driver_->keyPressed(toiKey(key));
-}
-
-void InputDriverWrapper::keyReleased(Key const key)
-{
-    return p_->input_driver_->keyReleased(toiKey(key));
-}
-
 }  // namespace haf::input

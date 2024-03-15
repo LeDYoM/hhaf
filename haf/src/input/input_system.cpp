@@ -93,11 +93,12 @@ void InputSystem::keyReleased(const Key key)
 
 void InputSystem::simulatePressKey(Key const key)
 {
-    input_driver_wrapper_->keyPressed(key);
+    keyPressed(key);
 }
 
 void InputSystem::simulateReleaseKey(Key const key)
 {
-    input_driver_wrapper_->keyReleased(key);
+    keyReleased(key);
 }
+
 }  // namespace haf::sys

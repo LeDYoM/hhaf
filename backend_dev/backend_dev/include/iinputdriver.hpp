@@ -18,20 +18,6 @@ public:
      */
     virtual ~IInputDriver() = default;
 
-    /**
-     * @brief Users of this class should call this method to add any
-     * pending key pressed.
-     *  @param[in] iKey indicating the element to add.
-     */
-    virtual void keyPressed(IKey const) = 0;
-
-    /**
-     * @brief Users of this class should call this method to add any
-     * pending key released.
-     *  @param[in] iKey indicating the element to add.
-     */
-    virtual void keyReleased(IKey const) = 0;
-
     virtual void clearInternalInputBuffer() = 0;
     virtual void readKeyPressed(htps::vector<IKey>& keys_pressed) const = 0;
     virtual void readKeyReleased(htps::vector<IKey>& keys_released) const = 0;
