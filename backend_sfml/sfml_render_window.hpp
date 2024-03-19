@@ -1,8 +1,6 @@
 #ifndef HAF_BACKEND_SFMLB_REDNERWINDOW_INCLUDE_HPP
 #define HAF_BACKEND_SFMLB_REDNERWINDOW_INCLUDE_HPP
 
-#include <SFML/Window/Window.hpp>
-
 #include <htypes/include/types.hpp>
 #include <facil_math/include/vector2d.hpp>
 
