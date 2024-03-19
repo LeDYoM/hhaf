@@ -9,6 +9,11 @@ namespace haf::backend
 class ICoreMessages
 {
 public:
+    virtual void keyPressed(IKey const& key) = 0;
+
+    virtual void keyReleased(IKey const& key) = 0;
+
+    virtual void requestExit();
 
 protected:
     /**

@@ -95,7 +95,7 @@ bool GLFWRenderWindow::createWindow(u32 const width,
     return false;
 }
 
-bool GLFWRenderWindow::processEvents()
+bool GLFWRenderWindow::processEvents(ICoreMessages&)
 {
     input_driver_.clearInternalInputBuffer();
 

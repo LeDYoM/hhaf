@@ -82,7 +82,7 @@ bool SFMLRenderWindow::createWindow(u32 const width,
     return false;
 }
 
-bool SFMLRenderWindow::processEvents()
+bool SFMLRenderWindow::processEvents(ICoreMessages&)
 {
     input_driver_.clearInternalInputBuffer();
     sf::Event event;
