@@ -7,6 +7,7 @@ set(include_dir ${PROJECT_SOURCE_DIR}/backend_dev/include)
 set(headers
     ${include_dir}/factory_types.hpp
     ${include_dir}/ibackendregister.hpp
+    ${include_dir}/icore_messages.hpp
     ${include_dir}/ifactory.hpp
     ${include_dir}/iinputdriver.hpp
     ${include_dir}/ikey.hpp
