@@ -76,14 +76,16 @@ bool SFMLRenderWindow::createWindow(u32 const width,
 
         m_render_window->setVerticalSyncEnabled(false);
         already_created_ = true;
-//        m_window_render_target.setInternalRenderTarget();
+        //        m_window_render_target.setInternalRenderTarget();
         return true;
     }
     return false;
 }
 
-bool SFMLRenderWindow::processEvents(ICoreMessages&)
+bool SFMLRenderWindow::processEvents(
+    IWindowMessagesReceiver& iw_messages_receiver)
 {
+    (void)(iw_messages_receiver);
     input_driver_.clearInternalInputBuffer();
     sf::Event event;
     while (m_render_window->pollEvent(event))

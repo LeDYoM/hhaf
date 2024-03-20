@@ -3,7 +3,7 @@
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/str.hpp>
-#include <backend_dev/include/icore_messages.hpp>
+#include <backend_dev/include/iwindow_messages_receiver.hpp>
 
 namespace haf::backend
 {
@@ -45,7 +45,8 @@ public:
 
     virtual bool isAlreadyCreated() const = 0;
 
-    virtual bool processEvents(ICoreMessages& core_messages) = 0;
+    virtual bool processEvents(
+        IWindowMessagesReceiver& iw_messages_receiver) = 0;
 
     virtual void display()                                 = 0;
     virtual void setWindowTitle(htps::str const& newTitle) = 0;

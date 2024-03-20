@@ -42,7 +42,7 @@ bool Window::preLoop(time::TimePoint const& time_since_start)
         fps_counter.updateFPS(time_since_start, m_backend_window, m_title);
     }
 
-    return m_backend_window->processEvents();
+    return m_backend_window->processEvents(m_window_messages_receiver);
 }
 
 void Window::postLoop()

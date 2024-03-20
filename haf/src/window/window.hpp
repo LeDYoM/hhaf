@@ -4,7 +4,9 @@ HAF_PRAGMA_ONCE
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/str.hpp>
+
 #include "fps_counter.hpp"
+#include "window_messages_receiver.hpp"
 
 namespace haf::input
 {
@@ -61,6 +63,7 @@ public:
 
 private:
     FPSCounter fps_counter;
+    WindowMessagesReceiver m_window_messages_receiver;
     htps::rptr<backend::IWindow> m_backend_window{nullptr};
     htps::sptr<input::InputDriverWrapper> m_input_driver_wrapper;
     htps::str m_title;

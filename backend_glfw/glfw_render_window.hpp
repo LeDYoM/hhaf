@@ -6,7 +6,7 @@
 
 #include <backend_dev/include/iwindow.hpp>
 #include <backend_dev/include/iinputdriver.hpp>
-#include <backend_dev/include/icore_messages.hpp>
+#include <backend_dev/include/iwindow_messages_receiver.hpp>
 
 #include "glfw_input_driver.hpp"
 
@@ -31,7 +31,7 @@ public:
 
     bool isAlreadyCreated() const override;
 
-    bool processEvents(ICoreMessages& core_messages) override;
+    bool processEvents(IWindowMessagesReceiver& iw_messages_receiver) override;
     void display() override;
     void setWindowTitle(htps::str const& newTitle) override;
     void closeWindow() override;
