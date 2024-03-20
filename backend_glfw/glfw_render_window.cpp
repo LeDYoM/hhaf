@@ -103,7 +103,6 @@ void GLFWRenderWindow::processEvents(
     input_driver_.clearInternalInputBuffer();
 
     glfwPollEvents();
-    return false;
 }
 
 void GLFWRenderWindow::display()

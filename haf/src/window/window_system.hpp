@@ -47,11 +47,8 @@ public:
 
     /**
      * @brief Method to be executed before starting a cycle of the system
-     *
-     * @return true The window has requested to exit
-     * @return false The window did not request to exit
      */
-    bool preLoop();
+    void preLoop();
 
     /**
      * @brief Method to be executed after the cycle of a system
@@ -59,6 +56,8 @@ public:
     void postLoop();
 
     htps::sptr<Window> const& window() const;
+
+    bool exitRequested() const noexcept;
 
 private:
     WindowConfiguration m_window_configuration;

@@ -51,7 +51,7 @@ public:
      * @return true The window has requested to exit
      * @return false The window did not request to exit
      */
-    bool preLoop(time::TimePoint const& time_since_start);
+    void preLoop(time::TimePoint const& time_since_start);
 
     /**
      * @brief Method to be executed after the cycle of a system
@@ -61,6 +61,7 @@ public:
     htps::sptr<input::InputDriverWrapper> inputDriverWrapper();
     htps::sptr<input::InputDriverWrapper const> inputDriverWrapper() const;
 
+    bool windowWantsToExit() const noexcept;
 private:
     FPSCounter fps_counter;
     WindowMessagesReceiver m_window_messages_receiver;

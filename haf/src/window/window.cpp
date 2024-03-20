@@ -35,19 +35,24 @@ sptr<input::InputDriverWrapper const> Window::inputDriverWrapper() const
     return m_input_driver_wrapper;
 }
 
-bool Window::preLoop(time::TimePoint const& time_since_start)
+void Window::preLoop(time::TimePoint const& time_since_start)
 {
     if constexpr (ctc::ShowFPS)
     {
         fps_counter.updateFPS(time_since_start, m_backend_window, m_title);
     }
 
-    return m_backend_window->processEvents(m_window_messages_receiver);
+    m_backend_window->processEvents(m_window_messages_receiver);
 }
 
 void Window::postLoop()
 {
     m_backend_window->display();
+}
+
+bool Window::windowWantsToExit() const noexcept
+{
+    return m_window_messages_receiver.exitRequested();
 }
 
 }  // namespace haf::sys

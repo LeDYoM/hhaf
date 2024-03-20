@@ -102,10 +102,9 @@ bool WindowSystem::initialize(str const& window_config_file)
     }
 }
 
-bool WindowSystem::preLoop()
+void WindowSystem::preLoop()
 {
-    return m_window->preLoop(
-        getSystem<sys::TimeSystem>(systemAccessPtr()).nowFrame());
+    m_window->preLoop(getSystem<sys::TimeSystem>(systemAccessPtr()).nowFrame());
 }
 
 void WindowSystem::postLoop()
@@ -116,6 +115,11 @@ void WindowSystem::postLoop()
 sptr<Window> const& WindowSystem::window() const
 {
     return m_window;
+}
+
+bool WindowSystem::exitRequested() const noexcept
+{
+    return m_window->windowWantsToExit();
 }
 
 }  // namespace haf::sys

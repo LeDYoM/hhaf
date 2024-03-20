@@ -82,7 +82,7 @@ bool SFMLRenderWindow::createWindow(u32 const width,
     return false;
 }
 
-bool SFMLRenderWindow::processEvents(
+void SFMLRenderWindow::processEvents(
     IWindowMessagesReceiver& iw_messages_receiver)
 {
     (void)(iw_messages_receiver);
@@ -92,7 +92,7 @@ bool SFMLRenderWindow::processEvents(
     {
         if (event.type == sf::Event::Closed)
         {
-            return true;
+            iw_messages_receiver.requestExit();
         }
         else if (event.type == sf::Event::KeyPressed ||
                  event.type == sf::Event::KeyReleased)
@@ -100,7 +100,6 @@ bool SFMLRenderWindow::processEvents(
             input_driver_.keyEvent(event);
         }
     }
-    return false;
 }
 
 void SFMLRenderWindow::display()

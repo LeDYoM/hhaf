@@ -17,6 +17,9 @@ public:
     void keyReleased(backend::IKey const& key) override;
     void requestExit() override;
 
+    bool exitRequested() const noexcept;
+private:
+    bool m_exit_requested{false};
 };
 }  // namespace haf::sys
 

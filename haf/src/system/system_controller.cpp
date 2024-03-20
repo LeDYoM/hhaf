@@ -38,11 +38,11 @@ bool SystemController::preUpdate()
 {
     system<TimeSystem>().startFrame();
     system<DebugSystem>().onStartPreUpdate();
-    const bool pre_update_wants_to_close{system<WindowSystem>().preLoop()};
+    system<WindowSystem>().preLoop();
     system<SimulationSystem>().updateSimulationInput();
     system<InputSystem>().preUpdate();
     system<DebugSystem>().onFinishPreUpdate();
-    return pre_update_wants_to_close;
+    return system<WindowSystem>().exitRequested();
 }
 
 bool SystemController::update()

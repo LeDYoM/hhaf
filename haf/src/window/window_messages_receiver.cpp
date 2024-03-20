@@ -18,6 +18,12 @@ void WindowMessagesReceiver::keyReleased(backend::IKey const&)
 {}
 
 void WindowMessagesReceiver::requestExit()
-{}
+{
+    m_exit_requested = true;
+}
 
+bool WindowMessagesReceiver::exitRequested() const noexcept
+{
+    return m_exit_requested;
+}
 }  // namespace haf::sys
