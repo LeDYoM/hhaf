@@ -29,7 +29,7 @@ public:
 
     bool isAlreadyCreated() const override;
 
-    bool processEvents(IWindowMessagesReceiver& iw_messages_receiver) override;
+    void processEvents(IWindowMessagesReceiver& iw_messages_receiver) override;
     void display() override;
     void setWindowTitle(htps::str const& newTitle) override;
     void closeWindow() override;

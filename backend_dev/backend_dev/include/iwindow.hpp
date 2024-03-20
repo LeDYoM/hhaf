@@ -45,7 +45,7 @@ public:
 
     virtual bool isAlreadyCreated() const = 0;
 
-    virtual bool processEvents(
+    virtual void processEvents(
         IWindowMessagesReceiver& iw_messages_receiver) = 0;
 
     virtual void display()                                 = 0;

@@ -96,7 +96,7 @@ bool GLFWRenderWindow::createWindow(u32 const width,
     return false;
 }
 
-bool GLFWRenderWindow::processEvents(
+void GLFWRenderWindow::processEvents(
     IWindowMessagesReceiver& iw_messages_receiver)
 {
     (void)(iw_messages_receiver);
