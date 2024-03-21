@@ -29,10 +29,8 @@ public:
     void finish();
 
     void preUpdate();
-    void onStartUpdate() {}
-    void onFinishUpdate();
-    void onStartPostUpdate() {}
-    void onFinishPostUpdate();
+    void update();
+    void postUpdate();
 
     debug::MemoryDataInitializer startMemoryCounter() override;
 

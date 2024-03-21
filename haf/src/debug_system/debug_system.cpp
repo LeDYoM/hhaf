@@ -31,7 +31,7 @@ void DebugSystem::preUpdate()
         getSystem<TimeSystem>(systemAccessPtr()).currentFrame());
 }
 
-void DebugSystem::onFinishPostUpdate()
+void DebugSystem::postUpdate()
 {}
 
 MemoryDataInitializer DebugSystem::startMemoryCounter()
@@ -111,7 +111,7 @@ void DebugSystem::init()
     himgui::init();
 }
 
-void DebugSystem::onFinishUpdate()
+void DebugSystem::update()
 {
     himgui::initFrame();
     himgui::initWindow();

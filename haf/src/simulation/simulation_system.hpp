@@ -41,7 +41,7 @@ public:
     /**
      * @brief Update simulation output
      */
-    void updateSimulationOutput();
+    void update();
 
     bool getNext(htps::str const& name, htps::size_type& pre_selected);
 

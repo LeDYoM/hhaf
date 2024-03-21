@@ -53,7 +53,7 @@ public:
     /**
      * @brief Method to be executed after the cycle of a system
      */
-    void postLoop();
+    void postUpdate();
 
     htps::sptr<Window> const& window() const;
 

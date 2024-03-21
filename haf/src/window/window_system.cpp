@@ -110,7 +110,7 @@ void WindowSystem::preUpdate()
     m_window->preLoop(getSystem<sys::TimeSystem>(systemAccessPtr()).nowFrame());
 }
 
-void WindowSystem::postLoop()
+void WindowSystem::postUpdate()
 {
     m_window->postLoop();
 }

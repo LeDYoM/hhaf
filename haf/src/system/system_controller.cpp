@@ -46,22 +46,19 @@ bool SystemController::preUpdate()
 
 bool SystemController::update()
 {
-    system<DebugSystem>().onStartUpdate();
     system<InputSystem>().update();
-    system<SimulationSystem>().updateSimulationOutput();
+    system<SimulationSystem>().update();
     system<scene::SceneManager>().update();
-    system<DebugSystem>().onFinishUpdate();
-
+    system<DebugSystem>().update();
     return false;
 }
 
 bool SystemController::postUpdate()
 {
-    system<DebugSystem>().onStartPostUpdate();
     system<InputSystem>().postUpdate();
-    system<WindowSystem>().postLoop();
-    system<DebugSystem>().onFinishPostUpdate();
-    system<TimeSystem>().endFrame();
+    system<WindowSystem>().postUpdate();
+    system<DebugSystem>().postUpdate();
+    system<TimeSystem>().postUpdate();
 
     return false;
 }

@@ -192,7 +192,7 @@ void SimulationSystem::preUpdate()
     }
 }
 
-void SimulationSystem::updateSimulationOutput()
+void SimulationSystem::update()
 {
     // Get the current TimePoint
     time::TimePoint const& current_time_point{

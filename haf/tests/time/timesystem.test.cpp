@@ -44,7 +44,7 @@ TEST_CASE("TimeSystem frame time", "[haf][timesystem]")
 
     time_system.preUpdate();
     std::this_thread::sleep_for(std::chrono::milliseconds(10U));
-    time_system.endFrame();
+    time_system.postUpdate();
     std::this_thread::sleep_for(std::chrono::milliseconds(10U));
     time_system.preUpdate();
 

@@ -92,7 +92,7 @@ void TimeSystem::preUpdate()
     priv_->updateStartFrameTime();
 }
 
-void TimeSystem::endFrame()
+void TimeSystem::postUpdate()
 {
     priv_->updateEndFrameTime();
 }

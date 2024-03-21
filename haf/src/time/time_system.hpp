@@ -35,7 +35,7 @@ public:
     FrameNumberType currentFrame() const noexcept;
 
     void preUpdate();
-    void endFrame();
+    void postUpdate();
 
     void setAcceleration(htps::f32 const acceleration);
 
