@@ -33,7 +33,7 @@ WindowSystem::~WindowSystem()
         }
     }
     logger::DisplayLog::info_if(p_backend_window != nullptr, StaticTypeName,
-                        ": Window closed");
+                                ": Window closed");
 }
 
 bool WindowSystem::initialize(str const& window_config_file)
@@ -49,8 +49,9 @@ bool WindowSystem::initialize(str const& window_config_file)
     {
         backend::IWindow& backend_window{*p_backend_window};
 
-        logger::DisplayLog::info_if(backend_window.isAlreadyCreated(), StaticTypeName,
-                            ": Window was already created.");
+        logger::DisplayLog::info_if(backend_window.isAlreadyCreated(),
+                                    StaticTypeName,
+                                    ": Window was already created.");
 
         // Create physical window if not already done
         if (!backend_window.isAlreadyCreated())
@@ -64,7 +65,8 @@ bool WindowSystem::initialize(str const& window_config_file)
                                             config.configuredBitsPerAlpha(), 0U,
                                             nullptr))
             {
-                logger::DisplayLog::info(StaticTypeName, ": Window creation completed");
+                logger::DisplayLog::info(StaticTypeName,
+                                         ": Window creation completed");
             }
             else
             {
@@ -74,8 +76,8 @@ bool WindowSystem::initialize(str const& window_config_file)
             }
         }
 
-        logger::DisplayLog::debug(StaticTypeName,
-                          ": Window settings: ", backend_window.settingsInfo());
+        logger::DisplayLog::debug(StaticTypeName, ": Window settings: ",
+                                  backend_window.settingsInfo());
 
         // If window created successfully, extract the render target
         // associated with the window.
@@ -97,7 +99,8 @@ bool WindowSystem::initialize(str const& window_config_file)
     }
     else
     {
-        logger::DisplayLog::error(StaticTypeName, ": Backend window is nullptr!");
+        logger::DisplayLog::error(StaticTypeName,
+                                  ": Backend window is nullptr!");
         return false;
     }
 }
