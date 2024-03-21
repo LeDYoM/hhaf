@@ -2,8 +2,7 @@ HAF_PRAGMA_ONCE
 #ifndef HAF_SYSTEM_SYSTEM_CONFIGURATION_TEMPLATE_INCLUDE_HPP
 #define HAF_SYSTEM_SYSTEM_CONFIGURATION_TEMPLATE_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
-#include <htypes/include/str.hpp>
+#include <haf/include/core/types.hpp>
 
 #include <haf/include/system/subsystem_view.hpp>
 #include <haf/include/filesystem/ifile_serializer.hpp>
@@ -29,7 +28,7 @@ public:
 
         if (result == IFileSerializer::Result::Success)
         {
-            data_ = htps::move(current.data);
+            data_ = core::move(current.data);
         }
 
         return result == IFileSerializer::Result::Success;

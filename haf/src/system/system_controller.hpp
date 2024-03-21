@@ -2,7 +2,7 @@ HAF_PRAGMA_ONCE
 #ifndef HAF_SYSTEM_CONTROLLER_INCLUDE_HPP
 #define HAF_SYSTEM_CONTROLLER_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
+#include <haf/include/core/types.hpp>
 #include "system_provider.hpp"
 #include <haf/include/system/isystem_controller.hpp>
 
@@ -29,9 +29,9 @@ public:
     SystemController(SystemController&&)                 = default;
     SystemController& operator=(SystemController&&) = default;
 
-    void init(htps::rptr<IApp> iapp,
-              htps::rptr<host::IHostConnector> const host_connector,
-              htps::rptr<backend::BackendFactory> const backend_factory,
+    void init(core::rptr<IApp> iapp,
+              core::rptr<host::IHostConnector> const host_connector,
+              core::rptr<backend::BackendFactory> const backend_factory,
               int const argc,
               char const* const argv[]) override;
     bool preUpdate() override;

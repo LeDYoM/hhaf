@@ -6,7 +6,7 @@
 
 #include <hlog/include/hlog.hpp>
 
-using namespace htps;
+using namespace haf::core;
 
 namespace haf::sys
 {

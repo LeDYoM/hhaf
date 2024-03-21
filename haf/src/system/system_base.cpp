@@ -5,7 +5,7 @@
 #include <haf/include/system/system_access.hpp>
 #include <haf/include/system/subsystem_view.hpp>
 
-using namespace htps;
+using namespace haf::core;
 
 namespace haf::sys
 {
