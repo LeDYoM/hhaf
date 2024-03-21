@@ -36,12 +36,11 @@ void SystemController::terminate()
 
 bool SystemController::preUpdate()
 {
-    system<TimeSystem>().startFrame();
-    system<DebugSystem>().onStartPreUpdate();
-    system<WindowSystem>().preLoop();
-    system<SimulationSystem>().updateSimulationInput();
+    system<TimeSystem>().preUpdate();
+    system<DebugSystem>().preUpdate();
+    system<WindowSystem>().preUpdate();
+    system<SimulationSystem>().preUpdate();
     system<InputSystem>().preUpdate();
-    system<DebugSystem>().onFinishPreUpdate();
     return system<WindowSystem>().exitRequested();
 }
 

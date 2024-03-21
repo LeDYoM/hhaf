@@ -28,8 +28,7 @@ public:
     void init();
     void finish();
 
-    void onStartPreUpdate();
-    void onFinishPreUpdate() {}
+    void preUpdate();
     void onStartUpdate() {}
     void onFinishUpdate();
     void onStartPostUpdate() {}

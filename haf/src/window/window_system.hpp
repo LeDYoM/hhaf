@@ -48,7 +48,7 @@ public:
     /**
      * @brief Method to be executed before starting a cycle of the system
      */
-    void preLoop();
+    void preUpdate();
 
     /**
      * @brief Method to be executed after the cycle of a system

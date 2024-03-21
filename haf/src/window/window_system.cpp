@@ -105,7 +105,7 @@ bool WindowSystem::initialize(str const& window_config_file)
     }
 }
 
-void WindowSystem::preLoop()
+void WindowSystem::preUpdate()
 {
     m_window->preLoop(getSystem<sys::TimeSystem>(systemAccessPtr()).nowFrame());
 }
