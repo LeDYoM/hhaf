@@ -55,7 +55,7 @@ KeyState InputSystem::keyState(Key const key) const noexcept
     return key_states_[keyIndex(key)];
 }
 
-bool InputSystem::shitPressed() const noexcept
+bool InputSystem::shiftPressed() const noexcept
 {
     return keyState(Key::LShift) || keyState(Key::RShift);
 }

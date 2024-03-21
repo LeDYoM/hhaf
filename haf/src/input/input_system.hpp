@@ -32,7 +32,7 @@ public:
     input::KeyStates const& keyStates() const noexcept;
     input::KeyState keyState(input::Key const key) const noexcept;
 
-    bool shitPressed() const noexcept;
+    bool shiftPressed() const noexcept;
     bool controlPressed() const noexcept;
 
     /**
