@@ -32,7 +32,7 @@ public:
      * from the haf system to initialize the app. An @b IAppInitializer
      * instance will provide with the necessary data and members to
      * perform some initialization actions.
-     * 
+     *
      * @param app_initializer Class to help the app perform initialization
      * actions.
      */
@@ -42,7 +42,7 @@ public:
      * @brief Destroying function. This function will be invoked from the
      * haf system before destroying this App. An @b IAppFinisher will be
      * provided to help in deinitialize actions.
-     * 
+     *
      * @param app_finisher Class to help the app perform destruction
      */
     virtual void onFinish(scene::IAppFinisher& app_finisher)     = 0;
