@@ -18,7 +18,7 @@ SystemController::~SystemController() = default;
 
 void SystemController::init(
     rptr<IApp> iapp,
-    htps::rptr<host::IHostConnector> const host_connector,
+    rptr<host::IHostConnector> const host_connector,
     rptr<backend::BackendFactory> backend_factory,
     int const argc,
     char const* const argv[])
@@ -26,7 +26,7 @@ void SystemController::init(
     (void)(host_connector);
     LogAsserter::log_assert(
         iapp != nullptr, "Cannot create a SystemProvider with a nullptr app");
-    SystemProvider::init(htps::move(iapp), backend_factory, argc, argv);
+    SystemProvider::init(core::move(iapp), backend_factory, argc, argv);
 }
 
 void SystemController::terminate()
