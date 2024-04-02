@@ -1,3 +1,8 @@
+- Make input driver mostly a haf class and not a backend dependent class.
+    - Deprecate old input driver code.
+- Show info about current backend in debug imgui window.
+
+
 To format from command line:
 find haf/ -iname *.hpp -o -iname *.cpp| xargs clang-format -i
 

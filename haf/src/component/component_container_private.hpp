@@ -10,7 +10,7 @@ namespace haf::scene
 {
 class SceneManager;
 class ISceneManagerSubSystem;
-}
+}  // namespace haf::scene
 
 namespace haf::component
 {

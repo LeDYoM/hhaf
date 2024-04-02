@@ -22,8 +22,8 @@ DebugComponent::~DebugComponent() = default;
 void DebugComponent::onAttached()
 {
     sys::getSystem<scene::SceneManager>(attachedNode())
-        .KeyPressed().connect(
-            make_function(this, &DebugComponent::onKeyPressed));
+        .KeyPressed()
+        .connect(make_function(this, &DebugComponent::onKeyPressed));
 }
 
 void DebugComponent::onKeyPressed(input::Key const&)

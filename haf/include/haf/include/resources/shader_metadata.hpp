@@ -13,8 +13,7 @@ namespace haf::res
 class ShaderMetadata final
 {
 public:
-    static constexpr const haf::core::str_view StaticTypeName{
-        "ShaderMetadata"};
+    static constexpr const haf::core::str_view StaticTypeName{"ShaderMetadata"};
 
     ShaderMetadata();
     ~ShaderMetadata();

@@ -6,8 +6,6 @@ HAF_PRAGMA_ONCE
 #include <haf/include/debug_system/debug_types.hpp>
 
 namespace haf::debug
-{
-
-}  // namespace haf::debug
+{}  // namespace haf::debug
 
 #endif

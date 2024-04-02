@@ -54,6 +54,7 @@ public:
                           core::str const& value) override;
     void setVariableValue(debug::DebugVariableHandle const& index,
                           char const* const value) override;
+
 private:
     debug::DebugVariables m_debug_variables;
 };

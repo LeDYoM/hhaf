@@ -9,6 +9,6 @@ HAF_PRAGMA_ONCE
 namespace haf::data
 {
 using namespace mcs;
-}  // namespace haf::serializer
+}  // namespace haf::data
 
 #endif

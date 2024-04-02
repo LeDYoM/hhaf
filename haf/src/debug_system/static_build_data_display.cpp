@@ -10,13 +10,17 @@ namespace haf::debug
 void logBuildStaticData()
 {
     logger::DisplayLog::debug("BuildData: Class sizes:");
-    logger::DisplayLog::debug("BuildData: Component: ", sizeof(component::Component));
+    logger::DisplayLog::debug("BuildData: Component: ",
+                              sizeof(component::Component));
     logger::DisplayLog::debug("BuildData: ComponentContainer: ",
-                      sizeof(component::ComponentContainer));
-    logger::DisplayLog::debug("BuildData: SceneNode: ", sizeof(scene::SceneNode));
-    logger::DisplayLog::debug("BuildData: Matrix4x4: ", sizeof(fmath::Matrix4x4));
-    logger::DisplayLog::debug("BuildData: Matrix4x4 aligned: ",
-                      sizeof(fmath::Matrix4x4[2]) - sizeof(fmath::Matrix4x4));
+                              sizeof(component::ComponentContainer));
+    logger::DisplayLog::debug("BuildData: SceneNode: ",
+                              sizeof(scene::SceneNode));
+    logger::DisplayLog::debug("BuildData: Matrix4x4: ",
+                              sizeof(fmath::Matrix4x4));
+    logger::DisplayLog::debug(
+        "BuildData: Matrix4x4 aligned: ",
+        sizeof(fmath::Matrix4x4[2]) - sizeof(fmath::Matrix4x4));
 }
 
 }  // namespace haf::debug

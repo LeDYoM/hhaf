@@ -7,7 +7,7 @@ HAF_PRAGMA_ONCE
 
 namespace haf::scene::colors
 {
-using Color         = fmath::vector4df;
+using Color = fmath::vector4df;
 static constexpr auto const Full{fmath::OneF32};
 static constexpr auto const Empty{fmath::ZeroF32};
 static constexpr auto const OneForth{0.25F};

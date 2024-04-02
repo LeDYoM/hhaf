@@ -136,7 +136,7 @@ private:
  * @b mcs::Object . If first is false, the second value is undefined.
  */
 htps::pair<bool, mcs::Object> objectFromAddress(Address const& address,
-                                                 mcs::Object const& object);
+                                                mcs::Object const& object);
 
 /**
  * @brief Check that an @b Address exists in an @b mcs::Object and retrieve

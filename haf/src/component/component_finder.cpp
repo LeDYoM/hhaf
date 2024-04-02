@@ -26,7 +26,8 @@ sptr<Component> ComponentFinder::findAncestorComponent(str_view name) const
     for (auto parentNode{m_node->parent()}; parentNode != nullptr;
          parentNode = parentNode->parent())
     {
-        auto result{parentNode->componentContainer().getExistingComponent(name)};
+        auto result{
+            parentNode->componentContainer().getExistingComponent(name)};
         if (result)
         {
             return result;
