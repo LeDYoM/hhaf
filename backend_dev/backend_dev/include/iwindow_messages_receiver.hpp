@@ -9,10 +9,10 @@ namespace haf::backend
 class IWindowMessagesReceiver
 {
 public:
+    virtual void startInputKeysUpdate() = 0;
+    virtual void endInputKeysUpdate() = 0;
     virtual void keyPressed(IKey const& key) = 0;
-
     virtual void keyReleased(IKey const& key) = 0;
-
     virtual void requestExit() = 0;
 
 protected:

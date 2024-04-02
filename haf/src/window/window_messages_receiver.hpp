@@ -13,6 +13,8 @@ public:
     WindowMessagesReceiver();
     ~WindowMessagesReceiver() override;
 
+    void startInputKeysUpdate() override;
+    void endInputKeysUpdate() override;
     void keyPressed(backend::IKey const& key) override;
     void keyReleased(backend::IKey const& key) override;
     void requestExit() override;

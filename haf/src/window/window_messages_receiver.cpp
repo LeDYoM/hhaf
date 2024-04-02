@@ -11,6 +11,14 @@ namespace haf::sys
 WindowMessagesReceiver::WindowMessagesReceiver()  = default;
 WindowMessagesReceiver::~WindowMessagesReceiver() = default;
 
+void WindowMessagesReceiver::startInputKeysUpdate()
+{
+}
+
+void WindowMessagesReceiver::endInputKeysUpdate()
+{
+}
+
 void WindowMessagesReceiver::keyPressed(backend::IKey const&)
 {}
 
