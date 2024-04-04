@@ -5,8 +5,10 @@ HAF_PRAGMA_ONCE
 #include <htypes/include/types.hpp>
 #include <htypes/include/str.hpp>
 #include "system/system_base.hpp"
+
 #include "window.hpp"
 #include "window_configuration.hpp"
+#include "window_messages_receiver.hpp"
 
 namespace haf::sys
 {
@@ -50,6 +52,8 @@ public:
      */
     void preUpdate();
 
+    void update();
+
     /**
      * @brief Method to be executed after the cycle of a system
      */
@@ -61,6 +65,7 @@ public:
 
 private:
     WindowConfiguration m_window_configuration;
+    WindowMessagesReceiver m_window_messages_receiver;
     htps::sptr<Window> m_window;
 };
 }  // namespace haf::sys

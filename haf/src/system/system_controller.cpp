@@ -50,6 +50,7 @@ bool SystemController::update()
     system<SimulationSystem>().update();
     system<scene::SceneManager>().update();
     system<DebugSystem>().update();
+    system<WindowSystem>().update();
     return false;
 }
 

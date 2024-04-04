@@ -41,8 +41,11 @@ void Window::preLoop(time::TimePoint const& time_since_start)
     {
         fps_counter.updateFPS(time_since_start, m_backend_window, m_title);
     }
+}
 
-    m_backend_window->processEvents(m_window_messages_receiver);
+void Window::loop(WindowMessagesReceiver& window_messages_receiver)
+{
+    m_backend_window->processEvents(window_messages_receiver);
 }
 
 void Window::postLoop()
@@ -52,7 +55,8 @@ void Window::postLoop()
 
 bool Window::windowWantsToExit() const noexcept
 {
-    return m_window_messages_receiver.exitRequested();
+    return false;
+//    return m_window_messages_receiver.exitRequested();
 }
 
 }  // namespace haf::sys
