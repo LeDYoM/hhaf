@@ -43,9 +43,9 @@ void Window::preLoop(time::TimePoint const& time_since_start)
     }
 }
 
-void Window::loop(WindowMessagesReceiver& window_messages_receiver)
+void Window::loop()
 {
-    m_backend_window->processEvents(window_messages_receiver);
+    m_backend_window->processEvents(m_window_messages_receiver);
 }
 
 void Window::postLoop()
@@ -55,8 +55,7 @@ void Window::postLoop()
 
 bool Window::windowWantsToExit() const noexcept
 {
-    return false;
-//    return m_window_messages_receiver.exitRequested();
+    return m_window_messages_receiver.exitRequested();
 }
 
 }  // namespace haf::sys

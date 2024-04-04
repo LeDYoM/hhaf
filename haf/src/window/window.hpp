@@ -53,7 +53,7 @@ public:
      */
     void preLoop(time::TimePoint const& time_since_start);
 
-    void loop(WindowMessagesReceiver& window_messages_receiver);
+    void loop();
 
     /**
      * @brief Method to be executed after the cycle of a system
@@ -66,6 +66,7 @@ public:
     bool windowWantsToExit() const noexcept;
 private:
     FPSCounter fps_counter;
+    WindowMessagesReceiver m_window_messages_receiver;
     htps::rptr<backend::IWindow> m_backend_window{nullptr};
     htps::sptr<input::InputDriverWrapper> m_input_driver_wrapper;
     htps::str m_title;

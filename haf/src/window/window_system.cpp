@@ -112,7 +112,7 @@ void WindowSystem::preUpdate()
 
 void WindowSystem::update()
 {
-    m_window->loop(m_window_messages_receiver);
+    m_window->loop();
 }
 
 void WindowSystem::postUpdate()

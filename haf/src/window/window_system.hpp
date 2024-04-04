@@ -8,7 +8,6 @@ HAF_PRAGMA_ONCE
 
 #include "window.hpp"
 #include "window_configuration.hpp"
-#include "window_messages_receiver.hpp"
 
 namespace haf::sys
 {
@@ -65,7 +64,6 @@ public:
 
 private:
     WindowConfiguration m_window_configuration;
-    WindowMessagesReceiver m_window_messages_receiver;
     htps::sptr<Window> m_window;
 };
 }  // namespace haf::sys
