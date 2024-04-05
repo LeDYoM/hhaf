@@ -6,6 +6,7 @@ HAF_PRAGMA_ONCE
 #include <haf/include/input/key.hpp>
 
 #include "system/system_base.hpp"
+#include "keyboard_data.hpp"
 
 namespace haf::input
 {
@@ -59,9 +60,7 @@ private:
     void keyReleased(input::Key const key);
 
     core::sptr<input::InputDriverWrapper> input_driver_wrapper_;
-    input::KeyStates key_states_{};
-    core::vector<input::Key> pressed_keys_;
-    core::vector<input::Key> released_keys_;
+    input::KeyboardData m_keyboard_data;
 };
 }  // namespace haf::sys
 
