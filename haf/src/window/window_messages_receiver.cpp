@@ -13,17 +13,24 @@ WindowMessagesReceiver::~WindowMessagesReceiver() = default;
 
 void WindowMessagesReceiver::startInputKeysUpdate()
 {
+    m_keyboardData.pressedKeys.clear();
+    m_keyboardData.releasedKeys.clear();
 }
 
 void WindowMessagesReceiver::endInputKeysUpdate()
 {
 }
 
-void WindowMessagesReceiver::keyPressed(backend::IKey const&)
-{}
+void WindowMessagesReceiver::keyPressed(backend::IKey const& key)
+{
+    // Check that the key is not already inserted? Perhaps too slow
+    m_keyboardData.pressedKeys.push_back(key);
+}
 
 void WindowMessagesReceiver::keyReleased(backend::IKey const&)
-{}
+{
+    m_keyboardData.releasedKeys.push_back(key);
+}
 
 void WindowMessagesReceiver::requestExit()
 {
