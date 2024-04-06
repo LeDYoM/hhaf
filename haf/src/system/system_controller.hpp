@@ -1,4 +1,3 @@
-HAF_PRAGMA_ONCE
 #ifndef HAF_SYSTEM_CONTROLLER_INCLUDE_HPP
 #define HAF_SYSTEM_CONTROLLER_INCLUDE_HPP
 
@@ -39,6 +38,7 @@ public:
     bool postUpdate() override;
     void terminate() override;
 };
+
 }  // namespace haf::sys
 
 #endif
