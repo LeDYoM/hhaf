@@ -1,9 +1,9 @@
 #include "sfml_render_window.hpp"
-#include "conversions.hpp"
-#include <string>
 
-#include <SFML/Window/Window.hpp>
 #include <SFML/Config.hpp>
+#include <SFML/Window/Window.hpp>
+#include <SFML/Window/Keyboard.hpp>
+#include <SFML/Window/Event.hpp>
 
 using namespace htps;
 
@@ -82,28 +82,6 @@ bool SFMLRenderWindow::createWindow(u32 const width,
     return false;
 }
 
-/*
-void SFMLRenderWindow::processEvents(
-    IWindowMessagesReceiver& iw_messages_receiver)
-{
-    (void)(iw_messages_receiver);
-    input_driver_.clearInternalInputBuffer();
-    sf::Event event;
-    while (m_render_window->pollEvent(event))
-    {
-        if (event.type == sf::Event::Closed)
-        {
-            iw_messages_receiver.requestExit();
-        }
-        else if (event.type == sf::Event::KeyPressed ||
-                 event.type == sf::Event::KeyReleased)
-        {
-            input_driver_.keyEvent(event);
-        }
-    }
-}
-*/
-
 constexpr IKey toBackendKey(sf::Keyboard::Key const& k) noexcept
 {
     return static_cast<IKey>(k);
@@ -139,7 +117,7 @@ void SFMLRenderWindow::display()
 
 void SFMLRenderWindow::setWindowTitle(str const& newTitle)
 {
-    m_render_window->setTitle(to_sf_type(newTitle));
+    m_render_window->setTitle(newTitle.c_str());
 }
 
 void SFMLRenderWindow::closeWindow()
