@@ -82,6 +82,7 @@ bool SFMLRenderWindow::createWindow(u32 const width,
     return false;
 }
 
+/*
 void SFMLRenderWindow::processEvents(
     IWindowMessagesReceiver& iw_messages_receiver)
 {
@@ -100,6 +101,35 @@ void SFMLRenderWindow::processEvents(
             input_driver_.keyEvent(event);
         }
     }
+}
+*/
+
+constexpr IKey toBackendKey(sf::Keyboard::Key const& k) noexcept
+{
+    return static_cast<IKey>(k);
+}
+
+void SFMLRenderWindow::processEvents(
+    IWindowMessagesReceiver& iw_messages_receiver)
+{
+    iw_messages_receiver.startInputKeysUpdate();
+    sf::Event event;
+    while (m_render_window->pollEvent(event))
+    {
+        if (event.type == sf::Event::Closed)
+        {
+            iw_messages_receiver.requestExit();
+        }
+        else if (event.type == sf::Event::KeyPressed)
+        {
+            iw_messages_receiver.keyPressed(toBackendKey(event.key.code));
+        }
+        else if (event.type == sf::Event::KeyReleased)
+        {
+            iw_messages_receiver.keyReleased(toBackendKey(event.key.code));
+        }
+    }
+    iw_messages_receiver.endInputKeysUpdate();
 }
 
 void SFMLRenderWindow::display()

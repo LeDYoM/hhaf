@@ -92,7 +92,8 @@ void configureSystem(T& system, str const& file_name)
 
     if (!configuration_file.empty())
     {
-        logger::DisplayLog::debug("Using configuration file: ", configuration_file);
+        logger::DisplayLog::debug("Using configuration file: ",
+                                  configuration_file);
     }
 
     system->initialize(configuration_file);
@@ -206,8 +207,8 @@ void SystemProvider::initializeSystems(
 
         if (init_system_options.init_input_system)
         {
-            p_->input_system_->setInputDriverWrapper(
-                p_->window_system_->window()->inputDriverWrapper());
+            p_->input_system_->setSharedKeyboardData(
+                p_->window_system_->window()->sharedKeyboardData());
         }
 
         if (init_system_options.init_debug_system)

@@ -11,7 +11,7 @@
 
 #include <hlog/include/hlog.hpp>
 
-using namespace htps;
+using namespace haf::core;
 using namespace haf::time;
 
 namespace haf::sys
@@ -20,19 +20,19 @@ Window::Window(rptr<backend::IWindow> backend_window,
                sptr<input::InputDriverWrapper> input_driver_wrapper) :
     fps_counter{},
     m_backend_window{backend_window},
-    m_input_driver_wrapper{htps::move(input_driver_wrapper)}
+    m_input_driver_wrapper{core::move(input_driver_wrapper)}
 {}
 
 Window::~Window() = default;
 
-sptr<input::InputDriverWrapper> Window::inputDriverWrapper()
+sptr<input::KeyboardData> Window::sharedKeyboardData()
 {
-    return m_input_driver_wrapper;
+    return m_window_messages_receiver.sharedKeyboardData();
 }
 
-sptr<input::InputDriverWrapper const> Window::inputDriverWrapper() const
+sptr<input::KeyboardData const> Window::sharedKeyboardData() const
 {
-    return m_input_driver_wrapper;
+    return m_window_messages_receiver.sharedKeyboardData();
 }
 
 void Window::preLoop(time::TimePoint const& time_since_start)

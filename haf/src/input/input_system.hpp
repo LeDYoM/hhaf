@@ -48,19 +48,15 @@ public:
      */
     void simulateReleaseKey(const input::Key key);
 
-    /**
-     * @brief Set the Input Driver object
-     * @param input_driver  mcs::Objectto be set.
-     */
-    void setInputDriverWrapper(
-        htps::sptr<input::InputDriverWrapper> input_driver);
+    void setSharedKeyboardData(
+        core::sptr<input::KeyboardData> shared_keyboard_data);
 
 private:
     void keyPressed(input::Key const key);
     void keyReleased(input::Key const key);
 
     core::sptr<input::InputDriverWrapper> input_driver_wrapper_;
-    input::KeyboardData m_keyboard_data;
+    core::sptr<input::KeyboardData> m_shared_keyboard_data;
 };
 }  // namespace haf::sys
 

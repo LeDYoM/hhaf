@@ -2,8 +2,7 @@ HAF_PRAGMA_ONCE
 #ifndef HAF_WINDOW_WINDOW_INCLUDE_HPP
 #define HAF_WINDOW_WINDOW_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
-#include <htypes/include/str.hpp>
+#include <haf/include/core/types.hpp>
 
 #include "fps_counter.hpp"
 #include "window_messages_receiver.hpp"
@@ -35,8 +34,8 @@ public:
     /**
      * @brief Construct a new Window object
      */
-    Window(htps::rptr<backend::IWindow> backend_window_,
-           htps::sptr<input::InputDriverWrapper> input_driver_wrapper_);
+    Window(core::rptr<backend::IWindow> backend_window_,
+           core::sptr<input::InputDriverWrapper> input_driver_wrapper_);
 
     /**
      * @brief Destroy the Window object
@@ -60,17 +59,18 @@ public:
      */
     void postLoop();
 
-    htps::sptr<input::InputDriverWrapper> inputDriverWrapper();
-    htps::sptr<input::InputDriverWrapper const> inputDriverWrapper() const;
+    core::sptr<input::KeyboardData> sharedKeyboardData();
+    core::sptr<input::KeyboardData const> sharedKeyboardData() const;
 
     bool windowWantsToExit() const noexcept;
 private:
     FPSCounter fps_counter;
     WindowMessagesReceiver m_window_messages_receiver;
-    htps::rptr<backend::IWindow> m_backend_window{nullptr};
-    htps::sptr<input::InputDriverWrapper> m_input_driver_wrapper;
-    htps::str m_title;
+    core::rptr<backend::IWindow> m_backend_window{nullptr};
+    core::sptr<input::InputDriverWrapper> m_input_driver_wrapper;
+    core::str m_title;
 };
+
 }  // namespace haf::sys
 
 #endif

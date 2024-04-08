@@ -1,6 +1,8 @@
 #ifndef HAF_WINDOW_WINDOW_MESSAGES_RECEIVER_INCLUDE_HPP
 #define HAF_WINDOW_WINDOW_MESSAGES_RECEIVER_INCLUDE_HPP
 
+#include <haf/include/core/types.hpp>
+
 #include <backend_dev/include/iwindow_messages_receiver.hpp>
 #include <backend_dev/include/ikey.hpp>
 
@@ -21,9 +23,13 @@ public:
     void requestExit() override;
 
     bool exitRequested() const noexcept;
+
+    core::sptr<input::KeyboardData> sharedKeyboardData();
+    core::sptr<input::KeyboardData const> sharedKeyboardData() const;
+
 private:
     bool m_exit_requested{false};
-    input::KeyboardData m_keyboardData;
+    core::sptr<input::KeyboardData> m_keyboardData;
 };
 }  // namespace haf::sys
 

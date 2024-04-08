@@ -95,7 +95,7 @@ bool WindowSystem::initialize(str const& window_config_file)
         m_window =
             msptr<Window>(p_backend_window, htps::move(input_driver_wrapper));
 
-        return m_window != nullptr && m_window->inputDriverWrapper() != nullptr;
+        return m_window != nullptr;
     }
     else
     {

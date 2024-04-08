@@ -6,44 +6,50 @@
 
 #include <hlog/include/hlog.hpp>
 
+using namespace haf::core;
+using namespace haf::input;
+using namespace haf::backend;
+
 namespace
 {
-haf::input::Key toKey(haf::backend::IKey const ikey)
+Key toKey(IKey const ikey)
 {
-    return static_cast<haf::input::Key>(ikey);
+    return static_cast<Key>(ikey);
 }
 
-haf::backend::IKey toiKey(haf::input::Key const key)
+IKey toiKey(Key const key)
 {
-    return static_cast<haf::backend::IKey>(key);
+    return static_cast<IKey>(key);
 }
 
 }  // namespace
 
 namespace haf::sys
 {
-WindowMessagesReceiver::WindowMessagesReceiver()  = default;
+WindowMessagesReceiver::WindowMessagesReceiver() :
+    m_keyboardData{core::msptr<input::KeyboardData>()}
+{}
+
 WindowMessagesReceiver::~WindowMessagesReceiver() = default;
 
 void WindowMessagesReceiver::startInputKeysUpdate()
 {
-    m_keyboardData.pressedKeys.clear();
-    m_keyboardData.releasedKeys.clear();
+    m_keyboardData->pressedKeys.clear();
+    m_keyboardData->releasedKeys.clear();
 }
 
 void WindowMessagesReceiver::endInputKeysUpdate()
-{
-}
+{}
 
-void WindowMessagesReceiver::keyPressed(backend::IKey const& key)
+void WindowMessagesReceiver::keyPressed(IKey const& key)
 {
     // Check that the key is not already inserted? Perhaps too slow.
-    m_keyboardData.pressedKeys.push_back(toKey(key));
+    m_keyboardData->pressedKeys.push_back(toKey(key));
 }
 
-void WindowMessagesReceiver::keyReleased(backend::IKey const& key)
+void WindowMessagesReceiver::keyReleased(IKey const& key)
 {
-    m_keyboardData.releasedKeys.push_back(toKey(key));
+    m_keyboardData->releasedKeys.push_back(toKey(key));
 }
 
 void WindowMessagesReceiver::requestExit()
@@ -55,4 +61,15 @@ bool WindowMessagesReceiver::exitRequested() const noexcept
 {
     return m_exit_requested;
 }
+
+sptr<KeyboardData> WindowMessagesReceiver::sharedKeyboardData()
+{
+    return m_keyboardData;
+}
+
+sptr<KeyboardData const> WindowMessagesReceiver::sharedKeyboardData() const
+{
+    return m_keyboardData;
+}
+
 }  // namespace haf::sys
