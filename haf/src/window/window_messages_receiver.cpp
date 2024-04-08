@@ -2,7 +2,6 @@
 #include <backend_dev/include/iwindow.hpp>
 
 #include "input/input_system.hpp"
-#include "input/input_driver_wrapper.hpp"
 
 #include <hlog/include/hlog.hpp>
 
@@ -12,14 +11,9 @@ using namespace haf::backend;
 
 namespace
 {
-Key toKey(IKey const ikey)
+constexpr Key toKey(IKey const ikey) noexcept
 {
     return static_cast<Key>(ikey);
-}
-
-IKey toiKey(Key const key)
-{
-    return static_cast<IKey>(key);
 }
 
 }  // namespace

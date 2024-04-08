@@ -7,9 +7,7 @@ using namespace htps;
 
 namespace haf::backend::glfwb
 {
-GLFWRenderWindow::GLFWRenderWindow() :
-    m_render_window{nullptr}, m_already_created{false}
-{}
+GLFWRenderWindow::GLFWRenderWindow() = default;
 
 GLFWRenderWindow::~GLFWRenderWindow()
 {
@@ -100,7 +98,7 @@ void GLFWRenderWindow::processEvents(
     IWindowMessagesReceiver& iw_messages_receiver)
 {
     (void)(iw_messages_receiver);
-    input_driver_.clearInternalInputBuffer();
+//    input_driver_.clearInternalInputBuffer();
 
     glfwPollEvents();
 }
@@ -118,11 +116,6 @@ void GLFWRenderWindow::setWindowTitle(str const& newTitle)
 void GLFWRenderWindow::closeWindow()
 {
     //    m_render_window->close();
-}
-
-rptr<IInputDriver> GLFWRenderWindow::inputDriver()
-{
-    return &input_driver_;
 }
 
 str GLFWRenderWindow::info() const

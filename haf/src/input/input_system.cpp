@@ -1,7 +1,6 @@
 #include "input_system.hpp"
 
 #include <hlog/include/hlog.hpp>
-#include "input_driver_wrapper.hpp"
 
 using namespace haf::core;
 using namespace haf::input;
@@ -25,18 +24,12 @@ void InputSystem::preUpdate()
 
 void InputSystem::update()
 {
-    m_shared_keyboard_data->pressedKeys.clear();
-    KeyVector presed_keys_from_wrapper;
-    input_driver_wrapper_->readKeyPressed(presed_keys_from_wrapper);
-    for (auto const& key : presed_keys_from_wrapper)
+    for (auto const& key : m_shared_keyboard_data->pressedKeys)
     {
         keyPressed(key);
     }
 
-    m_shared_keyboard_data->releasedKeys.clear();
-    KeyVector released_keys_from_wrapper;
-    input_driver_wrapper_->readKeyReleased(released_keys_from_wrapper);
-    for (auto const& key : released_keys_from_wrapper)
+    for (auto const& key : m_shared_keyboard_data->releasedKeys)
     {
         keyReleased(key);
     }

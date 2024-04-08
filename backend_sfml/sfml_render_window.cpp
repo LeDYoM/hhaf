@@ -147,11 +147,6 @@ void SFMLRenderWindow::closeWindow()
     m_render_window->close();
 }
 
-rptr<IInputDriver> SFMLRenderWindow::inputDriver()
-{
-    return &input_driver_;
-}
-
 str SFMLRenderWindow::info() const
 {
     return make_str("name:SFMLWindow;provider:SFML;provider_version:",

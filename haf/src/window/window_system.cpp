@@ -4,7 +4,6 @@
 #include <backend/include/backend_factory.hpp>
 
 #include "input/input_system.hpp"
-#include "input/input_driver_wrapper.hpp"
 #include "render/render_target.hpp"
 #include "time/time_system.hpp"
 #include "system/system_provider.hpp"
@@ -79,21 +78,9 @@ bool WindowSystem::initialize(str const& window_config_file)
         logger::DisplayLog::debug(StaticTypeName, ": Window settings: ",
                                   backend_window.settingsInfo());
 
-        // If window created successfully, extract the render target
-        // associated with the window.
-        //        auto
-        //        render_target{msptr<RenderTarget>(backend_window.renderTarget())};
-
         logger::DisplayLog::debug(StaticTypeName, ": Extracted render target");
 
-        // Also take the input driver.
-        auto input_driver_wrapper{
-            msptr<input::InputDriverWrapper>(p_backend_window->inputDriver())};
-
-        logger::DisplayLog::debug(StaticTypeName, ": Extracted input driver");
-
-        m_window =
-            msptr<Window>(p_backend_window, htps::move(input_driver_wrapper));
+        m_window = msptr<Window>(p_backend_window);
 
         return m_window != nullptr;
     }

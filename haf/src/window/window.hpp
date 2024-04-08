@@ -7,11 +7,6 @@ HAF_PRAGMA_ONCE
 #include "fps_counter.hpp"
 #include "window_messages_receiver.hpp"
 
-namespace haf::input
-{
-class InputDriverWrapper;
-}
-
 namespace haf::backend
 {
     class IWindow;
@@ -34,8 +29,7 @@ public:
     /**
      * @brief Construct a new Window object
      */
-    Window(core::rptr<backend::IWindow> backend_window_,
-           core::sptr<input::InputDriverWrapper> input_driver_wrapper_);
+    explicit Window(core::rptr<backend::IWindow> backend_window_);
 
     /**
      * @brief Destroy the Window object
@@ -67,7 +61,6 @@ private:
     FPSCounter fps_counter;
     WindowMessagesReceiver m_window_messages_receiver;
     core::rptr<backend::IWindow> m_backend_window{nullptr};
-    core::sptr<input::InputDriverWrapper> m_input_driver_wrapper;
     core::str m_title;
 };
 

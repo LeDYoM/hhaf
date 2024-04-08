@@ -1,8 +1,6 @@
 #include "window.hpp"
 #include <backend_dev/include/iwindow.hpp>
 
-#include "input/input_system.hpp"
-#include "input/input_driver_wrapper.hpp"
 #include "render/render_target.hpp"
 #include "time/time_system.hpp"
 #include "utils/compile_time_constants.hpp"
@@ -16,11 +14,8 @@ using namespace haf::time;
 
 namespace haf::sys
 {
-Window::Window(rptr<backend::IWindow> backend_window,
-               sptr<input::InputDriverWrapper> input_driver_wrapper) :
-    fps_counter{},
-    m_backend_window{backend_window},
-    m_input_driver_wrapper{core::move(input_driver_wrapper)}
+Window::Window(rptr<backend::IWindow> backend_window) :
+    fps_counter{}, m_backend_window{backend_window}
 {}
 
 Window::~Window() = default;
