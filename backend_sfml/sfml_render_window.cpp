@@ -82,10 +82,13 @@ bool SFMLRenderWindow::createWindow(u32 const width,
     return false;
 }
 
+namespace
+{
 constexpr IKey toBackendKey(sf::Keyboard::Key const& k) noexcept
 {
     return static_cast<IKey>(k);
 }
+}  // namespace
 
 void SFMLRenderWindow::processEvents(
     IWindowMessagesReceiver& iw_messages_receiver)
