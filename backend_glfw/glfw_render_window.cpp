@@ -1,6 +1,5 @@
 #include "glfw_render_window.hpp"
-#include "conversions.hpp"
-#include <string>
+#include "key_conversion.hpp"
 #include <GLFW/glfw3.h>
 
 using namespace htps;
@@ -93,14 +92,6 @@ bool GLFWRenderWindow::createWindow(u32 const width,
     }
     return false;
 }
-
-namespace
-{
-//constexpr IKey toBackendKey(sf::Keyboard::Key const& k) noexcept
-//{
-//    return static_cast<IKey>(k);
-//}
-}  // namespace
 
 void GLFWRenderWindow::processEvents(
     IWindowMessagesReceiver& iw_messages_receiver)
