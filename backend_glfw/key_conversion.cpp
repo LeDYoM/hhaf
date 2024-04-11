@@ -3,6 +3,22 @@
 
 namespace haf::backend::glfwb
 {
+static bool toBackendKey(int const key,
+                         int const start_range,
+                         int const end_range,
+                         IKey const start_ikey,
+                         IKey& out) noexcept
+{
+    if (key >= start_range && key <= end_range)
+    {
+        out = static_cast<IKey>(
+            static_cast<std::underlying_type_t<IKey>>(start_ikey) +
+            (key - start_range));
+        return true;
+    }
+    return false;
+}
+
 IKey toBackendKey(int const key) noexcept
 {
     switch (key)
@@ -15,12 +31,16 @@ IKey toBackendKey(int const key) noexcept
             break;
     }
 
-    if (key >= GLFW_KEY_0 && key <= GLFW_KEY_9)
+    IKey ikey;
+    if (toBackendKey(key, GLFW_KEY_0, GLFW_KEY_9, IKey::Num0, ikey))
     {
-        return static_cast<IKey>(
-            static_cast<std::underlying_type_t<IKey>>(IKey::Num0) +
-            (key - GLFW_KEY_0));
+        return ikey;
     }
+    else if (toBackendKey(key, GLFW_KEY_A, GLFW_KEY_Z, IKey::A, ikey))
+    {
+        return ikey;
+    }
+
     return IKey::Unknown;
 }
 }  // namespace haf::backend::glfwb
