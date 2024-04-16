@@ -4,6 +4,18 @@
 
 using namespace htps;
 
+namespace
+{
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+    (void)(window);
+    (void)(key);
+    (void)(scancode);
+    (void)(action);
+    (void)(mods);
+}
+}
+
 namespace haf::backend::glfwb
 {
 GLFWRenderWindow::GLFWRenderWindow() = default;
@@ -80,6 +92,8 @@ bool GLFWRenderWindow::createWindow(u32 const width,
             m_render_window = glfwCreateWindow(w, h, "", NULL, NULL);
             glfwMakeContextCurrent(m_render_window);
 
+            glfwSetKeyCallback(m_render_window, key_callback);
+
             //            m_render_window->create(sf::VideoMode(w, h, bpp), "",
             //            style,
             //                                    context_settings);
@@ -96,10 +110,13 @@ bool GLFWRenderWindow::createWindow(u32 const width,
 void GLFWRenderWindow::processEvents(
     IWindowMessagesReceiver& iw_messages_receiver)
 {
-    (void)(iw_messages_receiver);
-//    input_driver_.clearInternalInputBuffer();
-//GLFW_KEY_E;
     glfwPollEvents();
+
+    (void)(iw_messages_receiver);
+    iw_messages_receiver.startInputKeysUpdate();
+    iw_messages_receiver.endInputKeysUpdate();
+    //    input_driver_.clearInternalInputBuffer();
+    // GLFW_KEY_E;
 }
 
 void GLFWRenderWindow::display()
