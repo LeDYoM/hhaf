@@ -2,7 +2,7 @@
 cmake_minimum_required(VERSION 3.16)
 project(
   hhaf
-  VERSION 1.0.2.3
+  VERSION 0.2.1.0
   DESCRIPTION "Host Application Framework"
   # [HOMEPAGE_URL <url-string>]
   LANGUAGES CXX)
