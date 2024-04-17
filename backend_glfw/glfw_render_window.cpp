@@ -6,15 +6,31 @@ using namespace htps;
 
 namespace
 {
-void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
+htps::vector<int> keysPressed(100U);
+htps::vector<int> keysReleased(100U);
+
+void key_callback(GLFWwindow* window,
+                  int key,
+                  int scancode,
+                  int action,
+                  int mods)
 {
     (void)(window);
     (void)(key);
     (void)(scancode);
     (void)(action);
     (void)(mods);
+
+    if (action == GLFW_PRESS)
+    {
+        keysPressed.push_back(key);
+    }
+    else if (action == GLFW_RELEASE)
+    {
+        keysReleased.push_back(key);
+    }
 }
-}
+}  // namespace
 
 namespace haf::backend::glfwb
 {
@@ -26,6 +42,11 @@ GLFWRenderWindow::~GLFWRenderWindow()
     {
         glfwTerminate();
     }
+
+    keysPressed.clear();
+    keysReleased.clear();
+    keysPressed.shrink_to_fit();
+    keysReleased.shrink_to_fit();
 }
 
 class ParamExtractor
@@ -112,11 +133,25 @@ void GLFWRenderWindow::processEvents(
 {
     glfwPollEvents();
 
-    (void)(iw_messages_receiver);
     iw_messages_receiver.startInputKeysUpdate();
+    for (auto const key : keysPressed)
+    {
+        iw_messages_receiver.keyPressed(toBackendKey(key));
+    }
+    keysPressed.clear();
+
+    for (auto const key : keysReleased)
+    {
+        iw_messages_receiver.keyPressed(toBackendKey(key));
+    }
+    keysReleased.clear();
+
     iw_messages_receiver.endInputKeysUpdate();
-    //    input_driver_.clearInternalInputBuffer();
-    // GLFW_KEY_E;
+
+    if(glfwWindowShouldClose(m_render_window))
+    {
+        iw_messages_receiver.requestExit();
+    }
 }
 
 void GLFWRenderWindow::display()
