@@ -4,7 +4,6 @@
 #include <backend/include/backend_factory.hpp>
 
 #include "input/input_system.hpp"
-#include "input/input_driver_wrapper.hpp"
 #include "render/render_target.hpp"
 #include "time/time_system.hpp"
 #include "system/system_provider.hpp"
@@ -33,7 +32,7 @@ WindowSystem::~WindowSystem()
         }
     }
     logger::DisplayLog::info_if(p_backend_window != nullptr, StaticTypeName,
-                        ": Window closed");
+                                ": Window closed");
 }
 
 bool WindowSystem::initialize(str const& window_config_file)
@@ -49,8 +48,9 @@ bool WindowSystem::initialize(str const& window_config_file)
     {
         backend::IWindow& backend_window{*p_backend_window};
 
-        logger::DisplayLog::info_if(backend_window.isAlreadyCreated(), StaticTypeName,
-                            ": Window was already created.");
+        logger::DisplayLog::info_if(backend_window.isAlreadyCreated(),
+                                    StaticTypeName,
+                                    ": Window was already created.");
 
         // Create physical window if not already done
         if (!backend_window.isAlreadyCreated())
@@ -64,7 +64,8 @@ bool WindowSystem::initialize(str const& window_config_file)
                                             config.configuredBitsPerAlpha(), 0U,
                                             nullptr))
             {
-                logger::DisplayLog::info(StaticTypeName, ": Window creation completed");
+                logger::DisplayLog::info(StaticTypeName,
+                                         ": Window creation completed");
             }
             else
             {
@@ -74,41 +75,34 @@ bool WindowSystem::initialize(str const& window_config_file)
             }
         }
 
-        logger::DisplayLog::debug(StaticTypeName,
-                          ": Window settings: ", backend_window.settingsInfo());
-
-        // If window created successfully, extract the render target
-        // associated with the window.
-        //        auto
-        //        render_target{msptr<RenderTarget>(backend_window.renderTarget())};
+        logger::DisplayLog::debug(StaticTypeName, ": Window settings: ",
+                                  backend_window.settingsInfo());
 
         logger::DisplayLog::debug(StaticTypeName, ": Extracted render target");
 
-        // Also take the input driver.
-        auto input_driver_wrapper{
-            msptr<input::InputDriverWrapper>(p_backend_window->inputDriver())};
+        m_window = msptr<Window>(p_backend_window);
 
-        logger::DisplayLog::debug(StaticTypeName, ": Extracted input driver");
-
-        m_window =
-            msptr<Window>(p_backend_window, htps::move(input_driver_wrapper));
-
-        return m_window != nullptr && m_window->inputDriverWrapper() != nullptr;
+        return m_window != nullptr;
     }
     else
     {
-        logger::DisplayLog::error(StaticTypeName, ": Backend window is nullptr!");
+        logger::DisplayLog::error(StaticTypeName,
+                                  ": Backend window is nullptr!");
         return false;
     }
 }
 
-bool WindowSystem::preLoop()
+void WindowSystem::preUpdate()
 {
-    return m_window->preLoop(
-        getSystem<sys::TimeSystem>(systemAccessPtr()).nowFrame());
+    m_window->preLoop(getSystem<sys::TimeSystem>(systemAccessPtr()).nowFrame());
 }
 
-void WindowSystem::postLoop()
+void WindowSystem::update()
+{
+    m_window->loop();
+}
+
+void WindowSystem::postUpdate()
 {
     m_window->postLoop();
 }
@@ -116,6 +110,11 @@ void WindowSystem::postLoop()
 sptr<Window> const& WindowSystem::window() const
 {
     return m_window;
+}
+
+bool WindowSystem::exitRequested() const noexcept
+{
+    return m_window->windowWantsToExit();
 }
 
 }  // namespace haf::sys

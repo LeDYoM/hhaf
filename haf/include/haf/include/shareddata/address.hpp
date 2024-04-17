@@ -3,7 +3,7 @@ HAF_PRAGMA_ONCE
 #define HAF_SHAREDDATA_ADRESS_INCLUDE_HPP
 
 #include <haf/include/core/types.hpp>
-#include <mc_serial/include/object.hpp>
+#include <mc_serial/include/interfaces/ifullserializable.hpp>
 #include <haf/include/haf_export.hpp>
 
 namespace haf::shdata
@@ -136,7 +136,7 @@ private:
  * @b mcs::Object . If first is false, the second value is undefined.
  */
 htps::pair<bool, mcs::Object> objectFromAddress(Address const& address,
-                                                 mcs::Object const& object);
+                                                mcs::Object const& object);
 
 /**
  * @brief Check that an @b Address exists in an @b mcs::Object and retrieve

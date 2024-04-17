@@ -23,7 +23,13 @@ using DebugVariableHandle = core::s64;
     attachedNode()->subSystem<debug::IDebugVariables>()->setVariableValue( \
         HAF_DEBUG_VARIABLE_NAME(v_id), value);
 #define HAF_DEBUG_VARIABLES_CODE(x) x
-#define BREAK_IF(condition) { if (condition) { __debugbreak(); }}
+#define BREAK_IF(condition) \
+    { \
+        if (condition) \
+        { \
+            __debugbreak(); \
+        } \
+    }
 #else
 #define HAF_DECLARE_DEBUG_VARIABLE(v_id)
 #define FROM_COMPONENT_GET_DEBUG_VARIABLE(v_id, value) \

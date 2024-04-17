@@ -8,8 +8,8 @@ set(headers
     ${include_dir}/factory_types.hpp
     ${include_dir}/ibackendregister.hpp
     ${include_dir}/ifactory.hpp
-    ${include_dir}/iinputdriver.hpp
     ${include_dir}/ikey.hpp
+    ${include_dir}/iwindow_messages_receiver.hpp
     ${include_dir}/iwindow.hpp
 )
 

@@ -1,18 +1,18 @@
-HAF_PRAGMA_ONCE
-#ifndef HAF_DATA_IDESERIALIZABLE_INCLUDE_HPP
-#define HAF_DATA_IDESERIALIZABLE_INCLUDE_HPP
+MCS_PRAGMA_ONCE
+#ifndef MCS_IDESERIALIZABLE_INCLUDE_HPP
+#define MCS_IDESERIALIZABLE_INCLUDE_HPP
 
 #include <htypes/include/vector.hpp>
 #include <htypes/include/dictionary.hpp>
 #include <mc_serial/include/object.hpp>
 
-namespace haf::data
+namespace mcs
 {
 class IDeserializable
 {
 public:
     virtual bool deserialize(mcs::Object const&) = 0;
-    virtual ~IDeserializable()                    = default;
+    virtual ~IDeserializable()                   = default;
 };
 
 template <typename T>
@@ -63,6 +63,6 @@ private:
     htps::vector<T> elements_;
 };
 
-}  // namespace haf::data
+}  // namespace mcs
 
 #endif

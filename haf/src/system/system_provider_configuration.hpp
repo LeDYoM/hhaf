@@ -3,21 +3,19 @@ HAF_PRAGMA_ONCE
 #define HAF_SYSTEM_SYSTEM_PROVIDER_CONFIGURATION_INCLUDE_HPP
 
 #include "haf_private.hpp"
-#include <htypes/include/types.hpp>
-#include <htypes/include/str.hpp>
-
-#include <haf/include/data/ideserializable.hpp>
+#include <haf/include/core/types.hpp>
+#include <haf/include/data/types.hpp>
 #include "system/system_configuration.hpp"
 
 namespace haf::sys
 {
 struct SystemConfigurationData
 {
-    htps::str simulation_system_configuration_file_;
-    htps::str window_system_configuration_file_;
+    core::str simulation_system_configuration_file_;
+    core::str window_system_configuration_file_;
 };
 
-struct DeserializableSystemConfigurationData
+struct DeserializableSystemConfigurationData final
     : public data::IDeserializable
 {
     static constexpr char kSimulationSystemConfigurationFile[] =
@@ -39,17 +37,17 @@ struct DeserializableSystemConfigurationData
     SystemConfigurationData data;
 };
 
-class SystemProviderConfiguration
+class SystemProviderConfiguration final
     : public SystemConfiguration<DeserializableSystemConfigurationData,
                                  SystemConfigurationData>
 {
 public:
-    htps::str const& simulationSystemConfigurationFile() const noexcept
+    core::str const& simulationSystemConfigurationFile() const noexcept
     {
         return data().simulation_system_configuration_file_;
     }
 
-    htps::str const& windowSystemConfigurationFile() const noexcept
+    core::str const& windowSystemConfigurationFile() const noexcept
     {
         return data().window_system_configuration_file_;
     }

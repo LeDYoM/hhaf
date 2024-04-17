@@ -6,6 +6,7 @@ HAF_PRAGMA_ONCE
 #include <haf/include/input/key.hpp>
 
 #include "system/system_base.hpp"
+#include "keyboard_data.hpp"
 
 namespace haf::input
 {
@@ -32,7 +33,7 @@ public:
     input::KeyStates const& keyStates() const noexcept;
     input::KeyState keyState(input::Key const key) const noexcept;
 
-    bool shitPressed() const noexcept;
+    bool shiftPressed() const noexcept;
     bool controlPressed() const noexcept;
 
     /**
@@ -47,21 +48,15 @@ public:
      */
     void simulateReleaseKey(const input::Key key);
 
-    /**
-     * @brief Set the Input Driver object
-     * @param input_driver  mcs::Objectto be set.
-     */
-    void setInputDriverWrapper(
-        htps::sptr<input::InputDriverWrapper> input_driver);
+    void setSharedKeyboardData(
+        core::sptr<input::KeyboardData> shared_keyboard_data);
 
 private:
     void keyPressed(input::Key const key);
     void keyReleased(input::Key const key);
 
     core::sptr<input::InputDriverWrapper> input_driver_wrapper_;
-    input::KeyStates key_states_{};
-    core::vector<input::Key> pressed_keys_;
-    core::vector<input::Key> released_keys_;
+    core::sptr<input::KeyboardData> m_shared_keyboard_data;
 };
 }  // namespace haf::sys
 

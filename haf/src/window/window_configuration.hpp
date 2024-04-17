@@ -7,7 +7,7 @@ HAF_PRAGMA_ONCE
 #include <htypes/include/str.hpp>
 #include <facil_math/include/vector2d.hpp>
 
-#include <haf/include/data/ideserializable.hpp>
+#include <haf/include/data/types.hpp>
 #include "system/system_configuration.hpp"
 
 namespace haf::sys

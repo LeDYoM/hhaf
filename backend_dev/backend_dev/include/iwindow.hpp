@@ -3,6 +3,7 @@
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/str.hpp>
+#include <backend_dev/include/iwindow_messages_receiver.hpp>
 
 namespace haf::backend
 {
@@ -44,13 +45,13 @@ public:
 
     virtual bool isAlreadyCreated() const = 0;
 
-    virtual bool processEvents() = 0;
+    virtual void processEvents(
+        IWindowMessagesReceiver& iw_messages_receiver) = 0;
 
     virtual void display()                                 = 0;
     virtual void setWindowTitle(htps::str const& newTitle) = 0;
     virtual void closeWindow()                             = 0;
 
-    virtual IInputDriver* inputDriver()    = 0;
     virtual htps::str info() const         = 0;
     virtual htps::str settingsInfo() const = 0;
 };

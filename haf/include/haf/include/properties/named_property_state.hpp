@@ -12,7 +12,6 @@ class ViewableProperty final
 {
 public:
 private:
-
 };
 
 }  // namespace haf::prop

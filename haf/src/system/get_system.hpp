@@ -2,7 +2,7 @@ HAF_PRAGMA_ONCE
 #ifndef HAF_SYSTEM_INTERNAL_GET_INCLUDE_HPP
 #define HAF_SYSTEM_INTERNAL_GET_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
+#include <haf/include/core/types.hpp>
 
 namespace haf::scene
 {
@@ -15,22 +15,22 @@ class SystemAccess;
 class ISystemProvider;
 
 template <typename SystemType>
-[[nodiscard]] SystemType const& getSystem(htps::rptr<SystemAccess const>);
+[[nodiscard]] SystemType const& getSystem(core::rptr<SystemAccess const>);
 
 template <typename SystemType>
-[[nodiscard]]SystemType& getSystem(htps::rptr<SystemAccess>);
+[[nodiscard]]SystemType& getSystem(core::rptr<SystemAccess>);
 
 template <typename SystemType>
-[[nodiscard]]SystemType const& getSystem(htps::rptr<ISystemProvider const>);
+[[nodiscard]]SystemType const& getSystem(core::rptr<ISystemProvider const>);
 
 template <typename SystemType>
-[[nodiscard]]SystemType& getSystem(htps::rptr<ISystemProvider>);
+[[nodiscard]]SystemType& getSystem(core::rptr<ISystemProvider>);
 
 template <typename SystemType>
 [[nodiscard]]SystemType const& getSystem(htps::rptr<scene::SceneNode const>);
 
 template <typename SystemType>
-[[nodiscard]]SystemType& getSystem(htps::rptr<scene::SceneNode>);
+[[nodiscard]]SystemType& getSystem(core::rptr<scene::SceneNode>);
 }  // namespace haf::sys
 
 #endif

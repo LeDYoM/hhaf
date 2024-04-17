@@ -2,12 +2,12 @@
 #include "file_system_private_funcs.hpp"
 #include <hlog/include/hlog.hpp>
 
-#include <mc_serial/include/object_parser.hpp>
 #include <debug_system/debug_system.hpp>
 #include <system/get_system.hpp>
 #include <haf/include/system/system_access.hpp>
 #include <system/system_provider.hpp>
 #include <haf/include/system/subsystem_view.hpp>
+#include <haf/include/data/types.hpp>
 
 using namespace haf::core;
 
@@ -29,14 +29,14 @@ bool FileSystem::processResult(IFileSerializer::Result const result,
         else if (result == IFileSerializer::Result::ParsingError)
         {
             logger::DisplayLog::debug(pre_message, file,
-                              " found, but contains invalid format");
+                                      " found, but contains invalid format");
             LogAsserter::log_assert(!assert_on_error, pre_message, file,
                                     " found, but contains invalid format");
         }
         else
         {
             logger::DisplayLog::debug(pre_message, file,
-                              " : Unknown error trying to read file");
+                                      " : Unknown error trying to read file");
             LogAsserter::log_assert(!assert_on_error, pre_message, file,
                                     " : Unknown error trying to read file");
         }
@@ -102,19 +102,10 @@ IFileSerializer::Result FileSystem::deserializeFromFile(
     str const text_data{loadTextFile(file_name)};
     if (!text_data.empty())
     {
-        mcs::ObjectCompiler obj_compiler(text_data);
-        if (obj_compiler.compile())
-        {
-            // The compilation was correct so, at least we
-            // have a valid Object.
-            return ((data.deserialize(obj_compiler.result()))
-                        ? Result::Success
-                        : Result::ParsingError);
-        }
-        else
-        {
-            return Result::ParsingError;
-        }
+        data::TextSerializer text_serializer;
+        return (text_serializer.deserializeFromText(text_data, data)
+                    ? Result::Success
+                    : Result::ParsingError);
     }
     else
     {
@@ -126,14 +117,13 @@ IFileSerializer::Result FileSystem::serializeToFile(
     const Path& file_name,
     const data::ISerializable& data)
 {
-    mcs::Object obj;
-    auto const temp{data.serialize(obj)};
+    str data_str;
+    data::TextSerializer text_serializer;
 
-    if (temp)
+    auto const result{text_serializer.serializeToText(data_str, data)};
+
+    if (result)
     {
-        htps::str data_str;
-        data_str << obj;
-
         return ((saveTextFile(file_name, htps::move(data_str)))
                     ? Result::Success
                     : Result::FileIOError);

@@ -26,7 +26,6 @@ public:
 private:
     bool loadDefaultShaderNoInput(sys::ResourceManager& rManager);
     bool loadDefaultShader0(sys::ResourceManager& rManager);
-    bool loadDefaultBuffers(sys::ResourceManager& rManager);
     bool loadDefaultMesh(sys::ResourceManager& rManager);
     bool loadDefaultVertexArrayObject(sys::ResourceManager& rManager);
     bool loadDefaultCubeMesh(sys::ResourceManager& rManager);

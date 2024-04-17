@@ -6,7 +6,10 @@ HAF_PRAGMA_ONCE
 #include <haf/include/component/component_container.hpp>
 
 template <typename T>
-concept HasStaticTypeName = requires { T::StaticTypeName; };
+concept HasStaticTypeName = requires
+{
+    T::StaticTypeName;
+};
 
 namespace haf::component
 {

@@ -20,7 +20,8 @@ bool HostInternal::initializeBackend()
 {
     // Initialize and create the backend factory
     backend_factory_ = uptr<backend::BackendFactory>(createBackendFactory());
-    backend_factory_->loadBackendFile("bsfml");
+//    backend_factory_->loadBackendFile("bsfml");
+    backend_factory_->loadBackendFile("bglfw");
 //    backend_factory_->loadBackendFile("haf_integrated_backend");
     logLoadedFactories();
 

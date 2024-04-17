@@ -2,7 +2,7 @@ HAF_PRAGMA_ONCE
 #ifndef HAF_SYSTEM_SYSTEM_BASE_INCLUDE_HPP
 #define HAF_SYSTEM_SYSTEM_BASE_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
+#include <haf/include/core/types.hpp>
 
 namespace haf::sys
 {
@@ -67,7 +67,7 @@ public:
     ISystemProvider const& isystemProvider() const noexcept;
 
     SystemAccess systemAccess() noexcept;
-    htps::rptr<SystemAccess> systemAccessPtr() noexcept;
+    core::rptr<SystemAccess> systemAccessPtr() noexcept;
 
     SubSystemViewer subSystemViewer() noexcept;
 protected:
@@ -80,7 +80,7 @@ protected:
 
 private:
     ISystemProvider& system_provider_;
-    htps::uptr<SystemAccess> system_access_{nullptr};
+    core::uptr<SystemAccess> system_access_{nullptr};
 };
 }  // namespace haf::sys
 

@@ -1,17 +1,52 @@
 #include "glfw_render_window.hpp"
-#include "conversions.hpp"
-#include <string>
+#include "key_conversion.hpp"
+#include <GLFW/glfw3.h>
 
 using namespace htps;
 
+namespace
+{
+htps::vector<int> keysPressed(100U);
+htps::vector<int> keysReleased(100U);
+
+void key_callback(GLFWwindow* window,
+                  int key,
+                  int scancode,
+                  int action,
+                  int mods)
+{
+    (void)(window);
+    (void)(key);
+    (void)(scancode);
+    (void)(action);
+    (void)(mods);
+
+    if (action == GLFW_PRESS)
+    {
+        keysPressed.push_back(key);
+    }
+    else if (action == GLFW_RELEASE)
+    {
+        keysReleased.push_back(key);
+    }
+}
+}  // namespace
+
 namespace haf::backend::glfwb
 {
-GLFWRenderWindow::GLFWRenderWindow()  //: m_render_window{muptr<sf::Window>()}
-{}
+GLFWRenderWindow::GLFWRenderWindow() = default;
 
 GLFWRenderWindow::~GLFWRenderWindow()
 {
-    //    m_render_window->close();
+    if (m_already_created)
+    {
+        glfwTerminate();
+    }
+
+    keysPressed.clear();
+    keysReleased.clear();
+    keysPressed.shrink_to_fit();
+    keysReleased.shrink_to_fit();
 }
 
 class ParamExtractor
@@ -39,7 +74,7 @@ private:
 
 bool GLFWRenderWindow::isAlreadyCreated() const
 {
-    return already_created_;
+    return m_already_created;
 }
 
 bool GLFWRenderWindow::createWindow(u32 const width,
@@ -59,76 +94,79 @@ bool GLFWRenderWindow::createWindow(u32 const width,
     (void)(alpha_bpp);
     (void)(num_extra_parameters);
     (void)(extra_parameters);
-    if (!already_created_)
+    if (!m_already_created)
     {
-        /*
-        sf::Uint32 style{sf::Style::Default};
-        //        if (wcp.fullScreen)
-        //            style = sf::Style::Fullscreen;
+        m_already_created = true;
+        if (glfwInit() != 0)
+        {
+            ParamExtractor prm_xtr{num_extra_parameters, extra_parameters};
+            //    uint width = prm_xtr.getParam(800U);
+            //    uint height = prm_xtr.getParam(600U);
+            //    uint bpp = prm_xtr.getParam(32U);
 
-        ParamExtractor prm_xtr{num_extra_parameters, extra_parameters};
-        //    uint width = prm_xtr.getParam(800U);
-        //    uint height = prm_xtr.getParam(600U);
-        //    uint bpp = prm_xtr.getParam(32U);
+            const unsigned int w = static_cast<unsigned int>(width);
+            const unsigned int h = static_cast<unsigned int>(height);
+            //            const unsigned int bpp = static_cast<unsigned int>(
+            //                red_bpp + green_bpp + blue_bpp + alpha_bpp);
 
-        unsigned int w   = static_cast<unsigned int>(width);
-        unsigned int h   = static_cast<unsigned int>(height);
-        unsigned int bpp = static_cast<unsigned int>(red_bpp + green_bpp +
-                                                     blue_bpp + alpha_bpp);
+            // glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+            m_render_window = glfwCreateWindow(w, h, "", NULL, NULL);
+            glfwMakeContextCurrent(m_render_window);
 
-        sf::ContextSettings context_settings = sf::ContextSettings();
-        m_render_window->create(sf::VideoMode(w, h, bpp), "", style,
-                                context_settings);
+            glfwSetKeyCallback(m_render_window, key_callback);
 
-        m_render_window->setVerticalSyncEnabled(false);
-        already_created_ = true;
-//        m_window_render_target.setInternalRenderTarget();
-*/
+            //            m_render_window->create(sf::VideoMode(w, h, bpp), "",
+            //            style,
+            //                                    context_settings);
+
+            //            m_render_window->setVerticalSyncEnabled(false);
+            m_already_created = true;
+            //        m_window_render_target.setInternalRenderTarget();
+        }
         return true;
     }
     return false;
 }
 
-bool GLFWRenderWindow::processEvents()
+void GLFWRenderWindow::processEvents(
+    IWindowMessagesReceiver& iw_messages_receiver)
 {
-    /*
-    input_driver_.clearInternalInputBuffer();
-    sf::Event event;
-    while (m_render_window->pollEvent(event))
+    glfwPollEvents();
+
+    iw_messages_receiver.startInputKeysUpdate();
+    for (auto const key : keysPressed)
     {
-        if (event.type == sf::Event::Closed)
-        {
-            return true;
-        }
-        else if (event.type == sf::Event::KeyPressed ||
-                 event.type == sf::Event::KeyReleased)
-        {
-            input_driver_.keyEvent(event);
-        }
+        iw_messages_receiver.keyPressed(toBackendKey(key));
     }
-    */
-    return false;
+    keysPressed.clear();
+
+    for (auto const key : keysReleased)
+    {
+        iw_messages_receiver.keyPressed(toBackendKey(key));
+    }
+    keysReleased.clear();
+
+    iw_messages_receiver.endInputKeysUpdate();
+
+    if(glfwWindowShouldClose(m_render_window))
+    {
+        iw_messages_receiver.requestExit();
+    }
 }
 
 void GLFWRenderWindow::display()
 {
-    //    m_render_window->display();
+    glfwSwapBuffers(m_render_window);
 }
 
-void GLFWRenderWindow::setWindowTitle(str const& /*newTitle*/)
+void GLFWRenderWindow::setWindowTitle(str const& newTitle)
 {
-    //    m_render_window->setTitle(to_sf_type(newTitle));
+    glfwSetWindowTitle(m_render_window, newTitle.c_str());
 }
 
 void GLFWRenderWindow::closeWindow()
 {
     //    m_render_window->close();
-}
-
-rptr<IInputDriver> GLFWRenderWindow::inputDriver()
-{
-    //    return &input_driver_;
-    return nullptr;
 }
 
 str GLFWRenderWindow::info() const

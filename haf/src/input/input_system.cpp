@@ -1,7 +1,6 @@
 #include "input_system.hpp"
 
 #include <hlog/include/hlog.hpp>
-#include "input_driver_wrapper.hpp"
 
 using namespace haf::core;
 using namespace haf::input;
@@ -9,15 +8,15 @@ using namespace haf::input;
 namespace haf::sys
 {
 
-void InputSystem::setInputDriverWrapper(
-    sptr<InputDriverWrapper> input_driver_wrapper)
+void InputSystem::setSharedKeyboardData(
+    htps::sptr<input::KeyboardData> shared_keyboard_data)
 {
-    LogAsserter::log_assert(input_driver_wrapper != nullptr,
+    LogAsserter::log_assert(shared_keyboard_data != nullptr,
                             "Parameter is nullptr");
-    LogAsserter::log_assert(input_driver_wrapper_ == nullptr,
-                            "Input driver wrapper was already set");
+    LogAsserter::log_assert(m_shared_keyboard_data == nullptr,
+                            "Shared keyboard data was already set");
 
-    input_driver_wrapper_ = htps::move(input_driver_wrapper);
+    m_shared_keyboard_data = core::move(shared_keyboard_data);
 }
 
 void InputSystem::preUpdate()
@@ -25,18 +24,12 @@ void InputSystem::preUpdate()
 
 void InputSystem::update()
 {
-    pressed_keys_.clear();
-    decltype(pressed_keys_) presed_keys_from_wrapper;
-    input_driver_wrapper_->readKeyPressed(presed_keys_from_wrapper);
-    for (auto const& key : presed_keys_from_wrapper)
+    for (auto const& key : m_shared_keyboard_data->pressedKeys)
     {
         keyPressed(key);
     }
 
-    released_keys_.clear();
-    decltype(released_keys_) released_keys_from_wrapper;
-    input_driver_wrapper_->readKeyReleased(released_keys_from_wrapper);
-    for (auto const& key : released_keys_from_wrapper)
+    for (auto const& key : m_shared_keyboard_data->releasedKeys)
     {
         keyReleased(key);
     }
@@ -47,15 +40,15 @@ void InputSystem::postUpdate()
 
 KeyStates const& InputSystem::keyStates() const noexcept
 {
-    return key_states_;
+    return m_shared_keyboard_data->keyStates;
 }
 
 KeyState InputSystem::keyState(Key const key) const noexcept
 {
-    return key_states_[keyIndex(key)];
+    return m_shared_keyboard_data->keyStates[keyIndex(key)];
 }
 
-bool InputSystem::shitPressed() const noexcept
+bool InputSystem::shiftPressed() const noexcept
 {
     return keyState(Key::LShift) || keyState(Key::RShift);
 }
@@ -67,37 +60,38 @@ bool InputSystem::controlPressed() const noexcept
 
 const vector<Key>& InputSystem::pressedKeys() const noexcept
 {
-    return pressed_keys_;
+    return m_shared_keyboard_data->pressedKeys;
 }
 
 const vector<Key>& InputSystem::releasedKeys() const noexcept
 {
-    return released_keys_;
+    return m_shared_keyboard_data->releasedKeys;
 }
 
 void InputSystem::keyPressed(const Key key)
 {
     LogAsserter::log_assert(isValidKey(key), "Incorrect key value");
     logger::DisplayLog::info("InputSystem: Key pressed: ", keyIndex(key));
-    key_states_[keyIndex(key)] = true;
-    pressed_keys_.push_back(key);
+    m_shared_keyboard_data->keyStates[keyIndex(key)] = true;
+    m_shared_keyboard_data->pressedKeys.push_back(key);
 }
 
 void InputSystem::keyReleased(const Key key)
 {
     LogAsserter::log_assert(isValidKey(key), "Incorrect key value");
     logger::DisplayLog::info("InputSystem: Key released: ", keyIndex(key));
-    key_states_[keyIndex(key)] = false;
-    released_keys_.push_back(key);
+    m_shared_keyboard_data->keyStates[keyIndex(key)] = false;
+    m_shared_keyboard_data->releasedKeys.push_back(key);
 }
 
 void InputSystem::simulatePressKey(Key const key)
 {
-    input_driver_wrapper_->keyPressed(key);
+    keyPressed(key);
 }
 
 void InputSystem::simulateReleaseKey(Key const key)
 {
-    input_driver_wrapper_->keyReleased(key);
+    keyReleased(key);
 }
+
 }  // namespace haf::sys

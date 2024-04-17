@@ -11,8 +11,7 @@ using namespace htps;
 namespace haf::backend
 {
 BackendFactory::BackendFactory() :
-    window_{nullptr},
-    loader_{agloader::createLoader()}
+    window_{nullptr}, loader_{agloader::createLoader()}
 {}
 
 BackendFactory::~BackendFactory()
@@ -21,8 +20,8 @@ BackendFactory::~BackendFactory()
     for (auto&& loaded_module : loaded_modules_)
     {
         logger::DisplayLog::debug(StaticTypeName,
-                            ": Destroying backend loaded module: ",
-                            loaded_module->moduleName());
+                                  ": Destroying backend loaded module: ",
+                                  loaded_module->moduleName());
         loaded_module->emptyRegisteredFactories();
         loaded_module->finish();
         loader_->unloadModule(loaded_module->moduleName().c_str());
@@ -38,7 +37,7 @@ BackendFactory::~BackendFactory()
 bool BackendFactory::loadBackendFile(htps::str const& file_name)
 {
     logger::DisplayLog::debug(StaticTypeName,
-                        ": Going to load backend module: ", file_name);
+                              ": Going to load backend module: ", file_name);
 
     if (loader_->loadModule(file_name.c_str()))
     {

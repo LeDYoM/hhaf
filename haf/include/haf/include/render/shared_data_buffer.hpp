@@ -19,7 +19,8 @@ public:
                                   bufferObjectUnsizedConstructParams);
 
     template <typename T>
-    explicit SharedDataBuffer(render::RenderObjectData<T>&& render_object_data) :
+    explicit SharedDataBuffer(
+        render::RenderObjectData<T>&& render_object_data) :
         SharedDataBuffer{
             core::move(render_object_data.bufferObjectUnsizedConstructParams())}
     {}

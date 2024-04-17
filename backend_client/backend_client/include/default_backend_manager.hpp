@@ -32,10 +32,10 @@ public:
     ~DefaultBackendManager();
 
     void setFactories(
-        htps::rptr<IBackendRegister> const backend_register) override final;
+        htps::rptr<IBackendRegister> const backend_register) override;
 
     void resetFactories(
-        htps::rptr<IBackendRegister> const backend_register) override final;
+        htps::rptr<IBackendRegister> const backend_register) override;
 
     template <typename T>
     void createFactoryOfFactories()

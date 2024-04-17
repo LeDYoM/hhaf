@@ -2,14 +2,10 @@ HAF_PRAGMA_ONCE
 #ifndef HAF_WINDOW_WINDOW_INCLUDE_HPP
 #define HAF_WINDOW_WINDOW_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
-#include <htypes/include/str.hpp>
-#include "fps_counter.hpp"
+#include <haf/include/core/types.hpp>
 
-namespace haf::input
-{
-class InputDriverWrapper;
-}
+#include "fps_counter.hpp"
+#include "window_messages_receiver.hpp"
 
 namespace haf::backend
 {
@@ -33,8 +29,7 @@ public:
     /**
      * @brief Construct a new Window object
      */
-    Window(htps::rptr<backend::IWindow> backend_window_,
-           htps::sptr<input::InputDriverWrapper> input_driver_wrapper_);
+    explicit Window(core::rptr<backend::IWindow> backend_window_);
 
     /**
      * @brief Destroy the Window object
@@ -49,22 +44,26 @@ public:
      * @return true The window has requested to exit
      * @return false The window did not request to exit
      */
-    bool preLoop(time::TimePoint const& time_since_start);
+    void preLoop(time::TimePoint const& time_since_start);
+
+    void loop();
 
     /**
      * @brief Method to be executed after the cycle of a system
      */
     void postLoop();
 
-    htps::sptr<input::InputDriverWrapper> inputDriverWrapper();
-    htps::sptr<input::InputDriverWrapper const> inputDriverWrapper() const;
+    core::sptr<input::KeyboardData> sharedKeyboardData();
+    core::sptr<input::KeyboardData const> sharedKeyboardData() const;
 
+    bool windowWantsToExit() const noexcept;
 private:
     FPSCounter fps_counter;
-    htps::rptr<backend::IWindow> m_backend_window{nullptr};
-    htps::sptr<input::InputDriverWrapper> m_input_driver_wrapper;
-    htps::str m_title;
+    WindowMessagesReceiver m_window_messages_receiver;
+    core::rptr<backend::IWindow> m_backend_window{nullptr};
+    core::str m_title;
 };
+
 }  // namespace haf::sys
 
 #endif

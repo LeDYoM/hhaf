@@ -17,9 +17,6 @@ message("CMAKE_SOURCE_DIR:" ${CMAKE_SOURCE_DIR})
 message("CMAKE_BINARY_DIR:" ${CMAKE_BINARY_DIR})
 set(_REPO_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-message("AAAAAAAAAAAAAAAAAAAAAA: ${GENERATOR_IS_MULTI_CONFIG}")
-message("BBBBBBBBBBBBBBBBBBBBBBBBB: ${CMAKE_GENERATOR_IS_MULTI_CONFIG}")
-
 # First for the generic no-config case (e.g. with mingw, Ninja, Makefiles...)
 if(DEFINED CMAKE_BUILD_TYPE)
   message("Mono-config generator. Config type: " ${CMAKE_BUILD_TYPE})
@@ -34,6 +31,7 @@ endif()
 
 # Second, for multi-config builds (e.g. msvc)
 foreach(OUTPUTCONFIG ${CMAKE_CONFIGURATION_TYPES})
+  message("Multi config generator")
   message("For config " ${OUTPUTCONFIG} " we have "
           ${_REPO_OUTPUT_DIRECTORY}/${OUTPUTCONFIG})
   string(TOUPPER ${OUTPUTCONFIG} OUTPUTCONFIG)
@@ -55,6 +53,7 @@ add_subdirectory(glad)
 
 set(hhaf_core_module_list
   agloader
+  file_system_utilities
   mc_serial
   parpar
   logger

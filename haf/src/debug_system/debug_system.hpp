@@ -28,12 +28,9 @@ public:
     void init();
     void finish();
 
-    void onStartPreUpdate();
-    void onFinishPreUpdate() {}
-    void onStartUpdate() {}
-    void onFinishUpdate();
-    void onStartPostUpdate() {}
-    void onFinishPostUpdate();
+    void preUpdate();
+    void update();
+    void postUpdate();
 
     debug::MemoryDataInitializer startMemoryCounter() override;
 
@@ -57,6 +54,7 @@ public:
                           core::str const& value) override;
     void setVariableValue(debug::DebugVariableHandle const& index,
                           char const* const value) override;
+
 private:
     debug::DebugVariables m_debug_variables;
 };

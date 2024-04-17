@@ -1,7 +1,9 @@
 #include "sfml_render_window.hpp"
-#include "conversions.hpp"
-#include <string>
+
 #include <SFML/Config.hpp>
+#include <SFML/Window/Window.hpp>
+#include <SFML/Window/Keyboard.hpp>
+#include <SFML/Window/Event.hpp>
 
 using namespace htps;
 
@@ -74,29 +76,41 @@ bool SFMLRenderWindow::createWindow(u32 const width,
 
         m_render_window->setVerticalSyncEnabled(false);
         already_created_ = true;
-//        m_window_render_target.setInternalRenderTarget();
+        //        m_window_render_target.setInternalRenderTarget();
         return true;
     }
     return false;
 }
 
-bool SFMLRenderWindow::processEvents()
+namespace
 {
-    input_driver_.clearInternalInputBuffer();
+constexpr IKey toBackendKey(sf::Keyboard::Key const& k) noexcept
+{
+    return static_cast<IKey>(k);
+}
+}  // namespace
+
+void SFMLRenderWindow::processEvents(
+    IWindowMessagesReceiver& iw_messages_receiver)
+{
+    iw_messages_receiver.startInputKeysUpdate();
     sf::Event event;
     while (m_render_window->pollEvent(event))
     {
         if (event.type == sf::Event::Closed)
         {
-            return true;
+            iw_messages_receiver.requestExit();
         }
-        else if (event.type == sf::Event::KeyPressed ||
-                 event.type == sf::Event::KeyReleased)
+        else if (event.type == sf::Event::KeyPressed)
         {
-            input_driver_.keyEvent(event);
+            iw_messages_receiver.keyPressed(toBackendKey(event.key.code));
+        }
+        else if (event.type == sf::Event::KeyReleased)
+        {
+            iw_messages_receiver.keyReleased(toBackendKey(event.key.code));
         }
     }
-    return false;
+    iw_messages_receiver.endInputKeysUpdate();
 }
 
 void SFMLRenderWindow::display()
@@ -106,17 +120,12 @@ void SFMLRenderWindow::display()
 
 void SFMLRenderWindow::setWindowTitle(str const& newTitle)
 {
-    m_render_window->setTitle(to_sf_type(newTitle));
+    m_render_window->setTitle(newTitle.c_str());
 }
 
 void SFMLRenderWindow::closeWindow()
 {
     m_render_window->close();
-}
-
-rptr<IInputDriver> SFMLRenderWindow::inputDriver()
-{
-    return &input_driver_;
 }
 
 str SFMLRenderWindow::info() const

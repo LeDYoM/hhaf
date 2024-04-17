@@ -32,7 +32,7 @@
             "stopAtEntry": false,
             "cwd": "${command:cmake.launchTargetDirectory}",
             "environment": [],
-            "console": "externalTerminal"
+            "console": "newExternalWindow"
         },
         {
             "name": "(Windows) Launch with config",
@@ -43,7 +43,7 @@
             "stopAtEntry": false,
             "cwd": "${command:cmake.launchTargetDirectory}",
             "environment": [],
-            "console": "externalTerminal"
+            "console": "newExternalWindow"
         }
     ]
 }

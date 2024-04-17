@@ -11,7 +11,8 @@ HAF_PRAGMA_ONCE
 namespace haf::scene
 {
 class HAF_API MoveCameraComponent final
-    : public component::ComponentBootStrap<MoveCameraComponent,"InputSubSystem">
+    : public component::ComponentBootStrap<MoveCameraComponent,
+                                           "InputSubSystem">
 {
 public:
     static constexpr const core::str_view StaticTypeName{"MoveCameraComponent"};

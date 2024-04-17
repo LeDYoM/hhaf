@@ -34,8 +34,8 @@ public:
     time::TimePoint nowFrame() const noexcept;
     FrameNumberType currentFrame() const noexcept;
 
-    void startFrame();
-    void endFrame();
+    void preUpdate();
+    void postUpdate();
 
     void setAcceleration(htps::f32 const acceleration);
 

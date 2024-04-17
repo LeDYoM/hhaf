@@ -39,6 +39,7 @@ public:
     core::sptr<Shader>& shader() noexcept;
 
     void fillRenderData(render::RenderData& render_data);
+
 private:
     struct VertexArrayObjectPriv;
     core::PImplPointer<VertexArrayObjectPriv> m_p;

@@ -2,6 +2,7 @@
 #include <backend_client/include/default_factory.hpp>
 
 #include "glfw_render_window.hpp"
+#include <GLFW/glfw3.h>
 
 namespace haf::backend::glfwb
 {
@@ -13,4 +14,5 @@ void GLFWBackendManager::create()
     createFactoryOfFactories<
         DefaultFactoryOf<IWindow, GLFWRenderWindow>>();
 }
+
 }  // namespace haf::backend::glfwb

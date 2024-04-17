@@ -33,8 +33,15 @@ public:
      */
     void initialize(htps::str const& simulation_config_file);
 
-    void updateSimulationInput();
-    void updateSimulationOutput();
+    /**
+     * @brief Update simulation input
+     */
+    void preUpdate();
+
+    /**
+     * @brief Update simulation output
+     */
+    void update();
 
     bool getNext(htps::str const& name, htps::size_type& pre_selected);
 

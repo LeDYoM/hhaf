@@ -24,14 +24,14 @@ void DebugSystem::logBuildStaticData()
     debug::logBuildStaticData();
 }
 
-void DebugSystem::onStartPreUpdate()
+void DebugSystem::preUpdate()
 {
     m_debug_variables.startFrame(
         getSystem<TimeSystem>(systemAccessPtr()).nowFrame(),
         getSystem<TimeSystem>(systemAccessPtr()).currentFrame());
 }
 
-void DebugSystem::onFinishPostUpdate()
+void DebugSystem::postUpdate()
 {}
 
 MemoryDataInitializer DebugSystem::startMemoryCounter()
@@ -111,7 +111,7 @@ void DebugSystem::init()
     himgui::init();
 }
 
-void DebugSystem::onFinishUpdate()
+void DebugSystem::update()
 {
     himgui::initFrame();
     himgui::initWindow();

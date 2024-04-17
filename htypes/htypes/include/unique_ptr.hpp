@@ -122,7 +122,7 @@ template <typename T, typename... Args>
 [[nodiscard]] uptr<T> muptr(Args&&... args)
 {
     T* p{AllocatorType<T>::make_one(htps::forward<Args>(args)...)};
-    return uptr<T>(htps::move(p));
+    return uptr<T>{htps::move(p)};
 }
 
 }  // namespace htps

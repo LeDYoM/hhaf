@@ -2,7 +2,7 @@ HAF_PRAGMA_ONCE
 #ifndef HAF_SYS_SYSTEM_ACCESS_INCLUDE_HPP
 #define HAF_SYS_SYSTEM_ACCESS_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
+#include <haf/include/core/types.hpp>
 
 namespace haf::scene
 {
@@ -28,7 +28,7 @@ public:
      * stored on this instance.
      */
     explicit SystemAccess(
-        htps::rptr<ISystemProvider> isystem_provider) noexcept;
+        core::rptr<ISystemProvider> isystem_provider) noexcept;
 
     /**
      * @brief Destroy the System Access object
@@ -50,7 +50,7 @@ public:
 
     SubSystemViewer subSystemViewer() const noexcept;
 
-    htps::rptr<ISystemProvider> isystem_provider_;
+    core::rptr<ISystemProvider> isystem_provider_;
 
 private:
     friend class scene::SceneController;

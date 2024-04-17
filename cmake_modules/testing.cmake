@@ -14,9 +14,10 @@ function (prepareTestLibrary)
     message(STATUS "Fetching Catch2")
     #======================================
 
+    set(CATCH2_COMMIT 182c910)
     FetchContent_Declare(CATCH2
         GIT_REPOSITORY https://github.com/catchorg/Catch2.git
-        GIT_TAG v2.13.10
+        GIT_TAG ${CATCH2_COMMIT}
         CMAKE_ARGS -DBUILD_TESTING=OFF
     )
 

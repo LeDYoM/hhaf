@@ -8,7 +8,7 @@
 #include <hlog/include/hlog.hpp>
 #include <hosted_app/include/iapp.hpp>
 
-using namespace htps;
+using namespace haf::core;
 
 namespace haf::sys
 {
@@ -18,7 +18,7 @@ SystemController::~SystemController() = default;
 
 void SystemController::init(
     rptr<IApp> iapp,
-    htps::rptr<host::IHostConnector> const host_connector,
+    rptr<host::IHostConnector> const host_connector,
     rptr<backend::BackendFactory> backend_factory,
     int const argc,
     char const* const argv[])
@@ -26,7 +26,7 @@ void SystemController::init(
     (void)(host_connector);
     LogAsserter::log_assert(
         iapp != nullptr, "Cannot create a SystemProvider with a nullptr app");
-    SystemProvider::init(htps::move(iapp), backend_factory, argc, argv);
+    SystemProvider::init(core::move(iapp), backend_factory, argc, argv);
 }
 
 void SystemController::terminate()
@@ -36,33 +36,30 @@ void SystemController::terminate()
 
 bool SystemController::preUpdate()
 {
-    system<TimeSystem>().startFrame();
-    system<DebugSystem>().onStartPreUpdate();
-    const bool pre_update_wants_to_close{system<WindowSystem>().preLoop()};
-    system<SimulationSystem>().updateSimulationInput();
+    system<TimeSystem>().preUpdate();
+    system<DebugSystem>().preUpdate();
+    system<WindowSystem>().preUpdate();
+    system<SimulationSystem>().preUpdate();
     system<InputSystem>().preUpdate();
-    system<DebugSystem>().onFinishPreUpdate();
-    return pre_update_wants_to_close;
+    return system<WindowSystem>().exitRequested();
 }
 
 bool SystemController::update()
 {
-    system<DebugSystem>().onStartUpdate();
     system<InputSystem>().update();
-    system<SimulationSystem>().updateSimulationOutput();
+    system<SimulationSystem>().update();
     system<scene::SceneManager>().update();
-    system<DebugSystem>().onFinishUpdate();
-
+    system<DebugSystem>().update();
+    system<WindowSystem>().update();
     return false;
 }
 
 bool SystemController::postUpdate()
 {
-    system<DebugSystem>().onStartPostUpdate();
     system<InputSystem>().postUpdate();
-    system<WindowSystem>().postLoop();
-    system<DebugSystem>().onFinishPostUpdate();
-    system<TimeSystem>().endFrame();
+    system<WindowSystem>().postUpdate();
+    system<DebugSystem>().postUpdate();
+    system<TimeSystem>().postUpdate();
 
     return false;
 }

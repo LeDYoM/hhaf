@@ -42,11 +42,11 @@ TEST_CASE("TimeSystem frame time", "[haf][timesystem]")
     auto test_time_system{makeTestSystem<TestTimeSystem>()};
     auto& time_system = test_time_system->system<TimeSystem>();
 
-    time_system.startFrame();
+    time_system.preUpdate();
     std::this_thread::sleep_for(std::chrono::milliseconds(10U));
-    time_system.endFrame();
+    time_system.postUpdate();
     std::this_thread::sleep_for(std::chrono::milliseconds(10U));
-    time_system.startFrame();
+    time_system.preUpdate();
 
     CHECK(time_system.lastFrameTime().milliseconds() > TimePoint::Rep{10U});
 }

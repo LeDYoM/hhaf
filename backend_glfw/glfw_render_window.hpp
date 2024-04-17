@@ -5,9 +5,9 @@
 #include <facil_math/include/vector2d.hpp>
 
 #include <backend_dev/include/iwindow.hpp>
-#include <backend_dev/include/iinputdriver.hpp>
+#include <backend_dev/include/iwindow_messages_receiver.hpp>
 
-#include "glfw_input_driver.hpp"
+struct GLFWwindow;
 
 namespace haf::backend::glfwb
 {
@@ -28,19 +28,17 @@ public:
 
     bool isAlreadyCreated() const override;
 
-    bool processEvents() override;
+    void processEvents(IWindowMessagesReceiver& iw_messages_receiver) override;
     void display() override;
     void setWindowTitle(htps::str const& newTitle) override;
     void closeWindow() override;
 
-    htps::rptr<IInputDriver> inputDriver() override;
     htps::str info() const override;
     htps::str settingsInfo() const override;
 
 private:
-//    htps::uptr<sf::Window> m_render_window;
-    bool already_created_{false};
-//    SFMLInputDriver input_driver_;
+    GLFWwindow* m_render_window{nullptr};
+    bool m_already_created{false};
 };
 
 }  // namespace haf::backend::glfwb

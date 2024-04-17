@@ -5,6 +5,7 @@ HAF_PRAGMA_ONCE
 #include <htypes/include/types.hpp>
 #include <htypes/include/str.hpp>
 #include "system/system_base.hpp"
+
 #include "window.hpp"
 #include "window_configuration.hpp"
 
@@ -47,18 +48,19 @@ public:
 
     /**
      * @brief Method to be executed before starting a cycle of the system
-     *
-     * @return true The window has requested to exit
-     * @return false The window did not request to exit
      */
-    bool preLoop();
+    void preUpdate();
+
+    void update();
 
     /**
      * @brief Method to be executed after the cycle of a system
      */
-    void postLoop();
+    void postUpdate();
 
     htps::sptr<Window> const& window() const;
+
+    bool exitRequested() const noexcept;
 
 private:
     WindowConfiguration m_window_configuration;

@@ -13,8 +13,8 @@ HAF_PRAGMA_ONCE
 namespace haf::sys
 {
 class FileSystem final : public SystemBase,
-                                     public IFileSerializer,
-                                     public fs::IBinaryFileReader
+                         public IFileSerializer,
+                         public fs::IBinaryFileReader
 {
 public:
     using SystemBase::SystemBase;
@@ -26,9 +26,9 @@ public:
                        bool const assert_on_error) override;
 
     core::RawMemory loadBinaryFile(Path const& file_name) override;
-    htps::str loadTextFile(const Path& file_name) override;
+    core::str loadTextFile(const Path& file_name) override;
 
-    bool saveTextFile(const Path& file_name, const htps::str& data) override;
+    bool saveTextFile(const Path& file_name, const core::str& data) override;
 
     IFileSerializer::Result deserializeFromFile(
         const Path& file_name,

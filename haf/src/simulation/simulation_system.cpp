@@ -148,7 +148,7 @@ void SimulationSystem::setSimulateRandomDataBuffer(
     priv_->setSimulateRandomDataBuffer(htps::move(simulated_data_buffer));
 }
 
-void SimulationSystem::updateSimulationInput()
+void SimulationSystem::preUpdate()
 {
     // Get the current TimePoint
     time::TimePoint const& current_time_point{
@@ -192,7 +192,7 @@ void SimulationSystem::updateSimulationInput()
     }
 }
 
-void SimulationSystem::updateSimulationOutput()
+void SimulationSystem::update()
 {
     // Get the current TimePoint
     time::TimePoint const& current_time_point{

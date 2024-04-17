@@ -52,6 +52,7 @@ public:
     void setUniform(core::s32 const index, fmath::Matrix4x4 const& m4x4);
 
     ShaderMetadata m_shader_metadata;
+
 private:
     struct ShaderPrivate;
     core::PImplPointer<ShaderPrivate> m_p;

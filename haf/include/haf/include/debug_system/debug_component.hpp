@@ -10,8 +10,7 @@ HAF_PRAGMA_ONCE
 namespace haf::debug
 {
 class HAF_API DebugComponent final
-    : public component::ComponentBootStrap<DebugComponent,
-                                           "RenderSubSystem">
+    : public component::ComponentBootStrap<DebugComponent, "RenderSubSystem">
 {
 public:
     static constexpr const core::str_view StaticTypeName{"DebugComponent"};
@@ -20,6 +19,7 @@ public:
     ~DebugComponent();
 
     void onAttached() override;
+
 private:
     void onKeyPressed(input::Key const& key);
 };

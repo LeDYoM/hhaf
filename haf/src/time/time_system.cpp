@@ -86,13 +86,13 @@ void TimeSystem::setAcceleration(f32 const acceleration)
     }
 }
 
-void TimeSystem::startFrame()
+void TimeSystem::preUpdate()
 {
     priv_->incrementFrame();
     priv_->updateStartFrameTime();
 }
 
-void TimeSystem::endFrame()
+void TimeSystem::postUpdate()
 {
     priv_->updateEndFrameTime();
 }

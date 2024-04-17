@@ -396,7 +396,14 @@ public:
         }
     }
 
-    constexpr void clear() noexcept { data_.clear(); }
+    constexpr void clear() noexcept
+    {
+        if (!data_.empty())
+        {
+            data_[0] = static_cast<char_type>(0);
+        }
+        data_.clear();
+    }
 
     constexpr size_type cfind(char_type const ch) const noexcept
     {

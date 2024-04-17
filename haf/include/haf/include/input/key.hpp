@@ -136,7 +136,7 @@ constexpr bool isValidKey(Key const key) noexcept
 }
 
 using KeyState  = bool;
-using KeyStates = KeyState[KeyCount];
+using KeyStates = core::array<KeyState, KeyCount>;
 }  // namespace haf::input
 
 #endif

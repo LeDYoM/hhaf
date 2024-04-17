@@ -19,7 +19,6 @@ bool DefaultResources::loadDefaultResources(sys::ResourceManager& rManager)
     bool result{true};
     result &= loadDefaultShaderNoInput(rManager);
     result &= loadDefaultShader0(rManager);
-    result &= loadDefaultBuffers(rManager);
     result &= loadDefaultMesh(rManager);
     result &= loadDefaultVertexArrayObject(rManager);
     result &= loadDefaultCubeMesh(rManager);
@@ -39,11 +38,10 @@ bool DefaultResources::loadDefaultShader0(sys::ResourceManager& rManager)
                             core::str_view{R"(
         #version 450 core
 
-        in vec3 haf_position;
+        layout (location = 0) in vec3 haf_position;
         in vec4 haf_color;
         in vec2 haf_textureuv;
 
-        uniform mat4 haf_camera_projection;
         uniform mat4 haf_object_position;
 
         layout(std140,location=1) uniform Foo
@@ -97,11 +95,6 @@ bool DefaultResources::loadDefaultShader0(sys::ResourceManager& rManager)
     LogAsserter::log_assert(m_defaultShader0 != nullptr);
 
     return m_defaultShader0 != nullptr;
-}
-
-bool DefaultResources::loadDefaultBuffers(sys::ResourceManager&)
-{
-    return true;
 }
 
 bool DefaultResources::loadDefaultMesh(sys::ResourceManager& rManager)
