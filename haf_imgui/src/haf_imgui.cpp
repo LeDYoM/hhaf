@@ -17,7 +17,6 @@ void init()
     ImGui::CreateContext();
 
     ImGuiIO& io = ImGui::GetIO();
-    (void)io;
     io.ConfigFlags |=
         ImGuiConfigFlags_NavEnableKeyboard;  // Enable Keyboard Controls
     io.ConfigFlags |=
@@ -59,6 +58,7 @@ void finishWindow()
 
 void finishFrame()
 {
+
     // Render dear imgui into screen
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
