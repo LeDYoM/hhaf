@@ -12,4 +12,20 @@ bool InitImp()
     return result;
 }
 
+void NewFrameImp()
+{
+    ImGui_ImplOpenGL3_NewFrame();
+    ImGui_ImplWin32_NewFrame();
+}
+
+void FinishFrameImp()
+{
+
+}
+
+void ShutDownImp()
+{
+
+}
+
 }

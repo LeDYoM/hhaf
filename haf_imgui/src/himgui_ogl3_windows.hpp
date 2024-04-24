@@ -4,6 +4,9 @@
 namespace himgui::ogl3w
 {
 bool InitImp();
+void NewFrameImp();
+void FinishFrameImp();
+void ShutDownImp();
 }
 
 #endif

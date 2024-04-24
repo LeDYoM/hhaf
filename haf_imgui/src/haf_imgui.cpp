@@ -38,9 +38,7 @@ void update()
 
 void initFrame()
 {
-    ImGui_ImplOpenGL3_NewFrame();
-    ImGui_ImplWin32_NewFrame();
-
+    ogl3w::NewFrameImp();
     ImGui::NewFrame();
 }
 
@@ -58,7 +56,6 @@ void finishWindow()
 
 void finishFrame()
 {
-
     // Render dear imgui into screen
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
