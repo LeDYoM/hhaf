@@ -7,7 +7,11 @@ if (use_imgui)
     set(CURRENT_TARGET haf_imgui)
 
     set (headers haf_imgui.hpp)
-    set (sources src/haf_imgui.cpp)
+    set (sources
+        src/haf_imgui.cpp
+        src/himgui_ogl3_windows.cpp
+        src/himgui_ogl3_windows.hpp
+        )
     build_lib_component(STATIC HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}" SOURCES
                     ${sources} HEADERS ${headers})
 

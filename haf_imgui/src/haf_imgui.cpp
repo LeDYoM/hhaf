@@ -2,6 +2,7 @@
 #include "backends/imgui_impl_opengl3.h"
 #include "backends/imgui_impl_win32.h"
 #include <Windows.h>
+#include "himgui_ogl3_windows.hpp"
 
 namespace
 {
@@ -22,8 +23,7 @@ void init()
     io.ConfigFlags |=
         ImGuiConfigFlags_NavEnableGamepad;  // Enable Gamepad Controls
     // Setup Platform/Renderer bindings
-    ImGui_ImplOpenGL3_Init();
-    ImGui_ImplWin32_InitForOpenGL(GetActiveWindow());
+    ogl3w::InitImp();
     // Setup Dear ImGui style
     ImGui::StyleColorsDark();
     himgui_initialized = true;
