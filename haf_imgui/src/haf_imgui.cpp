@@ -1,7 +1,4 @@
 #include "imgui.h"
-#include "backends/imgui_impl_opengl3.h"
-#include "backends/imgui_impl_win32.h"
-#include <Windows.h>
 #include "himgui_ogl3_windows.hpp"
 
 namespace
@@ -58,13 +55,12 @@ void finishFrame()
 {
     // Render dear imgui into screen
     ImGui::Render();
-    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+    ogl3w::FinishFrameImp();
 }
 
 void shutdown()
 {
-    ImGui_ImplOpenGL3_Shutdown();
-    ImGui_ImplWin32_Shutdown();
+    ogl3w::ShutDownImp();
     ImGui::DestroyContext();
 }
 

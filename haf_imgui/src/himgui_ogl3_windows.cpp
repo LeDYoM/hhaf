@@ -20,12 +20,13 @@ void NewFrameImp()
 
 void FinishFrameImp()
 {
-
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
 
 void ShutDownImp()
 {
-
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplWin32_Shutdown();
 }
 
 }
