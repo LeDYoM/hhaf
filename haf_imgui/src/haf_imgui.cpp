@@ -8,6 +8,7 @@ constinit bool himgui_initialized{false};
 
 namespace himgui
 {
+namespace imguibackend = ogl3w;
 void init()
 {
     // Setup Dear ImGui context
@@ -20,7 +21,7 @@ void init()
     io.ConfigFlags |=
         ImGuiConfigFlags_NavEnableGamepad;  // Enable Gamepad Controls
     // Setup Platform/Renderer bindings
-    ogl3w::InitImp();
+    imguibackend::InitImp();
     // Setup Dear ImGui style
     ImGui::StyleColorsDark();
     himgui_initialized = true;
@@ -35,7 +36,7 @@ void update()
 
 void initFrame()
 {
-    ogl3w::NewFrameImp();
+    imguibackend::NewFrameImp();
     ImGui::NewFrame();
 }
 
@@ -55,12 +56,12 @@ void finishFrame()
 {
     // Render dear imgui into screen
     ImGui::Render();
-    ogl3w::FinishFrameImp();
+    imguibackend::FinishFrameImp();
 }
 
 void shutdown()
 {
-    ogl3w::ShutDownImp();
+    imguibackend::ShutDownImp();
     ImGui::DestroyContext();
 }
 
