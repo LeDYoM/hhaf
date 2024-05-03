@@ -1,12 +1,11 @@
-#include "himgui_ogl3_windows.hpp"
-#include "backends/imgui_impl_opengl3.h"
-#include "backends/imgui_impl_win32.h"
-#include <Windows.h>
+#include "himgui_glfw.hpp"
+#include "backends/imgui_impl_glfw.h"
 
 namespace himgui::glfw
 {
 bool InitImp()
 {
+    ImGui_ImplGlfw_InitForOpenGL();
     bool result{ImGui_ImplOpenGL3_Init()};
     result &= ImGui_ImplWin32_InitForOpenGL(GetActiveWindow());
     return result;
