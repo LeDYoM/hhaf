@@ -229,7 +229,7 @@ void SystemProvider::initializeSystems(
 }
 
 void SystemProvider::setBackend(
-    htps::rptr<backend::BackendFactory> backend_factory)
+    rptr<backend::BackendFactory> backend_factory)
 {
     LogAsserter::log_assert(backend_factory != nullptr,
                             "nullptr backend_factory received");
