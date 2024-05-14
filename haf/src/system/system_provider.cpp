@@ -73,7 +73,7 @@ struct SystemProvider::SystemProviderPrivate final
         if (!haf_configuration_file_.empty())
         {
             system_provdier_configuration_.loadConfiguration(
-                htps::move(sub_system_viewer), haf_configuration_file_);
+                core::move(sub_system_viewer), haf_configuration_file_);
         }
     }
 };
