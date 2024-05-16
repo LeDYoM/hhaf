@@ -148,7 +148,7 @@ void GLFWRenderWindow::processEvents(
 
     iw_messages_receiver.endInputKeysUpdate();
 
-    if(glfwWindowShouldClose(m_render_window))
+    if (glfwWindowShouldClose(m_render_window))
     {
         iw_messages_receiver.requestExit();
     }
