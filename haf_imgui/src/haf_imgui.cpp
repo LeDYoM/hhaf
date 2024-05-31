@@ -12,16 +12,16 @@ namespace imguibackend = ogl3w;
 void init()
 {
     // Setup Dear ImGui context
-    IMGUI_CHECKVERSION();
-    ImGui::CreateContext();
+//    IMGUI_CHECKVERSION();
+//    ImGui::CreateContext();
 
-    ImGuiIO& io = ImGui::GetIO();
-    io.ConfigFlags |=
-        ImGuiConfigFlags_NavEnableKeyboard;  // Enable Keyboard Controls
-    io.ConfigFlags |=
-        ImGuiConfigFlags_NavEnableGamepad;  // Enable Gamepad Controls
+//    ImGuiIO& io = ImGui::GetIO();
+//    io.ConfigFlags |=
+//        ImGuiConfigFlags_NavEnableKeyboard;  // Enable Keyboard Controls
+//    io.ConfigFlags |=
+//        ImGuiConfigFlags_NavEnableGamepad;  // Enable Gamepad Controls
     // Setup Platform/Renderer bindings
-    imguibackend::InitImp();
+//    imguibackend::InitImp();
     // Setup Dear ImGui style
     ImGui::StyleColorsDark();
     himgui_initialized = true;

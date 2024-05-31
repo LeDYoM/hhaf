@@ -20,8 +20,13 @@ target_include_directories(imgui PUBLIC ${imgui_SOURCE_DIR})
 
 # Add backend
 target_sources(imgui PRIVATE
+    ${imgui_SOURCE_DIR}/backends/imgui_impl_glfw.h
+    ${imgui_SOURCE_DIR}/backends/imgui_impl_glfw.cpp
     ${imgui_SOURCE_DIR}/backends/imgui_impl_opengl3.h
     ${imgui_SOURCE_DIR}/backends/imgui_impl_opengl3.cpp
     ${imgui_SOURCE_DIR}/backends/imgui_impl_opengl3_loader.h
     ${imgui_SOURCE_DIR}/backends/imgui_impl_win32.h
-    ${imgui_SOURCE_DIR}/backends/imgui_impl_win32.cpp)
+    ${imgui_SOURCE_DIR}/backends/imgui_impl_win32.cpp
+    )
+
+target_link_libraries(imgui PUBLIC glfw)

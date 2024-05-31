@@ -1,4 +1,5 @@
 #include "glfw_render_window.hpp"
+#include "glfw_render_window_imgui.hpp"
 #include "key_conversion.hpp"
 #include <GLFW/glfw3.h>
 
@@ -112,6 +113,7 @@ bool GLFWRenderWindow::createWindow(u32 const width,
             // glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
             m_render_window = glfwCreateWindow(w, h, "", NULL, NULL);
             glfwMakeContextCurrent(m_render_window);
+            init(m_render_window);
 
             glfwSetKeyCallback(m_render_window, key_callback);
 
