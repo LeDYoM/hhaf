@@ -115,7 +115,7 @@ bool GLFWRenderWindow::createWindow(u32 const width,
             glfwMakeContextCurrent(m_render_window);
             init(m_render_window);
 
-            glfwSetKeyCallback(m_render_window, key_callback);
+//            glfwSetKeyCallback(m_render_window, key_callback);
 
             //            m_render_window->create(sf::VideoMode(w, h, bpp), "",
             //            style,
@@ -154,6 +154,8 @@ void GLFWRenderWindow::processEvents(
     {
         iw_messages_receiver.requestExit();
     }
+
+    newFrame();
 }
 
 void GLFWRenderWindow::display()

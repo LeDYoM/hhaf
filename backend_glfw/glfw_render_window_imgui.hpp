@@ -12,6 +12,7 @@ struct GLFWwindow;
 namespace haf::backend::glfwb
 {
 void init(GLFWwindow* window);
+void newFrame();
 
 }  // namespace haf::backend::glfwb
 

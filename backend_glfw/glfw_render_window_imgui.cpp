@@ -24,4 +24,11 @@ void init(GLFWwindow* window)
     ImGui_ImplOpenGL3_Init("#version 130");
 }
 
+void newFrame()
+{
+    ImGui_ImplOpenGL3_NewFrame();
+    ImGui_ImplGlfw_NewFrame();
+    ImGui::NewFrame();
+}
+
 }  // namespace haf::backend::glfwb
