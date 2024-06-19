@@ -23,7 +23,7 @@ void init()
     // Setup Platform/Renderer bindings
 //    imguibackend::InitImp();
     // Setup Dear ImGui style
-    ImGui::StyleColorsDark();
+//    ImGui::StyleColorsDark();
     himgui_initialized = true;
 }
 
