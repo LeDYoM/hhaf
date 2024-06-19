@@ -1,5 +1,6 @@
 #include "imgui.h"
 #include "himgui_ogl3_windows.hpp"
+#include "himgui_glfw.hpp"
 
 namespace
 {
@@ -8,7 +9,7 @@ constinit bool himgui_initialized{false};
 
 namespace himgui
 {
-namespace imguibackend = ogl3w;
+namespace imguibackend = glfw;
 void init()
 {
     // Setup Dear ImGui context
@@ -24,6 +25,7 @@ void init()
 //    imguibackend::InitImp();
     // Setup Dear ImGui style
 //    ImGui::StyleColorsDark();
+//    himgui_initialized = true;
     himgui_initialized = true;
 }
 
@@ -36,8 +38,8 @@ void update()
 
 void initFrame()
 {
-    imguibackend::NewFrameImp();
-    ImGui::NewFrame();
+//    imguibackend::NewFrameImp();
+//    ImGui::NewFrame();
 }
 
 void initWindow()

@@ -9,6 +9,8 @@ if (use_imgui)
     set (headers haf_imgui.hpp)
     set (sources
         src/haf_imgui.cpp
+        src/himgui_glfw.cpp
+        src/himgui_glfw.hpp
         src/himgui_ogl3_windows.cpp
         src/himgui_ogl3_windows.hpp
         )
