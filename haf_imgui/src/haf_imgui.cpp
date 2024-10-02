@@ -1,6 +1,9 @@
 #include "imgui.h"
 #include "himgui_ogl3_windows.hpp"
 #include "himgui_glfw.hpp"
+#include "imgui.h"
+#include "backends/imgui_impl_glfw.h"
+#include "backends/imgui_impl_opengl3.h"
 
 namespace
 {
@@ -12,21 +15,25 @@ namespace himgui
 namespace imguibackend = glfw;
 void init()
 {
-    // Setup Dear ImGui context
-//    IMGUI_CHECKVERSION();
-//    ImGui::CreateContext();
+}
 
-//    ImGuiIO& io = ImGui::GetIO();
-//    io.ConfigFlags |=
-//        ImGuiConfigFlags_NavEnableKeyboard;  // Enable Keyboard Controls
-//    io.ConfigFlags |=
-//        ImGuiConfigFlags_NavEnableGamepad;  // Enable Gamepad Controls
+void init_glfw(GLFWwindow* /*window*/)
+{
+    // Setup Dear ImGui context
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+
+    ImGuiIO& io = ImGui::GetIO();
+    io.ConfigFlags |=
+        ImGuiConfigFlags_NavEnableKeyboard;  // Enable Keyboard Controls
+    io.ConfigFlags |=
+        ImGuiConfigFlags_NavEnableGamepad;  // Enable Gamepad Controls
     // Setup Platform/Renderer bindings
-//    imguibackend::InitImp();
+    imguibackend::InitImp();
     // Setup Dear ImGui style
-//    ImGui::StyleColorsDark();
-//    himgui_initialized = true;
+    ImGui::StyleColorsDark();
     himgui_initialized = true;
+//    himgui_initialized = true;
 }
 
 void update()
@@ -38,8 +45,8 @@ void update()
 
 void initFrame()
 {
-//    imguibackend::NewFrameImp();
-//    ImGui::NewFrame();
+    imguibackend::NewFrameImp();
+    ImGui::NewFrame();
 }
 
 void initWindow()
