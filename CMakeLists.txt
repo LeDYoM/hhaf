@@ -83,7 +83,7 @@ endforeach()
 add_subdirectory(backend_client)
 add_subdirectory(backend_sfml)
 add_subdirectory(backend_glfw)
-#add_subdirectory(haf_imgui)
+add_subdirectory(haf_imgui)
 #add_subdirectory(zoper_game)
 add_subdirectory(apps/haf_life_game)
 

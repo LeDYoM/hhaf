@@ -14,7 +14,8 @@ if (use_imgui)
         src/himgui_ogl3_windows.cpp
         src/himgui_ogl3_windows.hpp
         )
-    build_lib_component(STATIC HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}" SOURCES
+    message("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+    build_lib_component(HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}" SOURCES
                     ${sources} HEADERS ${headers})
 
     target_link_libraries(${CURRENT_TARGET} PUBLIC imgui)
