@@ -6,8 +6,6 @@
 #include "static_build_data_display.hpp"
 #include <hlog/include/hlog.hpp>
 
-#include "haf_imgui.hpp"
-
 using namespace haf::core;
 using namespace haf::debug;
 using namespace haf::time;
@@ -108,30 +106,29 @@ void DebugSystem::setVariableValue(DebugVariableHandle const& index,
 
 void DebugSystem::init()
 {
-    himgui::init();
 }
 
 void DebugSystem::update()
 {
 //    himgui::initFrame();
-    himgui::initWindow();
-    himgui::addMessage("Test message");
+//    himgui::initWindow();
+//    himgui::addMessage("Test message");
     str temp;
     str temp_value;
 
     for (auto const& [name, value] : m_debug_variables.debugVariables())
     {
         temp = name + ":" + value.value();
-        himgui::addMessage(temp.c_str());
+//        himgui::addMessage(temp.c_str());
     }
 
-    himgui::finishWindow();
-    himgui::finishFrame();
+//    himgui::finishWindow();
+//    himgui::finishFrame();
 }
 
 void DebugSystem::finish()
 {
-    himgui::shutdown();
+//    himgui::shutdown();
 }
 
 }  // namespace haf::sys
