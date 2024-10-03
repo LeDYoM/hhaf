@@ -26,8 +26,38 @@ IKey toBackendKey(int const key) noexcept
         case GLFW_KEY_SPACE:
             return IKey::Space;
             break;
-        case GLFW_KEY_UNKNOWN:
-            return IKey::Unknown;
+        case GLFW_KEY_APOSTROPHE:
+            return IKey::Quote;
+            break;
+        case GLFW_KEY_COMMA:
+            return IKey::Comma;
+            break;
+        case GLFW_KEY_MINUS:
+            return IKey::Dash;
+            break;
+        case GLFW_KEY_PERIOD:
+            return IKey::Period;
+            break;
+        case GLFW_KEY_SLASH:
+            return IKey::Slash;
+            break;
+        case GLFW_KEY_SEMICOLON:
+            return IKey::SemiColon;
+            break;
+        case GLFW_KEY_EQUAL:
+            return IKey::Equal;
+            break;
+        case GLFW_KEY_LEFT_BRACKET:
+            return IKey::LBracket;
+            break;
+        case GLFW_KEY_BACKSLASH:
+            return IKey::BackSlash;
+            break;
+        case GLFW_KEY_RIGHT_BRACKET:
+            return IKey::RBracket;
+            break;
+        case GLFW_KEY_GRAVE_ACCENT:
+            return IKey::RBracket;
             break;
     }
 

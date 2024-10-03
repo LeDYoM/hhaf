@@ -73,7 +73,7 @@ struct SystemProvider::SystemProviderPrivate final
         if (!haf_configuration_file_.empty())
         {
             system_provdier_configuration_.loadConfiguration(
-                htps::move(sub_system_viewer), haf_configuration_file_);
+                core::move(sub_system_viewer), haf_configuration_file_);
         }
     }
 };
@@ -229,7 +229,7 @@ void SystemProvider::initializeSystems(
 }
 
 void SystemProvider::setBackend(
-    htps::rptr<backend::BackendFactory> backend_factory)
+    rptr<backend::BackendFactory> backend_factory)
 {
     LogAsserter::log_assert(backend_factory != nullptr,
                             "nullptr backend_factory received");

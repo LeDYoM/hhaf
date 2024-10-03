@@ -1,7 +1,9 @@
 #include "imgui.h"
+#include "himgui_ogl3_windows.hpp"
+#include "himgui_glfw.hpp"
+#include "imgui.h"
+#include "backends/imgui_impl_glfw.h"
 #include "backends/imgui_impl_opengl3.h"
-#include "backends/imgui_impl_win32.h"
-#include <Windows.h>
 
 namespace
 {
@@ -10,24 +12,28 @@ constinit bool himgui_initialized{false};
 
 namespace himgui
 {
+namespace imguibackend = glfw;
 void init()
+{
+}
+
+void init_glfw(GLFWwindow* /*window*/)
 {
     // Setup Dear ImGui context
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
 
     ImGuiIO& io = ImGui::GetIO();
-    (void)io;
     io.ConfigFlags |=
         ImGuiConfigFlags_NavEnableKeyboard;  // Enable Keyboard Controls
     io.ConfigFlags |=
         ImGuiConfigFlags_NavEnableGamepad;  // Enable Gamepad Controls
     // Setup Platform/Renderer bindings
-    ImGui_ImplOpenGL3_Init();
-    ImGui_ImplWin32_InitForOpenGL(GetActiveWindow());
+    imguibackend::InitImp();
     // Setup Dear ImGui style
     ImGui::StyleColorsDark();
     himgui_initialized = true;
+//    himgui_initialized = true;
 }
 
 void update()
@@ -39,9 +45,7 @@ void update()
 
 void initFrame()
 {
-    ImGui_ImplOpenGL3_NewFrame();
-    ImGui_ImplWin32_NewFrame();
-
+    imguibackend::NewFrameImp();
     ImGui::NewFrame();
 }
 
@@ -61,13 +65,12 @@ void finishFrame()
 {
     // Render dear imgui into screen
     ImGui::Render();
-    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+    imguibackend::FinishFrameImp();
 }
 
 void shutdown()
 {
-    ImGui_ImplOpenGL3_Shutdown();
-    ImGui_ImplWin32_Shutdown();
+    imguibackend::ShutDownImp();
     ImGui::DestroyContext();
 }
 

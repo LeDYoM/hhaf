@@ -16,17 +16,4 @@ set_compile_warning_level_and_cxx_properties_all(${CURRENT_TARGET})
 # Detect and add SFML
 add_subdirectory(glfw)
 
-target_link_libraries(${CURRENT_TARGET} PRIVATE glfw)
-
-#target_link_libraries(${CURRENT_TARGET} PRIVATE
-#    sfml-system
-#    sfml-window
-#    sfml-graphics
-#    renderer)
-
-#add_custom_command(TARGET ${CURRENT_TARGET} POST_BUILD
-#                   COMMAND ${CMAKE_COMMAND}
-#                           -E
-#                           copy_directory
-#                           ${SFML_BINARY_DIR}/lib
-#                           $<TARGET_FILE_DIR:${CURRENT_TARGET}>)
+target_link_libraries(${CURRENT_TARGET} PRIVATE glfw haf_imgui)

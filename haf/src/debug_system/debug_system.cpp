@@ -113,7 +113,7 @@ void DebugSystem::init()
 
 void DebugSystem::update()
 {
-    himgui::initFrame();
+//    himgui::initFrame();
     himgui::initWindow();
     himgui::addMessage("Test message");
     str temp;

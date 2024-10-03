@@ -1,6 +1,7 @@
 #include "glfw_render_window.hpp"
 #include "key_conversion.hpp"
 #include <GLFW/glfw3.h>
+#include "haf_imgui.hpp"
 
 using namespace htps;
 
@@ -112,8 +113,9 @@ bool GLFWRenderWindow::createWindow(u32 const width,
             // glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
             m_render_window = glfwCreateWindow(w, h, "", NULL, NULL);
             glfwMakeContextCurrent(m_render_window);
+            himgui::init_glfw(m_render_window);
 
-            glfwSetKeyCallback(m_render_window, key_callback);
+//            glfwSetKeyCallback(m_render_window, key_callback);
 
             //            m_render_window->create(sf::VideoMode(w, h, bpp), "",
             //            style,
@@ -148,10 +150,12 @@ void GLFWRenderWindow::processEvents(
 
     iw_messages_receiver.endInputKeysUpdate();
 
-    if(glfwWindowShouldClose(m_render_window))
+    if (glfwWindowShouldClose(m_render_window))
     {
         iw_messages_receiver.requestExit();
     }
+
+    himgui::initFrame();
 }
 
 void GLFWRenderWindow::display()

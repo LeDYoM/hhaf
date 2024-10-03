@@ -46,7 +46,7 @@ target_link_libraries(${CURRENT_TARGET} PRIVATE
   backend_dev
 )
 
-target_link_libraries(${CURRENT_TARGET} PRIVATE haf_imgui)
+#target_link_libraries(${CURRENT_TARGET} PRIVATE haf_imgui)
 
 target_link_libraries(${CURRENT_TARGET} PUBLIC log_and_types mc_serial parpar facil_math)
 set_pragma_once_or_not(HAF true PUBLIC)
