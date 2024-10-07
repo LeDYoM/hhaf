@@ -18,6 +18,6 @@ if (use_imgui)
     build_lib_component(EXPORT_ALL HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}" SOURCES
                     ${sources} HEADERS ${headers})
 
-    target_link_libraries(${CURRENT_TARGET} PRIVATE imgui)
+    target_link_libraries(${CURRENT_TARGET} PUBLIC imgui)
 
 endif()
