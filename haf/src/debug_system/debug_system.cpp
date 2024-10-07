@@ -6,6 +6,8 @@
 #include "static_build_data_display.hpp"
 #include <hlog/include/hlog.hpp>
 
+#include "haf_imgui.hpp"
+
 using namespace haf::core;
 using namespace haf::debug;
 using namespace haf::time;
@@ -24,6 +26,8 @@ void DebugSystem::logBuildStaticData()
 
 void DebugSystem::preUpdate()
 {
+    himgui::init();
+
     m_debug_variables.startFrame(
         getSystem<TimeSystem>(systemAccessPtr()).nowFrame(),
         getSystem<TimeSystem>(systemAccessPtr()).currentFrame());

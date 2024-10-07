@@ -1,6 +1,7 @@
 #include "glfw_render_window.hpp"
 #include "key_conversion.hpp"
 #include <GLFW/glfw3.h>
+#include "haf_imgui.hpp"
 
 using namespace htps;
 
@@ -113,6 +114,7 @@ bool GLFWRenderWindow::createWindow(u32 const width,
             m_render_window = glfwCreateWindow(w, h, "", NULL, NULL);
             glfwMakeContextCurrent(m_render_window);
 //            himgui::init_glfw(m_render_window);
+            himgui::init();
 
             glfwSetKeyCallback(m_render_window, key_callback);
 

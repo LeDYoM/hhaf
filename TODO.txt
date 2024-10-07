@@ -8,7 +8,7 @@ find haf/ -iname *.hpp -o -iname *.cpp| xargs clang-format -i
 
 1.0.2:
     - Fix debug variables.
-        - Add imggui.
+        - Add imgui.
         - Add defines calling just a function
         - Logic to display vars with advanced features
 

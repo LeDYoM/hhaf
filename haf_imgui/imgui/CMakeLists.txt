@@ -1,5 +1,5 @@
 include(FetchContent)
-message(STATUS "Fetching Imggui")
+message(STATUS "Fetching Imgui")
 
 set(IMGUI_COMMIT 9d8de45)
 FetchContent_Declare(imgui
@@ -10,7 +10,7 @@ FetchContent_Declare(imgui
 
 FetchContent_MakeAvailable(imgui)
 
-message("Fetching ImgGui done")
+message("Fetching ImGui done")
 file (GLOB HEADERS "${imgui_SOURCE_DIR}/*.h")
 file (GLOB SOURCES "${imgui_SOURCE_DIR}/*.cpp")
 

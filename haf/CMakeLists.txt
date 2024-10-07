@@ -47,6 +47,7 @@ target_link_libraries(${CURRENT_TARGET} PRIVATE
 )
 
 target_link_libraries(${CURRENT_TARGET} PUBLIC log_and_types mc_serial parpar facil_math)
+target_link_libraries(${CURRENT_TARGET} PUBLIC haf_imgui)
 set_pragma_once_or_not(HAF true PUBLIC)
 
 # For now, we need it public for tests.
