@@ -14,10 +14,10 @@ if (use_imgui)
         src/himgui_ogl3_windows.cpp
         src/himgui_ogl3_windows.hpp
         )
-    message("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
-    build_lib_component(EXPORT_ALL HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}" SOURCES
+
+        build_lib_component(EXPORT_ALL HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}" SOURCES
                     ${sources} HEADERS ${headers})
 
-    target_link_libraries(${CURRENT_TARGET} PUBLIC imgui)
+    target_link_libraries(${CURRENT_TARGET} PRIVATE imgui)
 
 endif()
