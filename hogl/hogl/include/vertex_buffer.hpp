@@ -11,10 +11,10 @@ using NativeHandleType = htps::u32;
 class VertexBuffer
 {
 public:
-    enum Usage
+    enum class Usage
     {
         Stream,   ///< Constantly changing data
-        Dynamic,  ///< Occasionally changing data
+        Dynamic,  ///< Occasionally changing dataF
         Static    ///< Rarely changing data
     };
 

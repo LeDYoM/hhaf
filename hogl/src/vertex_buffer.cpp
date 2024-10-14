@@ -21,11 +21,11 @@ GLenum usageToGlEnum(VertexBuffer::Usage const usage)
 {
     switch (usage)
     {
-        case VertexBuffer::Static:
+        case VertexBuffer::Usage::Static:
             return GL_STATIC_DRAW;
-        case VertexBuffer::Dynamic:
+        case VertexBuffer::Usage::Dynamic:
             return GL_DYNAMIC_DRAW;
-        case VertexBuffer::Stream:
+        case VertexBuffer::Usage::Stream:
         default:
             return GL_STREAM_DRAW;
     }
