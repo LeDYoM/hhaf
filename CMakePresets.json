@@ -1,0 +1,47 @@
+{
+    "version": 6,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 23,
+        "patch": 0
+    },
+    "configurePresets": [
+        {
+            "name": "default",
+            "displayName": "default",
+            "description": "default",
+            "hidden": true,
+            "binaryDir": "${sourceDir}/preset_build/${presetName}"
+        },
+        {
+            "name": "win_vs_2022_x64",
+            "displayName": "Visual Stdudio 17 x64 2022 Windows",
+            "description": "Visual Stdudio 17 x64 2022 Windows",
+            "inherits": "default",
+            "generator": "Visual Studio 17 2022"
+        },
+        {
+            "name": "ninja",
+            "displayName": "Ninja Multi-Config",
+            "description": "Ninja Multi-Config",
+            "inherits": "default",
+            "generator": "Ninja Multi-Config"
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "win_vs_2022_x64_debug",
+            "description": "Build for Windows x64 in Debug configuration using Visual Studio 2022",
+            "displayName": "Windows VS 2022 x64 debug",
+            "configurePreset": "win_vs_2022_x64",
+            "configuration": "Debug"
+        },
+        {
+            "name": "win_vs_2022_x64_release",
+            "description": "Build for Windows x64 in Release configuration using Visual Studio 2022",
+            "displayName": "Windows VS 2022 x64 release",
+            "configurePreset": "win_vs_2022_x64",
+            "configuration": "Release"
+        }
+    ]
+}

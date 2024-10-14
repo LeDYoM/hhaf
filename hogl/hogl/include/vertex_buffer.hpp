@@ -6,7 +6,7 @@
 
 namespace haf::ogl
 {
-using NativeHandleType = htps::size_type;
+using NativeHandleType = htps::u32;
 
 class VertexBuffer
 {
