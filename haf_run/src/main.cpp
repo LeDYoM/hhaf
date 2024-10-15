@@ -10,13 +10,14 @@ int main(int argc, char* argv[])
     {
         // Create a dummy thread to initialize pthread library in
         // the executable. This is a workaround necessary for linux only.
-        std::thread t([]() {});
-        t.join();
+        std::jthread t([]() {});
     }
-    int result = 0;
+
     installMemManager();
 
     auto* loader(agloader::createLoader());
+
+    int result{0};
 
     constexpr const char host_library[] = "host";
     if (loader->loadModule(host_library))
