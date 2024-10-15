@@ -10,8 +10,17 @@ set(CMAKE_INSTALL_PREFIX hhaf)
 
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 include(functions)
-setOptions()
-includeForOptions()
+
+option(BUILD_PACKAGES "Build packages" ON)
+include(testing)
+testing_init()
+
+if(BUILD_PACKAGES)
+  include(install)
+  message("Building packages")
+else()
+  message("Not building packages")
+endif()
 
 set(_REPO_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
 

@@ -1,19 +1,3 @@
-macro(setOptions)
-  option(BUILD_PACKAGES "Build packages" ON)
-endmacro()
-
-macro(includeForOptions)
-  include(testing)
-  testing_init()
-
-  if(BUILD_PACKAGES)
-    include(install)
-    message("Building packages")
-  else()
-    message("Not building packages")
-  endif()
-endmacro()
-
 function(set_cxx_standard CURRENT_TARGET)
     set_target_properties(${CURRENT_TARGET} PROPERTIES
         CXX_STANDARD 20
