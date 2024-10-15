@@ -19,7 +19,7 @@ bld/
 [Bb]in/
 [Oo]bj/
 
-# Visual Studo cache/options directory
+# Visual Studio cache/options directory
 .vs/
 
 # MSTest test Results
@@ -78,6 +78,3 @@ ipch/
 
 
 build/
-\.vscode/
-external/win/oglsandbox/sb7code
-external/win/opengl_test/sb7code
