@@ -16,16 +16,21 @@
         {
             "name": "win_vs_2022_x64",
             "displayName": "Visual Stdudio 17 x64 2022 Windows",
-            "description": "Visual Stdudio 17 x64 2022 Windows",
+            "description": "Preset Visual Stdudio 17 x64 2022 Windows using Visual Studio Generator on Windows",
             "inherits": "default",
-            "generator": "Visual Studio 17 2022"
+            "generator": "Visual Studio 17 2022",
+            "hidden": false
         },
         {
-            "name": "ninja",
-            "displayName": "Ninja Multi-Config",
-            "description": "Ninja Multi-Config",
+            "name": "win32-msvc17-x64_x86-ninja-multi",
+            "displayName": "Visual Stdudio 17 x64 2022 Windows",
+            "description": "Preset Visual Stdudio 17 x64 2022 Windows using Visual Studio Generator on Windows",
+            "generator": "Ninja Multi-Config",
             "inherits": "default",
-            "generator": "Ninja Multi-Config"
+            "cacheVariables": {
+                "CMAKE_C_COMPILER": "cl.exe",
+                "CMAKE_CXX_COMPILER": "cl.exe"
+            }
         }
     ],
     "buildPresets": [
@@ -42,6 +47,13 @@
             "displayName": "Windows VS 2022 x64 release",
             "configurePreset": "win_vs_2022_x64",
             "configuration": "Release"
+        },
+        {
+            "name": "win_ninja_vs_2022_x64_debug",
+            "description": "Build for Windows x64 in Debug configuration using Visual Studio 2022",
+            "displayName": "Windows Ninja VS 2022 x64 debug",
+            "configurePreset": "win32-msvc17-x64_x86-ninja-multi",
+            "configuration": "Debug"
         }
     ]
 }
