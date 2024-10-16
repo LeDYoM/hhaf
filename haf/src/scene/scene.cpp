@@ -90,8 +90,8 @@ void Scene::initDebugUtils()
     p_->m_display_var_console->updateVar("Test", a);
     p_->m_display_var_console->showDebugVariables = true;
     installDebugUtils();
-    nodeConsole->componentOfType<TransformableComponent>()->Position =
-    {0.1f, 0.1f};
+    nodeConsole->componentOfType<TransformableComponent>()->Position = {0.1f,
+                                                                        0.1f};
 }
 
 }  // namespace haf::scene
