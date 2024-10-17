@@ -83,15 +83,16 @@ str Scene::completeName() const
 
 void Scene::initDebugUtils()
 {
-    sptr<SceneNode> nodeConsole = createSceneNode("m_display_var_console");
-    p_->m_display_var_console   = nodeConsole->component<DisplayVarConsole>();
+    sptr<TransformableSceneNode> nodeConsole =
+        createSceneNode<TransformableSceneNode>("m_display_var_console");
+    p_->m_display_var_console = nodeConsole->component<DisplayVarConsole>();
 
     debug::DebugVariable a{1};
     p_->m_display_var_console->updateVar("Test", a);
     p_->m_display_var_console->showDebugVariables = true;
     installDebugUtils();
-    nodeConsole->componentOfType<TransformableComponent>()->Position = {0.1f,
-                                                                        0.1f};
+    nodeConsole->Position = {0.1f, 0.1f};
+    nodeConsole->Scale = {1.0f, 4.0f};
 }
 
 }  // namespace haf::scene

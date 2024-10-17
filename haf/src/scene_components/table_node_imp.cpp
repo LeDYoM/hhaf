@@ -58,7 +58,6 @@ void TableNodeImp::createTableNodesIfNecessary()
 
             node->Position = left_top_plus_half_size +
                 (cell_size * static_cast<htps::vector2df>(p));
-            m_transformableComponent->Position = {0.0F, 0.0F};
         });
         allTableElementsCreated(TableSize());
     }
@@ -134,9 +133,9 @@ void TableNodeImp::for_each_table_innerSceneNode(
     }
 }
 
-void TableNodeImp::addRequirements(component::ComponentRequirements& cReq)
+void TableNodeImp::addRequirements(component::ComponentRequirements&)
 {
-    cReq.component(m_transformableComponent);
+//    cReq.component(m_transformableComponent);
 }
 
 }  // namespace haf::scene

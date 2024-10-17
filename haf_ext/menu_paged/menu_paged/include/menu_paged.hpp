@@ -54,7 +54,6 @@ private:
     htps::sptr<StatesControllerComponent<htps::s32>> statesControllerComponent_;
     htps::vector_shared_pointers<MenuPage> menu_steps_;
     MenuFinishedStatus status_{MenuFinishedStatus::Backward};
-    htps::sptr<TransformableComponent> m_transformableComponent;
 };
 }  // namespace haf::scene
 

@@ -70,7 +70,6 @@ private:
     virtual void createNodeAt(htps::vector2dst const& index) = 0;
 
     htps::vector<htps::vector<ContainedType_t>> inner_nodes_;
-    htps::sptr<TransformableComponent> m_transformableComponent;
 };
 
 }  // namespace haf::scene

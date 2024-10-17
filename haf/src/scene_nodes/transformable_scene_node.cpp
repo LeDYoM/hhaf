@@ -67,12 +67,14 @@ void TransformableSceneNode::postRender(SceneRenderContext& sceneRenderContext)
     }
     else
     {
+/*
         auto const& parentTransformable{
             parent()->componentOfType<TransformableComponent>()};
 
         sceneRenderContext.currentTransformation = parentTransformable
             ? parentTransformable->globalTransform()
             : Matrix4x4::Identity;
+            */
     }
 
     bool localTransformationChanged{updateTransformIfNecessary()};
