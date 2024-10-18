@@ -7,7 +7,6 @@ HTPS_PRAGMA_ONCE
 
 #include <haf/include/haf_export.hpp>
 #include <htypes/include/connection.hpp>
-#include <haf/include/scene_components/transformable_component.hpp>
 #include <haf/include/scene_nodes/transformable_scene_node.hpp>
 #include <haf/include/component/component.hpp>
 #include <haf/include/component/component_requirements.hpp>

@@ -92,7 +92,7 @@ void Scene::initDebugUtils()
     p_->m_display_var_console->showDebugVariables = true;
     installDebugUtils();
     nodeConsole->Position = {0.1f, 0.1f};
-    nodeConsole->Scale = {1.0f, 4.0f};
+    nodeConsole->Scale    = {1.0f, 4.0f};
 }
 
 }  // namespace haf::scene
