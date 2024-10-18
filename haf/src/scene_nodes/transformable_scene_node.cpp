@@ -53,6 +53,8 @@ void TransformableSceneNode::postRender(SceneRenderContext& sceneRenderContext)
         sceneRenderContext.currentTransformation = parentTransformable
             ? parentTransformable->globalTransform()
             : Matrix4x4::Identity;
+
+        sceneRenderContext.currentTransformation = Matrix4x4::Identity;
     }
 
     bool localTransformationChanged{updateTransformIfNecessary()};
