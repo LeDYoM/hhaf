@@ -8,7 +8,8 @@ namespace haf::scene
 {
 sptr<render::Renderizable> const& RenderizableSceneNode::node() const noexcept
 {
-    LogAsserter::log_assert(!BaseClass::empty(), "The inner vector is empty");
+    LogAsserter::log_assert(!BaseClass::emptyRenderizables(),
+                            "The Renderizables vector is empty");
     return BaseClass::operator[](0U);
 }
 }  // namespace haf::scene

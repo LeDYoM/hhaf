@@ -10,15 +10,30 @@ HTPS_PRAGMA_ONCE
 
 namespace haf::scene
 {
-class HAF_API RenderizablesSceneNode : public TransformableSceneNode,
-                                       public render::Renderizables
+class HAF_API RenderizablesSceneNode : public TransformableSceneNode
 {
     using SceneNodeBaseClass = TransformableSceneNode;
 
 public:
-
     RenderizablesSceneNode(htps::rptr<SceneNode> parent, htps::str name);
     void postRender(SceneRenderContext& sceneRenderContext) override;
+
+    auto renderizablesCount() const noexcept { return renderizables_.size(); }
+
+    bool emptyRenderizables() const noexcept { return renderizables_.empty(); }
+
+    decltype(auto) operator[](htps::size_type const index) const noexcept
+    {
+        return renderizables_[index];
+    }
+
+    auto renderizableBuilder()
+    {
+        return renderizables_.renderizableBuilder();
+    }
+
+private:
+    render::Renderizables renderizables_;
 };
 
 }  // namespace haf::scene
