@@ -5,3 +5,7 @@ find haf/ -iname *.hpp -o -iname *.cpp| xargs clang-format -i
 #- Make transformations explicit of rotation, scalation, position, etc...
 #   that should help to not store the entire matrix always.
 - Create CodeProfiler
+
+think:
+Renderizables and Renderizable should merge
+SceneNodeLetter has only a convenience function. Should dissappear.
