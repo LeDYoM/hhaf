@@ -10,8 +10,17 @@ set(CMAKE_INSTALL_PREFIX hhaf)
 
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 include(functions)
-setOptions()
-includeForOptions()
+
+option(BUILD_PACKAGES "Build packages" ON)
+include(testing)
+testing_init()
+
+if(BUILD_PACKAGES)
+  include(install)
+  message("Building packages")
+else()
+  message("Not building packages")
+endif()
 
 message("CMAKE_SOURCE_DIR:" ${CMAKE_SOURCE_DIR})
 message("CMAKE_BINARY_DIR:" ${CMAKE_BINARY_DIR})
