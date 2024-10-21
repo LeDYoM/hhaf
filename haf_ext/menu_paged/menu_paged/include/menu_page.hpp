@@ -8,7 +8,7 @@
 #include <haf/include/scene_nodes/scene_node_text.hpp>
 
 #include <htypes/include/connection.hpp>
-#include <haf/include/scene_components/discretetextcomponent.hpp>
+#include <haf/include/scene_components/discrete_text_component.hpp>
 
 namespace haf::scene
 {

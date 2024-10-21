@@ -132,7 +132,7 @@ set(sources
 
   # Scene components
   ${src_dir}/scene_components/camera_component.cpp
-  ${src_dir}/scene_components/discretetextcomponent.cpp
+  ${src_dir}/scene_components/discrete_text_component.cpp
   ${src_dir}/scene_components/scene_components_log.hpp
   ${src_dir}/scene_components/table_node_imp.cpp
   ${src_dir}/scene_components/table_text_component.cpp
@@ -307,7 +307,7 @@ set(headers
 
   # Scene components
   ${inc_dir}/scene_components/camera_component.hpp
-  ${inc_dir}/scene_components/discretetextcomponent.hpp
+  ${inc_dir}/scene_components/discrete_text_component.hpp
   ${inc_dir}/scene_components/iapp_finisher.hpp
   ${inc_dir}/scene_components/iapp_initializer.hpp
   ${inc_dir}/scene_components/iscene_control.hpp

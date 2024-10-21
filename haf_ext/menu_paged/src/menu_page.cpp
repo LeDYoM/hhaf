@@ -5,7 +5,7 @@
 
 #include <hlog/include/hlog.hpp>
 #include <haf/include/input/key.hpp>
-#include <haf/include/scene_components/discretetextcomponent.hpp>
+#include <haf/include/scene_components/discrete_text_component.hpp>
 
 #include <htypes/include/function.hpp>
 
