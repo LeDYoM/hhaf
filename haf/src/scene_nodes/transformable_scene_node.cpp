@@ -1,5 +1,4 @@
 #include <haf/include/scene_nodes/transformable_scene_node.hpp>
-#include <haf/include/scene_components/transformable_component.hpp>
 #include <haf/include/profiler/code_profiler.hpp>
 #include <haf/include/debug_system/debug_types.hpp>
 #include <hlog/include/hlog.hpp>
@@ -44,17 +43,6 @@ void TransformableSceneNode::postRender(SceneRenderContext& sceneRenderContext)
             transformable_parent != nullptr
             ? transformable_parent->globalTransform()
             : Matrix4x4::Identity;
-    }
-    else
-    {
-        auto const& parentTransformable{
-            parent()->componentOfType<TransformableComponent>()};
-
-        sceneRenderContext.currentTransformation = parentTransformable
-            ? parentTransformable->globalTransform()
-            : Matrix4x4::Identity;
-
-        sceneRenderContext.currentTransformation = Matrix4x4::Identity;
     }
 
     bool localTransformationChanged{updateTransformIfNecessary()};
