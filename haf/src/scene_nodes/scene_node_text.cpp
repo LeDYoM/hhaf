@@ -1,7 +1,6 @@
 #include <haf/include/scene_nodes/scene_node_text.hpp>
 #include <haf/include/render/renderizables.hpp>
 
-#include "scene_node_letter.hpp"
 #include "resources/font_utils.hpp"
 
 #include <haf/include/resources/ifont.hpp>
@@ -151,12 +150,12 @@ void SceneNodeText::update()
                     -(text_render_size / 2.0F);
 
                 // Initialize the node for each letter we are going to use
-                sptr<SceneNodeLetter> letterNode;
+                sptr<RenderizableSceneNode> letterNode;
 
                 for (auto curChar : current_text)
                 {
                     letterNode =
-                        m_letters_scene_node->createSceneNode<SceneNodeLetter>(
+                        m_letters_scene_node->createSceneNode<RenderizableSceneNode>(
                             "text_" + str::to_str(indexChar));
                     letterNode->renderizableBuilder()
                         .name("text_" + str::to_str(indexChar))
@@ -171,8 +170,9 @@ void SceneNodeText::update()
 
                     letterNode->node()->material().color = text_color;
 
-                    letterNode->setCharacterTextureData(
-                        texture, font->getTextureBounds(curChar));
+                    letterNode->node()->material().texture = texture;
+                    letterNode->node()->material().textureRect =
+                        font->getTextureBounds(curChar);
 
                     ++indexChar;
                 }

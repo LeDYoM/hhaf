@@ -143,8 +143,6 @@ set(sources
   # Scene nodes
   ${src_dir}/scene_nodes/renderizable_scene_node.cpp
   ${src_dir}/scene_nodes/renderizables_scene_node.cpp
-  ${src_dir}/scene_nodes/scene_node_letter.cpp
-  ${src_dir}/scene_nodes/scene_node_letter.hpp
   ${src_dir}/scene_nodes/scene_node_table_imp.cpp
   ${src_dir}/scene_nodes/scene_node_table_text.cpp
   ${src_dir}/scene_nodes/scene_node_text_quad.cpp
