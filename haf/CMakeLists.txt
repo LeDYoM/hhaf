@@ -137,6 +137,7 @@ set(sources
   ${src_dir}/scene_components/table_node_imp.cpp
   ${src_dir}/scene_components/table_text_component.cpp
   ${src_dir}/scene_components/texteditorcomponent.cpp
+  ${src_dir}/scene_components/transformable_component.cpp
   ${src_dir}/scene_components/visibility_selector_component.cpp
 
   # Scene nodes
@@ -315,6 +316,7 @@ set(headers
   ${inc_dir}/scene_components/table_text_component.hpp
   ${inc_dir}/scene_components/table_component.hpp
   ${inc_dir}/scene_components/texteditorcomponent.hpp
+  ${inc_dir}/scene_components/transformable_component.hpp
   ${inc_dir}/scene_components/visibility_selector_component.hpp
 
   # Scene nodes

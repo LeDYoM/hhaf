@@ -12,6 +12,7 @@ SceneNode::SceneNode(rptr<SceneNode> parent, str name) :
     SceneNodes{this},
     sys::SystemAccess{parent != nullptr ? &(parent->isystemProvider())
                                         : nullptr},
+//    SceneNodeProperties(true),
     component::ComponentContainer{this},
     sys::SubSystemViewer{&isystemProvider()}
 {}
