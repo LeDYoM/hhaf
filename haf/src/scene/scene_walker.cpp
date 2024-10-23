@@ -20,14 +20,7 @@ void walk(SceneNode& scene_node, ISceneSubsystem& iscene_subsystem)
 {
     if (scene_node.Visible())
     {
-        // Update the node components
-        auto const& transformable_component{
-            scene_node.componentOfType<TransformableComponent>()};
-        if (transformable_component != nullptr)
-        {
-            transformable_component->setSceneRenderContext(
-                scene_render_context);
-        }
+        iscene_subsystem.onSceneNodePass(scene_node);
         scene_node.updateComponents();
         scene_node.update();
         scene_node.postRender(scene_render_context);
