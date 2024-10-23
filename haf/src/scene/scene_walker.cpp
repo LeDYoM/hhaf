@@ -8,11 +8,15 @@ using namespace htps;
 
 namespace haf::scene
 {
-void render(Scene& scene_node, ISceneSubsystem& iscene_subsystem)
+void walk(Scene& scene, ISceneSubsystem& iscene_subsystem)
 {
+    iscene_subsystem.onPassStart();
+    iscene_subsystem.onScenePass(scene);
+    render(static_cast<SceneNode&>(scene), iscene_subsystem);
+    iscene_subsystem.onPassFinished();
 }
 
-void render(Scene& scene_node, ISceneSubsystem& iscene_subsystem)
+void walk(SceneNode& scene_node, ISceneSubsystem& iscene_subsystem)
 {
     if (scene_node.Visible())
     {

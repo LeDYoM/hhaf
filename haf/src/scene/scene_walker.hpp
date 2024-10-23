@@ -21,7 +21,7 @@ namespace haf
         virtual bool onSceneNodePass(scene::SceneNode&) = 0;
         virtual bool onSceneTreeDown() = 0;
         virtual bool onSceneTreeUp() = 0;
-        virtual bool onPassFinished() = 0;
+        virtual bool onScenePassFinished(scene::Scene&) = 0;
         virtual ~ISceneSubsystem() = default;
     };
 }
@@ -29,7 +29,7 @@ namespace haf
 namespace haf::scene
 {
 
-void HAF_PRIVATE walk(Scene& scene_node, ISceneSubsystem& iscene_subsystem);
+void HAF_PRIVATE walk(Scene& scene, ISceneSubsystem& iscene_subsystem);
 void HAF_PRIVATE walk(SceneNode& scene_node, ISceneSubsystem& iscene_subsystem);
 
 }  // namespace haf::scene
