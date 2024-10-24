@@ -20,7 +20,7 @@ void walk(SceneNode& scene_node, ISceneSubsystem& iscene_subsystem)
 {
     if (scene_node.Visible())
     {
-        iscene_subsystem
+//        iscene_subsystem
         // Render the nodes added to this node
         for (auto& group : scene_node.sceneNodes())
         {
