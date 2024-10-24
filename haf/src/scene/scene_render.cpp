@@ -14,13 +14,6 @@ void render(SceneNode& scene_node, SceneRenderContext scene_render_context)
     if (scene_node.Visible())
     {
         // Update the node components
-        auto const& transformable_component{
-            scene_node.componentOfType<TransformableComponent>()};
-        if (transformable_component != nullptr)
-        {
-            transformable_component->setSceneRenderContext(
-                scene_render_context);
-        }
         scene_node.updateComponents();
         scene_node.update();
         scene_node.postRender(scene_render_context);
