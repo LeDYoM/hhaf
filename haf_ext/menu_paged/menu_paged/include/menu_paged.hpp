@@ -4,7 +4,6 @@
 #include <htypes/include/types.hpp>
 #include <htypes/include/connection.hpp>
 
-#include <haf/include/scene_components/transformable_component.hpp>
 #include <haf/include/scene/color.hpp>
 #include <haf/include/resources/ifont.hpp>
 #include <haf/include/scene_components/states_controller_component.hpp>

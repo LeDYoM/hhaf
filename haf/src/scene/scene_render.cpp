@@ -3,7 +3,6 @@
 #include <haf/include/scene/scene.hpp>
 #include <haf/include/scene/scene_node.hpp>
 #include <haf/include/component/component_container.hpp>
-#include <haf/include/scene_components/transformable_component.hpp>
 
 using namespace htps;
 

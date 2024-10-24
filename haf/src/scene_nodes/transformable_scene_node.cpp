@@ -1,5 +1,4 @@
 #include <haf/include/scene_nodes/transformable_scene_node.hpp>
-#include <haf/include/scene_components/transformable_component.hpp>
 #include <haf/include/profiler/code_profiler.hpp>
 #include <haf/include/debug_system/debug_types.hpp>
 #include <hlog/include/hlog.hpp>
