@@ -42,6 +42,7 @@ public:
         std::is_nothrow_copy_constructible_v<T>) :
         BaseClass{iv}
     {}
+
     constexpr PropertyState(T&& iv) noexcept(
         std::is_nothrow_move_constructible_v<T>) :
         BaseClass{htps::move(iv)}
