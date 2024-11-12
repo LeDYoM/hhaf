@@ -12,6 +12,7 @@ using namespace haf::render;
 using namespace haf::anim;
 
 using namespace htps;
+using namespace fmath;
 
 namespace zoper
 {

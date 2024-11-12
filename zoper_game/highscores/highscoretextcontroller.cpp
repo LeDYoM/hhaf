@@ -19,6 +19,7 @@ using namespace htps;
 using namespace haf;
 using namespace haf::scene;
 using namespace haf::scene::nodes;
+using namespace fmath;
 
 namespace zoper
 {
@@ -30,7 +31,7 @@ void HighScoreTextController::onCreated()
     TableSize = {3U, NumHighScore};
 }
 
-void HighScoreTextController::onAllTableElementsCreated(htps::vector2dst const)
+void HighScoreTextController::onAllTableElementsCreated(fmath::vector2dst const)
 {
     set_property_for_each_table_node(&SceneNodeText::TextBaseSizeProperty,
                                      TextBaseSize{'A', 8U});
@@ -111,7 +112,7 @@ void HighScoreTextController::addHighScoreEditor(
         Finished();
     });
     editor->Rejected.connect(
-        [editor_ = mwptr(editor)]() { editor_.lock()->enabled = true; });
+        [editor_ = htps::wptr(editor)]() { editor_.lock()->enabled = true; });
 }
 
 void HighScoreTextController::addEditAnimation(const size_type line_index)

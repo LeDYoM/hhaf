@@ -2,6 +2,7 @@
 #include <SFML/Graphics/Texture.hpp>
 
 using namespace htps;
+using namespace fmath;
 
 namespace haf::backend::sfmlb
 {

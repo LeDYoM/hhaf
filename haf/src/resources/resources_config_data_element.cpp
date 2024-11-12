@@ -2,7 +2,7 @@
 
 namespace haf::res
 {
-bool ResourcesConfigDataElement::deserialize(htps::Object const& obj)
+bool ResourcesConfigDataElement::deserialize(mcs::Object const& obj)
 {
     bool result{true};
     result &= obj[ResourcesConfigDataElement::TypeStr].as(type);

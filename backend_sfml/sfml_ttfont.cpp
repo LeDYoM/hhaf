@@ -3,6 +3,7 @@
 #include <SFML/Graphics/Font.hpp>
 
 using namespace htps;
+using namespace fmath;
 
 namespace haf::backend::sfmlb
 {

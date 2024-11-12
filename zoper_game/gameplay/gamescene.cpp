@@ -19,7 +19,7 @@
 #include "../zoperprogramcontroller.hpp"
 #include "../keymapping.hpp"
 #include <htypes/include/types.hpp>
-#include <htypes/include/properties/iproperty.hpp>
+#include <haf/include/properties/iproperty.hpp>
 
 #include <boardmanager/include/boardmanager.hpp>
 #include <boardmanager/include/board_types.hpp>
@@ -30,7 +30,7 @@
 #include <haf/include/scene_components/statescontrolleractuator_register.hpp>
 #include <haf/include/shareddata/shared_data_viewer.hpp>
 #include <haf/include/resources/iresource_configurator.hpp>
-#include <htypes/include/serializer.hpp>
+#include <mc_serial/include/serializer.hpp>
 #include <haf/include/filesystem/ifile_serializer.hpp>
 #include <haf/include/render/renderizables.hpp>
 #include <haf/include/render/renderizable_builder.hpp>
@@ -42,6 +42,7 @@ using namespace haf::render;
 using namespace haf::scene;
 using namespace haf::scene::nodes;
 using namespace haf::anim;
+using namespace fmath;
 
 namespace zoper
 {

@@ -1,12 +1,13 @@
 #include "catch.hpp"
 
 #include <htypes/include/types.hpp>
-#include <htypes/include/object.hpp>
+#include <facil_math/include/rect.hpp>
 #include <haf/include/shareddata/address.hpp>
 
 using namespace htps;
 using namespace haf;
 using namespace haf::shdata;
+using namespace mcs;
 
 TEST_CASE("Address", "[haf][shdata][Address]")
 {

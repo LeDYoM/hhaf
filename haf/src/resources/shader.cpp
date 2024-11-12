@@ -19,7 +19,7 @@ void Shader::setUniform(htps::str const& name, bool const& value)
     priv_->setUniform(name, value);
 }
 
-void Shader::setUniform(htps::str const& name, htps::vector2df const& value)
+void Shader::setUniform(htps::str const& name, fmath::vector2df const& value)
 {
     priv_->setUniform(name, value);
 }

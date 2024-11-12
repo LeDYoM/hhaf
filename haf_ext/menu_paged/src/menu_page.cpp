@@ -10,6 +10,7 @@
 #include <htypes/include/function.hpp>
 
 using namespace htps;
+using namespace fmath;
 
 namespace haf::scene
 {
@@ -30,7 +31,7 @@ void MenuPage::onCreated()
 
 constexpr size_type columnForOptions{4U};
 
-void MenuPage::onAllTableElementsCreated(htps::vector2dst const table_size)
+void MenuPage::onAllTableElementsCreated(fmath::vector2dst const table_size)
 {
     BaseClass::onAllTableElementsCreated(table_size);
 

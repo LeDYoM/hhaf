@@ -3,7 +3,7 @@ HTPS_PRAGMA_ONCE
 #define HAF_SCENE_ITTFONT_INTERFACE_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
-#include <htypes/include/rect.hpp>
+#include <facil_math/include/rect.hpp>
 
 #include <haf/include/resources/itexture.hpp>
 #include <haf/include/resources/ifont.hpp>
@@ -16,9 +16,9 @@ protected:
     ~ITTFont() = default;
 
 public:
-    virtual htps::Rectf32 getBounds(const htps::u32 codePoint,
+    virtual fmath::Rectf32 getBounds(const htps::u32 codePoint,
                                     const htps::u32 characterSize) const = 0;
-    virtual htps::Rectf32 getTextureBounds(
+    virtual fmath::Rectf32 getTextureBounds(
         const htps::u32 codePoint,
         const htps::u32 characterSize) const                              = 0;
     virtual htps::f32 getAdvance(const htps::u32 codePoint,

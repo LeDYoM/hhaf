@@ -4,8 +4,8 @@ HTPS_PRAGMA_ONCE
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/str.hpp>
-#include <htypes/include/rect.hpp>
-#include <htypes/include/properties/property_state.hpp>
+#include <facil_math/include/rect.hpp>
+#include <haf/include/properties/property_state.hpp>
 #include <haf/include/scene/color.hpp>
 #include <haf/include/haf_export.hpp>
 #include <haf/include/resources/itexture.hpp>
@@ -17,10 +17,10 @@ namespace haf::scene
 class HAF_API Material
 {
 public:
-    htps::PropertyState<scene::Color> color;
-    htps::PropertyState<htps::sptr<res::IShader>> shader;
-    htps::PropertyState<htps::sptr<res::ITexture>> texture;
-    htps::PropertyState<htps::Rects32> textureRect;
+    prop::PropertyState<scene::Color> color;
+    prop::PropertyState<htps::sptr<res::IShader>> shader;
+    prop::PropertyState<htps::sptr<res::ITexture>> texture;
+    prop::PropertyState<fmath::Rects32> textureRect;
 };
 }  // namespace haf::scene
 

@@ -4,7 +4,7 @@ HTPS_PRAGMA_ONCE
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/function.hpp>
-#include <htypes/include/connection.hpp>
+#include <haf/include/events/connection.hpp>
 #include <haf/include/time/time_point.hpp>
 #include <haf/include/time/time_view.hpp>
 #include <haf/include/time/timer.hpp>
@@ -12,7 +12,7 @@ HTPS_PRAGMA_ONCE
 
 namespace haf::time
 {
-using timer_emitter_t  = htps::emitter<TimePoint>;
+using timer_emitter_t  = evt::emitter<TimePoint>;
 using timer_callback_t = timer_emitter_t::emitter_callback_t;
 
 /**

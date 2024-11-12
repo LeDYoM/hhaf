@@ -68,7 +68,7 @@ public:
     bool makeEmpty() override;
 
 private:
-    htps::Object data_object_;
+    mcs::Object data_object_;
 };
 
 }  // namespace haf::sys

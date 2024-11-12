@@ -6,6 +6,7 @@
 #include "texture.hpp"
 
 using namespace htps;
+using namespace fmath;
 
 namespace haf::res
 {

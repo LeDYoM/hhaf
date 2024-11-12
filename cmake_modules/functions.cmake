@@ -1,6 +1,22 @@
+macro(setOptions)
+  option(BUILD_PACKAGES "Build packages" ON)
+endmacro()
+
+macro(includeForOptions)
+  include(testing)
+  testing_init()
+
+  if(BUILD_PACKAGES)
+    include(install)
+    message("Building packages")
+  else()
+    message("Not building packages")
+  endif()
+endmacro()
+
 function(set_cxx_standard CURRENT_TARGET)
     set_target_properties(${CURRENT_TARGET} PROPERTIES
-        CXX_STANDARD 20
+        CXX_STANDARD 23
         CXX_STANDARD_REQUIRED ON
         CXX_EXTENSIONS OFF
         POSITION_INDEPENDENT_CODE ON)
@@ -19,21 +35,22 @@ function (set_compile_warning_level_all CURRENT_TARGET level)
     target_compile_options(${CURRENT_TARGET} ${level}
 #        $<$<CXX_COMPILER_ID:MSVC>:/Wall /WX>
         $<$<CXX_COMPILER_ID:MSVC>:/W4 /WX>
-        $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:-Wall -Wextra -pedantic -Werror>
+        $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:-Wall -Wextra -pedantic -Wno-unknown-pragmas>
     )
+    set(CMAKE_COMPILE_WARNING_AS_ERROR OFF)
 endfunction()
 
 function (set_compile_warning_level CURRENT_TARGET level)
     target_compile_options(${CURRENT_TARGET} ${level}
         $<$<CXX_COMPILER_ID:MSVC>:/W4 /WX>
-        $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:-Wall -Wextra -pedantic -Werror>
+        $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:-Wall -Wextra -pedantic -Werror -Wno-unknown-pragmas>
     )
 endfunction()
 
 function (set_compile_warning_level_for_tests CURRENT_TARGET level)
     target_compile_options(${CURRENT_TARGET} ${level}
         $<$<CXX_COMPILER_ID:MSVC>:/W4 /WX>
-        $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:-Wall -Wextra -pedantic -Werror>
+        $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:-Wall -Wextra -pedantic -Werror -Wno-unknown-pragmas>
     )
 endfunction()
 
@@ -54,22 +71,6 @@ endfunction()
 function(set_compile_warning_level_and_cxx_properties_all CURRENT_TARGET)
     set_compile_warning_level_all(${CURRENT_TARGET} PRIVATE)
     set_cxx_standard(${CURRENT_TARGET})
-endfunction()
-
-# Function to build different components from the project in an unified way.
-function(build_lib_interface_component)
-
-  cmake_parse_arguments(LC_BUILD "" "HEADER_DIRECTORY" "SOURCES" ${ARGN})
-
-  set(CURRENT_TARGET ${PROJECT_NAME})
-
-  add_library(${CURRENT_TARGET} INTERFACE)
-  target_sources(${CURRENT_TARGET} INTERFACE ${LC_BUILD_SOURCES})
-  target_include_directories(${CURRENT_TARGET}
-                             INTERFACE ${LC_BUILD_HEADER_DIRECTORY})
-
-  export(TARGETS ${CURRENT_TARGET} FILE ${CURRENT_TARGET}_target.cmake)
-
 endfunction()
 
 function(set_install_options_for_target target)
@@ -107,7 +108,9 @@ function(build_lib_component)
     set(mode_for_others PUBLIC)
   endif()
 
-  target_sources(${CURRENT_TARGET} ${mode} "${LC_BUILD_SOURCES};${LC_BUILD_HEADERS}")
+  if(NOT ${mode} STREQUAL "INTERFACE")
+    target_sources(${CURRENT_TARGET} ${mode} "${LC_BUILD_SOURCES};${LC_BUILD_HEADERS}")
+  endif()
 
   set_compile_warning_level(${CURRENT_TARGET} ${mode})
   if(NOT ${mode} STREQUAL "INTERFACE")
@@ -146,7 +149,6 @@ function(build_lib_component)
   )
 
   set_install_options_for_target(${CURRENT_TARGET})
-  
 endfunction()
 
 function(build_lib_ext)
@@ -165,6 +167,19 @@ function(build_lib_ext)
   target_link_libraries(${CURRENT_TARGET} PRIVATE haf)
 
   set_compile_warning_level_and_cxx_properties(${CURRENT_TARGET})
+
+endfunction()
+
+function(set_pragma_once_or_not this_name use_pragma_once mode)
+  if (use_pragma_once STREQUAL "true")
+    message("Setting pragma once for ${this_name}")
+    set(result _Pragma\(\"once\"\))
+  else()
+    message("Not Setting pragma once for ${this_name}")
+    set(result "")
+  endif()
+
+  target_compile_definitions(${CURRENT_TARGET} ${mode} ${this_name}_PRAGMA_ONCE=${result})
 
 endfunction()
 

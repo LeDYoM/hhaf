@@ -14,27 +14,27 @@
 namespace haf::backend::sfmlb
 {
 template <typename T>
-constexpr sf::Rect<T> to_sf_type(htps::Rect<T> const& rect) noexcept
+constexpr sf::Rect<T> to_sf_type(fmath::Rect<T> const& rect) noexcept
 {
     return sf::Rect<T>{rect.left, rect.top, rect.width, rect.height};
 }
 
 template <typename T>
-constexpr htps::Rect<T> from_sf_type(sf::Rect<T> const& rect) noexcept
+constexpr fmath::Rect<T> from_sf_type(sf::Rect<T> const& rect) noexcept
 {
-    return htps::Rect<T>{rect.left, rect.top, rect.width, rect.height};
+    return fmath::Rect<T>{rect.left, rect.top, rect.width, rect.height};
 }
 
 template <typename T>
-constexpr const sf::Vector2<T> to_sf_type(htps::vector2d<T> const& v) noexcept
+constexpr const sf::Vector2<T> to_sf_type(fmath::vector2d<T> const& v) noexcept
 {
     return sf::Vector2<T>{v.x, v.y};
 }
 
 template <typename T>
-constexpr const htps::vector2d<T> from_sf_type(sf::Vector2<T> const& v) noexcept
+constexpr const fmath::vector2d<T> from_sf_type(sf::Vector2<T> const& v) noexcept
 {
-    return htps::vector2d<T>{v.x, v.y};
+    return fmath::vector2d<T>{v.x, v.y};
 }
 
 constexpr IKey doCast(sf::Keyboard::Key const& k) noexcept

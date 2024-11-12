@@ -10,7 +10,7 @@ HTPS_PRAGMA_ONCE
 #include <haf/include/scene/scene_node.hpp>
 #include <haf/include/time/timer_component.hpp>
 #include <haf/include/time/timer_connector.hpp>
-#include <htypes/include/properties/iproperty.hpp>
+#include <haf/include/properties/iproperty.hpp>
 
 namespace haf::anim
 {

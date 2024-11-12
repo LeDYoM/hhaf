@@ -20,7 +20,7 @@ void RenderElement::setModelViewMatrix(
     htps::f32 const* const model_view_matrix)
 {
     transformation =
-        htps::make_span(model_view_matrix, model_view_matrix + 16U);
+        htps::span(model_view_matrix, model_view_matrix + 16U);
 }
 
 void RenderElement::setProjectionMatrix(

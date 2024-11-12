@@ -2,9 +2,11 @@
 #define HAF_BACKEND_SFMLB_REDNERTARGET_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
-#include <htypes/include/vector2d.hpp>
-#include <htypes/include/rect.hpp>
+#include <htypes/include/str.hpp>
 #include <htypes/include/array.hpp>
+
+#include <facil_math/include/vector2d.hpp>
+#include <facil_math/include/rect.hpp>
 
 namespace haf::backend
 {
@@ -22,7 +24,7 @@ public:
     RenderTarget();
 
     void clear();
-    void setViewPort(htps::Rects32 const& viewport);
+    void setViewPort(fmath::Rects32 const& viewport);
     void setProjection(htps::span<htps::f32 const> const& projection);
     void render(RenderElement const* const render_element);
 

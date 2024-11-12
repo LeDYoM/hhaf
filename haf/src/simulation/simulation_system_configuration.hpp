@@ -24,7 +24,7 @@ struct HAF_PRIVATE DeserializableSimulationData : public data::IDeserializable
     static constexpr char SimulationInputFileStr[] = "read_input";
     static constexpr char SimulationOutputFile[]   = "write_output";
 
-    bool deserialize(htps::Object const& obj)
+    bool deserialize(mcs::Object const& obj)
     {
         data.global_use |=
             obj[SimulationInputFileStr].as(data.simulation_input_file);

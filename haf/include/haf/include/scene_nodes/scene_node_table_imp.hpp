@@ -3,10 +3,10 @@ HTPS_PRAGMA_ONCE
 #define HAF_SCENE_SCENE_NODE_TABLE_IMP_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
-#include <htypes/include/properties/iproperty.hpp>
+#include <haf/include/properties/iproperty.hpp>
 
 #include <haf/include/haf_export.hpp>
-#include <htypes/include/connection.hpp>
+#include <haf/include/events/connection.hpp>
 #include <haf/include/scene_nodes/transformable_scene_node.hpp>
 #include <haf/include/component/component.hpp>
 
@@ -25,49 +25,49 @@ public:
 
     using ContainedType_t = htps::sptr<TransformableSceneNode>;
 
-    htps::PropertyState<htps::vector2dst> TableSize;
-    htps::PropertyState<htps::vector2df> TableSizeForNodes;
+    prop::PropertyState<fmath::vector2dst> TableSize;
+    prop::PropertyState<fmath::vector2df> TableSizeForNodes;
 
-    htps::emitter<htps::vector2dst, ContainedType_t const&> onInnerNodeCreated;
+    evt::emitter<fmath::vector2dst, ContainedType_t const&> onInnerNodeCreated;
 
     /**
      * @brief Get the size of each cell.
      * @note It might change when new size for the table is set
-     * @return htps::vector2df The size of each cell
+     * @return fmath::vector2df The size of each cell
      */
-    htps::vector2df cellSize() const;
+    fmath::vector2df cellSize() const;
 
     /**
      * @brief Update the node
      */
     void update() override;
 
-    bool nodeTableCreated(htps::vector2dst const& index) const;
+    bool nodeTableCreated(fmath::vector2dst const& index) const;
 
-    virtual void onAllTableElementsCreated(htps::vector2dst const);
-    htps::emitter<htps::vector2dst const> allTableElementsCreated;
+    virtual void onAllTableElementsCreated(fmath::vector2dst const);
+    evt::emitter<fmath::vector2dst const> allTableElementsCreated;
 
     void createTableNodesIfNecessary();
 
 protected:
 
-    ContainedType_t innerSceneNodeAt(htps::vector2dst const index) const;
+    ContainedType_t innerSceneNodeAt(fmath::vector2dst const index) const;
 
-    virtual void setTableSize(htps::vector2dst const ntableSize);
+    virtual void setTableSize(fmath::vector2dst const ntableSize);
 
 private:
-    ContainedType_t createInnerSceneNodeAt(htps::vector2dst const index,
+    ContainedType_t createInnerSceneNodeAt(fmath::vector2dst const index,
                                            htps::str const& name);
 
-    void setInnerSceneNodeAt(htps::vector2dst const index,
+    void setInnerSceneNodeAt(fmath::vector2dst const index,
                              ContainedType_t& scene_node);
 
     void updateTableSizeIfNecessary();
 
     void for_each_table_innerSceneNode(
-        htps::function<void(const htps::vector2dst&, ContainedType_t&)> action);
+        htps::function<void(const fmath::vector2dst&, ContainedType_t&)> action);
 
-    virtual void createNodeAt(htps::vector2dst const& index) = 0;
+    virtual void createNodeAt(fmath::vector2dst const& index) = 0;
 
     htps::vector<htps::vector<ContainedType_t>> inner_nodes_;
 };

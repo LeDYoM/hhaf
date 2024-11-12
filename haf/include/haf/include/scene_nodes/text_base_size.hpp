@@ -4,7 +4,7 @@ HTPS_PRAGMA_ONCE
 
 #include <haf/include/haf_export.hpp>
 #include <htypes/include/types.hpp>
-#include <htypes/include/vector2d.hpp>
+#include <facil_math/include/vector2d.hpp>
 #include <htypes/include/str.hpp>
 
 namespace haf::scene::nodes
@@ -17,17 +17,17 @@ public:
     TextBaseSize(char const ch, htps::size_type const size);
 
     TextBaseSize(htps::str text);
-    TextBaseSize(htps::vector2df size);
-    TextBaseSize(htps::str text, htps::vector2df size);
+    TextBaseSize(fmath::vector2df size);
+    TextBaseSize(htps::str text, fmath::vector2df size);
 
     bool operator==(TextBaseSize const& rhs) const noexcept;
 
     htps::str const& text() const noexcept;
-    htps::vector2df value() const noexcept;
+    fmath::vector2df value() const noexcept;
 
 private:
     htps::str text_;
-    htps::vector2df value_;
+    fmath::vector2df value_;
 };
 
 }  // namespace haf::scene::nodes

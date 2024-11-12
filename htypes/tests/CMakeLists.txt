@@ -5,25 +5,20 @@ set(CURRENT_TARGET ${PROJECT_NAME})
 
 set(SOURCE_TESTS
     array
-    connection
     dictionary
     function
-    lockablevector
+    hash
+    lockable_vector
     main
     menum
-    object
-    object_utils
-    parpar
-    properties
-    propertystate
-    rect
+    shared_ptr
     span
     str_literal
+    str_view
     str
-    vector_view
+    unique_ptr
     vector
-    vector2d
-    vector3d
+    weak_ptr
 )
 
 add_test_executable(SOURCE_TESTS ${SOURCE_TESTS})

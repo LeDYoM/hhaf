@@ -19,7 +19,7 @@ public:
     ~SFMLShader() noexcept override;
 
     void setUniform(htps::str const& name, bool const& v) override;
-    void setUniform(htps::str const& name, htps::vector2df const& v) override;
+    void setUniform(htps::str const& name, fmath::vector2df const& v) override;
     void setUniform(htps::str const& name,
                     htps::rptr<ITexture const> const texture) override;
 

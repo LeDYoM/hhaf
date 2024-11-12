@@ -2,7 +2,7 @@
 #define HAF_BACKEND_SFML_TTFONT_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
-#include <htypes/include/rect.hpp>
+#include <facil_math/include/rect.hpp>
 #include <htypes/include/str.hpp>
 #include <htypes/include/rawmemory.hpp>
 #include <backend_dev/include/ittfont.hpp>
@@ -24,9 +24,9 @@ public:
                ResourceLoadParameters&& resource_load_parameters);
     ~SFMLTTFont() override;
 
-    htps::Rectf32 getBounds(const htps::u32 codePoint,
+    fmath::Rectf32 getBounds(const htps::u32 codePoint,
                             const htps::u32 characterSize) const override;
-    htps::Rectf32 getTextureBounds(
+    fmath::Rectf32 getTextureBounds(
         const htps::u32 codePoint,
         const htps::u32 characterSize) const override;
     htps::f32 getAdvance(const htps::u32 codePoint,

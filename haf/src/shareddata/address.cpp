@@ -4,6 +4,7 @@
 #include <utility>
 
 using namespace htps;
+using namespace mcs;
 
 namespace haf::shdata
 {
@@ -124,7 +125,7 @@ bool Address::removeLast()
     return false;
 }
 
-pair<bool, htps::Object> objectFromAddress(Address const& address,
+pair<bool, mcs::Object> objectFromAddress(Address const& address,
                                            Object const& object)
 {
     if (address.isFinal())
@@ -157,7 +158,7 @@ pair<bool, htps::Object> objectFromAddress(Address const& address,
     return {false, {}};
 }
 
-htps::Object* ensureAddress(Address const& address, htps::Object& object)
+mcs::Object* ensureAddress(Address const& address, mcs::Object& object)
 {
     if (address.isFinal())
     {

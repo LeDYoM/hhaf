@@ -19,10 +19,10 @@ public:
     void onAttached() override;
 
     void tableNodeCreated(
-        htps::vector2dst const&,
+        fmath::vector2dst const&,
         htps::sptr<haf::scene::nodes::SceneNodeText> const&);
 
-    void setText(htps::vector2dst const& nodeIndex, htps::str const& text);
+    void setText(fmath::vector2dst const& nodeIndex, htps::str const& text);
 private:
     void addRequirements(component::ComponentRequirements&) override;
     htps::sptr<scene::TextTableNode> m_textTableNode;

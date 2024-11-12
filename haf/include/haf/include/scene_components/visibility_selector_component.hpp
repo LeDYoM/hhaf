@@ -3,7 +3,7 @@ HTPS_PRAGMA_ONCE
 #define HAF_SCENE_VISIBILITY_SELECTOR_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
-#include <htypes/include/properties/property_state.hpp>
+#include <haf/include/properties/property_state.hpp>
 
 #include <haf/include/component/component.hpp>
 
@@ -31,7 +31,7 @@ public:
      * The index is for the nodes contained in the same SceneNode as this
      * component.
      */
-    htps::PropertyState<htps::size_type> visible_index;
+    prop::PropertyState<htps::size_type> visible_index;
 };
 
 }  // namespace haf::scene

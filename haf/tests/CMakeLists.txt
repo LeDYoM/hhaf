@@ -11,6 +11,10 @@ set(SOURCE_TESTS
     debug_system/debug_variable
     debug_system/debug_variables
 
+    properties/named_property_state
+    properties/properties
+    properties/property_state
+
     scene/color
     scene/matrix4x4
     scene/scenecontroller

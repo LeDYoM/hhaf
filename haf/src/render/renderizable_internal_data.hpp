@@ -11,7 +11,7 @@ struct RenderizableInternalData
 {
     FigType_t const& figType;
     htps::size_type const& pointCount;
-    htps::Rects32 const& textureRect;
+    fmath::Rects32 const& textureRect;
 };
 
 }  // namespace haf::render

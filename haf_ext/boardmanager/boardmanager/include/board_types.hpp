@@ -2,10 +2,11 @@
 #define HEF_EXT_BOARDMANAGER_BOARD_TYPES_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
+#include <facil_math/include/vector2d.hpp>
 
 namespace haf::board
 {
-using BoardPositionType = htps::vector2dst;
+using BoardPositionType = fmath::vector2dst;
 
 }  // namespace haf::board
 

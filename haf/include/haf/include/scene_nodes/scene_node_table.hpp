@@ -3,8 +3,8 @@ HTPS_PRAGMA_ONCE
 #define HAF_SCENE_NODE_TABLE_INCLUDE_HPP
 
 #include <haf/include/haf_export.hpp>
-#include <htypes/include/connection.hpp>
-#include <htypes/include/properties/properties.hpp>
+#include <haf/include/events/connection.hpp>
+#include <haf/include/properties/properties.hpp>
 #include <haf/include/scene_nodes/scene_node_table_imp.hpp>
 #include <hlog/include/hlog.hpp>
 
@@ -25,27 +25,27 @@ public:
 
     using BaseClass::BaseClass;
 
-    htps::emitter<htps::vector2dst const, htps::sptr<T> const&>
+    evt::emitter<fmath::vector2dst const, htps::sptr<T> const&>
         onTableNodeCreated;
 
-    constexpr htps::sptr<T>& operator()(htps::vector2dst const& index)
+    constexpr htps::sptr<T>& operator()(fmath::vector2dst const& index)
     {
         return nodeAt(index);
     }
 
     constexpr htps::sptr<T const> const operator()(
-        htps::vector2dst const& index) const noexcept
+        fmath::vector2dst const& index) const noexcept
     {
         return nodeAt(index);
     }
 
-    constexpr htps::sptr<T>& nodeAt(htps::vector2dst const& index) noexcept
+    constexpr htps::sptr<T>& nodeAt(fmath::vector2dst const& index) noexcept
     {
         return nodes_[index.x][index.y];
     }
 
     constexpr htps::sptr<T const> const nodeAt(
-        htps::vector2dst const& index) const noexcept
+        fmath::vector2dst const& index) const noexcept
     {
         return nodes_[index.x][index.y];
     }
@@ -63,7 +63,7 @@ public:
     }
 
     constexpr void for_each_tableSceneNode(
-        htps::function<void(htps::vector2dst const&,
+        htps::function<void(fmath::vector2dst const&,
                             htps::sptr<T> const&)> const action)
     {
         for (htps::size_type x{0U}; x < nodes_.size(); ++x)
@@ -72,7 +72,7 @@ public:
             {
                 if (htps::sptr<T> & node{nodes_[x][y]}; node)
                 {
-                    action(htps::vector2dst{x, y}, node);
+                    action(fmath::vector2dst{x, y}, node);
                 }
             }
         }
@@ -86,7 +86,7 @@ public:
         PropertyValue const& value)
     {
         for_each_tableSceneNode(
-            [&value, property_v](htps::vector2dst const&,
+            [&value, property_v](fmath::vector2dst const&,
                                  htps::sptr<T> const& node) {
                 set_property(node, property_v, value);
             });
@@ -97,7 +97,7 @@ public:
         htps::function<void(const htps::size_type, htps::sptr<T> const&)> const
             action)
     {
-        for_each_tableSceneNode([&action, x](htps::vector2dst const& pos,
+        for_each_tableSceneNode([&action, x](fmath::vector2dst const& pos,
                                              htps::sptr<T> const& node) {
             if (pos.x == x)
             {
@@ -111,7 +111,7 @@ public:
         htps::function<void(htps::size_type const, htps::sptr<T> const&)> const
             action)
     {
-        for_each_tableSceneNode([&action, y](htps::vector2dst const& pos,
+        for_each_tableSceneNode([&action, y](fmath::vector2dst const& pos,
                                              htps::sptr<T> const& node) {
             if (pos.y == y)
             {
@@ -121,10 +121,10 @@ public:
     }
 
 private:
-    virtual void tableNodeCreated(htps::vector2dst const&, htps::sptr<T> const&)
+    virtual void tableNodeCreated(fmath::vector2dst const&, htps::sptr<T> const&)
     {}
 
-    void createNodeAt(htps::vector2dst const& index) override final
+    void createNodeAt(fmath::vector2dst const& index) override final
     {
         auto createdNode{
             innerSceneNodeAt(index)->createSceneNode<T>("inner_inner_node")};
@@ -133,7 +133,7 @@ private:
         tableNodeCreated(index, nodeAt(index));
     }
 
-    void setTableSize(htps::vector2dst const ntableSize) override final
+    void setTableSize(fmath::vector2dst const ntableSize) override final
     {
         BaseClass::setTableSize(ntableSize);
         nodes_.resize(ntableSize.x);

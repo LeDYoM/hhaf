@@ -3,6 +3,7 @@
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/array.hpp>
+#include <htypes/include/vector.hpp>
 
 #include <backend_dev/include/ivertex.hpp>
 #include <hogl/include/vertex_buffer.hpp>

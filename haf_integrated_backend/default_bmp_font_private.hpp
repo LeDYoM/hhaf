@@ -21,12 +21,12 @@ struct KearningInfo
 
 struct CharDescriptor
 {
-    htps::Rect<htps::u16> position;
-    htps::vector2d<htps::s16> offset;
+    fmath::Rect<htps::u16> position;
+    fmath::vector2d<htps::s16> offset;
     htps::s16 xadvance;
     htps::s16 page;
     htps::vector<KearningInfo> kearn;
-    htps::Rectf32 offsetedPosition;
+    fmath::Rectf32 offsetedPosition;
 
     htps::s32 GetKerningPair(const htps::u32 second) const;
 };
@@ -48,8 +48,8 @@ struct FontInfo
     htps::f32 stretchH;
     bool smooth;
     bool aa;
-    htps::Rect<htps::s16> padding;
-    htps::vector2d<htps::s16> spacing;
+    fmath::Rect<htps::s16> padding;
+    fmath::vector2d<htps::s16> spacing;
     bool outline;
 };
 
@@ -58,7 +58,7 @@ class DefaultBMPFont::DefaultBMFontPrivate
 public:
     htps::s16 lineHeight;
     htps::s16 base;
-    htps::vector2du32 size_;
+    fmath::vector2du32 size_;
     htps::s16 pages;
     htps::s16 outline;
     FontInfo fInfo;

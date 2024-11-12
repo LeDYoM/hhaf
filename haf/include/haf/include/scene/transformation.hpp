@@ -3,9 +3,9 @@ HTPS_PRAGMA_ONCE
 #define HAF_SCENE_TRANSFORMATION_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
-#include <htypes/include/vector2d.hpp>
-#include <htypes/include/rect.hpp>
-#include <htypes/include/properties/property_state.hpp>
+#include <facil_math/include/vector2d.hpp>
+#include <facil_math/include/rect.hpp>
+#include <haf/include/properties/property_state.hpp>
 
 #include <haf/include/scene/matrix4x4.hpp>
 
@@ -15,12 +15,12 @@ class HAF_API Transformation
 {
 public:
     using Scalar       = Matrix4x4::Scalar;
-    using VectorScalar = htps::vector2d<Scalar>;
-    using RectScalar   = htps::Rect<Scalar>;
+    using VectorScalar = fmath::vector2d<Scalar>;
+    using RectScalar   = fmath::Rect<Scalar>;
 
-    htps::PropertyState<VectorScalar> Position{VectorScalar{0.0F, 0.0F}};
-    htps::PropertyState<Scalar> Rotation{Scalar{0.0F}};
-    htps::PropertyState<VectorScalar> Scale{VectorScalar{1.0F, 1.0F}};
+    prop::PropertyState<VectorScalar> Position{VectorScalar{0.0F, 0.0F}};
+    prop::PropertyState<Scalar> Rotation{Scalar{0.0F}};
+    prop::PropertyState<VectorScalar> Scale{VectorScalar{1.0F, 1.0F}};
 
     Transformation() noexcept;
     virtual ~Transformation();

@@ -28,5 +28,5 @@ build_lib_component(EXPORT_ALL HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}" SOURCES
 
 target_compile_definitions(${CURRENT_TARGET} PRIVATE backend_client_EXPORTS)
 
-target_link_libraries(${CURRENT_TARGET} PRIVATE backend_dev htypes)
+target_link_libraries(${CURRENT_TARGET} PRIVATE backend_dev htypes facil_math)
 set_compile_warning_level_and_cxx_properties(${CURRENT_TARGET})

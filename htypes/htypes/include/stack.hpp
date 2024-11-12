@@ -19,12 +19,12 @@ public:
     using const_reference = const T&;
 
     constexpr stack() noexcept = default;
-    explicit constexpr stack(const size_type size) : data_(size) {}
+    explicit constexpr stack(const size_type size) : data_{size} {}
     constexpr stack(const stack& other)     = default;
     constexpr stack(stack&& other) noexcept = default;
     constexpr stack& operator=(const stack& other) = default;
     constexpr stack& operator=(stack&& other) noexcept = default;
-    ~stack() noexcept                                  = default;
+    constexpr ~stack()                                           = default;
 
     constexpr size_type capacity() const noexcept { return data_.capacity(); }
     constexpr size_type size() const noexcept { return data_.size(); }

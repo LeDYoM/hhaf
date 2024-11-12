@@ -4,9 +4,9 @@ HTPS_PRAGMA_ONCE
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/vector.hpp>
-#include <htypes/include/vector2d.hpp>
-#include <htypes/include/rect.hpp>
-#include <htypes/include/properties/property_state.hpp>
+#include <facil_math/include/vector2d.hpp>
+#include <facil_math/include/rect.hpp>
+#include <haf/include/properties/property_state.hpp>
 
 #include <haf/include/scene/matrix4x4.hpp>
 #include <haf/include/scene/transformation.hpp>
@@ -29,9 +29,9 @@ public:
 
     using Scalar = Matrix4x4::Scalar;  ///< Type Scalar for this class
     using VectorScalar =
-        htps::vector2d<Scalar>;  ///< Type VectorScalar for this class
+        fmath::vector2d<Scalar>;  ///< Type VectorScalar for this class
     using RectScalar =
-        htps::Rect<Scalar>;  ///< Type of RectScalar for this class
+        fmath::Rect<Scalar>;  ///< Type of RectScalar for this class
 
     /**
      * @brief Construct a new Transformable object. The object will be

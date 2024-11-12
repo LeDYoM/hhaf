@@ -7,7 +7,7 @@ HTPS_PRAGMA_ONCE
 #include <haf/include/component/component_container.hpp>
 #include <haf/include/scene/scene_node.hpp>
 #include <haf/include/scene_components/states_controller_component.hpp>
-#include <htypes/include/connection.hpp>
+#include <haf/include/events/connection.hpp>
 #include <hlog/include/hlog.hpp>
 
 namespace haf::input

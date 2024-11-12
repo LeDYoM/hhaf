@@ -3,7 +3,7 @@ HTPS_PRAGMA_ONCE
 #define HAF_COMPONENT_INPUT_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
-#include <htypes/include/connection.hpp>
+#include <haf/include/events/connection.hpp>
 #include <haf/include/input/input_component_base.hpp>
 #include <haf/include/input/key.hpp>
 
@@ -17,8 +17,8 @@ public:
 
     void update() override;
 
-    htps::emitter<const Key&> KeyPressed;
-    htps::emitter<const Key&> KeyReleased;
+    evt::emitter<const Key&> KeyPressed;
+    evt::emitter<const Key&> KeyReleased;
 };
 }  // namespace haf::input
 

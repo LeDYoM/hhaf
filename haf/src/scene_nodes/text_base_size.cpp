@@ -1,6 +1,7 @@
 #include <haf/include/scene_nodes/text_base_size.hpp>
 
 using namespace htps;
+using namespace fmath;
 
 namespace haf::scene::nodes
 {

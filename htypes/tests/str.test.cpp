@@ -19,6 +19,19 @@ TEST_CASE("str::str Default constructor", "[str]")
     CHECK(test.size() == 1U);
 }
 
+TEST_CASE("str::str Construct with string_view", "[str][str_view]")
+{
+    str test{"hello"};
+    CHECK(test == "hello");
+    CHECK(test.size() == 5U);
+    CHECK_FALSE(test.empty());
+
+    str_view test2{test.c_str()};
+    CHECK(test2 == "hello");
+    CHECK(test2.size() == 5U);
+    CHECK_FALSE(test2.empty());
+}
+
 TEST_CASE("str::str Copy initialize", "[str]")
 {
     str test("a");

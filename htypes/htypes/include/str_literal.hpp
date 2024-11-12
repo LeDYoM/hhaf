@@ -11,8 +11,6 @@ namespace htps
 template <typename char_type, size_type N>
 struct basic_str_literal
 {
-    using size_type = size_type;
-
     constexpr basic_str_literal(char_type const (&str)[N]) noexcept :
         real_size_{N}
     {
@@ -32,8 +30,14 @@ struct basic_str_literal
 
     constexpr bool empty() const noexcept { return real_size_ == 1U; }
 
-    constexpr char_type const* const cbegin() const noexcept { return value; }
-    constexpr char_type const* const cend() const noexcept
+    constexpr char_type * begin() noexcept { return value; }
+    constexpr char_type * end() noexcept
+    {
+        return &(value[real_size_]);
+    }
+
+    constexpr char_type const* cbegin() const noexcept { return value; }
+    constexpr char_type const* cend() const noexcept
     {
         return &(value[real_size_]);
     }

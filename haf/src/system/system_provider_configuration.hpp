@@ -25,7 +25,7 @@ struct HAF_PRIVATE DeserializableSystemConfigurationData
     static constexpr char kWindowSystemConfigurationFile[] =
         "window_configuration_file";
 
-    bool deserialize(htps::Object const& obj)
+    bool deserialize(mcs::Object const& obj)
     {
         obj[kSimulationSystemConfigurationFile].as(
             data.simulation_system_configuration_file_);

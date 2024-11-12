@@ -17,20 +17,20 @@ public:
 
     void update() override;
 
-    htps::PropertyState<htps::size_type> currentLevel;
-    htps::PropertyState<htps::size_type> currentScore;
-    htps::PropertyState<htps::size_type> currentConsumedTokens;
-    htps::PropertyState<htps::u64> currentEllapsedTimeInSeconds;
-    htps::PropertyState<htps::size_type> currentStayCounter;
+    haf::prop::PropertyState<htps::size_type> currentLevel;
+    haf::prop::PropertyState<htps::size_type> currentScore;
+    haf::prop::PropertyState<htps::size_type> currentConsumedTokens;
+    haf::prop::PropertyState<htps::u64> currentEllapsedTimeInSeconds;
+    haf::prop::PropertyState<htps::size_type> currentStayCounter;
 
     void onCreated() override;
     int foo() { return 4; }
     bool abc;
-    htps::PropertyState<bool> cde;
+    haf::prop::PropertyState<bool> cde;
 
 private:
-    void onAllScoreElementsCreated(htps::vector2dst const);
-    void onAllGoalElementsCreated(htps::vector2dst const);
+    void onAllScoreElementsCreated(fmath::vector2dst const);
+    void onAllGoalElementsCreated(fmath::vector2dst const);
     bool setLevel(const htps::size_type level);
     bool setScore(htps::size_type const score);
     bool setConsumedTokens(htps::size_type const consumedTokens);

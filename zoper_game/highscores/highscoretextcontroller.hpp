@@ -2,7 +2,7 @@
 #define ZOPER_HIGHSCORETEXTCONTROLLER_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
-#include <htypes/include/connection.hpp>
+#include <haf/include/events/connection.hpp>
 #include <haf/include/scene/scene_node.hpp>
 #include <haf/include/resources/ifont.hpp>
 #include <haf/include/scene_nodes/renderizable_scene_node.hpp>
@@ -23,10 +23,10 @@ public:
 
     void onCreated() override;
 
-    htps::emitter<> Finished;
+    haf::evt::emitter<> Finished;
 
 private:
-    void onAllTableElementsCreated(htps::vector2dst const) override;
+    void onAllTableElementsCreated(fmath::vector2dst const) override;
     void standarizeText(
         const htps::sptr<haf::scene::nodes::SceneNodeText>& ntext);
     void saveHighScores();

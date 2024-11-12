@@ -2,9 +2,9 @@
 #define ZOPER_GAME_SHARED_DATA_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
-#include <htypes/include/vector2d.hpp>
-#include <htypes/include/rect.hpp>
-#include <htypes/include/object.hpp>
+#include <facil_math/include/vector2d.hpp>
+#include <facil_math/include/rect.hpp>
+#include <facil_math/include/rect.hpp>
 #include <htypes/include/str.hpp>
 #include <haf/include/shareddata/ishareable.hpp>
 #include <haf/include/shareddata/address.hpp>
@@ -39,8 +39,8 @@ struct GameSharedData : public haf::shdata::IShareable
     static constexpr char EndLevel[]     = "EndLevel";
     static constexpr char GameScore[]    = "GameScore";
 
-    bool serialize(htps::Object& obj) const override;
-    bool deserialize(htps::Object const& obj) override;
+    bool serialize(mcs::Object& obj) const override;
+    bool deserialize(mcs::Object const& obj) override;
 };
 
 }  // namespace zoper

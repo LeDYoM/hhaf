@@ -36,11 +36,6 @@ SceneBox SceneNode::sceneView() const
     return sceneParent()->cameraComponent()->view();
 }
 
-SceneBox::vector_t SceneNode::sceneViewSize() const
-{
-    return sceneView().size();
-}
-
 rptr<Scene> SceneNode::sceneParent()
 {
     return ancestor<Scene>();

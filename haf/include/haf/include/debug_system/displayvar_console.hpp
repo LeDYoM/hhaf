@@ -23,7 +23,7 @@ public:
     void update() override;
     void addRequirements(component::ComponentRequirements&);
 
-    htps::PropertyState<bool> showDebugVariables{false};
+    prop::PropertyState<bool> showDebugVariables{false};
 
 private:
     htps::PureDictionary m_variables_data;

@@ -1,6 +1,6 @@
 #include "highscoresdata.hpp"
 
-#include <htypes/include/serializer.hpp>
+#include <mc_serial/include/serializer.hpp>
 #include <hlog/include/hlog.hpp>
 
 using namespace htps;

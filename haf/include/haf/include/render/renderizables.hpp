@@ -49,7 +49,7 @@ public:
         htps::function<void(htps::sptr<T> const&)> action) const
     {
         for_each_node([&action](htps::sptr<Renderizable> const& node) {
-            if (auto const tnode{std::dynamic_pointer_cast<T>(node)})
+            if (auto const tnode{htps::dynamic_pointer_cast<T>(node)})
             {
                 action(tnode);
             }

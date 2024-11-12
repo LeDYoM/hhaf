@@ -5,7 +5,7 @@ HTPS_PRAGMA_ONCE
 #include "haf_private.hpp"
 #include <htypes/include/types.hpp>
 #include <htypes/include/str.hpp>
-#include <htypes/include/vector2d.hpp>
+#include <facil_math/include/vector2d.hpp>
 
 #include <haf/include/data/ideserializable.hpp>
 #include "system/system_configuration.hpp"
@@ -34,7 +34,7 @@ struct HAF_PRIVATE DeserializableWindowConfigurationData
     static constexpr char WindowBitsPerBlueStr[]  = "window_bpb";
     static constexpr char WindowBitsPerAlphaStr[] = "window_bpa";
 
-    bool deserialize(htps::Object const& obj)
+    bool deserialize(mcs::Object const& obj)
     {
         bool result{true};
         result |= obj[WindowWidthStr].as(data.width);
@@ -58,9 +58,9 @@ public:
     htps::u32 configuredWindowWidth() const noexcept { return data().width; }
     htps::u32 configuredWindowHeight() const noexcept { return data().height; }
 
-    htps::vector2du32 configuredWindowSize() const noexcept
+    fmath::vector2du32 configuredWindowSize() const noexcept
     {
-        return htps::vector2du32{data().width, data().height};
+        return fmath::vector2du32{data().width, data().height};
     }
 
     htps::u8 configuredBitsPerRed() const noexcept

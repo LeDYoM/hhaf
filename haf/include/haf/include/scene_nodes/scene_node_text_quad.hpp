@@ -17,7 +17,7 @@ public:
 
     void onCreated() override;
 
-    void onElementCreated(htps::vector2dst, htps::sptr<SceneNodeText> const&);
+    void onElementCreated(fmath::vector2dst, htps::sptr<SceneNodeText> const&);
 
 };
 }  // namespace haf::scene::nodes

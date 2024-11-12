@@ -2,7 +2,7 @@
 #define HEF_EXT_MENU_PAGED_MAIN_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
-#include <htypes/include/connection.hpp>
+#include <haf/include/events/connection.hpp>
 
 #include <haf/include/scene/color.hpp>
 #include <haf/include/resources/ifont.hpp>
@@ -29,10 +29,10 @@ class MenuPaged : public TransformableSceneNode
 public:
     using BaseClass::BaseClass;
 
-    htps::PropertyState<htps::sptr<res::IFont>> NormalTextFont;
-    htps::PropertyState<Color> NormalColor;
-    htps::PropertyState<Color> SelectedColor;
-    htps::PropertyState<bool> FinishSceneAtEnd;
+    prop::PropertyState<htps::sptr<res::IFont>> NormalTextFont;
+    prop::PropertyState<Color> NormalColor;
+    prop::PropertyState<Color> SelectedColor;
+    prop::PropertyState<bool> FinishSceneAtEnd;
 
     void onCreated() override;
     ~MenuPaged() override;
@@ -42,7 +42,7 @@ public:
 
     void terminate(MenuFinishedStatus const status);
 
-    htps::emitter<const MenuFinishedStatus> MenuFinished;
+    evt::emitter<const MenuFinishedStatus> MenuFinished;
 
 protected:
     htps::sptr<MenuPage> createMenuPage(htps::str name);

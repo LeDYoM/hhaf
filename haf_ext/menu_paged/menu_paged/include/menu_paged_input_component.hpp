@@ -2,7 +2,7 @@
 #define ZOPER_MENU_MENUPAGE_INPUT_COMPONENT_INCLUDE_HPP
 
 #include <haf/include/input/virtual_input_component.hpp>
-#include <htypes/include/connection.hpp>
+#include <haf/include/events/connection.hpp>
 
 namespace haf::scene
 {
@@ -13,11 +13,11 @@ public:
     using BaseClass = input::VirtualInputComponent;
     using BaseClass::BaseClass;
 
-    htps::emitter<> Up;
-    htps::emitter<> Down;
-    htps::emitter<> Left;
-    htps::emitter<> Right;
-    htps::emitter<> Selected;
+    evt::emitter<> Up;
+    evt::emitter<> Down;
+    evt::emitter<> Left;
+    evt::emitter<> Right;
+    evt::emitter<> Selected;
 
 private:
     void onKeyPressed(const input::Key&) override;

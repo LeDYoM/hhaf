@@ -1,7 +1,7 @@
 #include "texture.hpp"
 #include <backend_dev/include/itexture.hpp>
 
-using namespace htps;
+using namespace fmath;
 
 namespace haf::res
 {

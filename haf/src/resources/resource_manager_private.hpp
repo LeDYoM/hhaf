@@ -16,8 +16,8 @@
 #include <backend/include/backend_factory.hpp>
 #include <backend_dev/include/resource_load_parameters.hpp>
 
-#include <htypes/include/object.hpp>
-#include <htypes/include/object_utils.hpp>
+#include <facil_math/include/rect.hpp>
+#include <mc_serial/include/object.hpp>
 #include <algorithm>
 
 using namespace htps;

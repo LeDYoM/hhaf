@@ -20,7 +20,7 @@ struct GameScene::GameScenePrivate
     htps::uptr<KeyMapping> key_mapping_;
 
     void createScoreIncrementPoints(haf::scene::SceneNode& main_node,
-                                    htps::vector2df const& lastTokenPosition);
+                                    fmath::vector2df const& lastTokenPosition);
 };
 }  // namespace zoper
 

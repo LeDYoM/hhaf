@@ -1,14 +1,15 @@
 #include <haf/include/scene_components/camera_component.hpp>
 #include <haf/include/scene/matrix4x4.hpp>
 #include <haf/include/scene/transformation.hpp>
-#include <htypes/include/rect.hpp>
-#include <htypes/include/properties/property_state.hpp>
+#include <facil_math/include/rect.hpp>
+#include <haf/include/properties/property_state.hpp>
 #include "render/render_system.hpp"
 #include "render/render_target.hpp"
 #include "system/get_system.hpp"
 #include "scene_components_log.hpp"
 
 using namespace htps;
+using namespace fmath;
 
 namespace haf::scene
 {

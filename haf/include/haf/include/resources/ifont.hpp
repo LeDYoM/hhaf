@@ -3,7 +3,8 @@ HTPS_PRAGMA_ONCE
 #define HAF_SCENE_FONT_INTERFACE_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
-#include <htypes/include/rect.hpp>
+
+#include <facil_math/include/rect.hpp>
 #include <htypes/include/str.hpp>
 
 namespace haf::res
@@ -16,8 +17,8 @@ protected:
     ~IFont() = default;
 
 public:
-    virtual htps::Rectf32 getBounds(const htps::u32 codePoint) const        = 0;
-    virtual htps::Rectf32 getTextureBounds(const htps::u32 codePoint) const = 0;
+    virtual fmath::Rectf32 getBounds(const htps::u32 codePoint) const        = 0;
+    virtual fmath::Rectf32 getTextureBounds(const htps::u32 codePoint) const = 0;
     virtual htps::f32 getAdvance(const htps::u32 codePoint) const           = 0;
     virtual htps::f32 getLineSpacing() const                                = 0;
     virtual htps::f32 getKerning(const htps::u32 first,

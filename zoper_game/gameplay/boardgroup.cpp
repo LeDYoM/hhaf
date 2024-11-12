@@ -20,6 +20,7 @@
 using namespace htps;
 using namespace haf::scene;
 using namespace haf::scene::nodes;
+using namespace fmath;
 
 namespace zoper
 {
@@ -30,7 +31,7 @@ void BoardGroup::configure(vector2dst size,
                            sptr<LevelProperties> level_properties)
 {
     level_properties_ = htps::move(level_properties);
-    TableSize = size;
+    TableSize         = size;
     auto const tableSize{TableSize()};
 
     // Create and initialize the BoardManager
@@ -65,7 +66,7 @@ void BoardGroup::addPlayer()
     LogAsserter::log_assert(player_ == nullptr, "Player already initialized");
 
     // Create the player instance
-    player_ = tokens_scene_node->createSceneNode<Player>("playerNode");
+    player_        = tokens_scene_node->createSceneNode<Player>("playerNode");
     player_->Scale = tileSize();
 
     // Add it to the board and to the scene nodes
@@ -86,7 +87,7 @@ void BoardGroup::createNewToken(BoardTileData const data,
 
     // Set the position in the scene depending on the board position
     new_tile_token->Position = board2Scene(board_position);
-    new_tile_token->Scale = tileSize();
+    new_tile_token->Scale    = tileSize();
 
     // Add it to the board
     auto board_model{componentOfType<board::BoardManager>()};
@@ -96,9 +97,9 @@ void BoardGroup::createNewToken(BoardTileData const data,
 
 void BoardGroup::tileRemoved(const vector2dst, board::SITilePointer& tile)
 {
-    LogAsserter::log_assert(std::dynamic_pointer_cast<Token>(tile) != nullptr,
+    LogAsserter::log_assert(htps::dynamic_pointer_cast<Token>(tile) != nullptr,
                             "Trying to delete invalid type from board");
-    tokens_scene_node->removeSceneNode(std::dynamic_pointer_cast<Token>(tile));
+    tokens_scene_node->removeSceneNode(htps::dynamic_pointer_cast<Token>(tile));
 }
 
 void BoardGroup::onTableNodeAdded(htps::sptr<SceneNode> const&)
@@ -111,9 +112,8 @@ void BoardGroup::setLevel(const size_type level)
     // Update background tiles
     for_each_tableSceneNode(
         [this, level](const auto position, sptr<BoardTileSceneNode> node) {
-            node->BackgroundColor =
-                getBackgroundTileColor(level, position,
-                                       TokenZones::pointInCenter(position));
+            node->BackgroundColor = getBackgroundTileColor(
+                level, position, TokenZones::pointInCenter(position));
         });
 }
 
@@ -260,7 +260,7 @@ bool BoardGroup::moveTowardsCenter(Direction const direction,
         }
         board_model->moveTile(position, next);
         auto const dest_tile{
-            std::dynamic_pointer_cast<Token>(board_model->getTile(next))};
+            htps::dynamic_pointer_cast<Token>(board_model->getTile(next))};
 
         LogAsserter::log_assert(dest_tile != nullptr, "Error moving the tile!");
 

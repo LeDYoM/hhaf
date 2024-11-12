@@ -134,3 +134,19 @@ TEST_CASE("dictionary::add no overwrite", "[htypes][dictionry]")
     CHECK(v.size() == 3U);
     CHECK((*(v.find("bcd"))).second == 100);
 }
+
+TEST_CASE("dictionary::erase", "[htypes][dictionry]")
+{
+    Dictionary<int> v{{"ABC", 4}, {"DEF", 5}, {"GHI", 10}};
+
+    CHECK(v.size() == 3U);
+    CHECK(v.erase("DEF") == 1U);
+    CHECK(v.size() == 2U);
+    CHECK(v.erase("DEF") == 0U);
+    CHECK(v.size() == 2U);
+    CHECK(v.erase("abc") == 0U);
+    CHECK(v.size() == 2U);
+
+    CHECK(v.index(0U) == 4U);
+    CHECK(v.index(1U) == 10U);
+}

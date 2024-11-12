@@ -10,6 +10,8 @@ HTPS_PRAGMA_ONCE
 #include <haf/include/utils/type_data.hpp>
 #include <hlog/include/hlog.hpp>
 
+#include <memory>
+
 namespace haf::scene
 {
 class SceneNode;
@@ -64,7 +66,7 @@ public:
     htps::sptr<T> componentOfType() const
     {
         auto cot{componentOfType(type_of<T>())};
-        return cot ? std::dynamic_pointer_cast<T>(cot) : nullptr;
+        return cot ? htps::dynamic_pointer_cast<T>(cot) : nullptr;
     }
 
     /**

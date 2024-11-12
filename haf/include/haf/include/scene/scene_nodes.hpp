@@ -5,8 +5,8 @@ HTPS_PRAGMA_ONCE
 #include <htypes/include/types.hpp>
 #include <htypes/include/str.hpp>
 #include <htypes/include/vector.hpp>
-#include <htypes/include/connection.hpp>
-#include <htypes/include/properties/properties.hpp>
+#include <haf/include/events/connection.hpp>
+#include <haf/include/properties/properties.hpp>
 #include <haf/include/scene/scenenode_cast.hpp>
 
 namespace haf::scene
@@ -120,7 +120,7 @@ public:
         htps::function<void(htps::sptr<T> const&)> action)
     {
         for_each_sceneNode([&action](htps::sptr<SceneNode> const& node) {
-            if (auto const tnode = std::dynamic_pointer_cast<T>(node);
+            if (auto const tnode = htps::dynamic_pointer_cast<T>(node);
                 tnode != nullptr)
             {
                 action(tnode);
@@ -139,7 +139,7 @@ public:
         htps::function<void(htps::sptr<T const> const&)> action) const
     {
         for_each_sceneNode([&action](htps::sptr<SceneNode const> const& node) {
-            if (auto const tnode = std::dynamic_pointer_cast<T const>(node))
+            if (auto const tnode = htps::dynamic_pointer_cast<T const>(node))
             {
                 action(tnode);
             }
@@ -177,9 +177,9 @@ public:
     bool moveToLastPosition(htps::sptr<SceneNode> const& node);
     bool moveToFirstPosition(htps::sptr<SceneNode> const& node);
 
-    htps::emitter<htps::sptr<SceneNode> const&> onNodeCreated;
-    htps::emitter<htps::sptr<SceneNode> const&> onNodeAdded;
-    htps::emitter<htps::sptr<SceneNode> const&> onNodeReady;
+    evt::emitter<htps::sptr<SceneNode> const&> onNodeCreated;
+    evt::emitter<htps::sptr<SceneNode> const&> onNodeAdded;
+    evt::emitter<htps::sptr<SceneNode> const&> onNodeReady;
 
 protected:
     /**

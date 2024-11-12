@@ -47,7 +47,7 @@ public:
 
     /**
      * @brief Set the Input Driver object
-     * @param input_driver  htps::Objectto be set.
+     * @param input_driver  mcs::Objectto be set.
      */
     void setInputDriverWrapper(
         htps::sptr<input::InputDriverWrapper> input_driver);

@@ -46,7 +46,7 @@ void Renderizable::RenderizablePrivate::updatePositions()
 }
 
 void Renderizable::RenderizablePrivate::updateTextureRect(
-    htps::Rects32 const& textureRect)
+    fmath::Rects32 const& textureRect)
 {
     setTextureRect(positions_, texture_coordinates_, textureRect);
     m_render_element.setTexturecoordinates(texture_coordinates_.cbegin());

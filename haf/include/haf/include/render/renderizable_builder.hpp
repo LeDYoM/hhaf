@@ -3,7 +3,7 @@ HTPS_PRAGMA_ONCE
 #define HAF_RENDERIZABLE_BUILDER_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
-#include <htypes/include/rect.hpp>
+#include <facil_math/include/rect.hpp>
 #include <htypes/include/str.hpp>
 #include <htypes/include/function.hpp>
 

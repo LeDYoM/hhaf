@@ -4,7 +4,7 @@ HTPS_PRAGMA_ONCE
 
 #include <haf/include/resources/ifont.hpp>
 #include <htypes/include/vector.hpp>
-#include <htypes/include/rect.hpp>
+#include <facil_math/include/rect.hpp>
 #include <htypes/include/str.hpp>
 #include "text_render_data.hpp"
 

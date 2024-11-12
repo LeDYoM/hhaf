@@ -20,7 +20,7 @@ public:
 
     void setUniform(htps::str const& name, bool const& value) override;
     void setUniform(htps::str const& name,
-                    htps::vector2df const& value) override;
+                    fmath::vector2df const& value) override;
     void setUniform(htps::str const& name, ITexture* value) override;
 
     backend::IShader const* backEndShader() const noexcept;

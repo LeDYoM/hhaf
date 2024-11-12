@@ -4,7 +4,7 @@ HTPS_PRAGMA_ONCE
 
 #include "haf_private.hpp"
 #include <htypes/include/types.hpp>
-#include <htypes/include/object.hpp>
+#include <facil_math/include/rect.hpp>
 
 #include <haf/include/shareddata/ishareable.hpp>
 #include "resource_data_description_names.hpp"
@@ -18,7 +18,7 @@ struct HAF_PRIVATE ResourcesConfigDataElement : public data::IDeserializable
     static constexpr char TypeStr[5U]     = ResourceTypeStr;
     static constexpr char FileNameStr[5U] = ResourceFileNameStr;
 
-    bool deserialize(htps::Object const& obj) override;
+    bool deserialize(mcs::Object const& obj) override;
 };
 
 }  // namespace haf::res

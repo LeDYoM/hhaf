@@ -1,6 +1,6 @@
 #include <haf/include/component/component_container.hpp>
 #include <haf/include/component/component_requirements.hpp>
-#include <htypes/include/lockablevector.hpp>
+#include <htypes/include/lockable_vector.hpp>
 
 using namespace htps;
 
@@ -22,7 +22,7 @@ struct ComponentContainer::ComponentContainerPrivate
     rptr<scene::SceneNode> const attachable_;
     LockableVector<sptr<Component>> components_;
 
-    ComponentContainer::ComponentContainerPrivate(
+    explicit ComponentContainerPrivate(
         rptr<scene::SceneNode> attachable) noexcept :
         attachable_{attachable}
     {}

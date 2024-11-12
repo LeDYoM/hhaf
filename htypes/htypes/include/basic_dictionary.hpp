@@ -65,7 +65,7 @@ public:
     }
 
     constexpr bool add(key_type const& key,
-                       T value,
+                       T value = {},
                        const bool overwrite = true)
     {
         auto it(find(key));
@@ -77,7 +77,7 @@ public:
         }
         else if (overwrite)
         {
-            (*it) = element(key, value);
+            (*it) = element(key, htps::move(value));
             return true;
         }
         return false;
@@ -136,15 +136,15 @@ public:
         return find_checked(key);
     }
 
-    constexpr pair<bool, size_type> cfind_index(
+    constexpr pair<bool, ssize_type> cfind_index(
         key_type const& key) const noexcept
     {
         auto const index{data_.find_index_if(
             [&key](auto const& element) { return element.first == key; })};
-        return {index > -1 ? true : false, static_cast<size_type>(index)};
+        return {index > -1 ? true : false, static_cast<ssize_type>(index)};
     }
 
-    constexpr pair<bool, size_type> find_index(
+    constexpr pair<bool, ssize_type> find_index(
         key_type const& key) const noexcept
     {
         return cfind_index(key);
@@ -162,6 +162,16 @@ public:
     constexpr value_type& index(size_type const index)
     {
         return data_[index].second;
+    }
+
+    constexpr size_type erase(key_type const& key)
+    {
+        size_type previous_size{size()};
+
+        data_.template erase_if<false>(
+            [&key](element const& current) { return current.first == key; });
+
+        return (previous_size - size());
     }
 
 private:

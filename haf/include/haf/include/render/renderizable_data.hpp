@@ -3,8 +3,8 @@ HTPS_PRAGMA_ONCE
 #define HAF_RENDERIZABLE_DATA_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
-#include <htypes/include/properties/property_state.hpp>
-#include <htypes/include/rect.hpp>
+#include <haf/include/properties/property_state.hpp>
+#include <facil_math/include/rect.hpp>
 #include <htypes/include/str.hpp>
 
 #include <haf/include/types/scene_types.hpp>
@@ -26,13 +26,13 @@ namespace haf::render
 {
 struct RenderizableData
 {
-    htps::PropertyState<htps::str> RenderizableName;
-    htps::PropertyState<FigType_t> FigureTypeProperty;
-    htps::PropertyState<scene::Color> ColorProperty;
-    htps::PropertyState<htps::size_type> PointCount;
-    htps::PropertyState<htps::sptr<res::IShader>> ShaderProperty;
-    htps::PropertyState<htps::sptr<res::ITexture>> TextureProperty;
-    htps::PropertyState<htps::Rects32> TextureRectProperty;
+    prop::PropertyState<htps::str> RenderizableName;
+    prop::PropertyState<FigType_t> FigureTypeProperty;
+    prop::PropertyState<scene::Color> ColorProperty;
+    prop::PropertyState<htps::size_type> PointCount;
+    prop::PropertyState<htps::sptr<res::IShader>> ShaderProperty;
+    prop::PropertyState<htps::sptr<res::ITexture>> TextureProperty;
+    prop::PropertyState<fmath::Rects32> TextureRectProperty;
 };
 
 }  // namespace haf::render

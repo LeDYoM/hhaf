@@ -3,7 +3,7 @@ HTPS_PRAGMA_ONCE
 #define HAF_SCENE_TTFONT_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
-#include <htypes/include/rect.hpp>
+#include <facil_math/include/rect.hpp>
 
 #include "texture.hpp"
 #include <haf/include/resources/ittfont.hpp>
@@ -20,9 +20,9 @@ class TTFont final : public ITTFont
 public:
     TTFont(backend::ITTFont* const font);
     ~TTFont();
-    htps::Rectf32 getBounds(const htps::u32 codePoint,
+    fmath::Rectf32 getBounds(const htps::u32 codePoint,
                             const htps::u32 characterSize) const override;
-    htps::Rectf32 getTextureBounds(
+    fmath::Rectf32 getTextureBounds(
         const htps::u32 codePoint,
         const htps::u32 characterSize) const override;
     htps::f32 getAdvance(const htps::u32 codePoint,

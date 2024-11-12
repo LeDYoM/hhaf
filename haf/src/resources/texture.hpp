@@ -3,7 +3,7 @@ HTPS_PRAGMA_ONCE
 #define HAF_SCENE_TEXTURE_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
-#include <htypes/include/vector2d.hpp>
+#include <facil_math/include/vector2d.hpp>
 #include <haf/include/resources/itexture.hpp>
 
 namespace haf::backend
@@ -19,7 +19,7 @@ public:
     Texture(backend::ITexture const* texture);
     ~Texture();
 
-    htps::vector2du32 size() const override;
+    fmath::vector2du32 size() const override;
 
     backend::ITexture const* backEndTexture() const noexcept;
 

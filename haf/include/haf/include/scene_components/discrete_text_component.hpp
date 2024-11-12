@@ -14,11 +14,11 @@ class DiscreteTextComponent final
     using BaseClass = component::Component;
 
 public:
-    htps::BasicProperty<bool> circleAroud{true};
-    htps::BasicProperty<htps::string_vector> data;
+    prop::BasicProperty<bool> circleAroud{true};
+    prop::BasicProperty<htps::string_vector> data;
     void incrementIndex() noexcept;
     void decrementIndex() noexcept;
-    htps::PropertyState<htps::size_type> index{0U};
+    prop::PropertyState<htps::size_type> index{0U};
 
     virtual void update() override;
 

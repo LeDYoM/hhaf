@@ -59,6 +59,9 @@ add_subdirectory(tools)
 set(hhaf_core_module_list
   agloader
   logger
+  mc_serial
+  facil_math
+  parpar
   memmanager
   htypes
   hlog

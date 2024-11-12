@@ -21,5 +21,5 @@ set(headers
 build_lib_component(EXPORT_ALL HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}" SOURCES
                     "${SOURCES}" HEADERS "${headers}")
 
-target_link_libraries(${CURRENT_TARGET} PRIVATE agloader log_and_types)
+target_link_libraries(${CURRENT_TARGET} PRIVATE agloader log_and_types facil_math)
 target_link_libraries(${CURRENT_TARGET} PUBLIC backend_dev)

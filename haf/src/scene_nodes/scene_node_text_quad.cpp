@@ -1,6 +1,6 @@
 #include <haf/include/scene_nodes/scene_node_text_quad.hpp>
 
-using namespace htps;
+using namespace fmath;
 
 namespace haf::scene::nodes
 {
@@ -10,7 +10,7 @@ void TextQuad::onCreated()
     TableSize = {2U, 2U};
 }
 
-void TextQuad::onElementCreated(htps::vector2dst index,
+void TextQuad::onElementCreated(fmath::vector2dst index,
                                 htps::sptr<SceneNodeText> const& node)
 {
     if (index == vector2dst{0U, 0U})

@@ -5,8 +5,3 @@ haf::backend::BackendFactory* createBackendFactory()
 {
     return new haf::backend::BackendFactory();
 }
-
-void destroyBackendFactory(haf::backend::BackendFactory* b_factory)
-{
-    delete b_factory;
-}

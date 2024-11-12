@@ -25,8 +25,8 @@ public:
     explicit BMPFont(backend::IBMPFont* font);
     ~BMPFont();
 
-    htps::Rectf32 getBounds(const htps::u32 codePoint) const override;
-    htps::Rectf32 getTextureBounds(const htps::u32 codePoint) const override;
+    fmath::Rectf32 getBounds(const htps::u32 codePoint) const override;
+    fmath::Rectf32 getTextureBounds(const htps::u32 codePoint) const override;
     htps::f32 getAdvance(const htps::u32 codePoint) const override;
     htps::f32 getLineSpacing() const override;
     htps::f32 getKerning(const htps::u32 first,

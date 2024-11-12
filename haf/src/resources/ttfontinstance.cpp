@@ -4,6 +4,7 @@
 #include <backend_dev/include/ittfont.hpp>
 
 using namespace htps;
+using namespace fmath;
 
 namespace haf::res
 {

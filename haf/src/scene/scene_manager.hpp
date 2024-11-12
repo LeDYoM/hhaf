@@ -4,7 +4,7 @@ HTPS_PRAGMA_ONCE
 
 #include "haf_private.hpp"
 #include <htypes/include/types.hpp>
-#include <htypes/include/rect.hpp>
+#include <facil_math/include/rect.hpp>
 #include <haf/include/types/scene_types.hpp>
 #include <haf/include/scene_components/iscene_control.hpp>
 #include <haf/include/scene_components/iapp_initializer.hpp>

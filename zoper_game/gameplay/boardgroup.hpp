@@ -1,8 +1,8 @@
 #ifndef ZOPER_BOARDGROUP_HPP
 #define ZOPER_BOARDGROUP_HPP
 
-#include <htypes/include/vector2d.hpp>
-#include <htypes/include/connection.hpp>
+#include <facil_math/include/vector2d.hpp>
+#include <haf/include/events/connection.hpp>
 
 #include <haf/include/scene/scene_node.hpp>
 #include <haf/include/scene_nodes/scene_node_table.hpp>
@@ -35,20 +35,20 @@ public:
 
     ~BoardGroup() override;
 
-    void configure(htps::vector2dst size,
+    void configure(fmath::vector2dst size,
                    htps::sptr<LevelProperties> level_properties);
 
     void onCreated() override;
 
     void createNewToken(BoardTileData const data,
-                        htps::vector2dst const& board_position);
+                        fmath::vector2dst const& board_position);
 
-    void tileRemoved(const htps::vector2dst,
+    void tileRemoved(const fmath::vector2dst,
                      haf::board::SITilePointer&) override;
     void setLevel(const htps::size_type level);
 
     haf::scene::Color getBackgroundTileColor(const htps::size_type level,
-                                             htps::vector2dst position,
+                                             fmath::vector2dst position,
                                              const bool isCenter) const;
 
     void movePlayer(Direction const& direction);
@@ -63,10 +63,10 @@ public:
      * @return false The tile is not in the center
      */
     bool moveTileInDirection(Direction const direction,
-                             htps::vector2dst const position);
+                             fmath::vector2dst const position);
 
     bool moveTowardsCenter(Direction const direction,
-                           htps::vector2dst const position);
+                           fmath::vector2dst const position);
 
     htps::sptr<haf::board::BoardManager> boardManager() noexcept;
     const htps::sptr<const haf::board::BoardManager> boardManager()
@@ -76,9 +76,9 @@ public:
     htps::sptr<Player> player() noexcept;
     const htps::sptr<Player> player() const noexcept;
 
-    htps::vector2df board2SceneFactor() const;
-    htps::vector2df board2Scene(const htps::vector2dst& bPosition) const;
-    htps::vector2df tileSize() const;
+    fmath::vector2df board2SceneFactor() const;
+    fmath::vector2df board2Scene(const fmath::vector2dst& bPosition) const;
+    fmath::vector2df tileSize() const;
 
 private:
     void onTableNodeAdded(htps::sptr<SceneNode> const&);

@@ -4,9 +4,9 @@ HTPS_PRAGMA_ONCE
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/function.hpp>
-#include <htypes/include/connection.hpp>
+#include <haf/include/events/connection.hpp>
 #include <htypes/include/stack.hpp>
-#include <htypes/include/lockablevector.hpp>
+#include <htypes/include/lockable_vector.hpp>
 #include <hlog/include/hlog.hpp>
 #include <haf/include/component/component.hpp>
 
@@ -106,25 +106,25 @@ public:
 
     constexpr T& currentState() noexcept { return states_stack_.back(); }
 
-    htps::emitter<const T&> StateFinished;
-    htps::emitter<const T&> StateStarted;
-    htps::emitter<const T&> StatePushed;
-    htps::emitter<const T&> StatePopped;
-    htps::emitter<const T&> StatePaused;
-    htps::emitter<const T&> StateResumed;
-    htps::emitter<> BeforeStart;
-    htps::emitter<> AfterFinish;
+    evt::emitter<const T&> StateFinished;
+    evt::emitter<const T&> StateStarted;
+    evt::emitter<const T&> StatePushed;
+    evt::emitter<const T&> StatePopped;
+    evt::emitter<const T&> StatePaused;
+    evt::emitter<const T&> StateResumed;
+    evt::emitter<> BeforeStart;
+    evt::emitter<> AfterFinish;
 
 private:
     inline void changeState(T newState)
     {
-        postAction([this, newState = htps::move(newState)]() {
+        postAction([this, _newState = htps::move(newState)]() {
             LogAsserter::log_assert(!states_stack_.empty(),
                                     "States stack size is empty");
             StateFinished(states_stack_.back());
             states_stack_.pop_back();
-            StateStarted(newState);
-            states_stack_.push_back(htps::move(newState));
+            StateStarted(_newState);
+            states_stack_.push_back(htps::move(_newState));
         });
     }
 

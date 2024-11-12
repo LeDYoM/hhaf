@@ -2,20 +2,20 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_RENDER_VERTEX_INCLUDE_HPP
 #define HAF_RENDER_VERTEX_INCLUDE_HPP
 
-#include <htypes/include/vector2d.hpp>
+#include <facil_math/include/vector2d.hpp>
 #include <haf/include/scene/color.hpp>
 
 namespace haf::render
 {
 struct Vertex final
 {
-    Vertex(htps::vector2df p,
+    Vertex(fmath::vector2df p,
                      scene::Color c,
-                     htps::vector2df tc) noexcept :
+                     fmath::vector2df tc) noexcept :
         position{htps::move(p)}, color{htps::move(c)}, texCoords{htps::move(tc)}
     {}
 
-    Vertex(htps::vector2df p, htps::vector2df tc) noexcept :
+    Vertex(fmath::vector2df p, fmath::vector2df tc) noexcept :
         position{htps::move(p)}, color{}, texCoords{htps::move(tc)}
     {}
 
@@ -25,9 +25,9 @@ struct Vertex final
     constexpr Vertex(Vertex const&) noexcept       = default;
     constexpr Vertex& operator=(Vertex const&) noexcept = default;
 
-    htps::vector2df position{};
+    fmath::vector2df position{};
     scene::Color color{};
-    htps::vector2df texCoords{};
+    fmath::vector2df texCoords{};
 };
 
 }  // namespace haf::render

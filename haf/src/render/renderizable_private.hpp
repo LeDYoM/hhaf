@@ -34,7 +34,7 @@ struct Renderizable::RenderizablePrivate
 
     void updatePositions();
 
-    void updateTextureRect(htps::Rects32 const& textureRect);
+    void updateTextureRect(fmath::Rects32 const& textureRect);
 
     void updateColors(scene::Color const& color);
 };

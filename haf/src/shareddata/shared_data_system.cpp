@@ -3,10 +3,13 @@
 
 #include <hlog/include/hlog.hpp>
 
+#include <mc_serial/include/object.hpp>
+
 #include <utility>
 
 using namespace htps;
 using namespace haf::shdata;
+using namespace mcs;
 
 namespace haf::sys
 {

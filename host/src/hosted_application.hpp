@@ -21,7 +21,7 @@ public:
     ManagedApp managed_app_;
     htps::str app_name_;
     htps::uptr<IHostConnector> host_connector_;
-    sys::DestructibleSystemController app_system_controller;
+    sys::UptrSystemController app_system_controller;
     AppState app_state{AppState::NotInitialized};
 
     /**

@@ -7,6 +7,7 @@
 #include <algorithm>
 
 using namespace htps;
+using namespace fmath;
 
 namespace haf::res
 {

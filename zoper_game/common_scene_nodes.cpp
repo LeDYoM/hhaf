@@ -1,6 +1,6 @@
 #include "common_scene_nodes.hpp"
 #include <htypes/include/types.hpp>
-#include <htypes/include/properties/iproperty.hpp>
+#include <haf/include/properties/iproperty.hpp>
 
 #include <hlog/include/hlog.hpp>
 #include <haf/include/render/renderizable.hpp>

@@ -26,7 +26,7 @@ public:
         return haf::shdata::Address{"/test/data/"};
     }
 
-    bool serialize(htps::Object& obj) const override
+    bool serialize(mcs::Object& obj) const override
     {
         bool result{true};
         result &= obj.set("a", a);
@@ -36,7 +36,7 @@ public:
         return result;
     }
 
-    bool deserialize(htps::Object const& obj) override
+    bool deserialize(mcs::Object const& obj) override
     {
         bool result = true;
         result &= obj.getValue("a").as(a);

@@ -1,15 +1,16 @@
 #include <htypes/include/types.hpp>
-#include <htypes/include/vector2d.hpp>
+#include <facil_math/include/vector2d.hpp>
 #include <htypes/include/str.hpp>
 #include <haf/include/scene_components/table_node_imp.hpp>
 
 using namespace htps;
+using namespace fmath;
 
 namespace haf::scene
 {
-htps::vector2df TableNodeImp::cellSize() const
+fmath::vector2df TableNodeImp::cellSize() const
 {
-    return htps::vector2df{1.0F / static_cast<htps::vector2df>(TableSize())};
+    return fmath::vector2df{1.0F / static_cast<fmath::vector2df>(TableSize())};
 }
 
 void TableNodeImp::update()
@@ -46,7 +47,7 @@ void TableNodeImp::createTableNodesIfNecessary()
                                            half_cell_size};
         for_each_table_innerSceneNode([this, &cell_size,
                                        &left_top_plus_half_size](
-                                          htps::vector2dst const& p,
+                                          fmath::vector2dst const& p,
                                           const htps::sptr<
                                               TransformableSceneNode>& node) {
             if (node->sceneNodes().empty())
@@ -57,7 +58,7 @@ void TableNodeImp::createTableNodesIfNecessary()
             node->Scale = cell_size;
 
             node->Position = left_top_plus_half_size +
-                (cell_size * static_cast<htps::vector2df>(p));
+                (cell_size * static_cast<fmath::vector2df>(p));
 //            m_transformableComponent->Position = {0.0F, 0.0F};
         });
         allTableElementsCreated(TableSize());
@@ -71,7 +72,7 @@ bool TableNodeImp::nodeTableCreated(vector2dst const& index) const
 }
 
 TableNodeImp::ContainedType_t TableNodeImp::createInnerSceneNodeAt(
-    htps::vector2dst const index,
+    fmath::vector2dst const index,
     htps::str const& name)
 {
     LogAsserter::log_assert(inner_nodes_[index.x][index.y] == nullptr,
@@ -86,7 +87,7 @@ TableNodeImp::ContainedType_t TableNodeImp::createInnerSceneNodeAt(
 }
 
 TableNodeImp::ContainedType_t TableNodeImp::innerSceneNodeAt(
-    htps::vector2dst const index) const
+    fmath::vector2dst const index) const
 {
     return inner_nodes_[index.x][index.y];
 }
@@ -99,7 +100,7 @@ void TableNodeImp::updateTableSizeIfNecessary()
     }
 }
 
-void TableNodeImp::setTableSize(htps::vector2dst const ntableSize)
+void TableNodeImp::setTableSize(fmath::vector2dst const ntableSize)
 {
     inner_nodes_.resize(ntableSize.x);
 
@@ -109,7 +110,7 @@ void TableNodeImp::setTableSize(htps::vector2dst const ntableSize)
     }
 }
 
-void TableNodeImp::setInnerSceneNodeAt(htps::vector2dst const index,
+void TableNodeImp::setInnerSceneNodeAt(fmath::vector2dst const index,
                                        ContainedType_t& scene_node)
 {
     LogAsserter::log_assert(index.x < TableSize().x && index.y < TableSize().y,
@@ -120,7 +121,7 @@ void TableNodeImp::setInnerSceneNodeAt(htps::vector2dst const index,
 }
 
 void TableNodeImp::for_each_table_innerSceneNode(
-    htps::function<void(htps::vector2dst const&, ContainedType_t&)> action)
+    htps::function<void(fmath::vector2dst const&, ContainedType_t&)> action)
 {
     for (htps::size_type x{0}; x < inner_nodes_.size(); ++x)
     {
@@ -128,7 +129,7 @@ void TableNodeImp::for_each_table_innerSceneNode(
         {
             if (auto&& inner_node = inner_nodes_[x][y])
             {
-                action(htps::vector2dst{x, y}, inner_node);
+                action(fmath::vector2dst{x, y}, inner_node);
             }
         }
     }

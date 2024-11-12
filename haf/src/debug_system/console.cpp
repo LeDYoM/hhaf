@@ -30,13 +30,13 @@ void Console::onAttached()
         make_function(this, &Console::tableNodeCreated);
 }
 
-void Console::setText(htps::vector2dst const& nodeIndex, htps::str const& text)
+void Console::setText(fmath::vector2dst const& nodeIndex, htps::str const& text)
 {
     m_textTableNode->nodeAt(nodeIndex)->Text.assignIfDifferent(text);
 }
 
 void Console::tableNodeCreated(
-    htps::vector2dst const& /*index*/,
+    fmath::vector2dst const& /*index*/,
     htps::sptr<haf::scene::nodes::SceneNodeText> const& node)
 {
     node->Text      = "AAAAAAAAAA";

@@ -3,7 +3,7 @@ HTPS_PRAGMA_ONCE
 #define HAF_SCENE_NODES_SCENE_NODE_TEXT_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
-#include <htypes/include/properties/iproperty.hpp>
+#include <haf/include/properties/iproperty.hpp>
 #include <haf/include/resources/ifont.hpp>
 #include <haf/include/scene/color.hpp>
 #include <haf/include/scene_nodes/transformable_scene_node.hpp>
@@ -37,13 +37,13 @@ public:
         Bottom
     };
 
-    htps::PropertyState<htps::str> Text;
-    htps::PropertyState<htps::sptr<res::IFont>> Font;
-    htps::PropertyState<Color> TextColor;
-    htps::PropertyState<TextBaseSize> TextBaseSizeProperty;
-    htps::PropertyState<AlignmentXModes> AlignmentX;
-    htps::PropertyState<AlignmentYModes> AlignmentY;
-    htps::PropertyState<htps::vector2df> AlignmentSize;
+    prop::PropertyState<htps::str> Text;
+    prop::PropertyState<htps::sptr<res::IFont>> Font;
+    prop::PropertyState<Color> TextColor;
+    prop::PropertyState<TextBaseSize> TextBaseSizeProperty;
+    prop::PropertyState<AlignmentXModes> AlignmentX;
+    prop::PropertyState<AlignmentYModes> AlignmentY;
+    prop::PropertyState<fmath::vector2df> AlignmentSize;
 
 protected:
     void update() override final;

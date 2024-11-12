@@ -161,9 +161,9 @@ public:
             vector_storage new_vector{
                 vector_storage{static_cast<size_type>(capacity)}};
 
-            for (auto&& iterator : *this)
+            for (auto&& elements_old_vector : *this)
             {
-                new_vector.push_back(htps::move(iterator));
+                new_vector.push_back(htps::move(elements_old_vector));
             }
 
             *this = htps::move(new_vector);
@@ -177,9 +177,9 @@ public:
             vector_storage new_vector{
                 vector_storage{static_cast<size_type>(size_)}};
 
-            for (size_type index{0U}; index < size_; ++index)
+            for (auto&& elements_old_vector : *this)
             {
-                new_vector.push_back(htps::move(*at(index)));
+                new_vector.push_back(htps::move(elements_old_vector));
             }
 
             *this = htps::move(new_vector);

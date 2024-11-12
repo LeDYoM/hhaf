@@ -9,12 +9,13 @@
 #include <haf/include/resources/iresource_retriever.hpp>
 #include <haf/include/resources/ittfont.hpp>
 #include <htypes/include/function.hpp>
-#include <htypes/include/properties/properties.hpp>
+#include <haf/include/properties/properties.hpp>
 
 using namespace htps;
 using namespace haf;
 using namespace haf::scene;
 using namespace haf::scene::nodes;
+using namespace fmath;
 
 namespace zoper
 {
@@ -74,7 +75,7 @@ void GameHudSceneNode::update()
     }
 }
 
-void GameHudSceneNode::onAllScoreElementsCreated(htps::vector2dst const)
+void GameHudSceneNode::onAllScoreElementsCreated(fmath::vector2dst const)
 {
     auto font{subSystem<res::IResourceRetriever>()
                   ->getTTFont(GameResources::ScoreFontId)
@@ -98,7 +99,7 @@ void GameHudSceneNode::onAllScoreElementsCreated(htps::vector2dst const)
     });
 }
 
-void GameHudSceneNode::onAllGoalElementsCreated(htps::vector2dst const)
+void GameHudSceneNode::onAllGoalElementsCreated(fmath::vector2dst const)
 {
     auto font{subSystem<res::IResourceRetriever>()
                   ->getTTFont(GameResources::ScoreFontId)

@@ -4,7 +4,7 @@ HTPS_PRAGMA_ONCE
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/str.hpp>
-#include <htypes/include/connection.hpp>
+#include <haf/include/events/connection.hpp>
 #include <haf/include/input/virtual_input_component.hpp>
 
 namespace haf::scene
@@ -16,8 +16,8 @@ class TextEditorComponent final : public input::VirtualInputComponent
 public:
     virtual void onAttached() override;
 
-    htps::emitter<const htps::str&> Accepted;
-    htps::emitter<> Rejected;
+    evt::emitter<const htps::str&> Accepted;
+    evt::emitter<> Rejected;
 
     bool enabled{true};
 

@@ -19,7 +19,7 @@ build_concrete_backend(
 set_compile_warning_level_and_cxx_properties_all(${CURRENT_TARGET})
 #find_package(OpenGL REQUIRED)
 #set(LIBS ${GLFW3_LIBRARY} ${OPENGL_LIBRARY} GLAD ${CMAKE_DL_LIBS} ${ASSIMP_LIBRARY} STB_IMAGE)
-#target_link_libraries(${CURRENT_TARGET} PRIVATE ${OPENGL_LIBRARY})
+target_link_libraries(${CURRENT_TARGET} PRIVATE facil_math)
 # Detect and add SFML
 add_subdirectory(sfml)
 

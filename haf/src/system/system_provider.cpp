@@ -23,7 +23,7 @@
 #include <haf/include/scene_components/iapp_initializer.hpp>
 #include <haf/include/scene_components/iapp_finisher.hpp>
 
-#include <htypes/include/parpar.hpp>
+#include <parpar/include/parpar.hpp>
 
 using namespace htps;
 

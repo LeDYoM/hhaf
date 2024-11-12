@@ -2,7 +2,7 @@
 #define HAF_BACKEND_SFML_TTFONTFACTORY_HPP
 
 #include <htypes/include/types.hpp>
-#include <htypes/include/vector2d.hpp>
+#include <facil_math/include/vector2d.hpp>
 #include <backend_dev/include/iresourcefactories.hpp>
 #include <backend_dev/include/resource_load_parameters.hpp>
 

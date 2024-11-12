@@ -3,7 +3,6 @@ HTPS_PRAGMA_ONCE
 #define HAF_RENDER_RENDERIZABLE_INTERNAL_FUNCTIONS_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
-#include <htypes/include/vector2d.hpp>
 
 #include <haf/include/render/renderizable.hpp>
 #include <backend_dev/include/ivertex.hpp>
@@ -16,7 +15,7 @@ void setPolygon(htps::vector<backend::iPosition>& positions);
 void setTextureRect(
     htps::vector<backend::iPosition> const& positions,
     htps::vector<backend::iTextureCoordinates>& texture_coordinates,
-    htps::Rectf32 const& texture_rect);
+    fmath::Rectf32 const& texture_rect);
 
 }  // namespace haf::render
 

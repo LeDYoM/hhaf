@@ -2,7 +2,7 @@
 #define HAF_BACKEND_SFML_TEXTURE_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
-#include <htypes/include/vector2d.hpp>
+#include <facil_math/include/vector2d.hpp>
 
 #include <backend_dev/include/itexture.hpp>
 
@@ -19,7 +19,7 @@ public:
     SFMLTexture(sf::Texture const* const texture, bool const owned);
     ~SFMLTexture() override;
 
-    htps::vector2du32 size() const override;
+    fmath::vector2du32 size() const override;
     htps::u64 uniqueId() const override;
     void bind() const override;
 

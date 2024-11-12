@@ -4,14 +4,15 @@ HTPS_PRAGMA_ONCE
 
 #include <htypes/include/vector.hpp>
 #include <htypes/include/dictionary.hpp>
-#include <htypes/include/object.hpp>
+#include <facil_math/include/rect.hpp>
+#include <mc_serial/include/object.hpp>
 
 namespace haf::data
 {
 class IDeserializable
 {
 public:
-    virtual bool deserialize(htps::Object const&) = 0;
+    virtual bool deserialize(mcs::Object const&) = 0;
     virtual ~IDeserializable()                    = default;
 };
 
@@ -21,7 +22,7 @@ class DeserializableDictionary : public IDeserializable
 public:
     DeserializableDictionary() = default;
 
-    bool deserialize(htps::Object const& obj)
+    bool deserialize(mcs::Object const& obj)
     {
         for (auto const& element : obj.objects())
         {
@@ -45,7 +46,7 @@ class DeserializableVector : public IDeserializable
 public:
     DeserializableVector() = default;
 
-    bool deserialize(htps::Object const& obj)
+    bool deserialize(mcs::Object const& obj)
     {
         for (auto const& element : obj.objects())
         {

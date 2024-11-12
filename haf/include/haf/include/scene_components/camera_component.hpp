@@ -4,7 +4,7 @@ HTPS_PRAGMA_ONCE
 
 #include <haf/include/haf_export.hpp>
 #include <htypes/include/p_impl_pointer.hpp>
-#include <htypes/include/properties/iproperty.hpp>
+#include <haf/include/properties/iproperty.hpp>
 #include <haf/include/component/component.hpp>
 #include <haf/include/scene/scene.hpp>
 #include <haf/include/types/scene_types.hpp>
@@ -19,10 +19,10 @@ public:
     CameraComponent();
     ~CameraComponent() override;
 
-    htps::PropertyState<SceneBox> view;
-    htps::PropertyState<SceneUnit> Near;
-    htps::PropertyState<SceneUnit> Far;
-    htps::PropertyState<SceneBox> viewPort;
+    prop::PropertyState<SceneBox> view;
+    prop::PropertyState<SceneUnit> Near;
+    prop::PropertyState<SceneUnit> Far;
+    prop::PropertyState<SceneBox> viewPort;
 
     void moveView(SceneCoordinates const& delta);
 

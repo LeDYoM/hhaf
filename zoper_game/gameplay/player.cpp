@@ -14,6 +14,7 @@ using namespace haf::scene;
 using namespace haf::render;
 using namespace haf::time;
 using namespace haf::anim;
+using namespace fmath;
 
 namespace zoper
 {

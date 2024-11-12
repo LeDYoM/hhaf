@@ -8,6 +8,7 @@ using namespace haf;
 using namespace haf::board;
 using namespace haf::scene;
 using namespace htps;
+using namespace fmath;
 
 namespace zoper
 {

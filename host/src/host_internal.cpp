@@ -11,7 +11,7 @@ namespace haf::host
 HostInternal::HostInternal(const int argc, char const* const argv[]) :
     argc_{argc},
     argv_{argv},
-    backend_factory_{nullptr, nullptr},
+    backend_factory_{nullptr},
     config_{argc, argv},
     params_{parpar::create(argc, argv)}
 {}
@@ -19,9 +19,7 @@ HostInternal::HostInternal(const int argc, char const* const argv[]) :
 bool HostInternal::initializeBackend()
 {
     // Initialize and create the backend factory
-    backend_factory_ =
-        uptr<backend::BackendFactory, void (*)(backend::BackendFactory*)>(
-            createBackendFactory(), destroyBackendFactory);
+    backend_factory_ = uptr<backend::BackendFactory>{createBackendFactory()};
     backend_factory_->loadBackendFile("bsfml");
     backend_factory_->loadBackendFile("haf_integrated_backend");
     logLoadedFactories();

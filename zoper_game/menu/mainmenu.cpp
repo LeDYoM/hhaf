@@ -162,7 +162,7 @@ void MainMenu::onCreated()
     FinishSceneAtEnd = true;
 }
 
-void MainMenu::onTableNodeCreated(htps::vector2dst,
+void MainMenu::onTableNodeCreated(fmath::vector2dst,
                                   htps::sptr<SceneNodeText> const& node)
 {
     node->TextBaseSizeProperty = TextBaseSize{'A', 8U};

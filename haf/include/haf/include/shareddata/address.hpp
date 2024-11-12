@@ -5,8 +5,9 @@ HTPS_PRAGMA_ONCE
 #include <htypes/include/p_impl_pointer.hpp>
 #include <htypes/include/types.hpp>
 #include <htypes/include/str.hpp>
-#include <htypes/include/object.hpp>
+#include <facil_math/include/rect.hpp>
 #include <haf/include/haf_export.hpp>
+#include <mc_serial/include/object.hpp>
 
 namespace haf::shdata
 {
@@ -126,28 +127,28 @@ private:
 };
 
 /**
- * @brief Get a copy of an @b htps::Object contained at that address
+ * @brief Get a copy of an @b mcs::Object contained at that address
  *
  * @param address Address to retrieve
  * @param object Object where to search
- * @return htps::pair<bool, htps::Object> In the returned pair, the first
+ * @return htps::pair<bool, mcs::Object> In the returned pair, the first
  * will be if the operation wass successful and the second will be an
- * @b htps::Object . If first is false, the second value is undefined.
+ * @b mcs::Object . If first is false, the second value is undefined.
  */
-htps::pair<bool, htps::Object> objectFromAddress(Address const& address,
-                                                 htps::Object const& object);
+htps::pair<bool, mcs::Object> objectFromAddress(Address const& address,
+                                                 mcs::Object const& object);
 
 /**
- * @brief Check that an @b Address exists in an @b htps::Object and retrieve
+ * @brief Check that an @b Address exists in an @b mcs::Object and retrieve
  * a pointer to the element. Otherwhise, create the structure inside the
- * @b htps::Object and return a pointer to the newly created @b htps::Object
+ * @b mcs::Object and return a pointer to the newly created @b mcs::Object
  * too.
  * @param address Adress to search for
  * @param object Object where to search
- * @return htps::Object* Pointer to the old or new Object. Might be nullptr if
+ * @return mcs::Object* Pointer to the old or new Object. Might be nullptr if
  * for any reason it cannot be created.
  */
-htps::Object* ensureAddress(Address const& address, htps::Object& object);
+mcs::Object* ensureAddress(Address const& address, mcs::Object& object);
 
 }  // namespace haf::shdata
 

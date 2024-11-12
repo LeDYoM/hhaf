@@ -4,6 +4,7 @@
 #include <haf/include/scene_nodes/transformable_scene_node.hpp>
 
 using namespace htps;
+using namespace fmath;
 
 namespace haf::render
 {

@@ -13,13 +13,14 @@
 #include <hlog/include/hlog.hpp>
 
 using namespace htps;
+using namespace fmath;
 
 namespace haf::scene::nodes
 {
 
 namespace
 {
-inline void updateAlignmentX(PropertyState<vector2df>& position,
+inline void updateAlignmentX(prop::PropertyState<vector2df>& position,
                              SceneNodeText::AlignmentXModes const alignmentX,
                              f32 const textSizeX,
                              vector2df const& alignmentSize) noexcept
@@ -42,7 +43,7 @@ inline void updateAlignmentX(PropertyState<vector2df>& position,
     position = {newPosX, position().y};
 }
 
-inline void updateAlignmentY(PropertyState<vector2df>& position,
+inline void updateAlignmentY(prop::PropertyState<vector2df>& position,
                              SceneNodeText::AlignmentYModes const alignmentY,
                              f32 const textSizeY,
                              vector2df const& alignmentSize) noexcept

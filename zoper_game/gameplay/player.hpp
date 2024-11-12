@@ -22,12 +22,12 @@ public:
            htps::str name);
     ~Player() override;
 
-    htps::PropertyState<BoardPositionType> player_board_position;
-    htps::PropertyState<Direction> currentDirection;
+    haf::prop::PropertyState<BoardPositionType> player_board_position;
+    haf::prop::PropertyState<Direction> currentDirection;
 
     bool canBeMovedTo(BoardPositionType const& dest_position) const override;
 
-    void launchPlayerAnimation(htps::vector2df const& toWhere);
+    void launchPlayerAnimation(fmath::vector2df const& toWhere);
 
     void tileAdded() override;
     void tileChanged(BoardTileData const oldValue,

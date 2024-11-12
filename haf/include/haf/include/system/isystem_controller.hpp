@@ -1,4 +1,4 @@
-HTPS_PRAGMA_ONCE
+HAF_PRAGMA_ONCE
 #ifndef HAF_ISYSTEMCONTROLLER_INTERFACE_INCLUDE_HPP
 #define HAF_ISYSTEMCONTROLLER_INTERFACE_INCLUDE_HPP
 
@@ -37,9 +37,7 @@ public:
     virtual void terminate()                    = 0;
 };
 
-using DestructibleSystemController =
-    htps::uptr<sys::ISystemController,
-               htps::function<void(sys::ISystemController*)>>;
+using UptrSystemController = htps::uptr<sys::ISystemController>;
 
 }  // namespace haf::sys
 

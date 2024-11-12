@@ -2,6 +2,7 @@
 #include <haf/include/scene_nodes/scene_node_text.hpp>
 
 using namespace htps;
+using namespace fmath;
 
 namespace haf::scene::nodes
 {

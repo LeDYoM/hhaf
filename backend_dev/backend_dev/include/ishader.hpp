@@ -2,8 +2,8 @@
 #define HAF_BACKEND_ISHADER_INTERFACE_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
-#include <htypes/include/vector2d.hpp>
-#include <htypes/include/rect.hpp>
+#include <facil_math/include/vector2d.hpp>
+#include <facil_math/include/rect.hpp>
 
 #include "itexture.hpp"
 #include "imaterial_data.hpp"
@@ -17,7 +17,7 @@ public:
 
     virtual void setUniform(htps::str const& name, bool const& v)     = 0;
     virtual void setUniform(htps::str const& name,
-                            htps::vector2df const& v)                 = 0;
+                            fmath::vector2df const& v)                 = 0;
     virtual void setUniform(htps::str const& name,
                             htps::rptr<ITexture const> const texture) = 0;
 

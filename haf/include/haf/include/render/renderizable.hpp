@@ -3,7 +3,8 @@ HTPS_PRAGMA_ONCE
 #define HAF_SCENE_RENDERIZABLE_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
-#include <htypes/include/properties/property_state.hpp>
+
+#include <haf/include/properties/property_state.hpp>
 #include <htypes/include/function.hpp>
 #include <htypes/include/p_impl_pointer.hpp>
 
@@ -36,7 +37,7 @@ public:
 
     void render(bool const parent_transformation_changed);
 
-    htps::BasicProperty<bool> visible{true};
+    prop::BasicProperty<bool> visible{true};
 
     htps::rptr<scene::TransformableSceneNode> parent() noexcept;
     htps::rptr<scene::TransformableSceneNode const> parent() const noexcept;
