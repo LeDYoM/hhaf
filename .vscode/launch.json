@@ -24,6 +24,15 @@
             ]
         },
         {
+            "name": "(ctest) gdb Launch",
+            "type": "cppdbg",
+            "cwd": "${workspaceFolder}",
+            "request": "launch",
+            "program": "${cmake.testProgram}",
+            "args": [ "${cmake.testArgs}" ],
+            // other options...
+        }
+        {
             "name": "(Windows) Launch",
             "type": "cppvsdbg",
             "request": "launch",
@@ -43,6 +52,17 @@
             "stopAtEntry": false,
             "cwd": "${command:cmake.launchTargetDirectory}",
             "environment": [],
+            "console": "externalTerminal"
+        },
+        {
+            "name": "(ctest) Windows MSVC Launch",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${cmake.testProgram}",
+            "args": [ "${cmake.testArgs}" ],
+            "cwd": "${command:cmake.launchTargetDirectory}",
+            "environment": [],
+            "stopAtEntry": true,
             "console": "externalTerminal"
         }
     ]
