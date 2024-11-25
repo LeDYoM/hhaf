@@ -121,13 +121,10 @@ TEST_CASE("stack::non copyable class")
     CHECK(dummy.size() == 0U);
     CHECK(dummy.empty());
 }
-/*
-TEST_CASE("stack::destructor")
+
+TEST_CASE("stack of shared pointers")
 {
     {
-//        std::stack<std::unique_ptr<int>> dummy{std::make_unique<int>(3)};
-//        std::stack<std::unique_ptr<int>> dummy{nullptr};
-        std::stack<int> dummy{1};
+        stack<sptr<int>> dummy{msptr<int>(3), msptr<int>(4), msptr<int>(5)};
     }
 }
-*/
