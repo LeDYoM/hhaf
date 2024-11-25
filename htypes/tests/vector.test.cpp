@@ -86,22 +86,61 @@ TEST_CASE("vector::vector(iterator)", "[vector]")
     CHECK(4U == v[4]);
 }
 
-TEST_CASE("vector::vector(std::initialization_list)", "[vector]")
+TEST_CASE("vector::vector(std::initializer_list)", "[vector]")
 {
-    vector<u32> m;
-    m = {1, 9, 8, 7, 6, 5, 4, 3, 2, 0, 1};
-    CHECK(m == vector<u32>{1, 9, 8, 7, 6, 5, 4, 3, 2, 0, 1});
-
-    SECTION("Copy and move constructor")
     {
-        auto m2(m);
-        CHECK(m == m2);
-        CHECK(m.size() == m2.size());
-        CHECK(m.capacity() == m2.capacity());
+        vector<u32> m{1, 9, 8, 7, 6, 5, 4, 3, 2, 0, 1};
+        CHECK(m == vector<u32>{1, 9, 8, 7, 6, 5, 4, 3, 2, 0, 1});
 
-        auto m3(htps::move(m));
-        CHECK(m.empty());
-        CHECK(m2 == m3);
+        SECTION("Copy and move constructor")
+        {
+            auto m2{m};
+            CHECK(m == m2);
+            CHECK(m.size() == m2.size());
+            CHECK(m.capacity() == m2.capacity());
+
+            auto m3{htps::move(m)};
+            CHECK(m.empty());
+            CHECK(m2 == m3);
+        }
+    }
+
+    {
+        sptr<u32> sp1{msptr<u32>(1)};
+        sptr<u32> sp2{msptr<u32>(9)};
+        vector<sptr<u32>> m{sp1, sp2};
+        CHECK(m == vector<sptr<u32>>{htps::move(sp1), htps::move(sp2)});
+    }
+}
+
+TEST_CASE("vector::vector::operator=(std::initializer_list)", "[vector]")
+{
+    {
+        vector<u32> m;
+        m = {1, 9, 8, 7, 6, 5, 4, 3, 2, 0, 1};
+        CHECK(m == vector<u32>{1, 9, 8, 7, 6, 5, 4, 3, 2, 0, 1});
+
+        SECTION("Copy and move constructor")
+        {
+            auto m2(m);
+            CHECK(m == m2);
+            CHECK(m.size() == m2.size());
+            CHECK(m.capacity() == m2.capacity());
+
+            auto m3(htps::move(m));
+            CHECK(m.empty());
+            CHECK(m2 == m3);
+        }
+    }
+
+    {
+        sptr<u32> sp1{msptr<u32>(1)};
+        sptr<u32> sp2{msptr<u32>(9)};
+        vector<sptr<u32>> m;
+        m = {sp1, sp2};
+        vector<sptr<u32>> m2;
+        m2 = {htps::move(sp1), htps::move(sp2)};
+        CHECK(m == m2);
     }
 }
 
@@ -134,14 +173,14 @@ TEST_CASE("vector::emplace", "[vector]")
 
 TEST_CASE("vector::find_first_of", "[vector]")
 {
-    vector<s32> v{0,1,2,3,4,5,6,7,8,9};
+    vector<s32> v{0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
 
     CHECK(v.size() == 10U);
     CHECK(v.find_first_of(5) == &v[5U]);
     CHECK(v.find_first_of({5, 5}) == &v[5U]);
     CHECK(v.find_first_of({15, 5}) == &v[5U]);
     CHECK(v.find_first_of(15) == v.cend());
-    CHECK(v.find_first_of({15,16}) == v.cend());
+    CHECK(v.find_first_of({15, 16}) == v.cend());
     CHECK(v.find_first_of(0) == &v[0U]);
     CHECK(v.find_first_of(0) == v.begin());
     CHECK(v.find_last_of({18, 19, 20}) == v.cend());
@@ -150,7 +189,7 @@ TEST_CASE("vector::find_first_of", "[vector]")
 
 TEST_CASE("vector::find_backwards", "[vector]")
 {
-    vector<s32> v{0,1,2,3,4,5,6,7,8,9,0};
+    vector<s32> v{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0};
 
     CHECK(v.size() == 11U);
     CHECK(v.find_backwards(0) == &v[10U]);
@@ -163,7 +202,7 @@ TEST_CASE("vector::find_backwards", "[vector]")
 
 TEST_CASE("vector::cfind_backwards", "[vector]")
 {
-    vector<s32> const v{-1,1,2,3,4,5,6,7,8,9,0};
+    vector<s32> const v{-1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0};
 
     CHECK(v.size() == 11U);
     CHECK(v.cfind_backwards(0) == &v[10U]);
@@ -175,7 +214,7 @@ TEST_CASE("vector::cfind_backwards", "[vector]")
 
 TEST_CASE("vector::find_last_of", "[vector]")
 {
-    vector<s32> v{0,1,2,3,4,5,6,7,8,9,0};
+    vector<s32> v{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0};
 
     CHECK(v.size() == 11U);
     CHECK(v.find_last_of(0) == &v[10U]);
@@ -311,44 +350,42 @@ TEST_CASE("vector of shared pointers::remove", "[vector]")
         CHECK(test_vector1.size() == 10U);
 
         {
-            auto const iterator = test_vector1.begin();
-            auto const value2   = (test_vector1[1U]->b);
-            auto const value_last =
-                (test_vector1[test_vector1.size() - 1U]->b);
+            auto const iterator   = test_vector1.begin();
+            auto const value2     = (test_vector1[1U]->b);
+            auto const value_last = (test_vector1[test_vector1.size() - 1U]->b);
 
             CHECK(std::next(iterator) == &(test_vector1[1U]));
             test_vector1.erase_one<false>(*test_vector1.begin());
             CHECK(test_vector1[0U]->b == value2);
-            CHECK((test_vector1[test_vector1.size() - 1U]->b) ==
-                    value_last);
+            CHECK((test_vector1[test_vector1.size() - 1U]->b) == value_last);
         }
     }
-/*
-    SECTION("Remove removed shared pointer")
-    {
-        sptr<A> temp = msptr<A>(A{42});
-        wptr<A> weak = temp;
-        test_vector1.push_back(htps::move(temp));
-        CHECK(test_vector1.size() == 9U);
-        CHECK_FALSE(weak.lock() == nullptr);
-        test_vector1.pop_back();
-        CHECK(test_vector1.size() == 8U);
-        CHECK(weak.lock() == nullptr);
-    }
+    /*
+        SECTION("Remove removed shared pointer")
+        {
+            sptr<A> temp = msptr<A>(A{42});
+            wptr<A> weak = temp;
+            test_vector1.push_back(htps::move(temp));
+            CHECK(test_vector1.size() == 9U);
+            CHECK_FALSE(weak.lock() == nullptr);
+            test_vector1.pop_back();
+            CHECK(test_vector1.size() == 8U);
+            CHECK(weak.lock() == nullptr);
+        }
 
-    SECTION("Remove if")
-    {
-        sptr<A> temp = msptr<A>(A{42});
-        wptr<A> weak = temp;
-        test_vector1.push_back(htps::move(temp));
-        CHECK(test_vector1.size() == 9U);
-        CHECK_FALSE(weak.lock() == nullptr);
-        test_vector1.erase_if(
-            [](const sptr<A> element) { return element->b == 42; });
-        CHECK(test_vector1.size() == 8U);
-        CHECK(weak.lock() == nullptr);
-    }
-    */
+        SECTION("Remove if")
+        {
+            sptr<A> temp = msptr<A>(A{42});
+            wptr<A> weak = temp;
+            test_vector1.push_back(htps::move(temp));
+            CHECK(test_vector1.size() == 9U);
+            CHECK_FALSE(weak.lock() == nullptr);
+            test_vector1.erase_if(
+                [](const sptr<A> element) { return element->b == 42; });
+            CHECK(test_vector1.size() == 8U);
+            CHECK(weak.lock() == nullptr);
+        }
+        */
 }
 
 TEST_CASE("vector of shared pointers::emplace", "[vector]")

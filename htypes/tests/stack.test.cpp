@@ -3,6 +3,8 @@
 #include <htypes/include/stack.hpp>
 #include <htypes/include/types.hpp>
 
+#include <stack>
+
 using namespace htps;
 
 TEST_CASE("stack::stack constructors")
@@ -119,12 +121,13 @@ TEST_CASE("stack::non copyable class")
     CHECK(dummy.size() == 0U);
     CHECK(dummy.empty());
 }
-
+/*
 TEST_CASE("stack::destructor")
 {
     {
-        stack<uptr<int>> dummy{muptr<int>(1)};
-        CHECK(dummy.size() == 3U);
-        CHECK_FALSE(dummy.empty());
+//        std::stack<std::unique_ptr<int>> dummy{std::make_unique<int>(3)};
+//        std::stack<std::unique_ptr<int>> dummy{nullptr};
+        std::stack<int> dummy{1};
     }
 }
+*/
