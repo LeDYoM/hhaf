@@ -13,6 +13,7 @@ set(SOURCE_TESTS
     menum
     shared_ptr
     span
+    stack
     str_literal
     str_view
     str

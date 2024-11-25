@@ -2,7 +2,6 @@ HTPS_PRAGMA_ONCE
 #ifndef HTYPES_VECTOR_STORAGE_INCLUDE_HPP
 #define HTYPES_VECTOR_STORAGE_INCLUDE_HPP
 
-#include <initializer_list>
 #include <utility>
 #include "memory/allocator.hpp"
 #include "function.hpp"

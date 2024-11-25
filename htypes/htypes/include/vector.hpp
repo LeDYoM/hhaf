@@ -4,8 +4,8 @@ HTPS_PRAGMA_ONCE
 #define HTYPES_VECTOR_INCLUDE_HPP
 
 #include <htypes/include/growpolicy.hpp>
-#include <htypes/include/vector_base.hpp>
 #include <htypes/include/memory/allocator.hpp>
+#include <htypes/include/vector_base.hpp>
 
 namespace htps
 {
