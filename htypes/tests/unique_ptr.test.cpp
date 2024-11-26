@@ -1,4 +1,4 @@
-#include "catch.hpp"
+#include "catch_include.hpp"
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/unique_ptr.hpp>

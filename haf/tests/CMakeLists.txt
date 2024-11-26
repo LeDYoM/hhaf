@@ -47,7 +47,8 @@ set(BENCHMARK_SOURCES
 set(no_benchmark 1)
 
 add_haf_test_executable(SOURCE_TESTS ${SOURCE_TESTS})
-target_include_directories(${CURRENT_TARGET} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_include_directories(${CURRENT_TARGET} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include .)
+
 set_compile_warning_level_and_cxx_properties(${CURRENT_TARGET})
 
 if (NOT DEFINED no_benchmark)

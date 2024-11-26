@@ -1,4 +1,4 @@
-#include "catch.hpp"
+#include "catch_include.hpp"
 
 #include <htypes/include/types.hpp>
 #include "../../haf/src/debug_system/debug_variables.hpp"

@@ -1,4 +1,4 @@
-#include "catch.hpp"
+#include "catch_include.hpp"
 
 #include <htypes/include/types.hpp>
 #include <haf/include/scene_components/states_controller_component.hpp>

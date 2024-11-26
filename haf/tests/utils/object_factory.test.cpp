@@ -1,4 +1,4 @@
-#include "catch.hpp"
+#include "catch_include.hpp"
 
 #include <htypes/include/types.hpp>
 #include <haf/include/utils/object_factory.hpp>

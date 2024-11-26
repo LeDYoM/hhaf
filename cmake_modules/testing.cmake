@@ -14,11 +14,11 @@ function (prepareTestLibrary)
     message(STATUS "Fetching Catch2")
     #======================================
 
-    set(CATCH2_COMMIT 182c910)
-    FetchContent_Declare(CATCH2
+    set(CATCH2_COMMIT fa43b77429ba76c462b1898d6cd2f2d7a9416b14) # 3.7.1
+    FetchContent_Declare(Catch2
         GIT_REPOSITORY https://github.com/catchorg/Catch2.git
         GIT_TAG ${CATCH2_COMMIT}
-        CMAKE_ARGS -DBUILD_TESTING=OFF
+        CMAKE_ARGS -BUILD_SHARED_LIBS=OFF
     )
 
     FetchContent_MakeAvailable(Catch2)
@@ -41,7 +41,7 @@ function(add_test_executable)
     target_sources(${CURRENT_TARGET} PRIVATE ${SOURCE_TESTS_LIST})
     target_compile_definitions(${CURRENT_TARGET} PUBLIC CATCH_CONFIG_ENABLE_BENCHMARKING)
 
-    target_link_libraries(${CURRENT_TARGET} PUBLIC Catch2)
+    target_link_libraries(${CURRENT_TARGET} PUBLIC Catch2::Catch2WithMain)
     target_include_directories(
       ${CURRENT_TARGET} PRIVATE "${Catch2_SOURCE_DIR}/single_include/catch2")
 
@@ -53,7 +53,8 @@ function(add_haf_test_executable)
   if (BUILD_TESTS)
     file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/main.test.cpp"
     "#define CATCH_CONFIG_RUNNER
-      #include <catch.hpp>
+      #include <catch2/catch_test_macros.hpp>
+      #include <catch2/catch_session.hpp>
 
       #include <hlog/include/hlog.hpp>
 
@@ -97,7 +98,8 @@ function(add_test_executable_with_main)
 
       #pragma warning ( push )
       #pragma warning( disable : 4514 4620 4623 4625 4626 4820 5026 5027 5204 )
-      #include \"catch.hpp\"
+      #include <catch2/catch_test_macros.hpp>
+      #include <catch2/catch_session.hpp>
       #pragma warning ( pop )
 
       int main(int argc, char* argv[])

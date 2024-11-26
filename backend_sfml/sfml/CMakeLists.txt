@@ -5,7 +5,7 @@ if (NOT use_system_sfml)
     include(FetchContent)
     message(STATUS "Fetching SFML")
 
-    set(SFML_VERSION 2.5.1)
+    set(SFML_VERSION 5383d2b3948f805af55c9f8a4587ac72ec5981d1) #2.6.2
 
     # It's nice to get stripped-down release zips instead of cloning
     # a repo and checking out a tag
@@ -18,14 +18,12 @@ if (NOT use_system_sfml)
         GIT_REPOSITORY https://github.com/SFML/SFML.git
         GIT_TAG ${SFML_VERSION} #Always build with this tag, so we're sure it is stable.
         CMAKE_CACHE_ARGS -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX} -DBUILD_SHARED_LIBS=ON
-        CMAKE_ARGS "-Wno-dev"
     )
 
     FetchContent_MakeAvailable(SFML)
 
 #    add_subdirectory(SFML-2.5.1)
-
-    add_dependencies(${CURRENT_TARGET} sfml-system sfml-window sfml-graphics)
+#    add_dependencies(${CURRENT_TARGET} sfml-system sfml-window sfml-graphics)
 
     message("Fetching SFML done")
 else()

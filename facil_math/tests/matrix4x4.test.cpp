@@ -1,4 +1,4 @@
-#include "catch.hpp"
+#include "catch_include.hpp"
 
 #include <facil_math/include/matrix4x4.hpp>
 #include <limits>

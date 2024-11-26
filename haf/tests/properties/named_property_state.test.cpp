@@ -1,4 +1,4 @@
-#include "catch.hpp"
+#include "catch_include.hpp"
 /*
 #include <haf/include/core/types.hpp>
 #include <haf/include/properties/property_state.hpp>
