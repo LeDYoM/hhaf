@@ -41,11 +41,19 @@ function(add_test_executable)
     target_sources(${CURRENT_TARGET} PRIVATE ${SOURCE_TESTS_LIST})
     target_compile_definitions(${CURRENT_TARGET} PUBLIC CATCH_CONFIG_ENABLE_BENCHMARKING)
 
-    target_link_libraries(${CURRENT_TARGET} PUBLIC Catch2::Catch2WithMain)
-    target_include_directories(
-      ${CURRENT_TARGET} PRIVATE "${Catch2_SOURCE_DIR}/single_include/catch2")
-
     add_test(NAME ${CURRENT_TARGET} COMMAND ${CURRENT_TARGET})
+  endif()
+endfunction()
+
+function(add_test_link_with_main)
+  if (BUILD_TESTS)
+    target_link_libraries(${CURRENT_TARGET} PUBLIC Catch2::Catch2WithMain)
+  endif()
+endfunction()
+
+function(add_test_link)
+  if (BUILD_TESTS)
+    target_link_libraries(${CURRENT_TARGET} PUBLIC Catch2::Catch2)
   endif()
 endfunction()
 
@@ -83,41 +91,19 @@ function(add_haf_test_executable)
     list(APPEND PARAM_LIST "${CMAKE_CURRENT_BINARY_DIR}/main")
 
     add_test_executable(${PARAM_LIST})
-
+    add_test_link()
     target_link_libraries(${CURRENT_TARGET} PRIVATE haf)
   endif()
 endfunction()
 
 function(add_test_executable_with_main)
   if (BUILD_TESTS)
-    file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/main.test.cpp"
-     "#define CATCH_CONFIG_RUNNER
-      #ifdef _MSC_VER
-      #define CATCH_CONFIG_WINDOWS_CRTDBG
-      #endif
-
-      #pragma warning ( push )
-      #pragma warning( disable : 4514 4620 4623 4625 4626 4820 5026 5027 5204 )
-      #include <catch2/catch_test_macros.hpp>
-      #include <catch2/catch_session.hpp>
-      #pragma warning ( pop )
-
-      int main(int argc, char* argv[])
-      {
-        Catch::Session session;
-
-        int returnCode = session.applyCommandLine(argc, argv);
-        if (returnCode != 0)
-          return returnCode;
-
-        return session.run();
-    }")
 
     set(PARAM_LIST ${ARGV})
     list(APPEND PARAM_LIST "${CMAKE_CURRENT_BINARY_DIR}/main")
 
     add_test_executable(${PARAM_LIST})
-
+    add_test_link_with_main()
     target_link_libraries(${CURRENT_TARGET} PRIVATE haf)
   endif()
 endfunction()
