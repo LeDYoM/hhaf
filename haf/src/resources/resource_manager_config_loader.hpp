@@ -34,6 +34,7 @@ public:
     {
         config_directory_ = new_value;
     }
+
 private:
     res::SetResourceConfigFileResult parseResourceConfigFile(
         sys::SubSystemViewer sub_system_viewer);

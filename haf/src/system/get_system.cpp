@@ -37,15 +37,13 @@ namespace haf::sys
     const SystemType& getSystem<SystemType>( \
         rptr<ISystemProvider const> isystem_provider) \
     { \
-        return getSystemProvider(*isystem_provider) \
-            .system<SystemType>(); \
+        return getSystemProvider(*isystem_provider).system<SystemType>(); \
     } \
 \
     template <> \
     SystemType& getSystem<SystemType>(rptr<ISystemProvider> isystem_provider) \
     { \
-        return getSystemProvider(*isystem_provider) \
-            .system<SystemType>(); \
+        return getSystemProvider(*isystem_provider).system<SystemType>(); \
     } \
 \
     template <> \

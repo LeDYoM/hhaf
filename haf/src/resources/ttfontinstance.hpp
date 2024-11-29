@@ -23,8 +23,7 @@ public:
                          const htps::u32 second) const override;
     htps::str getTexture(char const character) override;
     ~TTFontInstance();
-    TTFontInstance(const TTFont& parent,
-                   const htps::u32 characterSize);
+    TTFontInstance(const TTFont& parent, const htps::u32 characterSize);
 
 private:
     const TTFont& parent_instance_;

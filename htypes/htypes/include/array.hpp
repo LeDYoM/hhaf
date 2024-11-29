@@ -21,9 +21,10 @@ public:
     using value_type       = T;
     using const_value_type = const T;
 
-    array() = default;
+    [[nodiscard]] array() = default;
 
-    constexpr array(std::initializer_list<value_type> iList) noexcept
+    [[nodiscard]] constexpr array(
+        std::initializer_list<value_type> iList) noexcept
     {
         //        static_assert(iList.size() <= array_size);
         auto buffer_element{&buffer_[0]};
@@ -44,7 +45,9 @@ public:
         }
     }
 
-    constexpr array(const T* const source, const size_type count) : array()
+    [[nodiscard]] constexpr array(const T* const source,
+                                  const size_type count) :
+        array{}
     {
         assert(array_size >= count);
         size_type index{0U};
@@ -56,19 +59,23 @@ public:
         }
     }
 
-    constexpr array(array&&) = default;
-    constexpr array( const array&) = default;
-    constexpr array& operator=(array&&) = default;
-    constexpr array& operator=(const array&) = default;
-
-    constexpr array(const_iterator const _begin, const_iterator const _end) :
+    [[nodiscard]] constexpr array(const_iterator const _begin,
+                                  const_iterator const _end) :
         array{_begin, static_cast<size_type>(std::distance(_begin, _end))}
     {}
 
-    constexpr array(span<T const> const rhs) : array{rhs.cbegin(), rhs.cend()}
+    [[nodiscard]] constexpr array(span<T const> const rhs) :
+        array{rhs.cbegin(), rhs.cend()}
     {}
 
-    constexpr array(span<T> const rhs) : array{rhs.cbegin(), rhs.cend()} {}
+    [[nodiscard]] constexpr array(span<T> const rhs) :
+        array{rhs.cbegin(), rhs.cend()}
+    {}
+
+    constexpr array(array&&)      = default;
+    constexpr array(const array&) = default;
+    constexpr array& operator=(array&&) = default;
+    constexpr array& operator=(const array&) = default;
 
     constexpr void insert(size_type const index, value_type element) noexcept
     {
@@ -83,34 +90,64 @@ public:
         }
     }
 
-    constexpr reference operator[](size_t const index) noexcept
+    [[nodiscard]] constexpr reference operator[](size_t const index) noexcept
     {
         return buffer_[index];
     }
-    constexpr const_reference operator[](const size_t index) const noexcept
+
+    [[nodiscard]] constexpr const_reference operator[](
+        const size_t index) const noexcept
     {
         return buffer_[index];
     }
-    constexpr size_t size() const noexcept { return array_size; }
-    constexpr bool empty() const noexcept { return array_size == 0U; }
-    constexpr iterator begin() noexcept { return buffer_; }
-    constexpr const_iterator begin() const noexcept { return buffer_; }
-    constexpr iterator end() noexcept { return buffer_ + array_size; }
-    constexpr const_iterator end() const noexcept
+
+    [[nodiscard]] constexpr size_t size() const noexcept { return array_size; }
+    [[nodiscard]] constexpr bool empty() const noexcept
+    {
+        return array_size == 0U;
+    }
+    [[nodiscard]] constexpr iterator begin() noexcept { return buffer_; }
+    [[nodiscard]] constexpr const_iterator begin() const noexcept
+    {
+        return buffer_;
+    }
+    [[nodiscard]] constexpr iterator end() noexcept
     {
         return buffer_ + array_size;
     }
-    constexpr const_iterator cbegin() const noexcept { return begin(); }
-    constexpr const_iterator cend() const noexcept { return end(); }
-    constexpr reference front() noexcept { return *begin(); }
-    constexpr reference back() noexcept { return buffer_[array_size - 1U]; }
-    constexpr const_reference front() const noexcept { return cbegin(); }
-    constexpr const_reference back() const noexcept
+    [[nodiscard]] constexpr const_iterator end() const noexcept
     {
-        return buffer_[array_size > 0 ? (array_size - 1) : 0];
+        return buffer_ + array_size;
     }
-    constexpr const_reference cfront() const noexcept { return cbegin(); }
-    constexpr const_reference cback() const noexcept { return back(); }
+    [[nodiscard]] constexpr const_iterator cbegin() const noexcept
+    {
+        return begin();
+    }
+    [[nodiscard]] constexpr const_iterator cend() const noexcept
+    {
+        return end();
+    }
+    [[nodiscard]] constexpr reference front() noexcept { return *begin(); }
+    [[nodiscard]] constexpr reference back() noexcept
+    {
+        return buffer_[array_size - 1U];
+    }
+    [[nodiscard]] constexpr const_reference front() const noexcept
+    {
+        return cbegin();
+    }
+    [[nodiscard]] constexpr const_reference back() const noexcept
+    {
+        return buffer_[array_size > 0U ? (array_size - 1U) : 0U];
+    }
+    [[nodiscard]] constexpr const_reference cfront() const noexcept
+    {
+        return cbegin();
+    }
+    [[nodiscard]] constexpr const_reference cback() const noexcept
+    {
+        return back();
+    }
 
     constexpr array& operator=(span<T> const& rhs)
     {
@@ -129,8 +166,9 @@ private:
 };
 
 template <class T, size_type array_size>
-constexpr bool operator==(array<T, array_size> const& lhs,
-                          array<T, array_size> const& rhs) noexcept
+[[nodiscard]] constexpr bool operator==(
+    array<T, array_size> const& lhs,
+    array<T, array_size> const& rhs) noexcept
 {
     return std::equal(lhs.cbegin(), lhs.cend(), rhs.cbegin());
 }

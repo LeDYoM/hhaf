@@ -10,10 +10,8 @@ namespace haf::res
 {
 using namespace backend;
 
-TTFontInstance::TTFontInstance(const TTFont& parent,
-                               const u32 characterSize) :
-    parent_instance_{parent},
-    character_size_{characterSize}
+TTFontInstance::TTFontInstance(const TTFont& parent, const u32 characterSize) :
+    parent_instance_{parent}, character_size_{characterSize}
 {}
 
 TTFontInstance::~TTFontInstance() = default;

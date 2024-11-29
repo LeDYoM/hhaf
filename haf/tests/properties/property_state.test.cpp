@@ -43,10 +43,7 @@ TEST_CASE("PropertyState", "[htypes][property][state]")
 struct Movable
 {
     int a;
-    bool operator==(Movable const& rhs) const noexcept
-    {
-        return a == rhs.a;
-    }
+    bool operator==(Movable const& rhs) const noexcept { return a == rhs.a; }
 };
 
 TEST_CASE("PropertyState::assignIfDifferent", "[htypes][property][state]")

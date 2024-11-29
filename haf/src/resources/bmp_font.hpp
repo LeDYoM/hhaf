@@ -12,7 +12,7 @@ namespace haf::backend
 {
 class IFont;
 class IBMPFont;
-}
+}  // namespace haf::backend
 
 namespace haf::res
 {

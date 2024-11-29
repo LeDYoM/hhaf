@@ -11,6 +11,7 @@ class ITexture
 {
 protected:
     ~ITexture() = default;
+
 public:
     virtual fmath::vector2du32 size() const = 0;
 };

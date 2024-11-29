@@ -11,12 +11,12 @@ namespace haf::debug
 {
 struct DebugActions::DebugActionsPrivate final
 {
-    using DebugActionVectorType = vector<
-        pair<input::Key, DebugActions::DebugAction>>;
+    using DebugActionVectorType =
+        vector<pair<input::Key, DebugActions::DebugAction>>;
     using DebugActionVectorTypeIterator = DebugActionVectorType::iterator;
     DebugActionVectorType debug_actions_;
 
-    DebugActionsPrivate() = default;
+    DebugActionsPrivate()  = default;
     ~DebugActionsPrivate() = default;
 
     auto find(Key const key)
@@ -60,7 +60,7 @@ void DebugActions::logSceneNodeTree(rptr<scene::SceneNode const> scene_node,
                                     size_type level)
 {
     str complete(level * 4U);
-    for (size_type i{0U}; i<level; ++i)
+    for (size_type i{0U}; i < level; ++i)
     {
         complete += "    ";
     }

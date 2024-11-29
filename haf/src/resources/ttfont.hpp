@@ -21,7 +21,7 @@ public:
     TTFont(backend::ITTFont* const font);
     ~TTFont();
     fmath::Rectf32 getBounds(const htps::u32 codePoint,
-                            const htps::u32 characterSize) const override;
+                             const htps::u32 characterSize) const override;
     fmath::Rectf32 getTextureBounds(
         const htps::u32 codePoint,
         const htps::u32 characterSize) const override;
@@ -32,7 +32,7 @@ public:
                          const htps::u32 second,
                          const htps::u32 characterSize) const override;
     htps::str getTexture(const htps::u32 characterSize,
-                                    char const character) const override;
+                         char const character) const override;
     htps::sptr<IFont> font(const htps::u32 charactersize) override;
 
 private:

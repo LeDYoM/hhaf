@@ -46,6 +46,7 @@ public:
     RenderizableBuilder& shader(htps::str const& shader_name);
     RenderizableBuilder& texture(htps::sptr<res::ITexture> _texture);
     RenderizableBuilder& texture(htps::str const& texture_name);
+
 private:
     RenderizableBuilderData data_;
 };

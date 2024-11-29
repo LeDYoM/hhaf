@@ -33,11 +33,11 @@ void DebugVariables::getVariable(DebugVariableHandle& index,
         }
         else
         {
-            m_debug_variables.add(
+            (void)(m_debug_variables.add(
                 str_name,
-                DebugVariable{static_cast<DebugVariable::value_type>(0)});
+                DebugVariable{static_cast<DebugVariable::value_type>(0)}));
             index =
-                static_cast<DebugVariableHandle>(m_debug_variables.size() - 1);
+                static_cast<DebugVariableHandle>(m_debug_variables.size() - 1U);
         }
     }
 }
@@ -96,8 +96,7 @@ str DebugVariables::state() const
     return result;
 }
 
-Dictionary<DebugVariable> const& DebugVariables::debugVariables()
-    const noexcept
+Dictionary<DebugVariable> const& DebugVariables::debugVariables() const noexcept
 {
     return m_debug_variables;
 }

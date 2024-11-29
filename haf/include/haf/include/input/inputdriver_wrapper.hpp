@@ -18,8 +18,7 @@ namespace haf::input
 class InputDriverWrapper final
 {
 public:
-    explicit InputDriverWrapper(
-        htps::rptr<backend::IInputDriver> input_driver);
+    explicit InputDriverWrapper(htps::rptr<backend::IInputDriver> input_driver);
     ~InputDriverWrapper();
 
     void keyPressed(const Key);

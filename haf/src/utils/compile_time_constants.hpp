@@ -21,6 +21,6 @@ inline constexpr bool ShowFPS{
 #endif
 };
 
-}
+}  // namespace haf::ctc
 
 #endif

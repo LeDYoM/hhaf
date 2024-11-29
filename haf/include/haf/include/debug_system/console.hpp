@@ -18,11 +18,11 @@ public:
     using BaseClass::BaseClass;
     void onAttached() override;
 
-    void tableNodeCreated(
-        fmath::vector2dst const&,
-        htps::sptr<haf::scene::nodes::SceneNodeText> const&);
+    void tableNodeCreated(fmath::vector2dst const&,
+                          htps::sptr<haf::scene::nodes::SceneNodeText> const&);
 
     void setText(fmath::vector2dst const& nodeIndex, htps::str const& text);
+
 private:
     void addRequirements(component::ComponentRequirements&) override;
     htps::sptr<scene::TextTableNode> m_textTableNode;

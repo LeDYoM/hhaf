@@ -20,8 +20,8 @@ void Timer::restart()
 
 TimePoint Timer::ellapsed() const
 {
-    return (isPaused() ? data_.time_paused_ : data_.itime_view_->now() -
-            data_.started_at_);
+    return (isPaused() ? data_.time_paused_
+                       : data_.itime_view_->now() - data_.started_at_);
 }
 
 void Timer::pause()

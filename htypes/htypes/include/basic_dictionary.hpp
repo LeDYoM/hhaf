@@ -27,23 +27,23 @@ public:
      * @brief  Default constructor
      *
      */
-    constexpr BasicDictionary() noexcept = default;
+    [[nodiscard]] constexpr BasicDictionary() noexcept = default;
 
-    constexpr BasicDictionary(std::initializer_list<element> eList) :
+    [[nodiscard]] constexpr BasicDictionary(std::initializer_list<element> eList) :
         data_{htps::move(eList)}
     {}
 
-    constexpr BasicDictionary(const content& eList) : data_{htps::move(eList)}
+    [[nodiscard]] constexpr BasicDictionary(const content& eList) : data_{htps::move(eList)}
     {}
 
-    constexpr iterator begin() noexcept { return data_.begin(); }
-    constexpr const_iterator begin() const noexcept { return data_.begin(); }
-    constexpr const_iterator cbegin() const noexcept { return data_.begin(); }
-    constexpr iterator end() noexcept { return data_.end(); }
-    constexpr const_iterator end() const noexcept { return data_.end(); }
-    constexpr const_iterator cend() const noexcept { return data_.end(); }
+    [[nodiscard]] constexpr iterator begin() noexcept { return data_.begin(); }
+    [[nodiscard]] constexpr const_iterator begin() const noexcept { return data_.begin(); }
+    [[nodiscard]] constexpr const_iterator cbegin() const noexcept { return data_.begin(); }
+    [[nodiscard]] constexpr iterator end() noexcept { return data_.end(); }
+    [[nodiscard]] constexpr const_iterator end() const noexcept { return data_.end(); }
+    [[nodiscard]] constexpr const_iterator cend() const noexcept { return data_.end(); }
 
-    constexpr bool add(content const& eList, bool const overwrite = true)
+    [[nodiscard]] constexpr bool add(content const& eList, bool const overwrite = true)
     {
         bool result{true};
         for (const element& elems : eList)
@@ -53,7 +53,7 @@ public:
         return result;
     }
 
-    constexpr bool add(std::initializer_list<element> eList,
+    [[nodiscard]] constexpr bool add(std::initializer_list<element> eList,
                        const bool overwrite = true)
     {
         bool result{true};
@@ -64,11 +64,11 @@ public:
         return result;
     }
 
-    constexpr bool add(key_type const& key,
+    [[nodiscard]] constexpr bool add(key_type const& key,
                        T value = {},
                        const bool overwrite = true)
     {
-        auto it(find(key));
+        auto const it{find(key)};
 
         if (it == data_.end())
         {

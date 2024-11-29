@@ -36,8 +36,7 @@ void StatedInputComponentBase::addStateKeyInputFunction(
                         htps::move(key_released_function)};
 }
 
-void StatedInputComponentBase::setProcessingState(
-    u32 const current_state)
+void StatedInputComponentBase::setProcessingState(u32 const current_state)
 {
     p_->current_state_ = current_state;
 }

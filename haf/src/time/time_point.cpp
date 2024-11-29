@@ -2,5 +2,5 @@
 
 namespace haf::time
 {
-    class TimePoint;
+class TimePoint;
 }  // namespace haf::time

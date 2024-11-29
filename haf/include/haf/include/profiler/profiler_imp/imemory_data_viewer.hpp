@@ -11,6 +11,7 @@ class IMemoryDataCreator
 {
 public:
     virtual MemoryDataInitializer startMemoryCounter() = 0;
+
 protected:
     virtual ~IMemoryDataCreator() = default;
 };

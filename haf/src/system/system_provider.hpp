@@ -48,7 +48,7 @@ public:
 
     SystemProvider(SystemProvider const&) = delete;
     SystemProvider& operator=(SystemProvider const&) = delete;
-    SystemProvider(SystemProvider&&) = default;
+    SystemProvider(SystemProvider&&)                 = default;
     SystemProvider& operator=(SystemProvider&&) = default;
 
     void setBackend(htps::rptr<backend::BackendFactory> backend_factory);

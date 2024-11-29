@@ -63,22 +63,22 @@ TEST_CASE("SceneController", "[lib][SceneController]")
 
     // TODO: common.scene_controller->update() fails because the camera creation
     // requires render system to be there and in tests, it is not. Fix someday.
-/*
-    SECTION("Simple scene")
-    {
-        CHECK(common.scene_controller->registerAndStartScene<UniqueScene>(
-            "UniqueScene"));
-
-        while (!common.exit)
+    /*
+        SECTION("Simple scene")
         {
-            common.scene_controller->update();
-            common.exit = true;
-        }
+            CHECK(common.scene_controller->registerAndStartScene<UniqueScene>(
+                "UniqueScene"));
 
-        common.step++;
-        CHECK(common.step == 1U);
-    }
-*/
+            while (!common.exit)
+            {
+                common.scene_controller->update();
+                common.exit = true;
+            }
+
+            common.step++;
+            CHECK(common.step == 1U);
+        }
+    */
     SECTION("Two scenes")
     {
         CHECK(common.scene_controller->registerSceneNodeType<GroupScene1>());

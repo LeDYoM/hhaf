@@ -8,7 +8,7 @@ HTPS_PRAGMA_ONCE
 
 namespace haf::backend
 {
-    class IWindow;
+class IWindow;
 }
 
 namespace haf::sys

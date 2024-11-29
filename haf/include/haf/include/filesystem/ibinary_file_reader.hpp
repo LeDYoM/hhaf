@@ -11,10 +11,11 @@ class IBinaryFileReader
 {
 protected:
     virtual ~IBinaryFileReader() = default;
+
 public:
     virtual htps::RawMemory loadBinaryFile(sys::Path const& file_name) = 0;
 };
 
-}  // namespace haf::sys
+}  // namespace haf::fs
 
 #endif

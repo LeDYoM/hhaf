@@ -91,7 +91,7 @@ sptr<T> get_or_add(backend::IResourceManager* iresource_manager,
         DisplayLog::info("Going to load file: ", fileName);
         sptr<T> resource{loadResource<T>(iresource_manager, factory, fileSystem,
                                          rid, fileName)};
-        container.add(rid, resource);
+        (void)(container.add(rid, resource));
         return resource;
     }
 }
@@ -104,7 +104,7 @@ struct ResourceManager::ResourceManagerPrivate
     ResourceList<sptr<Texture>> textures_;
     ResourceList<sptr<Shader>> shaders_;
     ResourceList<sptr<BMPFont>> bmp_fonts_;
-//    DefaultBMPFontFactory bmp_font_factory_;
+    //    DefaultBMPFontFactory bmp_font_factory_;
 };
 
 }  // namespace haf::sys

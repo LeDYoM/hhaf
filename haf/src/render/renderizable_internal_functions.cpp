@@ -11,7 +11,7 @@ namespace haf::render
 {
 void setColor(htps::vector<backend::iColor>& colors, scene::Color const& color)
 {
-    backend::iColor i_color { to_backend(color) };
+    backend::iColor i_color{to_backend(color)};
     for (auto&& vertex_color : colors)
     {
         vertex_color = i_color;

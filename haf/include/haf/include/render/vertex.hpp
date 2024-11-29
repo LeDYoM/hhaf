@@ -9,9 +9,7 @@ namespace haf::render
 {
 struct Vertex final
 {
-    Vertex(fmath::vector2df p,
-                     scene::Color c,
-                     fmath::vector2df tc) noexcept :
+    Vertex(fmath::vector2df p, scene::Color c, fmath::vector2df tc) noexcept :
         position{htps::move(p)}, color{htps::move(c)}, texCoords{htps::move(tc)}
     {}
 

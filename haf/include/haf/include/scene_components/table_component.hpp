@@ -121,7 +121,8 @@ public:
     }
 
 private:
-    virtual void tableNodeCreated(fmath::vector2dst const&, htps::sptr<T> const&)
+    virtual void tableNodeCreated(fmath::vector2dst const&,
+                                  htps::sptr<T> const&)
     {}
 
     void createNodeAt(fmath::vector2dst const& index) override final

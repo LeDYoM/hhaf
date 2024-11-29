@@ -17,7 +17,7 @@ protected:
 
 public:
     virtual fmath::Rectf32 getBounds(const htps::u32 codePoint,
-                                    const htps::u32 characterSize) const = 0;
+                                     const htps::u32 characterSize) const = 0;
     virtual fmath::Rectf32 getTextureBounds(
         const htps::u32 codePoint,
         const htps::u32 characterSize) const                              = 0;

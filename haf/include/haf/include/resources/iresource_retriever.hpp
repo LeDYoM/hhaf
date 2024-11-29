@@ -16,11 +16,12 @@ class IResourceRetriever
 {
 protected:
     ~IResourceRetriever() = default;
+
 public:
-    virtual htps::sptr<ITTFont> getTTFont(htps::str const& rid) const = 0;
+    virtual htps::sptr<ITTFont> getTTFont(htps::str const& rid) const   = 0;
     virtual htps::sptr<ITexture> getTexture(htps::str const& rid) const = 0;
-    virtual htps::sptr<IShader> getShader(htps::str const& rid) const = 0;
-    virtual htps::sptr<IFont> getBMPFont(htps::str const& rid) const = 0;
+    virtual htps::sptr<IShader> getShader(htps::str const& rid) const   = 0;
+    virtual htps::sptr<IFont> getBMPFont(htps::str const& rid) const    = 0;
 };
 
 }  // namespace haf::res

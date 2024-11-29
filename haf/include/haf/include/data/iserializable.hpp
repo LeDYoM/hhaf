@@ -10,8 +10,8 @@ class ISerializable
 {
 public:
     virtual bool serialize(mcs::Object&) const = 0;
-    virtual ~ISerializable()                    = default;
+    virtual ~ISerializable()                   = default;
 };
-}
+}  // namespace haf::data
 
 #endif

@@ -26,7 +26,6 @@ class HAF_API TransformableSceneNode : public SceneNode, public Transformation
     using BaseSceneNode = SceneNode;
 
 public:
-
     using Scalar = Matrix4x4::Scalar;  ///< Type Scalar for this class
     using VectorScalar =
         fmath::vector2d<Scalar>;  ///< Type VectorScalar for this class

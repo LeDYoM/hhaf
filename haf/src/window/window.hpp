@@ -13,7 +13,7 @@ class InputDriverWrapper;
 
 namespace haf::backend
 {
-    class IWindow;
+class IWindow;
 }
 
 namespace haf::sys

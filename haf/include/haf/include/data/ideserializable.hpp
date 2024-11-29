@@ -13,7 +13,7 @@ class IDeserializable
 {
 public:
     virtual bool deserialize(mcs::Object const&) = 0;
-    virtual ~IDeserializable()                    = default;
+    virtual ~IDeserializable()                   = default;
 };
 
 template <typename T>
@@ -24,13 +24,15 @@ public:
 
     bool deserialize(mcs::Object const& obj)
     {
+        bool result{false};
+
         for (auto const& element : obj.objects())
         {
             T element_data;
             element_data.deserialize(element.second);
-            elements_.add(element.first, htps::move(element_data));
+            result &= elements_.add(element.first, htps::move(element_data));
         }
-        return true;
+        return result;
     }
 
     htps::Dictionary<T>& elements() noexcept { return elements_; }

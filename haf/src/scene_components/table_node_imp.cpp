@@ -45,22 +45,21 @@ void TableNodeImp::createTableNodesIfNecessary()
         auto const half_cell_size{cell_size / 2.0F};
         auto const left_top_plus_half_size{vector2df{-0.5F, -0.5F} +
                                            half_cell_size};
-        for_each_table_innerSceneNode([this, &cell_size,
-                                       &left_top_plus_half_size](
-                                          fmath::vector2dst const& p,
-                                          const htps::sptr<
-                                              TransformableSceneNode>& node) {
-            if (node->sceneNodes().empty())
-            {
-                createNodeAt({p.x, p.y});
-            }
+        for_each_table_innerSceneNode(
+            [this, &cell_size, &left_top_plus_half_size](
+                fmath::vector2dst const& p,
+                const htps::sptr<TransformableSceneNode>& node) {
+                if (node->sceneNodes().empty())
+                {
+                    createNodeAt({p.x, p.y});
+                }
 
-            node->Scale = cell_size;
+                node->Scale = cell_size;
 
-            node->Position = left_top_plus_half_size +
-                (cell_size * static_cast<fmath::vector2df>(p));
-//            m_transformableComponent->Position = {0.0F, 0.0F};
-        });
+                node->Position = left_top_plus_half_size +
+                    (cell_size * static_cast<fmath::vector2df>(p));
+                //            m_transformableComponent->Position = {0.0F, 0.0F};
+            });
         allTableElementsCreated(TableSize());
     }
 }
@@ -135,9 +134,9 @@ void TableNodeImp::for_each_table_innerSceneNode(
     }
 }
 
-void TableNodeImp::addRequirements(component::ComponentRequirements& )
+void TableNodeImp::addRequirements(component::ComponentRequirements&)
 {
-//    cReq.component(m_transformableComponent);
+    //    cReq.component(m_transformableComponent);
 }
 
 }  // namespace haf::scene

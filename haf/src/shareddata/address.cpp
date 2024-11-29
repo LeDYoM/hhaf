@@ -126,7 +126,7 @@ bool Address::removeLast()
 }
 
 pair<bool, mcs::Object> objectFromAddress(Address const& address,
-                                           Object const& object)
+                                          Object const& object)
 {
     if (address.isFinal())
     {

@@ -5,8 +5,7 @@
 
 namespace haf::scene
 {
-Transformation::Transformation() noexcept :
-    transform_{}
+Transformation::Transformation() noexcept : transform_{}
 {}
 
 Transformation::~Transformation() = default;
@@ -44,7 +43,7 @@ Matrix4x4 const& Transformation::matrix() const noexcept
 void Transformation::setLeftTopPositionScale(VectorScalar const& vector)
 {
     Position = VectorScalar{-0.5F, -0.5F} + (vector / 2.0F);
-    Scale = vector;
+    Scale    = vector;
 }
 
 void Transformation::setRightTopPositionScale(VectorScalar const& vector)
@@ -53,7 +52,7 @@ void Transformation::setRightTopPositionScale(VectorScalar const& vector)
     origin.x -= vector.x / 2.0F;
     origin.y += vector.y / 2.0F;
     Position = htps::move(origin);
-    Scale = vector;
+    Scale    = vector;
 }
 
 }  // namespace haf::scene

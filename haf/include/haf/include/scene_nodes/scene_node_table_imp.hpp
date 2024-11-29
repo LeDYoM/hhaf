@@ -50,7 +50,6 @@ public:
     void createTableNodesIfNecessary();
 
 protected:
-
     ContainedType_t innerSceneNodeAt(fmath::vector2dst const index) const;
 
     virtual void setTableSize(fmath::vector2dst const ntableSize);
@@ -65,7 +64,8 @@ private:
     void updateTableSizeIfNecessary();
 
     void for_each_table_innerSceneNode(
-        htps::function<void(const fmath::vector2dst&, ContainedType_t&)> action);
+        htps::function<void(const fmath::vector2dst&, ContainedType_t&)>
+            action);
 
     virtual void createNodeAt(fmath::vector2dst const& index) = 0;
 

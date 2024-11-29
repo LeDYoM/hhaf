@@ -8,6 +8,4 @@ using namespace htps;
 using namespace haf::time;
 
 namespace haf::sys
-{
-
-}  // namespace haf::sys
+{}  // namespace haf::sys

@@ -16,6 +16,7 @@ class IAppInitializer
 {
 protected:
     virtual ~IAppInitializer() = default;
+
 public:
     /**
      * @brief Registed a specific type of class derived from @b Scene

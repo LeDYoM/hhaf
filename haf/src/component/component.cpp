@@ -3,6 +3,4 @@
 using namespace htps;
 
 namespace haf::component
-{
-
-}  // namespace haf::component
+{}  // namespace haf::component

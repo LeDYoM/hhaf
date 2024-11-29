@@ -64,7 +64,7 @@ void TextEditorComponent::onKeyPressed(const input::Key& key)
         else if (key == Key::Escape)
         {
             attached_text_node->Text = original_text_;
-            enabled = false;
+            enabled                  = false;
             Rejected();
         }
     }

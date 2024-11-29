@@ -29,9 +29,9 @@ struct ReplayData : public data::IFullSerializable
     constexpr static char InputDataName[]  = "input_data";
 
     friend const mcs::Object& operator>>(const mcs::Object& obj,
-                                          ReplayData& replay_data);
+                                         ReplayData& replay_data);
     friend mcs::Object& operator<<(mcs::Object& obj,
-                                    const ReplayData& replay_data);
+                                   const ReplayData& replay_data);
 
     bool serialize(mcs::Object& obj) const override
     {

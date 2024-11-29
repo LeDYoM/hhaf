@@ -40,7 +40,6 @@ public:
 protected:
     InnerDataType& data() noexcept { return data_; }
 
-
 private:
     InnerDataType data_;
 };

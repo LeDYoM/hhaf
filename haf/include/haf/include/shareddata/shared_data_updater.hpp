@@ -16,16 +16,15 @@ template <typename T>
 class SharedDataUpdater : public SharedDataHandler<T, ISharedData>
 {
     using BaseClass = SharedDataHandler<T, ISharedData>;
-    
+
 public:
-    explicit SharedDataUpdater(
-        htps::rptr<ISharedData> shared_data) noexcept :
+    explicit SharedDataUpdater(htps::rptr<ISharedData> shared_data) noexcept :
         BaseClass{shared_data}
     {}
 
     using BaseClass::update;
     using BaseClass::updateOrCreate;
-    
+
     bool commit()
     {
         if (BaseClass::internalData() != nullptr)

@@ -12,10 +12,10 @@ HTPS_PRAGMA_ONCE
 
 namespace haf::res
 {
-struct HAF_PRIVATE ResourcesConfigData : public data::DeserializableDictionary<
-        data::DeserializableDictionary<ResourcesConfigDataElement>>
-{
-};
+struct HAF_PRIVATE ResourcesConfigData
+    : public data::DeserializableDictionary<
+          data::DeserializableDictionary<ResourcesConfigDataElement>>
+{};
 
 }  // namespace haf::res
 

@@ -16,6 +16,6 @@ public:
 
     htps::sptr<nodes::SceneNodeText> text(fmath::vector2dst const& index);
 };
-}  // namespace haf::scene::nodes
+}  // namespace haf::scene
 
 #endif

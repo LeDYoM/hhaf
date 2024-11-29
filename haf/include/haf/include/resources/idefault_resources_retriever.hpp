@@ -15,6 +15,7 @@ class IDefaultResourcesRetriever
 {
 protected:
     ~IDefaultResourcesRetriever() = default;
+
 public:
     virtual htps::sptr<res::IShader> getDefaultShader() const = 0;
 };

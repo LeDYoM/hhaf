@@ -21,7 +21,8 @@ namespace haf
 void DisplayVarConsole::updateVar(str const& name,
                                   debug::DebugVariable const& variable)
 {
-    m_variables_data.add(make_str(name, ":"), make_str(variable.value()));
+    (void)(m_variables_data.add(make_str(name, ":"),
+                                make_str(variable.value())));
 }
 
 void DisplayVarConsole::update()

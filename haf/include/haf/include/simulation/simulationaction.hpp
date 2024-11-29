@@ -40,7 +40,7 @@ struct SimulationAction
 };
 
 inline const mcs::Object& operator>>(const mcs::Object& obj,
-                                      SimulationAction& simulation_action)
+                                     SimulationAction& simulation_action)
 {
     simulation_action.type = obj["type"].as<SimulationActionType>();
     simulation_action.time_point =
@@ -51,7 +51,7 @@ inline const mcs::Object& operator>>(const mcs::Object& obj,
 }
 
 inline mcs::Object& operator<<(mcs::Object& obj,
-                                const SimulationAction& simulation_action)
+                               const SimulationAction& simulation_action)
 {
     obj.set("type", simulation_action.type);
     obj.set("time_point", simulation_action.time_point.nanoseconds());

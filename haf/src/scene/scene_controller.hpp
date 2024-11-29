@@ -15,7 +15,7 @@ namespace haf::sys
 {
 class SystemAccess;
 class ISystemProvider;
-}
+}  // namespace haf::sys
 
 namespace haf::scene
 {

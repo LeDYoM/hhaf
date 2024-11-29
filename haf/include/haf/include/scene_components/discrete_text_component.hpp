@@ -9,7 +9,7 @@ HTPS_PRAGMA_ONCE
 namespace haf::scene
 {
 class DiscreteTextComponent final
-    : public component::Component //ComponentForType<nodes::SceneNodeText>
+    : public component::Component  // ComponentForType<nodes::SceneNodeText>
 {
     using BaseClass = component::Component;
 

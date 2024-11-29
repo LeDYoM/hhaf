@@ -27,10 +27,7 @@ public:
         return renderizables_[index];
     }
 
-    auto renderizableBuilder()
-    {
-        return renderizables_.renderizableBuilder();
-    }
+    auto renderizableBuilder() { return renderizables_.renderizableBuilder(); }
 
 private:
     render::Renderizables renderizables_;

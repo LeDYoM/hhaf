@@ -17,7 +17,7 @@ protected:
 public:
     virtual void setUniform(htps::str const& name, bool const& value) = 0;
     virtual void setUniform(htps::str const& name,
-                            fmath::vector2df const& value)             = 0;
+                            fmath::vector2df const& value)            = 0;
     virtual void setUniform(htps::str const& name, ITexture* value)   = 0;
 };
 }  // namespace haf::res

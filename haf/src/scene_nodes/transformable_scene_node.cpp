@@ -37,8 +37,7 @@ void TransformableSceneNode::postRender(SceneRenderContext& sceneRenderContext)
 
     auto const& transformable_parent{parentAs<TransformableSceneNode>()};
 
-    sceneRenderContext.currentTransformation =
-        transformable_parent != nullptr
+    sceneRenderContext.currentTransformation = transformable_parent != nullptr
         ? transformable_parent->globalTransform()
         : Matrix4x4::Identity;
 

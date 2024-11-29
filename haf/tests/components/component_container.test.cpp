@@ -138,10 +138,10 @@ TEST_CASE("ComponentContainer::composed_composed_component",
     CHECK(component_container->component<TestComposedComposedComponent>() !=
           nullptr);
     CHECK(component_container->components() == 3U);
-/*
-    CHECK(component_container->componentOfType<TestComposedComposedComponent>()
-              ->composedComponent()
-              ->composedComponent()
-              ->attachedNode() == &sceneNode);
-*/
+    /*
+        CHECK(component_container->componentOfType<TestComposedComposedComponent>()
+                  ->composedComponent()
+                  ->composedComponent()
+                  ->attachedNode() == &sceneNode);
+    */
 }

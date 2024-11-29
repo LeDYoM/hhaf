@@ -70,6 +70,7 @@ public:
     htps::rptr<SystemAccess> systemAccessPtr() noexcept;
 
     SubSystemViewer subSystemViewer() noexcept;
+
 protected:
     /**
      * @brief Destroy the System Base object

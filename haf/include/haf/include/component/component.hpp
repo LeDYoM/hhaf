@@ -31,7 +31,7 @@ public:
 
     Component(Component const&) = delete;
     Component& operator=(Component const&) = delete;
-    Component(Component&&) = default;
+    Component(Component&&)                 = default;
     Component& operator=(Component&&) = default;
 
     /**

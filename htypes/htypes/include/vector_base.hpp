@@ -435,12 +435,12 @@ public:
         return erase_all_if<discard_order>(htps::move(condition), begin());
     }
 
-    constexpr const_iterator find_first_of(T const& other) const noexcept
+    [[nodiscard]] constexpr const_iterator find_first_of(T const& other) const noexcept
     {
         return cfind(other);
     }
 
-    constexpr const_iterator find_first_of(
+    [[nodiscard]] constexpr const_iterator find_first_of(
         vector_base const& other) const noexcept
     {
         auto result{cend()};
@@ -457,12 +457,12 @@ public:
         return result;
     }
 
-    constexpr const_iterator find_last_of(T const& other) const noexcept
+    [[nodiscard]] constexpr const_iterator find_last_of(T const& other) const noexcept
     {
         return cfind_backwards(other);
     }
 
-    constexpr const_iterator find_last_of(
+    [[nodiscard]] constexpr const_iterator find_last_of(
         vector_base const& other) const noexcept
     {
         auto result{cbegin() - 1};
@@ -479,7 +479,7 @@ public:
         return ((result == cbegin() - 1) ? cend() : result);
     }
 
-    constexpr iterator find(iterator begin,
+    [[nodiscard]] constexpr iterator find(iterator begin,
                             const iterator end,
                             const T& element) const noexcept
     {
@@ -492,7 +492,7 @@ public:
     }
 
     template <typename F>
-    constexpr const_iterator cfind_if(const_iterator begin,
+    [[nodiscard]] constexpr const_iterator cfind_if(const_iterator begin,
                                       const_iterator const end,
                                       F&& f) const noexcept
     {
@@ -505,13 +505,13 @@ public:
     }
 
     template <typename F>
-    constexpr const_iterator cfind_if(F&& f) const noexcept
+    [[nodiscard]] constexpr const_iterator cfind_if(F&& f) const noexcept
     {
         return cfind_if(cbegin(), cend(), htps::forward<F>(f));
     }
 
     template <typename F>
-    constexpr iterator find_if(iterator begin,
+    [[nodiscard]] constexpr iterator find_if(iterator begin,
                                const const_iterator end,
                                F&& f) noexcept
     {
@@ -524,7 +524,7 @@ public:
     }
 
     template <typename F>
-    constexpr ssize_type cfind_index_if(F&& f) const noexcept
+    [[nodiscard]] constexpr ssize_type cfind_index_if(F&& f) const noexcept
     {
         auto begin_{cbegin()};
         ssize_type counter{0};
@@ -536,12 +536,12 @@ public:
     }
 
     template <typename F>
-    constexpr ssize_type find_index_if(F&& f) const noexcept
+    [[nodiscard]] constexpr ssize_type find_index_if(F&& f) const noexcept
     {
         return cfind_index_if(htps::forward<F>(f));
     }
 
-    constexpr ssize_type cfind_index(T const& other) const noexcept
+    [[nodiscard]] constexpr ssize_type cfind_index(T const& other) const noexcept
     {
         auto begin_{cbegin()};
         ssize_type counter{-1};
@@ -551,19 +551,19 @@ public:
         return ((begin_ == cend()) ? -1 : counter);
     }
 
-    constexpr ssize_type find_index(T const& other) const noexcept
+    [[nodiscard]] constexpr ssize_type find_index(T const& other) const noexcept
     {
         return cfind_index(other);
     }
 
     template <typename F>
-    constexpr iterator find_if(F&& f) noexcept
+    [[nodiscard]] constexpr iterator find_if(F&& f) noexcept
     {
         return find_if(begin(), cend(), htps::forward<F>(f));
     }
 
     template <typename F>
-    constexpr const_iterator find_if(const const_iterator begin,
+    [[nodiscard]] constexpr const_iterator find_if(const const_iterator begin,
                                      const const_iterator end,
                                      F&& f) const noexcept
     {
@@ -571,12 +571,12 @@ public:
     }
 
     template <typename F>
-    constexpr const_iterator find_if(F&& f) const noexcept
+    [[nodiscard]] constexpr const_iterator find_if(F&& f) const noexcept
     {
         return cfind_if(cbegin(), cend(), htps::forward<F>(f));
     }
 
-    constexpr const_iterator cfind(const_iterator begin,
+    [[nodiscard]] constexpr const_iterator cfind(const_iterator begin,
                                    const_iterator const end,
                                    T const& element) const noexcept
     {
@@ -588,7 +588,7 @@ public:
         return begin;
     }
 
-    constexpr iterator find(iterator begin,
+    [[nodiscard]] constexpr iterator find(iterator begin,
                             iterator const end,
                             T const& element) noexcept
     {
@@ -600,22 +600,22 @@ public:
         return begin;
     }
 
-    constexpr iterator find(T const& element) noexcept
+    [[nodiscard]] constexpr iterator find(T const& element) noexcept
     {
         return find(begin(), end(), element);
     }
 
-    constexpr const_iterator cfind(T const& element) const noexcept
+    [[nodiscard]] constexpr const_iterator cfind(T const& element) const noexcept
     {
         return cfind(cbegin(), cend(), element);
     }
 
-    constexpr const_iterator find(T const& element) const noexcept
+    [[nodiscard]] constexpr const_iterator find(T const& element) const noexcept
     {
         return cfind(element);
     }
 
-    constexpr const_iterator cfind_backwards(const_iterator const begin,
+    [[nodiscard]] constexpr const_iterator cfind_backwards(const_iterator const begin,
                                              const_iterator end,
                                              T const& element) const noexcept
     {
@@ -628,7 +628,7 @@ public:
         return (end == begin - 1) ? cend() : end;
     }
 
-    constexpr iterator find_backwards(iterator const begin,
+    [[nodiscard]] constexpr iterator find_backwards(iterator const begin,
                                       iterator end,
                                       T const& element) noexcept
     {
@@ -641,24 +641,24 @@ public:
         return (end == begin - 1) ? this->end() : end;
     }
 
-    constexpr iterator find_backwards(iterator const begin,
+    [[nodiscard]] constexpr iterator find_backwards(iterator const begin,
                                       iterator end,
                                       T const& element) const noexcept
     {
         return cfind_backwards(begin, end, element);
     }
 
-    constexpr iterator find_backwards(T const& element) noexcept
+    [[nodiscard]] constexpr iterator find_backwards(T const& element) noexcept
     {
         return find_backwards(begin(), end(), element);
     }
 
-    constexpr const_iterator cfind_backwards(T const& element) const noexcept
+    [[nodiscard]] constexpr const_iterator cfind_backwards(T const& element) const noexcept
     {
         return cfind_backwards(cbegin(), cend(), element);
     }
 
-    constexpr const_iterator find_backwards(T const& element) const noexcept
+    [[nodiscard]] constexpr const_iterator find_backwards(T const& element) const noexcept
     {
         return cfind_backwards(element);
     }
@@ -714,7 +714,7 @@ public:
         return *this;
     }
 
-    constexpr bool operator==(vector_base const& rhs) const noexcept
+    [[nodiscard]] constexpr bool operator==(vector_base const& rhs) const noexcept
     {
         // If the vectors have different sizes, they are different
         if (size() != rhs.size())

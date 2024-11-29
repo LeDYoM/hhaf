@@ -123,8 +123,8 @@ TEST_CASE("program filename --doit -abc=sdf",
     CHECK_FALSE(paramParser.positionalParameterExists("sdf"));
     CHECK(paramParser.switchExists("doit"));
     CHECK_FALSE(paramParser.switchExists("doitasd"));
-    paramParser.getOptions() ==
-        ParametersParser::OptionParameterVector{{"abc", "sdf"}};
+    CHECK(paramParser.getOptions() ==
+          ParametersParser::OptionParameterVector{{"abc", "sdf"}});
 }
 
 TEST_CASE("program sourcef.dat targetf.dat --nope -abc=sdf -this=other",

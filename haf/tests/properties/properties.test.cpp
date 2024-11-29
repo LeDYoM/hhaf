@@ -41,6 +41,6 @@ TEST_CASE("BasicProperty::toIProperty", "[htypes][property][BasicProperty]")
     CHECK(p() == 10);
 
     auto ip = dynamic_cast<IProperty<int>*>(&p);
-    (*ip) = 50;
+    (*ip)   = 50;
     CHECK((*ip)() == 50);
 }

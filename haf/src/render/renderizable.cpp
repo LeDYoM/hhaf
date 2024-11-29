@@ -32,8 +32,9 @@ Renderizable::Renderizable(rptr<TransformableSceneNode> parent,
 
     if (m_material.shader() == nullptr)
     {
-        m_material.shader = parent_->subSystem<res::IDefaultResourcesRetriever>()
-                             ->getDefaultShader();
+        m_material.shader =
+            parent_->subSystem<res::IDefaultResourcesRetriever>()
+                ->getDefaultShader();
     }
 }
 
@@ -68,7 +69,7 @@ void Renderizable::update(bool const parent_transformation_changed)
 
     if (m_material.shader.readResetHasChanged())
     {
-//        p_->m_render_element.setShader(to_backend(m_material.shader().get()));
+        //        p_->m_render_element.setShader(to_backend(m_material.shader().get()));
     }
 
     if (m_material.textureRect.readResetHasChanged())

@@ -155,9 +155,9 @@ void SceneNodeText::update()
 
                 for (auto curChar : current_text)
                 {
-                    letterNode =
-                        m_letters_scene_node->createSceneNode<RenderizableSceneNode>(
-                            "text_" + str::to_str(indexChar));
+                    letterNode = m_letters_scene_node
+                                     ->createSceneNode<RenderizableSceneNode>(
+                                         "text_" + str::to_str(indexChar));
                     letterNode->renderizableBuilder()
                         .name("text_" + str::to_str(indexChar))
                         .figType(render::FigType_t::Sprite)

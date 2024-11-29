@@ -21,10 +21,10 @@ public:
         DebugVariable::value_type const increment =
             static_cast<DebugVariable::value_type>(1)) = 0;
 
-    virtual void setVariable(
-        DebugVariableHandle const index,
-        DebugVariable::value_type const newValue =
-            static_cast<DebugVariable::value_type>(0)) = 0;
+    virtual void setVariable(DebugVariableHandle const index,
+                             DebugVariable::value_type const newValue =
+                                 static_cast<DebugVariable::value_type>(0)) = 0;
+
 protected:
     ~IDebugVariables() = default;
 };

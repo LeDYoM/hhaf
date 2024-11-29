@@ -66,12 +66,13 @@ private:
     void updateTableSizeIfNecessary();
 
     void for_each_table_innerSceneNode(
-        htps::function<void(const fmath::vector2dst&, ContainedType_t&)> action);
+        htps::function<void(const fmath::vector2dst&, ContainedType_t&)>
+            action);
 
     virtual void createNodeAt(fmath::vector2dst const& index) = 0;
 
     htps::vector<htps::vector<ContainedType_t>> inner_nodes_;
-//    htps::sptr<TransformableComponent> m_transformableComponent;
+    //    htps::sptr<TransformableComponent> m_transformableComponent;
 };
 
 }  // namespace haf::scene
