@@ -92,7 +92,7 @@ public:
         else
         {
             auto parent_as_type{parentAs<T>()};
-            return parent_as_type == nullptr ? _parent->ancestor<T>()
+            return parent_as_type == nullptr ? _parent->template ancestor<T>()
                                              : parent_as_type;
         }
     }
@@ -114,7 +114,7 @@ public:
         else
         {
             auto parent_as_type{parentAs<T>()};
-            return parent_as_type == nullptr ? _parent->ancestor<T>()
+            return parent_as_type == nullptr ? _parent->template ancestor<T>()
                                              : parent_as_type;
         }
     }

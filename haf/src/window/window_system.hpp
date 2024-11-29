@@ -2,6 +2,7 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_WINDOW_WINDOW_SYSTEM_INCLUDE_HPP
 #define HAF_WINDOW_WINDOW_SYSTEM_INCLUDE_HPP
 
+#include "haf_private.hpp"
 #include <htypes/include/types.hpp>
 #include <htypes/include/str.hpp>
 #include "system/system_base.hpp"
@@ -19,7 +20,7 @@ class SystemProvider;
  * It encapsulates an IWindow from the backend. This Window reference
  * might be already created or not.
  */
-class WindowSystem final : public SystemBase
+class HAF_PRIVATE WindowSystem final : public SystemBase
 {
 public:
     /**

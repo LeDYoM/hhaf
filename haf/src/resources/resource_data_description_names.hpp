@@ -4,8 +4,8 @@ HTPS_PRAGMA_ONCE
 
 namespace haf::res
 {
-static constexpr char ResourceTypeStr[]     = "type";
-static constexpr char ResourceFileNameStr[] = "file";
+static constexpr char const ResourceTypeStr[]     = "type";
+static constexpr char const ResourceFileNameStr[] = "file";
 
 }  // namespace haf::res
 

@@ -14,8 +14,6 @@ namespace haf::debug
 class DebugVariables final
 {
 public:
-    using DebugVariableHandle = DebugVariableHandle;
-
     void getVariable(DebugVariableHandle& index, char const* const name);
 
     bool getVariableValue(DebugVariableHandle& index, DebugVariable& value);

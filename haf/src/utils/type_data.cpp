@@ -13,7 +13,7 @@ size_type type_index::hash_code() const noexcept
     return static_cast<htps::size_type>(t_info_->hash_code());
 }
 
-char const* const type_index::name() const noexcept
+char const* type_index::name() const noexcept
 {
     return t_info_->name();
 }
