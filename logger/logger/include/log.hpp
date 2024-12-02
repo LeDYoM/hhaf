@@ -35,7 +35,7 @@ public:
      * @param args Arguments to build a line in the log.
      */
     template <typename... Args>
-    static constexpr void log([[maybe_unused]] Args&&... args) noexcept
+    static inline void log([[maybe_unused]] Args&&... args) noexcept
     {
         if constexpr (EnableLogs)
         {

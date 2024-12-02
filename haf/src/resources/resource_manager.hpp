@@ -2,6 +2,7 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_RESOURCEMANAGER_INCLUDE_HPP
 #define HAF_RESOURCEMANAGER_INCLUDE_HPP
 
+#include "haf_private.hpp"
 #include <htypes/include/types.hpp>
 #include <haf/include/resources/idefault_resources_retriever.hpp>
 #include <haf/include/resources/iresource_retriever.hpp>
@@ -26,7 +27,7 @@ class IShader;
 
 namespace haf::sys
 {
-class ResourceManager final : public SystemBase,
+class HAF_PRIVATE ResourceManager final : public SystemBase,
                               public res::IResourceRetriever,
                               public res::IResourcesConfigurator,
                               public res::IDefaultResourcesRetriever,

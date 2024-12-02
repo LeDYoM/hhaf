@@ -2,6 +2,7 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_RESOURCEMANAGER_CONFIG_LOADER_INCLUDE_HPP
 #define HAF_RESOURCEMANAGER_CONFIG_LOADER_INCLUDE_HPP
 
+#include "haf_private.hpp"
 #include <htypes/include/types.hpp>
 #include "resources_config_data.hpp"
 #include "resource_loaders/iresource_loader.hpp"
@@ -15,7 +16,7 @@ class SubSystemViewer;
 
 namespace haf::res
 {
-class ResourceManagerConfigLoader final
+class HAF_PRIVATE ResourceManagerConfigLoader final
 {
 public:
     res::SetResourceConfigFileResult setResourceConfigFile(

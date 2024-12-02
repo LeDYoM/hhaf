@@ -100,7 +100,6 @@ function(add_test_executable_with_main)
   if (BUILD_TESTS)
 
     set(PARAM_LIST ${ARGV})
-    list(APPEND PARAM_LIST "${CMAKE_CURRENT_BINARY_DIR}/main")
 
     add_test_executable(${PARAM_LIST})
     add_test_link_with_main()

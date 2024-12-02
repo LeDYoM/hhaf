@@ -23,8 +23,8 @@ public:
 
     constexpr void reset() noexcept { m_counter = 0U; }
 
-    constexpr [[nodiscard]] fast_u32 get() const noexcept { return m_counter; }
-    constexpr [[nodiscard]] fast_u32 get_weak() const noexcept
+    [[nodiscard]] constexpr fast_u32 get() const noexcept { return m_counter; }
+    [[nodiscard]] constexpr fast_u32 get_weak() const noexcept
     {
         return m_weak_counter;
     }

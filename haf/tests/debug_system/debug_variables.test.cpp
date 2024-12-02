@@ -1,6 +1,7 @@
 #include "catch_include.hpp"
 
 #include <htypes/include/types.hpp>
+#include <haf/include/debug_system/debug_variable.hpp>
 #include "../../haf/src/debug_system/debug_variables.hpp"
 
 using namespace htps;
@@ -16,7 +17,7 @@ TEST_CASE("DebugVariables::DebugVariables")
 TEST_CASE("DebugVariables::DebugVariables::addVariable")
 {
     DebugVariables debug_variables;
-    DebugVariables::DebugVariableHandle handle{-1};
+    DebugVariableHandle handle{-1};
 
     debug_variables.getVariable(handle, "TestDebugVariable_0");
     CHECK(handle != -1);
@@ -33,7 +34,7 @@ TEST_CASE("DebugVariables::DebugVariables::addVariable")
     SECTION("Load unexisting variable")
     {
         DebugVariable value{10};
-        DebugVariables::DebugVariableHandle handle2{-1};
+        DebugVariableHandle handle2{-1};
         CHECK_FALSE(debug_variables.getVariableValue(handle2, value));
     }
 }
@@ -41,7 +42,7 @@ TEST_CASE("DebugVariables::DebugVariables::addVariable")
 TEST_CASE("DebugVariables::DebugVariables::incrementVariable")
 {
     DebugVariables debug_variables;
-    DebugVariables::DebugVariableHandle handle{-1};
+    DebugVariableHandle handle{-1};
 
     debug_variables.getVariable(handle, "TestDebugVariable_0");
     CHECK(handle != -1);
@@ -82,7 +83,7 @@ TEST_CASE("DebugVariables::DebugVariables::incrementVariable")
 TEST_CASE("DebugVariables::DebugVariables::setVariable")
 {
     DebugVariables debug_variables;
-    DebugVariables::DebugVariableHandle handle{-1};
+    DebugVariableHandle handle{-1};
 
     debug_variables.getVariable(handle, "TestDebugVariable_0");
     CHECK(handle != -1);

@@ -20,7 +20,7 @@ public:
     constexpr htps::str const& name() const noexcept { return name_; }
 
 protected:
-    constexpr ~HasName() = default;
+    ~HasName() = default;
 
 private:
     htps::str name_;

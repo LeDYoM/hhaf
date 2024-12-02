@@ -2,6 +2,7 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_CORE_SYSTEM_SIMULATIONSYSTEM_INCLUDE_HPP
 #define HAF_CORE_SYSTEM_SIMULATIONSYSTEM_INCLUDE_HPP
 
+#include "haf_private.hpp"
 #include <htypes/include/types.hpp>
 #include <htypes/include/str.hpp>
 #include "system/system_base.hpp"
@@ -17,7 +18,7 @@ namespace haf::sys
  * actions to be simulated and add data to different system to force or
  * reproduce a set of different behaviours.
  */
-class SimulationSystem final : public SystemBase
+class HAF_PRIVATE SimulationSystem final : public SystemBase
 {
 public:
     using SimulateRandomDataBuffer = htps::vector<htps::size_type>;

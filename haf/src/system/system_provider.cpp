@@ -1,3 +1,4 @@
+#include "haf_private.hpp"
 #include "system_provider.hpp"
 #include "system_provider_configuration.hpp"
 #include "init_system_options.hpp"
@@ -29,7 +30,7 @@ using namespace htps;
 
 namespace haf::sys
 {
-struct SystemProvider::SystemProviderPrivate final
+struct HAF_PRIVATE SystemProvider::SystemProviderPrivate final
 {
     rptr<IApp> app_{nullptr};
     uptr<DebugSystem> debug_system_;

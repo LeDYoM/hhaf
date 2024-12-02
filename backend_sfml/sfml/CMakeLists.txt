@@ -1,4 +1,8 @@
-option(use_system_sfml "Use system SFML instead of fetching it" OFF)
+if(LINUX)
+    option(use_system_sfml "Use system SFML instead of fetching it" ON)
+else()
+    option(use_system_sfml "Use system SFML instead of fetching it" OFF)
+endif()
 
 if (NOT use_system_sfml)
 
@@ -21,9 +25,6 @@ if (NOT use_system_sfml)
     )
 
     FetchContent_MakeAvailable(SFML)
-
-#    add_subdirectory(SFML-2.5.1)
-#    add_dependencies(${CURRENT_TARGET} sfml-system sfml-window sfml-graphics)
 
     message("Fetching SFML done")
 else()

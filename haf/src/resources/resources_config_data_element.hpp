@@ -15,8 +15,8 @@ struct HAF_PRIVATE ResourcesConfigDataElement : public data::IDeserializable
 {
     htps::str type;
     htps::str file_name;
-    static constexpr char TypeStr[5U]     = ResourceTypeStr;
-    static constexpr char FileNameStr[5U] = ResourceFileNameStr;
+    static constexpr auto const TypeStr{ResourceTypeStr};
+    static constexpr auto FileNameStr{ResourceFileNameStr};
 
     bool deserialize(mcs::Object const& obj) override;
 };
