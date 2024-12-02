@@ -103,6 +103,7 @@ void MainMenu::onCreated()
     // Create and register menu pages
     {
         PageOptions main_page_options{true};
+        (void)(main_page_options);
         auto menuPageMain{createMenuPage("menuPageMain")};
         menuPageMain->menu_options = vector_shared_pointers<MenuPagedOption>{
             make_option("Play Token mode", RangeOption(), 1),
