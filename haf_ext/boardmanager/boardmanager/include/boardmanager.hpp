@@ -21,7 +21,6 @@ class BoardManager : public haf::component::Component
 public:
     using BackgroundData    = htps::s32;
     using BoardTileData     = ITile::BoardTileData;
-    using BoardPositionType = BoardPositionType;
 
     using BackgroundFunction =
         htps::function<BackgroundData(fmath::vector2dst const&)>;

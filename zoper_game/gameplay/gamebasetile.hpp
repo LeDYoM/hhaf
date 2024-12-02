@@ -24,7 +24,7 @@ protected:
     using TileBase = haf::board::ITile;
 
 public:
-    using BoardPositionType = TileBase::BoardPositionType;
+    using BoardPositionType = haf::board::BoardPositionType;
     using BoardTileData = haf::board::ITile::BoardTileData;
 
     GameBaseTile(htps::rptr<haf::scene::SceneNode> const parent,

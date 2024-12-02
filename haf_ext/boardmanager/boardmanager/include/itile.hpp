@@ -15,7 +15,6 @@ class ITile
 {
 public:
     using BoardTileData     = htps::s32;
-    using BoardPositionType = BoardPositionType;
 
     constexpr ITile() noexcept = default;
     virtual ~ITile()           = default;
