@@ -5,6 +5,7 @@
 #include <facil_math/include/vector2d.hpp>
 
 #include <haf/include/time/timer_connector.hpp>
+#include <haf/include/time/timer_component.hpp>
 #include <haf/include/component/component.hpp>
 #include <haf/include/scene/color.hpp>
 
