@@ -56,7 +56,7 @@ TEST_CASE("Scenenodes::for_each", "[SceneNode][SceneNodes]")
     CHECK(numCheck == kNumSceneNodes);
     numCheck = 0U;
 
-    for (auto const childNode : testScene->sceneNodes())
+    for (auto const& childNode : testScene->sceneNodes())
     {
         CHECK(childNode->Visible() == false);
         ++numCheck;
@@ -83,7 +83,7 @@ TEST_CASE("Scenenodes::for_each", "[SceneNode][SceneNodes]")
     CHECK(numCheck == kNumSceneNodes * 2U);
     numCheck = 0U;
 
-    for (auto const childNode : testScene->sceneNodes())
+    for (auto const& childNode : testScene->sceneNodes())
     {
         CHECK(childNode->Visible() == false);
         ++numCheck;
@@ -178,7 +178,7 @@ TEST_CASE("Scenenodes::set_property_for_each_node", "[SceneNode][SceneNodes]")
 
     size_type numCheck{0U};
 
-    for (auto const childNode : testScene->sceneNodes())
+    for (auto const& childNode : testScene->sceneNodes())
     {
         CHECK(childNode->Visible() == false);
         ++numCheck;
@@ -196,7 +196,7 @@ TEST_CASE("Scenenodes::set_property_for_each_node", "[SceneNode][SceneNodes]")
 
     testScene->set_property_for_each_node(&TestSceneNode::Visible, false);
 
-    for (auto const childNode : testScene->sceneNodes())
+    for (auto const& childNode : testScene->sceneNodes())
     {
         if (auto node = htps::dynamic_pointer_cast<TestSceneNode>(childNode))
         {
@@ -359,7 +359,7 @@ TEST_CASE("Scenenodes::for_each_as", "[SceneNode]")
     CHECK(numCheck == kNumSceneNodes);
     numCheck = 0U;
 
-    for (auto const childNode : testScene->sceneNodes())
+    for (auto const& childNode : testScene->sceneNodes())
     {
         CHECK(htps::dynamic_pointer_cast<TransformableSceneNode>(childNode)
                   ->Position() == vector2df{1.0F, 2.0F});
@@ -388,7 +388,7 @@ TEST_CASE("Scenenodes::for_each_as", "[SceneNode]")
     CHECK(numCheck == kNumSceneNodes * 2U);
     numCheck = 0U;
 
-    for (auto const childNode : testScene->sceneNodes())
+    for (auto const& childNode : testScene->sceneNodes())
     {
         CHECK(htps::dynamic_pointer_cast<TransformableSceneNode>(childNode)
                   ->Position() == vector2df{10.0F, 20.0F});
@@ -488,7 +488,7 @@ TEST_CASE("Scenenodes::set_property_for_each_as", "[SceneNode][SceneNodes]")
 
     size_type numCheck{0U};
 
-    for (auto const childNode : testScene->sceneNodes())
+    for (auto const& childNode : testScene->sceneNodes())
     {
         CHECK(htps::dynamic_pointer_cast<TransformableSceneNode>(childNode)
                   ->Position() == vector2df{4.5F, 3.5F});
@@ -509,7 +509,7 @@ TEST_CASE("Scenenodes::set_property_for_each_as", "[SceneNode][SceneNodes]")
     testScene->set_property_for_each_node(&TransformableSceneNode::Position,
                                           vector2df{33.0F, 44.0F});
 
-    for (auto const childNode : testScene->sceneNodes())
+    for (auto const& childNode : testScene->sceneNodes())
     {
         if (auto node = htps::dynamic_pointer_cast<TestTransformableSceneNode>(
                 childNode))
