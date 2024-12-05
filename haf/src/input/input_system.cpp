@@ -5,6 +5,7 @@
 
 using namespace htps;
 using namespace haf::input;
+using namespace logger;
 
 namespace haf::sys
 {

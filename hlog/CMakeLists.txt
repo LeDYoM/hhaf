@@ -26,3 +26,5 @@ target_link_libraries(${CURRENT_TARGET} PRIVATE Threads::Threads)
 
 target_link_libraries(${CURRENT_TARGET} PUBLIC logger htypes)
 set_compile_warning_level_and_cxx_properties_all(${CURRENT_TARGET})
+target_link_options(${CURRENT_TARGET} PRIVATE -rdynamic)
+addTestingDirectory(tests)

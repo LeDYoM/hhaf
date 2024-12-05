@@ -51,8 +51,8 @@ bool TileHitChecker::operator()(board::BoardPositionType const& loopPosition)
             board_group_->boardManager()->deleteTile(loopPosition);
 
             // You found a token, launch animation
-            DisplayLog::info("Tile with same color found");
-            DisplayLog::info("Creating points to score");
+            logger::DisplayLog::info("Tile with same color found");
+            logger::DisplayLog::info("Creating points to score");
             createScoreIncrementPoints_(loopPosition);
         }
         else
@@ -65,7 +65,7 @@ bool TileHitChecker::operator()(board::BoardPositionType const& loopPosition)
             board_group_->boardManager()->swapTileData(
                 board_group_->player()->boardPosition(), loopPosition);
 
-            DisplayLog::info("Player type changed to ",
+            logger::DisplayLog::info("Player type changed to ",
                              board_group_->player()->value());
 
             // Exit the loop

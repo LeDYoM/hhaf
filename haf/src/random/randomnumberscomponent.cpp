@@ -7,6 +7,7 @@
 #include <limits>
 
 using namespace htps;
+using namespace logger;
 
 namespace haf::rnd
 {

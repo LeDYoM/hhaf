@@ -5,11 +5,7 @@
 
 namespace haf
 {
-static constexpr char const DebugLogMessage[] = "[Debugging] ";
-
-struct DebugLogOptions : logger::DefaultMessageLogOptions<DebugLogMessage>
-{};
-using DebugLogDisplayer = MessageDisplayLog<DebugLogOptions>;
+using DebugLogDisplayer = logger::DisplayLog;
 
 }  // namespace haf
 

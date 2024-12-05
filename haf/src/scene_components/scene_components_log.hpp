@@ -6,13 +6,7 @@ HTPS_PRAGMA_ONCE
 
 namespace haf
 {
-static constexpr char const SceneComponentsLogMessage[] = "[SceneComponents] ";
-
-struct SceneComponentsLogOptions
-    : logger::DefaultMessageLogOptions<SceneComponentsLogMessage>
-{};
-using SceneComponentsLogDisplayer =
-    MessageDisplayLog<SceneComponentsLogOptions>;
+using SceneComponentsLogDisplayer = logger::DisplayLog;
 }  // namespace haf
 
 #endif

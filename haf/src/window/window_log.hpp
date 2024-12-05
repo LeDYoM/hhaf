@@ -6,11 +6,7 @@ HTPS_PRAGMA_ONCE
 
 namespace haf
 {
-static constexpr char const WindowLogMessage[] = "[Window] ";
-
-struct WindowLogOptions : logger::DefaultMessageLogOptions<WindowLogMessage>
-{};
-using WindowLogDisplayer = MessageDisplayLog<WindowLogOptions>;
+using WindowLogDisplayer = logger::DisplayLog;
 }  // namespace haf
 
 #endif

@@ -76,7 +76,7 @@ Color GameBaseTile::getColorForToken() const
             return colors::Magenta;
             break;
         default:
-            haf::DisplayLog::error("Error value for token: ", value(),
+            logger::DisplayLog::error("Error value for token: ", value(),
                                    " is not supported");
             return colors::White;
             break;

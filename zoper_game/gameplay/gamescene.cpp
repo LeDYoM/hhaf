@@ -165,8 +165,8 @@ void GameScene::generateNextToken()
     const TokenZones::TokenZone& currentTokenZone{
         TokenZones::tokenZones[next_token_part_]};
 
-    DisplayLog::info("NextTokenPart: ", next_token_part_);
-    DisplayLog::info("zone: ", currentTokenZone.zone_start);
+    logger::DisplayLog::info("NextTokenPart: ", next_token_part_);
+    logger::DisplayLog::info("zone: ", currentTokenZone.zone_start);
 
     // Generate the new token type
     size_type const newToken{p_->token_type_generator_->getUInt(NumTokens)};
@@ -178,7 +178,7 @@ void GameScene::generateNextToken()
     // Prepare the position for the new token
     vector2dst const new_position{
         TokenZones::displacedStartPoint(currentTokenZone, token_displacement)};
-    haf::DisplayLog::info("New tile pos: ", new_position);
+    logger::DisplayLog::info("New tile pos: ", new_position);
 
     // Now, we have the data for the new token generated, but first,
     /// lets start to move the row or col.
@@ -192,7 +192,7 @@ void GameScene::generateNextToken()
     // Select the next token zone.
     next_token_part_ = ((next_token_part_ + 1U) % NumWays);
 
-    DisplayLog::debug(board_group_->boardManager()->toStr());
+    logger::DisplayLog::debug(board_group_->boardManager()->toStr());
 
     if (game_over)
     {
@@ -207,7 +207,7 @@ void GameScene::goGameOver()
 
 void GameScene::launchPlayer()
 {
-    haf::DisplayLog::info("Launching player");
+    logger::DisplayLog::info("Launching player");
     ScoreIncrementer score_incrementer{level_properties_};
 
     PlayerLauncher player_launcher;

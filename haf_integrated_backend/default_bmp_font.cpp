@@ -5,6 +5,7 @@
 
 using namespace htps;
 using namespace fmath;
+using namespace logger;
 
 namespace haf::res
 {

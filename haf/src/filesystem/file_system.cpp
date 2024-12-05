@@ -12,6 +12,7 @@
 
 using namespace htps;
 using namespace mcs;
+using namespace logger;
 
 namespace haf::sys
 {

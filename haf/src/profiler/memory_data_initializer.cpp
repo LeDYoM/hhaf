@@ -30,7 +30,7 @@ MemoryDataInitializer::~MemoryDataInitializer()
         auto const deallocatedBytes_value{deallocatedBytes()};
 
         is_valid_ = memory_data_viewer_->popMemoryDataStatistics();
-        DisplayLog::debug("Allocations: ", allocations_value,
+        logger::DisplayLog::debug("Allocations: ", allocations_value,
                           "\nDeallocations: ", deallocations_value,
                           "\nBytes allocated: ", allocatedBytes_value,
                           "\nBytes deallocated: ", deallocatedBytes_value);

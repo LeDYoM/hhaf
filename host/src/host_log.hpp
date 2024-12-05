@@ -5,11 +5,7 @@
 
 namespace haf
 {
-static constexpr char const HostLogMessage[] = "[Host] ";
-
-struct HostLogOptions : logger::DefaultMessageLogOptions<HostLogMessage>
-{};
-using HostLogDisplayer = MessageDisplayLog<HostLogOptions>;
+using HostLogDisplayer = logger::DisplayLog;
 }  // namespace haf
 
 #endif

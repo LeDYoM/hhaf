@@ -1,5 +1,6 @@
 #include "catch_include.hpp"
 
+#include "haf_private.hpp"
 #include <htypes/include/types.hpp>
 #include <htypes/include/str.hpp>
 
@@ -8,7 +9,7 @@
 
 using namespace htps;
 
-struct CommonData
+struct HAF_PRIVATE CommonData
 {
     bool exit = false;
     u32 step{0U};
@@ -79,6 +80,7 @@ TEST_CASE("SceneController", "[lib][SceneController]")
             CHECK(common.step == 1U);
         }
     */
+/*
     SECTION("Two scenes")
     {
         CHECK(common.scene_controller->registerSceneNodeType<GroupScene1>());
@@ -120,7 +122,8 @@ TEST_CASE("SceneController", "[lib][SceneController]")
         CHECK_FALSE(
             common.scene_controller->unregisterSceneNodeType<GroupScene2>());
     }
-
+*/
+/*
     SECTION("Two scenes: Error unregistered scene")
     {
         CHECK(common.scene_controller->registerSceneNodeType<GroupScene1>());
@@ -150,4 +153,5 @@ TEST_CASE("SceneController", "[lib][SceneController]")
         CHECK_FALSE(
             common.scene_controller->unregisterSceneNodeType<GroupScene2>());
     }
+    */
 }

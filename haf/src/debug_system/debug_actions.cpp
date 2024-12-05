@@ -6,6 +6,7 @@
 
 using namespace haf::input;
 using namespace htps;
+using namespace logger;
 
 namespace haf::debug
 {

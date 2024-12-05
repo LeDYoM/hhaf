@@ -10,6 +10,7 @@
 
 using namespace htps;
 using namespace haf::res;
+using namespace logger;
 
 namespace haf::sys
 {

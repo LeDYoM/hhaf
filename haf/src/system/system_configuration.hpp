@@ -9,6 +9,8 @@ HTPS_PRAGMA_ONCE
 #include <haf/include/filesystem/ifile_serializer.hpp>
 #include <hlog/include/hlog.hpp>
 
+using namespace logger;
+
 namespace haf::sys
 {
 template <typename DeserializableDataType, typename InnerDataType>

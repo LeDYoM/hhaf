@@ -8,6 +8,7 @@
 using namespace htps;
 using namespace haf;
 using namespace haf::scene;
+using namespace logger;
 
 namespace haf::app_menu
 {

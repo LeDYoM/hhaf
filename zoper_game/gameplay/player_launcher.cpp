@@ -20,7 +20,7 @@ void PlayerLauncher::operator()(
     sptr<BoardGroup> board_group,
     htps::function<void(board::BoardPositionType)> createScoreIncrementPoints)
 {
-    DisplayLog::info("Launching player");
+    logger::DisplayLog::info("Launching player");
     haf::SceneCoordinates lastTokenPosition{};
 
     TileHitChecker tile_hit_checker{board_group, board_group->player()->value(),
@@ -31,7 +31,7 @@ void PlayerLauncher::operator()(
         board_group->player()->currentDirection(),
         board_group->boardManager()->size(), tile_hit_checker);
 
-    DisplayLog::info("Launching player");
+    logger::DisplayLog::info("Launching player");
     board_group->player()->launchPlayerAnimation(lastTokenPosition);
 }
 

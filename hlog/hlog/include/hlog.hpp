@@ -6,54 +6,35 @@
 #include <logger/include/log_asserter.hpp>
 #include <logger/include/severity_type.hpp>
 #include <logger/include/log_init.hpp>
-#include <logger/include/mixin_commiter.hpp>
 #include <hlog/include/thread_commiter.hpp>
-
+#include <logger/include/mixin_commiter.hpp>
 #include <htypes/include/str.hpp>
+#include <hlog/include/cout_commiter.hpp>
+#include <hlog/include/file_commiter.hpp>
 
 namespace logger
 {
-extern template struct Log<true, htps::str, MixinCommiter<haf::ThreadCommiter>>;
-}
+class LogStream
+{
+    inline static htps::str data;
+
+public:
+    htps::str& operator()() { return data; }
+};
+
+using FileCOutCommiter       = MixinCommiter<FileCommiter, COutCommiter>;
+using ThreadFileCoutCommiter = ThreadCommiter<FileCOutCommiter>;
+// using CurrentCommiter = ThreadFileCoutCommiter;
+using CurrentCommiter = COutCommiter;
+
+using CurrentLog             = Log<true, LogStream, CurrentCommiter>;
+using CurrentLogInitializer = LogInitializer<CurrentLog>;
+using DisplayLog = LogDisplayer<CurrentLog, SeverityType, false>;
+}  // namespace logger
 
 namespace haf
 {
-using LogClass =
-    logger::Log<true, htps::str, logger::MixinCommiter<ThreadCommiter>>;
+    using LogAsserter = logger::LogAsserter<logger::DisplayLog>;
+    using LogInitializer = logger::CurrentLogInitializer;
 }
-
-namespace logger
-{
-extern template struct LogDisplayer<haf::LogClass, SeverityType>;
-}
-
-namespace haf
-{
-using DisplayLog = logger::LogDisplayer<LogClass, logger::SeverityType>;
-
-template <typename LogOptions>
-using MessageDisplayLog =
-    logger::LogDisplayer<LogClass, logger::SeverityType, LogOptions>;
-}  // namespace haf
-
-namespace logger
-{
-extern template struct LogAsserter<haf::DisplayLog>;
-}
-
-namespace haf
-{
-using LogAsserter = logger::LogAsserter<DisplayLog>;
-}
-
-namespace logger
-{
-extern template struct LogInitializer<haf::LogClass>;
-}
-
-namespace haf
-{
-using LogInitializer = logger::LogInitializer<LogClass>;
-}
-
 #endif

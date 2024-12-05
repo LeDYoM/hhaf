@@ -7,10 +7,18 @@ namespace logger
 {
 static constexpr char const EmptyString[]{""};
 
-template <auto Message>
-struct DefaultMessageLogOptions
+template <unsigned int N>
+struct StringLiteral
 {
-    static constexpr char const* const BaseMessage = Message;
+    constexpr StringLiteral(const char (&str)[N])
+    {
+        for (int i{0}; i < N; ++i)
+        {
+            value[i] = str[i];
+        }
+    }
+
+    char value[N];
 };
 
 /**
@@ -21,12 +29,12 @@ struct DefaultMessageLogOptions
  */
 template <typename LogClass,
           typename SeverityType,
-          typename LogOptions = DefaultMessageLogOptions<EmptyString>>
+          bool DisplaySeverity_v = false>
 struct LogDisplayer
 {
     using LogClass_t     = LogClass;
     using SeverityType_t = SeverityType;
-    using LogOptions_t   = LogOptions;
+    static constexpr bool DisplaySeverity{DisplaySeverity_v};
 
 private:
     /**
@@ -48,7 +56,9 @@ private:
     {
         LogClass::template log_if_ce<
             SeverityType::template ShowSeverity<severity_type>>(
-            LogOptions_t::BaseMessage, std::forward<Args>(args)...);
+            DisplaySeverity ? SeverityType::template as_str<severity_type>()
+                            : "",
+            std::forward<Args>(args)...);
     }
 
 public:

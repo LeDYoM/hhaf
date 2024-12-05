@@ -9,6 +9,7 @@
 #include <chrono>
 
 using namespace htps;
+using namespace logger;
 
 namespace haf::sys
 {

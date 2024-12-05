@@ -12,6 +12,7 @@
 #include <string>
 
 using namespace htps;
+using namespace logger;
 
 namespace
 {

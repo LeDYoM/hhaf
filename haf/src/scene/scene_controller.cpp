@@ -10,6 +10,7 @@
 #include <hlog/include/hlog.hpp>
 
 using namespace htps;
+using namespace logger;
 
 namespace haf::scene
 {

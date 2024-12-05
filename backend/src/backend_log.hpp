@@ -5,11 +5,7 @@
 
 namespace haf
 {
-static constexpr char const BackendLogMessage[] = "[BackendLib] ";
-
-struct BackendLogOptions : logger::DefaultMessageLogOptions<BackendLogMessage>
-{};
-using BackendLogDisplayer = MessageDisplayLog<BackendLogOptions>;
+using BackendLogDisplayer = logger::DisplayLog;
 }  // namespace haf
 
 #endif
