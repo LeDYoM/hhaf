@@ -3,7 +3,7 @@
 #include <hlog/include/hlog.hpp>
 #include "include/log_stream_test.hpp"
 
-TEST_CASE("hlogdisplayer", "[hlog][hlogdisplayer")
+TEST_CASE("hlogdisplayer", "[hlog][hlogdisplayer]")
 {
     using TestLogDisplayer = logger::LogDisplayer<
         LogTestNullCommit,
@@ -22,7 +22,7 @@ TEST_CASE("hlogdisplayer", "[hlog][hlogdisplayer")
     LogTestNullCommit::finish_log();
 }
 
-TEST_CASE("hlogdisplayerWithMessage", "[hlog][hlogdisplayer")
+TEST_CASE("hlogdisplayerWithMessage", "[hlog][hlogdisplayer]")
 {
     using TestLogDisplayer = logger::LogDisplayer<
         LogTestNullCommit,
@@ -38,7 +38,7 @@ TEST_CASE("hlogdisplayerWithMessage", "[hlog][hlogdisplayer")
     LogTestNullCommit::finish_log();
 }
 
-TEST_CASE("hlogdisplayerWithMessageWithSeveirty", "[hlog][hlogdisplayer")
+TEST_CASE("hlogdisplayerWithMessageWithSeveirty", "[hlog][hlogdisplayer]")
 {
     using TestLogDisplayer = logger::LogDisplayer<
         LogTestNullCommit,
