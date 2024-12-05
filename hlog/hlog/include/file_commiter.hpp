@@ -1,8 +1,6 @@
 #ifndef HLOG_FILE_COMMITER_INCLUDE_HPP
 #define HLOG_FILE_COMMITER_INCLUDE_HPP
 
-#include <logger/include/stream_commiter.hpp>
-
 namespace logger
 {
 struct FileCommiter
