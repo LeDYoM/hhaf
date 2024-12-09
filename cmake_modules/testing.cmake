@@ -18,7 +18,6 @@ function (prepareTestLibrary)
     FetchContent_Declare(Catch2
         GIT_REPOSITORY https://github.com/catchorg/Catch2.git
         GIT_TAG ${CATCH2_COMMIT}
-        CMAKE_ARGS -BUILD_SHARED_LIBS=OFF
     )
 
     FetchContent_MakeAvailable(Catch2)
