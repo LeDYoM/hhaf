@@ -22,39 +22,34 @@ struct SeverityTypeDefinition
         error,
     };
 
-#pragma warning(push)
-#pragma warning(disable : 4514)  // Unused functions in MSVC
-
     template <severity_type_t severity_value>
     static constexpr const auto as_str() noexcept
     {
         switch (severity_value)
         {
             case severity_type_t::debug:
-                return "<DEBUG> :";
+                return "<DEBUG>: ";
                 break;
             case severity_type_t::verbose:
-                return "<VERBOSE> :";
+                return "<VERBOSE>: ";
                 break;
             case severity_type_t::info:
-                return "<INFO> :";
+                return "<INFO>: ";
                 break;
             case severity_type_t::warn:
-                return "<WARN> :";
+                return "<WARN>: ";
                 break;
             case severity_type_t::error:
-                return "<ERROR> :";
+                return "<ERROR>: ";
                 break;
             case severity_type_t::none:
-                return "<NONE?> :";
+                return "<NONE?>: ";
                 break;
             default:
                 // That should not happen.
-                return "<> :";
+                return "<>: ";
         }
     }
-
-#pragma warning(pop)
 };
 
 template <typename SeverityType, SeverityType::severity_type_t MinSeverity>
