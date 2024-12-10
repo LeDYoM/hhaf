@@ -29,12 +29,14 @@ struct StringLiteral
  */
 template <typename LogClass,
           typename SeverityType,
-          bool DisplaySeverity_v = false>
+          bool DisplaySeverity_v       = false,
+          StringLiteral DefaultMessage = EmptyString>
 struct LogDisplayer
 {
     using LogClass_t     = LogClass;
     using SeverityType_t = SeverityType;
     static constexpr bool DisplaySeverity{DisplaySeverity_v};
+    static constexpr StringLiteral LogMessage{DefaultMessage};
 
 private:
     /**
@@ -58,7 +60,7 @@ private:
             SeverityType::template ShowSeverity<severity_type>>(
             DisplaySeverity ? SeverityType::template as_str<severity_type>()
                             : "",
-            std::forward<Args>(args)...);
+            LogMessage.value, std::forward<Args>(args)...);
     }
 
 public:
