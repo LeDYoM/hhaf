@@ -14,14 +14,26 @@ function (prepareTestLibrary)
     message(STATUS "Fetching Catch2")
     #======================================
 
+    # Catch the previous value of BUILD_SHARED_LIBS
+    # looks like it is set somewhere. Set it to off
+    set(PREVIOUS_BUILD_SHARED_LIBS ${BUILD_SHARED_LIBS})
+    if(BUILD_SHARED_LIBS)
+      set(BUILD_SHARED_LIBS OFF)
+    endif()
+
+    message("BUILD_SHARED_LIBS: ${BUILD_SHARED_LIBS}")
+
     set(CATCH2_COMMIT fa43b77429ba76c462b1898d6cd2f2d7a9416b14) # 3.7.1
     FetchContent_Declare(Catch2
         GIT_REPOSITORY https://github.com/catchorg/Catch2.git
         GIT_TAG ${CATCH2_COMMIT}
+        CMAKE_CACHE_ARGS -DBUILD_SHARED_LIBS=OFF
     )
 
     FetchContent_MakeAvailable(Catch2)
 
+    # Set the old value of BUILD_SHARED_LIBS
+    set(BUILD_SHARED_LIBS ${PREVIOUS_BUILD_SHARED_LIBS})
     #======================================
     message(STATUS "Fetching Catch2 libraries done")
 endfunction()

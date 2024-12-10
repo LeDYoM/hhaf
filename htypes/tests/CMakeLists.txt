@@ -9,7 +9,6 @@ set(SOURCE_TESTS
     function
     hash
     lockable_vector
-    main
     menum
     shared_ptr
     span

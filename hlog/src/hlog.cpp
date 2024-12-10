@@ -8,7 +8,7 @@
 #include <logger/include/log_displayer.hpp>
 #include <logger/include/log_asserter.hpp>
 #include <logger/include/severity_type.hpp>
-#include <hlog/include/thread_commiter.hpp>
+#include <logger/include/thread_commiter.hpp>
 #include <logger/include/null_commiter.hpp>
 
 #pragma warning(pop)

@@ -1,12 +1,12 @@
-#ifndef HAF_LOGGER_LOGINIT_INCLUDE_HPP
-#define HAF_LOGGER_LOGINIT_INCLUDE_HPP
+#ifndef LOGGER_LOGINIT_INCLUDE_HPP
+#define LOGGER_LOGINIT_INCLUDE_HPP
 
 namespace logger
 {
 
 /**
  * @brief Log RAII object to construct and destruct the log
- * automatically..
+ * automatically.
  *
  * @tparam LogType The logger type to manage.
  */

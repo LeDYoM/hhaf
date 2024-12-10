@@ -6,11 +6,11 @@
 #include <logger/include/log_asserter.hpp>
 #include <logger/include/severity_type.hpp>
 #include <logger/include/log_init.hpp>
-#include <hlog/include/thread_commiter.hpp>
+#include <logger/include/thread_commiter.hpp>
 #include <logger/include/mixin_commiter.hpp>
+#include <logger/include/cout_commiter.hpp>
+#include <logger/include/file_commiter.hpp>
 #include <htypes/include/str.hpp>
-#include <hlog/include/cout_commiter.hpp>
-#include <hlog/include/file_commiter.hpp>
 
 namespace logger
 {

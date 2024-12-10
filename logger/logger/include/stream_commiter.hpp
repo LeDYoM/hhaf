@@ -10,7 +10,7 @@ struct StreamCommiter
 
     static void finish() {}
 
-    static inline void commitlog(const char* const log_stream)
+    static void commitlog(const char* const log_stream)
     {
         (*Stream) << log_stream << "\n";
         (*Stream).flush();
