@@ -3,7 +3,7 @@
 #include <logger/include/severity_type.hpp>
 #include "include/log_stream_test.hpp"
 
-TEST_CASE("logdisplayer", "[logger][logdisplayer]")
+TEST_CASE("logdisplayer", "[logger][log_severity][logdisplayer]")
 {
     using TestLogDisplayer = logger::LogDisplayer<
         LogTestNullCommit,
@@ -22,7 +22,7 @@ TEST_CASE("logdisplayer", "[logger][logdisplayer]")
     LogTestNullCommit::finish_log();
 }
 
-TEST_CASE("logdisplayerWithMessage", "[logger][logdisplayer]")
+TEST_CASE("logdisplayerWithoutMessage", "[logger][log_severity][logdisplayer]")
 {
     using TestLogDisplayer = logger::LogDisplayer<
         LogTestNullCommit,
@@ -38,7 +38,23 @@ TEST_CASE("logdisplayerWithMessage", "[logger][logdisplayer]")
     LogTestNullCommit::finish_log();
 }
 
-TEST_CASE("logdisplayerWithMessageWithSeveirty", "[logger][logdisplayer]")
+TEST_CASE("logdisplayerWithMessage", "[logger][log_severity][logdisplayer]")
+{
+    using TestLogDisplayer = logger::LogDisplayer<
+        LogTestNullCommit,
+        logger::SeverityTypeActiveTo<
+            logger::SeverityTypeDefinition::severity_type_t::debug>,false,"MySuperSystem: ">;
+
+    LogTestNullCommit::init_log();
+    LogStreamTest testing_stream;
+
+    TestLogDisplayer::debug("This should be used");
+    CHECK(testing_stream() == "MySuperSystem: This should be used");
+
+    LogTestNullCommit::finish_log();
+}
+
+TEST_CASE("logdisplayerWithoutMessageWithSeveirty", "[logger][log_severity][logdisplayer]")
 {
     using TestLogDisplayer = logger::LogDisplayer<
         LogTestNullCommit,
@@ -49,9 +65,27 @@ TEST_CASE("logdisplayerWithMessageWithSeveirty", "[logger][logdisplayer]")
     LogStreamTest testing_stream;
 
     TestLogDisplayer::debug("This should be used");
-    CHECK(testing_stream() == "<DEBUG> :This should be used");
+    CHECK(testing_stream() == "<DEBUG>: This should be used");
     TestLogDisplayer::verbose("This too");
-    CHECK(testing_stream() == "<VERBOSE> :This too");
+    CHECK(testing_stream() == "<VERBOSE>: This too");
+
+    LogTestNullCommit::finish_log();
+}
+
+TEST_CASE("logdisplayerWithMessageWithSeveirty", "[logger][log_severity][logdisplayer]")
+{
+    using TestLogDisplayer = logger::LogDisplayer<
+        LogTestNullCommit,
+        logger::SeverityTypeActiveTo<
+            logger::SeverityTypeDefinition::severity_type_t::debug>, true, "MyOtherSuperSystem: ">;
+
+    LogTestNullCommit::init_log();
+    LogStreamTest testing_stream;
+
+    TestLogDisplayer::debug("This should be used");
+    CHECK(testing_stream() == "<DEBUG>: MyOtherSuperSystem: This should be used");
+    TestLogDisplayer::verbose("This too");
+    CHECK(testing_stream() == "<VERBOSE>: MyOtherSuperSystem: This too");
 
     LogTestNullCommit::finish_log();
 }

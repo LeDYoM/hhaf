@@ -7,6 +7,7 @@ set(SOURCE_TESTS
     log
     log_asserter
     log_displayer
+    log_severity
 )
 
 add_test_executable_with_main(SOURCE_TESTS ${SOURCE_TESTS})
