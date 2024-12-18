@@ -22,11 +22,11 @@ HOST_PRIVATE int host_main(int argc, char* argv[]) noexcept
     }
     catch (std::exception& e)
     {
-        logger::DisplayLog::error("std::Exception: ", e.what());
+        haf::DisplayLog::error("std::Exception: ", e.what());
     }
     catch (...)
     {
-        logger::DisplayLog::info("Unexpected exception");
+        haf::DisplayLog::info("Unexpected exception");
     }
     return result;
 }

@@ -5,7 +5,7 @@
 
 namespace haf
 {
-using HostLogDisplayer = logger::DisplayLog;
+using HostLogDisplayer = DisplayLog;
 }  // namespace haf
 
 #endif

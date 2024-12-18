@@ -6,7 +6,7 @@ HTPS_PRAGMA_ONCE
 
 namespace haf
 {
-using WindowLogDisplayer = logger::DisplayLog;
+using WindowLogDisplayer = DisplayLog;
 }  // namespace haf
 
 #endif

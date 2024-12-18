@@ -68,6 +68,12 @@ TEST_CASE("logdisplayerWithoutMessageWithSeveirty", "[logger][log_severity][logd
     CHECK(testing_stream() == "<DEBUG>: This should be used");
     TestLogDisplayer::verbose("This too");
     CHECK(testing_stream() == "<VERBOSE>: This too");
+    TestLogDisplayer::info("This is an info");
+    CHECK(testing_stream() == "<INFO>: This is an info");
+    TestLogDisplayer::warn("This is a warning");
+    CHECK(testing_stream() == "<WARN>: This is a warning");
+    TestLogDisplayer::error("This is an error");
+    CHECK(testing_stream() == "<ERROR>: This is an error");
 
     LogTestNullCommit::finish_log();
 }

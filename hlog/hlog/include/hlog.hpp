@@ -6,10 +6,10 @@
 #include <logger/include/log_asserter.hpp>
 #include <logger/include/severity_type.hpp>
 #include <logger/include/log_init.hpp>
-#include <logger/include/thread_commiter.hpp>
-#include <logger/include/mixin_commiter.hpp>
-#include <logger/include/cout_commiter.hpp>
-#include <logger/include/file_commiter.hpp>
+#include <logger/include/commiters/thread_commiter.hpp>
+#include <logger/include/commiters/mixin_commiter.hpp>
+#include <logger/include/commiters/cout_commiter.hpp>
+#include <logger/include/commiters/file_commiter.hpp>
 #include <htypes/include/str.hpp>
 
 namespace logger
@@ -27,14 +27,19 @@ using ThreadFileCoutCommiter = ThreadCommiter<FileCOutCommiter>;
 // using CurrentCommiter = ThreadFileCoutCommiter;
 using CurrentCommiter = COutCommiter;
 
-using CurrentLog             = Log<true, LogStream, CurrentCommiter>;
+using CurrentLog            = Log<true, LogStream, CurrentCommiter>;
 using CurrentLogInitializer = LogInitializer<CurrentLog>;
-using DisplayLog = LogDisplayer<CurrentLog, SeverityType, false>;
+
+template <bool DisplaySeverity>
+using DisplayLogGeneral = LogDisplayer<CurrentLog, SeverityType, DisplaySeverity>;
 }  // namespace logger
 
 namespace haf
 {
-    using LogAsserter = logger::LogAsserter<logger::DisplayLog>;
-    using LogInitializer = logger::CurrentLogInitializer;
-}
+using LogAsserter    = logger::LogAsserter<logger::DisplayLogGeneral<false>>;
+using LogInitializer = logger::CurrentLogInitializer;
+using DisplayLogNoSeverity     = logger::DisplayLogGeneral<false>;
+using DisplayLogSeverity = logger::DisplayLogGeneral<true>;
+using DisplayLog = DisplayLogSeverity;
+}  // namespace haf
 #endif

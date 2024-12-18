@@ -3,6 +3,7 @@
 
 using namespace htps;
 using namespace haf::time;
+using namespace haf;
 
 namespace zoper
 {
@@ -24,7 +25,7 @@ void NextToken::prepareNextTokenImpl()
     timer_ = timer_component_.lock()->addTimer(
         TimerType::OneShot, TimePoint_as_miliseconds(time_point_getter_()),
         [this](TimePoint realEllapsed) {
-            logger::DisplayLog::info("Elapsed between tokens: ",
+            DisplayLog::info("Elapsed between tokens: ",
                                   realEllapsed.milliseconds());
             // New token
             action_();

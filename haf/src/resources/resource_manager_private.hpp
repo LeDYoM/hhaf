@@ -81,14 +81,14 @@ sptr<T> get_or_add(backend::IResourceManager* iresource_manager,
 
     if (internal_resource != nullptr)
     {
-        logger::DisplayLog::info(rid, " found on resource list. Returning instance.");
+        DisplayLog::info(rid, " found on resource list. Returning instance.");
         return internal_resource;
     }
     else
     {
         // Not found, try to load it.
-        logger::DisplayLog::info(rid, " not found on resource list.");
-        logger::DisplayLog::info("Going to load file: ", fileName);
+        DisplayLog::info(rid, " not found on resource list.");
+        DisplayLog::info("Going to load file: ", fileName);
         sptr<T> resource{loadResource<T>(iresource_manager, factory, fileSystem,
                                          rid, fileName)};
         (void)(container.add(rid, resource));

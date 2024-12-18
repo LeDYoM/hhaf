@@ -66,7 +66,7 @@ void MainMenu::goGame(GameMode const game_mode, vector<s32> menu_data)
 
     game_shared_data->startLevel = menu_data[0U];
     game_shared_data->gameMode   = game_mode;
-    logger::DisplayLog::info(game_shared_data->to_str());
+    DisplayLog::info(game_shared_data->to_str());
 
     terminate(MenuFinishedStatus::Forward);
 }

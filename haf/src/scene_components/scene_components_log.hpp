@@ -6,7 +6,7 @@ HTPS_PRAGMA_ONCE
 
 namespace haf
 {
-using SceneComponentsLogDisplayer = logger::DisplayLog;
+using SceneComponentsLogDisplayer = DisplayLog;
 }  // namespace haf
 
 #endif

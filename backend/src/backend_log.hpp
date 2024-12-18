@@ -5,7 +5,7 @@
 
 namespace haf
 {
-using BackendLogDisplayer = logger::DisplayLog;
+using BackendLogDisplayer = DisplayLog;
 }  // namespace haf
 
 #endif

@@ -17,7 +17,7 @@ ScoreIncrementer::~ScoreIncrementer()
 {
     for (size_type i{0U}; i < hits_; ++i)
     {
-        logger::DisplayLog::info("In a row: ", i);
+        DisplayLog::info("In a row: ", i);
 
         // Increase the score accordingly
         const auto score{(i + 1U) * level_properties_->baseScore()};
@@ -26,7 +26,7 @@ ScoreIncrementer::~ScoreIncrementer()
         // Inform that a token has been consumed
         level_properties_->tokenConsumed();
     }
-    logger::DisplayLog::info("Number of tokens in a row: ", hits_);
+    DisplayLog::info("Number of tokens in a row: ", hits_);
 }
 
 void ScoreIncrementer::addHit()

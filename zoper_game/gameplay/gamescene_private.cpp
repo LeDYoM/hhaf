@@ -34,7 +34,7 @@ void GameScene::GameScenePrivate::createScoreIncrementPoints(
     pointsToScoreSceneNode->Scale = vector2df{0.01F, 0.01F};
     using namespace gameplay::constants;
 
-    logger::DisplayLog::info("Creating animation for points to score");
+    DisplayLog::info("Creating animation for points to score");
 /*
     auto property_animation_builder{
         scene_animation_component_->make_property_animation_builder<Position>(

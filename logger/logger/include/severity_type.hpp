@@ -3,7 +3,9 @@
 
 namespace logger
 {
-
+/**
+ * @brief Encapsulate the severity enumeration and related small functions.
+ */
 struct SeverityTypeDefinition
 {
     /**
@@ -14,7 +16,7 @@ struct SeverityTypeDefinition
      */
     enum class severity_type_t
     {
-        none,
+        none = 0U,
         debug,
         verbose,
         info,
@@ -22,8 +24,13 @@ struct SeverityTypeDefinition
         error,
     };
 
-    template <severity_type_t severity_value>
-    static constexpr const auto as_str() noexcept
+    /**
+     * @brief Convert a severity_type_t passed as parameter to a string
+     * @tparam severity_value
+     * @return The string
+     */
+    static consteval const auto as_str(
+        const severity_type_t severity_value) noexcept
     {
         switch (severity_value)
         {
@@ -57,15 +64,16 @@ struct SeverityTypeImpl
 {
     using severity_type_t = SeverityType::severity_type_t;
 
-    template <severity_type_t severity_value>
-    static constexpr const auto as_str() noexcept
+    static consteval const auto as_str(severity_type_t severity_value) noexcept
     {
-        return SeverityType::template as_str<severity_value>();
+        return SeverityType::as_str(severity_value);
     }
 
-    template <severity_type_t severity_type>
-    static constexpr bool ShowSeverity = (static_cast<int>(severity_type) >=
-                                          static_cast<int>(MinSeverity));
+    static consteval bool showSeverity(severity_type_t severity_type) noexcept
+    {
+        return (static_cast<int>(severity_type) >=
+                static_cast<int>(MinSeverity));
+    }
 };
 
 template <auto severity>

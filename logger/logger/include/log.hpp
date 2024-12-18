@@ -99,7 +99,7 @@ private:
         }
     }
 
-};  // namespace logger
+};
 
 }  // namespace logger
 

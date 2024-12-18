@@ -39,8 +39,8 @@ build_lib_component(HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}" SOURCES
 
 target_link_libraries(${CURRENT_TARGET} PRIVATE
   host_connector
-  hosted_app 
-  memmanager 
+  hosted_app
+  memmanager
   hlog
   agloader
   haf

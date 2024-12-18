@@ -147,10 +147,10 @@ void HighScoreTextController::standarizeText(
 
 void HighScoreTextController::saveHighScores()
 {
-    logger::DisplayLog::info("Saving highscores...");
+    DisplayLog::info("Saving highscores...");
 
     subSystem<sys::IFileSerializer>()->serializeToFile(HighScoresFileName,
                                                        high_scores_data_);
-    logger::DisplayLog::info("High Scores saved");
+    DisplayLog::info("High Scores saved");
 }
 }  // namespace zoper

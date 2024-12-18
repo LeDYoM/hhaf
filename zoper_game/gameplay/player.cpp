@@ -40,9 +40,9 @@ void Player::update()
 
     if (player_board_position.readResetHasChanged())
     {
-        logger::DisplayLog::info("Player board position: ", boardPosition());
+        DisplayLog::info("Player board position: ", boardPosition());
         Position = board2Scene(boardPosition());
-        logger::DisplayLog::info("Player scene position: ", Position());
+        DisplayLog::info("Player scene position: ", Position());
     }
 
     if (currentDirection.readResetHasChanged())
@@ -60,12 +60,12 @@ bool Player::canBeMovedTo(BoardPositionType const& dest_position) const
 void Player::tileMoved(BoardPositionType const& source)
 {
     BaseClass::tileMoved(source);
-    logger::DisplayLog::info("Player old board position: ", source);
+    DisplayLog::info("Player old board position: ", source);
     LogAsserter::log_assert(boardPosition() != source,
                             "Source and dest are the same!");
-    logger::DisplayLog::info("Player board position: ", boardPosition());
+    DisplayLog::info("Player board position: ", boardPosition());
     Position = board2Scene(boardPosition());
-    logger::DisplayLog::info("Player scene position: ", Position());
+    DisplayLog::info("Player scene position: ", Position());
 
     player_board_position = boardPosition();
     currentDirection      = fromPositions(source, boardPosition());
@@ -89,7 +89,7 @@ void Player::launchPlayerAnimation(vector2df const& toWhere)
 
 void Player::launchAnimationBack(SceneCoordinates const& toWhere)
 {
-    logger::DisplayLog::info("Creating animation for player to go back");
+    DisplayLog::info("Creating animation for player to go back");
     currentDirection = currentDirection().negate();
     component(animation_component_);
 
@@ -103,7 +103,7 @@ void Player::launchAnimationBack(SceneCoordinates const& toWhere)
 
 void Player::tileAdded()
 {
-    logger::DisplayLog::info("TokenPlayer appeared at ", boardPosition());
+    DisplayLog::info("TokenPlayer appeared at ", boardPosition());
     m_renderizable_scene_node->node()->material().color = getColorForToken();
 
     // Set the position in the scene depending on the board position
@@ -119,7 +119,7 @@ void Player::tileChanged(BoardTileData const oldValue,
                          BoardTileData const newValue)
 {
     BaseClass::tileChanged(oldValue, newValue);
-    logger::DisplayLog::info("Player (position ", boardPosition(), ") changed from ",
+    DisplayLog::info("Player (position ", boardPosition(), ") changed from ",
                      oldValue, " to ", newValue);
 }
 
