@@ -24,5 +24,3 @@ Here are the modules you can view the documentation from:
 > [htypes module](@ref htypes_lib)
 
 > [haf module](@ref haf_main_lib)
-
-dgsdf
