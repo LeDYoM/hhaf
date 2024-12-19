@@ -4,7 +4,7 @@ HTPS_PRAGMA_ONCE
 
 #include <htypes/include/types.hpp>
 #include "system_provider.hpp"
-#include <haf/include/system/isystem_controller.hpp>
+#include <host_haf_interface/include/isystem_controller.hpp>
 
 namespace haf::backend
 {

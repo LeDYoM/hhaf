@@ -46,7 +46,17 @@ target_link_libraries(${CURRENT_TARGET} PRIVATE
   backend_dev
 )
 
-target_link_libraries(${CURRENT_TARGET} PUBLIC log_and_types mc_serial parpar facil_math)
+target_link_libraries(${CURRENT_TARGET} PUBLIC
+  log_and_types
+  mc_serial
+  parpar
+  facil_math
+)
+
+target_link_libraries(${CURRENT_TARGET} PRIVATE
+  host_haf_interface
+)
+
 set_pragma_once_or_not(HAF true PUBLIC)
 
 # For now, we need it public for tests.

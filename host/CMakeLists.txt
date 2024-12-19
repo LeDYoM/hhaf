@@ -41,10 +41,12 @@ target_link_libraries(${CURRENT_TARGET} PRIVATE
   host_connector
   hosted_app
   memmanager
+  parpar
   hlog
   agloader
-  haf
+  host_haf_interface
   backend
+  facil_math
 )
 
 #export(TARGETS ${CURRENT_TARGET} FILE HostTarget.cmake EXPORT_LINK_INTERFACE_LIBRARIES)

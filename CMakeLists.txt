@@ -65,6 +65,7 @@ set(hhaf_core_module_list
   memmanager
   htypes
   hlog
+  host_haf_interface
   host_connector
   hosted_app
   host

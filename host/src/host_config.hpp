@@ -5,14 +5,12 @@
 #include <htypes/include/str.hpp>
 #include <htypes/include/vector.hpp>
 #include <parpar/include/parpar.hpp>
-#include <facil_math/include/rect.hpp>
 #include <htypes/include/dictionary.hpp>
 
 #include <fstream>
 #include <string>
 
 using namespace htps;
-using namespace logger;
 
 namespace
 {

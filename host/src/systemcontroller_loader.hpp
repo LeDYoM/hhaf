@@ -3,7 +3,7 @@
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/function.hpp>
-#include <haf/include/system/isystem_controller.hpp>
+#include <host_haf_interface/include/isystem_controller.hpp>
 
 namespace agloader
 {

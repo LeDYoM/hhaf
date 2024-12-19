@@ -1,3 +1,3 @@
 
 ## Internal/developer documentation
-## Initialization of haf from a host
+## Initialization of haf from host

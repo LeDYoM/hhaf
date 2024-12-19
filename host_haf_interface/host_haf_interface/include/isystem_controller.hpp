@@ -1,6 +1,5 @@
-HAF_PRAGMA_ONCE
-#ifndef HAF_ISYSTEMCONTROLLER_INTERFACE_INCLUDE_HPP
-#define HAF_ISYSTEMCONTROLLER_INTERFACE_INCLUDE_HPP
+#ifndef HOST_HAF_INTERFACE_ISYSTEMCONTROLLER_INTERFACE_INCLUDE_HPP
+#define HOST_HAF_INTERFACE_ISYSTEMCONTROLLER_INTERFACE_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
 
@@ -24,7 +23,7 @@ namespace haf::sys
 class ISystemController
 {
 public:
-    virtual ~ISystemController() {}
+    virtual ~ISystemController() = default;
 
     virtual void init(htps::rptr<haf::IApp> iapp,
                       htps::rptr<host::IHostConnector> const host_connector,

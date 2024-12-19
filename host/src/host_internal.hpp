@@ -9,7 +9,7 @@
 #include "app_state.hpp"
 #include "hosted_app_group.hpp"
 
-#include <haf/include/system/isystem_controller.hpp>
+#include <host_haf_interface/include/isystem_controller.hpp>
 #include <parpar/include/parpar.hpp>
 #include <hosted_app/include/iapp.hpp>
 #include <backend/include/backend_creator.hpp>
