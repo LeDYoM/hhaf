@@ -27,14 +27,14 @@ using ThreadFileCoutCommiter = ThreadCommiter<FileCOutCommiter>;
 // using CurrentCommiter = ThreadFileCoutCommiter;
 using CurrentCommiter = COutCommiter;
 
-using CurrentLog             = Log<true, LogStream, CurrentCommiter>;
+using CurrentLog            = Log<true, LogStream, CurrentCommiter>;
 using CurrentLogInitializer = LogInitializer<CurrentLog>;
-using DisplayLog = LogDisplayer<CurrentLog, SeverityType, false>;
+using DisplayLog            = LogDisplayer<CurrentLog, SeverityType, false>;
 }  // namespace logger
 
 namespace haf
 {
-    using LogAsserter = logger::LogAsserter<logger::DisplayLog>;
-    using LogInitializer = logger::CurrentLogInitializer;
-}
+using LogAsserter    = logger::LogAsserter<logger::DisplayLog>;
+using LogInitializer = logger::CurrentLogInitializer;
+}  // namespace haf
 #endif

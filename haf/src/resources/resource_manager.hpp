@@ -27,12 +27,13 @@ class IShader;
 
 namespace haf::sys
 {
-class HAF_PRIVATE ResourceManager final : public SystemBase,
-                              public res::IResourceRetriever,
-                              public res::IResourcesConfigurator,
-                              public res::IDefaultResourcesRetriever,
-                              public res::IResourceLoader,
-                              public backend::IResourceManager
+class HAF_PRIVATE ResourceManager final
+    : public SystemBase,
+      public res::IResourceRetriever,
+      public res::IResourcesConfigurator,
+      public res::IDefaultResourcesRetriever,
+      public res::IResourceLoader,
+      public backend::IResourceManager
 {
 public:
     explicit ResourceManager(sys::SystemProvider& system_provider);
