@@ -168,10 +168,13 @@ public:
 
     constexpr sptr& operator=(sptr const& sp) noexcept
     {
-        *this = sptr{sp.m_ptr, sp.m_counter};
-        if (m_counter != nullptr)
+        if (this != &sp)
         {
-            m_counter->increment();
+            *this = sptr{sp.m_ptr, sp.m_counter};
+            if (m_counter != nullptr)
+            {
+                m_counter->increment();
+            }
         }
         return *this;
     }
