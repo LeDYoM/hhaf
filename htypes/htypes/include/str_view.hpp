@@ -59,67 +59,72 @@ public:
         basic_str_view{&data[0U], detail::_str_len(data)}
     {}
 
-    constexpr const_iterator data() const noexcept { return begin_; }
-    constexpr const_iterator begin() const noexcept { return begin_; }
-    constexpr const_iterator end() const noexcept { return begin_ + size_; }
-    constexpr const_iterator cbegin() const noexcept { return begin(); }
-    constexpr const_iterator cend() const noexcept { return end(); }
-    constexpr char_type operator[](size_type const index)
+    [[nodiscard]] constexpr const_iterator data() const noexcept
+    {
+        return begin_;
+    }
+    [[nodiscard]] constexpr const_iterator begin() const noexcept
+    {
+        return begin_;
+    }
+    [[nodiscard]] constexpr const_iterator end() const noexcept
+    {
+        return begin_ + size_;
+    }
+    [[nodiscard]] constexpr const_iterator cbegin() const noexcept
+    {
+        return begin();
+    }
+    [[nodiscard]] constexpr const_iterator cend() const noexcept
+    {
+        return end();
+    }
+    [[nodiscard]] constexpr char_type operator[](size_type const index)
     {
         return *(begin_ + index);
     }
 
-    constexpr bool empty() const noexcept
+    [[nodiscard]] constexpr bool empty() const noexcept
     {
         return begin_ == nullptr || size_ == 0U || (size_ > 0U && *begin_ == 0);
     }
 
-    constexpr size_type size() const noexcept { return size_; }
+    [[nodiscard]] constexpr size_type size() const noexcept { return size_; }
+
+    constexpr bool operator==(basic_str_view const& rhs) const noexcept
+    {
+        if (size() != rhs.size())
+        {
+            return false;
+        }
+        else
+        {
+            for (auto lhs_iterator{cbegin()}, rhs_iterator{rhs.cbegin()};
+                 lhs_iterator != cend(); ++lhs_iterator, ++rhs_iterator)
+            {
+                if (!(*lhs_iterator == *rhs_iterator))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+    }
+
+    constexpr bool operator==(char_type* const& rhs) const noexcept
+    {
+        return *this == basic_str_view{rhs};
+    }
+
+    template <size_type N>
+    constexpr bool operator==(char_type const (&rhs)[N]) const noexcept
+    {
+        return *this == basic_str_view{rhs};
+    }
 
     const_iterator begin_;
     size_type size_;
 };
-
-template <typename T>
-constexpr bool operator==(basic_str_view<T> const& lhs,
-                          basic_str_view<T> const& rhs)
-{
-    if (lhs.size() != rhs.size())
-    {
-        return false;
-    }
-    else
-    {
-        for (auto lhs_iterator{lhs.cbegin()}, rhs_iterator{rhs.cbegin()};
-             lhs_iterator != lhs.cend(); ++lhs_iterator, ++rhs_iterator)
-        {
-            if (!(*lhs_iterator == *rhs_iterator))
-            {
-                return false;
-            }
-        }
-        return true;
-    }
-}
-
-template <typename T>
-constexpr bool operator!=(basic_str_view<T> const& lhs,
-                          basic_str_view<T> const& rhs)
-{
-    return !(lhs == rhs);
-}
-
-template <typename T>
-constexpr bool operator==(basic_str_view<T> const& lhs, T* const& rhs)
-{
-    return lhs == basic_str_view<T>{rhs};
-}
-
-template <typename T, size_type N>
-constexpr bool operator==(basic_str_view<T> const& lhs, T const (&rhs)[N])
-{
-    return lhs == basic_str_view<T>{rhs};
-}
 
 using str_view = basic_str_view<char>;
 

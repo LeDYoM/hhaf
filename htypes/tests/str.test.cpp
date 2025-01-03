@@ -484,6 +484,35 @@ TEST_CASE("str::c_str", "[str]")
     }
 }
 
+TEST_CASE("str_comparisons", "[str]")
+{
+    str tst_string{"AAAA"};
+    str tst_string2{"AAAB"};
+    str tst_string3{"AAA"};
+    str tst_string4{"AAAA"};
+
+    CHECK(tst_string < tst_string2);
+    CHECK(tst_string2 > tst_string);
+
+    CHECK(tst_string <= tst_string2);
+    CHECK(tst_string2 >= tst_string);
+
+    CHECK(tst_string != tst_string2);
+    CHECK(tst_string2 != tst_string);
+
+    CHECK_FALSE(tst_string != tst_string4);
+    CHECK(tst_string <= tst_string3);
+    CHECK(tst_string != tst_string3);
+    CHECK_FALSE(tst_string > tst_string3);
+    CHECK(tst_string >= tst_string3);
+    CHECK(tst_string3 < tst_string);
+    CHECK(tst_string3 < tst_string);
+    CHECK(tst_string <= tst_string4);
+    CHECK(tst_string >= tst_string4);
+    CHECK(tst_string == tst_string4);
+    CHECK_FALSE(tst_string != tst_string4);
+}
+
 TEST_CASE("str::fromCharAndSize", "[str]")
 {
     str text0{str::fromCharAndSize('A', 5U)};

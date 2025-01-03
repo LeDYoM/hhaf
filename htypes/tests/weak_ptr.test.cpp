@@ -199,3 +199,15 @@ TEST_CASE("weak_ptr incomplete type", "[types][shared_ptr][weak_ptr]")
     CHECK(b.use_count() == 0U);
     CHECK(b == nullptr);
 }
+
+TEST_CASE("weak_ptr destroy_shared", "[types][shared_ptr][weak_ptr]")
+{
+    sptr<int> a;
+    wptr<int> b{a};
+    b = htps::move(a);
+    b = a;
+    CHECK(a.use_count() == 0U);
+    CHECK(a == nullptr);
+    CHECK(b.use_count() == 0U);
+    CHECK(b == nullptr);
+}

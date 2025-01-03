@@ -138,36 +138,36 @@ public:
     /// Destructor.
     inline ~vector_base() noexcept { clear(); }
 
-    constexpr reference operator[](const size_type index)
+    [[nodiscard]] constexpr reference operator[](const size_type index)
     {
         assert(index < size());
         return *(storage_.at(index));
     }
 
-    constexpr const_reference operator[](const size_type index) const
+    [[nodiscard]] constexpr const_reference operator[](const size_type index) const
     {
         assert(index < size());
         return *(storage_.at(index));
     }
 
-    constexpr size_type capacity() const noexcept
+    [[nodiscard]] constexpr size_type capacity() const noexcept
     {
         return storage_.capacity();
     }
 
-    constexpr size_type size() const noexcept { return storage_.size(); }
-    constexpr bool empty() const noexcept { return storage_.empty(); }
-    constexpr iterator begin() noexcept { return storage_.begin(); }
-    constexpr const_iterator begin() const noexcept { return storage_.begin(); }
-    constexpr const_iterator cbegin() const noexcept
+    [[nodiscard]] constexpr size_type size() const noexcept { return storage_.size(); }
+    [[nodiscard]] constexpr bool empty() const noexcept { return storage_.empty(); }
+    [[nodiscard]] constexpr iterator begin() noexcept { return storage_.begin(); }
+    [[nodiscard]] constexpr const_iterator begin() const noexcept { return storage_.begin(); }
+    [[nodiscard]] constexpr const_iterator cbegin() const noexcept
     {
         return storage_.cbegin();
     }
-    constexpr iterator end() noexcept { return storage_.end(); }
-    constexpr const_iterator end() const noexcept { return storage_.end(); }
-    constexpr const_iterator cend() const noexcept { return storage_.cend(); }
+    [[nodiscard]] constexpr iterator end() noexcept { return storage_.end(); }
+    [[nodiscard]] constexpr const_iterator end() const noexcept { return storage_.end(); }
+    [[nodiscard]] constexpr const_iterator cend() const noexcept { return storage_.cend(); }
 
-    constexpr T& back() noexcept
+    [[nodiscard]] constexpr T& back() noexcept
     {
         assert(size() > 0U);
         return *(storage_.at(size() - 1U));
@@ -733,11 +733,6 @@ public:
             }
             return true;
         }
-    }
-
-    constexpr bool operator!=(vector_base const& rhs) const noexcept
-    {
-        return !(*this == rhs);
     }
 
     constexpr void pop_back() noexcept { storage_.pop_back(); }

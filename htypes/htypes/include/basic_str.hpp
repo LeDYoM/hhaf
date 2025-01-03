@@ -10,6 +10,7 @@ HTPS_PRAGMA_ONCE
 #include <type_traits>
 #include <algorithm>
 #include <cctype>
+#include <compare>
 
 namespace htps
 {
@@ -498,39 +499,52 @@ public:
 
     // TO DO: Change them by using, eg.
     // using vector<T>::begin();
-    constexpr reference operator[](size_type const index) noexcept
+    [[nodiscard]] constexpr reference operator[](size_type const index) noexcept
     {
         return data_[index];
     }
 
-    constexpr const_reference operator[](size_type const index) const noexcept
+    [[nodiscard]] constexpr const_reference operator[](
+        size_type const index) const noexcept
     {
         return data_[index];
     }
 
-    constexpr auto capacity() const noexcept { return data_.capacity(); }
-    constexpr iterator begin() noexcept { return data_.begin(); }
-    constexpr const_iterator begin() const noexcept { return data_.begin(); }
-    constexpr const_iterator cbegin() const noexcept { return data_.cbegin(); }
-    constexpr iterator end() noexcept { return data_.begin() + size(); }
-    constexpr const_iterator end() const noexcept
+    [[nodiscard]] constexpr size_type capacity() const noexcept
+    {
+        return data_.capacity();
+    }
+    [[nodiscard]] constexpr iterator begin() noexcept { return data_.begin(); }
+    [[nodiscard]] constexpr const_iterator begin() const noexcept
+    {
+        return data_.begin();
+    }
+    [[nodiscard]] constexpr const_iterator cbegin() const noexcept
+    {
+        return data_.cbegin();
+    }
+    [[nodiscard]] constexpr iterator end() noexcept
+    {
+        return data_.begin() + size();
+    }
+    [[nodiscard]] constexpr const_iterator end() const noexcept
     {
         return data_.begin() + size();
     }
 
-    constexpr const_iterator cend() const noexcept
+    [[nodiscard]] constexpr const_iterator cend() const noexcept
     {
         return data_.cbegin() + size();
     }
 
-    constexpr char_type const* c_str() const noexcept
+    [[nodiscard]] constexpr char_type const* c_str() const noexcept
     {
         return data_.empty() ? "" : data_.cbegin();
     }
 
-    constexpr bool empty() const noexcept { return size() == 0; }
+    [[nodiscard]] constexpr bool empty() const noexcept { return size() == 0U; }
 
-    constexpr auto find_first_of(
+    [[nodiscard]] constexpr auto find_first_of(
         vector<char_type> const& chValue) const noexcept
     {
         auto const it{data_.cfind_first_of(chValue)};
@@ -538,14 +552,16 @@ public:
                                     : std::distance(cbegin(), it);
     }
 
-    constexpr auto find_first_of(char_type const chValue) const noexcept
+    [[nodiscard]] constexpr auto find_first_of(
+        char_type const chValue) const noexcept
     {
         auto const it{data_.find_first_of(chValue)};
         return (it == data_.cend()) ? basic_str::npos
                                     : std::distance(cbegin(), it);
     }
 
-    constexpr auto find_first_of(basic_str const value) const noexcept
+    [[nodiscard]] constexpr auto find_first_of(
+        basic_str const value) const noexcept
     {
         auto value_data_copy{value.data_};
         value_data_copy.pop_back();
@@ -561,14 +577,16 @@ public:
                                     : std::distance(cbegin(), it);
     }
 
-    constexpr auto find_last_of(char_type const chValue) const noexcept
+    [[nodiscard]] constexpr auto find_last_of(
+        char_type const chValue) const noexcept
     {
         auto const it{data_.find_last_of(chValue)};
         return (it == data_.cend()) ? basic_str::npos
                                     : std::distance(cbegin(), it);
     }
 
-    constexpr auto find_last_of(basic_str const value) const noexcept
+    [[nodiscard]] constexpr auto find_last_of(
+        basic_str const value) const noexcept
     {
         auto value_data_copy{value.data_};
         value_data_copy.pop_back();
@@ -600,17 +618,13 @@ public:
 
     static constexpr size_type npos{static_cast<size_type>(-1)};
 
-    constexpr bool operator==(basic_str const& rhs) const noexcept
+    [[nodiscard]] constexpr bool operator==(basic_str const& rhs) const noexcept
     {
         return data_ == rhs.data_;
     }
 
-    constexpr bool operator!=(basic_str const& rhs) const noexcept
-    {
-        return !(data_ == rhs.data_);
-    }
-
-    constexpr bool operator==(char_type const* const rhs) const noexcept
+    [[nodiscard]] constexpr bool operator==(
+        char_type const* const rhs) const noexcept
     {
         size_type counter{0U};
         for (; counter < size() && rhs[counter] != 0U; ++counter)
@@ -624,31 +638,31 @@ public:
         return (counter == size() && rhs[counter] == 0);
     }
 
-    constexpr bool operator==(
+    [[nodiscard]] constexpr bool operator==(
         basic_str_view<char_type> const& rhs) const noexcept
     {
         return *this == rhs.begin_;
     }
 
-    constexpr bool operator!=(char_type const* const a) const noexcept
-    {
-        return !(*this == a);
-    }
-
-    constexpr bool operator<(const basic_str& rhs) const noexcept
+    [[nodiscard]] constexpr auto operator<=>(
+        const basic_str& rhs) const noexcept
     {
         for (size_type i{0U}; i < size() && i < rhs.size(); ++i)
         {
             if (data_[i] < rhs[i])
             {
-                return true;
+                return std::strong_ordering::less;
             }
             else if (data_[i] > rhs[i])
             {
-                return false;
+                return std::strong_ordering::greater;
             }
         }
-        return size() < rhs.size();
+
+        return (size() < rhs.size()
+                    ? std::strong_ordering::less
+                    : size() < rhs.size() ? std::strong_ordering::greater
+                                          : std::strong_ordering::equal);
     }
 };
 
@@ -660,23 +674,9 @@ constexpr basic_str<value_type>& operator<<(basic_str<value_type>& lhs,
 }
 
 template <typename T, typename value_type>
-basic_str<value_type> operator+(T&& lhs, basic_str<value_type> const& rhs)
+auto operator+(T&& lhs, basic_str<value_type> const& rhs)
 {
     return basic_str<value_type>(htps::forward<T>(lhs)).append(rhs);
-}
-
-template <typename char_value>
-constexpr bool operator==(char_value const* const lhs,
-                          basic_str<char_value> const& rhs) noexcept
-{
-    return rhs == lhs;
-}
-
-template <typename char_value>
-constexpr bool operator!=(char_value const* const lhs,
-                          basic_str<char_value> const& rhs) noexcept
-{
-    return rhs != lhs;
 }
 
 template <typename char_value, typename T, typename... Args>

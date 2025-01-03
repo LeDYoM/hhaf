@@ -93,10 +93,7 @@ public:
      * @return true The two objects point to the same internal object.
      * @return false The two object point to different internal objects.
      */
-    constexpr bool operator==(const function& other) const noexcept
-    {
-        return callable_ == other.callable_;
-    }
+    constexpr bool operator==(const function& other) const noexcept = default;
 
     /**
      * @brief Compare two objects if they point to the same callable object.

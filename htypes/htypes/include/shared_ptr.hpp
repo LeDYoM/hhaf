@@ -145,12 +145,15 @@ public:
 
     constexpr sptr& operator=(sptr&& sp) noexcept
     {
-        auto tmp_ptr{htps::move(sp.m_ptr)};
-        auto tmp_counter{htps::move(sp.m_counter)};
-        sp.m_ptr     = htps::move(m_ptr);
-        sp.m_counter = htps::move(m_counter);
-        m_ptr        = htps::move(tmp_ptr);
-        m_counter    = htps::move(tmp_counter);
+        if (this != &sp)
+        {
+            auto tmp_ptr{htps::move(sp.m_ptr)};
+            auto tmp_counter{htps::move(sp.m_counter)};
+            sp.m_ptr     = htps::move(m_ptr);
+            sp.m_counter = htps::move(m_counter);
+            m_ptr        = htps::move(tmp_ptr);
+            m_counter    = htps::move(tmp_counter);
+        }
         return *this;
     }
 
@@ -196,6 +199,23 @@ public:
         return *this;
     }
 
+    [[nodiscard]] constexpr bool operator==(sptr const& rhs) const noexcept
+    {
+        return m_ptr == rhs.m_ptr;
+    }
+
+    template <typename Y = T>
+    [[nodiscard]] constexpr bool operator==(Y* rhs) const noexcept
+    {
+        return m_ptr == rhs;
+    }
+
+    template <typename Y = T>
+    [[nodiscard]] constexpr bool operator==(sptr<Y> const& rhs) const noexcept
+    {
+        return m_ptr == static_cast<T*>(rhs.get());
+    }
+
     constexpr void swap(sptr& other) noexcept
     {
         sptr _other{htps::move(other)};
@@ -210,7 +230,7 @@ public:
 
     void reset() noexcept { *this = sptr{nullptr, nullptr}; }
 
-    void reset(T* newValue) noexcept { *this = sptr{newValue}; }
+    void reset(T* newValue) { *this = sptr{newValue}; }
 
     [[nodiscard]] constexpr T* get() const noexcept { return m_ptr; }
     [[nodiscard]] constexpr T& operator*() const noexcept { return *m_ptr; }
@@ -271,26 +291,6 @@ private:
     T* m_ptr{nullptr};
     shptr_detail::counter* m_counter{nullptr};
 };
-
-template <typename T>
-[[nodiscard]] constexpr bool operator==(sptr<T> const& lhs,
-                                        std::nullptr_t) noexcept
-{
-    return lhs.get() == nullptr;
-}
-
-template <typename T>
-[[nodiscard]] constexpr bool operator==(sptr<T> const& lhs,
-                                        sptr<T> const& rhs) noexcept
-{
-    return lhs.get() == rhs.get();
-}
-
-template <typename T, typename Y = T>
-[[nodiscard]] constexpr bool operator==(sptr<T> const& lhs, Y* rhs) noexcept
-{
-    return lhs.get() == rhs;
-}
 
 template <typename T, typename... Args>
 [[nodiscard]] sptr<T> msptr(Args&&... args)
