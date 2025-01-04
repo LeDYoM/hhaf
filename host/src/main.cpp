@@ -14,6 +14,8 @@ HOST_PRIVATE int host_main(int argc, char* argv[]) noexcept
         using namespace haf::host;
 
         LogInitializer log_init;
+        DisplayLog::debug("Log system initialized");
+
         Host host(argc, argv);
         if (host.initialize())
         {

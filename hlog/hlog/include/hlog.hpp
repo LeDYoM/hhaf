@@ -24,22 +24,23 @@ public:
 
 using FileCOutCommiter       = MixinCommiter<FileCommiter, COutCommiter>;
 using ThreadFileCoutCommiter = ThreadCommiter<FileCOutCommiter>;
-// using CurrentCommiter = ThreadFileCoutCommiter;
-using CurrentCommiter = COutCommiter;
+using CurrentCommiter        = ThreadFileCoutCommiter;
+// using CurrentCommiter = COutCommiter;
 
 using CurrentLog            = Log<true, LogStream, CurrentCommiter>;
 using CurrentLogInitializer = LogInitializer<CurrentLog>;
 
 template <bool DisplaySeverity>
-using DisplayLogGeneral = LogDisplayer<CurrentLog, SeverityType, DisplaySeverity>;
+using DisplayLogGeneral =
+    LogDisplayer<CurrentLog, SeverityType, DisplaySeverity>;
 }  // namespace logger
 
 namespace haf
 {
 using LogAsserter    = logger::LogAsserter<logger::DisplayLogGeneral<false>>;
 using LogInitializer = logger::CurrentLogInitializer;
-using DisplayLogNoSeverity     = logger::DisplayLogGeneral<false>;
-using DisplayLogSeverity = logger::DisplayLogGeneral<true>;
-using DisplayLog = DisplayLogSeverity;
+using DisplayLogNoSeverity = logger::DisplayLogGeneral<false>;
+using DisplayLogSeverity   = logger::DisplayLogGeneral<true>;
+using DisplayLog           = DisplayLogSeverity;
 }  // namespace haf
 #endif

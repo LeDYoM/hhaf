@@ -19,19 +19,12 @@ struct InnerData
     std::queue<Message> m_msg_queue;
     std::atomic<bool> m_exit;
     std::function<void(const char* const log_stream)> m_commit_function;
-
-    InnerData()                 = default;
-    InnerData(InnerData const&) = delete;
-    InnerData& operator=(InnerData const&) = delete;
-    InnerData(InnerData&&)                 = delete;
-    InnerData& operator=(InnerData&&) = delete;
 };
 
 namespace
 {
 InnerData* m_data{nullptr};
-
-}  // namespace
+}
 
 void ThreadCommiterImpl::init(void (*cmt_log)(const char* const log_stream))
 {
@@ -88,7 +81,7 @@ void ThreadCommiterImpl::thread_func()
             }
         }
     }
-}  // namespace logger
+}
 
 void ThreadCommiterImpl::commitlog(const char* const log_stream)
 {

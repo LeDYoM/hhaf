@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.14)
 project(logger
-    VERSION 1.1.0.0
+    VERSION 1.2.0.0
     LANGUAGES CXX)
 
 set(CURRENT_TARGET logger)
@@ -23,7 +23,7 @@ set(sources
     src/commiters/file_commiter.cpp
     src/commiters/thread_commiter.cpp)
 
-build_lib_component(STATIC HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}" SOURCES
+build_lib_component(EXPORT_ALL HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}" SOURCES
                 ${sources} HEADERS ${headers})
 
 find_package(Threads REQUIRED)
