@@ -5,7 +5,6 @@
 #include <queue>
 #include <string>
 #include <atomic>
-#include <condition_variable>
 
 namespace logger
 {
@@ -16,7 +15,6 @@ struct InnerData
     std::mutex m_mutex;
     std::jthread m_thread;
     std::queue<Message> m_msg_queue;
-    std::condition_variable m_condition_variable;
     std::atomic<bool> m_exit;
     void (*m_commit_function)(const char* const log_stream);
 };
@@ -37,11 +35,9 @@ void ThreadCommiterImpl::init(void (*cmt_log)(const char* const log_stream))
 void ThreadCommiterImpl::finish()
 {
     {
-        std::unique_lock lck{m_data->m_mutex};
+        std::lock_guard lck{m_data->m_mutex};
         m_data->m_exit.store(true);
     }
-
-    m_data->m_condition_variable.notify_all();
 
     if (m_data->m_thread.joinable())
     {
@@ -60,36 +56,35 @@ void ThreadCommiterImpl::thread_func()
     {
         bool commit{false};
         {
-            std::unique_lock lck{m_data->m_mutex};
-            m_data->m_condition_variable.wait(lck, [] {
-                return m_data->m_exit || !m_data->m_msg_queue.empty();
-            });
-
-            if (!m_data->m_exit && !m_data->m_msg_queue.empty())
-                [[likely]]
+            std::lock_guard lck{m_data->m_mutex};
+            if (!m_data->m_msg_queue.empty())
+            {
                 {
                     message = std::move(m_data->m_msg_queue.front());
                     m_data->m_msg_queue.pop();
                     commit = true;
                 }
+            }
         }
 
-        if (!m_data->m_exit.load())
-            [[likely]]
+        if (!m_data->m_exit.load())  [[likely]]
+        {
+            if (commit)
             {
-                if (commit)
-                    [[likely]] { m_data->m_commit_function(message.c_str()); }
+                m_data->m_commit_function(message.c_str());
             }
+            else
+            {
+                std::this_thread::yield();
+            }
+        }
     }
 }
 
 void ThreadCommiterImpl::commitlog(const char* const log_stream)
 {
-    {
-        std::lock_guard lck{m_data->m_mutex};
-        m_data->m_msg_queue.emplace(std::move(log_stream));
-    }
-    m_data->m_condition_variable.notify_one();
+    std::lock_guard lck{m_data->m_mutex};
+    m_data->m_msg_queue.emplace(std::move(log_stream));
 }
 
 }  // namespace logger
