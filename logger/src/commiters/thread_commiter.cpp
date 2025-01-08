@@ -7,6 +7,7 @@
 #include <atomic>
 #include <condition_variable>
 #include <stop_token>
+#include <memory>
 
 namespace logger
 {
@@ -24,14 +25,14 @@ struct InnerData
 
 namespace
 {
-InnerData* m_data{nullptr};
+std::unique_ptr<InnerData> m_data{nullptr};
 }
 
 void thread_func(std::stop_token stop_token);
 
 void ThreadCommiterImpl::init(void (*cmt_log)(const char* const log_stream))
 {
-    m_data                    = new InnerData;
+    m_data                    = std::make_unique<InnerData>();
     m_data->m_commit_function = cmt_log;
     m_data->m_thread =
         std::jthread(thread_func, m_data->m_stop_source.get_token());
@@ -47,8 +48,7 @@ void ThreadCommiterImpl::finish()
         m_data->m_thread.join();
     }
 
-    delete m_data;
-    m_data = nullptr;
+    m_data.release();
 }
 
 void thread_func(std::stop_token stop_token)
