@@ -9,8 +9,6 @@ struct ThreadCommiterImpl
 
     static void finish();
 
-    static void thread_func();
-
     static void commitlog(const char* const log_stream);
 };
 

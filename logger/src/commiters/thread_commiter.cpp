@@ -6,6 +6,7 @@
 #include <string>
 #include <atomic>
 #include <condition_variable>
+#include <stop_token>
 
 namespace logger
 {
@@ -17,7 +18,7 @@ struct InnerData
     std::jthread m_thread;
     std::queue<Message> m_msg_queue;
     std::condition_variable m_condition_variable;
-    std::atomic<bool> m_exit;
+    std::stop_source m_stop_source;
     void (*m_commit_function)(const char* const log_stream);
 };
 
@@ -26,21 +27,19 @@ namespace
 InnerData* m_data{nullptr};
 }
 
+void thread_func(std::stop_token stop_token);
+
 void ThreadCommiterImpl::init(void (*cmt_log)(const char* const log_stream))
 {
     m_data                    = new InnerData;
     m_data->m_commit_function = cmt_log;
-    m_data->m_exit            = false;
-    m_data->m_thread          = std::jthread(thread_func);
+    m_data->m_thread =
+        std::jthread(thread_func, m_data->m_stop_source.get_token());
 }
 
 void ThreadCommiterImpl::finish()
 {
-    {
-        std::unique_lock lck{m_data->m_mutex};
-        m_data->m_exit.store(true);
-    }
-
+    m_data->m_stop_source.request_stop();
     m_data->m_condition_variable.notify_all();
 
     if (m_data->m_thread.joinable())
@@ -52,20 +51,21 @@ void ThreadCommiterImpl::finish()
     m_data = nullptr;
 }
 
-void ThreadCommiterImpl::thread_func()
+void thread_func(std::stop_token stop_token)
 {
     Message message;
 
-    while (!m_data->m_exit.load())
+    while (!stop_token.stop_requested())
     {
         bool commit{false};
         {
             std::unique_lock lck{m_data->m_mutex};
-            m_data->m_condition_variable.wait(lck, [] {
-                return m_data->m_exit || !m_data->m_msg_queue.empty();
+            m_data->m_condition_variable.wait(lck, [stop_token] {
+                return stop_token.stop_requested() ||
+                    !m_data->m_msg_queue.empty();
             });
 
-            if (!m_data->m_exit && !m_data->m_msg_queue.empty())
+            if (!stop_token.stop_requested() && !m_data->m_msg_queue.empty())
                 [[likely]]
                 {
                     message = std::move(m_data->m_msg_queue.front());
@@ -74,7 +74,7 @@ void ThreadCommiterImpl::thread_func()
                 }
         }
 
-        if (!m_data->m_exit.load())
+        if (!stop_token.stop_requested())
             [[likely]]
             {
                 if (commit)
