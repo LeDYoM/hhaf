@@ -1,7 +1,6 @@
 #include <haf/include/render/renderizables.hpp>
 
 #include <hlog/include/hlog.hpp>
-#include <haf/include/scene_nodes/transformable_scene_node.hpp>
 #include <haf/include/render/renderizable_builder.hpp>
 
 using namespace htps;
@@ -9,9 +8,14 @@ using namespace haf::scene;
 
 namespace haf::render
 {
-Renderizables::Renderizables(rptr<TransformableSceneNode> scene_node) noexcept :
+Renderizables::Renderizables(rptr<SceneNode> scene_node) noexcept :
     scene_node_{htps::move(scene_node)}
 {}
+
+void Renderizables::setSceneNode(rptr<scene::SceneNode> scene_node) noexcept
+{
+    scene_node_ = scene_node;
+}
 
 sptr<Renderizable> Renderizables::createRenderizable(
     RenderizableBuilderData&& renderizable_builder_data)
@@ -75,8 +79,7 @@ bool Renderizables::empty() const noexcept
     return render_nodes_.empty();
 }
 
-rptr<scene::TransformableSceneNode const> Renderizables::sceneNode()
-    const noexcept
+rptr<scene::SceneNode const> Renderizables::sceneNode() const noexcept
 {
     return scene_node_;
 }

@@ -2,11 +2,12 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_COMPONENT_COMPONENT_INCLUDE_HPP
 #define HAF_COMPONENT_COMPONENT_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
+#include <haf/include/core/types.hpp>
 
 namespace haf::scene
 {
 class SceneNode;
+class SceneController;
 }
 
 namespace haf::component
@@ -29,10 +30,10 @@ public:
      */
     virtual ~Component() = default;
 
-    Component(Component const&) = delete;
+    Component(Component const&)            = delete;
     Component& operator=(Component const&) = delete;
     Component(Component&&)                 = default;
-    Component& operator=(Component&&) = default;
+    Component& operator=(Component&&)      = default;
 
     /**
      * @brief Method called after the component is attached to a node.
@@ -44,7 +45,7 @@ public:
      * @brief Get the attached node.
      * @return The pointer to const attached node.
      */
-    constexpr const_pointer attachedNode() const noexcept
+    constexpr const pointer attachedNode() const noexcept
     {
         return attachedNode_;
     }
@@ -96,6 +97,7 @@ private:
 
     pointer attachedNode_{nullptr};
     friend class ComponentContainer;
+    friend class scene::SceneController;
 };
 
 }  // namespace haf::component

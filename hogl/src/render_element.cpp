@@ -16,11 +16,9 @@ void RenderElement::setTexture(ITexture const* const p_texture)
     texture = p_texture;
 }
 
-void RenderElement::setModelViewMatrix(
-    htps::f32 const* const model_view_matrix)
+void RenderElement::setModelViewMatrix(htps::f32 const* const model_view_matrix)
 {
-    transformation =
-        htps::span(model_view_matrix, model_view_matrix + 16U);
+    transformation = htps::span(model_view_matrix, model_view_matrix + 16U);
 }
 
 void RenderElement::setProjectionMatrix(

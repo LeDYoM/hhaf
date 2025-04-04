@@ -84,7 +84,7 @@ static constexpr T ToRadians = PiConstant<T> / static_cast<T>(180);
 }
 
 [[nodiscard]] inline tps::f32 dot(vector2df const& a,
-                                   vector2df const& b) noexcept
+                                  vector2df const& b) noexcept
 {
     return ((a.x * b.x) + (a.y * b.y));
 }

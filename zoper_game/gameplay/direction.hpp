@@ -57,9 +57,10 @@ public:
     Direction negate() const noexcept;
 
     fmath::vector2dst applyToVector(fmath::vector2dst const& v,
-                                   htps::u32 const scale = 1U) const noexcept;
+                                    htps::u32 const scale = 1U) const noexcept;
 
-    fmath::vector2ds32 directionVector(const htps::s32 scale = 1) const noexcept;
+    fmath::vector2ds32 directionVector(
+        const htps::s32 scale = 1) const noexcept;
 
     fmath::vector2ds32 negatedDirectionVector(
         const htps::u32 scale = 1U) const noexcept;

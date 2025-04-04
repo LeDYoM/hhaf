@@ -21,15 +21,16 @@ void GameSceneInput::onAttached()
 {
     BaseClass::onAttached();
 
-   // Get all necessary external dependencies
-    attachedNodeAs<GameScene>()->componentOfType(scene_states_);
+    // Get all necessary external dependencies
+    attachedNode()->componentOfType(scene_states_);
 
     LogAsserter::log_assert(scene_states_ != nullptr,
                             "GameSceneInput needs an attached node with a "
                             "StatesControllerComponent<GameSceneStates>>");
 
-    board_group_ =
-        attachedNode()->getByNameAs<BoardGroup>(BoardGroup::StaticName);
+    board_group_ = attachedNode()
+                       ->getByName(BoardGroup::StaticName)
+                       ->component<BoardGroup>();
     LogAsserter::log_assert(board_group_ != nullptr,
                             "GameSceneInput needs a parent with a board group");
 
@@ -57,7 +58,7 @@ void GameSceneInput::onKeyPressedPlaying(haf::input::Key const& key)
     }
     else if (keyMapping->isLaunchKey(key))
     {
-        attachedNodeAs<GameScene>()->launchPlayer();
+        attachedNode()->componentOfType<Game>()->launchPlayer();
     }
     else if (keyMapping->isPauseKey(key))
     {
@@ -79,9 +80,7 @@ void GameSceneInput::onKeyPressedPause(haf::input::Key const& key)
 
 void GameSceneInput::onKeyPressedGameOver(haf::input::Key const&)
 {
-    attachedNode()
-        ->subSystem<haf::scene::ISceneControl>()
-        ->switchToNextScene();
+    attachedNode()->subSystem<haf::scene::ISceneControl>()->switchToNextScene();
 }
 
 }  // namespace zoper

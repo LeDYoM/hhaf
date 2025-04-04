@@ -9,7 +9,7 @@ template <typename T, typename ConcreteObject>
 class DefaultFactoryOf : public IFactoryOf<T>
 {
 public:
-    using Interface = typename IFactoryOf<T>::Interface;
+    using Interface              = typename IFactoryOf<T>::Interface;
     ~DefaultFactoryOf() override = default;
 
     T* create() override { return new ConcreteObject; }

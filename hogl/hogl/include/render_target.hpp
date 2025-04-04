@@ -10,7 +10,7 @@
 
 namespace haf::backend
 {
-    class ITexture;
+class ITexture;
 }
 
 namespace haf::ogl
@@ -33,15 +33,15 @@ public:
 private:
     void resetRenderStates();
     void draw(VertexBuffer const& vertexBuffer,
-                RenderElement const& render_element);
+              RenderElement const& render_element);
     void preDraw(RenderElement const& render_element);
     void postDraw(RenderElement const& render_element);
-    void applyTexture(backend::ITexture const * const texture);
+    void applyTexture(backend::ITexture const* const texture);
     void postTexture();
     void bindVertexBuffer(VertexBuffer const* vertexBuffer);
 
     void drawDebugQuad(RenderElement const* const render_element);
 };
-}  // namespace haf::backend::sfmlb
+}  // namespace haf::ogl
 
 #endif

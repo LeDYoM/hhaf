@@ -15,6 +15,7 @@ class GameSceneInput final
     : public haf::input::StatedInputComponent<GameSceneStates>
 {
     using BaseClass = haf::input::StatedInputComponent<GameSceneStates>;
+
 public:
     GameSceneInput();
     ~GameSceneInput() override;

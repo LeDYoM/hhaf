@@ -144,7 +144,8 @@ public:
         return *(storage_.at(index));
     }
 
-    [[nodiscard]] constexpr const_reference operator[](const size_type index) const
+    [[nodiscard]] constexpr const_reference operator[](
+        const size_type index) const
     {
         assert(index < size());
         return *(storage_.at(index));
@@ -155,17 +156,35 @@ public:
         return storage_.capacity();
     }
 
-    [[nodiscard]] constexpr size_type size() const noexcept { return storage_.size(); }
-    [[nodiscard]] constexpr bool empty() const noexcept { return storage_.empty(); }
-    [[nodiscard]] constexpr iterator begin() noexcept { return storage_.begin(); }
-    [[nodiscard]] constexpr const_iterator begin() const noexcept { return storage_.begin(); }
+    [[nodiscard]] constexpr size_type size() const noexcept
+    {
+        return storage_.size();
+    }
+    [[nodiscard]] constexpr bool empty() const noexcept
+    {
+        return storage_.empty();
+    }
+    [[nodiscard]] constexpr iterator begin() noexcept
+    {
+        return storage_.begin();
+    }
+    [[nodiscard]] constexpr const_iterator begin() const noexcept
+    {
+        return storage_.begin();
+    }
     [[nodiscard]] constexpr const_iterator cbegin() const noexcept
     {
         return storage_.cbegin();
     }
     [[nodiscard]] constexpr iterator end() noexcept { return storage_.end(); }
-    [[nodiscard]] constexpr const_iterator end() const noexcept { return storage_.end(); }
-    [[nodiscard]] constexpr const_iterator cend() const noexcept { return storage_.cend(); }
+    [[nodiscard]] constexpr const_iterator end() const noexcept
+    {
+        return storage_.end();
+    }
+    [[nodiscard]] constexpr const_iterator cend() const noexcept
+    {
+        return storage_.cend();
+    }
 
     [[nodiscard]] constexpr T& back() noexcept
     {
@@ -435,7 +454,8 @@ public:
         return erase_all_if<discard_order>(htps::move(condition), begin());
     }
 
-    [[nodiscard]] constexpr const_iterator find_first_of(T const& other) const noexcept
+    [[nodiscard]] constexpr const_iterator find_first_of(
+        T const& other) const noexcept
     {
         return cfind(other);
     }
@@ -457,7 +477,8 @@ public:
         return result;
     }
 
-    [[nodiscard]] constexpr const_iterator find_last_of(T const& other) const noexcept
+    [[nodiscard]] constexpr const_iterator find_last_of(
+        T const& other) const noexcept
     {
         return cfind_backwards(other);
     }
@@ -480,8 +501,8 @@ public:
     }
 
     [[nodiscard]] constexpr iterator find(iterator begin,
-                            const iterator end,
-                            const T& element) const noexcept
+                                          const iterator end,
+                                          const T& element) const noexcept
     {
         checkRange(begin);
         checkRange(end);
@@ -493,8 +514,8 @@ public:
 
     template <typename F>
     [[nodiscard]] constexpr const_iterator cfind_if(const_iterator begin,
-                                      const_iterator const end,
-                                      F&& f) const noexcept
+                                                    const_iterator const end,
+                                                    F&& f) const noexcept
     {
         checkRange(begin);
         checkRange(end);
@@ -512,8 +533,8 @@ public:
 
     template <typename F>
     [[nodiscard]] constexpr iterator find_if(iterator begin,
-                               const const_iterator end,
-                               F&& f) noexcept
+                                             const const_iterator end,
+                                             F&& f) noexcept
     {
         checkRange(begin);
         checkRange(end);
@@ -541,7 +562,8 @@ public:
         return cfind_index_if(htps::forward<F>(f));
     }
 
-    [[nodiscard]] constexpr ssize_type cfind_index(T const& other) const noexcept
+    [[nodiscard]] constexpr ssize_type cfind_index(
+        T const& other) const noexcept
     {
         auto begin_{cbegin()};
         ssize_type counter{-1};
@@ -564,8 +586,8 @@ public:
 
     template <typename F>
     [[nodiscard]] constexpr const_iterator find_if(const const_iterator begin,
-                                     const const_iterator end,
-                                     F&& f) const noexcept
+                                                   const const_iterator end,
+                                                   F&& f) const noexcept
     {
         return cfind_if(begin, end, htps::forward<F>(f));
     }
@@ -576,9 +598,10 @@ public:
         return cfind_if(cbegin(), cend(), htps::forward<F>(f));
     }
 
-    [[nodiscard]] constexpr const_iterator cfind(const_iterator begin,
-                                   const_iterator const end,
-                                   T const& element) const noexcept
+    [[nodiscard]] constexpr const_iterator cfind(
+        const_iterator begin,
+        const_iterator const end,
+        T const& element) const noexcept
     {
         checkRange(begin);
         checkRange(end);
@@ -589,8 +612,8 @@ public:
     }
 
     [[nodiscard]] constexpr iterator find(iterator begin,
-                            iterator const end,
-                            T const& element) noexcept
+                                          iterator const end,
+                                          T const& element) noexcept
     {
         checkRange(begin);
         checkRange(end);
@@ -605,7 +628,8 @@ public:
         return find(begin(), end(), element);
     }
 
-    [[nodiscard]] constexpr const_iterator cfind(T const& element) const noexcept
+    [[nodiscard]] constexpr const_iterator cfind(
+        T const& element) const noexcept
     {
         return cfind(cbegin(), cend(), element);
     }
@@ -615,9 +639,10 @@ public:
         return cfind(element);
     }
 
-    [[nodiscard]] constexpr const_iterator cfind_backwards(const_iterator const begin,
-                                             const_iterator end,
-                                             T const& element) const noexcept
+    [[nodiscard]] constexpr const_iterator cfind_backwards(
+        const_iterator const begin,
+        const_iterator end,
+        T const& element) const noexcept
     {
         checkRange(begin);
         --end;
@@ -629,8 +654,8 @@ public:
     }
 
     [[nodiscard]] constexpr iterator find_backwards(iterator const begin,
-                                      iterator end,
-                                      T const& element) noexcept
+                                                    iterator end,
+                                                    T const& element) noexcept
     {
         checkRange(begin);
         --end;
@@ -641,9 +666,10 @@ public:
         return (end == begin - 1) ? this->end() : end;
     }
 
-    [[nodiscard]] constexpr iterator find_backwards(iterator const begin,
-                                      iterator end,
-                                      T const& element) const noexcept
+    [[nodiscard]] constexpr iterator find_backwards(
+        iterator const begin,
+        iterator end,
+        T const& element) const noexcept
     {
         return cfind_backwards(begin, end, element);
     }
@@ -653,12 +679,14 @@ public:
         return find_backwards(begin(), end(), element);
     }
 
-    [[nodiscard]] constexpr const_iterator cfind_backwards(T const& element) const noexcept
+    [[nodiscard]] constexpr const_iterator cfind_backwards(
+        T const& element) const noexcept
     {
         return cfind_backwards(cbegin(), cend(), element);
     }
 
-    [[nodiscard]] constexpr const_iterator find_backwards(T const& element) const noexcept
+    [[nodiscard]] constexpr const_iterator find_backwards(
+        T const& element) const noexcept
     {
         return cfind_backwards(element);
     }
@@ -714,7 +742,8 @@ public:
         return *this;
     }
 
-    [[nodiscard]] constexpr bool operator==(vector_base const& rhs) const noexcept
+    [[nodiscard]] constexpr bool operator==(
+        vector_base const& rhs) const noexcept
     {
         // If the vectors have different sizes, they are different
         if (size() != rhs.size())

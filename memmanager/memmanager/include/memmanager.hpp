@@ -3,7 +3,7 @@
 
 #include <cstddef>
 
-void installMemManager();
+void installMemManager(int argc, char* argv[]);
 void finishMemManager(bool const display_log = false);
 
 void* mmalloc(std::size_t size);

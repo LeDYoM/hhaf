@@ -1,33 +1,13 @@
 HTPS_PRAGMA_ONCE
-#ifndef MTPS_STR_VIEW_INCLUDE_HPP
-#define MTPS_STR_VIEW_INCLUDE_HPP
+#ifndef HTPS_STR_VIEW_INCLUDE_HPP
+#define HTPS_STR_VIEW_INCLUDE_HPP
 
 #include "types.hpp"
+#include "str_functions.hpp"
+#include <compare>
 
 namespace htps
 {
-namespace detail
-{
-template <typename char_type>
-constexpr static size_type _str_len(char_type const* const p_str) noexcept
-{
-    if (!p_str)
-    {
-        return size_type{};
-    }
-
-    auto const* p_str_copy{p_str};
-
-    while (*p_str_copy)
-    {
-        ++p_str_copy;
-    }
-
-    auto const tmp_result{p_str_copy - p_str};
-    return ((tmp_result > 0U) ? static_cast<size_type>(tmp_result) : 0U);
-}
-}  // namespace detail
-
 template <typename char_type>
 class basic_str_view
 {
@@ -38,38 +18,38 @@ public:
     using const_iterator =
         char_type const*;  //< Const iterator type of the string
 
-    constexpr basic_str_view() noexcept : begin_{nullptr}, size_{0U} {}
+    constexpr basic_str_view() noexcept : m_begin{nullptr}, m_size{0U} {}
 
     constexpr basic_str_view(const_iterator const begin,
                              size_type const size) noexcept :
-        begin_{begin}, size_{size}
+        m_begin{begin}, m_size{size}
     {}
 
     constexpr basic_str_view(const_iterator const begin,
                              const_iterator const end) noexcept :
-        begin_{begin}, size_{static_cast<size_type>(end - begin)}
+        m_begin{begin}, m_size{static_cast<size_type>(end - begin)}
     {}
 
     template <size_type N>
     constexpr basic_str_view(char_type const (&data)[N]) noexcept :
-        begin_{&data[0U]}, size_{N - 1}
+        m_begin{&data[0U]}, m_size{N - 1}
     {}
 
     constexpr explicit basic_str_view(const_iterator const data) noexcept :
-        basic_str_view{&data[0U], detail::_str_len(data)}
+        basic_str_view{&data[0U], strnlen(data)}
     {}
 
     [[nodiscard]] constexpr const_iterator data() const noexcept
     {
-        return begin_;
+        return m_begin;
     }
     [[nodiscard]] constexpr const_iterator begin() const noexcept
     {
-        return begin_;
+        return m_begin;
     }
     [[nodiscard]] constexpr const_iterator end() const noexcept
     {
-        return begin_ + size_;
+        return m_begin + m_size;
     }
     [[nodiscard]] constexpr const_iterator cbegin() const noexcept
     {
@@ -81,17 +61,19 @@ public:
     }
     [[nodiscard]] constexpr char_type operator[](size_type const index)
     {
-        return *(begin_ + index);
+        return *(m_begin + index);
     }
 
     [[nodiscard]] constexpr bool empty() const noexcept
     {
-        return begin_ == nullptr || size_ == 0U || (size_ > 0U && *begin_ == 0);
+        return m_begin == nullptr || m_size == 0U ||
+            (m_size > 0U && *m_begin == 0);
     }
 
-    [[nodiscard]] constexpr size_type size() const noexcept { return size_; }
+    [[nodiscard]] constexpr size_type size() const noexcept { return m_size; }
 
-    constexpr bool operator==(basic_str_view const& rhs) const noexcept
+    [[nodiscard]] constexpr bool operator==(
+        basic_str_view const& rhs) const noexcept
     {
         if (size() != rhs.size())
         {
@@ -99,31 +81,39 @@ public:
         }
         else
         {
-            for (auto lhs_iterator{cbegin()}, rhs_iterator{rhs.cbegin()};
-                 lhs_iterator != cend(); ++lhs_iterator, ++rhs_iterator)
-            {
-                if (!(*lhs_iterator == *rhs_iterator))
-                {
-                    return false;
-                }
-            }
-            return true;
+            return strnncmp(m_begin, size(), rhs.m_begin, rhs.size()) == 0;
         }
     }
 
-    constexpr bool operator==(char_type* const& rhs) const noexcept
+    [[nodiscard]] constexpr bool operator==(
+        char_type* const& rhs) const noexcept
     {
         return *this == basic_str_view{rhs};
     }
 
     template <size_type N>
-    constexpr bool operator==(char_type const (&rhs)[N]) const noexcept
+    [[nodiscard]] constexpr bool operator==(
+        char_type const (&rhs)[N]) const noexcept
     {
         return *this == basic_str_view{rhs};
     }
 
-    const_iterator begin_;
-    size_type size_;
+    [[nodiscard]] constexpr auto operator<=>(
+        const basic_str_view& rhs) const noexcept
+    {
+        auto const result{strnncmp(m_begin, size(), rhs.m_begin, rhs.size())};
+        return (result < 0       ? std::strong_ordering::less
+                    : result > 0 ? std::strong_ordering::greater
+                                 : std::strong_ordering::equal);
+    }
+
+    [[nodiscard]] constexpr size_type find(const_iterator str_to_find) noexcept
+    {
+        return strnfind(m_begin, str_to_find);
+    }
+
+    const_iterator m_begin;
+    size_type m_size;
 };
 
 using str_view = basic_str_view<char>;

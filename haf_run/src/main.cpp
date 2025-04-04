@@ -13,7 +13,7 @@ int main(int argc, char* argv[])
         std::jthread t([]() {});
     }
 
-    installMemManager();
+    installMemManager(argc, argv);
 
     auto* loader{agloader::createLoader()};
 

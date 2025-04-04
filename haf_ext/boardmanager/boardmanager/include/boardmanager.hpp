@@ -19,8 +19,8 @@ class IBoardManagerActuator;
 class BoardManager : public haf::component::Component
 {
 public:
-    using BackgroundData    = htps::s32;
-    using BoardTileData     = ITile::BoardTileData;
+    using BackgroundData = htps::s32;
+    using BoardTileData  = ITile::BoardTileData;
 
     using BackgroundFunction =
         htps::function<BackgroundData(fmath::vector2dst const&)>;

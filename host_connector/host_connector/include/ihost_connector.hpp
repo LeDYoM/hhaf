@@ -13,7 +13,7 @@ public:
      */
     constexpr IHostConnector() noexcept {}
 
-//    bool loadApplication()
+    //    bool loadApplication()
 
     /**
      * @brief Destroy the HostConnector object. This destructor is intended

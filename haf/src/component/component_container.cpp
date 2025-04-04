@@ -45,6 +45,13 @@ void ComponentContainer::clearComponents() noexcept
     p_->components_.clear();
 }
 
+bool ComponentContainer::attachComponent(sptr<Component> newComponent)
+{
+    applyRequirements(*newComponent);
+    initialize(*newComponent);
+    return addComponent(htps::move(newComponent));
+}
+
 bool ComponentContainer::addComponent(sptr<Component> nc)
 {
     LogAsserter::log_assert(nc != nullptr, "Trying to add a nullptr component");

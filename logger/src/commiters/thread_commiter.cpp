@@ -21,6 +21,18 @@ struct InnerData
     std::condition_variable m_condition_variable;
     std::stop_source m_stop_source;
     void (*m_commit_function)(const char* const log_stream);
+
+    InnerData()
+    {
+        int a=0;
+        (void)(a);
+    }
+
+    ~InnerData()
+    {
+        int a=0;
+        (void)(a);
+    }
 };
 
 namespace
@@ -48,7 +60,7 @@ void ThreadCommiterImpl::finish()
         m_data->m_thread.join();
     }
 
-    m_data.release();
+    m_data.reset();
 }
 
 void thread_func(std::stop_token stop_token)

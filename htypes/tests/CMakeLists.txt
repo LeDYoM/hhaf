@@ -13,6 +13,7 @@ set(SOURCE_TESTS
     shared_ptr
     span
     stack
+    str_functions
     str_literal
     str_view
     str

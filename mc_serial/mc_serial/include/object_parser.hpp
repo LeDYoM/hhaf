@@ -644,9 +644,9 @@ struct PropertyWrapper
 };
 
 tps::str& operator<<(tps::str& sso,
-                      Object::ValueDictionary::const_iterator const it);
+                     Object::ValueDictionary::const_iterator const it);
 tps::str& operator<<(tps::str& sso,
-                      Object::ObjectDictionary::const_iterator const it);
+                     Object::ObjectDictionary::const_iterator const it);
 tps::str& operator<<(tps::str& sso, PropertyWrapper const& property_wrapper);
 
 inline tps::str& operator<<(tps::str& sso, Object const& obj)

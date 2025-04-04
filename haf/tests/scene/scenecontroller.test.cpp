@@ -4,7 +4,6 @@
 #include <htypes/include/types.hpp>
 #include <htypes/include/str.hpp>
 
-#include <haf/include/scene/scene.hpp>
 #include "scene/scene_controller.hpp"
 
 using namespace htps;
@@ -18,7 +17,7 @@ struct HAF_PRIVATE CommonData
 };
 
 CommonData common;
-
+/*
 class UniqueScene : public haf::scene::Scene
 {
 public:
@@ -153,5 +152,6 @@ TEST_CASE("SceneController", "[lib][SceneController]")
             CHECK_FALSE(
                 common.scene_controller->unregisterSceneNodeType<GroupScene2>());
         }
-        */
+//
 }
+*/

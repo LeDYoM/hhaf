@@ -220,7 +220,7 @@ vector2dst BoardManager::size() const noexcept
 str BoardManager::toStr()
 {
     auto const _size{size()};
-    str temp {_size.x * _size.y};
+    str temp{_size.x * _size.y};
 
     for (u32 y{0}; y < _size.y; ++y)
     {

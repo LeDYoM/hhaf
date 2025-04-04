@@ -24,8 +24,8 @@ MemoryStatistics* getMemoryStatistics() noexcept;
 class MemoryView
 {
 public:
-#pragma warning( push )
-#pragma warning( disable : 4514 )
+#pragma warning(push)
+#pragma warning(disable : 4514)
     MemoryView() { pushMemoryStatisticsQueue(); }
 
     MemoryView(MemoryView const&) = delete;
@@ -36,7 +36,7 @@ public:
         return getHeadMemoryStatistics();
     }
     ~MemoryView() { popMemoryStatisticsQueue(); }
-#pragma warning( pop )
+#pragma warning(pop)
 };
 
 }  // namespace memm

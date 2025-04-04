@@ -293,8 +293,8 @@ constexpr bool operator==(Matrix4x4 const& lhs, Matrix4x4 const& rhs) noexcept
 [[nodiscard]] inline bool isAlmostEqual(vector3df const lhs,
                                         vector3df const rhs) noexcept
 {
-    return isAlmostEqual(lhs.x, rhs.x) &&
-        isAlmostEqual(lhs.y, rhs.y) && isAlmostEqual(lhs.z, rhs.z);
+    return isAlmostEqual(lhs.x, rhs.x) && isAlmostEqual(lhs.y, rhs.y) &&
+        isAlmostEqual(lhs.z, rhs.z);
 }
 
 [[nodiscard]] constexpr bool isAlmostEqual(Matrix4x4 const& lhs,

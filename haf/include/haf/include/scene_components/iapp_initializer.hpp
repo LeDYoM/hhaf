@@ -2,8 +2,9 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_SCENE_APP_INITIALIZER_INCLUDE_HPP
 #define HAF_SCENE_APP_INITIALIZER_INCLUDE_HPP
 
-#include <haf/include/scene/scenenodefactory.hpp>
-#include <haf/include/scene/scene.hpp>
+#include <haf/include/component/component_factory.hpp>
+#include <haf/include/component/component.hpp>
+#include <haf/include/scene_components/scene_component.hpp>
 
 namespace haf::scene
 {
@@ -25,11 +26,11 @@ public:
      * @return false A problem happened when registering the type
      */
     template <typename T>
-    bool registerSceneType()
+    bool registerSceneComponent()
     {
-        static_assert(std::is_base_of_v<Scene, T>,
+        static_assert(std::is_base_of_v<scene::SceneComponent, T>,
                       "The template type must be inherited from Scene");
-        return sceneNodeFactory().registerSceneNodeType<T>();
+        return componentFactory().registerObjectType<T>();
     }
 
     /**
@@ -57,7 +58,7 @@ public:
     }
 
 private:
-    virtual SceneNodeFactory& sceneNodeFactory() = 0;
+    virtual component::ComponentFactory& componentFactory() = 0;
 };
 
 }  // namespace haf::scene

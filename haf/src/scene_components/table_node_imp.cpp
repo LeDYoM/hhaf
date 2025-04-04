@@ -2,6 +2,7 @@
 #include <facil_math/include/vector2d.hpp>
 #include <htypes/include/str.hpp>
 #include <haf/include/scene_components/table_node_imp.hpp>
+#include <haf/include/scene/scene_node.hpp>
 
 using namespace htps;
 using namespace fmath;
@@ -33,7 +34,7 @@ void TableNodeImp::createTableNodesIfNecessary()
         {
             for (size_type x{0U}; x < tableSize.x; ++x)
             {
-                if (inner_nodes_[x][y] == nullptr)
+                if (m_inner_nodes[x][y] == nullptr)
                 {
                     (void)(createInnerSceneNodeAt(
                         {x, y}, make_str("inner_node_", x, y)));
@@ -47,8 +48,7 @@ void TableNodeImp::createTableNodesIfNecessary()
                                            half_cell_size};
         for_each_table_innerSceneNode(
             [this, &cell_size, &left_top_plus_half_size](
-                fmath::vector2dst const& p,
-                const htps::sptr<TransformableSceneNode>& node) {
+                fmath::vector2dst const& p, const htps::sptr<SceneNode>& node) {
                 if (node->sceneNodes().empty())
                 {
                     createNodeAt({p.x, p.y});
@@ -66,29 +66,26 @@ void TableNodeImp::createTableNodesIfNecessary()
 
 bool TableNodeImp::nodeTableCreated(vector2dst const& index) const
 {
-    return inner_nodes_.size() > index.x &&
-        inner_nodes_[index.x].size() > index.y;
+    return m_inner_nodes.size() > index.x &&
+        m_inner_nodes[index.x].size() > index.y;
 }
 
-TableNodeImp::ContainedType_t TableNodeImp::createInnerSceneNodeAt(
-    fmath::vector2dst const index,
-    htps::str const& name)
+SceneNodeSPtr TableNodeImp::createInnerSceneNodeAt(vector2dst const index,
+                                                   str const& name)
 {
-    LogAsserter::log_assert(inner_nodes_[index.x][index.y] == nullptr,
+    LogAsserter::log_assert(m_inner_nodes[index.x][index.y] == nullptr,
                             "Node already created");
-    ContainedType_t inner_node{
-        attachedNode()->createSceneNode<TransformableSceneNode>(
-            make_str(name, "_inner_node", index))};
+    auto inner_node{
+        attachedNode()->createSceneNode(make_str(name, "_inner_node", index))};
 
     setInnerSceneNodeAt(index, inner_node);
     onInnerNodeCreated(index, inner_node);
     return inner_node;
 }
 
-TableNodeImp::ContainedType_t TableNodeImp::innerSceneNodeAt(
-    fmath::vector2dst const index) const
+SceneNodeSPtr TableNodeImp::innerSceneNodeAt(vector2dst const index) const
 {
-    return inner_nodes_[index.x][index.y];
+    return m_inner_nodes[index.x][index.y];
 }
 
 void TableNodeImp::updateTableSizeIfNecessary()
@@ -101,34 +98,34 @@ void TableNodeImp::updateTableSizeIfNecessary()
 
 void TableNodeImp::setTableSize(fmath::vector2dst const ntableSize)
 {
-    inner_nodes_.resize(ntableSize.x);
+    m_inner_nodes.resize(ntableSize.x);
 
-    for (auto&& nodeColumn : inner_nodes_)
+    for (auto&& nodeColumn : m_inner_nodes)
     {
         nodeColumn.resize(ntableSize.y);
     }
 }
 
-void TableNodeImp::setInnerSceneNodeAt(fmath::vector2dst const index,
-                                       ContainedType_t& scene_node)
+void TableNodeImp::setInnerSceneNodeAt(vector2dst const index,
+                                       SceneNodeSPtr& scene_node)
 {
     LogAsserter::log_assert(index.x < TableSize().x && index.y < TableSize().y,
                             "TableSize::createNodeAt: Index ", index,
                             " is out of bounds. Size: ", TableSize());
 
-    inner_nodes_[index.x][index.y] = scene_node;
+    m_inner_nodes[index.x][index.y] = scene_node;
 }
 
 void TableNodeImp::for_each_table_innerSceneNode(
-    htps::function<void(fmath::vector2dst const&, ContainedType_t&)> action)
+    function<void(vector2dst const&, SceneNodeSPtr&)> action)
 {
-    for (htps::size_type x{0}; x < inner_nodes_.size(); ++x)
+    for (size_type x{0}; x < m_inner_nodes.size(); ++x)
     {
-        for (htps::size_type y{0}; y < inner_nodes_[x].size(); ++y)
+        for (size_type y{0}; y < m_inner_nodes[x].size(); ++y)
         {
-            if (auto&& inner_node = inner_nodes_[x][y])
+            if (auto&& inner_node = m_inner_nodes[x][y])
             {
-                action(fmath::vector2dst{x, y}, inner_node);
+                action(vector2dst{x, y}, inner_node);
             }
         }
     }

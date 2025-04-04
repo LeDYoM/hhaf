@@ -59,8 +59,8 @@ bool VertexBuffer::create(size_type const vertexCount)
     }
 
     glCheck(glBindBuffer(GL_ARRAY_BUFFER, m_buffer));
-    glCheck(glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * vertexCount,
-                         0, usageToGlEnum(m_usage)));
+    glCheck(glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * vertexCount, 0,
+                         usageToGlEnum(m_usage)));
     glCheck(glBindBuffer(GL_ARRAY_BUFFER, 0));
 
     m_size = vertexCount;

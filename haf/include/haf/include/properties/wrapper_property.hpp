@@ -25,7 +25,7 @@ public:
               typename ObjectType>
     constexpr WrapperProperty(
         ObjectType* const obj,
-        PropertyType<PropertyValue>(ObjectType::*property_v)) :
+        PropertyType<PropertyValue>(ObjectType::* property_v)) :
         m_property{&(obj->*property_v)}
     {}
 

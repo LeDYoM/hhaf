@@ -22,47 +22,46 @@ using namespace haf;
 using namespace haf::scene;
 using namespace haf::scene::nodes;
 
-HighScoresScene::HighScoresScene() : Scene{StaticTypeName}
-{}
-
-HighScoresScene::~HighScoresScene() = default;
-
-htps::str HighScoresScene::nextSceneName()
+htps::str HighScores::nextSceneName()
 {
     return MENU_SCENE_NAME;
 }
 
-void HighScoresScene::onCreated()
+void HighScores::onAttached()
 {
-    BaseClass::onCreated();
+    Base::onAttached();
 
     //    cameraComponent()->view = DefaultView;
     cameraComponent()->view = SceneBox{-0.5F, -0.5F, 1.0F, 1.0F};
     //    cameraComponent()->view = SceneBox{-0.5F, -0.5F, 1.0F, 1.0F};
 
-    auto resources_configurator{subSystem<res::IResourcesConfigurator>()};
+    auto resources_configurator{
+        attachedNode()->subSystem<res::IResourcesConfigurator>()};
     resources_configurator->setResourceConfigFile("resources.txt");
     resources_configurator->loadSection("high_scores");
 
     auto statesController{
-        component<StatesControllerComponent<HighScoresSceneStates>>()};
+        attachedNode()
+            ->component<StatesControllerComponent<HighScoresSceneStates>>()};
 
-    normal_font_ = subSystem<res::IResourceRetriever>()
-                       ->getTTFont(HighScoresResources::MenuFontId)
-                       ->font(72);
-    normal_color_   = colors::Blue;
-    selected_color_ = colors::Red;
+    m_normal_font = attachedNode()
+                        ->subSystem<res::IResourceRetriever>()
+                        ->getTTFont(HighScoresResources::MenuFontId)
+                        ->font(72);
+    m_normal_color   = colors::Blue;
+    m_selected_color = colors::Red;
 
     auto high_scores_main_menu_background{
-        createSceneNode<RenderizableSceneNode>(
-            "high_scores_main_menu_background")};
+        attachedNode()->createSceneNode("high_scores_main_menu_background")};
 
     createStandardBackground(high_scores_main_menu_background);
 
     auto highScoreTextController{
-        createSceneNode<HighScoreTextController>("HighScoreTextController")};
+        attachedNode()
+            ->createSceneNode("HighScoreTextController")
+            ->component<HighScoreTextController>()};
     highScoreTextController->Finished.connect([this, statesController]() {
-        subSystem<ISceneControl>()->switchToNextScene();
+        attachedNode()->subSystem<ISceneControl>()->switchToNextScene();
     });
     installDebugUtils();
 

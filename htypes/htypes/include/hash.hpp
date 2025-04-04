@@ -43,7 +43,6 @@ struct Hasher
     {
         T hash{5381U};
 
-
         for (auto&& c : s)
         {
             hash = ((hash << 5) + hash) + c;  // hash * 33 + c
@@ -75,13 +74,13 @@ struct Hasher
     template <typename T = u32>
     static constexpr T hash(str_view const s) noexcept
     {
-        return hash(span{s.cbegin(),s.cend()});
+        return hash(span{s.cbegin(), s.cend()});
     }
 
     template <typename T = u32>
     static constexpr T hash(str const& s) noexcept
     {
-        return hash(span{s.cbegin(),s.cend()});
+        return hash(span{s.cbegin(), s.cend()});
     }
 };
 

@@ -9,6 +9,11 @@ HTPS_PRAGMA_ONCE
 #include <haf/include/properties/properties.hpp>
 #include <haf/include/scene/scenenode_cast.hpp>
 
+namespace haf::component
+{
+class Component;
+}
+
 namespace haf::scene
 {
 class SceneNode;
@@ -32,7 +37,7 @@ public:
     template <typename T = SceneNode>
     auto createSceneNode(htps::str name)
     {
-        auto result{htps::msptr<T>(scene_node_, htps::move(name))};
+        auto result{htps::msptr<T>(m_scene_node, htps::move(name))};
         onNodeCreated(result);
         addSceneNode(result);
         return result;
@@ -45,7 +50,14 @@ public:
      * @return true The element existed and was removed
      * @return false The element was not on the group list
      */
-    bool removeSceneNode(htps::sptr<SceneNode> element);
+    bool removeSceneNode(htps::sptr<SceneNode> const& element);
+
+    htps::u32 removeSceneNodes(const SceneNodeVector& element);
+
+    template <typename T>
+    bool removeSceneNodesWithComponent();
+
+    bool removeSceneNodeWithComponent(component::Component& component);
 
     bool autoRemove();
 
@@ -166,7 +178,7 @@ public:
               typename PropertyValue,
               typename ObjectType>
     constexpr void set_property_for_each_node(
-        PropertyType<PropertyValue>(ObjectType::*property_v),
+        PropertyType<PropertyValue>(ObjectType::* property_v),
         PropertyValue const& value)
     {
         for_each_sceneNode_as<ObjectType>([&value, &property_v](auto& node) {
@@ -197,12 +209,12 @@ private:
     /**
      * @brief @b SceneNode that owns this group
      */
-    htps::rptr<SceneNode> const scene_node_;
+    htps::rptr<SceneNode> const m_scene_node;
 
     /**
      * @brief Container of a group of @b SceneNode (s)
      */
-    SceneNodeVector scene_nodes_;
+    SceneNodeVector m_scene_nodes;
 };
 
 }  // namespace haf::scene

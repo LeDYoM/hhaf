@@ -5,6 +5,7 @@ set(CURRENT_TARGET ${PROJECT_NAME})
 
 set(SOURCE_TESTS
     parpar
+    parpar_mini
 )
 
 add_test_executable_with_main(SOURCE_TESTS ${SOURCE_TESTS})

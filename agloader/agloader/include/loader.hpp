@@ -38,19 +38,18 @@ public:
      * @return Pointer to the loaded method.
      */
     LOADER_API void const* loadMethod(const char* const fileName,
-                                const char* const methodName);
+                                      const char* const methodName);
 
     /**
      * @brief Load a method from an already loaded module
-     * 
+     *
      * @tparam T Type to load
      * @param fileName File name containing the already loaded module.
      * @param methodName Method to load
      * @return Pointer to the loaded method.
      */
     template <typename T>
-    T loadMethod(const char* const fileName,
-                                const char* const methodName)
+    T loadMethod(const char* const fileName, const char* const methodName)
     {
         return reinterpret_cast<T>(loadMethod(fileName, methodName));
     }

@@ -1,7 +1,6 @@
 #include <haf/include/render/renderizable_builder.hpp>
 #include <haf/include/render/renderizables.hpp>
 #include <haf/include/resources/iresource_retriever.hpp>
-#include <haf/include/scene_nodes/transformable_scene_node.hpp>
 
 using namespace htps;
 using namespace fmath;

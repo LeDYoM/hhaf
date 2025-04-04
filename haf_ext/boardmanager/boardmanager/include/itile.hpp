@@ -14,7 +14,7 @@ namespace haf::board
 class ITile
 {
 public:
-    using BoardTileData     = htps::s32;
+    using BoardTileData = htps::s32;
 
     constexpr ITile() noexcept = default;
     virtual ~ITile()           = default;
@@ -26,8 +26,7 @@ public:
                              BoardTileData const /* newValue */)
     {}
 
-    virtual void tileMoved(BoardPositionType const& /* source */)
-    {}
+    virtual void tileMoved(BoardPositionType const& /* source */) {}
 
     constexpr BoardTileData value() const noexcept { return data_; }
     constexpr BoardPositionType const& boardPosition() const noexcept

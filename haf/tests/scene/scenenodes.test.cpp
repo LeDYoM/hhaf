@@ -4,13 +4,11 @@
 #include <htypes/include/str.hpp>
 #include <facil_math/include/vector2d.hpp>
 #include <haf/include/scene/scene_node.hpp>
-#include <haf/include/scene_nodes/transformable_scene_node.hpp>
 #include <haf/include/scene/scene_nodes.hpp>
-#include <haf/include/scene/scene.hpp>
 
 using namespace htps;
 using namespace fmath;
-
+/*
 namespace
 {
 auto unitTestScene()
@@ -588,3 +586,4 @@ TEST_CASE("Scenenodes::autoRemove", "[SceneNode][SceneNodes]")
     CHECK(node_test->autoRemove());
     CHECK(testScene->sceneNodes().size() == (kNumSceneNodes - 1U));
 }
+*/

@@ -43,7 +43,8 @@ TEST_CASE("logdisplayerWithMessage", "[logger][log_severity][logdisplayer]")
     using TestLogDisplayer = logger::LogDisplayer<
         LogTestNullCommit,
         logger::SeverityTypeActiveTo<
-            logger::SeverityTypeDefinition::severity_type_t::debug>,false,"MySuperSystem: ">;
+            logger::SeverityTypeDefinition::severity_type_t::debug>,
+        false, "MySuperSystem: ">;
 
     LogTestNullCommit::init_log();
     LogStreamTest testing_stream;
@@ -54,12 +55,14 @@ TEST_CASE("logdisplayerWithMessage", "[logger][log_severity][logdisplayer]")
     LogTestNullCommit::finish_log();
 }
 
-TEST_CASE("logdisplayerWithoutMessageWithSeveirty", "[logger][log_severity][logdisplayer]")
+TEST_CASE("logdisplayerWithoutMessageWithSeveirty",
+          "[logger][log_severity][logdisplayer]")
 {
     using TestLogDisplayer = logger::LogDisplayer<
         LogTestNullCommit,
         logger::SeverityTypeActiveTo<
-            logger::SeverityTypeDefinition::severity_type_t::debug>, true>;
+            logger::SeverityTypeDefinition::severity_type_t::debug>,
+        true>;
 
     LogTestNullCommit::init_log();
     LogStreamTest testing_stream;
@@ -78,18 +81,21 @@ TEST_CASE("logdisplayerWithoutMessageWithSeveirty", "[logger][log_severity][logd
     LogTestNullCommit::finish_log();
 }
 
-TEST_CASE("logdisplayerWithMessageWithSeveirty", "[logger][log_severity][logdisplayer]")
+TEST_CASE("logdisplayerWithMessageWithSeveirty",
+          "[logger][log_severity][logdisplayer]")
 {
     using TestLogDisplayer = logger::LogDisplayer<
         LogTestNullCommit,
         logger::SeverityTypeActiveTo<
-            logger::SeverityTypeDefinition::severity_type_t::debug>, true, "MyOtherSuperSystem: ">;
+            logger::SeverityTypeDefinition::severity_type_t::debug>,
+        true, "MyOtherSuperSystem: ">;
 
     LogTestNullCommit::init_log();
     LogStreamTest testing_stream;
 
     TestLogDisplayer::debug("This should be used");
-    CHECK(testing_stream() == "<DEBUG>: MyOtherSuperSystem: This should be used");
+    CHECK(testing_stream() ==
+          "<DEBUG>: MyOtherSuperSystem: This should be used");
     TestLogDisplayer::verbose("This too");
     CHECK(testing_stream() == "<VERBOSE>: MyOtherSuperSystem: This too");
 

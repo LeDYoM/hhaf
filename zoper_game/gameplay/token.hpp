@@ -8,7 +8,7 @@
 
 #include <boardmanager/include/itile.hpp>
 #include <haf/include/animation/animation_component.hpp>
-#include <haf/include/scene_nodes/renderizable_scene_node.hpp>
+#include <haf/include/scene_components/renderizable.hpp>
 
 namespace zoper
 {
@@ -20,14 +20,12 @@ namespace zoper
 class Token : public GameBaseTile
 {
     using BaseClass = GameBaseTile;
+
 public:
-    using BoardTileData = GameBaseTile::BoardTileData;
+    using BoardTileData     = GameBaseTile::BoardTileData;
     using BoardPositionType = BaseClass::BoardPositionType;
 
-    Token(htps::rptr<haf::scene::SceneNode> parent, htps::str name);
-    ~Token() override;
-
-    void onCreated() override;
+    void onAttached() override;
 
     static void resetTileCounter();
 
@@ -44,7 +42,7 @@ private:
     static htps::u32 tile_counter_;
     fmath::vector2df board2SceneFactor_;
     htps::sptr<haf::anim::AnimationComponent> animation_component_;
-    htps::sptr<haf::scene::RenderizableSceneNode> m_renderizable;
+    htps::sptr<haf::scene::Renderizable> m_renderizable;
 };
 }  // namespace zoper
 

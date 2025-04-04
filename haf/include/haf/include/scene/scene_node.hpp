@@ -13,6 +13,7 @@ HTPS_PRAGMA_ONCE
 #include <haf/include/system/system_access.hpp>
 #include <haf/include/component/component_container.hpp>
 #include <haf/include/system/subsystem_view.hpp>
+#include <haf/include/scene/transformation.hpp>
 
 namespace haf::scene
 {
@@ -22,12 +23,13 @@ class Scene;
  * This class serves as main entry point in the hierarchy of the scene.
  * To create new SceneNode types, inherit from this class.
  */
-class HAF_API SceneNode : public sys::HasName,
+class HAF_API SceneNode final : public sys::HasName,
                           public SceneNodeParent<SceneNode>,
                           public SceneNodes,
                           public sys::SystemAccess,
                           public component::ComponentContainer,
-                          public sys::SubSystemViewer
+                          public sys::SubSystemViewer,
+                          public Transformation
 {
 public:
     prop::PropertyState<bool> Visible{true};
@@ -64,36 +66,40 @@ public:
     /**
      * @brief Destroy the Scene Node object.
      */
-    virtual ~SceneNode();
-
-    /**
-     * @brief Method called when adding a new node just after creation.
-     * Override it to add code on creation.
-     */
-    virtual void onCreated() {}
+    ~SceneNode();
 
     /**
      * @brief Method called every frame
      */
-    virtual void update();
+    void update();
 
     /**
      * @brief Method called every frame after update
      * @param sceneRenderContext Current frame render context
      */
-    virtual void postRender(SceneRenderContext& sceneRenderContext);
-
-    virtual htps::rptr<Scene> sceneParent();
-    virtual htps::rptr<Scene const> sceneParent() const;
-
-    virtual htps::str completeName() const;
+    void postRender(SceneRenderContext& sceneRenderContext);
 
     /**
      * @brief Clear all elements in this scene node
      */
     void clearAll();
 
-    SceneBox sceneView() const;
+    /**
+     * @brief Get a copy of the current stored global transformation. No
+     * updates will be performed.
+     * @return Matrix4x4 const& The global transformation.
+     */
+    Matrix4x4 const& globalTransform() const noexcept;
+
+    /**
+     * @brief Get a copy of the current stored local transformation. No
+     * updates will be performed.
+     * @return Matrix4x4 const& The local transformation.
+     */
+    Matrix4x4 const& localTransform() const noexcept;
+
+private:
+    Matrix4x4 global_transform_;  ///< Global Transformation Matrix cached
 };
 
 using SceneNodeSPtr = htps::sptr<SceneNode>;

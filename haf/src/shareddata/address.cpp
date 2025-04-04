@@ -20,9 +20,9 @@ struct Address::AddressPrivate
 
     ~AddressPrivate() = default;
 
-    AddressPrivate(AddressPrivate&&) noexcept = default;
+    AddressPrivate(AddressPrivate&&) noexcept                 = default;
     AddressPrivate& operator=(AddressPrivate const&) noexcept = default;
-    AddressPrivate& operator=(AddressPrivate&&) noexcept = default;
+    AddressPrivate& operator=(AddressPrivate&&) noexcept      = default;
 
     vector<str> address_parts_;
 };
@@ -45,7 +45,7 @@ Address& Address::operator=(Address const& address)
     return *this;
 }
 
-Address::Address(Address&& address) noexcept = default;
+Address::Address(Address&& address) noexcept            = default;
 Address& Address::operator=(Address&& address) noexcept = default;
 
 size_type Address::size() const noexcept

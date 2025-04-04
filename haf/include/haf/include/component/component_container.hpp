@@ -15,6 +15,7 @@ HTPS_PRAGMA_ONCE
 namespace haf::scene
 {
 class SceneNode;
+class SceneController;
 }
 
 namespace haf::component
@@ -112,6 +113,8 @@ public:
     htps::size_type components() const noexcept;
 
 private:
+    bool attachComponent(htps::sptr<Component> newComponent);
+
     void applyRequirements(Component& _thisComponent);
 
     htps::rptr<scene::SceneNode> attachable() const noexcept;
@@ -129,6 +132,8 @@ private:
 
     struct ComponentContainerPrivate;
     htps::PImplPointer<ComponentContainerPrivate> p_;
+
+    friend class scene::SceneController;
 };
 
 }  // namespace haf::component

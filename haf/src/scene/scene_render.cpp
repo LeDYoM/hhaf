@@ -1,6 +1,5 @@
 #include "scene_render.hpp"
 
-#include <haf/include/scene/scene.hpp>
 #include <haf/include/scene/scene_node.hpp>
 #include <haf/include/component/component_container.hpp>
 
@@ -24,10 +23,11 @@ void render(SceneNode& scene_node, SceneRenderContext scene_render_context)
         }
     }
 }
-
+/*
 void render(Scene& scene, SceneRenderContext scene_render_context)
 {
     render(static_cast<SceneNode&>(scene), scene_render_context);
 }
+*/
 
 }  // namespace haf::scene

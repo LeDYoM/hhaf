@@ -26,8 +26,7 @@ bool type_index::operator==(type_index const& rhs) const noexcept
 std::strong_ordering type_index::operator<=>(
     const type_index& rhs) const noexcept
 {
-    return *t_info_ == *rhs.t_info_
-        ? std::strong_ordering::equal
+    return *t_info_ == *rhs.t_info_     ? std::strong_ordering::equal
         : t_info_->before(*rhs.t_info_) ? std::strong_ordering::less
                                         : std::strong_ordering::greater;
 }

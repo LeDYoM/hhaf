@@ -295,7 +295,7 @@ TEST_CASE("str::split", "[str]")
         CHECK(str{"A"}.split("")[0U] == "A");
     }
 
-//    str const foo{"hello. This. To Split string. Lets see."};
+    //    str const foo{"hello. This. To Split string. Lets see."};
 
     SECTION("str separator")
     {

@@ -11,76 +11,70 @@ HAF_PRAGMA_ONCE
 namespace haf::prop
 {
 template <typename T,
-          template <typename>
-          typename PropertyType,
+          template <typename> typename PropertyType,
           typename PropertyValue,
           typename ObjectType>
 constexpr IProperty<PropertyValue>& object_property(
     T* const obj,
-    PropertyType<PropertyValue>(ObjectType::*property_v))
+    PropertyType<PropertyValue>(ObjectType::* property_v))
 {
     return (obj->*property_v);
 }
 
 template <typename T,
-          template <typename>
-          typename PropertyType,
+          template <typename> typename PropertyType,
           typename PropertyValue,
           typename ObjectType>
 constexpr IProperty<PropertyValue>& object_property(
     core::sptr<T> const& obj,
-    PropertyType<PropertyValue>(ObjectType::*property_v))
+    PropertyType<PropertyValue>(ObjectType::* property_v))
 {
     return object_property(obj.get(), property_v);
 }
 
 template <typename T,
-          template <typename>
-          typename PropertyType,
+          template <typename> typename PropertyType,
           typename PropertyValue,
           typename ObjectType>
 constexpr void set_property(
     T* const obj,
-    PropertyType<PropertyValue>(ObjectType::*property_v),
+    PropertyType<PropertyValue>(ObjectType::* property_v),
     PropertyValue const& value)
 {
     object_property(obj, property_v) = value;
 }
 
 template <typename T,
-          template <typename>
-          typename PropertyType,
+          template <typename> typename PropertyType,
           typename PropertyValue,
           typename ObjectType>
 constexpr void set_property(
     T* const obj,
-    PropertyType<PropertyValue>(ObjectType::*property_v),
+    PropertyType<PropertyValue>(ObjectType::* property_v),
     PropertyValue&& value)
 {
     object_property(obj, property_v) = htps::move(value);
 }
 
 template <typename T,
-          template <typename>
-          typename PropertyType,
+          template <typename> typename PropertyType,
           typename PropertyValue,
           typename ObjectType>
 constexpr void set_property(
     core::sptr<T> const& obj,
-    PropertyType<PropertyValue>(ObjectType::*property_v),
+    PropertyType<PropertyValue>(ObjectType::* property_v),
     PropertyValue const& value)
 {
     object_property(obj, property_v) = value;
 }
 
 template <typename T,
-          template <typename>
-          typename PropertyType,
+          template <typename> typename PropertyType,
           typename PropertyValue,
           typename ObjectType>
 constexpr void set_property(
     core::sptr<T> const& obj,
-    PropertyType<PropertyValue>(ObjectType::*property_v),
+    PropertyType<PropertyValue>(ObjectType::* property_v),
     PropertyValue&& value)
 {
     object_property(obj, property_v) = core::move(value);

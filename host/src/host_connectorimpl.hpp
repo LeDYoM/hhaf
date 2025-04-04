@@ -10,8 +10,8 @@ class HostConnectorImpl final
 public:
     HostConnectorImpl(HostInternal& host_internal);
     ~HostConnectorImpl();
-private:
 
+private:
     HostInternal& host_internal_;
 };
 

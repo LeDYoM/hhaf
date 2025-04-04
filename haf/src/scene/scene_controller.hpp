@@ -8,8 +8,8 @@ HTPS_PRAGMA_ONCE
 #include <htypes/include/vector.hpp>
 #include <htypes/include/function.hpp>
 
-#include <haf/include/scene/scene.hpp>
-#include <haf/include/scene/scenenodefactory.hpp>
+#include <haf/include/scene_components/scene_component.hpp>
+#include <haf/include/component/component_factory.hpp>
 
 namespace haf::sys
 {
@@ -31,7 +31,7 @@ class HAF_PRIVATE SceneController final
 public:
     void setSceneManager(htps::rptr<SceneManager> scene_manager);
     bool setSystemProviderInScene(
-        htps::rptr<Scene::ScenePrivate> const scene_private,
+        htps::rptr<SceneComponent::SceneComponentPrivate> const scene_private,
         htps::rptr<sys::ISystemProvider> const isystem_provider);
 
     /**
@@ -49,7 +49,7 @@ public:
     template <typename T>
     bool registerAndStartScene(htps::str const& sceneName)
     {
-        if (scene_factory_.registerSceneNodeType<T>(sceneName))
+        if (m_component_factory.registerObjectType<T>(sceneName))
         {
             return startScene(sceneName);
         }
@@ -59,7 +59,7 @@ public:
     template <typename T>
     bool registerAndStartScene()
     {
-        if (scene_factory_.registerSceneNodeType<T>())
+        if (m_component_factory.registerObjectType<T>())
         {
             return startScene(T::StaticTypeName);
         }
@@ -69,13 +69,13 @@ public:
     template <typename T>
     bool registerSceneNodeType()
     {
-        return scene_factory_.registerSceneNodeType<T>();
+        return m_component_factory.registerObjectType<T>();
     }
 
     template <typename T>
     bool unregisterSceneNodeType()
     {
-        return scene_factory_.unregisterSceneNodeType<T>();
+        return m_component_factory.unregisterObjectType<T>();
     }
 
     template <typename T>
@@ -84,25 +84,26 @@ public:
         return startScene(T::StaticTypeName);
     }
 
-    SceneNodeFactory& sceneNodeFactory() noexcept;
-    SceneNodeFactory const& sceneNodeFactory() const noexcept;
+    component::ComponentFactory& componentFactory() noexcept;
+    component::ComponentFactory const& componentFactory() const noexcept;
 
-    htps::sptr<Scene> const& currentScene() const noexcept;
+    htps::sptr<SceneComponent> const& currentScene() const noexcept;
     bool currentSceneIsNull();
 
     void requestExit();
     bool exitRequested() const;
 
 private:
-    void startScene(htps::sptr<Scene> scene);
+    void startScene(htps::sptr<SceneComponent> scene);
     void terminateCurrentScene();
     void deferredSwitchScene();
 
-    SceneNodeFactory scene_factory_;
-    htps::rptr<SceneManager> scene_manager_{nullptr};
-    htps::sptr<Scene> current_scene_{nullptr};
-    bool switch_scene_{false};
-    bool exit_requested_{false};
+    component::ComponentFactory m_component_factory;
+    htps::rptr<SceneManager> m_scene_manager{nullptr};
+    htps::sptr<SceneComponent> m_current_scene{nullptr};
+    htps::sptr<SceneNode> m_root_scene_node{nullptr};
+    bool m_switch_scene{false};
+    bool m_exit_requested{false};
 };
 
 }  // namespace haf::scene

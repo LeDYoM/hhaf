@@ -5,12 +5,15 @@
 #ifdef OPENGL_CHECK_DEBUG
 
 #define glCheck(expr) \
-    {   \
+    { \
         expr; \
         haf::backend::ogl::glCheckError(__FILE__, __LINE__, #expr); \
     }
 #else
-#define glCheck(expr) { expr; }
+#define glCheck(expr) \
+    { \
+        expr; \
+    }
 #endif
 
 namespace haf::backend::ogl

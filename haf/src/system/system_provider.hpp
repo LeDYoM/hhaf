@@ -46,10 +46,10 @@ public:
     SystemProvider();
     ~SystemProvider() override;
 
-    SystemProvider(SystemProvider const&) = delete;
+    SystemProvider(SystemProvider const&)            = delete;
     SystemProvider& operator=(SystemProvider const&) = delete;
     SystemProvider(SystemProvider&&)                 = default;
-    SystemProvider& operator=(SystemProvider&&) = default;
+    SystemProvider& operator=(SystemProvider&&)      = default;
 
     void setBackend(htps::rptr<backend::BackendFactory> backend_factory);
     void createSystems(InitSystemOptions const& init_system_options);

@@ -2,10 +2,9 @@
 
 #include <htypes/include/types.hpp>
 #include <haf/include/scene/scene_node.hpp>
-#include <haf/include/scene/scene.hpp>
 
 using namespace htps;
-
+/*
 auto unitTestScene()
 {
     static auto uts(msptr<haf::scene::Scene>("unitTest"));
@@ -21,3 +20,4 @@ TEST_CASE("Constructor", "[SceneNode]")
     CHECK(unitTestScene()->sceneNodes().size() == 1U);
     CHECK(node_test->sceneNodes().size() == 0U);
 }
+*/

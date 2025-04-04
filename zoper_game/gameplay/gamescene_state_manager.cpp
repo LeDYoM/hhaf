@@ -1,5 +1,5 @@
 #include "gamescene_state_manager.hpp"
-#include "pause_scene_node.hpp"
+#include "pause.hpp"
 #include "gameover.hpp"
 #include "gamescene_states.hpp"
 
@@ -14,11 +14,11 @@ namespace zoper
 {
 GameSceneStateManager::GameSceneStateManager(
     sptr<haf::time::TimerComponent>& scene_timer_component,
-    sptr<PauseSceneNode> pause_scene_node,
-    sptr<GameOverSceneNode> game_over_scene_node) :
-    scene_timer_component_{scene_timer_component},
-    pause_node_{htps::move(pause_scene_node)},
-    game_over_scene_node_{htps::move(game_over_scene_node)}
+    sptr<Pause> pause,
+    sptr<GameOver> game_over) :
+    m_scene_timer_component{scene_timer_component},
+    m_pause{htps::move(pause)},
+    m_game_over{htps::move(game_over)}
 {}
 
 void GameSceneStateManager::onEnterState(GameSceneStates const& state)
@@ -32,14 +32,14 @@ void GameSceneStateManager::onEnterState(GameSceneStates const& state)
 
         case GameSceneStates::Pause:
         {
-            scene_timer_component_->pause();
-            pause_node_->enterPause();
+            m_scene_timer_component->pause();
+            m_pause->enterPause();
         }
         break;
         case GameSceneStates::GameOver:
         {
-            game_over_scene_node_->Visible = true;
-            scene_timer_component_->pause();
+            m_game_over->attachedNode()->Visible = true;
+            m_scene_timer_component->pause();
         }
         break;
     }
@@ -57,8 +57,8 @@ void GameSceneStateManager::onExitState(GameSceneStates const& state)
 
         case GameSceneStates::Pause:
         {
-            scene_timer_component_->resume();
-            pause_node_->exitPause();
+            m_scene_timer_component->resume();
+            m_pause->exitPause();
         }
         break;
 

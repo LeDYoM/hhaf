@@ -15,14 +15,12 @@ class DeltaProperty : public IDeltaProperty
 {
 public:
     using Base            = IDeltaProperty;
-    using value_type      = typename Base::value_type;
-    using const_type      = typename Base::const_type;
-    using reference       = typename Base::reference;
-    using const_reference = typename Base::const_reference;
-    using pointer         = typename Base::pointer;
-    using const_pointer   = typename Base::const_pointer;
-
-    constexpr DeltaProperty() = delete;
+    using value_type      = Base::value_type;
+    using const_type      = Base::const_type;
+    using reference       = Base::reference;
+    using const_reference = Base::const_reference;
+    using pointer         = Base::pointer;
+    using const_pointer   = Base::const_pointer;
 
     constexpr DeltaProperty(prop::WrapperProperty<T> wrapper_property,
                             T const& start_value,
@@ -68,7 +66,7 @@ template <template <typename> typename PropertyType,
           typename ObjectType>
 htps::uptr<DeltaProperty<PropertyValue>> make_delta_property(
     ObjectType* const obj,
-    PropertyType<PropertyValue>(ObjectType::*property_v),
+    PropertyType<PropertyValue>(ObjectType::* property_v),
     PropertyValue const& start_value,
     PropertyValue const& end_value)
 {

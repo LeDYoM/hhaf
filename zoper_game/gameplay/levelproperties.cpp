@@ -14,7 +14,7 @@ namespace zoper
 {
 void LevelProperties::onAttached()
 {
-    game_hud_ = attachedNode()->createSceneNode<GameHudSceneNode>("hud");
+    m_game_hud = attachedNode()->createSceneNode("hud")->component<GameHud>();
 }
 
 void LevelProperties::configure(
@@ -64,7 +64,7 @@ void LevelProperties::setScore(size_type const new_score)
             game_shared_data->score = current_score_;
         }
     }
-    game_hud_->currentScore = current_score_;
+    m_game_hud->currentScore = current_score_;
 }
 
 size_type LevelProperties::millisBetweenTokens() const
@@ -128,8 +128,8 @@ void LevelProperties::tokenConsumed()
 
 void LevelProperties::updateGoals()
 {
-    game_hud_->currentLevel       = current_level_;
-    game_hud_->currentStayCounter = stay_counter_;
+    m_game_hud->currentLevel       = current_level_;
+    m_game_hud->currentStayCounter = stay_counter_;
 }
 
 void LevelProperties::updateLevelData()
@@ -138,7 +138,7 @@ void LevelProperties::updateLevelData()
     {
         default:
         case GameMode::Token:
-            game_hud_->currentConsumedTokens = consumed_tokens_;
+            m_game_hud->currentConsumedTokens = consumed_tokens_;
 
             if (consumed_tokens_ >= stay_counter_)
             {
@@ -147,7 +147,7 @@ void LevelProperties::updateLevelData()
             break;
 
         case GameMode::Time:
-            game_hud_->currentEllapsedTimeInSeconds =
+            m_game_hud->currentEllapsedTimeInSeconds =
                 level_timer_->ellapsed().seconds();
 
             if (level_timer_->ellapsed().seconds() >= stay_counter_)

@@ -11,7 +11,6 @@ class HostConnector;
 class HostedAppGroup final
 {
 public:
-
     bool try_add_app(ManagedApp managed_app,
                      htps::str name,
                      htps::uptr<HostConnector> host_connector);

@@ -32,8 +32,8 @@ void BoardUtils::for_each_coordinate_in_rect(
 
     for_each_coordinate(
         startPosition, direction,
-        [&board_size, updatePredicate = htps::move(updatePredicate)](
-            const vector2dst& v) {
+        [&board_size,
+         updatePredicate = htps::move(updatePredicate)](const vector2dst& v) {
             return (v.x < board_size.x) && (v.y < board_size.y) &&
                 updatePredicate(v);
         });

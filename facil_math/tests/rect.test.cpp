@@ -31,7 +31,7 @@ TEST_CASE("rectFromCenterAndRadius", "[Rect]")
 TEST_CASE("rectFromCenterAndSize", "[Rect]")
 {
     Rect<s32> rect{rectFromCenterAndSize<s32>(vector2d<s32>{50, 80},
-                                                vector2d<s32>{20, 30})};
+                                              vector2d<s32>{20, 30})};
     CHECK(rect.size() == vector2d<s32>{20, 30});
     CHECK(rect.left == 40);
     CHECK(rect.width == 20);

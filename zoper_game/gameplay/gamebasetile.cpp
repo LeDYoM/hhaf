@@ -12,20 +12,22 @@ using namespace fmath;
 
 namespace zoper
 {
-GameBaseTile::GameBaseTile(rptr<SceneNode> const parent, str name) :
-    TileBase{}, BaseClass{parent, htps::move(name)}
-{}
-
-GameBaseTile::~GameBaseTile() = default;
-
 rptr<BoardGroup> GameBaseTile::getBoardGroup()
 {
-    return ancestor<BoardGroup>();
+    sptr<BoardGroup> bgroup{attachedNode()->componentOfType<BoardGroup>()};
+    return bgroup.get();
 }
 
 rptr<BoardGroup const> GameBaseTile::getBoardGroup() const
 {
-    return ancestor<BoardGroup>();
+    auto _parent{attachedNode()};
+    sptr<BoardGroup> bgroup;
+    while (_parent != nullptr && bgroup == nullptr)
+    {
+        bgroup = _parent->componentOfType<BoardGroup>();
+        _parent = _parent->parent();
+    }
+    return bgroup.get();
 }
 
 vector2df GameBaseTile::board2SceneFactor() const
@@ -77,7 +79,7 @@ Color GameBaseTile::getColorForToken() const
             break;
         default:
             DisplayLog::error("Error value for token: ", value(),
-                                   " is not supported");
+                              " is not supported");
             return colors::White;
             break;
     }

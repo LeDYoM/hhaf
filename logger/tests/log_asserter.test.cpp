@@ -21,5 +21,4 @@ TEST_CASE("logasserter_0", "[logger][logasseter]")
     Asserter::UseLowLevelAssert = false;
     Asserter::log_assert(false, "This should not crash");
     CHECK(testing_stream() != "");
-
 }

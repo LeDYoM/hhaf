@@ -3,11 +3,9 @@
 
 #include <facil_math/include/vector2d.hpp>
 #include <haf/include/events/connection.hpp>
+#include <haf/include/scene_components/table_of.hpp>
 
-#include <haf/include/scene/scene_node.hpp>
-#include <haf/include/scene_nodes/scene_node_table.hpp>
-
-#include "boardtilescene_node.hpp"
+#include "boardtile.hpp"
 #include "direction.hpp"
 
 #include <boardmanager/include/boardmanager.hpp>
@@ -16,29 +14,31 @@
 
 namespace zoper
 {
-
 class LevelProperties;
 class Player;
 
-class BoardGroup : public haf::scene::nodes::TableNode<BoardTileSceneNode>,
+class BoardGroup : public haf::scene::TableOf<BoardTile>,
                    public haf::board::IBoardManagerActuator
 {
 
 private:
-    using BaseClass = haf::scene::nodes::TableNode<BoardTileSceneNode>;
+    using Base = haf::scene::TableOf<BoardTile>;
 
 public:
     using BoardTileData = haf::board::IBoardManagerActuator::BoardTileData;
-    using BaseClass::BaseClass;
+    using Base::Base;
 
     constexpr static char const StaticName[] = "BoardGroup";
 
-    ~BoardGroup() override;
+    void update() override
+    {
+        Base::update();
+    }
 
     void configure(fmath::vector2dst size,
                    htps::sptr<LevelProperties> level_properties);
 
-    void onCreated() override;
+    void onAttached() override;
 
     void createNewToken(BoardTileData const data,
                         fmath::vector2dst const& board_position);
@@ -81,9 +81,9 @@ public:
     fmath::vector2df tileSize() const;
 
 private:
-    void onTableNodeAdded(htps::sptr<SceneNode> const&);
+    void onTableNodeAdded(htps::sptr<haf::scene::SceneNode> const&);
     htps::sptr<Player> player_;
-    htps::sptr<haf::scene::TransformableSceneNode> tokens_scene_node;
+    htps::sptr<haf::scene::SceneNode> tokens_scene_node;
     htps::sptr<LevelProperties> level_properties_;
 
     void addPlayer();

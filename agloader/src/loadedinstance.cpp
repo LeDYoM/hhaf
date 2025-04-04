@@ -5,8 +5,8 @@
 namespace
 {
 std::string formatFileName(std::string fileName,
-                                  char const* const extension,
-                                  char const* const prefix)
+                           char const* const extension,
+                           char const* const prefix)
 {
     if (!fileName.ends_with(extension))
     {
@@ -20,11 +20,11 @@ std::string formatFileName(std::string fileName,
 
 #if defined(_MSC_VER) || defined(__BORLANDC__)
 #define WIN32_LEAN_AND_MEAN
-#pragma warning( push )
-#pragma warning( disable : 5039 )
+#pragma warning(push)
+#pragma warning(disable : 5039)
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
-#pragma warning( pop )
+#pragma warning(pop)
 
 inline void* getMethod(void* handle, const char* methodName)
 {

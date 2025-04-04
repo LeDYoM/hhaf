@@ -15,7 +15,7 @@ namespace haf::host
 class SystemControllerLoader final
 {
 public:
-    using CreateSystemController_t  = haf::sys::ISystemController* (*)();
+    using CreateSystemController_t = haf::sys::ISystemController* (*)();
 
     SystemControllerLoader();
     ~SystemControllerLoader();

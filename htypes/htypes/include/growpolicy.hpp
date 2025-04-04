@@ -6,8 +6,8 @@ HTPS_PRAGMA_ONCE
 
 namespace htps
 {
-#pragma warning( push )
-#pragma warning( disable : 4514 )   // Unused functions in MSVC
+#pragma warning(push)
+#pragma warning(disable : 4514)  // Unused functions in MSVC
 
 class GrowPolicyUnary
 {
@@ -27,7 +27,7 @@ public:
     }
 };
 
-#pragma warning( pop )
+#pragma warning(pop)
 
 }  // namespace htps
 

@@ -220,10 +220,10 @@ public:
     tps::pair<bool, str_t> optionValue(str_t const& opPar) const
     {
         auto const iterator{std::find_if(option_parameters.cbegin(),
-                                   option_parameters.cend(),
-                                   [opPar](const OptionParameter& node) {
-                                       return node.first == opPar;
-                                   })};
+                                         option_parameters.cend(),
+                                         [opPar](const OptionParameter& node) {
+                                             return node.first == opPar;
+                                         })};
 
         return iterator == option_parameters.cend()
             ? tps::pair{false, str_t{""}}

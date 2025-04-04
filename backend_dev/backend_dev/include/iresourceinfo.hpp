@@ -9,6 +9,7 @@ class IResourceInfo
 {
 protected:
     virtual ~IResourceInfo() = default;
+
 public:
     virtual htps::str info() const = 0;
 };

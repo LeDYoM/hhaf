@@ -3,6 +3,7 @@
 #include <haf/include/resources/itexture.hpp>
 #include <haf/include/shareddata/ishared_data.hpp>
 #include <haf/include/scene_components/iscene_control.hpp>
+#include <haf/include/scene_components/renderizable.hpp>
 
 #include "mainmenu.hpp"
 #include "../loaders/mainmenuresources.hpp"
@@ -13,46 +14,45 @@
 #include <haf/include/resources/iresource_configurator.hpp>
 #include <haf/include/render/renderizables.hpp>
 #include <haf/include/render/renderizable_builder.hpp>
-#include <haf/include/scene_nodes/renderizables_scene_node.hpp>
 
 using namespace htps;
 using namespace haf;
 using namespace haf::scene;
 using namespace haf::render;
+using namespace haf::exts::dmp;
 
 namespace zoper
 {
 
-MenuScene::MenuScene() : BaseClass{StaticTypeName}
-{}
-
-MenuScene::~MenuScene() = default;
-
-str MenuScene::nextSceneName()
+str Menu::nextSceneName()
 {
     return GAME_SCENE_NAME;
 }
 
-void MenuScene::onCreated()
+void Menu::onAttached()
 {
-    BaseClass::onCreated();
+    Base::onAttached();
 
     // Load the necessary resources
-    auto resources_configurator{subSystem<res::IResourcesConfigurator>()};
+    auto resources_configurator{
+        attachedNode()->subSystem<res::IResourcesConfigurator>()};
     resources_configurator->setResourceConfigFile("resources.txt");
     resources_configurator->setResourcesDirectory("resources/");
     resources_configurator->loadSection("menu");
 
     // Create the background
     auto main_menu_background{
-        createSceneNode<RenderizableSceneNode>("main_menu_background")};
+        attachedNode()->createSceneNode("main_menu_background")};
     createStandardBackground(main_menu_background);
 
     // Create the logo
-    auto main_menu_background_logo{
-        createSceneNode<RenderizableSceneNode>("main_menu_background_logo")};
-    main_menu_background_logo->Position = {0.F, -0.28F};
-    main_menu_background_logo->Scale    = {0.5F, 0.4F};
+    auto main_menu_background_logo_scene_node{
+        attachedNode()->createSceneNode("main_menu_background_logo")};
+    auto main_menu_background_logo{main_menu_background_logo_scene_node
+                                       ->component<haf::scene::Renderizable>()};
+
+    main_menu_background_logo_scene_node->Position = {0.F, -0.28F};
+    main_menu_background_logo_scene_node->Scale    = {0.99F, 0.4F};
     main_menu_background_logo->renderizableBuilder()
         .name("mainLogo")
         .figType(FigType_t::Sprite)
@@ -60,15 +60,18 @@ void MenuScene::onCreated()
         //        .shader("shader1")
         .create();
 
-    createSceneNode<MainMenu>(MainMenu::StaticTypeName)
-        ->MenuFinished.connect([this](MenuFinishedStatus const status) {
+    auto main_menu_scene_node{
+        attachedNode()->createSceneNode(MainMenu::StaticTypeName)};
+
+    main_menu_scene_node->component<MainMenu>()->MenuFinished.connect(
+        [this](MenuFinishedStatus const status) {
             if (status == MenuFinishedStatus::Backward)
             {
-                subSystem<ISceneControl>()->requestExit();
+                attachedNode()->subSystem<ISceneControl>()->requestExit();
             }
         });
 
-    initDebugUtils();
+    //    initDebugUtils();
 }
 
 }  // namespace zoper

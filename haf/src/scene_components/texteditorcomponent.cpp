@@ -1,5 +1,6 @@
 #include <haf/include/scene_components/texteditorcomponent.hpp>
-#include <haf/include/scene_nodes/scene_node_text.hpp>
+#include <haf/include/scene_components/text.hpp>
+#include <haf/include/scene/scene_node.hpp>
 #include <haf/include/input/key.hpp>
 
 using namespace htps;
@@ -12,7 +13,7 @@ void TextEditorComponent::onAttached()
 
     using namespace haf::scene::nodes;
 
-    auto attached_text_node{attachedNodeAs<nodes::SceneNodeText>()};
+    auto attached_text_node{attachedNode()->component<Text>()};
     original_text_           = attached_text_node->Text();
     attached_text_node->Text = "";
 }
@@ -24,7 +25,7 @@ void TextEditorComponent::onKeyPressed(const input::Key& key)
 
     if (enabled)
     {
-        auto attached_text_node{attachedNodeAs<nodes::SceneNodeText>()};
+        auto attached_text_node{attachedNode()->componentOfType<Text>()};
         if (isAscii(key))
         {
             char const c_ascii{this->toAscii(key)};

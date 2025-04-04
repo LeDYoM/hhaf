@@ -10,8 +10,7 @@ namespace haf::backend
 class ITexture;
 
 struct IMaterialData
-{
-};
+{};
 
 }  // namespace haf::backend
 

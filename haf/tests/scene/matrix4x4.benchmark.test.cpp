@@ -28,9 +28,15 @@ TEST_CASE("haf::scene::Matrix4x4 Benchmark",
 
     Matrix4x4 copy;
 
-    BENCHMARK("Matrix4x4 copy asignment") { copy = matrix2; };
+    BENCHMARK("Matrix4x4 copy asignment")
+    {
+        copy = matrix2;
+    };
 
-    BENCHMARK("Matrix4x4 equal multiply") { copy *= matrix2; };
+    BENCHMARK("Matrix4x4 equal multiply")
+    {
+        copy *= matrix2;
+    };
 
     BENCHMARK("Matrix4x4 multiply")
     {

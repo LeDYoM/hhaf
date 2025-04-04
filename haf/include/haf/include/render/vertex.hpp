@@ -17,10 +17,10 @@ struct Vertex final
         position{htps::move(p)}, color{}, texCoords{htps::move(tc)}
     {}
 
-    constexpr Vertex() noexcept         = default;
-    constexpr Vertex(Vertex&&) noexcept = default;
-    constexpr Vertex& operator=(Vertex&&) noexcept = default;
-    constexpr Vertex(Vertex const&) noexcept       = default;
+    constexpr Vertex() noexcept                         = default;
+    constexpr Vertex(Vertex&&) noexcept                 = default;
+    constexpr Vertex& operator=(Vertex&&) noexcept      = default;
+    constexpr Vertex(Vertex const&) noexcept            = default;
     constexpr Vertex& operator=(Vertex const&) noexcept = default;
 
     fmath::vector2df position{};

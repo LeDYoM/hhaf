@@ -51,8 +51,8 @@ public:
     virtual void setWindowTitle(htps::str const& newTitle) = 0;
     virtual void closeWindow()                             = 0;
 
-    virtual IInputDriver* inputDriver()   = 0;
-    virtual htps::str settingsInfo()      = 0;
+    virtual IInputDriver* inputDriver() = 0;
+    virtual htps::str settingsInfo()    = 0;
 };
 
 }  // namespace haf::backend

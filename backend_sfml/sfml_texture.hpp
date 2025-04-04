@@ -8,7 +8,7 @@
 
 namespace sf
 {
-    class Texture;
+class Texture;
 }
 
 namespace haf::backend::sfmlb

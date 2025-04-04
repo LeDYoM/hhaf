@@ -2,7 +2,6 @@
 
 #include <htypes/include/types.hpp>
 #include <haf/include/scene/scene_node.hpp>
-#include <haf/include/scene/scene.hpp>
 #include "scene/scene_manager.hpp"
 #include "system_test_utils.hpp"
 

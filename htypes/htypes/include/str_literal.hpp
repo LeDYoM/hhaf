@@ -30,11 +30,8 @@ struct basic_str_literal
 
     constexpr bool empty() const noexcept { return real_size_ == 1U; }
 
-    constexpr char_type * begin() noexcept { return value; }
-    constexpr char_type * end() noexcept
-    {
-        return &(value[real_size_]);
-    }
+    constexpr char_type* begin() noexcept { return value; }
+    constexpr char_type* end() noexcept { return &(value[real_size_]); }
 
     constexpr char_type const* cbegin() const noexcept { return value; }
     constexpr char_type const* cend() const noexcept
@@ -54,23 +51,11 @@ struct basic_str_literal
         }
     }
 
-    constexpr bool operator!=(basic_str_literal const& rhs) const noexcept
-    {
-        return !(*this == rhs);
-    }
-
     template <size_type N2>
     constexpr bool operator==(
         basic_str_literal<char_type, N2> const&) const noexcept
     {
         return false;
-    }
-
-    template <size_type N2>
-    constexpr bool operator!=(
-        basic_str_literal<char_type, N2> const&) const noexcept
-    {
-        return true;
     }
 
     template <size_type N2>
@@ -84,44 +69,6 @@ struct basic_str_literal
         {
             return false;
         }
-    }
-
-    constexpr bool operator==(basic_str_literal&& rhs) const
-    {
-        if (size() == rhs.size())
-        {
-            return std::equal(cbegin(), cend(), rhs.cbegin(), rhs.cend());
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-    constexpr bool operator!=(basic_str_literal&& rhs) const noexcept
-    {
-        return !(*this == htps::move(rhs));
-    }
-
-    template <size_type N2>
-    constexpr bool operator==(
-        basic_str_literal<char_type, N2>&& rhs) const noexcept
-    {
-        if (size() == (N2 - 1U))
-        {
-            return std::equal(cbegin(), cend(), rhs, (rhs + N));
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-    template <size_type N2>
-    constexpr bool operator!=(
-        basic_str_literal<char_type, N2>&& rhs) const noexcept
-    {
-        return !(*this == htps::move(rhs));
     }
 
     constexpr size_type hash() const noexcept { return value[0]; }

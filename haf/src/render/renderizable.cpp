@@ -5,7 +5,6 @@
 #include "renderizable_internal_functions.hpp"
 #include "system/get_system.hpp"
 
-#include <haf/include/scene_nodes/transformable_scene_node.hpp>
 #include <haf/include/render/renderizable_builder.hpp>
 #include <haf/include/resources/itexture.hpp>
 #include <haf/include/resources/ishader.hpp>
@@ -16,7 +15,7 @@ using namespace haf::scene;
 
 namespace haf::render
 {
-Renderizable::Renderizable(rptr<TransformableSceneNode> parent,
+Renderizable::Renderizable(rptr<SceneNode> parent,
                            RenderizableData&& renderizable_data) :
     sys::HasName{htps::move(renderizable_data.RenderizableName())},
     parent_{htps::move(parent)},
@@ -40,12 +39,12 @@ Renderizable::Renderizable(rptr<TransformableSceneNode> parent,
 
 Renderizable::~Renderizable() = default;
 
-rptr<TransformableSceneNode> Renderizable::parent() noexcept
+rptr<SceneNode> Renderizable::parent() noexcept
 {
     return parent_;
 }
 
-rptr<TransformableSceneNode const> Renderizable::parent() const noexcept
+rptr<SceneNode const> Renderizable::parent() const noexcept
 {
     return parent_;
 }

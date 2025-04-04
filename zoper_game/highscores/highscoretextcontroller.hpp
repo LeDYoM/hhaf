@@ -5,43 +5,40 @@
 #include <haf/include/events/connection.hpp>
 #include <haf/include/scene/scene_node.hpp>
 #include <haf/include/resources/ifont.hpp>
-#include <haf/include/scene_nodes/renderizable_scene_node.hpp>
-#include <haf/include/scene_nodes/scene_node_table_text.hpp>
-#include <haf/include/scene_nodes/scene_node_text.hpp>
+#include <haf/include/scene_components/renderizable.hpp>
+#include <haf/include/scene_components/table_of_text.hpp>
 #include <haf/include/animation/animation_component.hpp>
 #include "../loaders/highscoresresources.hpp"
 #include "highscoresdata.hpp"
 
 namespace zoper
 {
-class HighScoreTextController : public haf::scene::nodes::TextTableNode
+class HighScoreTextController : public haf::scene::TableOfText
 {
-    using BaseClass = haf::scene::nodes::TextTableNode;
+    using Base = haf::scene::TableOfText;
 
 public:
-    using BaseClass::BaseClass;
+    using Base::Base;
 
-    void onCreated() override;
+    void onAttached() override;
 
     haf::evt::emitter<> Finished;
 
 private:
     void onAllTableElementsCreated(fmath::vector2dst const) override;
-    void standarizeText(
-        const htps::sptr<haf::scene::nodes::SceneNodeText>& ntext);
+    void standarizeText(const htps::sptr<haf::scene::Text>& ntext);
     void saveHighScores();
     void addHighScoresLine(const htps::size_type counter,
                            const HighScore& element,
                            const bool is_inserting);
-    void addHighScoreEditor(
-        const htps::sptr<haf::scene::nodes::SceneNodeText>& label,
-        const htps::size_type counter);
+    void addHighScoreEditor(const htps::sptr<haf::scene::Text>& label,
+                            const htps::size_type counter);
     void addEditAnimation(const htps::size_type line_index);
-    HighScoresData high_scores_data_;
-    htps::sptr<haf::res::IFont> normal_font_;
+    HighScoresData m_high_scores_data;
+    htps::sptr<haf::res::IFont> m_normal_font;
 
-    haf::scene::Color normal_color_;
-    haf::scene::Color selected_color_;
+    haf::scene::Color m_normal_color;
+    haf::scene::Color m_selected_color;
 };
 }  // namespace zoper
 

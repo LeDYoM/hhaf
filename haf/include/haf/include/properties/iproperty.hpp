@@ -22,9 +22,9 @@ public:
     using pointer         = T*;
     using const_pointer   = T const*;
 
-    virtual void operator                     =(T const& v) noexcept(
+    virtual void operator=(T const& v) noexcept(
         std::is_nothrow_copy_assignable_v<T>) = 0;
-    virtual void operator                     =(T&& v) noexcept(
+    virtual void operator=(T&& v) noexcept(
         std::is_nothrow_move_assignable_v<T>) = 0;
 
     virtual T const& operator()() const noexcept = 0;

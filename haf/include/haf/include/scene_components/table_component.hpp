@@ -6,6 +6,7 @@ HTPS_PRAGMA_ONCE
 #include <haf/include/events/connection.hpp>
 #include <haf/include/properties/properties.hpp>
 #include <haf/include/scene_components/table_node_imp.hpp>
+#include <haf/include/scene/scene_node.hpp>
 #include <hlog/include/hlog.hpp>
 
 namespace haf::scene
@@ -82,7 +83,7 @@ public:
               typename PropertyValue,
               typename ObjectType>
     constexpr void set_property_for_each_table_node(
-        PropertyType<PropertyValue>(ObjectType::*property_v),
+        PropertyType<PropertyValue>(ObjectType::* property_v),
         PropertyValue const& value)
     {
         for_each_tableSceneNode(

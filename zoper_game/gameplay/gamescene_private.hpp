@@ -11,7 +11,7 @@
 
 namespace zoper
 {
-struct GameScene::GameScenePrivate
+struct Game::GameScenePrivate
 {
     htps::sptr<haf::anim::AnimationComponent> scene_animation_component_;
     htps::sptr<haf::rnd::RandomNumbersComponent> token_type_generator_;

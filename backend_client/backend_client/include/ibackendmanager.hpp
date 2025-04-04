@@ -13,6 +13,7 @@ class BC_API IBackendManager
 {
 protected:
     virtual ~IBackendManager() = default;
+
 public:
     virtual void create()                                                 = 0;
     virtual void setFactories(IBackendRegister* const)                    = 0;

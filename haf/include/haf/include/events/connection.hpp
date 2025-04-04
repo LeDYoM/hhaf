@@ -43,9 +43,8 @@ public:
      * @param r Emitter receiver.
      */
     constexpr connection_t(emitter_type& e, emitter_type& r) :
-        emitter_{e}, function_{[&r](Args... args) {
-            r(core::forward<Args>(args)...);
-        }}
+        emitter_{e},
+        function_{[&r](Args... args) { r(core::forward<Args>(args)...); }}
     {
         emitter_.connect(function_);
     }
@@ -71,8 +70,7 @@ private:
 };
 
 template <typename T,
-          template <typename... G>
-          typename function_type,
+          template <typename... G> typename function_type,
           typename em_type,
           typename... Args>
 class shared_connection_t final : public iconnection

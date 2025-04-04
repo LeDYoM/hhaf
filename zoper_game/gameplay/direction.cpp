@@ -25,7 +25,7 @@ Direction Direction::negate() const noexcept
 }
 
 fmath::vector2dst Direction::applyToVector(fmath::vector2dst const& v,
-                                          htps::u32 const scale) const noexcept
+                                           htps::u32 const scale) const noexcept
 {
     fmath::vector2ds32 const dv{directionVector(scale)};
     return {v.x + dv.x, v.y + dv.y};
@@ -80,7 +80,7 @@ Direction fromPositions(fmath::vector2dst const& origin,
                         fmath::vector2dst const& dest)
 {
     fmath::vector2ds32 const delta{static_cast<fmath::vector2ds32>(dest) -
-                                  static_cast<fmath::vector2ds32>(origin)};
+                                   static_cast<fmath::vector2ds32>(origin)};
     if ((delta.x != 0 && delta.y != 0) || (delta.x == 0 && delta.y == 0))
     {
         DisplayLog::error("Invalid vector diference. Cannot convert");

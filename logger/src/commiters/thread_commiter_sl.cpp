@@ -67,17 +67,18 @@ void ThreadCommiterImpl::thread_func()
             }
         }
 
-        if (!m_data->m_exit.load())  [[likely]]
-        {
-            if (commit)
+        if (!m_data->m_exit.load())
+            [[likely]]
             {
-                m_data->m_commit_function(message.c_str());
+                if (commit)
+                {
+                    m_data->m_commit_function(message.c_str());
+                }
+                else
+                {
+                    std::this_thread::yield();
+                }
             }
-            else
-            {
-                std::this_thread::yield();
-            }
-        }
     }
 }
 

@@ -44,6 +44,6 @@ private:
     Usage m_usage;
 };
 
-}  // namespace haf::backend::ogl
+}  // namespace haf::ogl
 
 #endif

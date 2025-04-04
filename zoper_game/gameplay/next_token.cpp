@@ -26,7 +26,7 @@ void NextToken::prepareNextTokenImpl()
         TimerType::OneShot, TimePoint_as_miliseconds(time_point_getter_()),
         [this](TimePoint realEllapsed) {
             DisplayLog::info("Elapsed between tokens: ",
-                                  realEllapsed.milliseconds());
+                             realEllapsed.milliseconds());
             // New token
             action_();
             prepareNextTokenImpl();

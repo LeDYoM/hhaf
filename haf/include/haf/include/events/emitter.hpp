@@ -11,8 +11,7 @@ namespace haf::evt
  * @tparam Args Template parameters with the type data to be emitted
  */
 template <template <typename T> typename vector_type,
-          template <typename... G>
-          typename function_type,
+          template <typename... G> typename function_type,
           typename... Args>
 class emitter_t final
 {
@@ -32,9 +31,9 @@ public:
      * @brief Create an emitter with one receiver attached
      */
     constexpr emitter_t(emitter_callback_t f) : m_receivers{htps::move(f)} {}
-    constexpr emitter_t(emitter_t const&) = default;
-    constexpr emitter_t& operator=(const emitter_t&) = default;
-    constexpr emitter_t(emitter_t&&) noexcept        = default;
+    constexpr emitter_t(emitter_t const&)                = default;
+    constexpr emitter_t& operator=(const emitter_t&)     = default;
+    constexpr emitter_t(emitter_t&&) noexcept            = default;
     constexpr emitter_t& operator=(emitter_t&&) noexcept = default;
 
     constexpr void operator()(Args... args)

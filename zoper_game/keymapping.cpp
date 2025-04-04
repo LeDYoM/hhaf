@@ -17,7 +17,7 @@ void KeyMapping::reset()
     using namespace input;
 
     keys_ = {Key::Left, Key::Right, Key::Up,
-              Key::Down, Key::Space, Key::Escape};
+             Key::Down, Key::Space, Key::Escape};
 }
 
 input::Key KeyMapping::getKey(const Direction d) const noexcept
@@ -93,7 +93,7 @@ void KeyMapping::apply()
 
     //  addConfigInt("key_launch" + str(Direction::Total),
     //_keys[Direction::Total]); 		addConfigInt("key_pause" +
-    //str(Direction::Total
+    // str(Direction::Total
     //+ 1), _keys[Direction::Total + 1]);
 }
 }  // namespace zoper

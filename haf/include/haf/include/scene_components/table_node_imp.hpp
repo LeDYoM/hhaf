@@ -5,11 +5,11 @@ HTPS_PRAGMA_ONCE
 #include <htypes/include/types.hpp>
 #include <facil_math/include/vector2d.hpp>
 #include <haf/include/properties/iproperty.hpp>
-#include <haf/include/properties/iproperty.hpp>
+#include <haf/include/properties/property_state.hpp>
 
 #include <haf/include/haf_export.hpp>
 #include <haf/include/events/connection.hpp>
-#include <haf/include/scene_nodes/transformable_scene_node.hpp>
+#include <haf/include/scene/scene_node.hpp>
 #include <haf/include/component/component.hpp>
 #include <haf/include/component/component_requirements.hpp>
 
@@ -25,14 +25,12 @@ class HAF_API TableNodeImp : public component::Component
 public:
     using BaseClass::BaseClass;
 
-    using ContainedType_t = htps::sptr<TransformableSceneNode>;
-
     void addRequirements(component::ComponentRequirements&) override;
 
     prop::PropertyState<fmath::vector2dst> TableSize;
     prop::PropertyState<fmath::vector2df> TableSizeForNodes;
 
-    evt::emitter<fmath::vector2dst, ContainedType_t const&> onInnerNodeCreated;
+    evt::emitter<fmath::vector2dst, SceneNodeSPtr const&> onInnerNodeCreated;
 
     /**
      * @brief Get the size of each cell.
@@ -52,27 +50,25 @@ public:
     void createTableNodesIfNecessary();
 
 protected:
-    ContainedType_t innerSceneNodeAt(fmath::vector2dst const index) const;
+    SceneNodeSPtr innerSceneNodeAt(fmath::vector2dst const index) const;
 
     virtual void setTableSize(fmath::vector2dst const ntableSize);
 
 private:
-    ContainedType_t createInnerSceneNodeAt(fmath::vector2dst const index,
-                                           htps::str const& name);
+    SceneNodeSPtr createInnerSceneNodeAt(fmath::vector2dst const index,
+                                         htps::str const& name);
 
     void setInnerSceneNodeAt(fmath::vector2dst const index,
-                             ContainedType_t& scene_node);
+                             SceneNodeSPtr& scene_node);
 
     void updateTableSizeIfNecessary();
 
     void for_each_table_innerSceneNode(
-        htps::function<void(const fmath::vector2dst&, ContainedType_t&)>
-            action);
+        htps::function<void(const fmath::vector2dst&, SceneNodeSPtr&)> action);
 
     virtual void createNodeAt(fmath::vector2dst const& index) = 0;
 
-    htps::vector<htps::vector<ContainedType_t>> inner_nodes_;
-    //    htps::sptr<TransformableComponent> m_transformableComponent;
+    htps::vector<htps::vector<SceneNodeSPtr>> m_inner_nodes;
 };
 
 }  // namespace haf::scene

@@ -51,11 +51,11 @@ public:
     {}
 
     constexpr basic_str(basic_str_view<char_type> other) :
-        basic_str{other.begin_, other.size_}
+        basic_str{other.m_begin, other.m_size}
     {}
 
     constexpr explicit basic_str(char_type const* const n) :
-        basic_str(n, detail::_str_len(n))
+        basic_str(n, strnlen(n))
     {}
 
     constexpr basic_str(const_iterator _begin, const_iterator _end) :
@@ -70,11 +70,11 @@ public:
 
     basic_str& operator=(char_type const* const n)
     {
-        auto const len{detail::_str_len(n)};
+        auto const len{strnlen(n)};
         if (len < data_.capacity())
         {
             data_.resize(len + 1);
-            for (decltype(detail::_str_len(n)) i{0U}; i < len; ++i)
+            for (decltype(strnlen(n)) i{0U}; i < len; ++i)
             {
                 data_[i] = n[i];
             }

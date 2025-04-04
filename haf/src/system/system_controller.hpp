@@ -24,10 +24,10 @@ public:
     SystemController();
     ~SystemController() override;
 
-    SystemController(SystemController const&) = delete;
+    SystemController(SystemController const&)            = delete;
     SystemController& operator=(SystemController const&) = delete;
     SystemController(SystemController&&)                 = default;
-    SystemController& operator=(SystemController&&) = default;
+    SystemController& operator=(SystemController&&)      = default;
 
     void init(htps::rptr<IApp> iapp,
               htps::rptr<host::IHostConnector> const host_connector,

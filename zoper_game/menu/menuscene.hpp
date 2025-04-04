@@ -4,24 +4,21 @@
 #include <htypes/include/types.hpp>
 #include <haf/include/events/connection.hpp>
 #include <haf/include/render/renderizable.hpp>
-#include <haf/include/scene/scene.hpp>
+#include <haf/include/scene_components/scene_component.hpp>
+#include <haf/include/component/component.hpp>
 
 #include "../scene_names.hpp"
 
 namespace zoper
 {
-class MenuScene final : public haf::scene::Scene
+class Menu final : public haf::scene::SceneComponent
 {
+    using Base = haf::scene::SceneComponent;
 public:
-    MenuScene();
-    ~MenuScene() override;
-
     static constexpr char StaticTypeName[] = MENU_SCENE_NAME;
 
-    using BaseClass = haf::scene::Scene;
-
-    htps::str nextSceneName() override;
-    void onCreated() override;
+    htps::str nextSceneName();
+    void onAttached() override;
 };
 }  // namespace zoper
 

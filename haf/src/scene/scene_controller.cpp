@@ -1,38 +1,38 @@
 #include "scene_controller.hpp"
 #include "scene_manager.hpp"
 #include "scene_render.hpp"
-#include "scene_private.hpp"
+#include "../scene_components/scene_component_private.hpp"
 #include "system/system_provider.hpp"
 #include <haf/include/scene/matrix4x4.hpp>
-#include <haf/include/scene/scene.hpp>
 #include <haf/include/system/isystem_provider.hpp>
 
 #include <hlog/include/hlog.hpp>
 
 using namespace htps;
 using namespace logger;
+using namespace haf::component;
 
 namespace haf::scene
 {
 void SceneController::setSceneManager(rptr<SceneManager> scene_manager)
 {
-    LogAsserter::log_assert(scene_manager_ == nullptr,
+    LogAsserter::log_assert(m_scene_manager == nullptr,
                             "The scene_manager_ was set already");
     LogAsserter::log_assert(scene_manager != nullptr,
                             "Invalid parameter scene_node");
-    scene_manager_ = scene_manager;
+    m_scene_manager = scene_manager;
 }
 
 bool SceneController::startScene(str const& sceneName)
 {
-    auto scene = scene_factory_.create(sceneName);
-    startScene(sptr<Scene>(htps::move(scene)));
+    auto scene{m_component_factory.create(sceneName)};
+    startScene(sptr<SceneComponent>(htps::move(scene)));
     return true;
 }
 
 void SceneController::switchToNextScene()
 {
-    switch_scene_ = true;
+    m_switch_scene = true;
 }
 
 void SceneController::deferredSwitchScene()
@@ -40,45 +40,46 @@ void SceneController::deferredSwitchScene()
     terminateCurrentScene();
 
     // Prepare next Scene
-    sptr<Scene> nextScene{nullptr};
-    if (!exit_requested_)
+    sptr<SceneComponent> nextScene{nullptr};
+    if (!m_exit_requested)
     {
-        auto const next_scene_name = current_scene_->nextSceneName();
+        auto const next_scene_name{m_current_scene->nextSceneName()};
 
         if (!next_scene_name.empty())
         {
-            nextScene = scene_factory_.create(next_scene_name);
+            nextScene = m_component_factory.create(next_scene_name);
             DisplayLog::error_if(nextScene == nullptr,
                                  "Requested next scene of type: ",
                                  next_scene_name, ", but cannot be created");
         }
     }
 
-    DisplayLog::info("Setting new scene: ",
-                     nextScene ? nextScene->name() : "<nullptr>");
+    //    DisplayLog::info("Setting new scene: ",
+    //                     nextScene ? nextScene->name() : "<nullptr>");
     startScene(htps::move(nextScene));
 }
 
 void SceneController::terminateCurrentScene()
 {
-    LogAsserter::log_assert(current_scene_ != nullptr,
+    LogAsserter::log_assert(m_current_scene != nullptr,
                             "Unexpected nullptr in current_scene");
-    DisplayLog::info("Terminating scene ", current_scene_->name());
-    current_scene_->onFinished();
+    //    DisplayLog::info("Terminating scene ", m_current_scene->name());
+    m_current_scene->onFinished();
 }
 
 void SceneController::update()
 {
-    if (switch_scene_)
+    if (m_switch_scene)
     {
         deferredSwitchScene();
-        switch_scene_ = false;
+        m_switch_scene = false;
     }
 
-    if (current_scene_ != nullptr)
+    if (m_current_scene != nullptr)
     {
         Matrix4x4 startMatrix{Matrix4x4::Identity};
-        render(*current_scene_, SceneRenderContext{false, startMatrix});
+        render(*m_root_scene_node,
+               SceneRenderContext{false, startMatrix});
     }
 }
 
@@ -90,13 +91,13 @@ void SceneController::finish()
     }
 }
 
-sptr<Scene> const& SceneController::currentScene() const noexcept
+sptr<SceneComponent> const& SceneController::currentScene() const noexcept
 {
-    return current_scene_;
+    return m_current_scene;
 }
 
 bool SceneController::setSystemProviderInScene(
-    rptr<Scene::ScenePrivate> const scene_private,
+    rptr<SceneComponent::SceneComponentPrivate> const scene_private,
     rptr<sys::ISystemProvider> const isystem_provider)
 {
     LogAsserter::log_assert(scene_private->iSystemProvider() == nullptr,
@@ -118,28 +119,31 @@ bool SceneController::setSystemProviderInScene(
     return true;
 }
 
-void SceneController::startScene(sptr<Scene> scene)
+void SceneController::startScene(sptr<SceneComponent> scene)
 {
-    current_scene_ = htps::move(scene);
-    if (current_scene_ != nullptr)
+    m_current_scene = htps::move(scene);
+    if (m_current_scene != nullptr)
     {
-        if (scene_manager_ != nullptr)
+        if (m_scene_manager != nullptr)
         {
+            m_root_scene_node = msptr<SceneNode>(nullptr, "Scene");
+            m_current_scene->attachedNode_ = m_root_scene_node.get();
+
             if (!(setSystemProviderInScene(
-                    current_scene_->scenePrivate(),
-                    &(scene_manager_->isystemProvider()))))
+                    m_current_scene->scenePrivate(),
+                    &(m_scene_manager->isystemProvider()))))
             {
                 DisplayLog::debug(
                     "Internal error: iSystemProvider was already set");
             }
+            m_root_scene_node->attachComponent(m_current_scene);
         }
-        current_scene_->onCreated();
     }
 }
 
 bool SceneController::currentSceneIsNull()
 {
-    return current_scene_ == nullptr;
+    return m_current_scene == nullptr;
 }
 
 bool SceneController::isActive()
@@ -147,24 +151,24 @@ bool SceneController::isActive()
     return !currentSceneIsNull();
 }
 
-SceneNodeFactory& SceneController::sceneNodeFactory() noexcept
+ComponentFactory& SceneController::componentFactory() noexcept
 {
-    return scene_factory_;
+    return m_component_factory;
 }
 
-SceneNodeFactory const& SceneController::sceneNodeFactory() const noexcept
+ComponentFactory const& SceneController::componentFactory() const noexcept
 {
-    return scene_factory_;
+    return m_component_factory;
 }
 
 void SceneController::requestExit()
 {
-    exit_requested_ = true;
+    m_exit_requested = true;
 }
 
 bool SceneController::exitRequested() const
 {
-    return exit_requested_;
+    return m_exit_requested;
 }
 
 }  // namespace haf::scene

@@ -16,4 +16,4 @@ void MainScene::onAttached()
     BaseClass::onAttached();
 }
 
-}  // namespace zoper
+}  // namespace hl

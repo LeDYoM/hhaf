@@ -14,11 +14,11 @@ void ZoperProgramController::onInit(
     haf::scene::IAppInitializer& app_initializer)
 {
     DisplayLog::verbose("Initializing ZoperProgramController");
-    app_initializer.registerSceneType<MenuScene>();
-    app_initializer.registerSceneType<GameScene>();
-    app_initializer.registerSceneType<HighScoresScene>();
+    app_initializer.registerSceneComponent<Menu>();
+    app_initializer.registerSceneComponent<Game>();
+    app_initializer.registerSceneComponent<HighScores>();
 
-    app_initializer.startScene<MenuScene>();
+    app_initializer.startScene<Menu>();
 }
 
 void ZoperProgramController::onFinish(haf::scene::IAppFinisher&)

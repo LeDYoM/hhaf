@@ -21,18 +21,16 @@ namespace zoper
 
 u32 Token::tile_counter_{0};
 
-Token::Token(SceneNode* const parent, str name) :
-    GameBaseTile{
-        parent, name + str::to_str(tile_counter_) + str::to_str(tile_counter_)},
-    animation_component_{component<anim::AnimationComponent>()}
-{}
-
-Token::~Token() = default;
-
-void Token::onCreated()
+void Token::onAttached()
 {
     ++tile_counter_;
-    m_renderizable = createSceneNode<RenderizableSceneNode>("renderizable");
+    animation_component_ =
+        attachedNode()->component<anim::AnimationComponent>();
+
+    m_renderizable = attachedNode()
+                         ->createSceneNode("renderizable")
+                         ->component<scene::Renderizable>();
+
     m_renderizable->renderizableBuilder()
         .name("Node" + str::to_str(tile_counter_))
         .figType(FigType_t::PolygonSprite)
@@ -53,10 +51,10 @@ void Token::resetTileCounter()
 void Token::tileAdded()
 {
     BaseClass::tileAdded();
-    DisplayLog::info("Token ", name(), " appeared at ", boardPosition());
+    //    DisplayLog::info("Token ", name(), " appeared at ", boardPosition());
 
     auto const AppearTokenTime = time::TimePoint_as_miliseconds(1000U);
-    auto const endScale{Scale()};
+    auto const endScale{attachedNode()->Scale()};
 
     {
         auto property_animation_builder{
@@ -76,8 +74,9 @@ void Token::setTokenColor(scene::Color const& token_color)
 void Token::tileRemoved()
 {
     BaseClass::tileRemoved();
-    DisplayLog::info("Deleting token ", name(), " from scene at position ",
-                     boardPosition());
+    //    DisplayLog::info("Deleting token ", name(), " from scene at position
+    //    ",
+    //                     boardPosition());
 }
 
 void Token::tileChanged(const BoardTileData oldValue,
@@ -95,7 +94,8 @@ void Token::tileMoved(const BoardPositionType& source)
 
     auto property_animation_builder{
         animation_component_->make_property_animation_builder(
-            &Transformation::Position, Position(), destination)};
+            &Transformation::Position, attachedNode()->Position(),
+            destination)};
     property_animation_builder.duration(time::TimePoint_as_miliseconds(1000U));
     animation_component_->addAnimation(htps::move(property_animation_builder));
 }

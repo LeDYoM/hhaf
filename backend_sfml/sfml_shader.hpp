@@ -24,7 +24,7 @@ public:
                     htps::rptr<ITexture const> const texture) override;
 
     void setTexture(htps::size_type const index,
-                            ITexture const* const texture) override;
+                    ITexture const* const texture) override;
 
     void bind() const override;
     void unbind() const override;

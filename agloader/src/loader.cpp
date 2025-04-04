@@ -43,7 +43,7 @@ void const* Loader::loadModule(const char* const fileName)
 }
 
 void const* Loader::loadMethod(const char* const fileName,
-                         const char* const methodName)
+                               const char* const methodName)
 {
     auto iterator{priv_->loaded_instances_.find(fileName)};
     if (iterator != priv_->loaded_instances_.end())

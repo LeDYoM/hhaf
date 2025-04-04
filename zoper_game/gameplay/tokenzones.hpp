@@ -58,7 +58,7 @@ struct TokenZones
         const Direction direction) noexcept
     {
         return fmath::vector2dst{(direction.isHorizontal() ? 0U : 1U),
-                                (direction.isHorizontal() ? 1U : 0U)};
+                                 (direction.isHorizontal() ? 1U : 0U)};
     }
 
     static fmath::vector2dst displacedStartPoint(

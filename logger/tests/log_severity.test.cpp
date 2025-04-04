@@ -3,12 +3,14 @@
 #include <logger/include/severity_type.hpp>
 #include "include/log_stream_test.hpp"
 
-TEST_CASE("logdisplayerWithoutMessageWithSomeSeveirty", "[logger][log_severity][logdisplayer]")
+TEST_CASE("logdisplayerWithoutMessageWithSomeSeveirty",
+          "[logger][log_severity][logdisplayer]")
 {
     using TestLogDisplayer = logger::LogDisplayer<
         LogTestNullCommit,
         logger::SeverityTypeActiveTo<
-            logger::SeverityTypeDefinition::severity_type_t::verbose>, true>;
+            logger::SeverityTypeDefinition::severity_type_t::verbose>,
+        true>;
 
     LogTestNullCommit::init_log();
     LogStreamTest testing_stream;
@@ -21,12 +23,14 @@ TEST_CASE("logdisplayerWithoutMessageWithSomeSeveirty", "[logger][log_severity][
     LogTestNullCommit::finish_log();
 }
 
-TEST_CASE("logdisplayerWithMessageWithSomeSeveirty", "[logger][log_severity][logdisplayer]")
+TEST_CASE("logdisplayerWithMessageWithSomeSeveirty",
+          "[logger][log_severity][logdisplayer]")
 {
     using TestLogDisplayer = logger::LogDisplayer<
         LogTestNullCommit,
         logger::SeverityTypeActiveTo<
-            logger::SeverityTypeDefinition::severity_type_t::verbose>, true, "MyOtherSuperSystem: ">;
+            logger::SeverityTypeDefinition::severity_type_t::verbose>,
+        true, "MyOtherSuperSystem: ">;
 
     LogTestNullCommit::init_log();
     LogStreamTest testing_stream;

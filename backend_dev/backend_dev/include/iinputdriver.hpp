@@ -32,8 +32,8 @@ public:
      */
     virtual void keyReleased(IKey const) = 0;
 
-    virtual void clearInternalInputBuffer() = 0;
-    virtual void readKeyPressed(htps::vector<IKey>& keys_pressed) const = 0;
+    virtual void clearInternalInputBuffer()                               = 0;
+    virtual void readKeyPressed(htps::vector<IKey>& keys_pressed) const   = 0;
     virtual void readKeyReleased(htps::vector<IKey>& keys_released) const = 0;
 };
 }  // namespace haf::backend

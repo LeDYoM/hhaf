@@ -17,7 +17,7 @@ public:
 using LogTestNullCommit =
     logger::Log<true, LogStreamTest, logger::NullCommiter>;
 
-using LogTestThreadNullCommit =
-    logger::Log<true, LogStreamTest, logger::ThreadCommiter<logger::NullCommiter>>;
+using LogTestThreadNullCommit = logger::
+    Log<true, LogStreamTest, logger::ThreadCommiter<logger::NullCommiter>>;
 
- #endif
+#endif

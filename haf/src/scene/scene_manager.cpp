@@ -1,7 +1,7 @@
 #include "scene_manager.hpp"
 #include "scene_controller.hpp"
 
-#include <haf/include/scene/scene.hpp>
+#include <haf/include/component/component_factory.hpp>
 
 #include "system/system_provider.hpp"
 #include "window/window.hpp"
@@ -12,13 +12,14 @@
 
 using namespace htps;
 using namespace haf::sys;
+using namespace haf::component;
 
 namespace haf::scene
 {
 SceneManager::SceneManager(sys::SystemProvider& system_provider) :
-    SystemBase{system_provider}, scene_controller_{msptr<SceneController>()}
+    SystemBase{system_provider}, m_scene_controller{msptr<SceneController>()}
 {
-    scene_controller_->setSceneManager(this);
+    m_scene_controller->setSceneManager(this);
 }
 
 SceneManager::~SceneManager() = default;
@@ -28,47 +29,47 @@ void SceneManager::start()
 
 void SceneManager::update()
 {
-    scene_controller_->update();
+    m_scene_controller->update();
 }
 
 void SceneManager::finish()
 {
-    scene_controller_->finish();
+    m_scene_controller->finish();
 }
 
 sptr<SceneController const> SceneManager::sceneController() const noexcept
 {
-    return scene_controller_;
+    return m_scene_controller;
 }
 
 sptr<SceneController> SceneManager::sceneController() noexcept
 {
-    return scene_controller_;
+    return m_scene_controller;
 }
 
 void SceneManager::switchToNextScene()
 {
-    scene_controller_->switchToNextScene();
+    m_scene_controller->switchToNextScene();
 }
 
 bool SceneManager::startScene(const htps::str& scene_name)
 {
-    return scene_controller_->startScene(scene_name);
+    return m_scene_controller->startScene(scene_name);
 }
 
 void SceneManager::requestExit()
 {
-    return scene_controller_->requestExit();
+    return m_scene_controller->requestExit();
 }
 
 bool SceneManager::exitRequested() const
 {
-    return scene_controller_->exitRequested();
+    return m_scene_controller->exitRequested();
 }
 
-SceneNodeFactory& SceneManager::sceneNodeFactory()
+ComponentFactory& SceneManager::componentFactory()
 {
-    return scene_controller_->sceneNodeFactory();
+    return m_scene_controller->componentFactory();
 }
 
 bool SceneManager::setNextApp(htps::str const&)

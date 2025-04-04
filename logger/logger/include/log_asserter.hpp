@@ -5,7 +5,7 @@
 #include <cassert>
 
 #ifdef __cpp_lib_source_location
-    #include <source_location>
+#include <source_location>
 #endif
 
 namespace logger
@@ -23,9 +23,10 @@ struct LogAsserter
         const bool condition,
         T&& arg
 #ifdef __cpp_lib_source_location
-        , std::source_location const source = std::source_location::current()
+        ,
+        std::source_location const source = std::source_location::current()
 #endif
-)
+    )
     {
         if (!condition)
         {
@@ -39,7 +40,7 @@ struct LogAsserter
 #ifdef __cpp_lib_source_location
                 "\t", source.function_name(), ": ",
 #endif
-                                     std::forward<T>(arg));
+                std::forward<T>(arg));
 
             if (UseLowLevelAssert)
             {

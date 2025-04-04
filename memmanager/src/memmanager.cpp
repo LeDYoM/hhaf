@@ -32,7 +32,7 @@ static int crtDebugMemAllocHook(int allocType,
     (void)(userData);
     (void)(allocType);
 
-    if (requestIndex == 73838)  // break;
+    if (requestIndex == 217)  // break;
 
         return true;
 
@@ -41,12 +41,18 @@ static int crtDebugMemAllocHook(int allocType,
 #endif  // NDEBUG
 #endif  // _MSC_VER
 
-void installMemManager()
+void installMemManager(int argc, char* argv[])
 {
 #ifdef _MSC_VER
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
     _CrtSetAllocHook(crtDebugMemAllocHook);
 #endif
+
+    for (int i=1;i<argc;++i)
+    {
+        (void)(argv);
+    }
+
     memm::initMemoryStatistics();
 }
 
@@ -64,19 +70,19 @@ void finishMemManager(bool const display_log)
     {
         memm::MemoryStatistics const* mem_statistics{
             memm::getMemoryStatistics()};
-        std::cout << "[MemManager] Number of allocations: " << mem_statistics->num_alloc_
-                  << "\n";
-        std::cout << "[MemManager] Number of deallocations: " << mem_statistics->num_dealloc_
-                  << "\n";
+        std::cout << "[MemManager] Number of allocations: "
+                  << mem_statistics->num_alloc_ << "\n";
+        std::cout << "[MemManager] Number of deallocations: "
+                  << mem_statistics->num_dealloc_ << "\n";
         Bytes allocated{mem_statistics->bytes_alloc_};
-        std::cout << "[MemManager] Bytes allocated:\t" << allocated.bytes << "\t("
-                  << allocated.KBytes() << "KB)\t(" << allocated.MBytes()
-                  << "MB)"
+        std::cout << "[MemManager] Bytes allocated:\t" << allocated.bytes
+                  << "\t(" << allocated.KBytes() << "KB)\t("
+                  << allocated.MBytes() << "MB)"
                   << "\n";
         Bytes deallocated{mem_statistics->bytes_alloc_};
-        std::cout << "[MemManager] Bytes deallocated:\t" << deallocated.bytes << "\t("
-                  << deallocated.KBytes() << "KB)\t(" << deallocated.MBytes()
-                  << "MB)";
+        std::cout << "[MemManager] Bytes deallocated:\t" << deallocated.bytes
+                  << "\t(" << deallocated.KBytes() << "KB)\t("
+                  << deallocated.MBytes() << "MB)";
         std::cout << std::endl;
     }
 

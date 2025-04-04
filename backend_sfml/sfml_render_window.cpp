@@ -74,7 +74,7 @@ bool SFMLRenderWindow::createWindow(u32 const width,
 
         m_render_window->setVerticalSyncEnabled(false);
         already_created_ = true;
-//        m_window_render_target.setInternalRenderTarget();
+        //        m_window_render_target.setInternalRenderTarget();
         return true;
     }
     return false;

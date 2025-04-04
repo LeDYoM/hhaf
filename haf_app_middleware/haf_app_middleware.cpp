@@ -19,7 +19,6 @@ void HafAppMiddleware::onInit(IAppInitializer& app_initializer)
 }
 
 void HafAppMiddleware::onFinish(IAppFinisher&)
-{
-}
+{}
 
 }  // namespace haf::app_middleware

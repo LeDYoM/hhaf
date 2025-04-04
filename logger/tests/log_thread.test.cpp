@@ -8,7 +8,8 @@ TEST_CASE("log_thread_commiter", "[logger][threadcommiter][logdisplayer]")
     using TestLogDisplayer = logger::LogDisplayer<
         LogTestThreadNullCommit,
         logger::SeverityTypeActiveTo<
-            logger::SeverityTypeDefinition::severity_type_t::verbose>, true>;
+            logger::SeverityTypeDefinition::severity_type_t::verbose>,
+        true>;
 
     LogTestThreadNullCommit::init_log();
     LogStreamTest testing_stream;

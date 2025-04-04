@@ -6,9 +6,9 @@
 namespace haf::backend
 {
 static constexpr char const kResourceTexture[] = "texture";
-static constexpr char const kResourceTTFont[] = "ttf";
+static constexpr char const kResourceTTFont[]  = "ttf";
 static constexpr char const kResourceBMPFont[] = "bmp_font_fnt";
-static constexpr char const kResourceShader[] = "shader";
+static constexpr char const kResourceShader[]  = "shader";
 
 struct IResourceDescriptor
 {
@@ -16,6 +16,6 @@ struct IResourceDescriptor
     htps::str type;
     htps::str fileName;
 };
-}  // namespace haf::res
+}  // namespace haf::backend
 
 #endif

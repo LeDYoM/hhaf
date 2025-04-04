@@ -7,11 +7,6 @@ HTPS_PRAGMA_ONCE
 #include <haf/include/render/renderizable.hpp>
 #include <haf/include/render/renderizable_builder.hpp>
 
-namespace haf::scene
-{
-class TransformableSceneNode;
-}
-
 namespace haf::render
 {
 class Renderizables
@@ -21,8 +16,11 @@ public:
      * @brief Construct a new Renderizables object with a parent node
      * @param scene_node Node to be used as a parent
      */
-    explicit Renderizables(
-        htps::rptr<scene::TransformableSceneNode> scene_node) noexcept;
+    explicit Renderizables(htps::rptr<scene::SceneNode> scene_node) noexcept;
+
+    explicit Renderizables() noexcept = default;
+
+    void setSceneNode(htps::rptr<scene::SceneNode> scene_node) noexcept;
 
     /**
      * @brief Create a Renderizable object
@@ -67,11 +65,11 @@ public:
     htps::size_type size() const;
     bool empty() const noexcept;
 
-    htps::rptr<scene::TransformableSceneNode const> sceneNode() const noexcept;
+    htps::rptr<scene::SceneNode const> sceneNode() const noexcept;
 
 private:
     void addRenderizable(htps::sptr<Renderizable> newElement);
-    htps::rptr<scene::TransformableSceneNode> scene_node_;
+    htps::rptr<scene::SceneNode> scene_node_;
     htps::vector<htps::sptr<Renderizable>> render_nodes_;
 };
 }  // namespace haf::render

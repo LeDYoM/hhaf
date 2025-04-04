@@ -50,9 +50,9 @@ public:
 
     PropertyState(const PropertyState&) noexcept(
         std::is_nothrow_copy_constructible_v<T>) = default;
-    constexpr PropertyState& operator            =(PropertyState&&) noexcept(
+    constexpr PropertyState& operator=(PropertyState&&) noexcept(
         std::is_nothrow_move_assignable_v<T>) = default;
-    constexpr PropertyState& operator         =(PropertyState const&) noexcept(
+    constexpr PropertyState& operator=(PropertyState const&) noexcept(
         std::is_nothrow_copy_assignable_v<T>) = default;
 
     constexpr void operator=(T const& v) noexcept(

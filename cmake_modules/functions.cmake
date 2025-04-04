@@ -146,7 +146,8 @@ function(build_lib_ext)
 
   set(CURRENT_TARGET ${PROJECT_NAME})
 
-  add_library(${CURRENT_TARGET} SHARED ${LC_BUILD_SOURCES})
+  add_library(${CURRENT_TARGET} SHARED)
+  target_sources(${CURRENT_TARGET} PRIVATE ${LC_BUILD_SOURCES})
 
   set_target_properties(${CURRENT_TARGET} PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS
                                                      true)

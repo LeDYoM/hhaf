@@ -54,7 +54,7 @@ private:
     htps::size_type stay_counter_{0U};
     htps::size_type current_score_{0U};
     GameMode game_mode_;
-    htps::sptr<GameHudSceneNode> game_hud_;
+    htps::sptr<GameHud> m_game_hud;
 };
 }  // namespace zoper
 

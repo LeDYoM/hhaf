@@ -18,14 +18,14 @@ SystemControllerLoader::SystemControllerLoader() :
 
 SystemControllerLoader::~SystemControllerLoader()
 {
-/*
-    DisplayLog::debug("SystemControllers created: ", created_);
-    DisplayLog::debug("SystemControllers deleted: ", deleted_);
-    LogAsserter::log_assert(
-        created_ == deleted_,
-        "Different number of created and deleted system controllers: ",
-        created_, " and ", deleted_);
-*/
+    /*
+        DisplayLog::debug("SystemControllers created: ", created_);
+        DisplayLog::debug("SystemControllers deleted: ", deleted_);
+        LogAsserter::log_assert(
+            created_ == deleted_,
+            "Different number of created and deleted system controllers: ",
+            created_, " and ", deleted_);
+    */
     if (loader_)
     {
         loader_->unloadModule(haf_library);

@@ -29,21 +29,36 @@ public:
      */
     [[nodiscard]] constexpr BasicDictionary() noexcept = default;
 
-    [[nodiscard]] constexpr BasicDictionary(std::initializer_list<element> eList) :
+    [[nodiscard]] constexpr BasicDictionary(
+        std::initializer_list<element> eList) :
         data_{htps::move(eList)}
     {}
 
-    [[nodiscard]] constexpr BasicDictionary(const content& eList) : data_{htps::move(eList)}
+    [[nodiscard]] constexpr BasicDictionary(const content& eList) :
+        data_{htps::move(eList)}
     {}
 
     [[nodiscard]] constexpr iterator begin() noexcept { return data_.begin(); }
-    [[nodiscard]] constexpr const_iterator begin() const noexcept { return data_.begin(); }
-    [[nodiscard]] constexpr const_iterator cbegin() const noexcept { return data_.begin(); }
+    [[nodiscard]] constexpr const_iterator begin() const noexcept
+    {
+        return data_.begin();
+    }
+    [[nodiscard]] constexpr const_iterator cbegin() const noexcept
+    {
+        return data_.begin();
+    }
     [[nodiscard]] constexpr iterator end() noexcept { return data_.end(); }
-    [[nodiscard]] constexpr const_iterator end() const noexcept { return data_.end(); }
-    [[nodiscard]] constexpr const_iterator cend() const noexcept { return data_.end(); }
+    [[nodiscard]] constexpr const_iterator end() const noexcept
+    {
+        return data_.end();
+    }
+    [[nodiscard]] constexpr const_iterator cend() const noexcept
+    {
+        return data_.end();
+    }
 
-    [[nodiscard]] constexpr bool add(content const& eList, bool const overwrite = true)
+    [[nodiscard]] constexpr bool add(content const& eList,
+                                     bool const overwrite = true)
     {
         bool result{true};
         for (const element& elems : eList)
@@ -54,7 +69,7 @@ public:
     }
 
     [[nodiscard]] constexpr bool add(std::initializer_list<element> eList,
-                       const bool overwrite = true)
+                                     const bool overwrite = true)
     {
         bool result{true};
         for (const element& elems : eList)
@@ -65,8 +80,8 @@ public:
     }
 
     [[nodiscard]] constexpr bool add(key_type const& key,
-                       T value = {},
-                       const bool overwrite = true)
+                                     T value              = {},
+                                     const bool overwrite = true)
     {
         auto const it{find(key)};
 

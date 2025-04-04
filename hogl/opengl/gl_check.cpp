@@ -5,7 +5,9 @@
 
 namespace haf::backend::ogl
 {
-void glCheckError(const char* file, unsigned int /*line*/, const char* /*expression*/)
+void glCheckError(const char* file,
+                  unsigned int /*line*/,
+                  const char* /*expression*/)
 {
     // Get the last error
     GLenum errorCode = glGetError();

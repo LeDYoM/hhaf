@@ -11,7 +11,8 @@ namespace haf::scene
 class Scene;
 class SceneNode;
 
-void HAF_PRIVATE render(Scene& scene, SceneRenderContext scene_render_context);
+// void HAF_PRIVATE render(Scene& scene, SceneRenderContext
+// scene_render_context);
 void HAF_PRIVATE render(SceneNode& scene_node,
                         SceneRenderContext scene_render_context);
 

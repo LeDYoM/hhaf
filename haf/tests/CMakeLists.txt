@@ -20,7 +20,6 @@ set(SOURCE_TESTS
     scene/scenecontroller
     scene/scenemanager
     scene/scenenode
-    scene/scenenodefactory
     scene/scenenodeparent
     scene/scenenodes
     scene/transformable

@@ -16,40 +16,40 @@ using namespace fmath;
 
 namespace zoper
 {
-void GameScene::GameScenePrivate::createScoreIncrementPoints(
+void Game::GameScenePrivate::createScoreIncrementPoints(
     SceneNode& main_node,
     vector2df const& /*lastTokenPosition*/)
 {
     auto pointsToScoreSceneNode{
-        main_node.createSceneNode<RenderizableSceneNode>(
-            "pointIncrementScore_SceneNode")};
+        main_node.createSceneNode("pointIncrementScore_SceneNode")
+            ->component<Renderizable>()};
 
     auto node{pointsToScoreSceneNode->renderizableBuilder()
-                    .name("pointIncrementScore")
-                    .figType(FigType_t::Sprite)
-                    .color(colors::White)
-//                    .pointCount(30U)
-                    .create()};
+                  .name("pointIncrementScore")
+                  .figType(FigType_t::Sprite)
+                  .color(colors::White)
+                  //                    .pointCount(30U)
+                  .create()};
 
-    pointsToScoreSceneNode->Scale = vector2df{0.01F, 0.01F};
+    pointsToScoreSceneNode->attachedNode()->Scale = vector2df{0.01F, 0.01F};
     using namespace gameplay::constants;
 
     DisplayLog::info("Creating animation for points to score");
-/*
-    auto property_animation_builder{
-        scene_animation_component_->make_property_animation_builder<Position>(
-            pointsToScoreSceneNode)};
-    property_animation_builder.startValue(lastTokenPosition)
-        .endValue(EndPositionPointsToScore)
-        .duration(time::TimePoint_as_miliseconds(MillisAnimationPointsToScore))
-        .actionWhenFinished([pointsToScoreSceneNode]() {
-            pointsToScoreSceneNode->autoRemove();
-        });
-*/
-    pointsToScoreSceneNode->Position = EndPositionPointsToScore;
-/*
-    scene_animation_component_->addAnimation(
-        htps::move(property_animation_builder));
-*/
+    /*
+        auto property_animation_builder{
+            scene_animation_component_->make_property_animation_builder<Position>(
+                pointsToScoreSceneNode)};
+        property_animation_builder.startValue(lastTokenPosition)
+            .endValue(EndPositionPointsToScore)
+            .duration(time::TimePoint_as_miliseconds(MillisAnimationPointsToScore))
+            .actionWhenFinished([pointsToScoreSceneNode]() {
+                pointsToScoreSceneNode->autoRemove();
+            });
+    */
+    pointsToScoreSceneNode->attachedNode()->Position = EndPositionPointsToScore;
+    /*
+        scene_animation_component_->addAnimation(
+            htps::move(property_animation_builder));
+    */
 }
 }  // namespace zoper

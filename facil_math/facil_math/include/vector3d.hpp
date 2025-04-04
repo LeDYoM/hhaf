@@ -221,7 +221,8 @@ static_assert(std::is_standard_layout_v<vector3d<tps::u8>>,
 static_assert(std::is_standard_layout_v<vector3d<tps::f64>>,
               "vector3df64 has not standard layout");
 
-static_assert(std::is_trivial_v<vector3d<tps::f32>>, "vector3df32 is not trivial");
+static_assert(std::is_trivial_v<vector3d<tps::f32>>,
+              "vector3df32 is not trivial");
 
 using vector3du8  = vector3d<tps::u8>;
 using vector3ds8  = vector3d<tps::s8>;

@@ -69,8 +69,8 @@ str SFMLTTFont::getTexture(const u32 characterSize, char const /*character*/)
             msptr<SFMLTexture>(&font_->getTexture(characterSize), false)};
 
         str complete_resource_id{make_str(resource_id_, characterSize)};
-        bool result{
-            iresource_manager_->setExternalTexture(complete_resource_id, new_texture.get())};
+        bool result{iresource_manager_->setExternalTexture(complete_resource_id,
+                                                           new_texture.get())};
         if (result)
         {
             textures_ids_cache_[characterSize]  = complete_resource_id;

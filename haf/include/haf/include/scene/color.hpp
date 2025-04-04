@@ -56,10 +56,10 @@ struct Color
           value_type const blue,
           value_type const alpha = value_max) noexcept;
 
-    Color(Color const&) noexcept = default;
+    Color(Color const&) noexcept            = default;
     Color& operator=(Color const&) noexcept = default;
     Color(Color&&) noexcept                 = default;
-    Color& operator=(Color&&) noexcept = default;
+    Color& operator=(Color&&) noexcept      = default;
 
     /**
      * @brief Construct a Color object from another color, but with a

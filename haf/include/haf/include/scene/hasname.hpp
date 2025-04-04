@@ -12,10 +12,10 @@ class HAF_API HasName
 public:
     constexpr HasName(htps::str const& name) : name_{name} {}
     constexpr HasName(htps::str&& name) noexcept : name_{htps::move(name)} {}
-    constexpr HasName(HasName&& other) noexcept = default;
-    constexpr HasName(HasName const& other)     = default;
+    constexpr HasName(HasName&& other) noexcept            = default;
+    constexpr HasName(HasName const& other)                = default;
     constexpr HasName& operator=(HasName&& other) noexcept = default;
-    constexpr HasName& operator=(HasName const& other) = default;
+    constexpr HasName& operator=(HasName const& other)     = default;
 
     constexpr htps::str const& name() const noexcept { return name_; }
 

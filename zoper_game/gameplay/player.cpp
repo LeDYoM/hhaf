@@ -5,7 +5,6 @@
 #include <boardmanager/include/boardmanager.hpp>
 
 #include <hlog/include/hlog.hpp>
-#include <haf/include/scene_nodes/renderizable_scene_node.hpp>
 #include <haf/include/render/renderizables.hpp>
 #include <haf/include/component/component_container.hpp>
 
@@ -18,13 +17,11 @@ using namespace fmath;
 
 namespace zoper
 {
-Player::Player(rptr<SceneNode> parent, str name) :
-    BaseClass{htps::move(parent), htps::move(name)},
-    player_board_position{},
-    currentDirection{Direction{Direction::DirectionData::Up}}
+void Player::onAttached()
 {
-    m_renderizable_scene_node =
-        createSceneNode<RenderizableSceneNode>("renderizable_scene_node");
+    m_renderizable_scene_node = attachedNode()
+                                    ->createSceneNode("renderizable_scene_node")
+                                    ->component<Renderizable>();
     m_renderizable_scene_node->renderizableBuilder()
         .name("player_render_scene_node")
         .figType(FigType_t::PolygonSprite)
@@ -32,23 +29,21 @@ Player::Player(rptr<SceneNode> parent, str name) :
         .create();
 }
 
-Player::~Player() = default;
-
 void Player::update()
 {
-    BaseClass::update();
+    Base::update();
 
     if (player_board_position.readResetHasChanged())
     {
         DisplayLog::info("Player board position: ", boardPosition());
-        Position = board2Scene(boardPosition());
-        DisplayLog::info("Player scene position: ", Position());
+        attachedNode()->Position = board2Scene(boardPosition());
+        DisplayLog::info("Player scene position: ", attachedNode()->Position());
     }
 
     if (currentDirection.readResetHasChanged())
     {
         auto const direction{currentDirection()};
-        m_renderizable_scene_node->Rotation = direction.angle();
+        m_renderizable_scene_node->attachedNode()->Rotation = direction.angle();
     }
 }
 
@@ -59,13 +54,13 @@ bool Player::canBeMovedTo(BoardPositionType const& dest_position) const
 
 void Player::tileMoved(BoardPositionType const& source)
 {
-    BaseClass::tileMoved(source);
+    Base::tileMoved(source);
     DisplayLog::info("Player old board position: ", source);
     LogAsserter::log_assert(boardPosition() != source,
                             "Source and dest are the same!");
     DisplayLog::info("Player board position: ", boardPosition());
-    Position = board2Scene(boardPosition());
-    DisplayLog::info("Player scene position: ", Position());
+    attachedNode()->Position = board2Scene(boardPosition());
+    DisplayLog::info("Player scene position: ", attachedNode()->Position());
 
     player_board_position = boardPosition();
     currentDirection      = fromPositions(source, boardPosition());
@@ -73,17 +68,19 @@ void Player::tileMoved(BoardPositionType const& source)
 
 void Player::launchPlayerAnimation(vector2df const& toWhere)
 {
-    component(animation_component_);
+    attachedNode()->component(animation_component_);
 
     auto property_animation_builder{
         animation_component_->make_property_animation_builder(
-            &Player::Position, Player::Position(), toWhere)};
+            &SceneNode::Position, attachedNode()->Position(), toWhere)};
+
     property_animation_builder
         .duration(TimePoint_as_miliseconds(
             gameplay::constants::MillisAnimationLaunchPlayerStep))
-        .actionWhenFinished([this, currentPosition = Position()]() {
-            launchAnimationBack(currentPosition);
-        });
+        .actionWhenFinished(
+            [this, currentPosition = attachedNode()->Position()]() {
+                launchAnimationBack(currentPosition);
+            });
     animation_component_->addAnimation(htps::move(property_animation_builder));
 }
 
@@ -91,11 +88,11 @@ void Player::launchAnimationBack(SceneCoordinates const& toWhere)
 {
     DisplayLog::info("Creating animation for player to go back");
     currentDirection = currentDirection().negate();
-    component(animation_component_);
+    attachedNode()->component(animation_component_);
 
     auto property_animation_builder{
         animation_component_->make_property_animation_builder(
-            &Player::Position, Position(), toWhere)};
+            &SceneNode::Position, attachedNode()->Position(), toWhere)};
     property_animation_builder.duration(TimePoint_as_miliseconds(
         gameplay::constants::MillisAnimationLaunchPlayerStep));
     animation_component_->addAnimation(htps::move(property_animation_builder));
@@ -118,7 +115,7 @@ void Player::setTokenColor(scene::Color const& token_color)
 void Player::tileChanged(BoardTileData const oldValue,
                          BoardTileData const newValue)
 {
-    BaseClass::tileChanged(oldValue, newValue);
+    Base::tileChanged(oldValue, newValue);
     DisplayLog::info("Player (position ", boardPosition(), ") changed from ",
                      oldValue, " to ", newValue);
 }

@@ -1,8 +1,9 @@
 #ifndef ZOPER_GAMEBASETILE_HPP
 #define ZOPER_GAMEBASETILE_HPP
 
-#include <htypes/include/types.hpp>
+#include <haf/include/core/types.hpp>
 #include <haf/include/render/renderizable.hpp>
+#include <haf/include/component/component.hpp>
 #include <haf/include/scene/color.hpp>
 #include <boardmanager/include/itile.hpp>
 #include "boardgroup.hpp"
@@ -15,21 +16,16 @@ class BoardManager;
 namespace zoper
 {
 
-class GameBaseTile : public haf::board::ITile,
-                     public haf::scene::TransformableSceneNode
+class GameBaseTile : public haf::component::Component, public haf::board::ITile
 {
-    using BaseClass = haf::scene::TransformableSceneNode;
+    using Base = haf::component::Component;
 
 protected:
     using TileBase = haf::board::ITile;
 
 public:
     using BoardPositionType = haf::board::BoardPositionType;
-    using BoardTileData = haf::board::ITile::BoardTileData;
-
-    GameBaseTile(htps::rptr<haf::scene::SceneNode> const parent,
-                 htps::str name);
-    ~GameBaseTile() override;
+    using BoardTileData     = haf::board::ITile::BoardTileData;
 
     void tileChanged(BoardTileData const oldValue,
                      BoardTileData const newValue) override;

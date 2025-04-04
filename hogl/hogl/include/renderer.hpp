@@ -8,6 +8,6 @@ class Renderer
 public:
     Renderer();
 };
-}  // namespace haf::backend::client
+}  // namespace haf::ogl
 
 #endif

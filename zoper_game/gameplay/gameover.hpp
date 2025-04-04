@@ -1,21 +1,23 @@
-#ifndef ZOPER_GAMEOVER_SCENENODE_INCLUDE_HPP
-#define ZOPER_GAMEOVER_SCENENODE_INCLUDE_HPP
+#ifndef ZOPER_GAMEOVER_INCLUDE_HPP
+#define ZOPER_GAMEOVER_INCLUDE_HPP
 
-#include <haf/include/scene_nodes/transformable_scene_node.hpp>
+#include <haf/include/core/types.hpp>
+#include <haf/include/component/component.hpp>
+#include <haf/include/scene/scene_node.hpp>
 
 namespace zoper
 {
-class GameOverSceneNode : public haf::scene::TransformableSceneNode
+class GameOver : public haf::component::Component
 {
-    using BaseClass = haf::scene::TransformableSceneNode;
+    using Base = haf::component::Component;
 
 public:
-    using BaseClass::BaseClass;
+    using Base::Base;
 
-    void onCreated() override;
+    void onAttached() override;
 
 private:
-    htps::sptr<haf::scene::TransformableSceneNode> game_over_rg_;
+    htps::sptr<haf::scene::SceneNode> m_game_over_rg;
 };
 }  // namespace zoper
 

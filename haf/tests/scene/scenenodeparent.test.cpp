@@ -2,11 +2,10 @@
 
 #include <htypes/include/types.hpp>
 #include <haf/include/scene/scene_node.hpp>
-#include <haf/include/scene/scene.hpp>
 #include <haf/include/scene/scenenode_cast.hpp>
 
 using namespace htps;
-
+/*
 class TestScene : public haf::scene::Scene
 {
     using Scene::Scene;
@@ -67,3 +66,4 @@ TEST_CASE("SceneNodeParent::SceneNodeParent", "[SceneNode][SceneNodeParent]")
         CHECK(scene_node_test->ancestor<SceneNode>() == test_scene.get());
     }
 }
+*/

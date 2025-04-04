@@ -10,9 +10,9 @@
 
 namespace haf::backend
 {
-    class ITexture;
-    class IShader;
-}
+class ITexture;
+class IShader;
+}  // namespace haf::backend
 
 namespace haf::ogl
 {

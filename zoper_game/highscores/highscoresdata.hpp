@@ -20,7 +20,7 @@ struct HighScore
 };
 
 inline const mcs::Object& operator>>(const mcs::Object& obj,
-                                      HighScore& high_score_data)
+                                     HighScore& high_score_data)
 {
     high_score_data.name  = obj["name"].as<htps::str>();
     high_score_data.score = obj["score"].as<Score>();
@@ -28,7 +28,7 @@ inline const mcs::Object& operator>>(const mcs::Object& obj,
 }
 
 inline mcs::Object& operator<<(mcs::Object& obj,
-                                const HighScore& high_score_data)
+                               const HighScore& high_score_data)
 {
     obj.set("name", high_score_data.name);
     obj.set("score", high_score_data.score);
@@ -55,9 +55,9 @@ public:
     }
 
     friend mcs::Object& operator<<(mcs::Object& obj,
-                                    const HighScoresData& high_scores_data);
+                                   const HighScoresData& high_scores_data);
     friend const mcs::Object& operator>>(const mcs::Object& obj,
-                                          HighScoresData& high_scores_data);
+                                         HighScoresData& high_scores_data);
 
     bool serialize(mcs::Object& obj) const override
     {
@@ -76,7 +76,7 @@ private:
 };
 
 inline const mcs::Object& operator>>(const mcs::Object& obj,
-                                      HighScoresData& high_scores_data)
+                                     HighScoresData& high_scores_data)
 {
     if (const auto obj_high_scores_data = obj["high_scores"];
         obj_high_scores_data.isObject())
@@ -87,7 +87,7 @@ inline const mcs::Object& operator>>(const mcs::Object& obj,
 }
 
 inline mcs::Object& operator<<(mcs::Object& obj,
-                                const HighScoresData& high_scores_data)
+                               const HighScoresData& high_scores_data)
 {
     obj.set("high_scores", high_scores_data.high_score_list_);
     return obj;

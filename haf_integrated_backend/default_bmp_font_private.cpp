@@ -38,7 +38,7 @@ s32 CharDescriptor::GetKerningPair(u32 const second) const
 
 bool DefaultBMPFont::DefaultBMFontPrivate::ParseFont(const str& data)
 {
-//    auto data_lines{data.split("\n")};
+    //    auto data_lines{data.split("\n")};
     std::istringstream font_file_stream_{data.c_str()};
     std::istream& font_file_stream{font_file_stream_};
     std::size_t i{0U};

@@ -2,7 +2,6 @@
 #define HF_MAIN_SCENE_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
-#include <haf/include/scene/scene.hpp>
 #include <haf/include/component/component.hpp>
 
 namespace hl
@@ -20,6 +19,6 @@ public:
 
     void onAttached() override;
 };
-}  // namespace zoper
+}  // namespace hl
 
 #endif

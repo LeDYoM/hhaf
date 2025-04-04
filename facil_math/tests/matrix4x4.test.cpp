@@ -80,8 +80,8 @@ TEST_CASE("haf::math::Matrix4x4::setColumn", "[haf][scene][Matrix4x4]")
         matrix1.setColumn<2U>({5.4F, 8.5F, 9.6F, 10.7F});
         CHECK(isAlmostEqual(
             matrix1,
-            Matrix4x4{1.0F, 0.0F, 0.0F, 0.0F, 0.0F, 1.0F, 0.0F, 0.0F,
-             5.4F, 8.5F, 9.6F, 10.7F, 0.0F, 0.0F, 0.0F, 1.0F}));
+            Matrix4x4{1.0F, 0.0F, 0.0F, 0.0F, 0.0F, 1.0F, 0.0F, 0.0F, 5.4F,
+                      8.5F, 9.6F, 10.7F, 0.0F, 0.0F, 0.0F, 1.0F}));
     }
 
     {
@@ -91,8 +91,8 @@ TEST_CASE("haf::math::Matrix4x4::setColumn", "[haf][scene][Matrix4x4]")
         matrix1.setColumn<3U>({5.4F, 8.5F, 9.6F, 10.7F});
         CHECK(isAlmostEqual(
             matrix1,
-            Matrix4x4{1.0F, 0.0F, 0.0F, 0.0F, 0.0F, 1.0F, 0.0F, 0.0F,
-             0.0F, 0.0F, 1.0F, 0.0F, 5.4F, 8.5F, 9.6F, 10.7F}));
+            Matrix4x4{1.0F, 0.0F, 0.0F, 0.0F, 0.0F, 1.0F, 0.0F, 0.0F, 0.0F,
+                      0.0F, 1.0F, 0.0F, 5.4F, 8.5F, 9.6F, 10.7F}));
     }
 
     {
@@ -106,12 +106,10 @@ TEST_CASE("haf::math::Matrix4x4::setColumn", "[haf][scene][Matrix4x4]")
 
         CHECK(isAlmostEqual(
             matrix1,
-            Matrix4x4{5.4F, 8.5F, 9.6F, 10.7F, 5.4F, 8.5F, 9.6F, 10.7F,
-             5.4F, 8.5F, 9.6F, 10.7F, 5.4F, 8.5F, 9.6F, 10.7F}));
+            Matrix4x4{5.4F, 8.5F, 9.6F, 10.7F, 5.4F, 8.5F, 9.6F, 10.7F, 5.4F,
+                      8.5F, 9.6F, 10.7F, 5.4F, 8.5F, 9.6F, 10.7F}));
     }
 }
 
 TEST_CASE("haf::math::Matrix4x4::operator*", "[haf][scene][Matrix4x4]")
-{
-
-}
+{}

@@ -15,7 +15,7 @@ public:
     explicit MemoryDataInitializer(
         htps::rptr<IMemoryDataViewer> memory_data_viewer);
 
-    MemoryDataInitializer(MemoryDataInitializer const&) = delete;
+    MemoryDataInitializer(MemoryDataInitializer const&)            = delete;
     MemoryDataInitializer& operator=(MemoryDataInitializer const&) = delete;
 
     htps::size_type allocations() const;

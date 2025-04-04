@@ -4,7 +4,7 @@
 #include <htypes/include/types.hpp>
 #include <haf/include/events/connection.hpp>
 
-#include <haf/include/scene/scene.hpp>
+#include <haf/include/scene_components/scene_component.hpp>
 #include <haf/include/render/renderizable.hpp>
 #include <haf/include/resources/itexture.hpp>
 #include <haf/include/resources/ittfont.hpp>
@@ -15,24 +15,20 @@ namespace zoper
 {
 class HighScoreTextController;
 
-class HighScoresScene final : public haf::scene::Scene
+class HighScores final : public haf::scene::SceneComponent
 {
+    using Base = haf::scene::SceneComponent;
 public:
-    HighScoresScene();
-    ~HighScoresScene() override;
-
     static constexpr char StaticTypeName[] = HIGHSCORES_SCENE_NAME;
 
     htps::str nextSceneName() override;
-    void onCreated() override;
+    void onAttached() override;
 
 private:
-    using BaseClass = haf::scene::Scene;
-
     htps::sptr<HighScoreTextController> high_score_text_controller_;
-    htps::sptr<haf::res::IFont> normal_font_;
-    haf::scene::Color normal_color_;
-    haf::scene::Color selected_color_;
+    htps::sptr<haf::res::IFont> m_normal_font;
+    haf::scene::Color m_normal_color;
+    haf::scene::Color m_selected_color;
 };
 }  // namespace zoper
 

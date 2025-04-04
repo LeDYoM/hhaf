@@ -27,8 +27,8 @@
             &b_manager, ibackend_register); \
     }
 
-#define DEFAULT_INIT_FINISH_FUNCTIONS(b_manager)    \
-DEFINE_DEFAULT_INIT_FUNCTION(b_manager)   \
-DEFINE_DEFAULT_FINISH_FUNCTION(b_manager)
+#define DEFAULT_INIT_FINISH_FUNCTIONS(b_manager) \
+    DEFINE_DEFAULT_INIT_FUNCTION(b_manager) \
+    DEFINE_DEFAULT_FINISH_FUNCTION(b_manager)
 
 #endif

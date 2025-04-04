@@ -2,7 +2,6 @@
 
 #include <htypes/include/types.hpp>
 #include <haf/include/scene/scene_node.hpp>
-#include <haf/include/scene/scene.hpp>
 #include <haf/include/component/component_container.hpp>
 #include <haf/include/component/component.hpp>
 #include <haf/include/component/component_requirements.hpp>

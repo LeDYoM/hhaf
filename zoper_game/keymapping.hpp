@@ -31,9 +31,9 @@ public:
     void apply();
 
     friend const mcs::Object& operator>>(const mcs::Object& obj,
-                                          KeyMapping& key_mapping);
+                                         KeyMapping& key_mapping);
     friend mcs::Object& operator<<(mcs::Object& obj,
-                                    const KeyMapping& key_mapping);
+                                   const KeyMapping& key_mapping);
 
     bool serialize(mcs::Object&) const override;
     bool deserialize(mcs::Object const&) override;

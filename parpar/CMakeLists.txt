@@ -5,7 +5,7 @@ project("PARameter PARser"
     VERSION 1.0.0.1
     DESCRIPTION "Parameter Parser"
     # [HOMEPAGE_URL <url-string>]
-    LANGUAGES CXX
+    LANGUAGES C CXX
 )
 
 set(CURRENT_TARGET parpar)

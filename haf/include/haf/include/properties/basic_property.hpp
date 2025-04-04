@@ -26,9 +26,9 @@ public:
         std::is_nothrow_move_constructible_v<T>) = default;
     BasicProperty(BasicProperty const&) noexcept(
         std::is_nothrow_copy_constructible_v<T>) = default;
-    constexpr BasicProperty& operator            =(BasicProperty&&) noexcept(
+    constexpr BasicProperty& operator=(BasicProperty&&) noexcept(
         std::is_nothrow_move_assignable_v<T>) = default;
-    constexpr BasicProperty& operator         =(BasicProperty const&) noexcept(
+    constexpr BasicProperty& operator=(BasicProperty const&) noexcept(
         std::is_nothrow_copy_assignable_v<T>) = default;
 
     constexpr BasicProperty(T&& iv) noexcept(

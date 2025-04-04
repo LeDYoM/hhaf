@@ -24,9 +24,9 @@ public:
 
     Transformation() noexcept;
     virtual ~Transformation();
-    Transformation(Transformation const&) = delete;
-    Transformation& operator=(Transformation const&)    = delete;
-    constexpr Transformation(Transformation&&) noexcept = default;
+    Transformation(Transformation const&)                          = delete;
+    Transformation& operator=(Transformation const&)               = delete;
+    constexpr Transformation(Transformation&&) noexcept            = default;
     constexpr Transformation& operator=(Transformation&&) noexcept = default;
 
     void setLeftTopPositionScale(VectorScalar const& vector);

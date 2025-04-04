@@ -98,7 +98,6 @@ private:
             }
         }
     }
-
 };
 
 }  // namespace logger

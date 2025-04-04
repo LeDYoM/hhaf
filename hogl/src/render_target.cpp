@@ -170,7 +170,7 @@ void RenderTarget::bindVertexBuffer(VertexBuffer const* vertexBuffer)
 }
 
 void RenderTarget::draw(VertexBuffer const& vertexBuffer,
-                            RenderElement const& render_element)
+                        RenderElement const& render_element)
 {
     size_type firstVertex = 0;
 
@@ -233,9 +233,10 @@ void RenderTarget::setProjection(span<f32 const> const& projection)
 
 str RenderTarget::info() const
 {
-    return make_str("name:SFMLwRenderTarget;provider:SFML;provider_version:");/*,
-                    SFML_VERSION_MAJOR, ".", SFML_VERSION_MINOR, ".",
-                    SFML_VERSION_PATCH, ";version:0;subversion:3:patch0");*/
+    return make_str(
+        "name:SFMLwRenderTarget;provider:SFML;provider_version:"); /*,
+         SFML_VERSION_MAJOR, ".", SFML_VERSION_MINOR, ".",
+         SFML_VERSION_PATCH, ";version:0;subversion:3:patch0");*/
 }
 
-}  // namespace haf::backend::sfmlb
+}  // namespace haf::ogl

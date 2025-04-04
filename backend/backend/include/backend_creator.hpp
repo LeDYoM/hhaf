@@ -11,7 +11,6 @@ extern "C"
 }
 
 using BackendFactoryUPtr = htps::uptr<haf::backend::BackendFactory>;
-using BackendFactoryPtr = htps::rptr<haf::backend::BackendFactory>;
-
+using BackendFactoryPtr  = htps::rptr<haf::backend::BackendFactory>;
 
 #endif

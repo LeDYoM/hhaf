@@ -7,7 +7,7 @@ template <typename T>
 class IFactoryOf
 {
 public:
-    using Interface = T;
+    using Interface       = T;
     virtual ~IFactoryOf() = default;
 
     virtual T* create()      = 0;

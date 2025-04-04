@@ -32,7 +32,8 @@ constexpr const sf::Vector2<T> to_sf_type(fmath::vector2d<T> const& v) noexcept
 }
 
 template <typename T>
-constexpr const fmath::vector2d<T> from_sf_type(sf::Vector2<T> const& v) noexcept
+constexpr const fmath::vector2d<T> from_sf_type(
+    sf::Vector2<T> const& v) noexcept
 {
     return fmath::vector2d<T>{v.x, v.y};
 }

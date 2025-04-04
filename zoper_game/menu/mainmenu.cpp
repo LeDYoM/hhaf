@@ -1,9 +1,9 @@
 #include "mainmenu.hpp"
 #include "../loaders/mainmenuresources.hpp"
 #include "../gameshareddata.hpp"
-#include <menu_paged/include/menu_page.hpp>
+#include <default_menu_paged/include/menu_page.hpp>
+#include <default_menu_paged/include/menu_paged_black_board.hpp>
 #include <haf/include/scene/scene_node.hpp>
-#include <haf/include/scene/scene.hpp>
 #include <haf/include/scene_components/camera_component.hpp>
 #include <hlog/include/hlog.hpp>
 #include <haf/include/resources/iresource_retriever.hpp>
@@ -13,9 +13,11 @@
 #include <htypes/include/types.hpp>
 
 using namespace htps;
+using namespace fmath;
 using namespace haf;
 using namespace haf::scene;
 using namespace haf::scene::nodes;
+using namespace haf::exts::dmp;
 
 namespace zoper
 {
@@ -58,8 +60,8 @@ constexpr auto to_str(Antialiasing const aa)
 void MainMenu::goGame(GameMode const game_mode, vector<s32> menu_data)
 {
     using namespace haf::shdata;
-    auto game_shared_data_updater{
-        SharedDataUpdater<GameSharedData>{subSystem<ISharedData>()}};
+    auto game_shared_data_updater{SharedDataUpdater<GameSharedData>{
+        attachedNode()->subSystem<ISharedData>()}};
 
     auto game_shared_data{
         game_shared_data_updater.updateOrCreate(GameSharedData::address())};
@@ -81,24 +83,27 @@ void MainMenu::goTokenGame(vector<s32> menu_data)
     goGame(GameMode::Token, htps::move(menu_data));
 }
 
-void MainMenu::onCreated()
+void MainMenu::onAttached()
 {
-    BaseClass::onCreated();
+    Base::onAttached();
 
-    NormalTextFont =
+    auto comp{attachedNode()->component<MenuPagedBlackBoard>()};
+
+    comp->NormalTextFont =
 #ifdef TEST_BMP_FONT
-            getBMPFont(MainMenuResources::TestFontId)
+        getBMPFont(MainMenuResources::TestFontId)
 #else
-            subSystem<res::IResourceRetriever>()
-                ->getTTFont(MainMenuResources::MenuFontId)
-                ->font(30)
+        attachedNode()
+            ->subSystem<res::IResourceRetriever>()
+            ->getTTFont(MainMenuResources::MenuFontId)
+            ->font(30)
 #endif
-                ;
-    NormalColor = colors::Blue;
-    SelectedColor = colors::Red;
+        ;
+    comp->NormalColor   = colors::Blue;
+    comp->SelectedColor = colors::Red;
 
-    vector_shared_pointers<scene::MenuPage> menu_steps;
-    Scale = {1.0F, 0.3F};
+    vector_shared_pointers<MenuPage> menu_steps;
+    attachedNode()->Scale = {1.0F, 0.3F};
 
     // Create and register menu pages
     {
@@ -160,11 +165,10 @@ void MainMenu::onCreated()
 
     configure_menu(htps::move(menu_steps));
 
-    FinishSceneAtEnd = true;
+    comp->FinishSceneAtEnd = true;
 }
 
-void MainMenu::onTableNodeCreated(fmath::vector2dst,
-                                  htps::sptr<SceneNodeText> const& node)
+void MainMenu::onTableNodeCreated(vector2dst, sptr<Text> const& node)
 {
     node->TextBaseSizeProperty = TextBaseSize{'A', 8U};
 }

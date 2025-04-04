@@ -15,7 +15,6 @@ namespace haf::scene
 {
 class SceneController;
 class SceneNode;
-class SceneFactory;
 }  // namespace haf::scene
 
 namespace haf::scene
@@ -66,12 +65,12 @@ public:
      */
     bool exitRequested() const override;
 
-    SceneNodeFactory& sceneNodeFactory() override;
+    component::ComponentFactory& componentFactory() override;
 
     bool setNextApp(htps::str const& next_app) override;
 
 private:
-    htps::sptr<SceneController> scene_controller_;
+    htps::sptr<SceneController> m_scene_controller;
 };
 }  // namespace haf::scene
 

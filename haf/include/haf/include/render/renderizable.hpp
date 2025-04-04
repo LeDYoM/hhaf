@@ -16,18 +16,14 @@ HTPS_PRAGMA_ONCE
 #include <haf/include/resources/ishader.hpp>
 #include <haf/include/render/renderizable_data.hpp>
 #include <haf/include/scene/material.hpp>
-
-namespace haf::scene
-{
-class TransformableSceneNode;
-}
+#include <haf/include/scene/scene_node.hpp>
 
 namespace haf::render
 {
 class Renderizable final : public sys::HasName
 {
 public:
-    Renderizable(htps::rptr<scene::TransformableSceneNode> parent,
+    Renderizable(htps::rptr<scene::SceneNode> parent,
                  RenderizableData&& renderizable_data);
 
     ~Renderizable();
@@ -39,12 +35,12 @@ public:
 
     prop::BasicProperty<bool> visible{true};
 
-    htps::rptr<scene::TransformableSceneNode> parent() noexcept;
-    htps::rptr<scene::TransformableSceneNode const> parent() const noexcept;
+    htps::rptr<scene::SceneNode> parent() noexcept;
+    htps::rptr<scene::SceneNode const> parent() const noexcept;
 
 private:
     scene::Material m_material;
-    htps::rptr<scene::TransformableSceneNode> parent_;
+    htps::rptr<scene::SceneNode> parent_;
     struct RenderizablePrivate;
     htps::PImplPointer<RenderizablePrivate> p_;
 

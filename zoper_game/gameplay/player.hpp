@@ -12,18 +12,17 @@ namespace zoper
 
 class Player : public GameBaseTile
 {
-    using BaseClass = GameBaseTile;
+    using Base = GameBaseTile;
 
 public:
-    using BoardTileData     = BaseClass::BoardTileData;
-    using BoardPositionType = BaseClass::BoardPositionType;
+    using BoardTileData     = Base::BoardTileData;
+    using BoardPositionType = Base::BoardPositionType;
 
-    Player(htps::rptr<haf::scene::SceneNode> parent,
-           htps::str name);
-    ~Player() override;
+    void onAttached() override;
 
     haf::prop::PropertyState<BoardPositionType> player_board_position;
-    haf::prop::PropertyState<Direction> currentDirection;
+    haf::prop::PropertyState<Direction> currentDirection{
+        Direction::DirectionData::Up};
 
     bool canBeMovedTo(BoardPositionType const& dest_position) const override;
 
@@ -40,7 +39,7 @@ public:
 private:
     void setTokenColor(haf::scene::Color const& token_color) override;
 
-    htps::sptr<haf::scene::RenderizableSceneNode> m_renderizable_scene_node;
+    htps::sptr<haf::scene::Renderizable> m_renderizable_scene_node;
     void launchAnimationBack(haf::SceneCoordinates const& toWhere);
     htps::sptr<haf::anim::AnimationComponent> animation_component_;
 };

@@ -5,7 +5,7 @@
 #include "player.hpp"
 #include "constants.hpp"
 #include "gameover.hpp"
-#include "pause_scene_node.hpp"
+#include "pause.hpp"
 #include "boardutils.hpp"
 #include "scoreutils.hpp"
 #include "next_token.hpp"
@@ -46,99 +46,109 @@ using namespace fmath;
 
 namespace zoper
 {
-constexpr u32 NumTokens = 5U;
+constexpr u32 NumTokens{5U};
 
-GameScene::GameScene() : Scene{StaticTypeName}
+Game::Game() : SceneComponent{}
 {}
 
-GameScene::~GameScene() = default;
+Game::~Game() = default;
 
-str GameScene::nextSceneName()
+str Game::nextSceneName()
 {
     return HIGHSCORES_SCENE_NAME;
 }
 
-void GameScene::onCreated()
+void Game::onAttached()
 {
-    BaseClass::onCreated();
+    Base::onAttached();
     LogAsserter::log_assert(p_ == nullptr,
                             "Private data pointer is not nullptr!");
     p_ = muptr<GameScenePrivate>();
 
-    auto resources_configurator{subSystem<res::IResourcesConfigurator>()};
+    auto resources_configurator{
+        attachedNode()->subSystem<res::IResourcesConfigurator>()};
     resources_configurator->setResourceConfigFile("resources.txt");
     resources_configurator->loadSection("game");
 
-    next_token_part_ = 0U;
+    m_next_token_part = 0U;
 
     // Create the general timer component for the scene.
-    scene_timer_component_ = component<time::TimerComponent>();
+    m_scene_timer_component = attachedNode()->component<time::TimerComponent>();
 
-    p_->scene_animation_component_ = component<AnimationComponent>();
+    p_->scene_animation_component_ =
+        attachedNode()->component<AnimationComponent>();
 
     // At this point, we setup level properties.
     // level_properties_ should not be used before this point.
-    level_properties_ = component<LevelProperties>();
+    m_level_properties = attachedNode()->component<LevelProperties>();
 
-    size_type start_level;
-    GameMode game_mode;
+    size_type start_level{0};
+    GameMode game_mode{GameMode::Token};
 
     {
-        auto game_shared_data{shdata::SharedDataViewer<GameSharedData>(
-                                  subSystem<shdata::ISharedData>())
-                                  .view(GameSharedData::address())};
+        auto game_shared_data{
+            shdata::SharedDataViewer<GameSharedData>(
+                attachedNode()->subSystem<shdata::ISharedData>())
+                .view(GameSharedData::address())};
 
         start_level = game_shared_data->startLevel;
         game_mode   = game_shared_data->gameMode;
     }
 
-    level_properties_->configure(start_level, game_mode,
-                                 scene_timer_component_);
+    m_level_properties->configure(start_level, game_mode,
+                                  m_scene_timer_component);
 
     using namespace haf::board;
 
-    LogAsserter::log_assert(!board_group_, "board_group_ is not empty");
-    board_group_ = createSceneNode<BoardGroup>("BoardGroup");
+    LogAsserter::log_assert(!m_board_group, "board_group_ is not empty");
+    m_board_group =
+        attachedNode()->createSceneNode("BoardGroup")->component<BoardGroup>();
 
-    board_group_->configure(TokenZones::size, level_properties_);
+    m_board_group->configure(TokenZones::size, m_level_properties);
 
-    moveToFirstPosition(board_group_);
+    attachedNode()->moveToFirstPosition(m_board_group->attachedNode()->getShared(
+        m_board_group->attachedNode()));
 #ifdef USE_DEBUG_ACTIONS
-    component<debug::DebugActions>()->addDebugAction(
-        input::Key::Num2,
-        [this]() { component<debug::DebugActions>()->logSceneNodeTree(); });
-    component<debug::DebugActions>()->addDebugAction(
+    attachedNode()->component<debug::DebugActions>()->addDebugAction(
+        input::Key::Num2, [this]() {
+            attachedNode()
+                ->component<debug::DebugActions>()
+                ->logSceneNodeTree();
+        });
+    attachedNode()->component<debug::DebugActions>()->addDebugAction(
         input::Key::Num1, [this]() { levelProperties()->increaseScore(100U); });
-    component<debug::DebugActions>()->addDebugAction(
+    attachedNode()->component<debug::DebugActions>()->addDebugAction(
         input::Key::Q, [this]() { goGameOver(); });
-    component<debug::DebugActions>()->addDebugAction(
+    attachedNode()->component<debug::DebugActions>()->addDebugAction(
         input::Key::A, [this]() { levelProperties()->nextLevel(); });
-
 #endif
 
     // The next token has the responsibility of calling the function
     // generate new tokens according with the time provided by level proverties
-    next_token_ = msptr<NextToken>(scene_timer_component_);
-    next_token_->prepareNextToken(
-        make_function(level_properties_.get(),
+    m_next_token = msptr<NextToken>(m_scene_timer_component);
+    m_next_token->prepareNextToken(
+        make_function(m_level_properties.get(),
                       &LevelProperties::millisBetweenTokens),
         [this]() { generateNextToken(); });
 
     p_->states_manager_ = muptr<GameSceneStateManager>(
-        scene_timer_component_, createSceneNode<PauseSceneNode>("PauseNode"),
-        createSceneNode<GameOverSceneNode>("gameOverSceneNode"));
+        m_scene_timer_component,
+        attachedNode()->createSceneNode("PauseNode")->component<Pause>(),
+        attachedNode()
+            ->createSceneNode("gameOverSceneNode")
+            ->component<GameOver>());
 
     // Set state control.
     {
-        component(scene_states_);
+        attachedNode()->component(m_scene_states);
 
         StatesControllerActuatorRegister<GameSceneStates>
             gameSceneActuatorRegister;
         gameSceneActuatorRegister.registerStatesControllerActuator(
-            *scene_states_, *(p_->states_manager_));
+            *m_scene_states, *(p_->states_manager_));
     }
 
-    p_->token_type_generator_ = component<rnd::RandomNumbersComponent>();
+    p_->token_type_generator_ = attachedNode()->component<rnd::RandomNumbersComponent>();
     LogAsserter::log_assert(p_->token_type_generator_ != nullptr,
                             "Cannot create RandomNumbersComponent");
 
@@ -146,26 +156,31 @@ void GameScene::onCreated()
     LogAsserter::log_assert(p_->token_position_generator_ != nullptr,
                             "Cannot create RandomNumbersComponent");
 
-    auto game_scene_input{component<GameSceneInput>()};
+    auto game_scene_input{attachedNode()->component<GameSceneInput>()};
 
     p_->key_mapping_ = muptr<KeyMapping>();
     p_->key_mapping_->reset();
 
-    subSystem<sys::IFileSerializer>()->deserializeFromFile("keys.txt",
+    attachedNode()->subSystem<sys::IFileSerializer>()->deserializeFromFile("keys.txt",
                                                            *p_->key_mapping_);
-    subSystem<sys::IFileSerializer>()->serializeToFile("keys.txt",
+    attachedNode()->subSystem<sys::IFileSerializer>()->serializeToFile("keys.txt",
                                                        *p_->key_mapping_);
 
-    scene_states_->start(GameSceneStates::Playing);
+    m_scene_states->start(GameSceneStates::Playing);
     installDebugUtils();
 }
 
-void GameScene::generateNextToken()
+sptr<LevelProperties> Game::levelProperties() const noexcept
+{
+    return m_level_properties;
+}
+
+void Game::generateNextToken()
 {
     const TokenZones::TokenZone& currentTokenZone{
-        TokenZones::tokenZones[next_token_part_]};
+        TokenZones::tokenZones[m_next_token_part]};
 
-    DisplayLog::info("NextTokenPart: ", next_token_part_);
+    DisplayLog::info("NextTokenPart: ", m_next_token_part);
     DisplayLog::info("zone: ", currentTokenZone.zone_start);
 
     // Generate the new token type
@@ -182,17 +197,17 @@ void GameScene::generateNextToken()
 
     // Now, we have the data for the new token generated, but first,
     /// lets start to move the row or col.
-    const auto game_over{board_group_->moveTowardsCenter(
+    const auto game_over{m_board_group->moveTowardsCenter(
         currentTokenZone.direction, new_position)};
 
     // Set the new token
-    board_group_->createNewToken(
+    m_board_group->createNewToken(
         static_cast<BoardGroup::BoardTileData>(newToken), new_position);
 
     // Select the next token zone.
-    next_token_part_ = ((next_token_part_ + 1U) % NumWays);
+    m_next_token_part = ((m_next_token_part + 1U) % NumWays);
 
-    DisplayLog::debug(board_group_->boardManager()->toStr());
+    DisplayLog::debug(m_board_group->boardManager()->toStr());
 
     if (game_over)
     {
@@ -200,25 +215,25 @@ void GameScene::generateNextToken()
     }
 }
 
-void GameScene::goGameOver()
+void Game::goGameOver()
 {
-    scene_states_->setState(GameSceneStates::GameOver);
+    m_scene_states->setState(GameSceneStates::GameOver);
 }
 
-void GameScene::launchPlayer()
+void Game::launchPlayer()
 {
     DisplayLog::info("Launching player");
-    ScoreIncrementer score_incrementer{level_properties_};
+    ScoreIncrementer score_incrementer{m_level_properties};
 
     PlayerLauncher player_launcher;
-    player_launcher(score_incrementer, board_group_,
-                    htps::make_function(this, &GameScene::tokenHitAnimation));
+    player_launcher(score_incrementer, m_board_group,
+                    htps::make_function(this, &Game::tokenHitAnimation));
 }
 
-void GameScene::tokenHitAnimation(board::BoardPositionType const& pos)
+void Game::tokenHitAnimation(board::BoardPositionType const& pos)
 {
-    auto const lastTokenPosition = board_group_->board2Scene(pos);
-    p_->createScoreIncrementPoints(*this, lastTokenPosition);
+    auto const lastTokenPosition{m_board_group->board2Scene(pos)};
+    p_->createScoreIncrementPoints(*(this->attachedNode()), lastTokenPosition);
 }
 
 }  // namespace zoper
