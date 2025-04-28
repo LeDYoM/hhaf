@@ -97,8 +97,8 @@ RenderTarget::RenderTarget()
     resetRenderStates();
 }
 
-void RenderTarget::drawDebugQuad([
-    [maybe_unused]] RenderElement const* const render_element)
+void RenderTarget::drawDebugQuad(
+    [[maybe_unused]] RenderElement const* const render_element)
 {
 #ifdef DRAW_DEBUG_QUAD
     auto const* const render_element{
@@ -122,6 +122,15 @@ void RenderTarget::clear()
     glCheck(glClearColor(0.0F, 0.0F, 0.0F, 1.0F));
     glCheck(glClear(GL_COLOR_BUFFER_BIT));
 }
+
+namespace
+{
+[[nodiscard]] inline bool isAlmostEqual(float const lhs,
+                                        float const rhs) noexcept
+{
+    return std::fabs(lhs - rhs) < FLT_EPSILON;
+}
+}  // namespace
 
 void applyTransform(const htps::array<htps::f32, 16U>& transform)
 {

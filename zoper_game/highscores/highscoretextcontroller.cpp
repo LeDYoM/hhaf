@@ -17,7 +17,6 @@
 using namespace htps;
 using namespace haf;
 using namespace haf::scene;
-using namespace haf::scene::nodes;
 using namespace fmath;
 
 namespace zoper
@@ -77,8 +76,6 @@ void HighScoreTextController::addHighScoresLine(const size_type counter,
                                                 const HighScore& element,
                                                 const bool is_inserting)
 {
-    using namespace nodes;
-
     auto label{text(vector2dst{0U, counter})};
     standarizeText(label);
     label->Text = make_str(counter, ".");
@@ -111,8 +108,7 @@ void HighScoreTextController::addHighScoreEditor(const sptr<Text>& label,
         saveHighScores();
         Finished();
     });
-    editor->Rejected.connect(
-        [editor = htps::wptr(editor)]() { editor.lock()->enabled = true; });
+    editor->DisallowReject = true;
 }
 
 void HighScoreTextController::addEditAnimation(const size_type line_index)

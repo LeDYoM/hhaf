@@ -36,7 +36,7 @@ ComponentContainer::~ComponentContainer() = default;
 
 void ComponentContainer::updateComponents()
 {
-    p_->components_.performUpdateBackwards(
+    p_->components_.performUpdate(
         [](sptr<Component> const& component) { component->update(); });
 }
 

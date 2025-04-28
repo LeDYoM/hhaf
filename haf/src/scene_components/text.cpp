@@ -65,9 +65,8 @@ inline void updateAlignmentY(prop::PropertyState<vector2df>& position,
     position = {position().x, newPosY};
 }
 
-inline nodes::TextBaseSize updateTextRenderData(
-    res::FontUtils const& font_utils,
-    nodes::TextBaseSize const& text_base_size)
+inline TextBaseSize updateTextRenderData(res::FontUtils const& font_utils,
+                                         TextBaseSize const& text_base_size)
 {
     if (!text_base_size.text().empty())
     {

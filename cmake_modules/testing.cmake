@@ -21,8 +21,6 @@ function (prepareTestLibrary)
       set(BUILD_SHARED_LIBS OFF)
     endif()
 
-    message("BUILD_SHARED_LIBS: ${BUILD_SHARED_LIBS}")
-
     set(CATCH2_COMMIT fa43b77429ba76c462b1898d6cd2f2d7a9416b14) # 3.7.1
     FetchContent_Declare(Catch2
         GIT_REPOSITORY https://github.com/catchorg/Catch2.git

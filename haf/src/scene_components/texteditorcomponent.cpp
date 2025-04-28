@@ -11,8 +11,6 @@ void TextEditorComponent::onAttached()
 {
     BaseClass::onAttached();
 
-    using namespace haf::scene::nodes;
-
     auto attached_text_node{attachedNode()->component<Text>()};
     original_text_           = attached_text_node->Text();
     attached_text_node->Text = "";
@@ -20,7 +18,6 @@ void TextEditorComponent::onAttached()
 
 void TextEditorComponent::onKeyPressed(const input::Key& key)
 {
-    using namespace nodes;
     using namespace input;
 
     if (enabled)
@@ -65,8 +62,11 @@ void TextEditorComponent::onKeyPressed(const input::Key& key)
         else if (key == Key::Escape)
         {
             attached_text_node->Text = original_text_;
-            enabled                  = false;
-            Rejected();
+            if (!DisallowReject())
+            {
+                enabled = false;
+                Rejected();
+            }
         }
     }
 }

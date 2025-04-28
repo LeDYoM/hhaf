@@ -19,11 +19,12 @@ public:
 
     haf::prop::PropertyState<htps::size_type> currentLevel;
     haf::prop::PropertyState<htps::size_type> currentScore;
-    haf::prop::PropertyState<htps::size_type> currentConsumedTokens;
     haf::prop::PropertyState<htps::u64> currentEllapsedTimeInSeconds;
     haf::prop::PropertyState<htps::size_type> currentStayCounter;
 
     void onAttached() override;
+
+    void setCurrentConsumedTokens(const htps::size_type a);
 
 private:
     void onAllScoreElementsCreated(fmath::vector2dst const);
@@ -33,6 +34,8 @@ private:
     bool setConsumedTokens(htps::size_type const consumedTokens);
     bool setEllapsedTimeInSeconds(htps::u64 const seconds);
     bool setStayCounter(htps::size_type const stayCounter);
+
+    haf::prop::PropertyState<htps::size_type> currentConsumedTokens;
 
     htps::sptr<haf::scene::TableOfTextQuad> m_score_quad;
     htps::sptr<haf::scene::TableOfTextQuad> m_goal_quad;

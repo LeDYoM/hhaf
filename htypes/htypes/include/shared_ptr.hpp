@@ -15,10 +15,10 @@ class counter
 public:
     constexpr counter() noexcept = default;
 
-    constexpr counter(const counter&) = delete;
+    constexpr counter(const counter&)            = delete;
     constexpr counter& operator=(const counter&) = delete;
 
-    constexpr counter(counter&&) = default;
+    constexpr counter(counter&&)            = default;
     constexpr counter& operator=(counter&&) = default;
 
     constexpr void reset() noexcept { m_counter = 0U; }
@@ -249,18 +249,11 @@ public:
     {
         if (m_counter != nullptr)
         {
-            if constexpr (!std::is_const_v<T>)
+            if (m_counter->decrement_destroy())
             {
-                if (m_counter->decrement_destroy())
-                {
-                    m_ptr = nullptr;
-                    AllocatorType<shptr_detail::counter>::delete_one(m_counter);
-                    m_counter = nullptr;
-                }
-            }
-            else
-            {
-                m_counter->decrement();
+                m_ptr = nullptr;
+                AllocatorType<shptr_detail::counter>::delete_one(m_counter);
+                m_counter = nullptr;
             }
         }
     }
@@ -307,7 +300,7 @@ template <class T, class T2>
     {
         const auto ptr{dynamic_cast<T*>(other.get())};
 
-        if (ptr)
+        if (ptr != nullptr)
         {
             sptr<T> result{ptr, other.m_counter};
             result.m_counter->increment();
@@ -325,7 +318,7 @@ template <class T, class T2>
     {
         const auto ptr{dynamic_cast<T*>(other.get())};
 
-        if (ptr)
+        if (ptr != nullptr)
         {
             auto tmp_counter{other.m_counter};
             other.m_counter = nullptr;
@@ -344,7 +337,7 @@ template <class T, class T2>
     {
         auto ptr{static_cast<T*>(other.get())};
 
-        if (ptr)
+        if (ptr != nullptr)
         {
             auto result{sptr<T>{htps::move(ptr), htps::move(other.m_counter)}};
             result.m_counter->increment();
@@ -362,7 +355,7 @@ template <class T, class T2>
     {
         auto ptr{static_cast<T*>(other.get())};
 
-        if (ptr)
+        if (ptr != nullptr)
         {
             auto tmp_counter{other.m_counter};
             other.m_counter = nullptr;

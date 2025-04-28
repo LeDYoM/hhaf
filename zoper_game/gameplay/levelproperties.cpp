@@ -138,7 +138,7 @@ void LevelProperties::updateLevelData()
     {
         default:
         case GameMode::Token:
-            m_game_hud->currentConsumedTokens = consumed_tokens_;
+            m_game_hud->setCurrentConsumedTokens(consumed_tokens_);
 
             if (consumed_tokens_ >= stay_counter_)
             {

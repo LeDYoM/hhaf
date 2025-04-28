@@ -3,6 +3,9 @@
 #include <string>
 #include <SFML/Config.hpp>
 
+#include "imgui-SFML.h"
+#include "imgui.h"
+
 using namespace htps;
 
 namespace haf::backend::sfmlb

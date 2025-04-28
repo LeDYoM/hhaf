@@ -28,11 +28,12 @@ static int crtDebugMemAllocHook(int allocType,
     (void)(fileName);
     (void)(blockType);
     (void)(blockType);
+    (void)(requestIndex);
     (void)(size);
     (void)(userData);
     (void)(allocType);
 
-    if (requestIndex == 217)  // break;
+    if (size == 104)  // break;
 
         return true;
 
@@ -87,10 +88,6 @@ void finishMemManager(bool const display_log)
     }
 
     memm::destroyMemoryStatistics();
-
-#ifdef _MSC_VER
-    _CrtDumpMemoryLeaks();
-#endif
 }
 
 void* mmalloc(std::size_t size)

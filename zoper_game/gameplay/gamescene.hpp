@@ -49,12 +49,13 @@ public:
 
 private:
     struct GameScenePrivate;
-    htps::uptr<GameScenePrivate> p_;
+    htps::uptr<GameScenePrivate> m_p;
 
     void generateNextToken();
     void _debugDisplayBoard() const;
 
-    htps::sptr<scene::StatesControllerComponent<GameSceneStates>> m_scene_states;
+    htps::sptr<scene::StatesControllerComponent<GameSceneStates>>
+        m_scene_states;
     htps::sptr<BoardGroup> m_board_group;
 
     // Timer related properties

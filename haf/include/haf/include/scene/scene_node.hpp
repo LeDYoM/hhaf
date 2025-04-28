@@ -69,11 +69,6 @@ public:
     ~SceneNode();
 
     /**
-     * @brief Method called every frame
-     */
-    void update();
-
-    /**
      * @brief Method called every frame after update
      * @param sceneRenderContext Current frame render context
      */

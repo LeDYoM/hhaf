@@ -11,7 +11,6 @@
 using namespace htps;
 using namespace haf;
 using namespace haf::scene;
-using namespace haf::scene::nodes;
 using namespace fmath;
 
 namespace zoper
@@ -70,6 +69,11 @@ void GameHud::update()
             currentStayCounter.resetHasChanged();
         }
     }
+}
+
+void GameHud::setCurrentConsumedTokens(const htps::size_type a)
+{
+    currentConsumedTokens.assignIfDifferent(a);
 }
 
 void GameHud::onAllScoreElementsCreated(fmath::vector2dst const)

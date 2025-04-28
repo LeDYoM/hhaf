@@ -9,7 +9,6 @@
 
 using namespace haf::render;
 using namespace haf::scene;
-using namespace haf::scene::nodes;
 using namespace htps;
 
 namespace zoper

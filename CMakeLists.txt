@@ -87,7 +87,7 @@ endforeach()
 add_subdirectory(haf_ext)
 
 add_subdirectory(backend_client)
-add_subdirectory(backend_sfml)
+add_subdirectory(backends/backend_sfml)
 add_subdirectory(haf_integrated_backend)
 add_subdirectory(zoper_game)
 add_subdirectory(apps/haf_life_game)

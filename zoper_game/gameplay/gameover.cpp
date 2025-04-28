@@ -13,7 +13,6 @@ namespace zoper
 {
 using namespace haf;
 using namespace haf::scene;
-using namespace haf::scene::nodes;
 
 void GameOver::onAttached()
 {

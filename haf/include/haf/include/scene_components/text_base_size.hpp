@@ -7,9 +7,8 @@ HTPS_PRAGMA_ONCE
 #include <facil_math/include/vector2d.hpp>
 #include <htypes/include/str.hpp>
 
-namespace haf::scene::nodes
+namespace haf::scene
 {
-
 class HAF_API TextBaseSize
 {
 public:
@@ -26,10 +25,10 @@ public:
     fmath::vector2df value() const noexcept;
 
 private:
-    htps::str text_;
-    fmath::vector2df value_;
+    htps::str m_text;
+    fmath::vector2df m_value;
 };
 
-}  // namespace haf::scene::nodes
+}  // namespace haf::scene
 
 #endif

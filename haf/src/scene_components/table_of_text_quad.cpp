@@ -1,7 +1,7 @@
 #include <haf/include/scene_components/table_of_text_quad.hpp>
 
 using namespace fmath;
-
+using namespace htps;
 namespace haf::scene
 {
 void TableOfTextQuad::onAttached()
@@ -11,8 +11,7 @@ void TableOfTextQuad::onAttached()
     TableSize = {2U, 2U};
 }
 
-void TableOfTextQuad::onElementCreated(fmath::vector2dst index,
-                                       htps::sptr<Text> const& node)
+void TableOfTextQuad::onElementCreated(vector2dst index, sptr<Text> const& node)
 {
     if (index == vector2dst{0U, 0U})
     {

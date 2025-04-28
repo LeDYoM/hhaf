@@ -19,9 +19,6 @@ SceneNode::SceneNode(rptr<SceneNode> parent, str name) :
 
 SceneNode::~SceneNode() = default;
 
-void SceneNode::update()
-{}
-
 void SceneNode::postRender(SceneRenderContext& sceneRenderContext)
 {
     //    HAF_PROFILE_SCENE_NODE_METHOD(prTime)

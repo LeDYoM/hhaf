@@ -18,7 +18,6 @@ using namespace htps;
 
 using namespace haf;
 using namespace haf::scene;
-using namespace haf::scene::nodes;
 using namespace haf::time;
 
 namespace zoper

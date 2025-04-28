@@ -20,7 +20,6 @@ namespace zoper
 {
 using namespace haf;
 using namespace haf::scene;
-using namespace haf::scene::nodes;
 
 htps::str HighScores::nextSceneName()
 {

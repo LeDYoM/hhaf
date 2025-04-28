@@ -6,7 +6,7 @@ HTPS_PRAGMA_ONCE
 #include <haf/include/properties/iproperty.hpp>
 #include <haf/include/resources/ifont.hpp>
 #include <haf/include/scene/color.hpp>
-#include <haf/include/scene_nodes/text_base_size.hpp>
+#include <haf/include/scene_components/text_base_size.hpp>
 #include <haf/include/component/component.hpp>
 #include <haf/include/properties/property_state.hpp>
 
@@ -34,7 +34,7 @@ public:
     prop::PropertyState<htps::str> Text;
     prop::PropertyState<htps::sptr<res::IFont>> Font;
     prop::PropertyState<Color> TextColor;
-    prop::PropertyState<nodes::TextBaseSize> TextBaseSizeProperty;
+    prop::PropertyState<TextBaseSize> TextBaseSizeProperty;
     prop::PropertyState<AlignmentXModes> AlignmentX;
     prop::PropertyState<AlignmentYModes> AlignmentY;
     prop::PropertyState<fmath::vector2df> AlignmentSize;

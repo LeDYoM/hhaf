@@ -9,7 +9,6 @@
 using namespace htps;
 using namespace fmath;
 using namespace haf::scene;
-using namespace haf::scene::nodes;
 
 namespace
 {

@@ -4,6 +4,7 @@ HTPS_PRAGMA_ONCE
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/str.hpp>
+#include <haf/include/properties/basic_property.hpp>
 #include <haf/include/events/connection.hpp>
 #include <haf/include/input/virtual_input_component.hpp>
 
@@ -18,6 +19,7 @@ public:
 
     evt::emitter<const htps::str&> Accepted;
     evt::emitter<> Rejected;
+    prop::BasicProperty<bool> DisallowReject{false};
 
     bool enabled{true};
 
