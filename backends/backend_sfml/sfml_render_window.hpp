@@ -1,8 +1,6 @@
 #ifndef HAF_BACKEND_SFMLB_REDNERWINDOW_INCLUDE_HPP
 #define HAF_BACKEND_SFMLB_REDNERWINDOW_INCLUDE_HPP
 
-#include <SFML/Window/Window.hpp>
-
 #include <htypes/include/types.hpp>
 #include <facil_math/include/vector2d.hpp>
 
@@ -10,6 +8,11 @@
 #include <backend_dev/include/iinputdriver.hpp>
 
 #include "sfml_input_driver.hpp"
+
+namespace sf
+{
+    class Window;
+}
 
 namespace haf::backend::sfmlb
 {
@@ -41,6 +44,7 @@ public:
 
 private:
     htps::uptr<sf::Window> m_render_window;
+
     bool already_created_{false};
     SFMLInputDriver input_driver_;
 };

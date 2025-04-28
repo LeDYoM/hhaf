@@ -3,8 +3,10 @@
 #include <string>
 #include <SFML/Config.hpp>
 
+#ifdef HAF_USE_SFML_IMGUI
 #include "imgui-SFML.h"
 #include "imgui.h"
+#endif
 
 using namespace htps;
 
@@ -76,8 +78,12 @@ bool SFMLRenderWindow::createWindow(u32 const width,
                                 context_settings);
 
         m_render_window->setVerticalSyncEnabled(false);
+
+#ifdef HAF_USE_SFML_IMGUI
+        ImGui::SFML::Init(*m_render_window);
+#endif
+
         already_created_ = true;
-        //        m_window_render_target.setInternalRenderTarget();
         return true;
     }
     return false;
@@ -89,6 +95,10 @@ bool SFMLRenderWindow::processEvents()
     sf::Event event;
     while (m_render_window->pollEvent(event))
     {
+#ifdef HAF_USE_SFML_IMGUI
+        ImGui::SFML::ProcessEvent(*m_render_window, event);
+#endif
+
         if (event.type == sf::Event::Closed)
         {
             return true;
@@ -115,6 +125,9 @@ void SFMLRenderWindow::setWindowTitle(str const& newTitle)
 void SFMLRenderWindow::closeWindow()
 {
     m_render_window->close();
+#ifdef HAF_USE_SFML_IMGUI
+    ImGui::SFML::Shutdown();
+#endif
 }
 
 rptr<IInputDriver> SFMLRenderWindow::inputDriver()

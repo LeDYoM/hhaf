@@ -42,6 +42,9 @@ if(use_imgui)
         option(use_system_imgui "Use system ImGUI instead of fetching it" OFF)
     endif()
 
+    target_compile_definitions(${CURRENT_TARGET} PRIVATE HAF_USE_SFML_IMGUI)
+    target_compile_definitions(${CURRENT_TARGET} PRIVATE HAF_USE_IMGUI)
+
     if (NOT use_system_imgui)
 
         include(FetchContent)
