@@ -11,9 +11,9 @@
 
 namespace zoper
 {
-class BoardTile : public haf::scene::Renderizables
+class BoardTile : public haf::scene::RenderizableGroupComponent
 {
-    using Base = haf::scene::Renderizables;
+    using Base = haf::scene::RenderizableGroupComponent;
 
 public:
     /**

@@ -10,7 +10,7 @@ HTPS_PRAGMA_ONCE
 
 namespace haf::scene
 {
-class HAF_API Renderizables : public component::Component
+class HAF_API RenderizableGroupComponent : public component::Component
 {
 public:
     void onAttached() override;

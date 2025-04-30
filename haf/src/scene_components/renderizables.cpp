@@ -6,14 +6,13 @@ using namespace haf::render;
 namespace haf::scene
 {
 
-void Renderizables::onAttached()
+void RenderizableGroupComponent::onAttached()
 {
     renderizables_.setSceneNode(attachedNode());
 }
 
-void Renderizables::update()
+void RenderizableGroupComponent::update()
 {
-    //    SceneNodeBaseClass::postRender(sceneRenderContext);
     renderizables_.updateRenderizables(true);
 }
 

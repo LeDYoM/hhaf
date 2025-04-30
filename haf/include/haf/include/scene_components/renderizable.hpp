@@ -14,12 +14,12 @@ class Renderizable;
 
 namespace haf::scene
 {
-class Renderizable : public Renderizables
+class Renderizable : public RenderizableGroupComponent
 {
-    using BaseClass = Renderizables;
+    using BaseClass = RenderizableGroupComponent;
 
 public:
-    htps::sptr<render::Renderizable> const& node() const noexcept;
+//    htps::sptr<render::Renderizable> const& node() const noexcept;
 };
 }  // namespace haf::scene
 
