@@ -101,7 +101,7 @@ void Player::launchAnimationBack(SceneCoordinates const& toWhere)
 void Player::tileAdded()
 {
     DisplayLog::info("TokenPlayer appeared at ", boardPosition());
-    m_renderizable_scene_node->node()->material().color = getColorForToken();
+    m_renderizable_scene_node->first()->material().color = getColorForToken();
 
     // Set the position in the scene depending on the board position
     player_board_position = boardPosition();
@@ -109,7 +109,7 @@ void Player::tileAdded()
 
 void Player::setTokenColor(scene::Color const& token_color)
 {
-    m_renderizable_scene_node->node()->material().color = token_color;
+    m_renderizable_scene_node->first()->material().color = token_color;
 }
 
 void Player::tileChanged(BoardTileData const oldValue,

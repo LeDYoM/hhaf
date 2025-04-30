@@ -166,10 +166,10 @@ void Text::update()
                     letterNode->Position = ch_data.character_position;
                     letterNode->Scale    = ch_data.character_size;
 
-                    node->node()->material().color = text_color;
+                    node->first()->material().color = text_color;
 
-                    node->node()->material().texture = texture;
-                    node->node()->material().textureRect =
+                    node->first()->material().texture = texture;
+                    node->first()->material().textureRect =
                         font->getTextureBounds(curChar);
 
                     ++indexChar;
@@ -188,7 +188,7 @@ void Text::update()
         m_letters_scene_node->for_each_sceneNode(
             [&text_color](sptr<SceneNode> const& sNode) {
                 auto node{sNode->componentOfType<Renderizable>()};
-                node->node()->material().color = text_color;
+                node->first()->material().color = text_color;
             });
     }
 }

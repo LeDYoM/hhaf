@@ -68,7 +68,7 @@ void Token::tileAdded()
 
 void Token::setTokenColor(scene::Color const& token_color)
 {
-    m_renderizable->node()->material().color = token_color;
+    m_renderizable->first()->material().color = token_color;
 }
 
 void Token::tileRemoved()

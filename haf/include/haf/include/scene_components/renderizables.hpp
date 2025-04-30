@@ -12,6 +12,8 @@ namespace haf::scene
 {
 class HAF_API RenderizableGroupComponent : public component::Component
 {
+    using BaseClass = component::Component;
+
 public:
     void onAttached() override;
 
@@ -27,6 +29,8 @@ public:
     }
 
     auto renderizableBuilder() { return renderizables_.renderizableBuilder(); }
+
+    htps::sptr<render::Renderizable> const& first() const noexcept;
 
 private:
     render::Renderizables renderizables_;
