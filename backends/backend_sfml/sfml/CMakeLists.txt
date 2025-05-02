@@ -32,7 +32,7 @@ else()
     find_package(SFML 2.5 REQUIRED system window graphics)
 endif()
 
-option(use_imgui "Use ImGUI" OFF)
+option(use_imgui "Use ImGUI" ON)
 message("Use ImGUI: ${use_imgui}")
 
 if(use_imgui)

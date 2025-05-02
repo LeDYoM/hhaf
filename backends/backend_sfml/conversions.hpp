@@ -6,7 +6,6 @@
 #include "sfml_render_window.hpp"
 #include "sfml_texture.hpp"
 #include "sfml_shader.hpp"
-#include <SFML/Window.hpp>
 #include <SFML/System/String.hpp>
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/Transform.hpp>

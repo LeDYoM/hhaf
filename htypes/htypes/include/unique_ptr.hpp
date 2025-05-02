@@ -11,6 +11,7 @@ template <typename T>
 class uptr
 {
 public:
+    using type = T;
     constexpr uptr() noexcept = default;
     constexpr uptr(std::nullptr_t) noexcept : m_pointer{nullptr} {}
     constexpr uptr(rptr<T> pointer) noexcept : m_pointer{pointer} {}

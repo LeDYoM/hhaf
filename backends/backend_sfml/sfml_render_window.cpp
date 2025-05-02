@@ -3,7 +3,10 @@
 #include <string>
 #include <SFML/Config.hpp>
 
+#include <SFML/Window.hpp>
+
 #ifdef HAF_USE_SFML_IMGUI
+#include <SFML/Graphics/RenderWindow.hpp>
 #include "imgui-SFML.h"
 #include "imgui.h"
 #endif
@@ -12,7 +15,8 @@ using namespace htps;
 
 namespace haf::backend::sfmlb
 {
-SFMLRenderWindow::SFMLRenderWindow() : m_render_window{muptr<sf::Window>()}
+SFMLRenderWindow::SFMLRenderWindow() :
+    m_render_window{muptr<decltype(m_render_window)::type>()}
 {}
 
 SFMLRenderWindow::~SFMLRenderWindow()

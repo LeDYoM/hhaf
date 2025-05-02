@@ -11,8 +11,12 @@
 
 namespace sf
 {
-    class Window;
-}
+#ifdef HAF_USE_SFML_IMGUI
+class RenderWindow;
+#else
+class Window;
+#endif
+}  // namespace sf
 
 namespace haf::backend::sfmlb
 {
@@ -43,7 +47,14 @@ public:
     htps::str settingsInfo() override;
 
 private:
-    htps::uptr<sf::Window> m_render_window;
+    htps::uptr<
+#ifdef HAF_USE_SFML_IMGUI
+        sf::RenderWindow
+#else
+        sf::Window
+#endif
+        >
+        m_render_window;
 
     bool already_created_{false};
     SFMLInputDriver input_driver_;
