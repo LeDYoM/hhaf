@@ -80,7 +80,8 @@
         "xtr1common": "cpp",
         "forward_list": "cpp",
         "format": "cpp",
-        "bitset": "cpp"
+        "bitset": "cpp",
+        "charconv": "cpp"
     },
     "C_Cpp.dimInactiveRegions": false,
     "testMate.cpp.log.logSentry": "disable_3"

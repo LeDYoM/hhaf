@@ -22,12 +22,15 @@ public:
     htps::str& operator()() { return data; }
 };
 
+// Select the commiter
 using FileCOutCommiter       = MixinCommiter<FileCommiter, COutCommiter>;
 using ThreadFileCoutCommiter = ThreadCommiter<FileCOutCommiter>;
-using CurrentCommiter        = ThreadFileCoutCommiter;
-// using CurrentCommiter = COutCommiter;
+// using CurrentCommiter        = ThreadFileCoutCommiter;
+using CurrentCommiter = COutCommiter;
 
-using CurrentLog            = Log<true, LogStream, CurrentCommiter>;
+static constexpr bool kUseLogs{true};
+
+using CurrentLog            = Log<kUseLogs, LogStream, CurrentCommiter>;
 using CurrentLogInitializer = LogInitializer<CurrentLog>;
 
 template <bool DisplaySeverity>
@@ -37,10 +40,10 @@ using DisplayLogGeneral =
 
 namespace haf
 {
-static constexpr bool kUseLogs{true};
+static constexpr bool kDisplaySeverity{true};
 
 using LogInitializer = logger::CurrentLogInitializer;
-using DisplayLog     = logger::DisplayLogGeneral<kUseLogs>;
+using DisplayLog     = logger::DisplayLogGeneral<kDisplaySeverity>;
 using LogAsserter    = logger::LogAsserter<DisplayLog>;
 }  // namespace haf
 #endif
