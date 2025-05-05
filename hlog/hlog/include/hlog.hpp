@@ -37,10 +37,10 @@ using DisplayLogGeneral =
 
 namespace haf
 {
-using LogAsserter    = logger::LogAsserter<logger::DisplayLogGeneral<false>>;
+static constexpr bool kUseLogs{true};
+
 using LogInitializer = logger::CurrentLogInitializer;
-using DisplayLogNoSeverity = logger::DisplayLogGeneral<false>;
-using DisplayLogSeverity   = logger::DisplayLogGeneral<true>;
-using DisplayLog           = DisplayLogSeverity;
+using DisplayLog     = logger::DisplayLogGeneral<kUseLogs>;
+using LogAsserter    = logger::LogAsserter<DisplayLog>;
 }  // namespace haf
 #endif
