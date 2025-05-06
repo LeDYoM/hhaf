@@ -40,9 +40,9 @@ template struct LogInitializer<Log<true, LogStream, COutCommiter>>;
 }  // namespace logger
 */
 
-static constexpr bool kDisplaySeverity{true};
-
 template struct logger::CurrentLogInitializer;
-template struct logger::
-    LogDisplayer<logger::CurrentLog, logger::SeverityType, kDisplaySeverity>;
-template struct logger::LogAsserter<DisplayLog>;
+template struct logger::LogDisplayer<logger::CurrentLog,
+                                     logger::SeverityType,
+                                     haf::kDisplaySeverity>;
+template struct logger::LogAsserter<
+    logger::LogDisplayer<logger::CurrentLog, logger::SeverityType, false>>;
