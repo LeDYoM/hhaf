@@ -50,7 +50,7 @@ template <logger::StringLiteral First>
 using HafLog     = logger::DisplayLogGeneral<kDisplaySeverity, First>;
 
 template <logger::StringLiteral First>
-using HafAssert  = logger::LogAsserter<DisplayLog<First>>;
+using HafAssert  = logger::LogAsserter<HafLog<First>>;
 
 }  // namespace haf
 #endif
