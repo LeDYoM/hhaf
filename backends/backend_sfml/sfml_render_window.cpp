@@ -1,5 +1,6 @@
 #include "sfml_render_window.hpp"
 #include "conversions.hpp"
+#include "param_extractor.hpp"
 #include <string>
 #include <SFML/Config.hpp>
 
@@ -23,29 +24,6 @@ SFMLRenderWindow::~SFMLRenderWindow()
 {
     m_render_window->close();
 }
-
-class ParamExtractor
-{
-public:
-    constexpr ParamExtractor(const unsigned int size,
-                             const unsigned int* const data) :
-        size_{size}, data_{data}
-    {}
-
-    unsigned int getParam(const unsigned int def_param = 0U)
-    {
-        if (current_ < size_)
-        {
-            return data_[current_++];
-        }
-        return def_param;
-    }
-
-private:
-    unsigned int current_{0U};
-    const unsigned int size_;
-    const unsigned int* const data_;
-};
 
 bool SFMLRenderWindow::isAlreadyCreated() const
 {
