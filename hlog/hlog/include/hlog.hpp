@@ -33,9 +33,9 @@ static constexpr bool kUseLogs{true};
 using CurrentLog            = Log<kUseLogs, LogStream, CurrentCommiter>;
 using CurrentLogInitializer = LogInitializer<CurrentLog>;
 
-template <bool DisplaySeverity>
+template <bool DisplaySeverity, StringLiteral First>
 using DisplayLogGeneral =
-    LogDisplayer<CurrentLog, SeverityType, DisplaySeverity>;
+    LogDisplayer<CurrentLog, SeverityType, DisplaySeverity, First>;
 }  // namespace logger
 
 namespace haf
@@ -43,7 +43,14 @@ namespace haf
 static constexpr bool kDisplaySeverity{true};
 
 using LogInitializer = logger::CurrentLogInitializer;
-using DisplayLog     = logger::DisplayLogGeneral<kDisplaySeverity>;
+using DisplayLog     = logger::DisplayLogGeneral<kDisplaySeverity, "">;
 using LogAsserter    = logger::LogAsserter<DisplayLog>;
+
+template <logger::StringLiteral First>
+using HafLog     = logger::DisplayLogGeneral<kDisplaySeverity, First>;
+
+template <logger::StringLiteral First>
+using HafAssert  = logger::LogAsserter<DisplayLog<First>>;
+
 }  // namespace haf
 #endif
