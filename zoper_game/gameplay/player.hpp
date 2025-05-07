@@ -39,7 +39,8 @@ public:
 private:
     void setTokenColor(haf::scene::Color const& token_color) override;
 
-    htps::sptr<haf::scene::Renderizable> m_renderizable_scene_node;
+    htps::sptr<haf::scene::RenderizableGroupComponent>
+        m_renderizable_scene_node;
     void launchAnimationBack(haf::SceneCoordinates const& toWhere);
     htps::sptr<haf::anim::AnimationComponent> animation_component_;
 };

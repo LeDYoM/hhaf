@@ -7,7 +7,7 @@
 #include <haf/include/scene/color.hpp>
 #include <haf/include/render/renderizable.hpp>
 #include <haf/include/scene_components/renderizables.hpp>
-#include <haf/include/scene_components/renderizable.hpp>
+#include <haf/include/scene_components/renderizables.hpp>
 
 namespace zoper
 {
@@ -28,7 +28,7 @@ public:
 
 private:
     htps::sptr<haf::render::Renderizable> m_background_tile;
-    htps::sptr<haf::scene::Renderizable> m_point_in_center;
+    htps::sptr<haf::scene::RenderizableGroupComponent> m_point_in_center;
 };
 }  // namespace zoper
 

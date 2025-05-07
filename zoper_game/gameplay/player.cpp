@@ -21,7 +21,7 @@ void Player::onAttached()
 {
     m_renderizable_scene_node = attachedNode()
                                     ->createSceneNode("renderizable_scene_node")
-                                    ->component<Renderizable>();
+                                    ->component<RenderizableGroupComponent>();
     m_renderizable_scene_node->renderizableBuilder()
         .name("player_render_scene_node")
         .figType(FigType_t::PolygonSprite)

@@ -1,5 +1,5 @@
 #include <haf/include/scene_components/text.hpp>
-#include <haf/include/scene_components/renderizable.hpp>
+#include <haf/include/scene_components/renderizables.hpp>
 #include <haf/include/render/renderizables.hpp>
 
 #include "resources/font_utils.hpp"
@@ -154,7 +154,8 @@ void Text::update()
                 {
                     letterNode = m_letters_scene_node->createSceneNode(
                         "text_" + str::to_str(indexChar));
-                    auto node{letterNode->component<Renderizable>()};
+                    auto node{
+                        letterNode->component<RenderizableGroupComponent>()};
                     node->renderizableBuilder()
                         .name("text_" + str::to_str(indexChar))
                         .figType(render::FigType_t::Sprite)
@@ -187,7 +188,7 @@ void Text::update()
 
         m_letters_scene_node->for_each_sceneNode(
             [&text_color](sptr<SceneNode> const& sNode) {
-                auto node{sNode->componentOfType<Renderizable>()};
+                auto node{sNode->componentOfType<RenderizableGroupComponent>()};
                 node->first()->material().color = text_color;
             });
     }

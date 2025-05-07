@@ -3,7 +3,7 @@
 #include <haf/include/resources/itexture.hpp>
 #include <haf/include/shareddata/ishared_data.hpp>
 #include <haf/include/scene_components/iscene_control.hpp>
-#include <haf/include/scene_components/renderizable.hpp>
+#include <haf/include/scene_components/renderizables.hpp>
 
 #include "mainmenu.hpp"
 #include "../loaders/mainmenuresources.hpp"
@@ -48,8 +48,9 @@ void Menu::onAttached()
     // Create the logo
     auto main_menu_background_logo_scene_node{
         attachedNode()->createSceneNode("main_menu_background_logo")};
-    auto main_menu_background_logo{main_menu_background_logo_scene_node
-                                       ->component<haf::scene::Renderizable>()};
+    auto main_menu_background_logo{
+        main_menu_background_logo_scene_node
+            ->component<RenderizableGroupComponent>()};
 
     main_menu_background_logo_scene_node->Position = {0.F, -0.28F};
     main_menu_background_logo_scene_node->Scale    = {0.99F, 0.4F};

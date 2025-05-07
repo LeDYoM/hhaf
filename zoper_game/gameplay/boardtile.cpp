@@ -12,7 +12,7 @@ namespace zoper
 void BoardTile::onAttached()
 {
     m_point_in_center = attachedNode()->createSceneNode("backgroundTile")
-        ->component<scene::Renderizable>();
+        ->component<scene::RenderizableGroupComponent>();
     m_point_in_center->renderizableBuilder()
         .name("backgroundTilePoint")
         .figType(FigType_t::Sprite)

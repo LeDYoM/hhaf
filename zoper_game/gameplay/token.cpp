@@ -29,7 +29,7 @@ void Token::onAttached()
 
     m_renderizable = attachedNode()
                          ->createSceneNode("renderizable")
-                         ->component<scene::Renderizable>();
+                         ->component<RenderizableGroupComponent>();
 
     m_renderizable->renderizableBuilder()
         .name("Node" + str::to_str(tile_counter_))

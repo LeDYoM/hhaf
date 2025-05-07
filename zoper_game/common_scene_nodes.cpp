@@ -1,7 +1,7 @@
 #include "common_scene_nodes.hpp"
 #include <haf/include/core/types.hpp>
 #include <haf/include/properties/iproperty.hpp>
-#include <haf/include/scene_components/renderizable.hpp>
+#include <haf/include/scene_components/renderizables.hpp>
 
 #include <hlog/include/hlog.hpp>
 #include <haf/include/render/renderizable.hpp>
@@ -16,7 +16,7 @@ namespace zoper
 void createStandardBackground(SceneNodeSPtr const& scene_node)
 {
     auto renderizable_scene_node{
-        scene_node->component<haf::scene::Renderizable>()};
+        scene_node->component<RenderizableGroupComponent>()};
     renderizable_scene_node->renderizableBuilder()
         .name("background")
         .figType(FigType_t::Sprite)

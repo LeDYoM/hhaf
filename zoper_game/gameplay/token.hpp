@@ -8,7 +8,7 @@
 
 #include <boardmanager/include/itile.hpp>
 #include <haf/include/animation/animation_component.hpp>
-#include <haf/include/scene_components/renderizable.hpp>
+#include <haf/include/scene_components/renderizables.hpp>
 
 namespace zoper
 {
@@ -42,7 +42,7 @@ private:
     static htps::u32 tile_counter_;
     fmath::vector2df board2SceneFactor_;
     htps::sptr<haf::anim::AnimationComponent> animation_component_;
-    htps::sptr<haf::scene::Renderizable> m_renderizable;
+    htps::sptr<haf::scene::RenderizableGroupComponent> m_renderizable;
 };
 }  // namespace zoper
 

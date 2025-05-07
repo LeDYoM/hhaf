@@ -22,7 +22,7 @@ void Game::GameScenePrivate::createScoreIncrementPoints(
 {
     auto pointsToScoreSceneNode{
         main_node.createSceneNode("pointIncrementScore_SceneNode")
-            ->component<Renderizable>()};
+            ->component<RenderizableGroupComponent>()};
 
     auto node{pointsToScoreSceneNode->renderizableBuilder()
                   .name("pointIncrementScore")
