@@ -1,5 +1,5 @@
 #include <haf/include/scene_components/text.hpp>
-#include <haf/include/scene_components/renderizables.hpp>
+#include <haf/include/scene_components/renderizable_group_component.hpp>
 #include <haf/include/render/renderizables.hpp>
 
 #include "resources/font_utils.hpp"

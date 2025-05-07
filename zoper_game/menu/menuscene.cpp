@@ -3,7 +3,7 @@
 #include <haf/include/resources/itexture.hpp>
 #include <haf/include/shareddata/ishared_data.hpp>
 #include <haf/include/scene_components/iscene_control.hpp>
-#include <haf/include/scene_components/renderizables.hpp>
+#include <haf/include/scene_components/renderizable_group_component.hpp>
 
 #include "mainmenu.hpp"
 #include "../loaders/mainmenuresources.hpp"

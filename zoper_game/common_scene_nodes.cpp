@@ -1,7 +1,7 @@
 #include "common_scene_nodes.hpp"
 #include <haf/include/core/types.hpp>
 #include <haf/include/properties/iproperty.hpp>
-#include <haf/include/scene_components/renderizables.hpp>
+#include <haf/include/scene_components/renderizable_group_component.hpp>
 
 #include <hlog/include/hlog.hpp>
 #include <haf/include/render/renderizable.hpp>

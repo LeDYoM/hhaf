@@ -6,8 +6,7 @@
 #include <haf/include/scene/scene_node.hpp>
 #include <haf/include/scene/color.hpp>
 #include <haf/include/render/renderizable.hpp>
-#include <haf/include/scene_components/renderizables.hpp>
-#include <haf/include/scene_components/renderizables.hpp>
+#include <haf/include/scene_components/renderizable_group_component.hpp>
 
 namespace zoper
 {

@@ -5,7 +5,7 @@
 #include <haf/include/events/connection.hpp>
 #include <haf/include/scene/scene_node.hpp>
 #include <haf/include/resources/ifont.hpp>
-#include <haf/include/scene_components/renderizables.hpp>
+#include <haf/include/scene_components/renderizable_group_component.hpp>
 #include <haf/include/scene_components/table_of_text.hpp>
 #include <haf/include/animation/animation_component.hpp>
 #include "../loaders/highscoresresources.hpp"

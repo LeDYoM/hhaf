@@ -8,8 +8,7 @@
 
 #include <boardmanager/include/itile.hpp>
 #include <haf/include/animation/animation_component.hpp>
-#include <haf/include/scene_components/renderizables.hpp>
-
+#include <haf/include/scene_components/renderizable_group_component.hpp>
 namespace zoper
 {
 /**
