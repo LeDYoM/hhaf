@@ -91,11 +91,6 @@ void SceneController::finish()
     }
 }
 
-sptr<SceneComponent> const& SceneController::currentScene() const noexcept
-{
-    return m_current_scene;
-}
-
 bool SceneController::setSystemProviderInScene(
     rptr<SceneComponent::SceneComponentPrivate> const scene_private,
     rptr<sys::ISystemProvider> const isystem_provider)

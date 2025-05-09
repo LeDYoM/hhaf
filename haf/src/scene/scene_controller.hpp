@@ -87,7 +87,6 @@ public:
     component::ComponentFactory& componentFactory() noexcept;
     component::ComponentFactory const& componentFactory() const noexcept;
 
-    htps::sptr<SceneComponent> const& currentScene() const noexcept;
     bool currentSceneIsNull();
 
     void requestExit();
