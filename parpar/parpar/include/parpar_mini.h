@@ -3,7 +3,7 @@ PARPAR_PRAGMA_ONCE
 #define PAR_PAR_MINI_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
-#include <htypes/include/str_view.hpp>
+#include <htypes/include/str_functions.hpp>
 
 /**
  * @brief This file implements a small footprint version of parameter parser
@@ -26,15 +26,10 @@ public:
     constexpr auto numParameters() const noexcept { return m_argc; }
 
 private:
-    bool param_starts_with(const htps::u32 index, char const* prefix)
+    bool param_starts_with(htps::u32 const index, char const* prefix)
     {
-        htps::str_view v_prefix{prefix};
-        htps::str_view v_param{param(index)};
-
-        if (v_param.size() >= v_prefix.size())
-        {
-            return true;
-        }
+        auto const current_param{param(index)};
+        return htps::starts_with(current_param, prefix);
     }
 
     constexpr ParametersParserMini(int const argc,
