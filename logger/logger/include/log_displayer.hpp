@@ -57,7 +57,7 @@ private:
         [maybe_unused]] Args&&... args) noexcept
     {
         LogClass::template log_if_ce<SeverityType::showSeverity(severity_type)>(
-            DisplaySeverity ? SeverityType::template as_str(severity_type) : "",
+            DisplaySeverity ? SeverityType::as_str(severity_type) : "",
             LogMessage.value, std::forward<Args>(args)...);
     }
 
