@@ -4,6 +4,7 @@ HTPS_PRAGMA_ONCE
 
 #include <haf/include/core/types.hpp>
 #include "haf_private.hpp"
+#include <haf/include/scene/scene_node.hpp>
 
 namespace haf::scene
 {
@@ -35,7 +36,7 @@ public:
     {
         T::update();
 
-        for (auto& group : scene_node.sceneNodes())
+        for (auto& group : node.sceneNodes())
         {
             updateNodeDownTree(*group);
         }
