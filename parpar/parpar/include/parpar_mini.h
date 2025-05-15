@@ -48,6 +48,7 @@ public:
                 return &(pr[2]);
             }
         }
+        return nullptr;
     }
 
 private:

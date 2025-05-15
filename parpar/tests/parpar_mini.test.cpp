@@ -28,7 +28,7 @@ TEST_CASE("haf::parpar::ParameterParserMini", "[parparmini]")
         CHECK(strncmp(paramParser.param(3), "-file") == 0);
     }
 
-        {
+    {
         const int argc           = 1;
         char const* const argv[] = {"parpar"};
 
@@ -44,4 +44,11 @@ TEST_CASE("haf::parpar::ParameterParserMini", "[parparmini]")
         CHECK(strncmp(paramParser.param(1), "program=qwe.txt") != 0);
         CHECK(paramParser.param(1) == nullptr);
     }
+}
+
+TEST_CASE("haf::parpar::ParameterParserMini", "[parparmini]")
+{
+        const int argc           = 5;
+        char const* const argv[] = {"parpar", "--program", "this",
+                                    "-file", "archive.txt"};
 }
