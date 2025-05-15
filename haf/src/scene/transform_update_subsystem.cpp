@@ -18,7 +18,7 @@ void TransformScene::finishPass()
 void TransformScene::update()
 {}
 
-void TransformScene::updateNodeDownTree(SceneNode& node)
+void TransformScene::updateNodeDownTree(SceneNode&)
 {}
 
 }  // namespace haf::scene

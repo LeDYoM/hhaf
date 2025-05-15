@@ -48,7 +48,7 @@ public:
                 return &(pr[2]);
             }
         }
-        return nullptr;
+        return static_cast<const char*>(nullptr);
     }
 
 private:
