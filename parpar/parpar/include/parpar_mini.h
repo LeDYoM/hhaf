@@ -30,7 +30,7 @@ public:
     {
         return m_argc;
     }
-/*
+
     [[nodiscard]] constexpr auto paramKey(Index const index) const noexcept
     {
         auto const pr{param(index)};
@@ -42,24 +42,24 @@ public:
             }
             else if (pr[1] != '-')
             {
-                return &(pr[1]);
+                return pr.offset(1);
             }
             else
             {
-                return &(pr[2]);
+                return pr.offset(2);
             }
         }
-        return static_cast<const char*>(nullptr);
+        return htps::str_view{};
     }
-*/
-private:/*
+
+private:
 
     bool param_starts_with(Index const index, char const* prefix)
     {
         auto const current_param{param(index)};
-        return htps::starts_with(current_param, prefix);
+        return current_param.starts_with(prefix);
     }
-*/
+
     constexpr ParametersParserMini(int const argc,
                                    char const* const argv[]) noexcept :
         m_argc{static_cast<Index>(argc)}, m_argv{argv}

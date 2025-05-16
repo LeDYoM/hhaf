@@ -109,16 +109,29 @@ public:
                                  : std::strong_ordering::equal);
     }
 
-    [[nodiscard]] constexpr size_type find(const_iterator str_to_find) noexcept
+    [[nodiscard]] constexpr size_type find(
+        const_iterator str_to_find) const noexcept
     {
         return strnfind(m_begin, str_to_find);
     }
 
-    [[nodiscard]] constexpr basic_str_view offset(size_type index)
+    [[nodiscard]] constexpr basic_str_view offset(
+        size_type index) const noexcept
     {
         index = min({index, m_size});
         return basic_str_view{m_begin + index,
                               static_cast<size_type>(m_size - index)};
+    }
+
+    [[nodiscard]] constexpr bool starts_with(
+        const char_type* to_find) const noexcept
+    {
+        return htps::starts_with(m_begin, to_find);
+    }
+
+    [[nodiscard]] constexpr bool starts_with(basic_str_view to_find) const noexcept
+    {
+        return starts_with(m_begin, to_find.m_begin);
     }
 
     const_iterator m_begin;
