@@ -104,9 +104,9 @@ public:
         const basic_str_view& rhs) const noexcept
     {
         auto const result{strnncmp(m_begin, size(), rhs.m_begin, rhs.size())};
-        return (result < 0 ? std::strong_ordering::less
-                           : result > 0 ? std::strong_ordering::greater
-                                        : std::strong_ordering::equal);
+        return (result < 0       ? std::strong_ordering::less
+                    : result > 0 ? std::strong_ordering::greater
+                                 : std::strong_ordering::equal);
     }
 
     [[nodiscard]] constexpr size_type find(const_iterator str_to_find) noexcept
@@ -114,11 +114,11 @@ public:
         return strnfind(m_begin, str_to_find);
     }
 
-    [[nodiscard]] constexpr basic_str_view offset(size_type const index)
+    [[nodiscard]] constexpr basic_str_view offset(size_type index)
     {
-        return basic_str_view{
-            m_begin + index,
-            static_cast<size_type>(min({m_size - index, m_size}))};
+        index = min({index, m_size});
+        return basic_str_view{m_begin + index,
+                              static_cast<size_type>(m_size - index)};
     }
 
     const_iterator m_begin;
