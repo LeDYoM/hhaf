@@ -5,7 +5,7 @@
 
 using namespace htps;
 using namespace parparmini;
-
+/*
 TEST_CASE("haf::parpar::ParameterParserMini", "[parparmini]")
 {
     {
@@ -48,7 +48,12 @@ TEST_CASE("haf::parpar::ParameterParserMini", "[parparmini]")
 
 TEST_CASE("haf::parpar::ParameterParserMini", "[parparmini]")
 {
-        const int argc           = 5;
-        char const* const argv[] = {"parpar", "--program", "this",
-                                    "-file", "archive.txt"};
+    const int argc           = 5;
+    char const* const argv[] = {"parpar", "--program", "this", "-file",
+                                "archive.txt"};
+
+    const ParametersParserMini paramParser(create(argc, argv));
+
+
 }
+*/

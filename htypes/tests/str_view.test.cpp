@@ -105,3 +105,29 @@ TEST_CASE("str_view::find", "[str_view]")
         CHECK(a.find("Hello ") == npos);
     }
 }
+
+TEST_CASE("str_view::offset", "[str_view]")
+{
+    {
+        str_view a{"Hello"};
+        CHECK(a.offset(0) == a);
+        CHECK(a.offset(0) == "Hello");
+    }
+
+    {
+        str_view a{"Hello"};
+        CHECK(a.offset(50) == "");
+    }
+
+    {
+        str_view a{"longer string here"};
+        CHECK(a.offset(7) == "string here");
+    }
+
+    {
+        str_view a{"longer string here"};
+        str_view b{"nger string here"};
+
+        CHECK(a.offset(2) == b);
+    }
+}

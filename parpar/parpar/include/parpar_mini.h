@@ -4,6 +4,7 @@ PARPAR_PRAGMA_ONCE
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/str_functions.hpp>
+#include <htypes/include/str_view.hpp>
 
 /**
  * @brief This file implements a small footprint version of parameter parser
@@ -17,7 +18,7 @@ public:
 
     [[nodiscard]] constexpr auto operator[](Index const index) const noexcept
     {
-        return ((index < m_argc) ? m_argv[index] : nullptr);
+        return htps::str_view{(index < m_argc) ? m_argv[index] : nullptr};
     }
 
     [[nodiscard]] constexpr auto param(Index const index) const noexcept
@@ -29,7 +30,7 @@ public:
     {
         return m_argc;
     }
-
+/*
     [[nodiscard]] constexpr auto paramKey(Index const index) const noexcept
     {
         auto const pr{param(index)};
@@ -37,7 +38,7 @@ public:
         {
             if (pr[0] != '-')
             {
-                return &(pr[0]);
+                return pr;
             }
             else if (pr[1] != '-')
             {
@@ -50,14 +51,15 @@ public:
         }
         return static_cast<const char*>(nullptr);
     }
+*/
+private:/*
 
-private:
     bool param_starts_with(Index const index, char const* prefix)
     {
         auto const current_param{param(index)};
         return htps::starts_with(current_param, prefix);
     }
-
+*/
     constexpr ParametersParserMini(int const argc,
                                    char const* const argv[]) noexcept :
         m_argc{static_cast<Index>(argc)}, m_argv{argv}
