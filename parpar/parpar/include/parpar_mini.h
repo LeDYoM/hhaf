@@ -26,6 +26,23 @@ public:
         return (*this)[index];
     }
 
+    [[nodiscard]] constexpr auto operator[](htps::str_view index) const noexcept
+    {
+        for (auto i{1U}; i < m_argc; ++i)
+        {
+            if (param(i) == index)
+            {
+                return static_cast<htps::s32>(i);
+            }
+        }
+        return -1;
+    }
+
+    [[nodiscard]] constexpr auto param(htps::str_view index) const noexcept
+    {
+        return (*this)[htps::move(index)];
+    }
+
     [[nodiscard]] constexpr auto numParameters() const noexcept
     {
         return m_argc;
@@ -52,14 +69,12 @@ public:
         return htps::str_view{};
     }
 
-private:
-
-    bool param_starts_with(Index const index, char const* prefix)
+    [[nodiscard]] constexpr auto paramValue(htps::str_view index) const noexcept
     {
-        auto const current_param{param(index)};
-        return current_param.starts_with(prefix);
+        auto const key{param(index)};
     }
 
+private:
     constexpr ParametersParserMini(int const argc,
                                    char const* const argv[]) noexcept :
         m_argc{static_cast<Index>(argc)}, m_argv{argv}
