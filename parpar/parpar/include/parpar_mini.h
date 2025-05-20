@@ -72,6 +72,7 @@ public:
     [[nodiscard]] constexpr auto paramValue(htps::str_view index) const noexcept
     {
         auto const key{param(index)};
+        return ((key > -1) ? param(key) : htps::str_view{});
     }
 
 private:
