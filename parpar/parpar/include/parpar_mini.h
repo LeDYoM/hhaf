@@ -47,6 +47,11 @@ public:
         return htps::str_view{};
     }
 
+    [[nodiscard]] constexpr auto paramValue(Index const index) const noexcept
+    {
+        return paramKey(index + 1U);
+    }
+
     [[nodiscard]] constexpr auto operator[](htps::str_view index) const noexcept
     {
         for (auto i{1U}; i < m_argc; ++i)
@@ -79,8 +84,8 @@ public:
 
     [[nodiscard]] constexpr auto paramValue(htps::str_view index) const noexcept
     {
-        auto const key{param(index)};
-        return ((key > -1) ? param(key) : htps::str_view{});
+        auto const key{paramKey(index)};
+        return ((key > 0U) ? paramValue(key) : htps::str_view{});
     }
 
     [[nodiscard]] constexpr auto numParameters() const noexcept
