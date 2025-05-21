@@ -26,28 +26,6 @@ public:
         return (*this)[index];
     }
 
-    [[nodiscard]] constexpr auto operator[](htps::str_view index) const noexcept
-    {
-        for (auto i{1U}; i < m_argc; ++i)
-        {
-            if (param(i) == index)
-            {
-                return static_cast<htps::s32>(i);
-            }
-        }
-        return -1;
-    }
-
-    [[nodiscard]] constexpr auto param(htps::str_view index) const noexcept
-    {
-        return (*this)[htps::move(index)];
-    }
-
-    [[nodiscard]] constexpr auto numParameters() const noexcept
-    {
-        return m_argc;
-    }
-
     [[nodiscard]] constexpr auto paramKey(Index const index) const noexcept
     {
         auto const pr{param(index)};
@@ -69,15 +47,51 @@ public:
         return htps::str_view{};
     }
 
+    [[nodiscard]] constexpr auto operator[](htps::str_view index) const noexcept
+    {
+        for (auto i{1U}; i < m_argc; ++i)
+        {
+            if (param(i) == index)
+            {
+                return i;
+            }
+        }
+        return 0U;
+    }
+
+    [[nodiscard]] constexpr auto paramKey(
+        htps::str_view const index) const noexcept
+    {
+        for (auto i{1U}; i < m_argc; ++i)
+        {
+            if (paramKey(i) == index)
+            {
+                return i;
+            }
+        }
+        return 0U;
+    }
+
+    [[nodiscard]] constexpr auto param(htps::str_view index) const noexcept
+    {
+        return (*this)[htps::move(index)];
+    }
+
     [[nodiscard]] constexpr auto paramValue(htps::str_view index) const noexcept
     {
         auto const key{param(index)};
         return ((key > -1) ? param(key) : htps::str_view{});
     }
 
+    [[nodiscard]] constexpr auto numParameters() const noexcept
+    {
+        return m_argc;
+    }
+
 private:
-    constexpr ParametersParserMini(int const argc,
-                                   char const* const argv[]) noexcept :
+    [[nodiscard]] constexpr ParametersParserMini(
+        int const argc,
+        char const* const argv[]) noexcept :
         m_argc{static_cast<Index>(argc)}, m_argv{argv}
     {}
 
@@ -88,7 +102,8 @@ private:
                                        char const* const argv[]);
 };
 
-inline ParametersParserMini create(int const argc, char const* const argv[])
+inline [[nodiscard]] ParametersParserMini create(int const argc,
+                                                 char const* const argv[])
 {
     return ParametersParserMini{argc, argv};
 }

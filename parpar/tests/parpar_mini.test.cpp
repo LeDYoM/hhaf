@@ -5,7 +5,7 @@
 
 using namespace htps;
 using namespace parparmini;
-/*
+
 TEST_CASE("haf::parpar::ParameterParserMini", "[parparmini]")
 {
     {
@@ -17,15 +17,15 @@ TEST_CASE("haf::parpar::ParameterParserMini", "[parparmini]")
 
         CHECK(paramParser.numParameters() == 4U);
 
-        CHECK(strncmp(paramParser[0], "parpar") == 0);
-        CHECK(strncmp(paramParser[1], "program=qwe.txt") == 0);
-        CHECK(strncmp(paramParser[2], "--abc") == 0);
-        CHECK(strncmp(paramParser[3], "-file") == 0);
+        CHECK(paramParser[0] == "parpar");
+        CHECK(paramParser[1] == "program=qwe.txt");
+        CHECK(paramParser[2] == "--abc");
+        CHECK(paramParser[3] == "-file");
 
-        CHECK(strncmp(paramParser.param(0), "parpar") == 0);
-        CHECK(strncmp(paramParser.param(1), "program=qwe.txt") == 0);
-        CHECK(strncmp(paramParser.param(2), "--abc") == 0);
-        CHECK(strncmp(paramParser.param(3), "-file") == 0);
+        CHECK(paramParser.param(0) == "parpar");
+        CHECK(paramParser.param(1) == "program=qwe.txt");
+        CHECK(paramParser.param(2) == "--abc");
+        CHECK(paramParser.param(3) == "-file");
     }
 
     {
@@ -36,17 +36,17 @@ TEST_CASE("haf::parpar::ParameterParserMini", "[parparmini]")
 
         CHECK(paramParser.numParameters() == 1U);
 
-        CHECK(strncmp(paramParser[0], "parpar") == 0);
-        CHECK(strncmp(paramParser[1], "program=qwe.txt") != 0);
+        CHECK(paramParser[0] == "parpar");
         CHECK(paramParser[1] == nullptr);
+        CHECK(paramParser[2] == nullptr);
 
-        CHECK(strncmp(paramParser.param(0), "parpar") == 0);
-        CHECK(strncmp(paramParser.param(1), "program=qwe.txt") != 0);
+        CHECK(paramParser.param(0) == "parpar");
         CHECK(paramParser.param(1) == nullptr);
+        CHECK(paramParser.param(2) == nullptr);
     }
 }
 
-TEST_CASE("haf::parpar::ParameterParserMini", "[parparmini]")
+TEST_CASE("haf::parpar::ParameterParserMini::str_view", "[parparmini]")
 {
     const int argc           = 5;
     char const* const argv[] = {"parpar", "--program", "this", "-file",
@@ -54,6 +54,15 @@ TEST_CASE("haf::parpar::ParameterParserMini", "[parparmini]")
 
     const ParametersParserMini paramParser(create(argc, argv));
 
+    CHECK(paramParser["parpar"] == 0);
+    CHECK(paramParser["--program"] == 1);
+    CHECK(paramParser["this"] == 2);
+    CHECK(paramParser["-file"] == 3);
+    CHECK(paramParser["archive.txt"] == 4);
 
+    CHECK(paramParser.param("parpar") == 0);
+    CHECK(paramParser.param("--program") == 1);
+    CHECK(paramParser.param("this") == 2);
+    CHECK(paramParser.param("-file") == 3);
+    CHECK(paramParser.param("archive.txt") == 4);
 }
-*/
