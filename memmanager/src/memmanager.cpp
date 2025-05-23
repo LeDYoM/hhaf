@@ -1,6 +1,6 @@
 #include <memmanager/include/memmanager.hpp>
 #include <memmanager/include/memory_view.hpp>
-#include "memory_statistics.hpp"
+#include "memory_statistics_private.hpp"
 
 #include <cstdlib>
 #include <new>
@@ -45,11 +45,12 @@ static int crtDebugMemAllocHook(int allocType,
 void installMemManager(int argc, char* argv[])
 {
 #ifdef _MSC_VER
-    _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+    _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF |
+                   _CRTDBG_CHECK_ALWAYS_DF);
     _CrtSetAllocHook(crtDebugMemAllocHook);
 #endif
 
-    for (int i=1;i<argc;++i)
+    for (int i = 1; i < argc; ++i)
     {
         (void)(argv);
     }

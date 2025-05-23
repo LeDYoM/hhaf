@@ -1,4 +1,4 @@
-#include "memory_statistics.hpp"
+#include "memory_statistics_private.hpp"
 #include <cstdint>
 
 namespace memm

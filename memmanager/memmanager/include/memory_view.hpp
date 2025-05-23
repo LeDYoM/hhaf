@@ -4,23 +4,10 @@
 #include <cstddef>
 #include <cstdint>
 
+#include "memory_statistics.hpp"
+
 namespace memm
 {
-struct MemoryStatistics
-{
-    std::uint64_t num_alloc_{0U};
-    std::uint64_t num_dealloc_{0U};
-    std::uint64_t bytes_alloc_{0U};
-    std::uint64_t bytes_dealloc_{0U};
-};
-
-bool pushMemoryStatisticsQueue();
-bool popMemoryStatisticsQueue();
-
-MemoryStatistics* getHeadMemoryStatistics();
-bool canAddNode() noexcept;
-MemoryStatistics* getMemoryStatistics() noexcept;
-
 class MemoryView
 {
 public:
