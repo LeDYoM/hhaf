@@ -16,12 +16,6 @@ class SceneNode;
 void HAF_PRIVATE render(SceneNode& scene_node,
                         SceneRenderContext scene_render_context);
 
-template<typename T>
-void HAF_PRIVATE subsystemUpdateNode(T& subsystem, SceneNode& node)
-{
-    subsystem.updateNode(node);
-}
-
 }  // namespace haf::scene
 
 #endif

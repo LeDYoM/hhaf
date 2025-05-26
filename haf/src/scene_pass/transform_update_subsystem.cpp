@@ -18,7 +18,7 @@ void TransformScene::finishPass()
 void TransformScene::update()
 {}
 
-void TransformScene::updateNodeDownTree(SceneNode&)
+void TransformScene::updateNodeDownTree(SceneNode&, htps::sptr<component::Component> )
 {}
 
 }  // namespace haf::scene
