@@ -47,41 +47,14 @@ public:
      */
     constexpr const pointer attachedNode() const noexcept
     {
-        return attachedNode_;
+        return m_attachedNode;
     }
 
     /**
      * @brief Get the attached node.
      * @return The pointer to the attached node.
      */
-    constexpr pointer attachedNode() noexcept { return attachedNode_; }
-
-    /**
-     * @brief Shortcut method to get the attached node converted to a type.
-     *
-     * @tparam Y Dest type to convert
-     * @return htps::rptr<Y> containing the attached node or nullptr if no
-     * conversion was possible.
-     */
-    template <typename Y>
-    htps::rptr<Y> attachedNodeAs() noexcept
-    {
-        return dynamic_cast<Y*>(attachedNode());
-    }
-
-    /**
-     * @brief Shortcut method to get the attached node converted to a type.
-     * Const version
-     *
-     * @tparam Y Dest type to convert
-     * @return htps::rptr<Y> containing the attached node or nullptr if no
-     * conversion was possible.
-     */
-    template <typename Y>
-    htps::rptr<Y const> attachedNodeAs() const noexcept
-    {
-        return dynamic_cast<Y const*>(attachedNode());
-    }
+    constexpr pointer attachedNode() noexcept { return m_attachedNode; }
 
 protected:
     Component() noexcept = default;
@@ -89,15 +62,15 @@ protected:
 private:
     void setAttachedNode(pointer const attachedNode) noexcept
     {
-        attachedNode_ = attachedNode;
+        m_attachedNode = attachedNode;
         onAttached();
     }
 
     virtual void addRequirements(ComponentRequirements&) {}
 
-    pointer attachedNode_{nullptr};
+    pointer m_attachedNode{nullptr};
     friend class ComponentContainer;
-    friend class scene::SceneController;
+    friend class scene::SceneController::startScene;
 };
 
 }  // namespace haf::component

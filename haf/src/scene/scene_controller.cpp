@@ -122,7 +122,7 @@ void SceneController::startScene(sptr<SceneComponent> scene)
         if (m_scene_manager != nullptr)
         {
             m_root_scene_node = msptr<SceneNode>(nullptr, "Scene");
-            m_current_scene->attachedNode_ = m_root_scene_node.get();
+            m_current_scene->m_attachedNode = m_root_scene_node.get();
 
             if (!(setSystemProviderInScene(
                     m_current_scene->scenePrivate(),
