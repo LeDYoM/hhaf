@@ -70,7 +70,7 @@ private:
 
     pointer m_attachedNode{nullptr};
     friend class ComponentContainer;
-    friend class scene::SceneController::startScene;
+    friend class scene::SceneController;
 };
 
 }  // namespace haf::component
