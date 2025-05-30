@@ -30,25 +30,7 @@ void SceneNode::postRender(SceneRenderContext& sceneRenderContext)
         : Matrix4x4::Identity;
 
     bool localTransformationChanged{updateTransformIfNecessary()};
-    /*
-        HAF_DECLARE_DEBUG_VARIABLE(matrix_updater_counter)
-        if (HAF_DEBUG_VARIABLE_NAME(matrix_updater_counter) < 0)
-        {
-            subSystem<debug::IDebugVariables>()->getVariable(
-                HAF_DEBUG_VARIABLE_NAME(matrix_updater_counter), "muc");
-        }
-        else
-        {
-            debug::DebugVariable value{0};
 
-            subSystem<debug::IDebugVariables>()->getVariableValue(
-                HAF_DEBUG_VARIABLE_NAME(matrix_updater_counter), value);
-
-            if (value.value() < 5)
-                subSystem<debug::IDebugVariables>()->incrementVariable(
-                    HAF_DEBUG_VARIABLE_NAME(matrix_updater_counter), 1);
-        }
-    */
     if (!localTransformationChanged)
     {
         localTransformationChanged =
@@ -80,3 +62,23 @@ Matrix4x4 const& SceneNode::localTransform() const noexcept
 }
 
 }  // namespace haf::scene
+
+    /*
+        HAF_DECLARE_DEBUG_VARIABLE(matrix_updater_counter)
+        if (HAF_DEBUG_VARIABLE_NAME(matrix_updater_counter) < 0)
+        {
+            subSystem<debug::IDebugVariables>()->getVariable(
+                HAF_DEBUG_VARIABLE_NAME(matrix_updater_counter), "muc");
+        }
+        else
+        {
+            debug::DebugVariable value{0};
+
+            subSystem<debug::IDebugVariables>()->getVariableValue(
+                HAF_DEBUG_VARIABLE_NAME(matrix_updater_counter), value);
+
+            if (value.value() < 5)
+                subSystem<debug::IDebugVariables>()->incrementVariable(
+                    HAF_DEBUG_VARIABLE_NAME(matrix_updater_counter), 1);
+        }
+    */

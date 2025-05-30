@@ -78,23 +78,6 @@ public:
      * @brief Clear all elements in this scene node
      */
     void clearAll();
-
-    /**
-     * @brief Get a copy of the current stored global transformation. No
-     * updates will be performed.
-     * @return Matrix4x4 const& The global transformation.
-     */
-    Matrix4x4 const& globalTransform() const noexcept;
-
-    /**
-     * @brief Get a copy of the current stored local transformation. No
-     * updates will be performed.
-     * @return Matrix4x4 const& The local transformation.
-     */
-    Matrix4x4 const& localTransform() const noexcept;
-
-private:
-    Matrix4x4 global_transform_;  ///< Global Transformation Matrix cached
 };
 
 using SceneNodeSPtr = htps::sptr<SceneNode>;

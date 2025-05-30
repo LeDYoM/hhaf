@@ -35,10 +35,25 @@ public:
 
     Matrix4x4 const& matrix() const noexcept;
 
+    /**
+     * @brief Get a copy of the current stored global transformation. No
+     * updates will be performed.
+     * @return Matrix4x4 const& The global transformation.
+     */
+    Matrix4x4 const& globalTransform() const noexcept;
+
+    /**
+     * @brief Get a copy of the current stored local transformation. No
+     * updates will be performed.
+     * @return Matrix4x4 const& The local transformation.
+     */
+    Matrix4x4 const& localTransform() const noexcept;
 private:
     void updateTransform();
 
     Matrix4x4 transform_;
+    Matrix4x4 global_transform_;  ///< Global Transformation Matrix cached
+
 };
 }  // namespace haf::scene
 
