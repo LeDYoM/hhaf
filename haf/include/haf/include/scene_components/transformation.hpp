@@ -2,16 +2,16 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_SCENE_TRANSFORMATION_INCLUDE_HPP
 #define HAF_SCENE_TRANSFORMATION_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
+#include <haf/include/core/types.hpp>
 #include <facil_math/include/vector2d.hpp>
 #include <facil_math/include/rect.hpp>
 #include <haf/include/properties/property_state.hpp>
-
 #include <haf/include/scene/matrix4x4.hpp>
+#include <haf/include/component/component.hpp>
 
 namespace haf::scene
 {
-class HAF_API Transformation
+class HAF_API Transformation : public component::Component
 {
 public:
     using Scalar       = Matrix4x4::Scalar;

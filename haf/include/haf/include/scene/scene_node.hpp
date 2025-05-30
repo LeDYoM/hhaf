@@ -13,7 +13,7 @@ HTPS_PRAGMA_ONCE
 #include <haf/include/system/system_access.hpp>
 #include <haf/include/component/component_container.hpp>
 #include <haf/include/system/subsystem_view.hpp>
-#include <haf/include/scene/transformation.hpp>
+#include <haf/include/scene_components/transformation.hpp>
 
 namespace haf::scene
 {
