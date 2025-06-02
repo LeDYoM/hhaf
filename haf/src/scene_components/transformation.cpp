@@ -1,4 +1,4 @@
-#include <haf/include/scene/transformation.hpp>
+#include <haf/include/scene_components/transformation.hpp>
 #include "render/geometry_math.hpp"
 
 #include <cmath>
@@ -53,6 +53,16 @@ void Transformation::setRightTopPositionScale(VectorScalar const& vector)
     origin.y += vector.y / 2.0F;
     Position = htps::move(origin);
     Scale    = vector;
+}
+
+Matrix4x4 const& Transformation::globalTransform() const noexcept
+{
+    return global_transform_;
+}
+
+Matrix4x4 const& Transformation::localTransform() const noexcept
+{
+    return matrix();
 }
 
 }  // namespace haf::scene

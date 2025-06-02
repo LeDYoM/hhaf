@@ -13,8 +13,7 @@ SceneNode::SceneNode(rptr<SceneNode> parent, str name) :
                                         : nullptr},
     component::ComponentContainer{this},
     sys::SubSystemViewer{&isystemProvider()},
-    Transformation(),
-    global_transform_{}
+    Transformation()
 {}
 
 SceneNode::~SceneNode() = default;
@@ -30,25 +29,7 @@ void SceneNode::postRender(SceneRenderContext& sceneRenderContext)
         : Matrix4x4::Identity;
 
     bool localTransformationChanged{updateTransformIfNecessary()};
-    /*
-        HAF_DECLARE_DEBUG_VARIABLE(matrix_updater_counter)
-        if (HAF_DEBUG_VARIABLE_NAME(matrix_updater_counter) < 0)
-        {
-            subSystem<debug::IDebugVariables>()->getVariable(
-                HAF_DEBUG_VARIABLE_NAME(matrix_updater_counter), "muc");
-        }
-        else
-        {
-            debug::DebugVariable value{0};
 
-            subSystem<debug::IDebugVariables>()->getVariableValue(
-                HAF_DEBUG_VARIABLE_NAME(matrix_updater_counter), value);
-
-            if (value.value() < 5)
-                subSystem<debug::IDebugVariables>()->incrementVariable(
-                    HAF_DEBUG_VARIABLE_NAME(matrix_updater_counter), 1);
-        }
-    */
     if (!localTransformationChanged)
     {
         localTransformationChanged =
@@ -69,14 +50,24 @@ void SceneNode::clearAll()
     clearSceneNodes();
 }
 
-Matrix4x4 const& SceneNode::globalTransform() const noexcept
-{
-    return global_transform_;
-}
-
-Matrix4x4 const& SceneNode::localTransform() const noexcept
-{
-    return matrix();
-}
-
 }  // namespace haf::scene
+
+/*
+    HAF_DECLARE_DEBUG_VARIABLE(matrix_updater_counter)
+    if (HAF_DEBUG_VARIABLE_NAME(matrix_updater_counter) < 0)
+    {
+        subSystem<debug::IDebugVariables>()->getVariable(
+            HAF_DEBUG_VARIABLE_NAME(matrix_updater_counter), "muc");
+    }
+    else
+    {
+        debug::DebugVariable value{0};
+
+        subSystem<debug::IDebugVariables>()->getVariableValue(
+            HAF_DEBUG_VARIABLE_NAME(matrix_updater_counter), value);
+
+        if (value.value() < 5)
+            subSystem<debug::IDebugVariables>()->incrementVariable(
+                HAF_DEBUG_VARIABLE_NAME(matrix_updater_counter), 1);
+    }
+*/
