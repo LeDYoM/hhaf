@@ -48,7 +48,7 @@ public:
      * @return Matrix4x4 const& The local transformation.
      */
     Matrix4x4 const& localTransform() const noexcept;
-private:
+//private:
     void updateTransform();
 
     Matrix4x4 transform_;

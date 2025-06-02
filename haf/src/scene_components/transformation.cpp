@@ -55,4 +55,14 @@ void Transformation::setRightTopPositionScale(VectorScalar const& vector)
     Scale    = vector;
 }
 
+Matrix4x4 const& Transformation::globalTransform() const noexcept
+{
+    return global_transform_;
+}
+
+Matrix4x4 const& Transformation::localTransform() const noexcept
+{
+    return matrix();
+}
+
 }  // namespace haf::scene
