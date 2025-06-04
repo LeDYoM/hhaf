@@ -3,9 +3,9 @@
 #include <thread>
 
 // Signature of the main function exported from host shared library
-using p_haf_host_main = int (*)(int argc, char* argv[]);
+using p_haf_host_main = int (*)(int const argc, char const* argv[]);
 
-int main(int argc, char* argv[])
+int main(int const argc, char const* argv[])
 {
     {
         // Create a dummy thread to initialize pthread library in

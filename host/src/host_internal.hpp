@@ -19,7 +19,7 @@ namespace haf::host
 class HostInternal
 {
 public:
-    HostInternal(const int argc, char const* const argv[]);
+    HostInternal(int const argc, char const* const argv[]);
 
     int const argc_;
     char const* const* const argv_;

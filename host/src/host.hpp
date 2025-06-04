@@ -18,7 +18,7 @@ public:
      * @param argc Number of command line parameters.
      * @param argv Pointers to the command line parameters.
      */
-    Host(int argc, char* argv[]);
+    Host(int const argc, char const* argv[]);
 
     /**
      * @brief Destroy the Host object

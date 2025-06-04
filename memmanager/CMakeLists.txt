@@ -8,8 +8,8 @@ project("HAF MemManager"
 set(CURRENT_TARGET memmanager)
 
 set(sources
-    src/memmanager_msc.cpp
-    src/memmanager_msc.hpp
+    src/platforms/msvc/memmanager_msvc.cpp
+    src/memmanager_platform.hpp
     src/memmanager.cpp
     src/memory_statistics_private.hpp
     src/memory_statistics.cpp
@@ -24,5 +24,6 @@ set(headers
 build_lib_component(EXPORT_ALL HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}" SOURCES
                     "${sources}" HEADERS "${headers}" )
 
-target_link_libraries(${CURRENT_TARGET} PRIVATE parpar)
 set_compile_warning_level_and_cxx_properties_all(${CURRENT_TARGET})
+target_link_libraries(${CURRENT_TARGET} PRIVATE parpar)
+target_include_directories(${CURRENT_TARGET} PRIVATE src)

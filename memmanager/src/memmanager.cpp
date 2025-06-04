@@ -1,15 +1,13 @@
 #include <memmanager/include/memmanager.hpp>
 #include <memmanager/include/memory_view.hpp>
 #include "memory_statistics_private.hpp"
-#include "memmanager_msc.hpp"
+#include "memmanager_platform.hpp"
 
-#include <cstdlib>
-#include <new>
 #include <iostream>
 
-void installMemManager(int argc, char* argv[])
+void installMemManager(int const argc, char const* argv[])
 {
-    initPlatformMemManager();
+    initPlatformMemManager(argc, argv);
 
     for (int i = 1; i < argc; ++i)
     {
@@ -23,8 +21,17 @@ struct Bytes
 {
     uint64_t bytes;
 
-    uint64_t KBytes() const noexcept { return bytes / 1024U; }
-    uint64_t MBytes() const noexcept { return bytes / (1024U * 1024U); }
+    constexpr uint64_t KBytes() const noexcept { return bytes / 1024U; }
+
+    constexpr uint64_t MBytes() const noexcept
+    {
+        return bytes / (1024U * 1024U);
+    }
+
+    constexpr uint64_t GBytes() const noexcept
+    {
+        return bytes / (1024U * 1024U * 1024U);
+    }
 };
 
 void finishMemManager(bool const display_log)

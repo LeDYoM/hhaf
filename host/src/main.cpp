@@ -3,7 +3,7 @@
 
 #include "host_export.hpp"
 
-HOST_PRIVATE int host_main(int argc, char* argv[]) noexcept
+HOST_PRIVATE int host_main(int const argc, char const* argv[]) noexcept
 {
     using namespace haf;
 
@@ -33,7 +33,7 @@ HOST_PRIVATE int host_main(int argc, char* argv[]) noexcept
     return result;
 }
 
-HOST_API int haf_host_main(int argc, char* argv[])
+HOST_API int haf_host_main(int const argc, char const* argv[])
 {
     return host_main(argc, argv);
 }
