@@ -9,6 +9,8 @@ set(CURRENT_TARGET memmanager)
 
 set(sources
     src/platforms/msvc/memmanager_msvc.cpp
+    src/configuration.cpp
+    src/configuration.hpp
     src/memmanager_platform.hpp
     src/memmanager.cpp
     src/memory_statistics_private.hpp
