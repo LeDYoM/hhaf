@@ -50,6 +50,6 @@ set_pragma_once_or_not(HTPS true INTERFACE)
 # Use Memmamanger
 target_compile_definitions(${CURRENT_TARGET} INTERFACE USER_MEM_MANAGER)
 target_link_libraries(${CURRENT_TARGET} INTERFACE memmanager)
-target_compile_features(${CURRENT_TARGET} INTERFACE cxx_std_20)
+target_compile_features(${CURRENT_TARGET} INTERFACE cxx_std_23)
 
 addTestingDirectory(tests)

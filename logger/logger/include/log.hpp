@@ -88,14 +88,7 @@ private:
     {
         if constexpr (EnableLogs)
         {
-            if constexpr (requires { arg(); })
-            {
-                log_stream() << arg();
-            }
-            else
-            {
-                log_stream() << arg;
-            }
+            log_stream() << arg;
         }
     }
 };

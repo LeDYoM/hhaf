@@ -1,7 +1,6 @@
 #include "memmanager_platform.hpp"
 #include <memmanager/include/memmanager.hpp>
-#include <memmanager/include/memory_view.hpp>
-#include "memory_statistics_private.hpp"
+#include "configuration.hpp"
 
 #include <cstdlib>
 #include <new>
@@ -42,10 +41,14 @@ int crtDebugMemAllocHook(int allocType,
 }
 #endif  // NDEBUG
 
-bool initPlatformMemManager(Configuration const&)
+bool initPlatformMemManager(Configuration const& config)
 {
-    _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF |
-                   _CRTDBG_CHECK_ALWAYS_DF);
+    int newFlag{_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF};
+    if (config.AlwaysCheckHeap)
+    {
+        newFlag |= _CRTDBG_CHECK_ALWAYS_DF;
+    }
+    _CrtSetDbgFlag(newFlag);
     _CrtSetAllocHook(crtDebugMemAllocHook);
     return true;
 }

@@ -30,6 +30,6 @@ build_lib_component(HEADERS_ONLY HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}"
 
 set_pragma_once_or_not(FMA true INTERFACE)
 
-target_compile_features(${CURRENT_TARGET} INTERFACE cxx_std_20)
+target_compile_features(${CURRENT_TARGET} INTERFACE cxx_std_23)
 
 addTestingDirectory(tests)
