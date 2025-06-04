@@ -2,12 +2,13 @@
 #include <memmanager/include/memory_view.hpp>
 #include "memory_statistics_private.hpp"
 #include "memmanager_platform.hpp"
-
+#include "configuration.hpp"
 #include <iostream>
 
 void installMemManager(int const argc, char const* argv[])
 {
-    initPlatformMemManager(argc, argv);
+    Configuration config{paramsToConfiguration(argc, argv)};
+    initPlatformMemManager(config);
 
     for (int i = 1; i < argc; ++i)
     {

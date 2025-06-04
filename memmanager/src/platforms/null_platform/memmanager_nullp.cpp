@@ -1,6 +1,6 @@
 #include "memmanager_platform.hpp"
 
-bool initPlatformMemManager(int const /*argc*/, char const* /*argv*/[])
+bool initPlatformMemManager(Configuration const&)
 {
     return true;
 }

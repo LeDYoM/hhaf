@@ -42,7 +42,7 @@ int crtDebugMemAllocHook(int allocType,
 }
 #endif  // NDEBUG
 
-bool initPlatformMemManager(int const /*argc*/, char const* /*argv*/[])
+bool initPlatformMemManager(Configuration const&)
 {
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF |
                    _CRTDBG_CHECK_ALWAYS_DF);
