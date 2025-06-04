@@ -19,6 +19,6 @@ build_lib_component(HEADERS_ONLY HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}"
               HEADERS ${headers})
 
 set_pragma_once_or_not(PARPAR true INTERFACE)
-target_compile_features(${CURRENT_TARGET} INTERFACE cxx_std_20)
-target_link_libraries(${CURRENT_TARGET} htypes)
+target_compile_features(${CURRENT_TARGET} INTERFACE cxx_std_23)
+target_link_libraries(${CURRENT_TARGET} INTERFACE htypes)
 addTestingDirectory(tests)
