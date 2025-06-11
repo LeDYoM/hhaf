@@ -10,6 +10,8 @@ HTPS_PRAGMA_ONCE
 
 #include <haf/include/scene_components/scene_component.hpp>
 #include <haf/include/component/component_factory.hpp>
+#include "../scene_pass/scene_pass_manager.hpp"
+
 
 namespace haf::sys
 {
@@ -101,6 +103,7 @@ private:
     htps::rptr<SceneManager> m_scene_manager{nullptr};
     htps::sptr<SceneComponent> m_current_scene{nullptr};
     htps::sptr<SceneNode> m_root_scene_node{nullptr};
+    ScenePassManager m_scene_pass_manager;
     bool m_switch_scene{false};
     bool m_exit_requested{false};
 };
