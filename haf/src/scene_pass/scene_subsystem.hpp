@@ -4,45 +4,15 @@ HTPS_PRAGMA_ONCE
 
 #include <haf/include/core/types.hpp>
 #include "haf_private.hpp"
-#include <haf/include/scene/scene_node.hpp>
+#include "component_type_updater.hpp"
 
 namespace haf::scene
 {
-template <typename T>
-class HAF_PRIVATE SceneSubsystem
+template <typename ComponentType>
+class HAF_PRIVATE ISceneSubsystem
 {
 public:
-    constexpr void init()
-    {
-        T::init();
-    }
-
-    constexpr void finish()
-    {
-        T::finish();
-    }
-
-    constexpr void initPass()
-    {
-        T::initPass();
-    }
-
-    constexpr void finishPass()
-    {
-        T::finishPass();
-    }
-
-    constexpr void updateNodeDownTree(SceneNode& node)
-    {
-        T::update();
-
-        for (auto& group : node.sceneNodes())
-        {
-            updateNodeDownTree(*group);
-        }
-
-        T::updateNodeDownTree(node);
-    }
+//    virtual htps::str const&
 };
 
 }  // namespace haf::scene

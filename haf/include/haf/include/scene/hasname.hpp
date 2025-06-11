@@ -25,6 +25,8 @@ protected:
 private:
     htps::str name_;
 };
+
+
 }  // namespace haf::sys
 
 #endif

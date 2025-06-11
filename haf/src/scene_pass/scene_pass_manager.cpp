@@ -14,6 +14,7 @@ class HAF_PRIVATE ScenePassManager final
 public:
     void registerForPass(htps::str_view passName,
                          htps::sptr<component::Component> node);
+
 };
 
 }  // namespace haf::scene

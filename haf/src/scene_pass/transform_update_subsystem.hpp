@@ -20,7 +20,6 @@ public:
     void updateNodeDownTree(SceneNode& node, htps::sptr<component::Component> );
 };
 
-using TransformSceneSubsystem = SceneSubsystem<TransformScene>;
 }  // namespace haf::scene
 
 #endif
