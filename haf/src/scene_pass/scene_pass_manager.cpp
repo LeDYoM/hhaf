@@ -9,7 +9,7 @@ HTPS_PRAGMA_ONCE
 
 namespace haf::scene
 {
-class HAF_PRIVATE ScenePassManager
+class HAF_PRIVATE ScenePassManager final
 {
 public:
     void registerForPass(htps::str_view passName,
