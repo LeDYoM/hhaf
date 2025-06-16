@@ -7,13 +7,19 @@ HTPS_PRAGMA_ONCE
 #include <haf/include/scene/scene_node.hpp>
 #include <haf/include/component/component.hpp>
 
+#include "iscene_subsystem.hpp"
+
 namespace haf::scene
 {
-class HAF_PRIVATE ScenePassManager
+class HAF_PRIVATE ScenePassManager final
 {
 public:
+    void registerSceneSubsystem(ISceneSubsystem&);
+
     void registerForPass(htps::str_view passName,
                          htps::sptr<component::Component> node);
+private:
+    core::vector<core::sptr<ISceneSubsystem>> m_scene_subsystems;
 };
 
 }  // namespace haf::scene

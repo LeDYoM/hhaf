@@ -1,22 +1,12 @@
-HTPS_PRAGMA_ONCE
-#ifndef HAF_SCENE_SCENE_PASS_MANAGER_INCLUDE_HPP
-#define HAF_SCENE_SCENE_PASS_MANAGER_INCLUDE_HPP
-
-#include <haf/include/core/types.hpp>
-#include "haf_private.hpp"
-#include <haf/include/scene/scene_node.hpp>
-#include <haf/include/component/component.hpp>
+#include "scene_pass_manager.hpp"
 
 namespace haf::scene
 {
-class HAF_PRIVATE ScenePassManager final
-{
-public:
-    void registerForPass(htps::str_view passName,
-                         htps::sptr<component::Component> node);
+void ScenePassManager::registerSceneSubsystem(ISceneSubsystem&)
+{}
 
-};
+void ScenePassManager::registerForPass(htps::str_view /*passName*/,
+                                       htps::sptr<component::Component> /*node*/)
+{}
 
 }  // namespace haf::scene
-
-#endif

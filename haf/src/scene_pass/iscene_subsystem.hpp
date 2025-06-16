@@ -8,11 +8,10 @@ HTPS_PRAGMA_ONCE
 
 namespace haf::scene
 {
-template <typename ComponentType>
 class HAF_PRIVATE ISceneSubsystem
 {
 public:
-//    virtual htps::str const&
+    virtual htps::str const& getName() const = 0;
 };
 
 }  // namespace haf::scene
