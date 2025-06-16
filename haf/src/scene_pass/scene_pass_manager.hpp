@@ -14,12 +14,12 @@ namespace haf::scene
 class HAF_PRIVATE ScenePassManager final
 {
 public:
-    void registerSceneSubsystem(ISceneSubsystem&);
+    void registerScenePassSubsystem(core::sptr<ISceneSubsystem>);
 
     void registerForPass(htps::str_view passName,
                          htps::sptr<component::Component> node);
 private:
-    core::vector<core::sptr<ISceneSubsystem>> m_scene_subsystems;
+    core::Dictionary<core::sptr<ISceneSubsystem>> m_scene_subsystems;
 };
 
 }  // namespace haf::scene

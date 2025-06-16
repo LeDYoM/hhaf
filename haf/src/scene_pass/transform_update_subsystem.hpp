@@ -5,7 +5,7 @@ HTPS_PRAGMA_ONCE
 #include <haf/include/core/types.hpp>
 #include <haf/include/scene/scene_node.hpp>
 #include <haf/include/component/component.hpp>
-#include "scene_subsystem.hpp"
+#include "iscene_subsystem.hpp"
 
 namespace haf::scene
 {

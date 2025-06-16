@@ -79,7 +79,7 @@ public:
         return result;
     }
 
-    [[nodiscard]] constexpr bool add(key_type const& key,
+    [[nodiscard]] constexpr bool add(key_type key,
                                      T value              = {},
                                      const bool overwrite = true)
     {
@@ -92,7 +92,7 @@ public:
         }
         else if (overwrite)
         {
-            (*it) = element(key, htps::move(value));
+            (*it) = element(htps::move(key), htps::move(value));
             return true;
         }
         return false;
@@ -189,23 +189,12 @@ public:
         return (previous_size - size());
     }
 
+    constexpr bool operator==(BasicDictionary const& rhs) const noexcept =
+        default;
+
 private:
     content data_;
 };
-
-template <typename Key, typename T>
-constexpr bool operator==(BasicDictionary<Key, T> const& lhs,
-                          BasicDictionary<Key, T> const& rhs) noexcept
-{
-    return lhs.data() == rhs.data();
-}
-
-template <typename Key, typename T>
-constexpr bool operator!=(BasicDictionary<Key, T> const& lhs,
-                          BasicDictionary<Key, T> const& rhs) noexcept
-{
-    return !(lhs == rhs);
-}
 
 }  // namespace htps
 
