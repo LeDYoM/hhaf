@@ -7,7 +7,8 @@ namespace haf::scene
 void ScenePassManager::registerScenePassSubsystem(
     sptr<ISceneSubsystem> scene_pass)
 {
-    (void)(m_scene_subsystems.add(scene_pass->getName(), std::move(scene_pass)));
+    (void)(m_scene_subsystems.add(scene_pass->getName(),
+                                  std::move(scene_pass)));
 }
 
 void ScenePassManager::registerForPass(
