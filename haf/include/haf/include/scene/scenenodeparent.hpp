@@ -7,11 +7,11 @@ HTPS_PRAGMA_ONCE
 
 namespace haf::scene
 {
+class SceneNode;
 /**
  * @brief Class encapsulating the functionallity related to the parent and
  * ancestors management.
  */
-template <typename CRTP>
 class SceneNodeParent
 {
 public:
@@ -19,7 +19,7 @@ public:
      * @brief Constructor.
      * @param[in] parent       The parent of this node.
      */
-    constexpr SceneNodeParent(htps::rptr<CRTP> parent) noexcept :
+    constexpr SceneNodeParent(htps::rptr<SceneNode> parent) noexcept :
         parent_{htps::move(parent)}
     {}
 
@@ -28,22 +28,25 @@ public:
      * @see SceneNode
      * @return Parent or nullptr if no parent
      */
-    constexpr htps::rptr<CRTP> parent() noexcept { return parent_; }
+    constexpr htps::rptr<SceneNode> parent() noexcept { return parent_; }
 
     /**
      * @brief Get the constant parent of this node
      * @see SceneNode
      * @return Parent or nullptr if no parent
      */
-    constexpr htps::rptr<CRTP const> parent() const noexcept { return parent_; }
+    constexpr htps::rptr<SceneNode const> parent() const noexcept
+    {
+        return parent_;
+    }
 
-    constexpr htps::rptr<CRTP const> cparent() const noexcept
+    constexpr htps::rptr<SceneNode const> cparent() const noexcept
     {
         return parent();
     }
 
 private:
-    htps::rptr<CRTP> const parent_;
+    htps::rptr<SceneNode> const parent_;
 };
 
 }  // namespace haf::scene

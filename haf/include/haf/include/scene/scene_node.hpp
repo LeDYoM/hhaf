@@ -24,7 +24,7 @@ class Scene;
  * To create new SceneNode types, inherit from this class.
  */
 class HAF_API SceneNode final : public sys::HasName,
-                          public SceneNodeParent<SceneNode>,
+                          public SceneNodeParent,
                           public SceneNodes,
                           public sys::SystemAccess,
                           public component::ComponentContainer,
