@@ -26,7 +26,7 @@
 #include <hlog/include/hlog.hpp>
 #include <haf/include/component/component_container.hpp>
 #include <haf/include/render/renderizable.hpp>
-#include <haf/include/scene_components/iscene_control.hpp>
+#include <haf/include/scene/iscene_control.hpp>
 #include <haf/include/scene_components/statescontrolleractuator_register.hpp>
 #include <haf/include/shareddata/shared_data_viewer.hpp>
 #include <haf/include/resources/iresource_configurator.hpp>

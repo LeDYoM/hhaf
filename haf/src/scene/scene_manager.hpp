@@ -6,9 +6,9 @@ HTPS_PRAGMA_ONCE
 #include <htypes/include/types.hpp>
 #include <facil_math/include/rect.hpp>
 #include <haf/include/types/scene_types.hpp>
-#include <haf/include/scene_components/iscene_control.hpp>
-#include <haf/include/scene_components/iapp_initializer.hpp>
-#include <haf/include/scene_components/iapp_finisher.hpp>
+#include <haf/include/scene/iscene_control.hpp>
+#include <haf/include/scene/iapp_initializer.hpp>
+#include <haf/include/scene/iapp_finisher.hpp>
 #include "system/system_base.hpp"
 
 namespace haf::scene

@@ -21,8 +21,8 @@
 #include <hosted_app/include/iapp.hpp>
 
 #include <haf/include/system/system_access.hpp>
-#include <haf/include/scene_components/iapp_initializer.hpp>
-#include <haf/include/scene_components/iapp_finisher.hpp>
+#include <haf/include/scene/iapp_initializer.hpp>
+#include <haf/include/scene/iapp_finisher.hpp>
 
 #include <parpar/include/parpar.hpp>
 

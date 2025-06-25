@@ -3,7 +3,7 @@
 #include <default_menu_paged/include/menu_paged_black_board.hpp>
 
 #include <haf/include/component/component_container.hpp>
-#include <haf/include/scene_components/iscene_control.hpp>
+#include <haf/include/scene/iscene_control.hpp>
 #include <haf/include/component/component_requirements.hpp>
 
 using namespace htps;

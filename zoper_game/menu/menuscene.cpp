@@ -2,7 +2,7 @@
 #include <haf/include/resources/iresource_retriever.hpp>
 #include <haf/include/resources/itexture.hpp>
 #include <haf/include/shareddata/ishared_data.hpp>
-#include <haf/include/scene_components/iscene_control.hpp>
+#include <haf/include/scene/iscene_control.hpp>
 #include <haf/include/scene_components/renderizable_group_component.hpp>
 
 #include "mainmenu.hpp"

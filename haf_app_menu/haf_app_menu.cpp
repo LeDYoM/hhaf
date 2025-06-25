@@ -1,7 +1,7 @@
 #include "haf_app_menu.hpp"
 
-#include <haf/include/scene_components/iapp_finisher.hpp>
-#include <haf/include/scene_components/iapp_initializer.hpp>
+#include <haf/include/scene/iapp_finisher.hpp>
+#include <haf/include/scene/iapp_initializer.hpp>
 
 #include <hlog/include/hlog.hpp>
 
