@@ -71,8 +71,12 @@ public:
 
     bool setNextApp(htps::str const& next_app) override;
 
+    SceneRenderContext& sceneRenderContext() override;
+    SceneRenderContext const& sceneRenderContext() const override;
+
 private:
     htps::sptr<SceneController> m_scene_controller;
+    htps::uptr<SceneRenderContext> m_scene_render_context;
 };
 }  // namespace haf::scene
 

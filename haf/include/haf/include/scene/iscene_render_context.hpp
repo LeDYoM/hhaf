@@ -4,6 +4,7 @@ HTPS_PRAGMA_ONCE
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/str.hpp>
+#include <haf/include/scene/scene_render_context.hpp>
 
 namespace haf::scene
 {
@@ -11,9 +12,9 @@ class ISceneRenderContext
 {
 protected:
     ~ISceneRenderContext() = default;
-
 public:
-
+    virtual SceneRenderContext& sceneRenderContext() = 0;
+    virtual SceneRenderContext const& sceneRenderContext() const = 0;
 };
 
 }  // namespace haf::scene
