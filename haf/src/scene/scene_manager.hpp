@@ -9,6 +9,7 @@ HTPS_PRAGMA_ONCE
 #include <haf/include/scene/iscene_control.hpp>
 #include <haf/include/scene/iapp_initializer.hpp>
 #include <haf/include/scene/iapp_finisher.hpp>
+#include <haf/include/scene/iscene_render_context.hpp>
 #include "system/system_base.hpp"
 
 namespace haf::scene
@@ -21,6 +22,7 @@ namespace haf::scene
 {
 class HAF_PRIVATE SceneManager final : public sys::SystemBase,
                                        public ISceneControl,
+                                       public ISceneRenderContext,
                                        public IAppInitializer,
                                        public IAppFinisher
 {
