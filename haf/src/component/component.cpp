@@ -1,6 +1,31 @@
 #include <haf/include/component/component.hpp>
+#include <haf/include/system/subsystem_view.hpp>
+#include <haf/include/scene/scene_node.hpp>
+#include <haf/include/scene/scene_render_context.hpp>
+#include <haf/include/scene/iscene_render_context_provider.hpp>
 
-using namespace htps;
+using namespace haf::core;
+using namespace haf::scene;
 
 namespace haf::component
-{}  // namespace haf::component
+{
+SceneRenderContext& Component::sceneRenderContext()
+{
+    return attachedNode()
+        ->subSystem<scene::ISceneRenderContextProvider>()
+        ->sceneRenderContext();
+}
+
+SceneRenderContext const& Component::sceneRenderContext() const
+{
+    return attachedNode()
+        ->subSystem<scene::ISceneRenderContextProvider>()
+        ->sceneRenderContext();
+}
+
+SceneRenderContext const& Component::cSceneRenderContext() const
+{
+    return sceneRenderContext();
+}
+
+}  // namespace haf::component

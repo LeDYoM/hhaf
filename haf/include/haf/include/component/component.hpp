@@ -8,6 +8,7 @@ namespace haf::scene
 {
 class SceneNode;
 class SceneController;
+struct SceneRenderContext;
 }
 
 namespace haf::component
@@ -58,6 +59,10 @@ public:
 
 protected:
     Component() noexcept = default;
+
+    scene::SceneRenderContext& sceneRenderContext();
+    scene::SceneRenderContext const& sceneRenderContext() const;
+    scene::SceneRenderContext const& cSceneRenderContext() const;
 
 private:
     void setAttachedNode(pointer const attachedNode) noexcept

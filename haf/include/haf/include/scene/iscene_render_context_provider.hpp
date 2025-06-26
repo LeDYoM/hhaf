@@ -1,6 +1,6 @@
 HTPS_PRAGMA_ONCE
-#ifndef HAF_SCENE_ISCENE_RENDER_CONTEXT_INCLUDE_HPP
-#define HAF_SCENE_ISCENE_RENDER_CONTEXT_INCLUDE_HPP
+#ifndef HAF_SCENE_ISCENE_RENDER_CONTEXT__PROVIDER_INCLUDE_HPP
+#define HAF_SCENE_ISCENE_RENDER_CONTEXT__PROVIDER_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/str.hpp>
@@ -8,10 +8,10 @@ HTPS_PRAGMA_ONCE
 
 namespace haf::scene
 {
-class ISceneRenderContext
+class ISceneRenderContextProvider
 {
 protected:
-    ~ISceneRenderContext() = default;
+    ~ISceneRenderContextProvider() = default;
 public:
     virtual SceneRenderContext& sceneRenderContext() = 0;
     virtual SceneRenderContext const& sceneRenderContext() const = 0;

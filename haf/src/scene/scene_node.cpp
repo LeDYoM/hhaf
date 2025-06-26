@@ -1,6 +1,9 @@
 #include <haf/include/scene/scene_node.hpp>
 #include <haf/include/scene_components/camera_component.hpp>
 
+#include <haf/include/scene/iscene_render_context_provider.hpp>
+#include <haf/include/scene/scene_render_context.hpp>
+
 using namespace htps;
 
 namespace haf::scene
@@ -18,11 +21,14 @@ SceneNode::SceneNode(rptr<SceneNode> parent, str name) :
 
 SceneNode::~SceneNode() = default;
 
-void SceneNode::postRender(SceneRenderContext& sceneRenderContext)
+void SceneNode::postRender(SceneRenderContext& /*sceneRenderContext*/)
 {
     //    HAF_PROFILE_SCENE_NODE_METHOD(prTime)
 
     auto const& transformable_parent{parent()};
+    auto& sceneRenderContext = subSystem<scene::ISceneRenderContextProvider>()
+        ->sceneRenderContext();
+
 
     sceneRenderContext.currentTransformation = transformable_parent != nullptr
         ? transformable_parent->globalTransform()
