@@ -11,8 +11,13 @@ class Matrix4x4;
 
 struct SceneRenderContext
 {
-    bool parentTransformationChanged_;
-    Matrix4x4& currentTransformation;
+    bool parentTransformationChanged_{false};
+    Matrix4x4 currentTransformation{Matrix4x4::Identity};
+
+    void reset()
+    {
+        *this = SceneRenderContext{};
+    }
 };
 
 }  // namespace haf::scene

@@ -76,7 +76,6 @@ public:
 
 private:
     htps::sptr<SceneController> m_scene_controller;
-    htps::uptr<SceneRenderContext> m_scene_render_context;
 };
 }  // namespace haf::scene
 

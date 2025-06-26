@@ -79,12 +79,12 @@ bool SceneManager::setNextApp(htps::str const&)
 
 SceneRenderContext& SceneManager::sceneRenderContext()
 {
-    return *m_scene_render_context;
+    return m_scene_controller->sceneRenderContext();
 }
 
 SceneRenderContext const& SceneManager::sceneRenderContext() const
 {
-    return *m_scene_render_context;
+    return m_scene_controller->sceneRenderContext();
 }
 
 }  // namespace haf::scene

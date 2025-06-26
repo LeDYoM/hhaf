@@ -14,6 +14,10 @@ using namespace haf::component;
 
 namespace haf::scene
 {
+SceneController::SceneController() :
+    m_scene_render_context{core::muptr<SceneRenderContext>()}
+{}
+
 void SceneController::setSceneManager(rptr<SceneManager> scene_manager)
 {
     LogAsserter::log_assert(m_scene_manager == nullptr,
@@ -77,9 +81,9 @@ void SceneController::update()
 
     if (m_current_scene != nullptr)
     {
-        Matrix4x4 startMatrix{Matrix4x4::Identity};
-        render(*m_root_scene_node,
-               SceneRenderContext{false, startMatrix});
+        LogAsserter::log_assert(m_scene_render_context != nullptr);
+        m_scene_render_context->reset();
+        render(*m_root_scene_node, *m_scene_render_context);
     }
 }
 
@@ -154,6 +158,16 @@ ComponentFactory& SceneController::componentFactory() noexcept
 ComponentFactory const& SceneController::componentFactory() const noexcept
 {
     return m_component_factory;
+}
+
+SceneRenderContext& SceneController::sceneRenderContext()
+{
+    return *m_scene_render_context;
+}
+
+SceneRenderContext const& SceneController::sceneRenderContext() const
+{
+    return *m_scene_render_context;
 }
 
 void SceneController::requestExit()

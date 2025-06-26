@@ -29,6 +29,8 @@ class SceneManager;
 class HAF_PRIVATE SceneController final
 {
 public:
+    SceneController();
+
     void setSceneManager(htps::rptr<SceneManager> scene_manager);
     bool setSystemProviderInScene(
         htps::rptr<SceneComponent::SceneComponentPrivate> const scene_private,
@@ -87,6 +89,9 @@ public:
     component::ComponentFactory& componentFactory() noexcept;
     component::ComponentFactory const& componentFactory() const noexcept;
 
+    SceneRenderContext& sceneRenderContext();
+    SceneRenderContext const& sceneRenderContext() const;
+
     bool currentSceneIsNull();
 
     void requestExit();
@@ -101,6 +106,7 @@ private:
     htps::rptr<SceneManager> m_scene_manager{nullptr};
     htps::sptr<SceneComponent> m_current_scene{nullptr};
     htps::sptr<SceneNode> m_root_scene_node{nullptr};
+    htps::uptr<SceneRenderContext> m_scene_render_context{nullptr};
     bool m_switch_scene{false};
     bool m_exit_requested{false};
 };
