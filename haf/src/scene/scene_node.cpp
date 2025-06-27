@@ -22,7 +22,8 @@ SceneNode::SceneNode(rptr<SceneNode> parent, str name) :
 
 SceneNode::~SceneNode() = default;
 
-void SceneNode::postRender(SceneRenderContext& /*sceneRenderContext*/)
+/*
+void SceneNode::postRender(SceneRenderContext&)
 {
     //    HAF_PROFILE_SCENE_NODE_METHOD(prTime)
 
@@ -51,7 +52,7 @@ void SceneNode::postRender(SceneRenderContext& /*sceneRenderContext*/)
     sceneRenderContext.parentTransformationChanged_ =
         localTransformationChanged;
 }
-
+*/
 void SceneNode::clearAll()
 {
     clearSceneNodes();
