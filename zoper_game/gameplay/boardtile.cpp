@@ -11,8 +11,9 @@ namespace zoper
 {
 void BoardTile::onAttached()
 {
-    m_point_in_center = attachedNode()->createSceneNode("backgroundTile")
-        ->component<scene::RenderizableGroupComponent>();
+    m_point_in_center = attachedNode()
+                            ->createSceneNode("backgroundTile")
+                            ->component<scene::RenderizableGroupComponent>();
     m_point_in_center->renderizableBuilder()
         .name("backgroundTilePoint")
         .figType(FigType_t::Sprite)
@@ -20,15 +21,18 @@ void BoardTile::onAttached()
         .create();
 
     // Size of the point in the middle of the tile
-    m_point_in_center->attachedNode()->Scale = {0.1F, 0.1F};
+    auto point_in_center_transform{
+        m_point_in_center->attachedNode()->component<Transformation>()};
 
-//    auto tileRenderizable2{attachedNode()
-//        ->createSceneNode("backgroundTilePoint")->component<scene::Renderizable>()};
+    point_in_center_transform->Scale = {0.1F, 0.1F};
 
-//    m_background_tile = tileRenderizable2->renderizableBuilder()
-//                            .name("backgroundTile")
-//                            .figType(FigType_t::Sprite)
-//                            .create();
+    //    auto tileRenderizable2{attachedNode()
+    //        ->createSceneNode("backgroundTilePoint")->component<scene::Renderizable>()};
+
+    //    m_background_tile = tileRenderizable2->renderizableBuilder()
+    //                            .name("backgroundTile")
+    //                            .figType(FigType_t::Sprite)
+    //                            .create();
 }
 
 void BoardTile::update()
@@ -37,7 +41,7 @@ void BoardTile::update()
 
     if (BackgroundColor.readResetHasChanged())
     {
-//        m_background_tile->material().color = BackgroundColor();
+        //        m_background_tile->material().color = BackgroundColor();
     }
 }
 

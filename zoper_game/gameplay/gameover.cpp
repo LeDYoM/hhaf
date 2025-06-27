@@ -26,8 +26,9 @@ void GameOver::onAttached()
                              ->getTTFont(GameResources::ScoreFontId)
                              ->font(100);
         gameText->TextColor = colors::White;
-        gameText->attachedNode()->Scale     = {0.3F, 0.3F};
-        gameText->attachedNode()->Position  = {0.0F, -0.15F};
+        auto transformation_node{gameText->attachedNode()->component<Transformation>()};
+        transformation_node->Scale     = {0.3F, 0.3F};
+        transformation_node->Position  = {0.0F, -0.15F};
     }
 
     {
@@ -38,8 +39,9 @@ void GameOver::onAttached()
                              ->getTTFont(GameResources::ScoreFontId)
                              ->font(100);
         overText->TextColor = colors::White;
-        overText->attachedNode()->Scale     = {0.3F, 0.3F};
-        overText->attachedNode()->Position  = {0.0F, 0.15F};
+        auto transformation_node{overText->attachedNode()->component<Transformation>()};
+        transformation_node->Scale     = {0.3F, 0.3F};
+        transformation_node->Position  = {0.0F, 0.15F};
     }
 
     attachedNode()->Visible = false;

@@ -102,7 +102,7 @@ void MainMenu::onAttached()
     comp->SelectedColor = colors::Red;
 
     vector_shared_pointers<MenuPage> menu_steps;
-    attachedNode()->Scale = {1.0F, 0.3F};
+    attachedNode()->component<Transformation>()->Scale = {1.0F, 0.3F};
 
     // Create and register menu pages
     {

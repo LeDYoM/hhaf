@@ -17,8 +17,10 @@ namespace zoper
 {
 void GameHud::onAttached()
 {
-    m_score_quad = attachedNode()->createSceneNode("score")->component<TableOfTextQuad>();
-    m_goal_quad  = attachedNode()->createSceneNode("goal")->component<TableOfTextQuad>();
+    m_score_quad =
+        attachedNode()->createSceneNode("score")->component<TableOfTextQuad>();
+    m_goal_quad =
+        attachedNode()->createSceneNode("goal")->component<TableOfTextQuad>();
 
     m_score_quad->allTableElementsCreated +=
         make_function(this, &GameHud::onAllScoreElementsCreated);
@@ -78,13 +80,14 @@ void GameHud::setCurrentConsumedTokens(const htps::size_type a)
 
 void GameHud::onAllScoreElementsCreated(fmath::vector2dst const)
 {
-    auto font{attachedNode()->subSystem<res::IResourceRetriever>()
+    auto font{attachedNode()
+                  ->subSystem<res::IResourceRetriever>()
                   ->getTTFont(GameResources::ScoreFontId)
                   ->font(200U)};
 
     m_score_quad->set_property_for_each_table_node(&Text::Font, font);
     m_score_quad->set_property_for_each_table_node(&Text::TextColor,
-                                                  colors::White);
+                                                   colors::White);
 
     auto text_00{m_score_quad->text(vector2dst{0U, 0U})};
     text_00->Text      = "Level:";
@@ -94,7 +97,9 @@ void GameHud::onAllScoreElementsCreated(fmath::vector2dst const)
     text_01->Text      = "Score:";
     text_01->TextColor = colors::Blue;
 
-    m_score_quad->attachedNode()->setLeftTopPositionScale({0.35F, 0.32F});
+    m_score_quad->attachedNode()
+        ->component<Transformation>()
+        ->setLeftTopPositionScale({0.35F, 0.32F});
     m_score_quad->for_each_outerSceneNode([](auto const&, auto const& node) {
         node->TextBaseSizeProperty = TextBaseSize{'A', 6U};
     });
@@ -102,13 +107,14 @@ void GameHud::onAllScoreElementsCreated(fmath::vector2dst const)
 
 void GameHud::onAllGoalElementsCreated(fmath::vector2dst const)
 {
-    auto font{attachedNode()->subSystem<res::IResourceRetriever>()
+    auto font{attachedNode()
+                  ->subSystem<res::IResourceRetriever>()
                   ->getTTFont(GameResources::ScoreFontId)
                   ->font(200U)};
 
     m_goal_quad->set_property_for_each_table_node(&Text::Font, font);
     m_goal_quad->set_property_for_each_table_node(&Text::TextColor,
-                                                 colors::White);
+                                                  colors::White);
 
     auto text_00{m_goal_quad->text(vector2dst{0U, 0U})};
     text_00->Text      = "Current:";
@@ -118,7 +124,9 @@ void GameHud::onAllGoalElementsCreated(fmath::vector2dst const)
     text_01->Text      = "Goal:";
     text_01->TextColor = colors::Blue;
 
-    m_goal_quad->attachedNode()->setRightTopPositionScale({0.35F, 0.32F});
+    m_goal_quad->attachedNode()
+        ->component<Transformation>()
+        ->setRightTopPositionScale({0.35F, 0.32F});
     m_goal_quad->for_each_outerSceneNode([](auto const&, auto const& node) {
         node->TextBaseSizeProperty = TextBaseSize{'A', 8U};
     });

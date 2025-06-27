@@ -52,8 +52,10 @@ void Menu::onAttached()
         main_menu_background_logo_scene_node
             ->component<RenderizableGroupComponent>()};
 
-    main_menu_background_logo_scene_node->Position = {0.F, -0.28F};
-    main_menu_background_logo_scene_node->Scale    = {0.99F, 0.4F};
+    main_menu_background_logo_scene_node->component<Transformation>()
+        ->Position = {0.F, -0.28F};
+    main_menu_background_logo_scene_node->component<Transformation>()->Scale = {
+        0.99F, 0.4F};
     main_menu_background_logo->renderizableBuilder()
         .name("mainLogo")
         .figType(FigType_t::Sprite)

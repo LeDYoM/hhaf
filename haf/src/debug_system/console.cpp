@@ -41,7 +41,7 @@ void Console::onAttached()
         attachedNode()->subSystem<res::IResourceRetriever>()->getBMPFont(
             "console_font");
     test->TextColor       = colors::Green;
-    attachedNode()->Scale = {0.2F, 0.2F};
+    attachedNode()->component<Transformation>()->Scale = {0.2F, 0.2F};
 }
 
 void Console::setText(fmath::vector2dst const& nodeIndex, htps::str const& text)

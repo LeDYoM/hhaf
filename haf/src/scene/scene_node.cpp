@@ -15,9 +15,10 @@ SceneNode::SceneNode(rptr<SceneNode> parent, str name) :
     sys::SystemAccess{parent != nullptr ? &(parent->isystemProvider())
                                         : nullptr},
     component::ComponentContainer{this},
-    sys::SubSystemViewer{&isystemProvider()},
-    Transformation()
-{}
+    sys::SubSystemViewer{&isystemProvider()}
+{
+    component<Transformation>();
+}
 
 SceneNode::~SceneNode() = default;
 

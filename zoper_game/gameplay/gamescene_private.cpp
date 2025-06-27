@@ -31,7 +31,8 @@ void Game::GameScenePrivate::createScoreIncrementPoints(
                   //                    .pointCount(30U)
                   .create()};
 
-    pointsToScoreSceneNode->attachedNode()->Scale = vector2df{0.01F, 0.01F};
+    pointsToScoreSceneNode->attachedNode()->component<Transformation>()->Scale =
+        vector2df{0.01F, 0.01F};
     using namespace gameplay::constants;
 
     DisplayLog::info("Creating animation for points to score");
@@ -46,7 +47,9 @@ void Game::GameScenePrivate::createScoreIncrementPoints(
                 pointsToScoreSceneNode->autoRemove();
             });
     */
-    pointsToScoreSceneNode->attachedNode()->Position = EndPositionPointsToScore;
+    pointsToScoreSceneNode->attachedNode()
+        ->component<Transformation>()
+        ->Position = EndPositionPointsToScore;
     /*
         scene_animation_component_->addAnimation(
             htps::move(property_animation_builder));

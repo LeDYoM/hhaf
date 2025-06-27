@@ -62,8 +62,10 @@ void Renderizable::update(bool const parent_transformation_changed)
 {
     if (parent_transformation_changed)
     {
+        auto parent_transformation_component{
+            parent()->component<Transformation>()};
         p_->m_render_element.setModelViewMatrix(
-            parent()->globalTransform().getMatrix());
+            parent_transformation_component->globalTransform().getMatrix());
     }
 
     if (m_material.shader.readResetHasChanged())

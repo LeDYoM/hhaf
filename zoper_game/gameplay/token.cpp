@@ -54,8 +54,10 @@ void Token::tileAdded()
     //    DisplayLog::info("Token ", name(), " appeared at ", boardPosition());
 
     auto const AppearTokenTime = time::TimePoint_as_miliseconds(1000U);
-    auto const endScale{attachedNode()->Scale()};
+    auto const endScale{attachedNode()->component<Transformation>()->Scale()};
 
+    assert(false);
+    /*
     {
         auto property_animation_builder{
             animation_component_->make_property_animation_builder(
@@ -64,6 +66,7 @@ void Token::tileAdded()
         animation_component_->addAnimation(
             htps::move(property_animation_builder));
     }
+            */
 }
 
 void Token::setTokenColor(scene::Color const& token_color)
@@ -92,11 +95,16 @@ void Token::tileMoved(const BoardPositionType& source)
     BaseClass::tileMoved(source);
     auto const destination{board2Scene(boardPosition())};
 
+    assert(false);
+
+    /*
     auto property_animation_builder{
         animation_component_->make_property_animation_builder(
-            &Transformation::Position, attachedNode()->Position(),
+            &Transformation::Position,
+            attachedNode()->component<Transformation>()->Position(),
             destination)};
     property_animation_builder.duration(time::TimePoint_as_miliseconds(1000U));
     animation_component_->addAnimation(htps::move(property_animation_builder));
+    */
 }
 }  // namespace zoper

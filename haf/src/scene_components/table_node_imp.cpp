@@ -54,9 +54,11 @@ void TableNodeImp::createTableNodesIfNecessary()
                     createNodeAt({p.x, p.y});
                 }
 
-                node->Scale = cell_size;
+                auto node_transformation{node->component<Transformation>()};
 
-                node->Position = left_top_plus_half_size +
+                node_transformation->Scale = cell_size;
+
+                node_transformation->Position = left_top_plus_half_size +
                     (cell_size * static_cast<fmath::vector2df>(p));
                 //            m_transformableComponent->Position = {0.0F, 0.0F};
             });

@@ -66,7 +66,7 @@ void BoardGroup::addPlayer()
     player_ =
         tokens_scene_node->createSceneNode("playerNode")->component<Player>();
 
-    player_->attachedNode()->Scale = tileSize();
+    player_->attachedNode()->component<Transformation>()->Scale = tileSize();
 
     // Add it to the board and to the scene nodes
     attachedNode()->componentOfType<board::BoardManager>()->setTile(
@@ -86,8 +86,10 @@ void BoardGroup::createNewToken(BoardTileData const data,
         tokens_scene_node->createSceneNode("tileNode")->component<Token>()};
 
     // Set the position in the scene depending on the board position
-    new_tile_token->attachedNode()->Position = board2Scene(board_position);
-    new_tile_token->attachedNode()->Scale    = tileSize();
+    new_tile_token->attachedNode()->component<Transformation>()->Position =
+        board2Scene(board_position);
+    new_tile_token->attachedNode()->component<Transformation>()->Scale =
+        tileSize();
 
     // Add it to the board
     auto board_model{attachedNode()->componentOfType<board::BoardManager>()};

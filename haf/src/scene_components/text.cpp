@@ -141,11 +141,14 @@ void Text::update()
                         ? text_render_data.text_size.y
                         : text_base_size.value().y};
 
-                m_inner_scale_scene_node->Scale =
-                    vector2df{1.0F / text_render_size};
+                auto scale_component{
+                    m_inner_scale_scene_node->component<Transformation>()};
+                scale_component->Scale = vector2df{1.0F / text_render_size};
 
-                m_inner_position_scene_node->Position =
-                    -(text_render_size / 2.0F);
+                auto position_component{
+                    m_inner_position_scene_node->component<Transformation>()};
+
+                position_component->Position = -(text_render_size / 2.0F);
 
                 // Initialize the node for each letter we are going to use
                 sptr<SceneNode> letterNode;
@@ -164,8 +167,11 @@ void Text::update()
                     auto const& ch_data{
                         text_render_data.character_render_data[indexChar]};
 
-                    letterNode->Position = ch_data.character_position;
-                    letterNode->Scale    = ch_data.character_size;
+                    auto letter_node_transformation{
+                        letterNode->component<Transformation>()};
+                    letter_node_transformation->Position =
+                        ch_data.character_position;
+                    letter_node_transformation->Scale = ch_data.character_size;
 
                     node->first()->material().color = text_color;
 

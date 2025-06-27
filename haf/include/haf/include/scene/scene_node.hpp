@@ -28,8 +28,7 @@ class HAF_API SceneNode final : public sys::HasName,
                           public SceneNodes,
                           public sys::SystemAccess,
                           public component::ComponentContainer,
-                          public sys::SubSystemViewer,
-                          public Transformation
+                          public sys::SubSystemViewer
 {
 public:
     prop::PropertyState<bool> Visible{true};
@@ -67,12 +66,6 @@ public:
      * @brief Destroy the Scene Node object.
      */
     ~SceneNode();
-
-    /**
-     * @brief Method called every frame after update
-     * @param sceneRenderContext Current frame render context
-     */
-    void postRender(SceneRenderContext& sceneRenderContext);
 
     /**
      * @brief Clear all elements in this scene node
