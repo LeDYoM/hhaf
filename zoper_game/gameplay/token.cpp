@@ -56,16 +56,15 @@ void Token::tileAdded()
     auto const AppearTokenTime = time::TimePoint_as_miliseconds(1000U);
     auto const endScale{attachedNode()->component<Transformation>()->Scale()};
 
-    assert(false);
     //    {
     //        auto property_animation_builder{
     //            animation_component_->make_property_animation_builder(
     //                &Transformation::Scale, {0.0F, 0.0F}, endScale)};
 
     auto property_animation_builder{
-        animation_component_->make_property_animation_builder2(
-//            &Transformation::Scale
-            attachedNode()->component<Transformation>()->Scale,
+        animation_component_->make_property_animation_builder(
+            &Transformation::Scale,
+//            attachedNode()->component<Transformation>()->Scale,
             {0.0F, 0.0F}, endScale
         )};
 

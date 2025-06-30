@@ -12,6 +12,8 @@ HTPS_PRAGMA_ONCE
 #include <haf/include/time/timer_connector.hpp>
 #include <haf/include/properties/iproperty.hpp>
 
+#include <haf/include/component/component.hpp>
+
 namespace haf::scene
 {
 class SceneNode;
@@ -38,27 +40,20 @@ public:
 
     PropertyAnimationBuilder make_property_animation_builder();
 
-    template <template <typename> typename PropertyType, typename PropertyValue>
+    template <typename T,
+              template <typename>
+              typename PropertyType,
+              typename PropertyValue>
     PropertyAnimationBuilder make_property_animation_builder(
-        PropertyType<PropertyValue>(scene::SceneNode::* property_v),
+        PropertyType<PropertyValue>(T::*property_v),
         PropertyValue const& start_value,
         PropertyValue const& end_value)
     {
         auto builder{make_property_animation_builder()};
-        builder.deltaProperty(make_delta_property(attachedNode(), property_v,
-                                                  start_value, end_value));
-        return builder;
-    }
-
-    template <template <typename> typename PropertyType, typename PropertyValue>
-    PropertyAnimationBuilder make_property_animation_builder2(
-        PropertyType<PropertyValue>& property_v,
-        PropertyValue const& start_value,
-        PropertyValue const& end_value)
-    {
-        auto builder{make_property_animation_builder()};
-        builder.deltaProperty(make_delta_property(attachedNode(), property_v,
-                                                  start_value, end_value));
+        auto* a{attachedNode()->component<T>().get()};
+        builder.deltaProperty(
+            make_delta_property(a, property_v,
+                                start_value, end_value));
         return builder;
     }
 
