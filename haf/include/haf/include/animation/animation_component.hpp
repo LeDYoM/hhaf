@@ -50,6 +50,16 @@ public:
         return builder;
     }
 
+    template <template <typename> typename PropertyType, typename PropertyValue>
+    PropertyAnimationBuilder make_property_animation_builder2(
+        PropertyType<PropertyValue>& /*property_v*/)
+    {
+        auto builder{make_property_animation_builder()};
+//        builder.deltaProperty(make_delta_property(attachedNode(), property_v,
+//                                                  start_value, end_value));
+        return builder;
+    }
+
 private:
     PropertyAnimationData make_property_animation_data();
 
