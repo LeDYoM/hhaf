@@ -64,7 +64,10 @@ void Token::tileAdded()
 
     auto property_animation_builder{
         animation_component_->make_property_animation_builder2(
-            &Transformation::Scale)};
+//            &Transformation::Scale
+            attachedNode()->component<Transformation>()->Scale,
+            {0.0F, 0.0F}, endScale
+        )};
 
     /*
 property_animation_builder.duration(AppearTokenTime);
