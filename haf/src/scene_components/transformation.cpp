@@ -2,6 +2,8 @@
 #include "render/geometry_math.hpp"
 
 #include <cmath>
+#include <haf/include/scene/scene_node.hpp>
+#include <haf/include/scene/iscene_render_context_provider.hpp>
 
 namespace haf::scene
 {
@@ -63,6 +65,37 @@ Matrix4x4 const& Transformation::globalTransform() const noexcept
 Matrix4x4 const& Transformation::localTransform() const noexcept
 {
     return matrix();
+}
+
+void Transformation::update()
+{
+    //    HAF_PROFILE_SCENE_NODE_METHOD(prTime)
+
+    auto const& transformable_parent{attachedNode()->parent()};
+    auto& sceneRenderContext =
+        attachedNode()
+            ->subSystem<scene::ISceneRenderContextProvider>()
+            ->sceneRenderContext();
+
+    sceneRenderContext.currentTransformation = transformable_parent != nullptr
+        ? transformable_parent->component<Transformation>()->globalTransform()
+        : Matrix4x4::Identity;
+
+    bool localTransformationChanged{updateTransformIfNecessary()};
+
+    if (!localTransformationChanged)
+    {
+        localTransformationChanged =
+            sceneRenderContext.parentTransformationChanged_;
+    }
+
+    if (localTransformationChanged)
+    {
+        global_transform_ = sceneRenderContext.currentTransformation * matrix();
+    }
+
+    sceneRenderContext.parentTransformationChanged_ =
+        localTransformationChanged;
 }
 
 }  // namespace haf::scene
