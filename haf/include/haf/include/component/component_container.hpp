@@ -60,7 +60,7 @@ public:
     template <typename T>
     htps::sptr<T> componentOfType() const
     {
-        auto cot{componentOfType(type_of<T>())};
+        auto cot{componentOfType(utils::type_of<T>())};
         return cot ? htps::dynamic_pointer_cast<T>(cot) : nullptr;
     }
 
@@ -114,12 +114,6 @@ private:
     htps::rptr<class scene::SceneNode> attachable() const noexcept;
 
     void initialize(component::Component& component) const;
-
-    template <typename T>
-    utils::type_index type_of() const noexcept
-    {
-        return utils::type_index{typeid(T)};
-    }
 
     bool addComponent(htps::sptr<Component> nc);
     htps::sptr<Component> componentOfType(utils::type_index const& ti) const;
