@@ -93,9 +93,6 @@ void Token::tileMoved(const BoardPositionType& source)
     BaseClass::tileMoved(source);
     auto const destination{board2Scene(boardPosition())};
 
-    assert(false);
-
-    /*
     auto property_animation_builder{
         animation_component_->make_property_animation_builder(
             &Transformation::Position,
@@ -103,6 +100,5 @@ void Token::tileMoved(const BoardPositionType& source)
             destination)};
     property_animation_builder.duration(time::TimePoint_as_miliseconds(1000U));
     animation_component_->addAnimation(htps::move(property_animation_builder));
-    */
 }
 }  // namespace zoper

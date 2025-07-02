@@ -73,12 +73,10 @@ void Player::tileMoved(BoardPositionType const& source)
     currentDirection      = fromPositions(source, boardPosition());
 }
 
-void Player::launchPlayerAnimation(vector2df const& /*toWhere*/)
+void Player::launchPlayerAnimation(vector2df const& toWhere)
 {
     attachedNode()->component(animation_component_);
 
-    assert(false);
-    /*
     auto property_animation_builder{
         animation_component_->make_property_animation_builder(
             &Transformation::Position,
@@ -94,24 +92,21 @@ void Player::launchPlayerAnimation(vector2df const& /*toWhere*/)
                 launchAnimationBack(currentPosition);
             });
     animation_component_->addAnimation(htps::move(property_animation_builder));
-    */
 }
 
-void Player::launchAnimationBack(SceneCoordinates const& /*toWhere*/)
+void Player::launchAnimationBack(SceneCoordinates const& toWhere)
 {
     DisplayLog::info("Creating animation for player to go back");
     currentDirection = currentDirection().negate();
     attachedNode()->component(animation_component_);
 
-    assert(false);
-/*
     auto property_animation_builder{
         animation_component_->make_property_animation_builder(
-            &SceneNode::Position, attachedNode()->Position(), toWhere)};
+            &Transformation::Position,
+            attachedNode()->component<Transformation>()->Position(), toWhere)};
     property_animation_builder.duration(TimePoint_as_miliseconds(
         gameplay::constants::MillisAnimationLaunchPlayerStep));
     animation_component_->addAnimation(htps::move(property_animation_builder));
-*/
 }
 
 void Player::tileAdded()
