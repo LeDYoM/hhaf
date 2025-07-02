@@ -12,12 +12,6 @@ HTPS_PRAGMA_ONCE
 
 #include <memory>
 
-namespace haf::scene
-{
-class SceneNode;
-class SceneController;
-}
-
 namespace haf::component
 {
 /**
@@ -27,7 +21,7 @@ namespace haf::component
 class HAF_API ComponentContainer
 {
 public:
-    explicit ComponentContainer(htps::rptr<scene::SceneNode> attachable);
+    explicit ComponentContainer(htps::rptr<class scene::SceneNode> attachable);
 
     /**
      * @brief Destroy the Component Container object
@@ -117,7 +111,7 @@ private:
 
     void applyRequirements(Component& _thisComponent);
 
-    htps::rptr<scene::SceneNode> attachable() const noexcept;
+    htps::rptr<class scene::SceneNode> attachable() const noexcept;
 
     void initialize(component::Component& component) const;
 
