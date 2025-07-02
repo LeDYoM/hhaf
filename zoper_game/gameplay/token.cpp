@@ -56,24 +56,15 @@ void Token::tileAdded()
     auto const AppearTokenTime = time::TimePoint_as_miliseconds(1000U);
     auto const endScale{attachedNode()->component<Transformation>()->Scale()};
 
-    //    {
-    //        auto property_animation_builder{
-    //            animation_component_->make_property_animation_builder(
-    //                &Transformation::Scale, {0.0F, 0.0F}, endScale)};
+    {
+        auto property_animation_builder{
+            animation_component_->make_property_animation_builder(
+                &Transformation::Scale, {0.0F, 0.0F}, endScale)};
 
-    auto property_animation_builder{
-        animation_component_->make_property_animation_builder(
-            &Transformation::Scale,
-//            attachedNode()->component<Transformation>()->Scale,
-            {0.0F, 0.0F}, endScale
-        )};
-
-    /*
-property_animation_builder.duration(AppearTokenTime);
-animation_component_->addAnimation(
-htps::move(property_animation_builder));
-}
-*/
+        property_animation_builder.duration(AppearTokenTime);
+        animation_component_->addAnimation(
+            htps::move(property_animation_builder));
+    }
 }
 
 void Token::setTokenColor(scene::Color const& token_color)
