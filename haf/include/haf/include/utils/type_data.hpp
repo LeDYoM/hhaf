@@ -5,14 +5,13 @@ HTPS_PRAGMA_ONCE
 #include <haf/include/haf_export.hpp>
 #include <htypes/include/types.hpp>
 #include <compare>
-#include <typeinfo>
 
 namespace haf::utils
 {
 class type_index
 {
 public:
-    type_index(std::type_info const& t_info) noexcept;
+    explicit [[nodiscard]] type_index(std::type_info const& t_info) noexcept;
 
     [[nodiscard]] htps::size_type hash_code() const noexcept;
     [[nodiscard]] char const* name() const noexcept;
