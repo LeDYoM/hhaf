@@ -8,9 +8,17 @@ using namespace fmath;
 
 TEST_CASE("vector2d::vector2d", "[vector2d]")
 {
-    vector2du32 v{};
-    CHECK(v.x == 0U);
-    CHECK(v.y == 0U);
+    {
+        vector2du32 v{};
+        CHECK(v.x == 0U);
+        CHECK(v.y == 0U);
+    }
+
+    {
+        vector2du32 v;
+        CHECK(v.x == 0U);
+        CHECK(v.y == 0U);
+    }
 }
 
 TEST_CASE("vector2d::operator+=", "[vector2d]")
