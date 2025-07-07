@@ -20,6 +20,8 @@ public:
     static constexpr tps::u16 kNumElements{4U};
     using value_type = T;
 
+    constexpr bool operator==(vector4d const& rhs) const noexcept = default;
+
     constexpr vector4d() noexcept = default;
 
     constexpr vector4d(vector3d<T> const& v, T _w) noexcept :

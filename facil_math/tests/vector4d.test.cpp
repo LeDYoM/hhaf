@@ -126,6 +126,18 @@ TEST_CASE("vector4d::operator*", "[vector4d]")
     CHECK(v1.y == 40);
     CHECK(v1.z == 120);
     CHECK(v1.w == 250);
+
+    auto v4{3U * v2};
+    CHECK(v4.x == 3U);
+    CHECK(v4.y == 6U);
+    CHECK(v4.z == 9U);
+    CHECK(v4.w == 15U);
+
+    auto v5{v2 * 7U};
+    CHECK(v5.x == 7U);
+    CHECK(v5.y == 14U);
+    CHECK(v5.z == 21U);
+    CHECK(v5.w == 35U);
 }
 
 TEST_CASE("vector4d::operator/", "[vector4d]")

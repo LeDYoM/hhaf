@@ -14,10 +14,19 @@ TEST_CASE("vector3d::vector3d", "[vector3d]")
     CHECK(v.z == 0U);
 }
 
+TEST_CASE("vector3d::vector2d", "[vector3d]")
+{
+    vector2du32 v2d{4U, 5U};
+    vector3du32 v{v2d};
+    CHECK(v.x == 4U);
+    CHECK(v.y == 5U);
+    CHECK(v.z == 0U);
+}
+
 TEST_CASE("vector3d::operator+=", "[vector3d]")
 {
-    vector3du32 v1{11, 20, 40};
-    vector3du32 v2{131, 200, 60};
+    vector3du32 v1{11U, 20U, 40U};
+    vector3du32 v2{131U, 200U, 60U};
 
     CHECK(v1.x == 11U);
     CHECK(v1.y == 20U);
@@ -108,6 +117,16 @@ TEST_CASE("vector3d::operator*", "[vector3d]")
     CHECK(v1.x == 11);
     CHECK(v1.y == 40);
     CHECK(v1.z == 120);
+
+    auto v4{3U * v2};
+    CHECK(v4.x == 3U);
+    CHECK(v4.y == 6U);
+    CHECK(v4.z == 9U);
+
+    auto v5{v2 * 7U};
+    CHECK(v5.x == 7U);
+    CHECK(v5.y == 14U);
+    CHECK(v5.z == 21U);
 }
 
 TEST_CASE("vector3d::operator/", "[vector3d]")

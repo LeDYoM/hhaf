@@ -15,9 +15,9 @@ TEST_CASE("vector2d::vector2d", "[vector2d]")
     }
 
     {
-        vector2du32 v;
-        CHECK(v.x == 0U);
-        CHECK(v.y == 0U);
+        vector2du32 v{23456U, 654321U};
+        CHECK(v.x == 23456U);
+        CHECK(v.y == 654321U);
     }
 }
 
@@ -96,6 +96,14 @@ TEST_CASE("vector2d::operator*", "[vector2d]")
     v1 *= v2;
     CHECK(v1.x == 11);
     CHECK(v1.y == 40);
+
+    auto v4{3U * v2};
+    CHECK(v4.x == 3U);
+    CHECK(v4.y == 6U);
+
+    auto v5{v2 * 7U};
+    CHECK(v5.x == 7U);
+    CHECK(v5.y == 14U);
 }
 
 TEST_CASE("vector2d::operator/", "[vector2d]")

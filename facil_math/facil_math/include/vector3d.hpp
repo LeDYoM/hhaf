@@ -25,11 +25,15 @@ public:
         x{v.x}, y{v.y}, z{static_cast<T>(0)}
     {}
 
-    constexpr vector3d(T const _x, T const _y, T const _z) noexcept :
-        x{_x}, y{_y}, z{_z}
+    constexpr vector3d(T _x, T _y, T _z) noexcept :
+        x{tps::move(_x)}, y{tps::move(_y)}, z{tps::move(_z)}
     {}
 
-    constexpr vector3d(T const _x, T const _y) noexcept : x{_x}, y{_y}, z{} {}
+    constexpr vector3d(T _x, T _y) noexcept :
+        x{tps::move(_x)}, y{tps::move(_y)}, z{}
+    {}
+
+    constexpr bool operator==(vector3d const& rhs) const noexcept = default;
 
     // Conversion operator
     template <typename Y>
