@@ -3,11 +3,9 @@
 #include <haf/include/scene/scene_node.hpp>
 #include <haf/include/component/component_container.hpp>
 
-using namespace htps;
-
 namespace haf::scene
 {
-void render(SceneNode& scene_node, SceneRenderContext scene_render_context)
+void render(SceneNode& scene_node)
 {
     if (scene_node.Visible())
     {
@@ -15,17 +13,11 @@ void render(SceneNode& scene_node, SceneRenderContext scene_render_context)
         scene_node.updateComponents();
 
         // Render the nodes added to this node
-        for (auto& group : scene_node.sceneNodes())
+        for (auto&& group : scene_node.sceneNodes())
         {
-            render(*group, scene_render_context);
+            render(*group);
         }
     }
 }
-/*
-void render(Scene& scene, SceneRenderContext scene_render_context)
-{
-    render(static_cast<SceneNode&>(scene), scene_render_context);
-}
-*/
 
 }  // namespace haf::scene

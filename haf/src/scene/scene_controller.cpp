@@ -83,7 +83,7 @@ void SceneController::update()
     {
         LogAsserter::log_assert(m_scene_render_context != nullptr);
         m_scene_render_context->reset();
-        render(*m_root_scene_node, *m_scene_render_context);
+        render(*m_root_scene_node);
     }
 }
 
