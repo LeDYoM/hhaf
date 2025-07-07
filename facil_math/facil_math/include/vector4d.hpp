@@ -220,8 +220,11 @@ static_assert(std::is_standard_layout_v<vector4d<tps::u8>>,
 static_assert(std::is_standard_layout_v<vector4d<tps::f64>>,
               "vector4df64 has not standard layout");
 
-static_assert(std::is_trivial_v<vector4d<tps::f32>>,
-              "vector4df32 is not trivial");
+static_assert(std::is_trivially_copyable_v<vector4d<tps::f32>>,
+              "vector4df32 is not trivially copyable");
+
+static_assert(std::is_trivially_default_constructible_v<vector4d<tps::f32>>,
+              "vector4df32 is not trivially default constructible");
 
 using vector4du8  = vector4d<tps::u8>;
 using vector4ds8  = vector4d<tps::s8>;
