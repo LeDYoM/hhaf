@@ -11,7 +11,7 @@ struct ComponentContainer::ComponentContainerPrivate
     sptr<Component> getComponentFromTypeIndex(
         utils::type_index const& tindex) const
     {
-        const auto v{components_.next()};
+        const auto v{m_components.next()};
         auto iterator(v.find_if(
             v.cbegin(), v.cend(), [&tindex](sptr<Component> const& component) {
                 return utils::type_index(typeid(*component)) == tindex;
@@ -19,12 +19,12 @@ struct ComponentContainer::ComponentContainerPrivate
         return (iterator == v.cend()) ? nullptr : (*iterator);
     }
 
-    rptr<scene::SceneNode> const attachable_;
-    LockableVector<sptr<Component>> components_;
+    rptr<scene::SceneNode> const m_attachable;
+    LockableVector<sptr<Component>> m_components;
 
     explicit ComponentContainerPrivate(
         rptr<scene::SceneNode> attachable) noexcept :
-        attachable_{attachable}
+        m_attachable{attachable}
     {}
 };
 
@@ -36,13 +36,13 @@ ComponentContainer::~ComponentContainer() = default;
 
 void ComponentContainer::updateComponents()
 {
-    p_->components_.performUpdate(
+    p_->m_components.performUpdate(
         [](sptr<Component> const& component) { component->update(); });
 }
 
 void ComponentContainer::clearComponents() noexcept
 {
-    p_->components_.clear();
+    p_->m_components.clear();
 }
 
 bool ComponentContainer::attachComponent(sptr<Component> newComponent)
@@ -55,7 +55,7 @@ bool ComponentContainer::attachComponent(sptr<Component> newComponent)
 bool ComponentContainer::addComponent(sptr<Component> nc)
 {
     LogAsserter::log_assert(nc != nullptr, "Trying to add a nullptr component");
-    p_->components_.push_back(htps::move(nc));
+    p_->m_components.push_back(htps::move(nc));
     return true;
 }
 
@@ -73,7 +73,7 @@ sptr<Component> ComponentContainer::componentOfType(
 
 rptr<scene::SceneNode> ComponentContainer::attachable() const noexcept
 {
-    return p_->attachable_;
+    return p_->m_attachable;
 }
 
 void ComponentContainer::initialize(component::Component& component) const
@@ -83,7 +83,7 @@ void ComponentContainer::initialize(component::Component& component) const
 
 htps::size_type ComponentContainer::components() const noexcept
 {
-    return p_->components_.size();
+    return p_->m_components.size();
 }
 
 }  // namespace haf::component
