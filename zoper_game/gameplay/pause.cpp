@@ -42,15 +42,14 @@ void Pause::onAttached()
 void Pause::enterPause()
 {
     attachedNode()->Visible = true;
-    /*
-        auto animation_component{
-            attachedNode()->component<haf::anim::AnimationComponent>()};
-        auto builder{animation_component->make_property_animation_builder(
-            &Text::TextColor, colors::Transparent, colors::White)};
-        builder.duration(TimePoint_as_miliseconds(1000U));
 
-        animation_component->addAnimation(htps::move(builder));
-    */
+    auto animation_component{
+        attachedNode()->component<haf::anim::AnimationComponent>()};
+    auto builder{animation_component->make_property_animation_builder(
+        &Text::TextColor, colors::Transparent, colors::White)};
+    builder.duration(TimePoint_as_miliseconds(1000U));
+
+    animation_component->addAnimation(htps::move(builder));
 }
 
 void Pause::exitPause()

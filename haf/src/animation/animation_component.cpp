@@ -19,7 +19,7 @@ public:
 
     void addAnimation(uptr<Animation> nanimation)
     {
-        animations_.emplace_back(htps::move(nanimation));
+        animations_.push_back(htps::move(nanimation));
     }
 };
 
