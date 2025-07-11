@@ -51,7 +51,7 @@ public:
     {
         auto builder{make_property_animation_builder()};
         builder.deltaProperty(
-            make_delta_property(attachedNode()->component<T>().get(),
+            make_delta_property(attachedNode()->componentOfType<T>().get(),
                                 property_v, start_value, end_value));
         return builder;
     }

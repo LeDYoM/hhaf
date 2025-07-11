@@ -1,7 +1,7 @@
-#ifndef HAF_HLOG_INCLUDE_HPP
-#define HAF_HLOG_INCLUDE_HPP
+#ifndef HAF_CORE_LOG_INCLUDE_HPP
+#define HAF_CORE_LOG_INCLUDE_HPP
 
-#include <haf/include/core/log_instances.hpp>
+#include <hlog/include/hlog.hpp>
 
 namespace haf
 {
