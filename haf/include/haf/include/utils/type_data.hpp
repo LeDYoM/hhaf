@@ -24,7 +24,7 @@ private:
 };
 
 template <typename T>
-type_index type_of() noexcept
+[[nodiscard]] type_index type_of() noexcept
 {
     return type_index{typeid(T)};
 }

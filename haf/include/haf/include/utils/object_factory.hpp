@@ -24,22 +24,12 @@ namespace haf::utils
  * @tparam Args Arguments types to the construction function.
  */
 template <typename InterfaceType, typename... Args>
-class ObjectFactory
+class ObjectFactory final
 {
 public:
     using CreateReturnType          = core::sptr<InterfaceType>;
     using ObjectConstructorFunction = htps::function<CreateReturnType(Args...)>;
     using size_type                 = core::size_type;
-
-    /**
-     * @brief Constructs an ObjectFactory object
-     */
-    constexpr ObjectFactory() = default;
-
-    /**
-     * @brief Destroy the Object Factory object
-     */
-    virtual ~ObjectFactory() = default;
 
     /**
      * @brief Register a concrete object type with a given name and a
@@ -53,8 +43,8 @@ public:
     bool registerObjectType(core::str_view type_name,
                             ObjectConstructorFunction constructor_function)
     {
-        return constructors_.add(core::str{type_name},
-                                 htps::move(constructor_function), false);
+        return m_constructors.add(core::str{type_name},
+                                  htps::move(constructor_function), false);
     }
 
     /**
@@ -133,7 +123,7 @@ public:
     bool unregisterObjectType(core::str type_name)
     {
         size_type const size_previous{size()};
-        constructors_.erase(htps::move(type_name));
+        m_constructors.erase(htps::move(type_name));
         return size_previous > size();
     }
 
@@ -178,8 +168,8 @@ public:
      */
     CreateReturnType create(core::str const& type_name, Args... args)
     {
-        if (auto const iterator{constructors_.find(type_name)};
-            iterator == constructors_.cend())
+        if (auto const iterator{m_constructors.find(type_name)};
+            iterator == m_constructors.cend())
         {
             return CreateReturnType(nullptr);
         }
@@ -212,7 +202,7 @@ public:
      *
      * @return The number of objects
      */
-    constexpr htps::size_type size() const { return constructors_.size(); }
+    constexpr auto size() const noexcept { return m_constructors.size(); }
 
     /**
      * @brief Ask if this instance contains any object registered
@@ -220,10 +210,10 @@ public:
      * @return true No objects in this instance
      * @return false At least one object in this instance
      */
-    constexpr bool empty() const { return constructors_.empty(); }
+    constexpr auto empty() const noexcept { return m_constructors.empty(); }
 
 private:
-    htps::Dictionary<ObjectConstructorFunction> constructors_;
+    htps::Dictionary<ObjectConstructorFunction> m_constructors;
 
     template <typename T, typename... MArgs>
     static CreateReturnType createObject(MArgs&&... args)
@@ -231,9 +221,9 @@ private:
         return htps::msptr<T>(htps::forward<MArgs>(args)...);
     }
 
-    bool containsType(core::str_view const name) const
+    bool containsType(core::str_view const name) const noexcept
     {
-        return constructors_.cfind(name) != constructors_.cend();
+        return m_constructors.cfind(name) != m_constructors.cend();
     }
 };
 }  // namespace haf::utils
