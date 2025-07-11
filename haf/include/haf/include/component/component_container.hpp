@@ -44,9 +44,7 @@ public:
         if (result == nullptr)
         {
             result = htps::msptr<T>();
-            applyRequirements(*result);
-            initialize(*result);
-            addComponent(result);
+            attachComponent(result);
         }
         return result;
     }
