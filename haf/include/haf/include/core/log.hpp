@@ -3,14 +3,10 @@
 
 #include <hlog/include/hlog.hpp>
 
+#define HAF_LOG_DEBUG(...)  haf::DisplayLog::debug(__VA_ARGS__)
+
 namespace haf
 {
-extern template LogDisplayer<CurrentLog, SeverityType, kDisplaySeverity>;
-extern template logger::LogDisplayer<logger::CurrentLog,
-                                     logger::SeverityType,
-                                     haf::kDisplaySeverity>;
-extern template logger::LogAsserter<
-    logger::LogDisplayer<logger::CurrentLog, logger::SeverityType, false>>;
 
 }  // namespace haf
 #endif
