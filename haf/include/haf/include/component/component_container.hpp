@@ -8,7 +8,7 @@ HTPS_PRAGMA_ONCE
 
 #include <haf/include/component/component.hpp>
 #include <haf/include/utils/type_data.hpp>
-#include <hlog/include/hlog.hpp>
+#include <haf/include/core/log.hpp>
 
 #include <memory>
 

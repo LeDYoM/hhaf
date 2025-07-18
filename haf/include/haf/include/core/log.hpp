@@ -7,4 +7,5 @@
 #define HAF_LOG_VERBOSE(...)  haf::DisplayLog::verbose(__VA_ARGS__)
 #define HAF_LOG_INFO(...)  haf::DisplayLog::info(__VA_ARGS__)
 
+
 #endif
