@@ -50,9 +50,10 @@ public:
         PropertyValue const& end_value)
     {
         auto builder{make_property_animation_builder()};
-        builder.deltaProperty(
-            make_delta_property(attachedNode()->componentOfType<T>().get(),
-                                property_v, start_value, end_value));
+        auto animateComponent{attachedNode()->componentOfType<T>()};
+        HAF_ASSERT(animateComponent != nullptr);
+        builder.deltaProperty(make_delta_property(
+            animateComponent.get(), property_v, start_value, end_value));
         return builder;
     }
 
