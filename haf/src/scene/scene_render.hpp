@@ -4,11 +4,13 @@ HTPS_PRAGMA_ONCE
 
 #include "haf_private.hpp"
 
+#include <haf/include/core/types.hpp>
+
 namespace haf::scene
 {
 class SceneNode;
 void HAF_PRIVATE render(SceneNode& scene_node);
-void HAF_PRIVATE render(SceneNode& scene_node, uint32_t const index);
+void HAF_PRIVATE render(SceneNode& scene_node, core::u32 const index);
 
 }  // namespace haf::scene
 

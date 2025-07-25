@@ -42,7 +42,7 @@ void ComponentContainer::updateComponents()
 
 void ComponentContainer::updateIndexedComponent(uint32_t const index)
 {
-    
+    (void)(index);
 }
 
 void ComponentContainer::clearComponents() noexcept
