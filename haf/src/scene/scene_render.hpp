@@ -8,6 +8,7 @@ namespace haf::scene
 {
 class SceneNode;
 void HAF_PRIVATE render(SceneNode& scene_node);
+void HAF_PRIVATE render(SceneNode& scene_node, uint32_t const index);
 
 }  // namespace haf::scene
 

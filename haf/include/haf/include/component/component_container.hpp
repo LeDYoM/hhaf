@@ -97,6 +97,8 @@ public:
      */
     void updateComponents();
 
+    void updateIndexedComponent(uint32_t const index);
+
     /**
      * @brief Clear all elements of this container     *
      */

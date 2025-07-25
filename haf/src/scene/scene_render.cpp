@@ -20,4 +20,20 @@ void render(SceneNode& scene_node)
     }
 }
 
+void render(SceneNode& scene_node, uint32_t const index)
+{
+    if (scene_node.Visible())
+    {
+        // Update the node components
+        scene_node.updateComponents();
+
+        // Render the nodes added to this node
+        for (auto&& group : scene_node.sceneNodes())
+        {
+            render(*group);
+        }
+    }
+}
+}
+
 }  // namespace haf::scene
