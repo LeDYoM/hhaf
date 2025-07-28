@@ -26,7 +26,7 @@ struct Hasher
     }
 
     template <typename T = u32, size_type N>
-    static consteval T hash(str_literal<N> s) noexcept
+    static consteval T hash(str_literal<N> const s) noexcept
     {
         T hash{5381U};
 

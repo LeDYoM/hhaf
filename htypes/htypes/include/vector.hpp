@@ -14,13 +14,19 @@ template <typename T,
           typename GrowPolicy = GrowPolicyUnary>
 using vector = vector_base<T, Allocator, GrowPolicy>;
 
-template <typename T>
-using vector_shared_pointers = vector<sptr<T>>;
+template <typename T,
+          typename Allocator  = AllocatorType<sptr<T>>,
+          typename GrowPolicy = GrowPolicyUnary>
+using vector_shared_pointers = vector_base<sptr<T>, Allocator, GrowPolicy>;
 
-template <typename T>
+template <typename T,
+          typename Allocator  = AllocatorType<uptr<T>>,
+          typename GrowPolicy = GrowPolicyUnary>
 using vector_unique_pointers = vector<uptr<T>>;
 
-template <typename T>
+template <typename T,
+          typename Allocator  = AllocatorType<wptr<T>>,
+          typename GrowPolicy = GrowPolicyUnary>
 using vector_weak_pointers = vector<wptr<T>>;
 }  // namespace htps
 

@@ -32,6 +32,8 @@ struct basic_str_literal
 
     constexpr char_type* begin() noexcept { return value; }
     constexpr char_type* end() noexcept { return &(value[real_size_]); }
+    constexpr char_type const* begin() const noexcept { return value; }
+    constexpr char_type const* end() const noexcept { return &(value[real_size_]); }
 
     constexpr char_type const* cbegin() const noexcept { return value; }
     constexpr char_type const* cend() const noexcept
