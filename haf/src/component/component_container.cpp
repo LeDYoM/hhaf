@@ -29,14 +29,14 @@ struct ComponentContainer::ComponentContainerPrivate
 };
 
 ComponentContainer::ComponentContainer(rptr<scene::SceneNode> attachable) :
-    p_{make_pimplp<ComponentContainerPrivate>(attachable)}
+    m_p{make_pimplp<ComponentContainerPrivate>(attachable)}
 {}
 
 ComponentContainer::~ComponentContainer() = default;
 
 void ComponentContainer::updateComponents()
 {
-    p_->m_components.performUpdate(
+    m_p->m_components.performUpdate(
         [](sptr<Component> const& component) { component->update(); });
 }
 
@@ -47,7 +47,7 @@ void ComponentContainer::updateIndexedComponent(uint32_t const index)
 
 void ComponentContainer::clearComponents() noexcept
 {
-    p_->m_components.clear();
+    m_p->m_components.clear();
 }
 
 bool ComponentContainer::attachComponent(sptr<Component> newComponent)
@@ -60,7 +60,7 @@ bool ComponentContainer::attachComponent(sptr<Component> newComponent)
 bool ComponentContainer::addComponent(sptr<Component> nc)
 {
     LogAsserter::log_assert(nc != nullptr, "Trying to add a nullptr component");
-    p_->m_components.push_back(htps::move(nc));
+    m_p->m_components.push_back(htps::move(nc));
     return true;
 }
 
@@ -73,12 +73,12 @@ void ComponentContainer::applyRequirements(Component& _thisComponent)
 sptr<Component> ComponentContainer::componentOfType(
     utils::type_index const& ti) const
 {
-    return p_->getComponentFromTypeIndex(ti);
+    return m_p->getComponentFromTypeIndex(ti);
 }
 
 rptr<scene::SceneNode> ComponentContainer::attachable() const noexcept
 {
-    return p_->m_attachable;
+    return m_p->m_attachable;
 }
 
 void ComponentContainer::initialize(component::Component& component) const
@@ -88,7 +88,7 @@ void ComponentContainer::initialize(component::Component& component) const
 
 htps::size_type ComponentContainer::components() const noexcept
 {
-    return p_->m_components.size();
+    return m_p->m_components.size();
 }
 
 }  // namespace haf::component
