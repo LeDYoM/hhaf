@@ -108,14 +108,9 @@ public:
 
 private:
     bool attachComponent(htps::sptr<Component> newComponent);
-
     void applyRequirements(Component& _thisComponent);
-
     htps::rptr<class scene::SceneNode> attachable() const noexcept;
-
     void initialize(component::Component& component) const;
-
-    bool addComponent(htps::sptr<Component> nc);
     htps::sptr<Component> componentOfType(utils::type_index const& ti) const;
 
     struct ComponentContainerPrivate;
