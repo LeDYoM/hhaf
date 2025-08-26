@@ -43,8 +43,8 @@ void Pause::enterPause()
 {
     attachedNode()->Visible = true;
 
-    auto animation_component{
-        attachedNode()->component<haf::anim::AnimationComponent>()};
+    auto animation_component{m_pause_text->attachedNode()
+                                 ->component<haf::anim::AnimationComponent>()};
     auto builder{animation_component->make_property_animation_builder(
         &Text::TextColor, colors::Transparent, colors::White)};
     builder.duration(TimePoint_as_miliseconds(1000U));

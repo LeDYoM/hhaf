@@ -30,7 +30,7 @@ void render(SceneNode& scene_node, core::u32 const index)
         // Render the nodes added to this node
         for (auto&& group : scene_node.sceneNodes())
         {
-            render(*group);
+            render(*group, index);
         }
     }
 }

@@ -114,7 +114,7 @@ private:
     htps::sptr<Component> componentOfType(utils::type_index const& ti) const;
 
     struct ComponentContainerPrivate;
-    htps::PImplPointer<ComponentContainerPrivate> p_;
+    htps::PImplPointer<ComponentContainerPrivate> m_p;
 
     friend class scene::SceneController;
 };
