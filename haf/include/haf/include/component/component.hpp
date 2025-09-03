@@ -3,13 +3,14 @@ HTPS_PRAGMA_ONCE
 #define HAF_COMPONENT_COMPONENT_INCLUDE_HPP
 
 #include <haf/include/core/types.hpp>
+#include <haf/include/component/component_order.hpp>
 
 namespace haf::scene
 {
 class SceneNode;
 class SceneController;
 struct SceneRenderContext;
-}
+}  // namespace haf::scene
 
 namespace haf::component
 {
@@ -56,6 +57,15 @@ public:
      * @return The pointer to the attached node.
      */
     constexpr pointer attachedNode() noexcept { return m_attachedNode; }
+
+    /**
+     * @brief This function is intended to be override.
+     * @return ComponentOrder The expected order for this component
+     */
+    virtual ComponentOrder::Value componentOrder()
+    {
+        return ComponentOrder::NoOrder;
+    }
 
 protected:
     Component() noexcept = default;

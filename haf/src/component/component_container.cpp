@@ -54,6 +54,9 @@ bool ComponentContainer::attachComponent(sptr<Component> newComponent)
 {
     applyRequirements(*newComponent);
     initialize(*newComponent);
+//    auto const index{newComponent->componentOrder()};
+//    m_p->m_components.current().resize(index + 1U);
+//    m_p->m_components.current()[index] = core::move(newComponent);
     m_p->m_components.push_back(htps::move(newComponent));
     return true;
 }
