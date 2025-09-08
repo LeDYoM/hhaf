@@ -169,6 +169,26 @@ public:
         }
     }
 
+    constexpr void insert(const T& newElement, const iterator where)
+    {
+        auto const newSize{size() + 1U};
+
+        if (capacity_ < newSize)
+        {
+            vector_storage new_vector{
+                vector_storage{static_cast<size_type>(newSize)}};
+
+            for(iterator it{it})
+
+            for (auto&& elements_old_vector : *this)
+            {
+                new_vector.push_back(htps::move(elements_old_vector));
+            }
+
+            *this = htps::move(new_vector);
+        }
+    }
+
     constexpr void shrink_to_fit()
     {
         if (size_ < capacity_)

@@ -706,6 +706,11 @@ public:
         storage_.emplace_back(htps::forward<Args>(args)...);
     }
 
+    constexpr void insert(iterator const where, const T& element)
+    {
+        checkRange(where);
+    }
+
     constexpr void insert(vector_base const& other)
     {
         if (!other.empty())
