@@ -360,7 +360,7 @@ TEST_CASE("vector of shared pointers::remove", "[vector]")
             CHECK((test_vector1[test_vector1.size() - 1U]->b) == value_last);
         }
     }
-    /*
+
         SECTION("Remove removed shared pointer")
         {
             sptr<A> temp = msptr<A>(A{42});
@@ -385,7 +385,6 @@ TEST_CASE("vector of shared pointers::remove", "[vector]")
             CHECK(test_vector1.size() == 8U);
             CHECK(weak.lock() == nullptr);
         }
-        */
 }
 
 TEST_CASE("vector of shared pointers::emplace", "[vector]")

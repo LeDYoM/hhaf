@@ -171,21 +171,33 @@ public:
 
     constexpr void insert(const T& newElement, const iterator where)
     {
+        vector_storage* storage{this};
         auto const newSize{size() + 1U};
-
-        if (capacity_ < newSize)
+        bool const isResizing{capacity_ < newSize};
+        if (isResizing)
         {
             vector_storage new_vector{
                 vector_storage{static_cast<size_type>(newSize)}};
 
-            for(iterator it{it})
-
-            for (auto&& elements_old_vector : *this)
+            for (auto it{begin()}; it < where; ++it)
             {
-                new_vector.push_back(htps::move(elements_old_vector));
+                new_vector.push_back(htps::move(*it));
             }
 
+            new_vector.push_back(newElement);
+
+            for (auto it{where + 1}; it < end(); ++it)
+            {
+                new_vector.push_back(htps::move(*it));
+            }
             *this = htps::move(new_vector);
+        }
+        else
+        {
+            for (auto it{std::prev(end())}; it >= where; --it)
+            {
+                *it = std::move(std::prev(it));
+            }
         }
     }
 
