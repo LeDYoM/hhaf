@@ -361,30 +361,30 @@ TEST_CASE("vector of shared pointers::remove", "[vector]")
         }
     }
 
-        SECTION("Remove removed shared pointer")
-        {
-            sptr<A> temp = msptr<A>(A{42});
-            wptr<A> weak = temp;
-            test_vector1.push_back(htps::move(temp));
-            CHECK(test_vector1.size() == 9U);
-            CHECK_FALSE(weak.lock() == nullptr);
-            test_vector1.pop_back();
-            CHECK(test_vector1.size() == 8U);
-            CHECK(weak.lock() == nullptr);
-        }
+    SECTION("Remove removed shared pointer")
+    {
+        sptr<A> temp = msptr<A>(A{42});
+        wptr<A> weak = temp;
+        test_vector1.push_back(htps::move(temp));
+        CHECK(test_vector1.size() == 9U);
+        CHECK_FALSE(weak.lock() == nullptr);
+        test_vector1.pop_back();
+        CHECK(test_vector1.size() == 8U);
+        CHECK(weak.lock() == nullptr);
+    }
 
-        SECTION("Remove if")
-        {
-            sptr<A> temp = msptr<A>(A{42});
-            wptr<A> weak = temp;
-            test_vector1.push_back(htps::move(temp));
-            CHECK(test_vector1.size() == 9U);
-            CHECK_FALSE(weak.lock() == nullptr);
-            test_vector1.erase_if(
-                [](const sptr<A> element) { return element->b == 42; });
-            CHECK(test_vector1.size() == 8U);
-            CHECK(weak.lock() == nullptr);
-        }
+    SECTION("Remove if")
+    {
+        sptr<A> temp = msptr<A>(A{42});
+        wptr<A> weak = temp;
+        test_vector1.push_back(htps::move(temp));
+        CHECK(test_vector1.size() == 9U);
+        CHECK_FALSE(weak.lock() == nullptr);
+        test_vector1.erase_if(
+            [](const sptr<A> element) { return element->b == 42; });
+        CHECK(test_vector1.size() == 8U);
+        CHECK(weak.lock() == nullptr);
+    }
 }
 
 TEST_CASE("vector of shared pointers::emplace", "[vector]")
@@ -397,7 +397,7 @@ TEST_CASE("vector of shared pointers::emplace", "[vector]")
     test_vector.pop_back();
     CHECK(test_vector.empty());
 }
-/*
+
 TEST_CASE("vector of shared pointers::clear", "[vector]")
 {
     vector_shared_pointers<A> test_vector1(init_vector_shared_pointers_A());
@@ -410,7 +410,7 @@ TEST_CASE("vector of shared pointers::clear", "[vector]")
     test_vector1.clear();
     CHECK(weak.lock() == nullptr);
 }
-*/
+
 TEST_CASE("vector of shared pointers::shrink_to_fit", "[vector]")
 {
     vector_shared_pointers<A> test_vector1(init_vector_shared_pointers_A());
@@ -531,10 +531,10 @@ struct MoveOnly
 {
 public:
     explicit MoveOnly(int b) : a{b} {}
-    MoveOnly(const MoveOnly&) = delete;
+    MoveOnly(const MoveOnly&)            = delete;
     MoveOnly& operator=(const MoveOnly&) = delete;
 
-    MoveOnly(MoveOnly&&) noexcept = default;
+    MoveOnly(MoveOnly&&) noexcept   = default;
     MoveOnly& operator=(MoveOnly&&) = default;
     int get() const noexcept { return a; }
 
@@ -568,5 +568,53 @@ TEST_CASE("vector::Movable only objects", "[vector]")
         CHECK(5 == v3[0U].get());
         CHECK(4 == v3[1U].get());
         CHECK(v.empty());
+    }
+}
+
+TEST_CASE("vector::pop_back", "[vector]")
+{
+    vector<u32> v;
+
+    CHECK(v.size() == 0U);
+    CHECK(v.empty());
+    CHECK(v.capacity() == 0U);
+
+    CHECK(v.begin() == v.end());
+    v.push_back(0);
+    v.push_back(1);
+    CHECK(v.size() == 2U);
+    CHECK_FALSE(v.empty());
+    CHECK(v.begin() != v.end());
+
+    v.pop_back();
+    CHECK(v.size() == 1U);
+    CHECK_FALSE(v.empty());
+    CHECK(v.begin() != v.end());
+
+    v.pop_back();
+    CHECK(v.size() == 0U);
+    CHECK(v.empty());
+    CHECK(v.begin() == v.end());
+}
+
+TEST_CASE("vector::insert_vector", "[vector]")
+{
+    SECTION("SimpleClass")
+    {
+        vector<MoveOnly> v;
+        v.emplace_back(5);
+        v.emplace_back(4);
+        v.emplace_back(3);
+        v.emplace_back(2);
+        CHECK(v.size() == 4U);
+
+        vector<MoveOnly> v2;
+        CHECK(v2.empty());
+        v2.insert(htps::move(v));
+        CHECK(v2.size() == 4U);
+        CHECK(v2[0].get() == 5);
+        CHECK(v2[1].get() == 4);
+        CHECK(v2[2].get() == 3);
+        CHECK(v2[3].get() == 2);
     }
 }
