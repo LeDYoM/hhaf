@@ -169,9 +169,8 @@ public:
         }
     }
 
-    constexpr void insert(const T& newElement, const iterator where)
+    constexpr void insert(iterator const where, const T& newElement)
     {
-        vector_storage* storage{this};
         auto const newSize{size() + 1U};
         bool const isResizing{capacity_ < newSize};
         if (isResizing)
@@ -186,7 +185,7 @@ public:
 
             new_vector.push_back(newElement);
 
-            for (auto it{where + 1}; it < end(); ++it)
+            for (auto it{where}; it < end(); ++it)
             {
                 new_vector.push_back(htps::move(*it));
             }
@@ -196,8 +195,9 @@ public:
         {
             for (auto it{std::prev(end())}; it >= where; --it)
             {
-                *it = std::move(std::prev(it));
+                *it = std::move(*(std::prev(it)));
             }
+            ++size_;
         }
     }
 

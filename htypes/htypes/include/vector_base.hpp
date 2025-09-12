@@ -70,7 +70,7 @@ public:
         while (iterator != end)
         {
             // Construct by copy.
-            emplace_back((*iterator++));
+            push_back((*iterator++));
         }
     }
 
@@ -709,6 +709,7 @@ public:
     constexpr void insert(iterator const where, const T& element)
     {
         checkRange(where);
+        storage_.insert(where, element);
     }
 
     constexpr void insert(vector_base const& other)

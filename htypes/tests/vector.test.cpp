@@ -641,3 +641,46 @@ TEST_CASE("vector::insert_vector", "[vector]")
         }
     }
 }
+
+TEST_CASE("vector::insert_element", "[vector]")
+{
+    SECTION("Simple")
+    {
+        vector<u32> v;
+        CHECK(v.empty());
+        v.insert(v.begin(), 3);
+        CHECK_FALSE(v.empty());
+        CHECK(v.size() == 1U);
+        CHECK(v[0] == 3);
+
+        v.insert(v.begin(), 4);
+        CHECK(v.size() == 2U);
+        CHECK(v[0] == 4);
+        CHECK(v[1] == 3);
+
+        v.insert(v.begin() + 1, 5);
+        CHECK(v.size() == 3U);
+        CHECK(v[0] == 4);
+        CHECK(v[1] == 5);
+        CHECK(v[2] == 3);
+
+        v.insert(v.end(), 6);
+        CHECK(v.size() == 4U);
+        CHECK(v[0] == 4);
+        CHECK(v[1] == 5);
+        CHECK(v[2] == 3);
+        CHECK(v[3] == 6);
+
+        v.pop_back();
+        v.pop_back();
+        CHECK(v.size() == 2U);
+        CHECK(v[0] == 4);
+        CHECK(v[1] == 5);
+
+        v.insert(v.end(), 7);
+        CHECK(v.size() == 3U);
+        CHECK(v[0] == 4);
+        CHECK(v[1] == 5);
+        CHECK(v[2] == 7);
+    }
+}
