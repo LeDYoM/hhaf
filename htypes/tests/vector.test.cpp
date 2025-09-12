@@ -634,5 +634,11 @@ TEST_CASE("vector::insert_element", "[vector]")
         CHECK(v.size() == 2U);
         CHECK(v[0] == 4);
         CHECK(v[1] == 3);
+
+        v.insert(v.begin() + 1, 5);
+        CHECK(v.size() == 3U);
+        CHECK(v[0] == 4);
+        CHECK(v[1] == 5);
+        CHECK(v[2] == 3);
     }
 }

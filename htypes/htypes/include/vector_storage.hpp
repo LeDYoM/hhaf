@@ -178,16 +178,14 @@ public:
             vector_storage new_vector{
                 vector_storage{static_cast<size_type>(newSize)}};
 
-            auto const index{std::distance(where, begin())};
-
-            for (auto it{begin()}; it < where + index; ++it)
+            for (auto it{begin()}; it < where; ++it)
             {
                 new_vector.push_back(htps::move(*it));
             }
 
             new_vector.push_back(newElement);
 
-            for (auto it{where + index}; it < end(); ++it)
+            for (auto it{where}; it < end(); ++it)
             {
                 new_vector.push_back(htps::move(*it));
             }
