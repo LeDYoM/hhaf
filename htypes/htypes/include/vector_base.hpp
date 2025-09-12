@@ -70,7 +70,7 @@ public:
         while (iterator != end)
         {
             // Construct by copy.
-            emplace_back((*iterator++));
+            push_back((*iterator++));
         }
     }
 
