@@ -115,6 +115,7 @@ TEST_CASE("vector::vector(std::initializer_list)", "[vector]")
 
 TEST_CASE("vector::vector::operator=(std::initializer_list)", "[vector]")
 {
+    SECTION("Simple case")
     {
         vector<u32> m;
         m = {1, 9, 8, 7, 6, 5, 4, 3, 2, 0, 1};
@@ -133,6 +134,7 @@ TEST_CASE("vector::vector::operator=(std::initializer_list)", "[vector]")
         }
     }
 
+    SECTION("Vector of shared pointers")
     {
         sptr<u32> sp1{msptr<u32>(1)};
         sptr<u32> sp2{msptr<u32>(9)};
@@ -616,5 +618,26 @@ TEST_CASE("vector::insert_vector", "[vector]")
         CHECK(v2[1].get() == 4);
         CHECK(v2[2].get() == 3);
         CHECK(v2[3].get() == 2);
+    }
+
+    SECTION("Shared pointers")
+    {
+        vector<sptr<u32>> v;
+        v.push_back(msptr<u32>(0));
+        v.push_back(msptr<u32>(1));
+        CHECK_FALSE(v.empty());
+        CHECK(v.size() == 2U);
+
+        SECTION("Insert by copy")
+        {
+            vector<sptr<u32>> v2;
+            v2.insert(v);
+            CHECK_FALSE(v2.empty());
+            CHECK(v2.size() == 2U);
+            v2.push_back(msptr<u32>(2));
+            CHECK(v2.size() == 3U);
+            v2.insert(v);
+            CHECK(v2.size() == 5U);
+        }
     }
 }
