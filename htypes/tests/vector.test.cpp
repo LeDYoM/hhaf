@@ -618,3 +618,21 @@ TEST_CASE("vector::insert_vector", "[vector]")
         CHECK(v2[3].get() == 2);
     }
 }
+
+TEST_CASE("vector::insert_element", "[vector]")
+{
+    SECTION("Simple")
+    {
+        vector<u32> v;
+        CHECK(v.empty());
+        v.insert(v.begin(), 3);
+        CHECK_FALSE(v.empty());
+        CHECK(v.size() == 1U);
+        CHECK(v[0] == 3);
+
+        v.insert(v.begin(), 4);
+        CHECK(v.size() == 2U);
+        CHECK(v[0] == 4);
+        CHECK(v[1] == 3);
+    }
+}
