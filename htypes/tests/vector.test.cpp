@@ -640,5 +640,24 @@ TEST_CASE("vector::insert_element", "[vector]")
         CHECK(v[0] == 4);
         CHECK(v[1] == 5);
         CHECK(v[2] == 3);
+
+        v.insert(v.end(), 6);
+        CHECK(v.size() == 4U);
+        CHECK(v[0] == 4);
+        CHECK(v[1] == 5);
+        CHECK(v[2] == 3);
+        CHECK(v[3] == 6);
+
+        v.pop_back();
+        v.pop_back();
+        CHECK(v.size() == 2U);
+        CHECK(v[0] == 4);
+        CHECK(v[1] == 5);
+
+        v.insert(v.end(), 7);
+        CHECK(v.size() == 3U);
+        CHECK(v[0] == 4);
+        CHECK(v[1] == 5);
+        CHECK(v[2] == 7);
     }
 }
