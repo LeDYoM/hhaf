@@ -197,6 +197,7 @@ public:
             {
                 *it = std::move(*(std::prev(it)));
             }
+            *where = newElement;
             ++size_;
         }
     }
