@@ -683,4 +683,58 @@ TEST_CASE("vector::insert_element", "[vector]")
         CHECK(v[1] == 5);
         CHECK(v[2] == 7);
     }
+
+    SECTION("Simple uninitialized")
+    {
+        vector<u32> v;
+        v.reserve(5);
+        CHECK(v.empty());
+        v.insert(v.begin(), 2);
+        CHECK_FALSE(v.empty());
+        CHECK(v.size() == 1);
+        CHECK(v[0] == 2);
+    }
+
+    SECTION("With shared pointers")
+    {
+        vector<sptr<u32>> v;
+        CHECK(v.empty());
+        v.insert(v.begin(), msptr<u32>(3));
+        CHECK_FALSE(v.empty());
+        CHECK(v.size() == 1U);
+        CHECK((*v[0]) == 3);
+
+        bool a = v[0] == 3;
+        (void)(a);
+
+        v.insert(v.begin(), msptr<u32>(4));
+        CHECK(v.size() == 2U);
+        CHECK(v[0] == 4);
+        CHECK(v[1] == 3);
+
+        v.insert(v.begin() + 1, msptr<u32>(5));
+        CHECK(v.size() == 3U);
+        CHECK(v[0] == 4);
+        CHECK(v[1] == 5);
+        CHECK(v[2] == 3);
+
+        v.insert(v.end(), msptr<u32>(6));
+        CHECK(v.size() == 4U);
+        CHECK(v[0] == 4);
+        CHECK(v[1] == 5);
+        CHECK(v[2] == 3);
+        CHECK(v[3] == 6);
+
+        v.pop_back();
+        v.pop_back();
+        CHECK(v.size() == 2U);
+        CHECK(v[0] == 4);
+        CHECK(v[1] == 5);
+
+        v.insert(v.end(), msptr<u32>(7));
+        CHECK(v.size() == 3U);
+        CHECK(v[0] == 4);
+        CHECK(v[1] == 5);
+        CHECK(v[2] == 7);
+    }
 }
