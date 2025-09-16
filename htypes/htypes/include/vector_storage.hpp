@@ -193,11 +193,19 @@ public:
         }
         else
         {
-            for (auto it{std::prev(end())}; it >= where; --it)
+            if (where >= end())
             {
-                *it = std::move(*(std::prev(it)));
+                Allocator::construct(where, newElement);
             }
-            *where = newElement;
+            else
+            {
+                for (auto it{std::prev(end())}; it >= where; --it)
+                {
+                    *it = std::move(*(std::prev(it)));
+                }
+                *where = newElement;
+            }
+
             ++size_;
         }
     }
