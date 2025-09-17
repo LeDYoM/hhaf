@@ -199,9 +199,15 @@ public:
             }
             else
             {
-                for (auto it{std::prev(end())}; it >= where; --it)
+                auto const prev_end{std::prev(end())};
+                Allocator::construct(end(), *prev_end);
+
+                if (prev_end > begin())
                 {
-                    *it = std::move(*(std::prev(it)));
+                    for (auto it{prev_end}; it >= where; --it)
+                    {
+                        *it = std::move(*(std::prev(it)));
+                    }
                 }
                 *where = newElement;
             }
