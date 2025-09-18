@@ -691,8 +691,43 @@ TEST_CASE("vector::insert_element", "[vector]")
         CHECK(v.empty());
         v.insert(v.begin(), 2);
         CHECK_FALSE(v.empty());
-        CHECK(v.size() == 1);
+        CHECK(v.size() == 1U);
         CHECK(v[0] == 2);
+
+        v.insert(v.end(), 3);
+        CHECK(v.size() == 2U);
+        CHECK(v[0] == 2);
+        CHECK(v[1] == 3);
+
+        v.insert(v.begin() + 1, 4);
+        CHECK(v.size() == 3U);
+        CHECK(v[0] == 2);
+        CHECK(v[1] == 4);
+        CHECK(v[2] == 3);
+
+        v.insert(v.begin() + 2, 5);
+        CHECK(v.size() == 4U);
+        CHECK(v[0] == 2);
+        CHECK(v[1] == 4);
+        CHECK(v[2] == 5);
+        CHECK(v[3] == 3);
+
+        v.insert(v.begin() + 3, 6);
+        CHECK(v.size() == 5U);
+        CHECK(v[0] == 2);
+        CHECK(v[1] == 4);
+        CHECK(v[2] == 5);
+        CHECK(v[3] == 6);
+        CHECK(v[4] == 3);
+
+        v.insert(v.begin() + 4, 7);
+        CHECK(v.size() == 6U);
+        CHECK(v[0] == 2);
+        CHECK(v[1] == 4);
+        CHECK(v[2] == 5);
+        CHECK(v[3] == 6);
+        CHECK(v[4] == 7);
+        CHECK(v[5] == 3);
     }
 
     SECTION("With shared pointers")
@@ -743,7 +778,7 @@ TEST_CASE("vector::insert_element", "[vector]")
     {
         vector<sptr<u32>> v;
 
-        v.reserve(5);
+        v.reserve(8);
         CHECK(v.empty());
         v.insert(v.begin(), msptr<u32>(2));
         CHECK_FALSE(v.empty());
@@ -754,5 +789,68 @@ TEST_CASE("vector::insert_element", "[vector]")
         CHECK(v.size() == 2U);
         CHECK(*(v[0]) == 3);
         CHECK(*(v[1]) == 2);
+
+        v.insert(v.end(), msptr<u32>(4));
+        CHECK(v.size() == 3U);
+        CHECK(*(v[0]) == 3);
+        CHECK(*(v[1]) == 2);
+        CHECK(*(v[2]) == 4);
+
+        v.insert(v.begin(), msptr<u32>(5));
+        CHECK(v.size() == 4U);
+        CHECK(*(v[0]) == 5);
+        CHECK(*(v[1]) == 3);
+        CHECK(*(v[2]) == 2);
+        CHECK(*(v[3]) == 4);
+
+        v.insert(v.begin() + 1, msptr<u32>(6));
+        CHECK(v.size() == 5U);
+        CHECK(*(v[0]) == 5);
+        CHECK(*(v[1]) == 6);
+        CHECK(*(v[2]) == 3);
+        CHECK(*(v[3]) == 2);
+        CHECK(*(v[4]) == 4);
+
+        v.insert(v.begin() + 2, msptr<u32>(7));
+        CHECK(v.size() == 6U);
+        CHECK(*(v[0]) == 5);
+        CHECK(*(v[1]) == 6);
+        CHECK(*(v[2]) == 7);
+        CHECK(*(v[3]) == 3);
+        CHECK(*(v[4]) == 2);
+        CHECK(*(v[5]) == 4);
+
+        v.insert(v.begin() + 3, msptr<u32>(8));
+        CHECK(v.size() == 7U);
+        CHECK(*(v[0]) == 5);
+        CHECK(*(v[1]) == 6);
+        CHECK(*(v[2]) == 7);
+        CHECK(*(v[3]) == 8);
+        CHECK(*(v[4]) == 3);
+        CHECK(*(v[5]) == 2);
+        CHECK(*(v[6]) == 4);
+
+        v.insert(v.begin() + 4, msptr<u32>(9));
+        CHECK(v.size() == 8U);
+        CHECK(*(v[0]) == 5);
+        CHECK(*(v[1]) == 6);
+        CHECK(*(v[2]) == 7);
+        CHECK(*(v[3]) == 8);
+        CHECK(*(v[4]) == 9);
+        CHECK(*(v[5]) == 3);
+        CHECK(*(v[6]) == 2);
+        CHECK(*(v[7]) == 4);
+
+        v.insert(v.begin() + 5, msptr<u32>(10));
+        CHECK(v.size() == 9U);
+        CHECK(*(v[0]) == 5);
+        CHECK(*(v[1]) == 6);
+        CHECK(*(v[2]) == 7);
+        CHECK(*(v[3]) == 8);
+        CHECK(*(v[4]) == 9);
+        CHECK(*(v[5]) == 10);
+        CHECK(*(v[6]) == 3);
+        CHECK(*(v[7]) == 2);
+        CHECK(*(v[8]) == 4);
     }
 }

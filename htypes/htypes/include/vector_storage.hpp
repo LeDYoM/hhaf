@@ -204,7 +204,7 @@ public:
 
                 if (prev_end > begin())
                 {
-                    for (auto it{prev_end}; it >= where; --it)
+                    for (auto it{prev_end}; it > where && it > begin(); --it)
                     {
                         *it = std::move(*(std::prev(it)));
                     }
