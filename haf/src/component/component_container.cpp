@@ -54,13 +54,19 @@ bool ComponentContainer::attachComponent(sptr<Component> newComponent)
 {
     applyRequirements(*newComponent);
     initialize(*newComponent);
-    if (newComponent->componentOrder() == ComponentOrder::NoOrder)
+
+    if (auto const order{newComponent->componentOrder()}; order == ComponentOrder::NoOrder)
     {
         m_p->m_components.push_back(htps::move(newComponent));
     }
     else
     {
-
+        m_p->m_components.push_back(htps::move(newComponent));
+        auto components{m_p->m_components.next()};
+        if (components.size() < order)
+        {
+//            m_p->m_components.current().
+        }
     }
 
     return true;
