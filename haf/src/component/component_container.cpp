@@ -11,16 +11,15 @@ struct ComponentContainer::ComponentContainerPrivate
     sptr<Component> getComponentFromTypeIndex(
         utils::type_index const& tindex) const
     {
-        const auto v{m_components.next()};
-        auto iterator(v.find_if(
-            v.cbegin(), v.cend(), [&tindex](sptr<Component> const& component) {
+        auto iterator(m_components.find_if(
+            m_components.cbegin(), m_components.cend(), [&tindex](sptr<Component> const& component) {
                 return utils::type_index(typeid(*component)) == tindex;
             }));
-        return (iterator == v.cend()) ? nullptr : (*iterator);
+        return (iterator == m_components.cend()) ? nullptr : (*iterator);
     }
 
     rptr<scene::SceneNode> const m_attachable;
-    LockableVector<sptr<Component>> m_components;
+    vector<sptr<Component>> m_components;
 
     explicit ComponentContainerPrivate(
         rptr<scene::SceneNode> attachable) noexcept :
@@ -36,8 +35,13 @@ ComponentContainer::~ComponentContainer() = default;
 
 void ComponentContainer::updateComponents()
 {
-    m_p->m_components.performUpdate(
-        [](sptr<Component> const& component) { component->update(); });
+    for(auto index{0U}; index < m_p->m_components.size(); ++index)
+    {
+        if (auto component{m_p->m_components[index]}; component != nullptr)
+        {
+            m_p->m_components[index]->update();
+        }
+    }
 }
 
 void ComponentContainer::updateIndexedComponent(uint32_t const index)
@@ -62,8 +66,8 @@ bool ComponentContainer::attachComponent(sptr<Component> newComponent)
     else
     {
         m_p->m_components.push_back(htps::move(newComponent));
-        auto components{m_p->m_components.next()};
-        if (components.size() < order)
+//        auto components{m_p->m_components.next()};
+//        if (components.size() < order)
         {
 //            m_p->m_components.current().
         }
