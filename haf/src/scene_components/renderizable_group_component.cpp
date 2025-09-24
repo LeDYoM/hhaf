@@ -24,4 +24,9 @@ sptr<render::Renderizable> const& RenderizableGroupComponent::first()
     return RenderizableGroupComponent::operator[](0U);
 }
 
+str RenderizableGroupComponent::staticTypeName() const noexcept
+{
+    return str{RenderizableGroupComponent::StaticTypeName};
+}
+
 }  // namespace haf::scene

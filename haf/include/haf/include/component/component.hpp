@@ -67,6 +67,8 @@ public:
         return ComponentOrder::NoOrder;
     }
 
+    virtual core::str staticTypeName() const noexcept;
+
 protected:
     Component() noexcept = default;
 

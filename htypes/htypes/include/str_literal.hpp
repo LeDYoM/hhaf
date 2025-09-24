@@ -7,6 +7,7 @@ HTPS_PRAGMA_ONCE
 
 namespace htps
 {
+using str_literal_hash = size_type;
 
 template <typename char_type, size_type N>
 struct basic_str_literal
@@ -73,7 +74,7 @@ struct basic_str_literal
         }
     }
 
-    constexpr size_type hash() const noexcept { return value[0]; }
+    constexpr str_literal_hash hash() const noexcept { return value[0]; }
 
     const size_type real_size_;
     char_type value[N];
@@ -81,8 +82,6 @@ struct basic_str_literal
 
 template <size_type N>
 using str_literal = basic_str_literal<char, N>;
-
-using str_literal_hash = size_type;
 
 template <size_type N>
 constexpr size_type basic_str_literal_size(char const (&str)[N]) noexcept

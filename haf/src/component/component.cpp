@@ -28,4 +28,9 @@ SceneRenderContext const& Component::cSceneRenderContext() const
     return sceneRenderContext();
 }
 
+str Component::staticTypeName() const noexcept
+{
+    return "Component";
+}
+
 }  // namespace haf::component

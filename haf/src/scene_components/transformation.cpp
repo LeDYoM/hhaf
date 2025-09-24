@@ -5,6 +5,8 @@
 #include <haf/include/scene/scene_node.hpp>
 #include <haf/include/scene/iscene_render_context_provider.hpp>
 
+using namespace haf::core;
+
 namespace haf::scene
 {
 Transformation::Transformation() noexcept : transform_{}
@@ -96,6 +98,11 @@ void Transformation::update()
 
     sceneRenderContext.parentTransformationChanged_ =
         localTransformationChanged;
+}
+
+str Transformation::staticTypeName() const noexcept
+{
+    return str{Transformation::StaticTypeName};
 }
 
 }  // namespace haf::scene

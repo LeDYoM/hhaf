@@ -10,11 +10,17 @@ HTPS_PRAGMA_ONCE
 
 namespace haf::scene
 {
+static constexpr char StaticTypeNameForRenderizableGroupComponent[]{
+    "RenderizableGroupComponent"};
+
 class HAF_API RenderizableGroupComponent : public component::Component
 {
     using BaseClass = component::Component;
 
 public:
+    static constexpr auto StaticTypeName{
+        StaticTypeNameForRenderizableGroupComponent};
+
     void onAttached() override;
 
     void update() override;
@@ -31,6 +37,8 @@ public:
     auto renderizableBuilder() { return renderizables_.renderizableBuilder(); }
 
     htps::sptr<render::Renderizable> const& first() const noexcept;
+
+    core::str staticTypeName() const noexcept override;
 
 private:
     render::Renderizables renderizables_;
