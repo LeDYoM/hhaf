@@ -13,7 +13,8 @@ struct ComponentContainer::ComponentContainerPrivate
         utils::type_index const& tindex) const
     {
         auto iterator(m_components.find_if(
-            m_components.cbegin(), m_components.cend(), [&tindex](sptr<Component> const& component) {
+            m_components.cbegin(), m_components.cend(),
+            [&tindex](sptr<Component> const& component) {
                 return utils::type_index(typeid(*component)) == tindex;
             }));
         return (iterator == m_components.cend()) ? nullptr : (*iterator);
@@ -36,7 +37,7 @@ ComponentContainer::~ComponentContainer() = default;
 
 void ComponentContainer::updateComponents()
 {
-    for(auto index{0U}; index < m_p->m_components.size(); ++index)
+    for (auto index{0U}; index < m_p->m_components.size(); ++index)
     {
         if (auto component{m_p->m_components[index]}; component != nullptr)
         {
@@ -60,17 +61,18 @@ bool ComponentContainer::attachComponent(sptr<Component> newComponent)
     applyRequirements(*newComponent);
     initialize(*newComponent);
 
-    if (auto const order{newComponent->componentOrder()}; order == ComponentOrder::NoOrder)
+    if (auto const order{newComponent->componentOrder()};
+        order == ComponentOrder::NoOrder)
     {
         m_p->m_components.push_back(htps::move(newComponent));
     }
     else
     {
         m_p->m_components.push_back(htps::move(newComponent));
-//        auto components{m_p->m_components.next()};
-//        if (components.size() < order)
+        //        auto components{m_p->m_components.next()};
+        //        if (components.size() < order)
         {
-//            m_p->m_components.current().
+            //            m_p->m_components.current().
         }
     }
 
