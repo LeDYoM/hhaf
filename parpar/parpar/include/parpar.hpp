@@ -353,13 +353,13 @@ private:
 
                         // Check for duplicates
                         syntax_errors_.push_back(
-                            optionExists(std::get<1>(result).first)
+                            optionExists(result.second.first)
                                 ? SyntaxParserErrorCodes::OptionAlreadySet
-                                : std::get<0>(result));
+                                : result.first);
 
                         option_parameters.emplace_back(
-                            std::get<1>(result).first,
-                            std::get<1>(result).second);
+                            result.second.first,
+                            result.second.second);
                     }
                     break;
 

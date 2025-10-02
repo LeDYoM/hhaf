@@ -11,6 +11,7 @@ set(SOURCE_TESTS
     hash
     lockable_vector
     menum
+    pair
     shared_ptr
     span
     stack

@@ -30,6 +30,7 @@ set(headers
     ${include_dir}/hash.hpp
     ${include_dir}/menum.hpp
     ${include_dir}/p_impl_pointer.hpp
+    ${include_dir}/pair.hpp
     ${include_dir}/rawmemory.hpp
     ${include_dir}/span.hpp
     ${include_dir}/stack.hpp

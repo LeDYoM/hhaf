@@ -388,19 +388,24 @@ public:
         return ok;
     }
 
-    bool set(tps::str key, Object obj)
+    bool set(tps::str&& key, Object obj)
     {
-        return set({std::make_pair(tps::move(key), tps::move(obj))});
+        return set({tps::pair(tps::move(key), tps::move(obj))});
+    }
+
+    bool set(tps::str const& key, Object obj)
+    {
+        return set({tps::pair(key, tps::move(obj))});
     }
 
     bool set(tps::str key, tps::str value)
     {
-        return set({std::make_pair(tps::move(key), tps::move(value))});
+        return set({tps::pair(tps::move(key), tps::move(value))});
     }
 
     bool set(tps::str key, Value value)
     {
-        return set({std::make_pair(tps::move(key), tps::move(value))});
+        return set({tps::pair(tps::move(key), tps::move(value))});
     }
 
     template <typename T,
@@ -438,11 +443,11 @@ public:
     bool set(size_t index, tps::str value)
     {
         return set(
-            {std::make_pair(tps::str(arraySeparator) + tps::str::to_str(index),
+            {tps::pair(tps::str(arraySeparator) + tps::str::to_str(index),
                             tps::move(value))});
     }
 
-    bool set(size_t index, Object value)
+    bool set(size_t const index, Object value)
     {
         return set(tps::str(arraySeparator) + tps::str::to_str(index),
                    tps::move(value));

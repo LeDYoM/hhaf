@@ -57,8 +57,6 @@ using fast_s8    = int_fast8_t;
 template <typename T, typename V>
 using map = std::map<T, V>;
 
-template <typename T, typename V>
-using pair = std::pair<T, V>;
 }  // namespace htps
 
 #endif

@@ -6,6 +6,7 @@ HTPS_PRAGMA_ONCE
 #include <htypes/include/shared_ptr.hpp>
 #include <htypes/include/unique_ptr.hpp>
 #include <htypes/include/weak_ptr.hpp>
+#include <htypes/include/pair.hpp>
 
 namespace htps
 {}  // namespace htps

@@ -5,7 +5,7 @@
 #include <hlog/include/hlog.hpp>
 
 using namespace haf::input;
-using namespace htps;
+using namespace haf::core;
 using namespace logger;
 
 namespace haf::debug
@@ -26,7 +26,7 @@ struct DebugActions::DebugActionsPrivate final
             [key](DebugActionVectorType::value_type const element) {
                 return element.first == key;
             })};
-        return std::make_pair(iterator != debug_actions_.cend(), iterator);
+        return pair(iterator != debug_actions_.cend(), iterator);
     }
 };
 
