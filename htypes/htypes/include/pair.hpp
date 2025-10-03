@@ -31,7 +31,7 @@ public:
         }
         else if (first > rhs.first)
         {
-            std::strong_ordering::greater;
+            return std::strong_ordering::greater;
         }
         else
         {
