@@ -4,13 +4,19 @@ HTPS_PRAGMA_ONCE
 
 #include "haf_private.hpp"
 #include <haf/include/core/types.hpp>
+#include <haf/include/utils/type_data.hpp>
 
 namespace haf::component
 {
-    class Component;
-/// @brief
+class Component;
+
 class HAF_PRIVATE ComponentContainerRepresentation
 {
+    sptr<Component> getComponentFromTypeIndex(
+        utils::type_index const& tindex) const;
+
+    void push_back(sptr<Component>&& new_component);
+
     core::vector<core::sptr<Component>> m_components;
 };
 }  // namespace haf::component
