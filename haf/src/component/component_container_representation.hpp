@@ -9,8 +9,8 @@ namespace haf::component
 /// @brief
 class HAF_PRIVATE ComponentContainerRepresentation
 {
-    vector<sptr<Component>> m_components;
-}
+//    vector<sptr<Component>> m_components;
+};
 }  // namespace haf::component
 
 #endif
