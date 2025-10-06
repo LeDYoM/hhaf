@@ -12,10 +12,10 @@ class Component;
 
 class HAF_PRIVATE ComponentContainerRepresentation
 {
-    sptr<Component> getComponentFromTypeIndex(
+    core::sptr<Component> getComponentFromTypeIndex(
         utils::type_index const& tindex) const;
 
-    void push_back(sptr<Component>&& new_component);
+    void push_back(core::sptr<Component>&& new_component);
 
     core::vector<core::sptr<Component>> m_components;
 };

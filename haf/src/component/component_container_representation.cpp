@@ -3,7 +3,7 @@
 
 namespace haf::component
 {
-
+using namespace haf::core;
 sptr<Component> ComponentContainerRepresentation::getComponentFromTypeIndex(
     utils::type_index const& tindex) const
 {
@@ -18,7 +18,7 @@ sptr<Component> ComponentContainerRepresentation::getComponentFromTypeIndex(
 void ComponentContainerRepresentation::push_back(
     sptr<Component>&& new_component)
 {
-    
+    m_components.push_back(core::move(new_component));
 }
 
 }  // namespace haf::component
