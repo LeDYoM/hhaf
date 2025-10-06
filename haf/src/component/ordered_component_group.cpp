@@ -1,4 +1,4 @@
-#include <haf/include/component/component_group.hpp>
+#include <haf/include/component/ordered_component_group.hpp>
 
 using namespace htps;
 

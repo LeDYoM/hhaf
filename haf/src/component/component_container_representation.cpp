@@ -1,4 +1,4 @@
-#include "component_container_representation.hpp"
+#include <haf/include/component/component_container_representation.hpp>
 #include <haf/include/component/component.hpp>
 
 namespace haf::component

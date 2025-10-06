@@ -1,9 +1,8 @@
 #include <haf/include/component/component_container.hpp>
 #include <haf/include/component/component_requirements.hpp>
 #include <haf/include/core/types.hpp>
-#include "../../src/component/component_container_representation.hpp"
 
-using namespace htps;
+using namespace haf::core;
 
 namespace haf::component
 {
