@@ -12,6 +12,7 @@ class Component;
 
 class HAF_API ComponentContainerRepresentation
 {
+protected:
     core::sptr<Component> getComponentFromTypeIndex(
         utils::type_index const& tindex) const;
 
@@ -37,7 +38,19 @@ class HAF_API ComponentContainerRepresentation
     }
 
     void push_back(core::sptr<Component>&& new_component);
+    void set_at_index(core::u32 core::sptr<Component>&& new_component);
 
+    auto size() const noexcept
+    {
+        return m_components.size();
+    }
+
+    void resize(core::u32 const newSize);
+
+    core::vector<core::sptr<Component>>& components() noexcept;
+    core::vector<core::sptr<Component>> const& components() const noexcept;
+
+private:
     core::vector<core::sptr<Component>> m_components;
 };
 }  // namespace haf::component
