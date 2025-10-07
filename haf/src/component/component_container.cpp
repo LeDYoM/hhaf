@@ -1,6 +1,8 @@
 #include <haf/include/component/component_container.hpp>
 #include <haf/include/component/component_requirements.hpp>
 #include <haf/include/core/types.hpp>
+#include <haf/include/component/ordered_component_group.hpp>
+#include <haf/include/component/unordered_component_group.hpp>
 
 using namespace haf::core;
 
@@ -21,6 +23,8 @@ struct ComponentContainer::ComponentContainerPrivate
 
     rptr<scene::SceneNode> const m_attachable;
     vector<sptr<Component>> m_components;
+    OrderedComponentGroup m_ordered_component_group;
+    UnorderedComponentGroup m_unordered_component_group;
 
     explicit ComponentContainerPrivate(
         rptr<scene::SceneNode> attachable) noexcept :
