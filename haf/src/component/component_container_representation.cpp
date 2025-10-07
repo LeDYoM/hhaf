@@ -27,6 +27,20 @@ void ComponentContainerRepresentation::resize(core::u32 const newSize)
     m_components.resize(newSize);
 }
 
+void ComponentContainerRepresentation::set_at_index(
+    core::u32 const index,
+    core::sptr<Component>&& new_component)
+{
+    m_components.set_at_index(index, core::move(new_component));
+}
+
+void ComponentContainerRepresentation::set_at_index(
+    core::u32 const index,
+    core::sptr<Component> const& new_component)
+{
+    m_components.set_at_index(index, new_component);
+}
+
 vector<sptr<Component>>& ComponentContainerRepresentation::components() noexcept
 {
     return m_components;

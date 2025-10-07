@@ -826,7 +826,7 @@ public:
      * @param index Index element where to put the element
      * @param element const l-value reference to the element to be added
      */
-    constexpr void set_at_index(size_type const index, T const& element)
+    constexpr void set_at_index(size_type const index, const T& element)
     {
         if (index >= size())
         {

@@ -1,17 +1,12 @@
 #include <haf/include/component/ordered_component_group.hpp>
 
-using namespace htps;
+using namespace haf::core;
 
 namespace haf::component
 {
-bool OrderedComponentGroup::InsertAtIndex(core::u32 const index,
-                                          core::sptr<Component>&&)
+void OrderedComponentGroup::insertAtIndex(u32 const index, sptr<Component> c)
 {
-    if (BaseClass::size() < index)
-    {
-        BaseClass::resize(index + 1U);
-    }
-    return true;
+    BaseClass::set_at_index(index, core::move(c));
 }
 
 }  // namespace haf::component
