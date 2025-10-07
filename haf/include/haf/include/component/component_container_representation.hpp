@@ -38,6 +38,7 @@ protected:
     }
 
     void push_back(core::sptr<Component>&& new_component);
+    void push_back(core::sptr<Component> const& new_component);
     void set_at_index(core::u32 const index, core::sptr<Component>&& new_component);
     void set_at_index(core::u32 const index, core::sptr<Component> const& new_component);
 

@@ -22,6 +22,12 @@ void ComponentContainerRepresentation::push_back(
     m_components.push_back(core::move(new_component));
 }
 
+void ComponentContainerRepresentation::push_back(
+    sptr<Component> const& new_component)
+{
+    m_components.push_back(new_component);
+}
+
 void ComponentContainerRepresentation::resize(core::u32 const newSize)
 {
     m_components.resize(newSize);

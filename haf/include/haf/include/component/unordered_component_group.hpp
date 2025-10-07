@@ -20,6 +20,9 @@ class HAF_API UnorderedComponentGroup : private ComponentContainerRepresentation
 public:
     using BaseClass::getComponent;
     using BaseClass::getComponentFromTypeIndex;
+
+    void PushBack(core::sptr<Component>&& c);
+    void PushBack(core::sptr<Component> const& c);
 };
 
 }  // namespace haf::component
