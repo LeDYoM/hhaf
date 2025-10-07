@@ -4,9 +4,8 @@ HTPS_PRAGMA_ONCE
 
 #include <haf/include/haf_export.hpp>
 #include <htypes/include/types.hpp>
-#include <htypes/include/p_impl_pointer.hpp>
-
 #include <haf/include/core/log.hpp>
+#include <haf/include/component/component_container_representation.hpp>
 
 namespace haf::component
 {
@@ -14,9 +13,13 @@ namespace haf::component
  * @brief class representing a group of components
  * @see Component
  */
-class HAF_API UnorderedComponentGroup
+class HAF_API UnorderedComponentGroup : private ComponentContainerRepresentation
 {
+    using BaseClass = ComponentContainerRepresentation;
+
 public:
+    using BaseClass::getComponent;
+    using BaseClass::getComponentFromTypeIndex;
 };
 
 }  // namespace haf::component

@@ -20,7 +20,8 @@ public:
     using BaseClass::getComponentFromTypeIndex;
     using BaseClass::getComponent;
 
-    void insertAtIndex(core::u32 const index, core::sptr<Component> c);
+    void insertAtIndex(core::u32 const index, core::sptr<Component>&& c);
+    void insertAtIndex(core::u32 const index, core::sptr<Component> const& c);
 };
 
 }  // namespace haf::component
