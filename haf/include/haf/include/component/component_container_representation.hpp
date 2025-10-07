@@ -38,7 +38,7 @@ protected:
     }
 
     void push_back(core::sptr<Component>&& new_component);
-    void set_at_index(core::u32 core::sptr<Component>&& new_component);
+    void set_at_index(core::u32 const index, core::sptr<Component>&& new_component);
 
     auto size() const noexcept
     {

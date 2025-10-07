@@ -806,6 +806,36 @@ public:
     }
 
     /**
+     * @brief Set an element at a given index.
+     * If the vector is smaller than the index, it will be grown to fit
+     * @param index Index element where to put the element
+     * @param element r-value reference to the element to be added
+     */
+    constexpr void set_at_index(size_type const index, T&& element)
+    {
+        if (index >= size())
+        {
+            resize(index + 1U);
+        }
+        (*this)[index] = htps::move(element);
+    }
+
+    /**
+     * @brief Set an element at a given index.
+     * If the vector is smaller than the index, it will be grown to fit
+     * @param index Index element where to put the element
+     * @param element const l-value reference to the element to be added
+     */
+    constexpr void set_at_index(size_type const index, T const& element)
+    {
+        if (index >= size())
+        {
+            resize(index + 1U);
+        }
+        (*this)[index] = element;
+    }
+
+    /**
      * @brief Delete all elements in the vector. but maintains the inner
      * reserved memory unmodified.
      */

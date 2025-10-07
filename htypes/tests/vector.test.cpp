@@ -854,3 +854,25 @@ TEST_CASE("vector::insert_element", "[vector]")
         CHECK(*(v[8]) == 4);
     }
 }
+
+TEST_CASE("vector::set_at_index", "[vector]")
+{
+        vector<sptr<u32>> v;
+        CHECK(v.empty());
+        v.set_at_index(0, msptr<u32>(20));
+        CHECK(v.size() == 1U);
+        CHECK(*(v[0]) == 20);
+
+        auto r{msptr<u32>(40)};
+        v.set_at_index(10, r);
+        CHECK(v.size() == 11U);
+        CHECK(*(v[10]) == 40);
+
+
+        CHECK(v[5] == nullptr);
+        v.set_at_index(5, htps::move(r));
+        CHECK(v.size() == 11U);
+        CHECK(*(v[5]) == 40);
+
+        CHECK(r == nullptr);
+}
