@@ -50,7 +50,7 @@ protected:
     void clear();
 
     template <typename Self>
-    auto operator[](this Self&& self, core::u32 const index) -> decltype(auto)
+    decltype(auto) operator[](this Self&& self, core::u32 const index)
     {
         return self.m_components[index];
     }

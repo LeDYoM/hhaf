@@ -31,7 +31,7 @@ void ComponentContainer::updateUnorderedComponents()
     for (auto index{0U}; index < m_p->m_unordered_component_group.size();
          ++index)
     {
-        if (auto component{m_p->m_unordered_component_group[index]};
+        if (auto&& component{m_p->m_unordered_component_group[index]};
             component != nullptr)
         {
             component->update();
@@ -41,7 +41,11 @@ void ComponentContainer::updateUnorderedComponents()
 
 void ComponentContainer::updateIndexedComponent(uint32_t const index)
 {
-    (void)(index);
+    if (auto&& component{m_p->m_unordered_component_group[index]};
+        component != nullptr)
+    {
+        component->update();
+    }
 }
 
 void ComponentContainer::clearComponents() noexcept
@@ -76,10 +80,17 @@ void ComponentContainer::applyRequirements(Component& _thisComponent)
 }
 
 sptr<Component> ComponentContainer::componentOfType(
-    utils::type_index const& /*ti*/) const
+    utils::type_index const& ti) const
 {
-//    return m_p->getComponentFromTypeIndex(ti);
-return nullptr;
+    if (auto c{m_p->m_ordered_component_group.getComponentFromTypeIndex(ti)};
+        c == nullptr)
+    {
+        return m_p->m_unordered_component_group.getComponentFromTypeIndex(ti);
+    }
+    else
+    {
+        return c;
+    }
 }
 
 rptr<scene::SceneNode> ComponentContainer::attachable() const noexcept
@@ -94,8 +105,8 @@ void ComponentContainer::initialize(component::Component& component) const
 
 htps::size_type ComponentContainer::components() const noexcept
 {
-//    return m_p->size();
-    return 1;
+    return m_p->m_ordered_component_group.size() +
+        m_p->m_unordered_component_group.size();
 }
 
 }  // namespace haf::component
