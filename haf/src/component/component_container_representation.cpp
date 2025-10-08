@@ -58,4 +58,9 @@ vector<sptr<Component>> const& ComponentContainerRepresentation::components()
     return m_components;
 }
 
+void ComponentContainerRepresentation::clear()
+{
+    m_components.clear();
+}
+
 }  // namespace haf::component

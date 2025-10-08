@@ -10,19 +10,7 @@ namespace haf::component
 {
 struct ComponentContainer::ComponentContainerPrivate
 {
-    sptr<Component> getComponentFromTypeIndex(
-        utils::type_index const& tindex) const
-    {
-        auto iterator(m_components.find_if(
-            m_components.cbegin(), m_components.cend(),
-            [&tindex](sptr<Component> const& component) {
-                return utils::type_index(typeid(*component)) == tindex;
-            }));
-        return (iterator == m_components.cend()) ? nullptr : (*iterator);
-    }
-
     rptr<scene::SceneNode> const m_attachable;
-    vector<sptr<Component>> m_components;
     OrderedComponentGroup m_ordered_component_group;
     UnorderedComponentGroup m_unordered_component_group;
 
@@ -56,7 +44,8 @@ void ComponentContainer::updateIndexedComponent(uint32_t const index)
 
 void ComponentContainer::clearComponents() noexcept
 {
-    m_p->m_components.clear();
+    m_p->m_ordered_component_group.clear();
+    m_p->m_unordered_component_group.clear();
 }
 
 bool ComponentContainer::attachComponent(sptr<Component> newComponent)
@@ -92,6 +81,7 @@ sptr<Component> ComponentContainer::componentOfType(
     utils::type_index const& ti) const
 {
     return m_p->getComponentFromTypeIndex(ti);
+    
 }
 
 rptr<scene::SceneNode> ComponentContainer::attachable() const noexcept

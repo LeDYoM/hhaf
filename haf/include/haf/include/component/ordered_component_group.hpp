@@ -19,6 +19,7 @@ class HAF_API OrderedComponentGroup : private ComponentContainerRepresentation
 public:
     using BaseClass::getComponentFromTypeIndex;
     using BaseClass::getComponent;
+    using BaseClass::clear();
 
     void insertAtIndex(core::u32 const index, core::sptr<Component>&& c);
     void insertAtIndex(core::u32 const index, core::sptr<Component> const& c);

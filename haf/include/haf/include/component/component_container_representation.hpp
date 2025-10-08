@@ -48,6 +48,7 @@ protected:
     }
 
     void resize(core::u32 const newSize);
+    void clear();
 
     core::vector<core::sptr<Component>>& components() noexcept;
     core::vector<core::sptr<Component>> const& components() const noexcept;
