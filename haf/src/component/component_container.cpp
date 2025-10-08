@@ -26,13 +26,15 @@ ComponentContainer::ComponentContainer(rptr<scene::SceneNode> attachable) :
 
 ComponentContainer::~ComponentContainer() = default;
 
-void ComponentContainer::updateComponents()
+void ComponentContainer::updateUnorderedComponents()
 {
-    for (auto index{0U}; index < m_p->m_components.size(); ++index)
+    for (auto index{0U}; index < m_p->m_unordered_component_group.size();
+         ++index)
     {
-        if (auto component{m_p->m_components[index]}; component != nullptr)
+        if (auto component{m_p->m_unordered_component_group[index]};
+            component != nullptr)
         {
-            m_p->m_components[index]->update();
+            component->update();
         }
     }
 }
@@ -48,8 +50,9 @@ void ComponentContainer::clearComponents() noexcept
     m_p->m_unordered_component_group.clear();
 }
 
-bool ComponentContainer::attachComponent(sptr<Component> newComponent)
+bool ComponentContainer::attachComponent(sptr<Component>)
 {
+    /*
     applyRequirements(*newComponent);
     initialize(*newComponent);
 
@@ -61,13 +64,8 @@ bool ComponentContainer::attachComponent(sptr<Component> newComponent)
     else
     {
         m_p->m_components.push_back(htps::move(newComponent));
-        //        auto components{m_p->m_components.next()};
-        //        if (components.size() < order)
-        {
-            //            m_p->m_components.current().
-        }
     }
-
+*/
     return true;
 }
 
@@ -78,10 +76,10 @@ void ComponentContainer::applyRequirements(Component& _thisComponent)
 }
 
 sptr<Component> ComponentContainer::componentOfType(
-    utils::type_index const& ti) const
+    utils::type_index const& /*ti*/) const
 {
-    return m_p->getComponentFromTypeIndex(ti);
-    
+//    return m_p->getComponentFromTypeIndex(ti);
+return nullptr;
 }
 
 rptr<scene::SceneNode> ComponentContainer::attachable() const noexcept
@@ -96,7 +94,8 @@ void ComponentContainer::initialize(component::Component& component) const
 
 htps::size_type ComponentContainer::components() const noexcept
 {
-    return m_p->m_components.size();
+//    return m_p->size();
+    return 1;
 }
 
 }  // namespace haf::component

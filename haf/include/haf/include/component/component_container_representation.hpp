@@ -39,16 +39,21 @@ protected:
 
     void push_back(core::sptr<Component>&& new_component);
     void push_back(core::sptr<Component> const& new_component);
-    void set_at_index(core::u32 const index, core::sptr<Component>&& new_component);
-    void set_at_index(core::u32 const index, core::sptr<Component> const& new_component);
+    void set_at_index(core::u32 const index,
+                      core::sptr<Component>&& new_component);
+    void set_at_index(core::u32 const index,
+                      core::sptr<Component> const& new_component);
 
-    auto size() const noexcept
-    {
-        return m_components.size();
-    }
+    auto size() const noexcept { return m_components.size(); }
 
     void resize(core::u32 const newSize);
     void clear();
+
+    template <typename Self>
+    auto operator[](this Self&& self, core::u32 const index) -> decltype(auto)
+    {
+        return self.m_components[index];
+    }
 
     core::vector<core::sptr<Component>>& components() noexcept;
     core::vector<core::sptr<Component>> const& components() const noexcept;

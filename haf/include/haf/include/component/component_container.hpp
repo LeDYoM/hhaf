@@ -95,7 +95,7 @@ public:
     /**
      * @brief Update componentents of this container
      */
-    void updateComponents();
+    void updateUnorderedComponents();
 
     void updateIndexedComponent(uint32_t const index);
 
