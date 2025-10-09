@@ -54,23 +54,21 @@ void ComponentContainer::clearComponents() noexcept
     m_p->m_unordered_component_group.clear();
 }
 
-bool ComponentContainer::attachComponent(sptr<Component>)
+void ComponentContainer::attachComponent(sptr<Component> newComponent)
 {
-    /*
     applyRequirements(*newComponent);
     initialize(*newComponent);
 
     if (auto const order{newComponent->componentOrder()};
         order == ComponentOrder::NoOrder)
     {
-        m_p->m_components.push_back(htps::move(newComponent));
+        m_p->m_unordered_component_group.PushBack(htps::move(newComponent));
     }
     else
     {
-        m_p->m_components.push_back(htps::move(newComponent));
+        m_p->m_ordered_component_group.insertAtIndex(static_cast<u32>(order),
+                                                     htps::move(newComponent));
     }
-*/
-    return true;
 }
 
 void ComponentContainer::applyRequirements(Component& _thisComponent)

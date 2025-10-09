@@ -54,7 +54,17 @@ protected:
     {
         return self.m_components[index];
     }
+/*
+    core::sptr<Component>& operator[](core::u32 const index)
+    {
+        return m_components[index];
+    }
 
+    core::sptr<Component> const& operator[](core::u32 const index) const
+    {
+        return m_components[index];
+    }
+*/
     core::vector<core::sptr<Component>>& components() noexcept;
     core::vector<core::sptr<Component>> const& components() const noexcept;
 

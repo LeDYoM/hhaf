@@ -100,14 +100,20 @@ public:
     void updateIndexedComponent(uint32_t const index);
 
     /**
-     * @brief Clear all elements of this container     *
+     * @brief Clear all elements of this container
      */
     void clearComponents() noexcept;
 
     htps::size_type components() const noexcept;
 
 private:
-    bool attachComponent(htps::sptr<Component> newComponent);
+    /**
+     * @brief Add a new component to the corresponding list
+     * @param newComponent Component to be added
+     * @note This function does not check if the component is already added, so
+     * it assumes it is not
+     */
+    void attachComponent(htps::sptr<Component> newComponent);
     void applyRequirements(Component& _thisComponent);
     htps::rptr<class scene::SceneNode> attachable() const noexcept;
     void initialize(component::Component& component) const;
