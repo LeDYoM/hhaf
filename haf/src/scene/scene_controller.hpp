@@ -97,6 +97,8 @@ public:
     void requestExit();
     bool exitRequested() const;
 
+    void addSceneRenderSubsystem(core::u32 const index);
+
 private:
     void startScene(htps::sptr<SceneComponent> scene);
     void terminateCurrentScene();

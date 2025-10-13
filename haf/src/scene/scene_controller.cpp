@@ -180,4 +180,8 @@ bool SceneController::exitRequested() const
     return m_exit_requested;
 }
 
+void SceneController::addSceneRenderSubsystem(u32 const)
+{
+}
+
 }  // namespace haf::scene

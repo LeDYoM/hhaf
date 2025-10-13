@@ -74,6 +74,8 @@ public:
     SceneRenderContext& sceneRenderContext() override;
     SceneRenderContext const& sceneRenderContext() const override;
 
+    void addSceneRenderSubsystem(core::u32 const index);
+
 private:
     htps::sptr<SceneController> m_scene_controller;
 };

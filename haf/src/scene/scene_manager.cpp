@@ -87,4 +87,9 @@ SceneRenderContext const& SceneManager::sceneRenderContext() const
     return m_scene_controller->sceneRenderContext();
 }
 
+void SceneManager::addSceneRenderSubsystem(u32 const index)
+{
+    m_scene_controller->addSceneRenderSubsystem(index);
+}
+
 }  // namespace haf::scene
