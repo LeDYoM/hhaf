@@ -74,6 +74,8 @@ public:
     SceneRenderContext& sceneRenderContext() override;
     SceneRenderContext const& sceneRenderContext() const override;
 
+    void addDefaultSceneRenderSubsystems();
+
     void addSceneRenderSubsystem(core::u32 const index);
 
 private:

@@ -25,7 +25,9 @@ SceneManager::SceneManager(sys::SystemProvider& system_provider) :
 SceneManager::~SceneManager() = default;
 
 void SceneManager::start()
-{}
+{
+    addDefaultSceneRenderSubsystems();
+}
 
 void SceneManager::update()
 {
@@ -85,6 +87,12 @@ SceneRenderContext& SceneManager::sceneRenderContext()
 SceneRenderContext const& SceneManager::sceneRenderContext() const
 {
     return m_scene_controller->sceneRenderContext();
+}
+
+void SceneManager::addDefaultSceneRenderSubsystems()
+{
+    m_scene_controller->addSceneRenderSubsystem(0);
+    m_scene_controller->addSceneRenderSubsystem(1);
 }
 
 void SceneManager::addSceneRenderSubsystem(u32 const index)

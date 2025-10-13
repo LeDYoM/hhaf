@@ -206,6 +206,11 @@ void SystemProvider::initializeSystems(
             p_->input_system_->setInputDriverWrapper(
                 p_->window_system_->window()->inputDriverWrapper());
         }
+
+        if (init_system_options.init_scene_manager)
+        {
+            p_->scene_manager_->start();
+        }
     }
 
     if (init_system_options.init_resource_manager)
@@ -260,7 +265,6 @@ void SystemProvider::terminate()
     p_->random_system_.reset();
     p_->render_system_.reset();
     p_->resource_manager_.reset();
-    p_->scene_manager_.reset();
     p_->input_system_.reset();
     p_->window_system_.reset();
     p_->time_system_.reset();
