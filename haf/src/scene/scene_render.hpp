@@ -9,8 +9,9 @@ HTPS_PRAGMA_ONCE
 namespace haf::scene
 {
 class SceneNode;
-void HAF_PRIVATE render(SceneNode& scene_node);
-void HAF_PRIVATE render(SceneNode& scene_node, core::u32 const index);
+void HAF_PRIVATE processUnorderedComponents(SceneNode& scene_node);
+void HAF_PRIVATE processOrderedComponents(SceneNode& scene_node,
+                                          core::u32 const index);
 
 }  // namespace haf::scene
 

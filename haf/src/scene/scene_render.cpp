@@ -5,7 +5,7 @@
 
 namespace haf::scene
 {
-void render(SceneNode& scene_node)
+void processUnorderedComponents(SceneNode& scene_node)
 {
     if (scene_node.Visible())
     {
@@ -15,12 +15,12 @@ void render(SceneNode& scene_node)
         // Render the nodes added to this node
         for (auto&& group : scene_node.sceneNodes())
         {
-            render(*group);
+            processUnorderedComponents(*group);
         }
     }
 }
 
-void render(SceneNode& scene_node, core::u32 const index)
+void processOrderedComponents(SceneNode& scene_node, core::u32 const index)
 {
     if (scene_node.Visible())
     {
@@ -30,7 +30,7 @@ void render(SceneNode& scene_node, core::u32 const index)
         // Render the nodes added to this node
         for (auto&& group : scene_node.sceneNodes())
         {
-            render(*group, index);
+            processOrderedComponents(*group, index);
         }
     }
 }
