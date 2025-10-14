@@ -8,9 +8,9 @@
 
 #include <hlog/include/hlog.hpp>
 
-using namespace htps;
 using namespace logger;
 using namespace haf::component;
+using namespace haf::core;
 
 namespace haf::scene
 {
@@ -83,7 +83,9 @@ void SceneController::update()
     {
         LogAsserter::log_assert(m_scene_render_context != nullptr);
         m_scene_render_context->reset();
+
         processUnorderedComponents(*m_root_scene_node);
+        processAllOrderedComponents(*m_root_scene_node);
     }
 }
 
@@ -180,8 +182,17 @@ bool SceneController::exitRequested() const
     return m_exit_requested;
 }
 
-void SceneController::addSceneRenderSubsystem(u32 const)
+void SceneController::addSceneRenderSubsystem(u32 const scene_subsystem)
 {
+    m_scene_subSystems.push_back(scene_subsystem);
+}
+
+void SceneController::processAllOrderedComponents(SceneNode& scene_node)
+{
+    for (auto i{0U}; i < m_scene_subSystems.size(); ++i)
+    {
+        processOrderedComponents(scene_node, i);
+    }
 }
 
 }  // namespace haf::scene

@@ -3,10 +3,7 @@ HTPS_PRAGMA_ONCE
 #define HAF_SCENE_SCENECONTROLLER_INCLUDE_HPP
 
 #include "haf_private.hpp"
-#include <htypes/include/types.hpp>
-#include <htypes/include/str.hpp>
-#include <htypes/include/vector.hpp>
-#include <htypes/include/function.hpp>
+#include <haf/include/core/types.hpp>
 
 #include <haf/include/scene_components/scene_component.hpp>
 #include <haf/include/component/component_factory.hpp>
@@ -103,12 +100,14 @@ private:
     void startScene(htps::sptr<SceneComponent> scene);
     void terminateCurrentScene();
     void deferredSwitchScene();
+    void processAllOrderedComponents(SceneNode& scene_node);
 
     component::ComponentFactory m_component_factory;
-    htps::rptr<SceneManager> m_scene_manager{nullptr};
-    htps::sptr<SceneComponent> m_current_scene{nullptr};
-    htps::sptr<SceneNode> m_root_scene_node{nullptr};
-    htps::uptr<SceneRenderContext> m_scene_render_context{nullptr};
+    core::rptr<SceneManager> m_scene_manager{nullptr};
+    core::sptr<SceneComponent> m_current_scene{nullptr};
+    SceneNodeSPtr m_root_scene_node{nullptr};
+    core::uptr<SceneRenderContext> m_scene_render_context{nullptr};
+    core::vector<core::u32> m_scene_subSystems;
     bool m_switch_scene{false};
     bool m_exit_requested{false};
 };
