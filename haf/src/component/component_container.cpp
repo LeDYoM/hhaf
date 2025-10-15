@@ -41,10 +41,13 @@ void ComponentContainer::updateUnorderedComponents()
 
 void ComponentContainer::updateIndexedComponent(uint32_t const index)
 {
-    if (auto&& component{m_p->m_unordered_component_group[index]};
-        component != nullptr)
+    if (index < m_p->m_ordered_component_group.size())
     {
-        component->update();
+        if (auto&& component{m_p->m_ordered_component_group[index]};
+            component != nullptr)
+        {
+            component->update();
+        }
     }
 }
 

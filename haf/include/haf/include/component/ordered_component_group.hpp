@@ -13,7 +13,7 @@ namespace haf::component
  * @brief class representing a group of components
  * @see Component
  */
-class HAF_API OrderedComponentGroup : private ComponentContainerRepresentation
+class HAF_API OrderedComponentGroup : public ComponentContainerRepresentation
 {
     using BaseClass = ComponentContainerRepresentation;
 public:
