@@ -84,5 +84,8 @@
         "charconv": "cpp"
     },
     "C_Cpp.dimInactiveRegions": false,
-    "testMate.cpp.log.logSentry": "disable_3"
+    "testMate.cpp.log.logSentry": "disable_3",
+    "github-actions.workflows.pinned.workflows": [
+        ".github/workflows/cmake.yml"
+    ]
 }
