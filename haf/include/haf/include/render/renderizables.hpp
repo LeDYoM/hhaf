@@ -12,11 +12,6 @@ namespace haf::render
 class Renderizables
 {
 public:
-    /**
-     * @brief Construct a new Renderizables object with a parent node
-     */
-    Renderizables() noexcept = default;
-
     void setSceneNode(htps::rptr<scene::SceneNode> scene_node) noexcept;
 
     /**
