@@ -48,7 +48,7 @@ public:
     RenderizableBuilder& texture(htps::str const& texture_name);
 
 private:
-    RenderizableBuilderData data_;
+    RenderizableBuilderData m_data;
 };
 }  // namespace haf::render
 

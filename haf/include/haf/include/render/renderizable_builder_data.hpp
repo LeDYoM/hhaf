@@ -19,7 +19,7 @@ namespace haf::render
 class RenderizableBuilderData
 {
 public:
-    explicit RenderizableBuilderData(
+    constexpr explicit RenderizableBuilderData(
         core::rptr<Renderizables> renderizables) noexcept :
         m_renderizables{renderizables}, m_builder_data{}
     {}

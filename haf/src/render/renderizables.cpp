@@ -3,7 +3,7 @@
 #include <hlog/include/hlog.hpp>
 #include <haf/include/render/renderizable_builder.hpp>
 
-using namespace htps;
+using namespace haf::core;
 using namespace haf::scene;
 
 namespace haf::render
@@ -51,12 +51,12 @@ void Renderizables::clearRenderizables()
 void Renderizables::for_each_node(
     function<void(const sptr<Renderizable>&)> action) const
 {
-    m_render_nodes.cfor_each(htps::move(action));
+    m_render_nodes.cfor_each(core::move(action));
 }
 
 void Renderizables::addRenderizable(sptr<Renderizable> newElement)
 {
-    m_render_nodes.push_back(htps::move(newElement));
+    m_render_nodes.push_back(core::move(newElement));
 }
 
 sptr<Renderizable> const& Renderizables::operator[](
