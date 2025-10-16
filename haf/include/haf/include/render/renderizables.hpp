@@ -1,6 +1,6 @@
 HTPS_PRAGMA_ONCE
-#ifndef HAF_COMPONENT_RENDERIZABLES_INCLUDE_HPP
-#define HAF_COMPONENT_RENDERIZABLES_INCLUDE_HPP
+#ifndef HAF_RENDER_RENDERIZABLES_INCLUDE_HPP
+#define HAF_RENDER_RENDERIZABLES_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/vector.hpp>
@@ -14,11 +14,8 @@ class Renderizables
 public:
     /**
      * @brief Construct a new Renderizables object with a parent node
-     * @param scene_node Node to be used as a parent
      */
-    explicit Renderizables(htps::rptr<scene::SceneNode> scene_node) noexcept;
-
-    explicit Renderizables() noexcept = default;
+    Renderizables() noexcept = default;
 
     void setSceneNode(htps::rptr<scene::SceneNode> scene_node) noexcept;
 
@@ -69,8 +66,9 @@ public:
 
 private:
     void addRenderizable(htps::sptr<Renderizable> newElement);
-    htps::rptr<scene::SceneNode> scene_node_;
-    htps::vector<htps::sptr<Renderizable>> render_nodes_;
+
+    htps::rptr<scene::SceneNode> m_scene_node;
+    htps::vector<htps::sptr<Renderizable>> m_render_nodes;
 };
 }  // namespace haf::render
 

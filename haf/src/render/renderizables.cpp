@@ -8,20 +8,16 @@ using namespace haf::scene;
 
 namespace haf::render
 {
-Renderizables::Renderizables(rptr<SceneNode> scene_node) noexcept :
-    scene_node_{htps::move(scene_node)}
-{}
-
 void Renderizables::setSceneNode(rptr<scene::SceneNode> scene_node) noexcept
 {
-    scene_node_ = scene_node;
+    m_scene_node = scene_node;
 }
 
 sptr<Renderizable> Renderizables::createRenderizable(
     RenderizableBuilderData&& renderizable_builder_data)
 {
-    auto result{
-        msptr<Renderizable>(scene_node_, renderizable_builder_data.extract())};
+    auto result{msptr<Renderizable>(
+        m_scene_node, core::move(renderizable_builder_data).extract())};
     addRenderizable(result);
     return result;
 }
@@ -34,7 +30,7 @@ RenderizableBuilder Renderizables::renderizableBuilder()
 void Renderizables::updateRenderizables(
     bool const parent_transformation_changed)
 {
-    for (auto&& renderizable : render_nodes_)
+    for (auto&& renderizable : m_render_nodes)
     {
         renderizable->render(parent_transformation_changed);
     }
@@ -44,44 +40,44 @@ void Renderizables::removeRenderizable(sptr<Renderizable> const& element)
 {
     LogAsserter::log_assert(element.get() != nullptr,
                             "Received empty renderizable node to be deleted");
-    render_nodes_.erase_values(element);
+    m_render_nodes.erase_values(element);
 }
 
 void Renderizables::clearRenderizables()
 {
-    render_nodes_.clear();
+    m_render_nodes.clear();
 }
 
 void Renderizables::for_each_node(
     function<void(const sptr<Renderizable>&)> action) const
 {
-    render_nodes_.cfor_each(htps::move(action));
+    m_render_nodes.cfor_each(htps::move(action));
 }
 
 void Renderizables::addRenderizable(sptr<Renderizable> newElement)
 {
-    render_nodes_.push_back(htps::move(newElement));
+    m_render_nodes.push_back(htps::move(newElement));
 }
 
 sptr<Renderizable> const& Renderizables::operator[](
     size_type const index) const noexcept
 {
-    return render_nodes_[index];
+    return m_render_nodes[index];
 }
 
 size_type Renderizables::size() const
 {
-    return render_nodes_.size();
+    return m_render_nodes.size();
 }
 
 bool Renderizables::empty() const noexcept
 {
-    return render_nodes_.empty();
+    return m_render_nodes.empty();
 }
 
 rptr<scene::SceneNode const> Renderizables::sceneNode() const noexcept
 {
-    return scene_node_;
+    return m_scene_node;
 }
 
 }  // namespace haf::render
