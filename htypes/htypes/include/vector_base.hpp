@@ -32,6 +32,7 @@ public:
     using iterator        = T*;        //< Iterator for the values
     using const_iterator  = T const*;  //< Iterator pointing to const values
     using reference       = T&;        //< Reference to member
+    using rv_reference    = T&&;       //< r-value reference to member
     using const_reference = const T&;  //< Const reference to members
     using value_type      = T;   //< Value type of the contained data member
     using pointer         = T*;  //< Pointer to the contained data type
@@ -101,7 +102,7 @@ public:
      * @param other Source vector to copy.
      */
     constexpr vector_base(vector_base const& other) :
-        vector_base(other.begin(), other.begin() + other.size())
+        vector_base{other.begin(), other.begin() + other.size()}
     {}
 
     /**
@@ -695,7 +696,7 @@ public:
 
     constexpr void push_back(const T& value) { storage_.push_back(value); }
 
-    constexpr void push_back(T&& value)
+    constexpr void push_back(rv_reference value)
     {
         storage_.push_back(htps::move(value));
     }
@@ -811,7 +812,7 @@ public:
      * @param index Index element where to put the element
      * @param element r-value reference to the element to be added
      */
-    constexpr void set_at_index(size_type const index, T&& element)
+    constexpr void set_at_index(size_type const index, rv_reference element)
     {
         if (index >= size())
         {
