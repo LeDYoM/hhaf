@@ -3,8 +3,7 @@ HTPS_PRAGMA_ONCE
 #define HAF_SCENE_SCENEMANAGER_INCLUDE_HPP
 
 #include "haf_private.hpp"
-#include <htypes/include/types.hpp>
-#include <facil_math/include/rect.hpp>
+#include <haf/include/core/types.hpp>
 #include <haf/include/types/scene_types.hpp>
 #include <haf/include/scene/iscene_control.hpp>
 #include <haf/include/scene/iapp_initializer.hpp>
@@ -34,8 +33,8 @@ public:
     void update();
     void finish();
 
-    htps::sptr<SceneController const> sceneController() const noexcept;
-    htps::sptr<SceneController> sceneController() noexcept;
+    core::sptr<SceneController const> sceneController() const noexcept;
+    core::sptr<SceneController> sceneController() noexcept;
 
     /**
      * @brief Method to change to the next scene.
@@ -50,7 +49,7 @@ public:
      * @return true  Everything went correct
      * @return false A problem happened.
      */
-    bool startScene(const htps::str& scene_name) override;
+    bool startScene(const core::str& scene_name) override;
 
     /**
      * @brief Tell the system to stop the current aplication.
@@ -69,7 +68,7 @@ public:
 
     component::ComponentFactory& componentFactory() override;
 
-    bool setNextApp(htps::str const& next_app) override;
+    bool setNextApp(core::str const& next_app) override;
 
     SceneRenderContext& sceneRenderContext() override;
     SceneRenderContext const& sceneRenderContext() const override;
@@ -79,7 +78,7 @@ public:
     void addSceneRenderSubsystem(core::u32 const index);
 
 private:
-    htps::sptr<SceneController> m_scene_controller;
+    core::sptr<SceneController> m_scene_controller;
 };
 }  // namespace haf::scene
 

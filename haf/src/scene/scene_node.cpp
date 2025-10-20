@@ -4,7 +4,7 @@
 #include <haf/include/scene/iscene_render_context_provider.hpp>
 #include <haf/include/scene/scene_render_context.hpp>
 
-using namespace htps;
+using namespace haf::core;
 
 namespace haf::scene
 {
