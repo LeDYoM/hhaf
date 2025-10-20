@@ -7,8 +7,6 @@ HTPS_PRAGMA_ONCE
 
 namespace haf::scene
 {
-class Matrix4x4;
-
 struct SceneRenderContext
 {
     bool parentTransformationChanged_{false};
