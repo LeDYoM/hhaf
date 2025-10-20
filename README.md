@@ -4,7 +4,7 @@ Github-CI:<br>
 [github_windows_status]: https://github.com/LeDYoM/hhaf/actions/workflows/cmake.yml/badge.svg
 [github_windows_link]: https://github.com/LeDYoM/hhaf/actions/workflows/cmake.yml
 
-# Host Application Framework (HAF)  {#mainpaige}
+# Host Application Framework (HAF)
 
 ## A C++ (game) application framework
 
