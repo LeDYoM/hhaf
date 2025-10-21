@@ -71,33 +71,31 @@ Matrix4x4 const& Transformation::localTransform() const noexcept
 
 void Transformation::update()
 {
-    //    HAF_PROFILE_SCENE_NODE_METHOD(prTime)
-
     auto const& transformable_parent{attachedNode()->parent()};
     auto& sceneRenderContext =
         attachedNode()
             ->subSystem<scene::ISceneRenderContextProvider>()
             ->sceneRenderContext();
 
-    sceneRenderContext.currentTransformation = transformable_parent != nullptr
+    Matrix4x4 const& newCurrentTransformation{transformable_parent != nullptr
         ? transformable_parent->component<Transformation>()->globalTransform()
-        : Matrix4x4::Identity;
+        : Matrix4x4::Identity};
+    sceneRenderContext.setCurrentTransformation(newCurrentTransformation);
 
     bool localTransformationChanged{updateTransformIfNecessary()};
 
     if (!localTransformationChanged)
     {
         localTransformationChanged =
-            sceneRenderContext.parentTransformationChanged_;
+            sceneRenderContext.parentTransformationChanged();
     }
 
     if (localTransformationChanged)
     {
-        global_transform_ = sceneRenderContext.currentTransformation * matrix();
+        global_transform_ = sceneRenderContext.currentTransformation() * matrix();
     }
 
-    sceneRenderContext.parentTransformationChanged_ =
-        localTransformationChanged;
+    sceneRenderContext.setParentTransformationChanged(localTransformationChanged);
 }
 
 str Transformation::staticTypeName() const noexcept

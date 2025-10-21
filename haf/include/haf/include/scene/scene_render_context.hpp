@@ -9,13 +9,35 @@ namespace haf::scene
 {
 struct SceneRenderContext
 {
-    bool parentTransformationChanged_{false};
-    Matrix4x4 currentTransformation{Matrix4x4::Identity};
+    [[nodiscard]] bool parentTransformationChanged() const noexcept
+    {
+        return m_parentTransformationChanged;
+    }
+
+    void setParentTransformationChanged(bool const nv) noexcept
+    {
+        m_parentTransformationChanged = nv;
+    }
+
+    [[nodiscard]] Matrix4x4 const& currentTransformation() const noexcept
+    {
+        return m_currentTransformation;
+    }
+
+    void setCurrentTransformation(Matrix4x4 const& nv) noexcept
+    {
+        m_currentTransformation = nv;
+    }
 
     void reset()
     {
         *this = SceneRenderContext{};
     }
+
+private:
+    bool m_parentTransformationChanged{false};
+    Matrix4x4 m_currentTransformation{Matrix4x4::Identity};
+
 };
 
 }  // namespace haf::scene
