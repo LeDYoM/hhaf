@@ -4,6 +4,7 @@ HTPS_PRAGMA_ONCE
 
 #include "vector.hpp"
 #include "str_view.hpp"
+#include "str_literal.hpp"
 #include "types.hpp"
 
 #include <sstream>
@@ -50,8 +51,13 @@ public:
         data_(n, N + 1)
     {}
 
-    constexpr basic_str(basic_str_view<char_type> other) :
+    constexpr explicit basic_str(basic_str_view<char_type> other) :
         basic_str{other.m_begin, other.m_size}
+    {}
+
+    template<size_type N>
+    constexpr explicit basic_str(basic_str_literal<char_type, N> other) :
+        basic_str{other.value, N - 1U}
     {}
 
     constexpr explicit basic_str(char_type const* const n) :

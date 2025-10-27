@@ -8,17 +8,16 @@ HTPS_PRAGMA_ONCE
 #include <haf/include/properties/property_state.hpp>
 #include <haf/include/scene/matrix4x4.hpp>
 #include <haf/include/component/component.hpp>
+#include <haf/include/component/component_order.hpp>
 
 namespace haf::scene
 {
-static constexpr char StaticTypeNameForTransformationComponents[]{
-    "TransformationComponent"};
-
 class HAF_API Transformation : public component::Component
 {
 public:
-    static constexpr auto StaticTypeName{
-        StaticTypeNameForTransformationComponents};
+    static constexpr core::str_literal StaticTypeName{
+        "TransformationComponent"};
+    static constexpr component::ComponentOrder::Value StaticComponentOrder{1U};
 
     using Scalar       = Matrix4x4::Scalar;
     using VectorScalar = fmath::vector2d<Scalar>;
@@ -29,11 +28,6 @@ public:
     prop::PropertyState<VectorScalar> Scale{VectorScalar{1.0F, 1.0F}};
 
     Transformation() noexcept;
-    virtual ~Transformation();
-    Transformation(Transformation const&)                          = delete;
-    Transformation& operator=(Transformation const&)               = delete;
-    constexpr Transformation(Transformation&&) noexcept            = default;
-    constexpr Transformation& operator=(Transformation&&) noexcept = default;
 
     void setLeftTopPositionScale(VectorScalar const& vector);
     void setRightTopPositionScale(VectorScalar const& vector);
@@ -58,11 +52,14 @@ public:
      * @return Matrix4x4 const& The local transformation.
      */
     Matrix4x4 const& localTransform() const noexcept;
-    // private:
+
+    component::ComponentOrder::Value componentOrder() const noexcept override;
+
+private:
     void updateTransform();
 
-    Matrix4x4 transform_;
-    Matrix4x4 global_transform_;  ///< Global Transformation Matrix cached
+    Matrix4x4 m_transform;
+    Matrix4x4 m_global_transform;  ///< Global Transformation Matrix cached
 };
 }  // namespace haf::scene
 

@@ -3,14 +3,11 @@ HTPS_PRAGMA_ONCE
 #define HAF_COMPONENT_COMPONENT_CONTAINER_INCLUDE_HPP
 
 #include <haf/include/haf_export.hpp>
-#include <htypes/include/types.hpp>
-#include <htypes/include/p_impl_pointer.hpp>
+#include <haf/include/core/types.hpp>
 
 #include <haf/include/component/component.hpp>
 #include <haf/include/utils/type_data.hpp>
 #include <haf/include/core/log.hpp>
-
-#include <memory>
 
 namespace haf::component
 {
@@ -21,7 +18,7 @@ namespace haf::component
 class HAF_API ComponentContainer
 {
 public:
-    explicit ComponentContainer(htps::rptr<class scene::SceneNode> attachable);
+    explicit ComponentContainer(core::rptr<class scene::SceneNode> attachable);
 
     /**
      * @brief Destroy the Component Container object
@@ -38,12 +35,12 @@ public:
      * existing
      */
     template <typename T>
-    htps::sptr<T> component()
+    core::sptr<T> component()
     {
-        htps::sptr<T> result{componentOfType<T>()};
+        core::sptr<T> result{componentOfType<T>()};
         if (result == nullptr)
         {
-            result = htps::msptr<T>();
+            result = core::msptr<T>();
             attachComponent(result);
         }
         return result;
@@ -56,10 +53,10 @@ public:
      * @return Pointer to the component or nullptr
      */
     template <typename T>
-    htps::sptr<T> componentOfType() const
+    core::sptr<T> componentOfType() const
     {
         auto cot{componentOfType(utils::type_of<T>())};
-        return cot ? htps::dynamic_pointer_cast<T>(cot) : nullptr;
+        return cot ? core::dynamic_pointer_cast<T>(cot) : nullptr;
     }
 
     /**
@@ -70,7 +67,7 @@ public:
      * if the component does not exist.
      */
     template <typename T>
-    void componentOfType(htps::sptr<T>& element) const
+    void componentOfType(core::sptr<T>& element) const
     {
         element = componentOfType<T>();
     }
@@ -84,7 +81,7 @@ public:
      * get the required type.
      */
     template <typename T>
-    void component(htps::sptr<T>& element)
+    void component(core::sptr<T>& element)
     {
         if (element == nullptr)
         {
@@ -104,7 +101,7 @@ public:
      */
     void clearComponents() noexcept;
 
-    htps::size_type components() const noexcept;
+    core::size_type components() const noexcept;
 
 private:
     /**
@@ -113,14 +110,14 @@ private:
      * @note This function does not check if the component is already added, so
      * it assumes it is not
      */
-    void attachComponent(htps::sptr<Component> newComponent);
+    void attachComponent(core::sptr<Component> newComponent);
     void applyRequirements(Component& _thisComponent);
-    htps::rptr<class scene::SceneNode> attachable() const noexcept;
+    core::rptr<class scene::SceneNode> attachable() const noexcept;
     void initialize(component::Component& component) const;
-    htps::sptr<Component> componentOfType(utils::type_index const& ti) const;
+    core::sptr<Component> componentOfType(utils::type_index const& ti) const;
 
     struct ComponentContainerPrivate;
-    htps::PImplPointer<ComponentContainerPrivate> m_p;
+    core::PImplPointer<ComponentContainerPrivate> m_p;
 
     friend class scene::SceneController;
 };

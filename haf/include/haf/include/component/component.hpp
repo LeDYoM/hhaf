@@ -62,10 +62,7 @@ public:
      * @brief This function is intended to be override.
      * @return ComponentOrder The expected order for this component
      */
-    virtual ComponentOrder::Value componentOrder()
-    {
-        return ComponentOrder::NoOrder;
-    }
+    virtual ComponentOrder::Value componentOrder() const noexcept;
 
     virtual core::str staticTypeName() const noexcept;
 
@@ -74,7 +71,6 @@ protected:
 
     scene::SceneRenderContext& sceneRenderContext();
     scene::SceneRenderContext const& sceneRenderContext() const;
-    scene::SceneRenderContext const& cSceneRenderContext() const;
 
 private:
     void setAttachedNode(pointer const attachedNode) noexcept

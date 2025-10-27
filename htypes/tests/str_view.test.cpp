@@ -16,6 +16,16 @@ TEST_CASE("str_view::str_view Default constructor", "[str_view]")
     CHECK(a[3U] == static_cast<char>(0));
 }
 
+TEST_CASE("str_view::str_view Construct from str_literal",
+          "[str_view][str_literal]")
+{
+    str_literal my_lit{"This is a literal"};
+    str_view my_view{my_lit};
+
+    CHECK(my_view[0] == my_lit[0]);
+    CHECK(my_lit.size() == my_view.size());
+}
+
 TEST_CASE("str_view::str_view Constructor with nullptr", "[str_view]")
 {
     str_view a{nullptr};

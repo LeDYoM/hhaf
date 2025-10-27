@@ -1,7 +1,6 @@
 #include "catch_include.hpp"
 
 #include <htypes/include/str.hpp>
-#include <cstring>
 
 using namespace htps;
 
@@ -30,6 +29,25 @@ TEST_CASE("str::str Construct with string_view", "[str][str_view]")
     CHECK(test2 == "hello");
     CHECK(test2.size() == 5U);
     CHECK_FALSE(test2.empty());
+
+    str test3(test2);
+    CHECK(test3 == "hello");
+    CHECK(test3.size() == 5U);
+    CHECK_FALSE(test3.empty());
+}
+
+TEST_CASE("str::str Construct with str_literal", "[str][str_view][str_literal]")
+{
+    str_literal my_literal{"literal"};
+    str test{my_literal};
+    CHECK(test.size() == 7U);
+    CHECK(test[0] == 'l');
+    CHECK(test[1] == 'i');
+    CHECK(test[2] == 't');
+    CHECK(test[3] == 'e');
+    CHECK(test[4] == 'r');
+    CHECK(test[5] == 'a');
+    CHECK(test[6] == 'l');
 }
 
 TEST_CASE("str::str Copy initialize", "[str]")

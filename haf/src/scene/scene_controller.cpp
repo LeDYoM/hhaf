@@ -1,6 +1,5 @@
 #include "scene_controller.hpp"
 #include "scene_manager.hpp"
-#include "scene_render.hpp"
 #include "../scene_components/scene_component_private.hpp"
 #include "system/system_provider.hpp"
 #include <haf/include/scene/matrix4x4.hpp>
@@ -84,7 +83,7 @@ void SceneController::update()
         LogAsserter::log_assert(m_scene_render_context != nullptr);
         m_scene_render_context->reset();
 
-        processUnorderedComponents(*m_root_scene_node);
+        processAllUnorderedComponents(*m_root_scene_node);
         processAllOrderedComponents(*m_root_scene_node);
     }
 }
@@ -182,17 +181,19 @@ bool SceneController::exitRequested() const
     return m_exit_requested;
 }
 
-void SceneController::addSceneRenderSubsystem(u32 const scene_subsystem)
+void SceneController::addSceneSubsystem(SceneSubsystem&& scene_subsystem)
 {
-    m_scene_subSystems.push_back(scene_subsystem);
+    m_scene_subsystems_manager.addSceneSubsystem(core::move(scene_subsystem));
 }
 
 void SceneController::processAllOrderedComponents(SceneNode& scene_node)
 {
-    for (auto i{0U}; i < m_scene_subSystems.size(); ++i)
-    {
-        processOrderedComponents(scene_node, i);
-    }
+    m_scene_subsystems_manager.processAllOrderedComponents(scene_node);
+}
+
+void SceneController::processAllUnorderedComponents(SceneNode& scene_node)
+{
+    m_scene_subsystems_manager.processAllUnorderedComponents(scene_node);
 }
 
 }  // namespace haf::scene

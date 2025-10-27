@@ -4,6 +4,7 @@ HTPS_PRAGMA_ONCE
 
 #include "types.hpp"
 #include "str_functions.hpp"
+#include "str_literal.hpp"
 #include "algoutils.hpp"
 #include <compare>
 
@@ -29,6 +30,11 @@ public:
     constexpr basic_str_view(const_iterator const begin,
                              const_iterator const end) noexcept :
         m_begin{begin}, m_size{static_cast<size_type>(end - begin)}
+    {}
+
+    template <size_type N>
+    constexpr basic_str_view(basic_str_literal<char_type, N> data) noexcept :
+        m_begin{data.cbegin()}, m_size{N - 1}
     {}
 
     template <size_type N>
@@ -104,9 +110,9 @@ public:
         const basic_str_view& rhs) const noexcept
     {
         auto const result{strnncmp(m_begin, size(), rhs.m_begin, rhs.size())};
-        return (result < 0       ? std::strong_ordering::less
-                    : result > 0 ? std::strong_ordering::greater
-                                 : std::strong_ordering::equal);
+        return (result < 0 ? std::strong_ordering::less
+                           : result > 0 ? std::strong_ordering::greater
+                                        : std::strong_ordering::equal);
     }
 
     [[nodiscard]] constexpr size_type find(
@@ -129,7 +135,8 @@ public:
         return htps::starts_with(m_begin, to_find);
     }
 
-    [[nodiscard]] constexpr bool starts_with(basic_str_view to_find) const noexcept
+    [[nodiscard]] constexpr bool starts_with(
+        basic_str_view to_find) const noexcept
     {
         return starts_with(m_begin, to_find.m_begin);
     }

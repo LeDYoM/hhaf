@@ -10,6 +10,9 @@
 
 #include <hlog/include/hlog.hpp>
 
+#include <haf/include/scene_components/renderizable_group_component.hpp>
+#include <haf/include/scene_components/transformation.hpp>
+
 using namespace htps;
 using namespace haf::sys;
 using namespace haf::component;
@@ -26,7 +29,7 @@ SceneManager::~SceneManager() = default;
 
 void SceneManager::start()
 {
-    addDefaultSceneRenderSubsystems();
+    addDefaultSceneSubsystems();
 }
 
 void SceneManager::update()
@@ -89,15 +92,19 @@ SceneRenderContext const& SceneManager::sceneRenderContext() const
     return m_scene_controller->sceneRenderContext();
 }
 
-void SceneManager::addDefaultSceneRenderSubsystems()
+void SceneManager::addDefaultSceneSubsystems()
 {
-    m_scene_controller->addSceneRenderSubsystem(0);
-    m_scene_controller->addSceneRenderSubsystem(1);
+    addSceneSubsystem(SceneSubsystem{str{Transformation::StaticTypeName},
+                                     Transformation::StaticComponentOrder});
+
+    addSceneSubsystem(
+        SceneSubsystem{str{RenderizableGroupComponent::StaticTypeName},
+                       RenderizableGroupComponent::StaticComponentOrder});
 }
 
-void SceneManager::addSceneRenderSubsystem(u32 const index)
+void SceneManager::addSceneSubsystem(SceneSubsystem&& scene_subsystem)
 {
-    m_scene_controller->addSceneRenderSubsystem(index);
+    m_scene_controller->addSceneSubsystem(core::move(scene_subsystem));
 }
 
 }  // namespace haf::scene

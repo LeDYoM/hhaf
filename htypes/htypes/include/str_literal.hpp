@@ -12,34 +12,33 @@ using str_literal_hash = size_type;
 template <typename char_type, size_type N>
 struct basic_str_literal
 {
-    constexpr basic_str_literal(char_type const (&str)[N]) noexcept :
-        real_size_{N}
+    consteval basic_str_literal(char_type const (&str)[N]) noexcept :
+        m_real_size{N}
     {
         std::copy_n(str, N, value);
     }
 
-    template <size_type M>
-    constexpr basic_str_literal(char_type const (&str)[M]) noexcept :
-        real_size_{M}
+    constexpr size_type size() const noexcept { return m_real_size - 1U; }
+
+    constexpr bool empty() const noexcept { return m_real_size == 1U; }
+
+    constexpr char_type operator[](size_type const index) const noexcept
     {
-        static_assert(M < N, "Invalid initialization parameter");
-        std::copy_n(str, M, value);
-        std::fill(&(value[M]), &(value[N]), char_type{0});
+        return value[index];
     }
 
-    constexpr size_type size() const noexcept { return real_size_ - 1U; }
-
-    constexpr bool empty() const noexcept { return real_size_ == 1U; }
-
     constexpr char_type* begin() noexcept { return value; }
-    constexpr char_type* end() noexcept { return &(value[real_size_]); }
+    constexpr char_type* end() noexcept { return &(value[m_real_size]); }
     constexpr char_type const* begin() const noexcept { return value; }
-    constexpr char_type const* end() const noexcept { return &(value[real_size_]); }
+    constexpr char_type const* end() const noexcept
+    {
+        return &(value[m_real_size]);
+    }
 
     constexpr char_type const* cbegin() const noexcept { return value; }
     constexpr char_type const* cend() const noexcept
     {
-        return &(value[real_size_]);
+        return &(value[m_real_size]);
     }
 
     constexpr bool operator==(basic_str_literal const& rhs) const noexcept
@@ -76,18 +75,12 @@ struct basic_str_literal
 
     constexpr str_literal_hash hash() const noexcept { return value[0]; }
 
-    const size_type real_size_;
+    const size_type m_real_size;
     char_type value[N];
 };
 
 template <size_type N>
 using str_literal = basic_str_literal<char, N>;
-
-template <size_type N>
-constexpr size_type basic_str_literal_size(char const (&str)[N]) noexcept
-{
-    return N - 1U;
-}
 
 }  // namespace htps
 

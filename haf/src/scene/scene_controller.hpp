@@ -7,6 +7,7 @@ HTPS_PRAGMA_ONCE
 
 #include <haf/include/scene_components/scene_component.hpp>
 #include <haf/include/component/component_factory.hpp>
+#include "scene_subsystems_manager.hpp"
 
 namespace haf::sys
 {
@@ -94,20 +95,21 @@ public:
     void requestExit();
     bool exitRequested() const;
 
-    void addSceneRenderSubsystem(core::u32 const index);
+    void addSceneSubsystem(SceneSubsystem&& scene_subsystem);
 
 private:
     void startScene(htps::sptr<SceneComponent> scene);
     void terminateCurrentScene();
     void deferredSwitchScene();
     void processAllOrderedComponents(SceneNode& scene_node);
+    void processAllUnorderedComponents(SceneNode& scene_node);
 
     component::ComponentFactory m_component_factory;
     core::rptr<SceneManager> m_scene_manager{nullptr};
     core::sptr<SceneComponent> m_current_scene{nullptr};
     SceneNodeSPtr m_root_scene_node{nullptr};
     core::uptr<SceneRenderContext> m_scene_render_context{nullptr};
-    core::vector<core::u32> m_scene_subSystems;
+    SceneSubsystemsManager m_scene_subsystems_manager;
     bool m_switch_scene{false};
     bool m_exit_requested{false};
 };

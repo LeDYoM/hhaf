@@ -1,6 +1,6 @@
 #include <haf/include/scene_components/renderizable_group_component.hpp>
 
-using namespace htps;
+using namespace haf::core;
 using namespace haf::render;
 
 namespace haf::scene
@@ -27,6 +27,12 @@ sptr<render::Renderizable> const& RenderizableGroupComponent::first()
 str RenderizableGroupComponent::staticTypeName() const noexcept
 {
     return str{RenderizableGroupComponent::StaticTypeName};
+}
+
+component::ComponentOrder::Value RenderizableGroupComponent::componentOrder()
+    const noexcept
+{
+    return StaticComponentOrder;
 }
 
 }  // namespace haf::scene

@@ -11,7 +11,9 @@ sptr<Component> ComponentContainerRepresentation::getComponentFromTypeIndex(
     auto iterator(m_components.find_if(
         m_components.cbegin(), m_components.cend(),
         [&tindex](sptr<Component> const& component) {
-            return utils::type_index(typeid(*component)) == tindex;
+            return !component.empty()
+                ? utils::type_index(typeid(*component)) == tindex
+                : false;
         }));
     return (iterator == m_components.cend()) ? nullptr : (*iterator);
 }

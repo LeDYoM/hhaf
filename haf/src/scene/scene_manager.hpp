@@ -10,6 +10,8 @@ HTPS_PRAGMA_ONCE
 #include <haf/include/scene/iapp_finisher.hpp>
 #include <haf/include/scene/iscene_render_context_provider.hpp>
 #include "system/system_base.hpp"
+#include "scene_subsystems.hpp"
+#include "scene_subsystem.hpp"
 
 namespace haf::scene
 {
@@ -73,9 +75,9 @@ public:
     SceneRenderContext& sceneRenderContext() override;
     SceneRenderContext const& sceneRenderContext() const override;
 
-    void addDefaultSceneRenderSubsystems();
+    void addDefaultSceneSubsystems();
 
-    void addSceneRenderSubsystem(core::u32 const index);
+    void addSceneSubsystem(SceneSubsystem&& scene_subsystem);
 
 private:
     core::sptr<SceneController> m_scene_controller;

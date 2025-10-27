@@ -23,14 +23,14 @@ SceneRenderContext const& Component::sceneRenderContext() const
         ->sceneRenderContext();
 }
 
-SceneRenderContext const& Component::cSceneRenderContext() const
-{
-    return sceneRenderContext();
-}
-
 str Component::staticTypeName() const noexcept
 {
     return "Component";
+}
+
+ComponentOrder::Value Component::componentOrder() const noexcept
+{
+    return ComponentOrder::NoOrder;
 }
 
 }  // namespace haf::component

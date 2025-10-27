@@ -9,10 +9,8 @@ using namespace haf::core;
 
 namespace haf::scene
 {
-Transformation::Transformation() noexcept : transform_{}
+Transformation::Transformation() noexcept : m_transform{}, m_global_transform{}
 {}
-
-Transformation::~Transformation() = default;
 
 bool Transformation::updateTransformIfNecessary() noexcept
 {
@@ -34,14 +32,14 @@ void Transformation::updateTransform()
                                  static_cast<Scalar>(std::sin(angle))};
     VectorScalar const position{Position()};
 
-    transform_ = {scale_cos.x,     scale_sin.y,     position.x,
-                  -scale_sin.x,    scale_cos.y,     position.y,
-                  Matrix4x4::Zero, Matrix4x4::Zero, Matrix4x4::One};
+    m_transform = {scale_cos.x,     scale_sin.y,     position.x,
+                   -scale_sin.x,    scale_cos.y,     position.y,
+                   Matrix4x4::Zero, Matrix4x4::Zero, Matrix4x4::One};
 }
 
 Matrix4x4 const& Transformation::matrix() const noexcept
 {
-    return transform_;
+    return m_transform;
 }
 
 void Transformation::setLeftTopPositionScale(VectorScalar const& vector)
@@ -61,7 +59,7 @@ void Transformation::setRightTopPositionScale(VectorScalar const& vector)
 
 Matrix4x4 const& Transformation::globalTransform() const noexcept
 {
-    return global_transform_;
+    return m_global_transform;
 }
 
 Matrix4x4 const& Transformation::localTransform() const noexcept
@@ -77,9 +75,11 @@ void Transformation::update()
             ->subSystem<scene::ISceneRenderContextProvider>()
             ->sceneRenderContext();
 
-    Matrix4x4 const& newCurrentTransformation{transformable_parent != nullptr
-        ? transformable_parent->component<Transformation>()->globalTransform()
-        : Matrix4x4::Identity};
+    Matrix4x4 const& newCurrentTransformation{
+        transformable_parent != nullptr
+            ? transformable_parent->component<Transformation>()
+                  ->globalTransform()
+            : Matrix4x4::Identity};
     sceneRenderContext.setCurrentTransformation(newCurrentTransformation);
 
     bool localTransformationChanged{updateTransformIfNecessary()};
@@ -92,15 +92,22 @@ void Transformation::update()
 
     if (localTransformationChanged)
     {
-        global_transform_ = sceneRenderContext.currentTransformation() * matrix();
+        m_global_transform =
+            sceneRenderContext.currentTransformation() * matrix();
     }
 
-    sceneRenderContext.setParentTransformationChanged(localTransformationChanged);
+    sceneRenderContext.setParentTransformationChanged(
+        localTransformationChanged);
 }
 
 str Transformation::staticTypeName() const noexcept
 {
     return str{Transformation::StaticTypeName};
+}
+
+component::ComponentOrder::Value Transformation::componentOrder() const noexcept
+{
+    return StaticComponentOrder;
 }
 
 }  // namespace haf::scene
