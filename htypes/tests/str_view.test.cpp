@@ -20,7 +20,7 @@ TEST_CASE("str_view::str_view Construct from str_literal",
           "[str_view][str_literal]")
 {
     str_literal my_lit{"This is a literal"};
-    str_view my_view{my_lit};
+    str_view my_view{"This is a literal"};
 
     CHECK(my_view[0] == my_lit[0]);
     CHECK(my_lit.size() == my_view.size());

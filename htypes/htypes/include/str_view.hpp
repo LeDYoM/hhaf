@@ -33,9 +33,7 @@ public:
     {}
 
     template <size_type N>
-    constexpr basic_str_view(basic_str_literal<char_type, N> data) noexcept :
-        m_begin{data.cbegin()}, m_size{N - 1}
-    {}
+    constexpr basic_str_view(basic_str_literal<char_type, N> data) = delete;
 
     template <size_type N>
     constexpr basic_str_view(char_type const (&data)[N]) noexcept :
