@@ -14,11 +14,12 @@
 
 #include <haf/include/animation/delta_property.hpp>
 
-using namespace htps;
-
 using namespace haf;
+using namespace haf::anim;
+using namespace haf::core;
 using namespace haf::scene;
 using namespace haf::time;
+using namespace haf::res;
 
 namespace zoper
 {
@@ -29,7 +30,7 @@ void Pause::onAttached()
         attachedNode()->createSceneNode("pausetext")->component<Text>();
     m_pause_text->Text = "PAUSE";
     m_pause_text->Font = attachedNode()
-                             ->subSystem<res::IResourceRetriever>()
+                             ->subSystem<IResourceRetriever>()
                              ->getTTFont(GameResources::ScoreFontId)
                              ->font(200U);
     m_pause_text->TextColor = colors::White;
@@ -43,13 +44,15 @@ void Pause::enterPause()
 {
     attachedNode()->Visible = true;
 
-    auto animation_component{m_pause_text->attachedNode()
-                                 ->component<haf::anim::AnimationComponent>()};
+    auto animation_component{
+        m_pause_text->attachedNode()->component<AnimationComponent>()};
     auto builder{animation_component->make_property_animation_builder(
         &Text::TextColor, colors::Transparent, colors::White)};
-    builder.duration(TimePoint_as_miliseconds(1000U));
+    builder.duration(TimePoint_as_miliseconds(1000U))
+    ;
+//        .actionBeforeStarting([this]() { attachedNode()->Visible = true; });
 
-    animation_component->addAnimation(htps::move(builder));
+    animation_component->addAnimation(core::move(builder));
 }
 
 void Pause::exitPause()

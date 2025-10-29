@@ -44,21 +44,26 @@ public:
     virtual ~Animation();
 
     /**
-     * @brief Execute an action at the end of the animation
+     * @brief Execute an action before starting to update the animation
+     */
+    void executeStartAction();
+
+    /**
+     * @brief Execute an action at the end of the animation if it is set
      */
     void executeEndAction();
 
 protected:
     using AnimationDeltaType = htps::f32;
-    AnimationDeltaType delta() const noexcept { return delta_; }
+    AnimationDeltaType delta() const noexcept { return m_delta; }
 
 private:
-    AnimationProperties animation_data_;
-    AnimationDirection current_direction_;
-    time::TimePoint current_time_;
-    AnimationDeltaType raw_delta_;
-    AnimationDeltaType delta_;
-    bool end_reached_;
+    AnimationProperties m_animation_data;
+    AnimationDirection m_current_direction;
+    time::TimePoint m_current_time;
+    AnimationDeltaType m_raw_delta;
+    AnimationDeltaType m_delta;
+    bool m_end_reached;
 
     AnimationDeltaType postProcessDelta(AnimationDeltaType const delta);
 };

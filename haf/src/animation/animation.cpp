@@ -1,73 +1,84 @@
 #include <haf/include/animation/animation.hpp>
 #include <hlog/include/hlog.hpp>
 
-using namespace htps;
+using namespace haf::core;
+using namespace haf::time;
 
 namespace haf::anim
 {
 Animation::Animation(AnimationProperties&& animation_data) noexcept :
-    animation_data_{htps::move(animation_data)},
-    current_direction_{animation_data_.AnimationDirectionProperty()},
-    current_time_{},
-    raw_delta_{static_cast<AnimationDeltaType>(0.0)},
-    delta_{postProcessDelta(raw_delta_)},
-    end_reached_{false}
+    m_animation_data{htps::move(animation_data)},
+    m_current_direction{m_animation_data.AnimationDirectionProperty()},
+    m_current_time{TimePoint{}},
+    m_raw_delta{static_cast<AnimationDeltaType>(0.0)},
+    m_delta{postProcessDelta(m_raw_delta)},
+    m_end_reached{false}
 {}
 
 Animation::~Animation() = default;
 
 bool Animation::animate()
 {
-    current_time_ = animation_data_.TimerProperty()->ellapsed();
+    executeStartAction();
+    m_current_time = m_animation_data.TimerProperty()->ellapsed();
 
-    bool continue_animation{current_time_ <= animation_data_.Duration()};
-    raw_delta_ = (continue_animation)
-        ? (static_cast<decltype(raw_delta_)>(current_time_.milliseconds()) /
-           animation_data_.Duration().milliseconds())
+    bool continue_animation{m_current_time <= m_animation_data.Duration()};
+    m_raw_delta = (continue_animation)
+        ? (static_cast<decltype(m_raw_delta)>(m_current_time.milliseconds()) /
+           m_animation_data.Duration().milliseconds())
         : static_cast<AnimationDeltaType>(1.0);
 
-    delta_       = postProcessDelta(raw_delta_);
-    end_reached_ = !continue_animation;
+    m_delta       = postProcessDelta(m_raw_delta);
+    m_end_reached = !continue_animation;
 
-    if (end_reached_)
+    if (m_end_reached)
     {
         // Should we stop animations?
         // Reduce the number of pending loops if animation type is not
         // infinite
-        if (animation_data_.Times() != -1)
+        if (m_animation_data.Times() != -1)
         {
-            animation_data_.Times = animation_data_.Times() - 1;
+            m_animation_data.Times = m_animation_data.Times() - 1;
         }
-        continue_animation = animation_data_.Times() != 0;
+        continue_animation = m_animation_data.Times() != 0;
 
         if (continue_animation)
         {
-            if (animation_data_.Switch())
+            if (m_animation_data.Switch())
             {
-                current_direction_ =
-                    ((current_direction_ == AnimationDirection::Forward)
+                m_current_direction =
+                    ((m_current_direction == AnimationDirection::Forward)
                          ? AnimationDirection::Backward
                          : AnimationDirection::Forward);
             }
-            animation_data_.TimerProperty()->restart();
+            m_animation_data.TimerProperty()->restart();
         }
     }
     return continue_animation;
 }
 
+void Animation::executeStartAction()
+{
+    if (m_current_time == TimePoint{} &&
+        m_animation_data.ActionBeforeStarting())
+    {
+        m_animation_data.ActionBeforeStarting()();
+    }
+}
+
 void Animation::executeEndAction()
 {
-    animation_data_.TimerProperty()->markToDelete();
+    m_animation_data.TimerProperty()->markToDelete();
     // If property containing the function wrapper contains a function, call it
-    if (animation_data_.ActionWhenFinished())
+    if (m_animation_data.ActionWhenFinished())
     {
-        animation_data_.ActionWhenFinished()();
+        m_animation_data.ActionWhenFinished()();
     }
 }
 
 f32 Animation::postProcessDelta(AnimationDeltaType const delta)
 {
-    switch (current_direction_)
+    switch (m_current_direction)
     {
         default:
         case AnimationDirection::Forward:

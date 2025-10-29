@@ -2,7 +2,7 @@
 #include <hlog/include/hlog.hpp>
 #include <htypes/include/lockable_vector.hpp>
 
-using namespace htps;
+using namespace haf::core;
 
 namespace haf::anim
 {
@@ -14,12 +14,12 @@ public:
 
     void addAnimation(PropertyAnimationData&& data)
     {
-        addAnimation(htps::muptr<PropertyAnimation>(htps::move(data)));
+        addAnimation(muptr<PropertyAnimation>(core::move(data)));
     }
 
     void addAnimation(uptr<Animation> nanimation)
     {
-        animations_.push_back(htps::move(nanimation));
+        animations_.push_back(core::move(nanimation));
     }
 };
 

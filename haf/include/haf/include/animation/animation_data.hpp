@@ -2,7 +2,7 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_ANIMATION_ANIMATION_DATA_INCLUDE_HPP
 #define HAF_ANIMATION_ANIMATION_DATA_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
+#include <haf/include/core/types.hpp>
 #include <haf/include/properties/basic_property.hpp>
 
 #include <haf/include/time/time_point.hpp>
@@ -22,20 +22,25 @@ struct AnimationProperties
      * @brief Timer to use in the animation
      */
     prop::BasicProperty<time::TimerConnectorSPtr> TimerProperty;
+
     /**
      * @brief Time computing the duration of the animation
      */
     prop::BasicProperty<time::TimePoint> Duration;
 
-    prop::BasicProperty<htps::function<void()>> ActionWhenFinished;
+    prop::BasicProperty<core::function<void()>> ActionBeforeStarting;
+
+    prop::BasicProperty<core::function<void()>> ActionWhenFinished;
+
     /**
      * @brief Direction of the animation
      */
     prop::BasicProperty<AnimationDirection> AnimationDirectionProperty;
+
     /**
      * @brief Number of times to perform the animation
      */
-    prop::BasicProperty<htps::s32> Times;
+    prop::BasicProperty<core::s32> Times;
 
     /**
      * @brief Switch between forward and backward

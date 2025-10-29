@@ -2,7 +2,7 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_ANIMATION_PROPERTY_ANIMATION_BUILDER_INCLUDE_HPP
 #define HAF_ANIMATION_PROPERTY_ANIMATION_BUILDER_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
+#include <haf/include/core/types.hpp>
 #include <haf/include/animation/property_animation_data.hpp>
 
 namespace haf::anim
@@ -29,11 +29,13 @@ public:
         default;
 
     PropertyAnimationBuilder& duration(time::TimePoint const& value);
-    PropertyAnimationBuilder& times(htps::s32 value);
-    PropertyAnimationBuilder& switchAnimation(bool value);
+    PropertyAnimationBuilder& times(core::s32 const value);
+    PropertyAnimationBuilder& switchAnimation(bool const value);
     PropertyAnimationBuilder& continuous();
-    PropertyAnimationBuilder& actionWhenFinished(htps::function<void()> value);
-    PropertyAnimationBuilder& deltaProperty(htps::uptr<IDeltaProperty> delta_p);
+    PropertyAnimationBuilder& actionBeforeStarting(
+        core::function<void()> value);
+    PropertyAnimationBuilder& actionWhenFinished(core::function<void()> value);
+    PropertyAnimationBuilder& deltaProperty(core::uptr<IDeltaProperty> delta_p);
     PropertyAnimationData&& extract() noexcept;
 
 private:
