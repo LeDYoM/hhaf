@@ -37,12 +37,12 @@ void Pause::onAttached()
 
     m_pause_text->attachedNode()->component<Transformation>()->Scale = {0.5F,
                                                                         0.5F};
-    attachedNode()->Visible                                          = false;
+    attachedNode()->Enabled                                          = false;
 }
 
 void Pause::enterPause()
 {
-    attachedNode()->Visible = true;
+    attachedNode()->Enabled = true;
 
     auto animation_component{
         m_pause_text->attachedNode()->component<AnimationComponent>()};
@@ -57,6 +57,6 @@ void Pause::enterPause()
 
 void Pause::exitPause()
 {
-    attachedNode()->Visible = false;
+    attachedNode()->Enabled = false;
 }
 }  // namespace zoper

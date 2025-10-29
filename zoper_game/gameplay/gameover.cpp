@@ -44,7 +44,7 @@ void GameOver::onAttached()
         transformation_node->Position  = {0.0F, 0.15F};
     }
 
-    attachedNode()->Visible = false;
+    attachedNode()->Enabled = false;
 }
 
 }  // namespace zoper

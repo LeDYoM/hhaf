@@ -47,7 +47,7 @@ TEST_CASE("Scenenodes::for_each", "[SceneNode][SceneNodes]")
 
     testScene->for_each_sceneNode(
         [&numCheck](sptr<SceneNode> const& childNode) {
-            childNode->Visible = false;
+            childNode->Enabled = false;
             ++numCheck;
         });
 
@@ -56,7 +56,7 @@ TEST_CASE("Scenenodes::for_each", "[SceneNode][SceneNodes]")
 
     for (auto const& childNode : testScene->sceneNodes())
     {
-        CHECK(childNode->Visible() == false);
+        CHECK(childNode->Enabled() == false);
         ++numCheck;
     }
 
@@ -74,7 +74,7 @@ TEST_CASE("Scenenodes::for_each", "[SceneNode][SceneNodes]")
 
     testScene->for_each_sceneNode(
         [&numCheck](sptr<SceneNode> const& childNode) {
-            childNode->Visible = false;
+            childNode->Enabled = false;
             ++numCheck;
         });
 
@@ -83,7 +83,7 @@ TEST_CASE("Scenenodes::for_each", "[SceneNode][SceneNodes]")
 
     for (auto const& childNode : testScene->sceneNodes())
     {
-        CHECK(childNode->Visible() == false);
+        CHECK(childNode->Enabled() == false);
         ++numCheck;
     }
 
@@ -92,7 +92,7 @@ TEST_CASE("Scenenodes::for_each", "[SceneNode][SceneNodes]")
 
     testScene->for_each_sceneNode_as<TestSceneNode>(
         [&numCheck](sptr<TestSceneNode> const& childNode) {
-            childNode->Visible = true;
+            childNode->Enabled = true;
             ++numCheck;
         });
 
@@ -121,7 +121,7 @@ TEST_CASE("Scenenodes::for_each const", "[SceneNode][SceneNodes]")
 
     testScene_->for_each_sceneNode(
         [&numCheck](sptr<SceneNode const> const& childNode) {
-            CHECK(childNode->Visible() == true);
+            CHECK(childNode->Enabled() == true);
             ++numCheck;
         });
 
@@ -139,7 +139,7 @@ TEST_CASE("Scenenodes::for_each const", "[SceneNode][SceneNodes]")
 
     testScene_->for_each_sceneNode(
         [&numCheck](sptr<SceneNode const> const& childNode) {
-            CHECK(childNode->Visible() == true);
+            CHECK(childNode->Enabled() == true);
             ++numCheck;
         });
 
@@ -148,7 +148,7 @@ TEST_CASE("Scenenodes::for_each const", "[SceneNode][SceneNodes]")
 
     testScene_->for_each_sceneNode_as<TestSceneNode>(
         [&numCheck](sptr<TestSceneNode const> const& childNode) {
-            CHECK(childNode->Visible() == true);
+            CHECK(childNode->Enabled() == true);
             ++numCheck;
         });
 
@@ -172,13 +172,13 @@ TEST_CASE("Scenenodes::set_property_for_each_node", "[SceneNode][SceneNodes]")
     }
     CHECK(testScene->sceneNodes().size() == kNumSceneNodes);
 
-    testScene->set_property_for_each_node(&SceneNode::Visible, false);
+    testScene->set_property_for_each_node(&SceneNode::Enabled, false);
 
     size_type numCheck{0U};
 
     for (auto const& childNode : testScene->sceneNodes())
     {
-        CHECK(childNode->Visible() == false);
+        CHECK(childNode->Enabled() == false);
         ++numCheck;
     }
 
@@ -192,13 +192,13 @@ TEST_CASE("Scenenodes::set_property_for_each_node", "[SceneNode][SceneNodes]")
         auto node_test(testScene->createSceneNode<TestSceneNode>(name));
     }
 
-    testScene->set_property_for_each_node(&TestSceneNode::Visible, false);
+    testScene->set_property_for_each_node(&TestSceneNode::Enabled, false);
 
     for (auto const& childNode : testScene->sceneNodes())
     {
         if (auto node = htps::dynamic_pointer_cast<TestSceneNode>(childNode))
         {
-            CHECK(childNode->Visible() == false);
+            CHECK(childNode->Enabled() == false);
             ++numCheck;
         }
     }

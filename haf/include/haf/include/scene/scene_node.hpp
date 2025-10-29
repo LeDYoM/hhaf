@@ -31,7 +31,7 @@ class HAF_API SceneNode final : public sys::HasName,
                           public sys::SubSystemViewer
 {
 public:
-    prop::PropertyState<bool> Visible{true};
+    prop::PropertyState<bool> Enabled{true};
 
     /**
      * @brief Disabled copy constructor

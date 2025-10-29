@@ -38,7 +38,7 @@ void GameSceneStateManager::onEnterState(GameSceneStates const& state)
         break;
         case GameSceneStates::GameOver:
         {
-            m_game_over->attachedNode()->Visible = true;
+            m_game_over->attachedNode()->Enabled = true;
             m_scene_timer_component->pause();
         }
         break;
