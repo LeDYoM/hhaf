@@ -10,16 +10,16 @@
 #include <haf/include/resources/ishader.hpp>
 #include <haf/include/resources/idefault_resources_retriever.hpp>
 
-using namespace htps;
+using namespace haf::core;
 using namespace haf::scene;
 
 namespace haf::render
 {
 Renderizable::Renderizable(rptr<SceneNode> parent,
                            RenderizableData&& renderizable_data) :
-    sys::HasName{htps::move(renderizable_data.RenderizableName())},
-    parent_{htps::move(parent)},
-    p_{make_pimplp<RenderizablePrivate>(
+    sys::HasName{core::move(renderizable_data.RenderizableName())},
+    m_parent{core::move(parent)},
+    m_p{make_pimplp<RenderizablePrivate>(
         renderizable_data.PointCount(),
         renderizable_data.FigureTypeProperty(),
         sys::getSystem<sys::RenderSystem>(parent).currentRenderTarget())}
@@ -32,7 +32,7 @@ Renderizable::Renderizable(rptr<SceneNode> parent,
     if (m_material.shader() == nullptr)
     {
         m_material.shader =
-            parent_->subSystem<res::IDefaultResourcesRetriever>()
+            m_parent->subSystem<res::IDefaultResourcesRetriever>()
                 ->getDefaultShader();
     }
 }
@@ -41,12 +41,12 @@ Renderizable::~Renderizable() = default;
 
 rptr<SceneNode> Renderizable::parent() noexcept
 {
-    return parent_;
+    return m_parent;
 }
 
 rptr<SceneNode const> Renderizable::parent() const noexcept
 {
-    return parent_;
+    return m_parent;
 }
 
 void Renderizable::render(bool const parent_transformation_changed)
@@ -54,7 +54,7 @@ void Renderizable::render(bool const parent_transformation_changed)
     if (visible())
     {
         update(parent_transformation_changed);
-        p_->render();
+        m_p->render();
     }
 }
 
@@ -64,7 +64,7 @@ void Renderizable::update(bool const parent_transformation_changed)
     {
         auto parent_transformation_component{
             parent()->component<Transformation>()};
-        p_->m_render_element.setModelViewMatrix(
+        m_p->m_render_element.setModelViewMatrix(
             parent_transformation_component->globalTransform().getMatrix());
     }
 
@@ -75,17 +75,18 @@ void Renderizable::update(bool const parent_transformation_changed)
 
     if (m_material.textureRect.readResetHasChanged())
     {
-        p_->updateTextureRect(m_material.textureRect());
+        m_p->updateTextureRect(m_material.textureRect());
     }
 
     if (m_material.color.readResetHasChanged())
     {
-        p_->updateColors(m_material.color());
+        m_p->updateColors(m_material.color());
     }
 
     if (m_material.texture.readResetHasChanged())
     {
-        p_->m_render_element.setTexture(to_backend(m_material.texture().get()));
+        m_p->m_render_element.setTexture(
+            to_backend(m_material.texture().get()));
     }
 }
 

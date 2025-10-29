@@ -21,18 +21,18 @@ public:
 
     void update() override;
 
-    auto renderizablesCount() const noexcept { return renderizables_.size(); }
+    auto renderizablesCount() const noexcept { return m_renderizables.size(); }
 
-    bool emptyRenderizables() const noexcept { return renderizables_.empty(); }
+    bool emptyRenderizables() const noexcept { return m_renderizables.empty(); }
 
     decltype(auto) operator[](core::size_type const index) const noexcept
     {
-        return renderizables_[index];
+        return m_renderizables[index];
     }
 
     auto renderizableBuilder()
     {
-        return renderizables_.renderizableBuilder();
+        return m_renderizables.renderizableBuilder();
     }
 
     core::sptr<render::Renderizable> const& first() const noexcept;
@@ -41,7 +41,7 @@ public:
     component::ComponentOrder::Value componentOrder() const noexcept override;
 
 private:
-    render::Renderizables renderizables_;
+    render::Renderizables m_renderizables;
 };
 
 }  // namespace haf::scene

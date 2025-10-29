@@ -2,7 +2,7 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_SCENE_RENDERIZABLE_INCLUDE_HPP
 #define HAF_SCENE_RENDERIZABLE_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
+#include <haf/include/core/types.hpp>
 
 #include <haf/include/properties/property_state.hpp>
 #include <htypes/include/function.hpp>
@@ -23,7 +23,7 @@ namespace haf::render
 class Renderizable final : public sys::HasName
 {
 public:
-    Renderizable(htps::rptr<scene::SceneNode> parent,
+    Renderizable(core::rptr<scene::SceneNode> parent,
                  RenderizableData&& renderizable_data);
 
     ~Renderizable();
@@ -35,14 +35,14 @@ public:
 
     prop::BasicProperty<bool> visible{true};
 
-    htps::rptr<scene::SceneNode> parent() noexcept;
-    htps::rptr<scene::SceneNode const> parent() const noexcept;
+    core::rptr<scene::SceneNode> parent() noexcept;
+    core::rptr<scene::SceneNode const> parent() const noexcept;
 
 private:
     scene::Material m_material;
-    htps::rptr<scene::SceneNode> parent_;
+    core::rptr<scene::SceneNode> m_parent;
     struct RenderizablePrivate;
-    htps::PImplPointer<RenderizablePrivate> p_;
+    core::PImplPointer<RenderizablePrivate> m_p;
 
     void update(bool const parent_transformation_changed);
 };

@@ -8,12 +8,13 @@ namespace haf::scene
 
 void RenderizableGroupComponent::onAttached()
 {
-    renderizables_.setSceneNode(attachedNode());
+    m_renderizables.setSceneNode(attachedNode());
 }
 
 void RenderizableGroupComponent::update()
 {
-    renderizables_.updateRenderizables(true);
+    //TODO: why always true?
+    m_renderizables.updateRenderizables(true);
 }
 
 sptr<render::Renderizable> const& RenderizableGroupComponent::first()
