@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.14)
 project(
   "HAF Main Library"
-  VERSION 0.8.2.0
+  VERSION 0.3.1.0
   DESCRIPTION "Host Application Framework main library"
   # [HOMEPAGE_URL <url-string>]
   LANGUAGES CXX
