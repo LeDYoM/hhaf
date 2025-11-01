@@ -37,14 +37,11 @@ void Pause::onAttached()
 
     m_pause_text->attachedNode()->component<Transformation>()->Scale = {0.5F,
                                                                         0.5F};
-//    attachedNode()->Visible                                          = false;
     m_pause_text->attachedNode()->hideChildren();
 }
 
 void Pause::enterPause()
 {
-//    attachedNode()->Visible = true;
-
     auto animation_component{
         m_pause_text->attachedNode()->component<AnimationComponent>()};
     auto builder{animation_component->make_property_animation_builder(
