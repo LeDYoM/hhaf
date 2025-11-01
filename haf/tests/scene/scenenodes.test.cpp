@@ -17,7 +17,7 @@ auto unitTestScene()
     return msptr<SceneNode>(nullptr, "unitTest");
 }
 }  // namespace
-/* 
+/*
 class TestSceneNode : public haf::scene::SceneNode
 {
     using haf::scene::SceneNode::SceneNode;
@@ -101,7 +101,7 @@ TEST_CASE("Scenenodes::for_each", "[SceneNode][SceneNodes]")
     CHECK(numCheck == kNumSceneNodes * 2U);
     numCheck = 0U;
 }
-/*
+
 TEST_CASE("Scenenodes::for_each const", "[SceneNode][SceneNodes]")
 {
     using namespace haf;
@@ -109,7 +109,7 @@ TEST_CASE("Scenenodes::for_each const", "[SceneNode][SceneNodes]")
 
     constexpr size_type kNumSceneNodes{10U};
     auto testScene(unitTestScene());
-    sptr<Scene const> testScene_ = testScene;
+    sptr<SceneNode const> testScene_ = testScene;
 
     // Create 10 scene nodes
     for (size_type index{0U}; index < kNumSceneNodes; ++index)
@@ -117,11 +117,11 @@ TEST_CASE("Scenenodes::for_each const", "[SceneNode][SceneNodes]")
         str name{make_str("SceneNode_test_", index)};
         auto node_test(testScene->createSceneNode(name));
     }
-    CHECK(testScene_->sceneNodes().size() == kNumSceneNodes);
+    CHECK(testScene->sceneNodes().size() == kNumSceneNodes);
 
     size_type numCheck{0U};
 
-    testScene_->for_each_sceneNode(
+    testScene->for_each_sceneNode(
         [&numCheck](sptr<SceneNode const> const& childNode) {
             CHECK(childNode->Visible() == true);
             ++numCheck;
@@ -134,10 +134,19 @@ TEST_CASE("Scenenodes::for_each const", "[SceneNode][SceneNodes]")
     for (size_type index{0U}; index < kNumSceneNodes; ++index)
     {
         str name{make_str("SceneNode_test_", index)};
-        auto node_test(testScene->createSceneNode<TestSceneNode>(name));
+        auto node_test(testScene->createSceneNode(name));
     }
 
-    CHECK(testScene_->sceneNodes().size() == kNumSceneNodes * 2U);
+    CHECK(testScene->sceneNodes().size() == kNumSceneNodes * 2U);
+
+    testScene->for_each_sceneNode(
+        [&numCheck](sptr<SceneNode const> const& childNode) {
+            CHECK(childNode->Visible() == true);
+            ++numCheck;
+        });
+
+    CHECK(numCheck == kNumSceneNodes * 2U);
+    numCheck = 0U;
 
     testScene_->for_each_sceneNode(
         [&numCheck](sptr<SceneNode const> const& childNode) {
@@ -147,17 +156,8 @@ TEST_CASE("Scenenodes::for_each const", "[SceneNode][SceneNodes]")
 
     CHECK(numCheck == kNumSceneNodes * 2U);
     numCheck = 0U;
-
-    testScene_->for_each_sceneNode_as<TestSceneNode>(
-        [&numCheck](sptr<TestSceneNode const> const& childNode) {
-            CHECK(childNode->Visible() == true);
-            ++numCheck;
-        });
-
-    CHECK(numCheck == kNumSceneNodes);
-    numCheck = 0U;
 }
-
+/*
 TEST_CASE("Scenenodes::set_property_for_each_node", "[SceneNode][SceneNodes]")
 {
     using namespace haf;
