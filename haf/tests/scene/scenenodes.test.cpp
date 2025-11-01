@@ -6,17 +6,18 @@
 #include <haf/include/scene/scene_node.hpp>
 #include <haf/include/scene/scene_nodes.hpp>
 
-using namespace htps;
+using namespace haf::scene;
+using namespace haf::core;
 using namespace fmath;
-/*
+
 namespace
 {
 auto unitTestScene()
 {
-    return msptr<haf::scene::Scene>("unitTest");
+    return msptr<SceneNode>(nullptr, "unitTest");
 }
 }  // namespace
-
+/* 
 class TestSceneNode : public haf::scene::SceneNode
 {
     using haf::scene::SceneNode::SceneNode;
@@ -26,6 +27,7 @@ class TestTransformableSceneNode : public haf::scene::TransformableSceneNode
 {
     using haf::scene::TransformableSceneNode::TransformableSceneNode;
 };
+*/
 
 TEST_CASE("Scenenodes::for_each", "[SceneNode][SceneNodes]")
 {
@@ -67,7 +69,7 @@ TEST_CASE("Scenenodes::for_each", "[SceneNode][SceneNodes]")
     for (size_type index{0U}; index < kNumSceneNodes; ++index)
     {
         str name{make_str("SceneNode_test_", index)};
-        auto node_test(testScene->createSceneNode<TestSceneNode>(name));
+        auto node_test(testScene->createSceneNode(name));
     }
 
     CHECK(testScene->sceneNodes().size() == kNumSceneNodes * 2U);
@@ -90,16 +92,16 @@ TEST_CASE("Scenenodes::for_each", "[SceneNode][SceneNodes]")
     CHECK(numCheck == kNumSceneNodes * 2U);
     numCheck = 0U;
 
-    testScene->for_each_sceneNode_as<TestSceneNode>(
-        [&numCheck](sptr<TestSceneNode> const& childNode) {
+    testScene->for_each_sceneNode(
+        [&numCheck](sptr<SceneNode> const& childNode) {
             childNode->Visible = true;
             ++numCheck;
         });
 
-    CHECK(numCheck == kNumSceneNodes);
+    CHECK(numCheck == kNumSceneNodes * 2U);
     numCheck = 0U;
 }
-
+/*
 TEST_CASE("Scenenodes::for_each const", "[SceneNode][SceneNodes]")
 {
     using namespace haf;
