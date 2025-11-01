@@ -7,7 +7,7 @@ namespace haf::scene
 {
 void processUnorderedComponents(SceneNode& scene_node)
 {
-    if (scene_node.Enabled())
+    if (scene_node.Visible())
     {
         // Update the node components
         scene_node.updateUnorderedComponents();
@@ -22,7 +22,7 @@ void processUnorderedComponents(SceneNode& scene_node)
 
 void processOrderedComponents(SceneNode& scene_node, core::u32 const index)
 {
-    if (scene_node.Enabled())
+    if (scene_node.Visible())
     {
         // Update the node components
         scene_node.updateIndexedComponent(index);

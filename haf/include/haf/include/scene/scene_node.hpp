@@ -31,8 +31,6 @@ class HAF_API SceneNode final : public sys::HasName,
                           public sys::SubSystemViewer
 {
 public:
-    prop::PropertyState<bool> Enabled{true};
-
     /**
      * @brief Disabled copy constructor
      */
@@ -71,6 +69,8 @@ public:
      * @brief Clear all elements in this scene node
      */
     void clearAll();
+
+    prop::PropertyState<bool> Visible{true};
 };
 
 using SceneNodeSPtr = htps::sptr<SceneNode>;

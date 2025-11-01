@@ -37,26 +37,27 @@ void Pause::onAttached()
 
     m_pause_text->attachedNode()->component<Transformation>()->Scale = {0.5F,
                                                                         0.5F};
-    attachedNode()->Enabled                                          = false;
+//    attachedNode()->Visible                                          = false;
+    m_pause_text->attachedNode()->hideChildren();
 }
 
 void Pause::enterPause()
 {
-    attachedNode()->Enabled = true;
+//    attachedNode()->Visible = true;
 
     auto animation_component{
         m_pause_text->attachedNode()->component<AnimationComponent>()};
     auto builder{animation_component->make_property_animation_builder(
         &Text::TextColor, colors::Transparent, colors::White)};
     builder.duration(TimePoint_as_miliseconds(1000U))
-    ;
-//        .actionBeforeStarting([this]() { attachedNode()->Visible = true; });
+        .actionBeforeStarting(
+            [this]() { m_pause_text->attachedNode()->showChildren(); });
 
     animation_component->addAnimation(core::move(builder));
 }
 
 void Pause::exitPause()
 {
-    attachedNode()->Enabled = false;
+    attachedNode()->Visible = false;
 }
 }  // namespace zoper

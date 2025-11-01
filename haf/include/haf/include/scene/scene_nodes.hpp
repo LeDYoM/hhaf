@@ -96,13 +96,6 @@ public:
      */
     htps::sptr<SceneNode> getByName(htps::str const& name);
 
-    template <typename T>
-    htps::sptr<T> getByNameAs(htps::str const& name)
-    {
-        auto node{getByName(name)};
-        return ((node != nullptr) ? sceneNodeCast<T>(node) : nullptr);
-    }
-
     htps::sptr<SceneNode> getShared(htps::rptr<SceneNode> node) const;
 
     /**
@@ -122,50 +115,6 @@ public:
         htps::function<void(htps::sptr<SceneNode const> const&)> action) const;
 
     /**
-     * @brief Execute a mutable action for every SceneNode that is a T in the
-     * group.
-     * @tparam Type to perform actions on
-     * @param action Action to perform
-     */
-    template <typename T>
-    constexpr void for_each_sceneNode_as(
-        htps::function<void(htps::sptr<T> const&)> action)
-    {
-        for_each_sceneNode([&action](htps::sptr<SceneNode> const& node) {
-            if (auto const tnode = htps::dynamic_pointer_cast<T>(node);
-                tnode != nullptr)
-            {
-                action(tnode);
-            }
-        });
-    }
-
-    /**
-     * @brief Execute a const action for every SceneNode that is a T in the
-     * group.
-     * @tparam Type to perform actions on
-     * @param action Action to perform
-     */
-    template <typename T>
-    constexpr void for_each_sceneNode_as(
-        htps::function<void(htps::sptr<T const> const&)> action) const
-    {
-        for_each_sceneNode([&action](htps::sptr<SceneNode const> const& node) {
-            if (auto const tnode = htps::dynamic_pointer_cast<T const>(node))
-            {
-                action(tnode);
-            }
-        });
-    }
-
-    /**
-     * @brief Set a property value for each SceneNode object in the group
-     *
-     * @tparam Tag Name of the property
-     * @tparam T Type of the property
-     * @param value Value of the property
-     */
-    /**
      * @brief Set a property value for each SceneNode object in the group
      * that is convertible to NodeType
      *
@@ -181,7 +130,7 @@ public:
         PropertyType<PropertyValue>(ObjectType::* property_v),
         PropertyValue const& value)
     {
-        for_each_sceneNode_as<ObjectType>([&value, &property_v](auto& node) {
+        for_each_sceneNode([&value, &property_v](auto& node) {
             set_property(node, property_v, value);
         });
     }
@@ -192,6 +141,10 @@ public:
     evt::emitter<htps::sptr<SceneNode> const&> onNodeCreated;
     evt::emitter<htps::sptr<SceneNode> const&> onNodeAdded;
     evt::emitter<htps::sptr<SceneNode> const&> onNodeReady;
+
+    void showChildren() noexcept;
+    void hideChildren() noexcept;
+    void setChildrenVisibility(bool const nv) noexcept;
 
 protected:
     /**

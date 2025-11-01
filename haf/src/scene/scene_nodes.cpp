@@ -163,4 +163,19 @@ bool SceneNodes::moveToFirstPosition(htps::sptr<SceneNode> const& node)
     return false;
 }
 
+void SceneNodes::showChildren() noexcept
+{
+    setChildrenVisibility(true);
+}
+
+void SceneNodes::hideChildren() noexcept
+{
+    setChildrenVisibility(false);
+}
+
+void SceneNodes::setChildrenVisibility(bool const nv) noexcept
+{
+    set_property_for_each_node(&SceneNode::Visible, nv);
+}
+
 }  // namespace haf::scene

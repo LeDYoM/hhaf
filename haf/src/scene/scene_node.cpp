@@ -27,4 +27,5 @@ void SceneNode::clearAll()
     clearSceneNodes();
 }
 
+
 }  // namespace haf::scene
