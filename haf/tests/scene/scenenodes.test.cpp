@@ -65,7 +65,6 @@ TEST_CASE("Scenenodes::for_each", "[SceneNode][SceneNodes]")
     CHECK(numCheck == kNumSceneNodes);
     numCheck = 0U;
 
-    // Create more scene nodes with different static type
     for (size_type index{0U}; index < kNumSceneNodes; ++index)
     {
         str name{make_str("SceneNode_test_", index)};
@@ -130,7 +129,6 @@ TEST_CASE("Scenenodes::for_each const", "[SceneNode][SceneNodes]")
     CHECK(numCheck == kNumSceneNodes);
     numCheck = 0U;
 
-    // Create more scene nodes with different static type
     for (size_type index{0U}; index < kNumSceneNodes; ++index)
     {
         str name{make_str("SceneNode_test_", index)};
@@ -157,7 +155,7 @@ TEST_CASE("Scenenodes::for_each const", "[SceneNode][SceneNodes]")
     CHECK(numCheck == kNumSceneNodes * 2U);
     numCheck = 0U;
 }
-/*
+
 TEST_CASE("Scenenodes::set_property_for_each_node", "[SceneNode][SceneNodes]")
 {
     using namespace haf;
@@ -187,25 +185,21 @@ TEST_CASE("Scenenodes::set_property_for_each_node", "[SceneNode][SceneNodes]")
     CHECK(numCheck == kNumSceneNodes);
     numCheck = 0U;
 
-    // Create more scene nodes with different static type
     for (size_type index{0U}; index < kNumSceneNodes; ++index)
     {
         str name{make_str("SceneNode_test_", index)};
-        auto node_test(testScene->createSceneNode<TestSceneNode>(name));
+        auto node_test(testScene->createSceneNode(name));
     }
 
-    testScene->set_property_for_each_node(&TestSceneNode::Visible, false);
+    testScene->set_property_for_each_node(&SceneNode::Visible, false);
 
     for (auto const& childNode : testScene->sceneNodes())
     {
-        if (auto node = htps::dynamic_pointer_cast<TestSceneNode>(childNode))
-        {
-            CHECK(childNode->Visible() == false);
-            ++numCheck;
-        }
+        CHECK(childNode->Visible() == false);
+        ++numCheck;
     }
 
-    CHECK(numCheck == kNumSceneNodes);
+    CHECK(numCheck == kNumSceneNodes * 2U);
 }
 
 TEST_CASE("Scenenodes::getByName", "[SceneNode][SceneNodes]")
@@ -330,7 +324,7 @@ TEST_CASE("Scenenodes::removeSceneNodeByNode", "[SceneNode][SceneNodes]")
     testScene->clearSceneNodes();
     CHECK(testScene->sceneNodes().size() == 0U);
 }
-
+/*
 TEST_CASE("Scenenodes::for_each_as", "[SceneNode]")
 {
     using namespace haf;
@@ -369,7 +363,6 @@ TEST_CASE("Scenenodes::for_each_as", "[SceneNode]")
     CHECK(numCheck == kNumSceneNodes);
     numCheck = 0U;
 
-    // Create more scene nodes with different static type
     for (size_type index{0U}; index < kNumSceneNodes; ++index)
     {
         str name{make_str("SceneNode_test_", index)};
@@ -437,7 +430,6 @@ TEST_CASE("Scenenodes::for_each_as const", "[SceneNode][SceneNodes]")
     CHECK(numCheck == kNumSceneNodes);
     numCheck = 0U;
 
-    // Create more scene nodes with different static type
     for (size_type index{0U}; index < kNumSceneNodes; ++index)
     {
         str name{make_str("SceneNode_test_", index)};
@@ -498,7 +490,6 @@ TEST_CASE("Scenenodes::set_property_for_each_as", "[SceneNode][SceneNodes]")
     CHECK(numCheck == kNumSceneNodes);
     numCheck = 0U;
 
-    // Create more scene nodes with different static type
     for (size_type index{0U}; index < kNumSceneNodes; ++index)
     {
         str name{make_str("SceneNode_test_", index)};
