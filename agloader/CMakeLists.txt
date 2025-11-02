@@ -8,14 +8,13 @@ project(
 
 set(CURRENT_TARGET agloader)
 
-set(SOURCES 
-  src/loadedinstance.cpp 
+set(SOURCES
+  src/loadedinstance.cpp
   src/loader.cpp
-  )
+)
 
-set(HEADERS 
+set(HEADERS
   agloader/include/loader_export.hpp
-  agloader/include/loader.hpp
   )
 
 set(PUBLIC_HEADERS_DIRECTORY include)
@@ -24,6 +23,13 @@ build_lib_component(HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}" SOURCES
                     "${SOURCES}" HEADERS "${HEADERS}")
 
 set_compile_warning_level_and_cxx_properties_all(${CURRENT_TARGET})
+
+target_sources(${CURRENT_TARGET}
+  PUBLIC
+    FILE_SET all_my_modules TYPE CXX_MODULES
+    FILES
+      agloader/include/loader.cppm
+)
 
 #target_include_directories(
 #  ${CURRENT_TARGET}
