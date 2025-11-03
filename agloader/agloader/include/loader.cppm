@@ -1,5 +1,6 @@
-#ifndef AG_LOADER_INCLUDE_HPP
-#define AG_LOADER_INCLUDE_HPP
+module;
+
+export module agloader;
 
 #include "loader_export.hpp"
 
@@ -9,7 +10,7 @@ namespace agloader
  * @brief Main class to load a module
  * This class provides the basic API to load a module and its methods
  */
-class Loader
+export class Loader
 {
 public:
     /**
@@ -78,5 +79,3 @@ LOADER_API Loader* createLoader();
 LOADER_API void destroyLoader();
 
 }  // namespace agloader
-
-#endif
