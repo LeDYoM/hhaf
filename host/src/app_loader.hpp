@@ -5,7 +5,7 @@
 #include <htypes/include/types.hpp>
 #include <htypes/include/function.hpp>
 #include <htypes/include/str.hpp>
-#include <agloader/include/loader.hpp>
+import agloader;
 
 namespace haf::host
 {

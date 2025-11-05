@@ -1,13 +1,11 @@
-module;
-/*
 #include "loadedinstance.hpp"
-*/
+
 #include <string>
 #include <map>
 #include <memory>
 #include <cstdint>
 
-module agloader;
+import agloader;
 
 namespace agloader
 {

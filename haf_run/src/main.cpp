@@ -1,6 +1,7 @@
-#include <agloader/include/loader.hpp>
 #include <memmanager/include/memmanager.hpp>
 #include <thread>
+
+import agloader;
 
 // Signature of the main function exported from host shared library
 using p_haf_host_main = int (*)(int const argc, char const* argv[]);

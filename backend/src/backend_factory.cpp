@@ -2,7 +2,7 @@
 #include <backend/include/backend_register.hpp>
 #include <backend_dev/include/iwindow.hpp>
 
-#include <agloader/include/loader.hpp>
+import agloader;
 
 #include "backend_log.hpp"
 

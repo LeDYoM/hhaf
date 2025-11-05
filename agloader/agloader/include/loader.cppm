@@ -1,5 +1,3 @@
-module;
-
 export module agloader;
 
 #include "loader_export.hpp"
@@ -71,11 +69,11 @@ private:
  * @brief Create a Loader object
  * @return An instance of the loader class
  */
-LOADER_API Loader* createLoader();
+export LOADER_API Loader* createLoader();
 
 /**
  * @brief Destroy the loader
  */
-LOADER_API void destroyLoader();
+export LOADER_API void destroyLoader();
 
 }  // namespace agloader

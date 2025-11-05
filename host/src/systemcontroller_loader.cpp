@@ -1,7 +1,8 @@
 #include "systemcontroller_loader.hpp"
 
 #include <hlog/include/hlog.hpp>
-#include <agloader/include/loader.hpp>
+
+import agloader;
 
 using namespace htps;
 
