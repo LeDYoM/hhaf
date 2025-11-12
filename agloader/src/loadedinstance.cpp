@@ -2,22 +2,6 @@
 #include <map>
 #include <string>
 
-namespace
-{
-std::string formatFileName(std::string fileName,
-                           char const* const extension,
-                           char const* const prefix)
-{
-    if (!fileName.ends_with(extension))
-    {
-        fileName += extension;
-    }
-
-    return prefix + fileName;
-}
-
-}  // namespace
-
 #if defined(_MSC_VER) || defined(__BORLANDC__)
 #define WIN32_LEAN_AND_MEAN
 #pragma warning(push)
@@ -86,6 +70,22 @@ LoadedInstance::~LoadedInstance()
     unload();
     delete priv_;
 }
+
+namespace
+{
+std::string formatFileName(std::string fileName,
+                           char const* const param_extension,
+                           char const* const param_prefix)
+{
+    if (!fileName.ends_with(param_extension))
+    {
+        fileName += param_extension;
+    }
+
+    return param_prefix + fileName;
+}
+
+}  // namespace
 
 bool LoadedInstance::load(char const* fileName)
 {
