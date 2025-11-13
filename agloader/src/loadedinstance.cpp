@@ -1,5 +1,6 @@
 #include "loadedinstance.hpp"
-#include <map>
+#include "loadedinstance_private.hpp"
+
 #include <string>
 
 #if defined(_MSC_VER) || defined(__BORLANDC__)
@@ -55,13 +56,6 @@ constexpr const char* const prefix    = "./lib";
 
 namespace agloader
 {
-class LoadedInstancePrivate
-{
-public:
-    void* shared_file_handle{nullptr};
-    std::map<std::string, void*> methods_;
-};
-
 LoadedInstance::LoadedInstance() : priv_{new LoadedInstancePrivate}
 {}
 

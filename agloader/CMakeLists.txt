@@ -16,12 +16,19 @@ add_library(${CURRENT_TARGET} SHARED)
 
 target_sources(${CURRENT_TARGET}
     PRIVATE
+      src/loadedinstance_private.hpp
       src/loadedinstance.cpp
       src/loadedinstance.hpp
     PUBLIC
       FILE_SET CXX_MODULES
       FILES
         agloader/include/loader.cppm
+        )
+
+target_sources(${CURRENT_TARGET}
+    PUBLIC
+      FILE_SET CXX_MODULES
+      FILES
         src/loader.cpp
         )
 
