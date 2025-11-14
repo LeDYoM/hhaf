@@ -19,16 +19,16 @@ static uintmax_t reference_counter{0U};
 
 Loader::Loader()
 {
-    priv_ = new LoaderPrivate;
+    m_priv = new LoaderPrivate;
 }
 
 Loader::~Loader()
 {
-    if (priv_)
+    if (m_priv)
     {
-        priv_->loaded_instances_.clear();
-        delete priv_;
-        priv_ = nullptr;
+        m_priv->loaded_instances_.clear();
+        delete m_priv;
+        m_priv = nullptr;
     }
 }
 
@@ -39,7 +39,7 @@ void const* Loader::loadModule(const char* const fileName)
 
     if (loadedInstace->loaded())
     {
-        priv_->loaded_instances_[fileName] = loadedInstace;
+        m_priv->loaded_instances_[fileName] = loadedInstace;
     }
     return loadedInstace->loadedData();
 }
@@ -47,8 +47,8 @@ void const* Loader::loadModule(const char* const fileName)
 void const* Loader::loadMethod(const char* const fileName,
                                const char* const methodName)
 {
-    auto iterator{priv_->loaded_instances_.find(fileName)};
-    if (iterator != priv_->loaded_instances_.end())
+    auto iterator{m_priv->loaded_instances_.find(fileName)};
+    if (iterator != m_priv->loaded_instances_.end())
     {
         auto loadedInstance{(*iterator).second};
         return loadedInstance->loadMethod(methodName);
@@ -58,10 +58,10 @@ void const* Loader::loadMethod(const char* const fileName,
 
 bool Loader::unloadModule(const char* fileName)
 {
-    auto iterator{priv_->loaded_instances_.find(fileName)};
-    if (iterator != priv_->loaded_instances_.end())
+    auto iterator{m_priv->loaded_instances_.find(fileName)};
+    if (iterator != m_priv->loaded_instances_.end())
     {
-        priv_->loaded_instances_.erase(iterator);
+        m_priv->loaded_instances_.erase(iterator);
         return true;
     }
     return false;

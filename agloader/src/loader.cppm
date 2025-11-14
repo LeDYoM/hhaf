@@ -62,7 +62,7 @@ public:
 
 private:
     struct LoaderPrivate;
-    LoaderPrivate* priv_{nullptr};
+    LoaderPrivate* m_priv{nullptr};
 };
 
 /**
