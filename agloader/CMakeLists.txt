@@ -14,6 +14,12 @@ set(CMAKE_VISIBILITY_INLINES_HIDDEN TRUE)
 set(CURRENT_TARGET agloader)
 add_library(${CURRENT_TARGET} SHARED)
 
+if(MSVC)
+  set(driver_file src/loadedinstance_linux.cpp)
+else()
+  set(driver_file src/loadedinstance_windows.cpp)
+endif()
+
 target_sources(${CURRENT_TARGET}
     PRIVATE
       src/loadedinstance_private.hpp
@@ -22,6 +28,7 @@ target_sources(${CURRENT_TARGET}
     PUBLIC
       FILE_SET CXX_MODULES
       FILES
+        ${driver_file}
         src/loader.cppm
         src/loader.cpp
         )

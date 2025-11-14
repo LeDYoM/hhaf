@@ -1,28 +1,23 @@
-#if defined(_MSC_VER) || defined(__BORLANDC__)
-#define WIN32_LEAN_AND_MEAN
-#pragma warning(push)
-#pragma warning(disable : 5039)
-#define WIN32_LEAN_AND_MEAN
-#include <windows.h>
-#pragma warning(pop)
+#ifdef LINUX
 
-inline void* getMethod(void* handle, const char* methodName)
+// For now, windows or linux
+#include <dlfcn.h>
+inline void* getMethod(void* handle, char const* const methodName)
 {
-    return static_cast<void*>(
-        GetProcAddress(static_cast<HMODULE>(handle), methodName));
+    return static_cast<void*>(dlsym(handle, methodName));
 }
 
-inline void* loadSharedObject(const char* fileName)
+inline void* loadSharedObject(char const* const fileName)
 {
-    return static_cast<void*>(LoadLibrary(fileName));
+    return static_cast<void*>(dlopen(fileName, RTLD_LAZY));
 }
 
 inline bool freeSharedObject(void* handle)
 {
-    return (FreeLibrary(static_cast<HMODULE>(handle)) != 0);
+    return (dlclose(handle) == 0);
 }
 
-constexpr char const extension[] = ".dll";
-constexpr char const prefix[]    = "";
+constexpr const char* const extension = ".so";
+constexpr const char* const prefix    = "./lib";
 
 #endif

@@ -4,7 +4,7 @@
 #include <string>
 
 #include "loadedinstance_linux.cpp"
-#include "loadedinstance_win.cpp"
+#include "loadedinstance_windows.cpp"
 
 namespace agloader
 {
