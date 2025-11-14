@@ -22,13 +22,7 @@ target_sources(${CURRENT_TARGET}
     PUBLIC
       FILE_SET CXX_MODULES
       FILES
-        agloader/include/loader.cppm
-        )
-
-target_sources(${CURRENT_TARGET}
-    PUBLIC
-      FILE_SET CXX_MODULES
-      FILES
+        src/loader.cppm
         src/loader.cpp
         )
 

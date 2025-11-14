@@ -1,7 +1,8 @@
 #ifndef LOADER_LOADEDINSTANCE_PRIVATE_HPP
-#define LOADER_LOADEDINSTANCE__PRIVATE_HPP
+#define LOADER_LOADEDINSTANCE_PRIVATE_HPP
 
 #include <map>
+#include <string>
 
 namespace agloader
 {
