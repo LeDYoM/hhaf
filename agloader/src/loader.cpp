@@ -1,4 +1,5 @@
 #include "loadedinstance.hpp"
+#include "loader_private.cpp"
 
 #include <string>
 #include <map>
@@ -9,11 +10,6 @@ import agloader;
 
 namespace agloader
 {
-struct Loader::LoaderPrivate
-{
-    std::map<std::string, std::shared_ptr<LoadedInstance>> loaded_instances_;
-};
-
 static std::unique_ptr<Loader> loaderInstance;
 static uintmax_t reference_counter{0U};
 
@@ -26,7 +22,7 @@ Loader::~Loader()
 {
     if (m_priv)
     {
-        m_priv->loaded_instances_.clear();
+        m_priv->m_loaded_instances.clear();
         delete m_priv;
         m_priv = nullptr;
     }
@@ -39,7 +35,7 @@ void const* Loader::loadModule(const char* const fileName)
 
     if (loadedInstace->loaded())
     {
-        m_priv->loaded_instances_[fileName] = loadedInstace;
+        m_priv->m_loaded_instances[fileName] = loadedInstace;
     }
     return loadedInstace->loadedData();
 }
@@ -47,8 +43,8 @@ void const* Loader::loadModule(const char* const fileName)
 void const* Loader::loadMethod(const char* const fileName,
                                const char* const methodName)
 {
-    auto iterator{m_priv->loaded_instances_.find(fileName)};
-    if (iterator != m_priv->loaded_instances_.end())
+    auto iterator{m_priv->m_loaded_instances.find(fileName)};
+    if (iterator != m_priv->m_loaded_instances.end())
     {
         auto loadedInstance{(*iterator).second};
         return loadedInstance->loadMethod(methodName);
@@ -58,10 +54,10 @@ void const* Loader::loadMethod(const char* const fileName,
 
 bool Loader::unloadModule(const char* fileName)
 {
-    auto iterator{m_priv->loaded_instances_.find(fileName)};
-    if (iterator != m_priv->loaded_instances_.end())
+    auto iterator{m_priv->m_loaded_instances.find(fileName)};
+    if (iterator != m_priv->m_loaded_instances.end())
     {
-        m_priv->loaded_instances_.erase(iterator);
+        m_priv->m_loaded_instances.erase(iterator);
         return true;
     }
     return false;

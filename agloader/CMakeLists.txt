@@ -31,6 +31,7 @@ target_sources(${CURRENT_TARGET}
         ${driver_file}
         src/loader.cppm
         src/loader.cpp
+        src/loader_private.cpp
         )
 
 #set(PUBLIC_HEADERS_DIRECTORY include)
