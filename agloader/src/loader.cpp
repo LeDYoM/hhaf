@@ -1,3 +1,5 @@
+module;
+
 #include "loadedinstance.hpp"
 #include "loader_private.cpp"
 
@@ -6,7 +8,7 @@
 #include <memory>
 #include <cstdint>
 
-import agloader;
+module agloader;
 
 namespace agloader
 {
