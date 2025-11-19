@@ -16,7 +16,7 @@ int main(int const argc, char const* argv[])
 
     installMemManager(argc, argv);
 
-    auto* loader{agloader::createLoader()};
+    auto* loader{agl::createLoader()};
 
     int result{0};
 
@@ -40,7 +40,7 @@ int main(int const argc, char const* argv[])
         loader->unloadModule(host_library);
     }
 
-    agloader::destroyLoader();
+    agl::destroyLoader();
     finishMemManager(true);
     return result;
 }

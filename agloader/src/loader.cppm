@@ -2,7 +2,7 @@ export module agloader;
 
 #include "loader_export.hpp"
 
-namespace agloader
+namespace agl
 {
 /**
  * @brief Main class to load a module
@@ -76,4 +76,4 @@ export LOADER_API Loader* createLoader();
  */
 export LOADER_API void destroyLoader();
 
-}  // namespace agloader
+}  // namespace agl

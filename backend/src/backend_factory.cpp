@@ -16,7 +16,7 @@ BackendFactory::BackendFactory() :
     ttfontFactory_{nullptr},
     shaderFactory_{nullptr},
     bmpFontFactory_{nullptr},
-    loader_{agloader::createLoader()}
+    loader_{agl::createLoader()}
 {}
 
 BackendFactory::~BackendFactory()
@@ -33,7 +33,7 @@ BackendFactory::~BackendFactory()
     }
     loaded_modules_.clear();
 
-    agloader::destroyLoader();
+    agl::destroyLoader();
     loader_ = nullptr;
     BackendLogDisplayer::debug("backend factory destroyed");
 }

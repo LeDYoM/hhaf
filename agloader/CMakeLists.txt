@@ -21,17 +21,18 @@ else()
 endif()
 
 target_sources(${CURRENT_TARGET}
-    PRIVATE
-      src/loadedinstance_private.hpp
-      src/loadedinstance.cpp
-      src/loadedinstance.hpp
+#    PRIVATE
+#      src/loadedinstance_private.hpp
+#      src/loadedinstance.cpp
+#      src/loadedinstance.hpp
     PUBLIC
       FILE_SET CXX_MODULES
       FILES
-        ${driver_file}
+#        src/agloader.ixx
+#        ${driver_file}
+        src/loader-impl.cpp
         src/loader.cppm
-        src/loader.cpp
-        src/loader_private.cpp
+#        src/loader_private.cppm
         )
 
 #set(PUBLIC_HEADERS_DIRECTORY include)

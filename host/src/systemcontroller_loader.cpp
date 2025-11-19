@@ -31,7 +31,7 @@ SystemControllerLoader::~SystemControllerLoader()
     {
         loader_->unloadModule(haf_library);
     }
-    agloader::destroyLoader();
+    agl::destroyLoader();
 
     fp_haf_create_system_controller_ = nullptr;
 }
@@ -45,7 +45,7 @@ SystemControllerLoader::ResultType SystemControllerLoader::loadFunctions()
 
         if (loader_ == nullptr)
         {
-            loader_ = agloader::createLoader();
+            loader_ = agl::createLoader();
         }
 
         if (!loader_)

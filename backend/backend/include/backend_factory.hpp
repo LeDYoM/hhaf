@@ -5,7 +5,7 @@
 #include <htypes/include/str.hpp>
 #include <backend_dev/include/iresourcefactories.hpp>
 
-namespace agloader
+namespace agl
 {
 class Loader;
 }
@@ -62,7 +62,7 @@ private:
     htps::rptr<ITTFontFactory> ttfontFactory_{nullptr};
     htps::rptr<IShaderFactory> shaderFactory_{nullptr};
     htps::rptr<IBMPFontFactory> bmpFontFactory_{nullptr};
-    htps::rptr<agloader::Loader> loader_{nullptr};
+    htps::rptr<agl::Loader> loader_{nullptr};
 };
 }  // namespace haf::backend
 

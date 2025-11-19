@@ -1,9 +1,11 @@
+module;
+
 #include "loadedinstance.hpp"
 #include <string>
 #include <map>
 #include <memory>
 
-import agloader;
+module agloader;
 
 namespace agloader
 {
