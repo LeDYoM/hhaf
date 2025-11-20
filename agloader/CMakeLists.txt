@@ -30,9 +30,8 @@ target_sources(${CURRENT_TARGET}
       FILES
 #        src/agloader.ixx
 #        ${driver_file}
-        src/loader-impl.cpp
+        src/loader_impl.cpp
         src/loader.cppm
-#        src/loader_private.cppm
         )
 
 #set(PUBLIC_HEADERS_DIRECTORY include)

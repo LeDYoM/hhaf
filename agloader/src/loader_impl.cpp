@@ -12,9 +12,10 @@ module agloader;
 
 namespace agl
 {
+
 Loader::Loader()
 {
-//    m_priv = new LoaderPrivate;
+    m_priv = new LoaderPrivate();
 }
 
 Loader::~Loader()
