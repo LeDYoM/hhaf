@@ -1,6 +1,9 @@
 #ifndef LOADER_LOADEDINSTANCE_HPP
 #define LOADER_LOADEDINSTANCE_HPP
 
+#include <map>
+#include <string>
+
 namespace agloader
 {
 class LoadedInstancePrivate;
@@ -19,7 +22,8 @@ public:
     void const* loadedData() const;
 
 private:
-    LoadedInstancePrivate* priv_;
+    void* m_shared_file_handle{nullptr};
+    std::map<std::string, void*> m_methods;
 };
 }  // namespace agloader
 #endif

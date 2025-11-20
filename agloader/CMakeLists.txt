@@ -21,10 +21,10 @@ else()
 endif()
 
 target_sources(${CURRENT_TARGET}
-#    PRIVATE
+    PRIVATE
 #      src/loadedinstance_private.hpp
-#      src/loadedinstance.cpp
-#      src/loadedinstance.hpp
+      src/loadedinstance.cpp
+      src/loadedinstance.hpp
     PUBLIC
       FILE_SET CXX_MODULES
       FILES
