@@ -1,9 +1,11 @@
-#include "loadedinstance.hpp"
+module;
 
-#include "loadedinstance_linux.cpp"
-#include "loadedinstance_windows.cpp"
+#include <string>
 
-namespace agloader
+module agloader.linstance;
+import agloader.linstance.pfunctions;
+
+namespace agl
 {
 LoadedInstance::LoadedInstance()
 {}
@@ -43,8 +45,7 @@ void const* LoadedInstance::loadMethod(char const* methodName)
         auto node{m_methods.find(methodName)};
         if (node == m_methods.end())
         {
-            auto methodAddress{
-                getMethod(m_shared_file_handle, methodName)};
+            auto methodAddress{getMethod(m_shared_file_handle, methodName)};
 
             // Add the result of getMethod even if is nullptr to avoid
             // trying to load it more times
@@ -83,4 +84,4 @@ void const* LoadedInstance::loadedData() const
     return m_shared_file_handle;
 }
 
-}  // namespace agloader
+}  // namespace agl

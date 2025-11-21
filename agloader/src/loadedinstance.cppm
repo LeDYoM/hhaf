@@ -1,14 +1,13 @@
-#ifndef LOADER_LOADEDINSTANCE_HPP
-#define LOADER_LOADEDINSTANCE_HPP
+module;
 
 #include <map>
 #include <string>
 
-namespace agloader
-{
-class LoadedInstancePrivate;
+export module agloader.linstance;
 
-class LoadedInstance
+namespace agl
+{
+export class LoadedInstance
 {
 public:
     LoadedInstance();
@@ -25,5 +24,4 @@ private:
     void* m_shared_file_handle{nullptr};
     std::map<std::string, void*> m_methods;
 };
-}  // namespace agloader
-#endif
+}  // namespace agl

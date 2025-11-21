@@ -7,9 +7,6 @@ module;
 
 module agloader;
 
-// #include "loadedinstance.hpp"
-// #include "loader_private.cpp"
-
 namespace agl
 {
 
@@ -20,19 +17,17 @@ Loader::Loader()
 
 Loader::~Loader()
 {
-/*
-    if (m_priv)
+
+    if (m_priv != nullptr)
     {
         m_priv->m_loaded_instances.clear();
         delete m_priv;
         m_priv = nullptr;
     }
-*/
 }
 
-void const* Loader::loadModule(const char* const /*fileName*/)
+void const* Loader::loadModule(const char* const fileName)
 {
-/*
     auto loadedInstace{std::make_shared<LoadedInstance>()};
     loadedInstace->load(fileName);
 
@@ -41,15 +36,11 @@ void const* Loader::loadModule(const char* const /*fileName*/)
         m_priv->m_loaded_instances[fileName] = loadedInstace;
     }
     return loadedInstace->loadedData();
-    */
-    // TO delete
-    return nullptr;
 }
 
-void const* Loader::loadMethod(const char* const /*fileName*/,
-                               const char* const /*methodName*/)
+void const* Loader::loadMethod(const char* const fileName,
+                               const char* const methodName)
 {
-/*
     auto iterator{m_priv->m_loaded_instances.find(fileName)};
     if (iterator != m_priv->m_loaded_instances.end())
     {
@@ -57,21 +48,17 @@ void const* Loader::loadMethod(const char* const /*fileName*/,
         return loadedInstance->loadMethod(methodName);
     }
     return nullptr;
-*/
-    // TO delete
-    return nullptr;
 }
 
-bool Loader::unloadModule(const char* /*fileName*/)
+bool Loader::unloadModule(const char* fileName)
 {
-/*
     auto iterator{m_priv->m_loaded_instances.find(fileName)};
     if (iterator != m_priv->m_loaded_instances.end())
     {
         m_priv->m_loaded_instances.erase(iterator);
         return true;
     }
-*/
+
     return false;
 }
 
@@ -101,4 +88,4 @@ void destroyLoader()
         loaderInstance.reset(nullptr);
     }
 }
-}  // namespace agloader
+}  // namespace agl

@@ -15,23 +15,24 @@ set(CURRENT_TARGET agloader)
 add_library(${CURRENT_TARGET} SHARED)
 
 if(MSVC)
-  set(driver_file src/loadedinstance_linux.cpp)
+  set(driver_file loadedinstance_windows.cppm)
 else()
-  set(driver_file src/loadedinstance_windows.cpp)
+  set(driver_file loadedinstance_linux.cppm)
 endif()
+message("AAAAAAAAAAAAAAAA: ${driver_file}")
 
 target_sources(${CURRENT_TARGET}
     PRIVATE
 #      src/loadedinstance_private.hpp
-      src/loadedinstance.cpp
-      src/loadedinstance.hpp
     PUBLIC
       FILE_SET CXX_MODULES
       FILES
 #        src/agloader.ixx
-#        ${driver_file}
-        src/loader_impl.cpp
-        src/loader.cppm
+      src/${driver_file}
+      src/loadedinstance.cppm
+      src/loadedinstance.cpp
+      src/loader_impl.cpp
+      src/loader.cppm
         )
 
 #set(PUBLIC_HEADERS_DIRECTORY include)

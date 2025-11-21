@@ -1,6 +1,12 @@
-export module agloader;
+module;
 
 #include "loader_export.hpp"
+#include <map>
+#include <string>
+#include <memory>
+
+export module agloader;
+import agloader.linstance;
 
 namespace agl
 {
@@ -63,7 +69,7 @@ public:
 private:
 struct LoaderPrivate
 {
-//    std::map<std::string, std::shared_ptr<LoadedInstance>> m_loaded_instances;
+    std::map<std::string, std::shared_ptr<LoadedInstance>> m_loaded_instances;
 };
 
 LoaderPrivate* m_priv{nullptr};
