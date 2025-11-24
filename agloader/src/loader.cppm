@@ -67,12 +67,7 @@ public:
     LOADER_API bool unloadModule(const char* const fileName);
 
 private:
-struct LoaderPrivate
-{
     std::map<std::string, std::shared_ptr<LoadedInstance>> m_loaded_instances;
-};
-
-LoaderPrivate* m_priv{nullptr};
 };
 
 /**

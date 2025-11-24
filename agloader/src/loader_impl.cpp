@@ -10,21 +10,9 @@ module agloader;
 namespace agl
 {
 
-Loader::Loader()
-{
-    m_priv = new LoaderPrivate();
-}
+Loader::Loader() = default;
 
-Loader::~Loader()
-{
-
-    if (m_priv != nullptr)
-    {
-        m_priv->m_loaded_instances.clear();
-        delete m_priv;
-        m_priv = nullptr;
-    }
-}
+Loader::~Loader() = default;
 
 void const* Loader::loadModule(const char* const fileName)
 {
@@ -33,7 +21,7 @@ void const* Loader::loadModule(const char* const fileName)
 
     if (loadedInstace->loaded())
     {
-        m_priv->m_loaded_instances[fileName] = loadedInstace;
+        m_loaded_instances[fileName] = loadedInstace;
     }
     return loadedInstace->loadedData();
 }
@@ -41,8 +29,8 @@ void const* Loader::loadModule(const char* const fileName)
 void const* Loader::loadMethod(const char* const fileName,
                                const char* const methodName)
 {
-    auto iterator{m_priv->m_loaded_instances.find(fileName)};
-    if (iterator != m_priv->m_loaded_instances.end())
+    auto iterator{m_loaded_instances.find(fileName)};
+    if (iterator != m_loaded_instances.end())
     {
         auto loadedInstance{(*iterator).second};
         return loadedInstance->loadMethod(methodName);
@@ -52,10 +40,10 @@ void const* Loader::loadMethod(const char* const fileName,
 
 bool Loader::unloadModule(const char* fileName)
 {
-    auto iterator{m_priv->m_loaded_instances.find(fileName)};
-    if (iterator != m_priv->m_loaded_instances.end())
+    if (auto iterator{m_loaded_instances.find(fileName)};
+        iterator != m_loaded_instances.end())
     {
-        m_priv->m_loaded_instances.erase(iterator);
+        m_loaded_instances.erase(iterator);
         return true;
     }
 
