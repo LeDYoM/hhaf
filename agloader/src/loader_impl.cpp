@@ -29,8 +29,8 @@ void const* Loader::loadModule(const char* const fileName)
 void const* Loader::loadMethod(const char* const fileName,
                                const char* const methodName)
 {
-    auto iterator{m_loaded_instances.find(fileName)};
-    if (iterator != m_loaded_instances.end())
+    if (auto const iterator{m_loaded_instances.find(fileName)};
+        iterator != m_loaded_instances.end())
     {
         auto loadedInstance{(*iterator).second};
         return loadedInstance->loadMethod(methodName);
@@ -40,7 +40,7 @@ void const* Loader::loadMethod(const char* const fileName,
 
 bool Loader::unloadModule(const char* fileName)
 {
-    if (auto iterator{m_loaded_instances.find(fileName)};
+    if (auto const iterator{m_loaded_instances.find(fileName)};
         iterator != m_loaded_instances.end())
     {
         m_loaded_instances.erase(iterator);
