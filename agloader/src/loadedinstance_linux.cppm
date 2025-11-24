@@ -4,7 +4,7 @@ module;
 // For now, windows or linux
 #include <dlfcn.h>
 
-export module agloader.linstance.pfunctions;
+export module agloader.linstance:pfunctions;
 
 export inline void* getMethod(void* handle, char const* const methodName)
 {
@@ -23,4 +23,5 @@ export inline bool freeSharedObject(void* handle)
 
 export constexpr const char* const extension = ".so";
 export constexpr const char* const prefix    = "./lib";
+
 #endif

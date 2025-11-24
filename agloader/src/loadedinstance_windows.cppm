@@ -8,7 +8,7 @@ module;
 #include <windows.h>
 #pragma warning(pop)
 
-export module agloader.linstance.pfunctions;
+export module agloader.linstance:pfunctions;
 
 export inline void* getMethod(void* handle, const char* methodName)
 {

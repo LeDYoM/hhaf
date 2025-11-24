@@ -3,7 +3,7 @@ module;
 #include <string>
 
 module agloader.linstance;
-import agloader.linstance.pfunctions;
+import :pfunctions;
 
 namespace agl
 {
