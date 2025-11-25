@@ -25,7 +25,7 @@ PUBLIC
   FILE_SET CXX_MODULES
   FILES
   src/${driver_file}
-  src/loaded_instance_impl.cppm
+  src/loaded_instance_impl.cpp
   src/loaded_instance.cppm
   src/loader_impl.cppm
   src/loader.cppm
