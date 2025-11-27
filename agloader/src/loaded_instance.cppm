@@ -4,30 +4,16 @@ module;
 #include <string>
 
 export module agloader:linstance;
+
 import :pfunctions;
-
-namespace
-{
-std::string formatFileName(std::string fileName,
-                           char const* const param_extension,
-                           char const* const param_prefix)
-{
-    if (!fileName.ends_with(param_extension))
-    {
-        fileName += param_extension;
-    }
-
-    return param_prefix + fileName;
-}
-
-}  // namespace
+import :utils;
 
 namespace agl
 {
-export class LoadedInstance
+class LoadedInstance
 {
 public:
-    LoadedInstance()  = default;
+    LoadedInstance() = default;
     ~LoadedInstance() = default;
 
     bool load(const char* fileName)

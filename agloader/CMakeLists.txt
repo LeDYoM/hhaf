@@ -21,6 +21,7 @@ target_sources(${CURRENT_TARGET}
 PUBLIC
   FILE_SET CXX_MODULES
   FILES
+  src/loaded_instance_utils.cppm
   src/loaded_instance_${driver_file}.cppm
   src/loaded_instance.cppm
   src/loader.cppm
