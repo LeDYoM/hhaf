@@ -2,8 +2,8 @@ name: CMake
 
 on:
   push:
-    branches:
-      [main,develop,ghactions_dev]
+#    branches:
+#      [main,develop,ghactions_dev]
 
 env:
   preset_name: win_vs_2022_x64
