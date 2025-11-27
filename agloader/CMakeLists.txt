@@ -1,36 +1,30 @@
 cmake_minimum_required(VERSION 3.14)
 project(
-  "AG Loader"
-  VERSION 1.1.1.2
+  "AGLoader"
+  VERSION 0.2.1.2
   DESCRIPTION "Multiplatform library to load shared libraries system agnostic"
   # [HOMEPAGE_URL <url-string>]
   LANGUAGES CXX)
 
 set(CURRENT_TARGET agloader)
+build_lib_module(${CURRENT_TARGET})
 
-set(SOURCES 
-  src/loadedinstance.cpp 
-  src/loader.cpp
-  )
+set_target_properties(${CURRENT_TARGET} PROPERTIES VISIBILITY_INLINES_HIDDEN TRUE)
 
-set(HEADERS 
-  agloader/include/loader_export.hpp
-  agloader/include/loader.hpp
-  )
+if(MSVC)
+  set(driver_file msvc)
+else()
+  set(driver_file linux)
+endif()
 
-set(PUBLIC_HEADERS_DIRECTORY include)
+target_sources(${CURRENT_TARGET}
+PUBLIC
+  FILE_SET CXX_MODULES
+  FILES
+  src/loaded_instance_utils.cppm
+  src/loaded_instance_${driver_file}.cppm
+  src/loaded_instance.cppm
+  src/loader.cppm
+)
 
-build_lib_component(HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}" SOURCES
-                    "${SOURCES}" HEADERS "${HEADERS}")
-
-set_compile_warning_level_and_cxx_properties_all(${CURRENT_TARGET})
-
-#target_include_directories(
-#  ${CURRENT_TARGET}
-#  PUBLIC $<INSTALL_INTERFACE:include>
-#         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../>
-#  PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/)
-
-target_compile_definitions(${CURRENT_TARGET} PRIVATE loader_EXPORTS)
 target_link_libraries(${CURRENT_TARGET} PRIVATE ${CMAKE_DL_LIBS})
-set_output_directories(${CURRENT_TARGET})

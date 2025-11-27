@@ -5,7 +5,7 @@
 #include <htypes/include/types.hpp>
 #include <htypes/include/function.hpp>
 #include <htypes/include/str.hpp>
-#include <agloader/include/loader.hpp>
+import agloader;
 
 namespace haf::host
 {
@@ -40,7 +40,7 @@ private:
     ManagedApp loadApp(p_initApp init_app,
                        p_finishApp finish_app,
                        htps::str const& origin_file) const;
-    agloader::Loader* loader_{nullptr};
+    agl::Loader* loader_{nullptr};
 };
 }  // namespace haf::host
 

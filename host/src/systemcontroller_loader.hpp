@@ -5,7 +5,7 @@
 #include <htypes/include/function.hpp>
 #include <host_haf_interface/include/isystem_controller.hpp>
 
-namespace agloader
+namespace agl
 {
 class Loader;
 }
@@ -32,7 +32,7 @@ public:
     [[nodiscard]] sys::UptrSystemController create();
 
 private:
-    htps::rptr<agloader::Loader> loader_;
+    htps::rptr<agl::Loader> loader_;
     CreateSystemController_t fp_haf_create_system_controller_;
 };
 }  // namespace haf::host

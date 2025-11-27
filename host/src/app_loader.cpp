@@ -4,13 +4,13 @@ using namespace htps;
 
 namespace haf::host
 {
-AppLoader::AppLoader() : loader_{agloader::createLoader()}
+AppLoader::AppLoader() : loader_{agl::createLoader()}
 {}
 
 AppLoader::~AppLoader()
 {
     loader_ = nullptr;
-    agloader::destroyLoader();
+    agl::destroyLoader();
 }
 
 ManagedApp AppLoader::loadApp(const str& file)
@@ -38,7 +38,7 @@ ManagedApp AppLoader::loadApp(p_initApp init_app,
 
 bool AppLoader::unloadApp(ManagedApp& managed_app) const
 {
-    using namespace agloader;
+    using namespace agl;
 
     bool result{false};
 
