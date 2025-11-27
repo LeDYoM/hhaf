@@ -1,11 +1,11 @@
-HTPS_PRAGMA_ONCE
-#ifndef HTYPES_ARRAY_INCLUDE_HPP
-#define HTYPES_ARRAY_INCLUDE_HPP
+module;
 
 #include <initializer_list>
-#include "types.hpp"
-#include "span.hpp"
+//#include "types.hpp"
+//#include "span.hpp"
 #include <cassert>
+
+export module htypes:array;
 
 namespace htps
 {
@@ -191,5 +191,3 @@ template <typename T>
 array(T) -> array<T, 1U>;
 
 }  // namespace htps
-
-#endif

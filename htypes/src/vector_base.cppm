@@ -2,9 +2,6 @@ HTPS_PRAGMA_ONCE
 #ifndef HTYPES_VECTOR_BASE_INCLUDE_HPP
 #define HTYPES_VECTOR_BASE_INCLUDE_HPP
 
-//#define LOG_MODE
-#include "debug_internal.hpp"
-
 #include <initializer_list>
 #include <utility>
 #include "function.hpp"

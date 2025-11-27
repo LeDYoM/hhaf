@@ -1,8 +1,8 @@
-HTPS_PRAGMA_ONCE
-#ifndef HTYPES_GROW_POLICY_INCLUDE_HPP
-#define HTYPES_GROW_POLICY_INCLUDE_HPP
+module;
 
 #include "types.hpp"
+
+module htypes:growpolicy;
 
 namespace htps
 {

@@ -1,9 +1,8 @@
-HTPS_PRAGMA_ONCE
-#ifndef HTPS_PAIR_INCLUDE_HPP
-#define HTPS_PAIR_INCLUDE_HPP
+module;
 
-#include <htypes/include/basic_types.hpp>
 #include <compare>
+
+export module htypes:pair;
 
 namespace htps
 {
@@ -49,5 +48,3 @@ public:
     }
 };
 }  // namespace htps
-
-#endif

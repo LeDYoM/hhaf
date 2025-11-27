@@ -1,8 +1,4 @@
-HTPS_PRAGMA_ONCE
-#ifndef HTPS_TYPES_CAST_INCLUDE_HPP
-#define HTPS_TYPES_CAST_INCLUDE_HPP
-
-#include <htypes/include/types.hpp>
+export module htypes:cast;
 
 namespace htps
 {
@@ -13,5 +9,3 @@ T d_cast(Y* element)
 }
 
 }  // namespace htps
-
-#endif

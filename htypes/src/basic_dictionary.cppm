@@ -1,10 +1,11 @@
-HTPS_PRAGMA_ONCE
-#ifndef HTYPES_BASIC_DICTIONARY_INCLUDE_HPP
-#define HTYPES_BASIC_DICTIONARY_INCLUDE_HPP
+module;
 
 #include <initializer_list>
-#include "types.hpp"
-#include "vector.hpp"
+//#include "types.hpp"
+//#include "vector.hpp"
+
+export module htypes:bdictionary;
+import :pair;
 
 namespace htps
 {
@@ -197,5 +198,3 @@ private:
 };
 
 }  // namespace htps
-
-#endif

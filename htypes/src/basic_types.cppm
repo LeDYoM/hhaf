@@ -1,11 +1,11 @@
-HTPS_PRAGMA_ONCE
-#ifndef HTYPES_BASIC_TYPES_INCLUDE_HPP
-#define HTYPES_BASIC_TYPES_INCLUDE_HPP
+module;
 
 #include <cstdint>
 #include <memory>
 #include <map>
 #include <type_traits>
+
+export module htypes:btypes;
 
 namespace htps
 {
@@ -58,5 +58,3 @@ template <typename T, typename V>
 using map = std::map<T, V>;
 
 }  // namespace htps
-
-#endif

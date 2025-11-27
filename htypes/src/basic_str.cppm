@@ -1,17 +1,17 @@
-HTPS_PRAGMA_ONCE
-#ifndef HTPS_BASIC_STR_INCLUDE_HPP
-#define HTPS_BASIC_STR_INCLUDE_HPP
-
-#include "vector.hpp"
-#include "str_view.hpp"
-#include "str_literal.hpp"
-#include "types.hpp"
+module;
 
 #include <sstream>
 #include <type_traits>
 #include <algorithm>
 #include <cctype>
 #include <compare>
+
+export module htypes:bstr;
+
+import :vector;
+import :str_view;
+import :str_literal;
+import :btypes;
 
 namespace htps
 {

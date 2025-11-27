@@ -9,6 +9,7 @@ project("HAF Types"
 )
 
 set(CURRENT_TARGET htypes)
+build_lib_module(${CURRENT_TARGET})
 
 set(include_dir htypes/include)
 set(headers
@@ -43,8 +44,47 @@ set(headers
     ${include_dir}/vector.hpp
 )
 
-build_lib_component(HEADERS_ONLY HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}"
-              HEADERS ${headers})
+target_sources(${CURRENT_TARGET}
+PUBLIC
+  FILE_SET CXX_MODULES
+  FILES
+    src/memory/alloc_func_memmanager.cppm
+    src/memory/alloc_func.cppm
+    src/memory/allocator.cppm
+    src/memory/allocatorfunc.cppm
+    src/memory/placement.cppm
+    src/algoutils.cppm
+    src/array.cppm
+    src/basic_dictionary.cppm
+    src/basic_str.cppm
+    src/basic_types.cppm
+    src/cast.cppm
+    src/dictionary.cppm
+    src/function.cppm
+    src/growpolicy.cppm
+    src/lockable_vector.cppm
+    src/hash.cppm
+    src/htypes.cppm
+    src/menum.cppm
+    src/p_impl_pointer.cppm
+    src/pair.cppm
+    src/pair.cppm
+    src/rawmemory.cppm
+    src/span.cppm
+    src/stack.cppm
+    src/str_literal.cppm
+    src/str_view.cppm
+    src/str.cppm
+    src/types.cppm
+    src/vector_base.cppm
+    src/vector_storage.cppm
+    src/vector.cppm
+)
+
+#build_lib_component(HEADERS_ONLY HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}"
+#              HEADERS ${headers})
+
+#build_command()
 
 set_pragma_once_or_not(HTPS true INTERFACE)
 

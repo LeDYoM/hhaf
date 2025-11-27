@@ -1,9 +1,8 @@
-HTPS_PRAGMA_ONCE
-#ifndef HTYPES_FUNCTION_INCLUDE_HPP
-#define HTYPES_FUNCTION_INCLUDE_HPP
+module;
 
 #include <cassert>
-#include "types.hpp"
+
+module htypes:function;
 
 namespace htps
 {
@@ -260,5 +259,3 @@ constexpr auto make_function(T const* obj, ReturnType (T::*p)(Args...) const)
 }
 
 }  // namespace htps
-
-#endif

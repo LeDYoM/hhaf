@@ -1,9 +1,9 @@
-HTPS_PRAGMA_ONCE
-#ifndef HTYPES_ALGO_UTILS_INCLUDE_HPP
-#define HTYPES_ALGO_UTILS_INCLUDE_HPP
+module;
 
 #include <algorithm>
 #include <initializer_list>
+
+export module htypes:algoutils;
 
 namespace htps
 {
@@ -34,5 +34,3 @@ constexpr T max(std::initializer_list<T> values)
 }
 
 }  // namespace htps
-
-#endif
