@@ -1,12 +1,13 @@
 module;
 
-#include "loader_export.hpp"
 #include <map>
 #include <string>
 #include <memory>
 
 export module agloader;
-import agloader.linstance;
+
+import "loader_export.hpp";
+import :linstance;
 
 namespace agl
 {
@@ -21,20 +22,30 @@ public:
      * @brief Construct a new Loader objec.
      * Default constructor. Do not use it directly.
      */
-    LOADER_PRIVATE Loader();
+    LOADER_PRIVATE Loader() = default;
 
     /**
      * @brief Destroy the Loader object.
      * Destructor. Do not use it directly.
      */
-    LOADER_PRIVATE ~Loader();
+    LOADER_PRIVATE ~Loader() = default;
 
     /**
      * @brief Load a shared library module from a file
      * @param fileName File to load WITHOUT extension
      * @return Pointer to the loaded module.
      */
-    LOADER_API void const* loadModule(const char* const fileName);
+    LOADER_API void const* loadModule(const char* const fileName)
+    {
+        auto loadedInstace{std::make_shared<LoadedInstance>()};
+        loadedInstace->load(fileName);
+
+        if (loadedInstace->loaded())
+        {
+            m_loaded_instances[fileName] = loadedInstace;
+        }
+        return loadedInstace->loadedData();
+    }
 
     /**
      * @brief Load a method from an already loaded module
@@ -43,7 +54,16 @@ public:
      * @return Pointer to the loaded method.
      */
     LOADER_API void const* loadMethod(const char* const fileName,
-                                      const char* const methodName);
+                                      const char* const methodName)
+    {
+        if (auto const iterator{m_loaded_instances.find(fileName)};
+            iterator != m_loaded_instances.end())
+        {
+            auto loadedInstance{(*iterator).second};
+            return loadedInstance->loadMethod(methodName);
+        }
+        return nullptr;
+    }
 
     /**
      * @brief Load a method from an already loaded module
@@ -64,21 +84,54 @@ public:
      * @param fileName File containing the already loaded module
      * @return If the unloading was successful or not
      */
-    LOADER_API bool unloadModule(const char* const fileName);
+    LOADER_API bool unloadModule(const char* const fileName)
+    {
+        if (auto const iterator{m_loaded_instances.find(fileName)};
+            iterator != m_loaded_instances.end())
+        {
+            m_loaded_instances.erase(iterator);
+            return true;
+        }
+
+        return false;
+    }
 
 private:
     std::map<std::string, std::shared_ptr<LoadedInstance>> m_loaded_instances;
 };
 
+static std::unique_ptr<Loader> loaderInstance;
+static uintmax_t reference_counter{0U};
+
 /**
  * @brief Create a Loader object
  * @return An instance of the loader class
  */
-export LOADER_API Loader* createLoader();
+export LOADER_API Loader* createLoader()
+{
+    ++reference_counter;
+    if (loaderInstance == nullptr)
+    {
+        loaderInstance = std::make_unique<Loader>();
+    }
+
+    return loaderInstance.get();
+}
 
 /**
  * @brief Destroy the loader
  */
-export LOADER_API void destroyLoader();
+export LOADER_API void destroyLoader()
+{
+    if (reference_counter > 0U)
+    {
+        --reference_counter;
+    }
+
+    if (reference_counter == 0U)
+    {
+        loaderInstance.reset(nullptr);
+    }
+}
 
 }  // namespace agl

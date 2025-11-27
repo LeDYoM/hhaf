@@ -4,7 +4,7 @@ module;
 // For now, windows or linux
 #include <dlfcn.h>
 
-export module agloader.linstance:pfunctions;
+export module agloader:pfunctions;
 
 void* getMethod(void* handle, char const* const methodName)
 {

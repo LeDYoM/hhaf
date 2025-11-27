@@ -140,6 +140,38 @@ function(build_lib_component)
   set_install_options_for_target(${CURRENT_TARGET})
 endfunction()
 
+function(build_lib_module C_TARGET)
+  cmake_parse_arguments(LC_BUILD "EXPORT_ALL;STATIC" "" "" ${ARGN})
+
+  if(LC_BUILD_STATIC)
+    message(STATUS "Add library static: ${C_TARGET}")
+    add_library(${C_TARGET} STATIC)
+  else()
+    message(STATUS "Add library shared: ${C_TARGET}")
+    add_library(${C_TARGET} SHARED)
+  endif()
+
+  if(LC_BUILD_EXPORT_ALL)
+    if (LC_BUILD_STATIC)
+      message(WARN "STATIC and EXPORT_ALL together makes no sense")
+    endif()
+    set_target_properties(${C_TARGET}
+                          PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS true)
+  endif()
+
+  set_compile_warning_level_and_cxx_properties(${C_TARGET})
+
+  # Set defines for project versions using standard cmake nomenclature
+  target_compile_definitions(${C_TARGET} PRIVATE
+    ${C_TARGET}_VERSION=${PROJECT_VERSION_MAJOR}
+    ${C_TARGET}_SUBVERSION=${PROJECT_VERSION_MINOR}
+    ${C_TARGET}_PATCH=${PROJECT_VERSION_PATCH}
+    ${C_TARGET}_TWEAK=${PROJECT_VERSION_TWEAK}
+  )
+
+  set_install_options_for_target(${C_TARGET})
+endfunction()
+
 function(build_lib_ext)
 
   cmake_parse_arguments(LC_BUILD "" "HEADER_DIRECTORY" "SOURCES" ${ARGN})

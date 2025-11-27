@@ -6,13 +6,11 @@ project(
   # [HOMEPAGE_URL <url-string>]
   LANGUAGES CXX)
 
-# These will be discussed later in the article
-set(CMAKE_CXX_EXTENSIONS FALSE)
-set(CMAKE_CXX_VISIBILITY_PRESET hidden)
-set(CMAKE_VISIBILITY_INLINES_HIDDEN TRUE)
-
 set(CURRENT_TARGET agloader)
-add_library(${CURRENT_TARGET} SHARED)
+build_lib_module(${CURRENT_TARGET})
+
+#add_library(${CURRENT_TARGET} SHARED)
+set_target_properties(${CURRENT_TARGET} PROPERTIES VISIBILITY_INLINES_HIDDEN TRUE)
 
 if(MSVC)
   set(driver_file loadedinstance_windows.cppm)
@@ -25,25 +23,9 @@ PUBLIC
   FILE_SET CXX_MODULES
   FILES
   src/${driver_file}
-  src/loaded_instance_impl.cpp
   src/loaded_instance.cppm
-  src/loader_impl.cppm
   src/loader.cppm
 )
 
-#set(PUBLIC_HEADERS_DIRECTORY include)
-
-# build_lib_component(HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}" SOURCES
-#                    "${SOURCES}" HEADERS "${HEADERS}")
-
 set_compile_warning_level_and_cxx_properties_all(${CURRENT_TARGET})
-
-#target_include_directories(
-#  ${CURRENT_TARGET}
-#  PUBLIC $<INSTALL_INTERFACE:include>
-#         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../>
-#  PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/)
-
-target_compile_definitions(${CURRENT_TARGET} PRIVATE loader_EXPORTS)
 target_link_libraries(${CURRENT_TARGET} PRIVATE ${CMAKE_DL_LIBS})
-set_output_directories(${CURRENT_TARGET})
