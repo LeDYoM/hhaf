@@ -1,10 +1,11 @@
 module;
 
 #include <initializer_list>
-//#include "types.hpp"
-//#include "vector.hpp"
 
 export module htypes:bdictionary;
+
+import :btypes;
+import :vector;
 import :pair;
 
 namespace htps

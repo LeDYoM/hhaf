@@ -1,9 +1,11 @@
-HTPS_PRAGMA_ONCE
-#ifndef HTYPES_ALLOCATOR_MEMMANAGER_MMALLOC_MFREE_INCLUDE_HPP
-#define HTYPES_ALLOCATOR_MEMMANAGER_MMALLOC_MFREE_INCLUDE_HPP
+module;
 
-#include <htypes/include/memory/allocatorfunc.hpp>
-#include <memmanager/include/memmanager.hpp>
+//#include <memmanager/include/memmanager.hpp>
+#include "../../../memmanager/memmanager/include/memmanager.hpp"
+
+export module htypes:alloc_func_memmanager;
+
+import :allocatorfunc;
 
 namespace htps
 {
@@ -13,5 +15,3 @@ using AllocatorMemManagerRaw =
     htps::AllocatorFunc<T, mmalloc, mfree, mfree_with_size>;
 
 }  // namespace htps
-
-#endif

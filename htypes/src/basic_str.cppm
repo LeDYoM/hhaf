@@ -12,6 +12,7 @@ import :vector;
 import :str_view;
 import :str_literal;
 import :btypes;
+import :pair;
 
 namespace htps
 {
@@ -754,4 +755,3 @@ inline basic_str<char_value> make_basic_str(f64&& n)
 
 }  // namespace htps
 
-#endif

@@ -1,12 +1,10 @@
-HTPS_PRAGMA_ONCE
-#ifndef HTPS_HASH_INCLUDE_HPP
-#define HTPS_HASH_INCLUDE_HPP
+export module htypes:hash;
 
-#include "types.hpp"
-#include "str.hpp"
-#include "str_literal.hpp"
-#include "str_view.hpp"
-#include "span.hpp"
+import :btypes;
+import :str;
+import :str_literal;
+import :str_view;
+import :span;
 
 namespace htps
 {
@@ -94,5 +92,3 @@ template <htps::str_literal Str>
 inline constexpr u32 StringHash_v{StringHash<Str>::value};
 
 }  // namespace htps
-
-#endif

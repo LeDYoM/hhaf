@@ -5,6 +5,8 @@ module;
 
 export module htypes:algoutils;
 
+import :btypes;
+
 namespace htps
 {
 template <typename Container, typename F>

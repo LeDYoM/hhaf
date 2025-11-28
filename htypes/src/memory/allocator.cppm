@@ -1,29 +1,27 @@
-HTPS_PRAGMA_ONCE
-#ifndef HTYPES_ALLOCATOR_INCLUDE_HPP
-#define HTYPES_ALLOCATOR_INCLUDE_HPP
+export module htypes:allocator;
 
-#include "placement.hpp"
+import :placement;
 
 #ifdef USER_MEM_MANAGER
-#include "alloc_func_memmanager.hpp"
+import :alloc_func_memmanager
 template <typename T>
 using ReserveDestroyT = htps::AllocatorMemManagerRaw<T>;
 #else
-#include "alloc_func.hpp"
+import :alloc_func;
 template <typename T>
 using ReserveDestroyT = htps::AllocatorMallocFree<T>;
 #endif
 
 namespace htps
 {
-
 template <typename T, typename ReserveDestroy = ReserveDestroyT<T>>
 class AllocatorType : public ReserveDestroy, public BasicConstructDestruct<T>
 {
 public:
     template <typename... Args>
     static T* make_one(Args&&... args) noexcept(
-        noexcept(ReserveDestroy::allocate(1)) && noexcept(
+        noexcept(ReserveDestroy::allocate(1)) &&
+        noexcept(
             BasicConstructDestruct<T>::construct(nullptr,
                                                  htps::forward<Args>(args)...)))
     {
@@ -40,5 +38,3 @@ public:
 };
 
 }  // namespace htps
-
-#endif

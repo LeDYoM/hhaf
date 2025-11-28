@@ -1,9 +1,10 @@
-HTPS_PRAGMA_ONCE
-#ifndef MTPS_CESTR_INCLUDE_HPP
-#define MTPS_CESTR_INCLUDE_HPP
+module;
 
-#include "types.hpp"
 #include <algorithm>
+
+export module htypes:str_literal;
+
+import :btypes;
 
 namespace htps
 {
@@ -83,5 +84,3 @@ template <size_type N>
 using str_literal = basic_str_literal<char, N>;
 
 }  // namespace htps
-
-#endif

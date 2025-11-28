@@ -1,10 +1,8 @@
-HTPS_PRAGMA_ONCE
-#ifndef HTYPES_SHARED_PTR_INCLUDE_HPP
-#define HTYPES_SHARED_PTR_INCLUDE_HPP
+export module htypes:shared_ptr;
 
-#include <htypes/include/basic_types.hpp>
-#include <htypes/include/unique_ptr.hpp>
-#include <htypes/include/memory/allocator.hpp>
+import :btypes;
+import :unique_ptr;
+import :allocator;
 
 namespace htps
 {
@@ -368,5 +366,3 @@ template <class T, class T2>
 }
 
 }  // namespace htps
-
-#endif

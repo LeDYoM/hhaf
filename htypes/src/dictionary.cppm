@@ -1,9 +1,7 @@
-HTPS_PRAGMA_ONCE
-#ifndef HTYPES_DICTIONARY_INCLUDE_HPP
-#define HTYPES_DICTIONARY_INCLUDE_HPP
+export module htypes:dictionary;
 
-#include <htypes/include/basic_dictionary.hpp>
-#include <htypes/include/str.hpp>
+import :bdictionary;
+import :str;
 
 namespace htps
 {
@@ -17,5 +15,3 @@ using Dictionary = BasicDictionary<str, T>;
 using PureDictionary = Dictionary<str>;
 
 }  // namespace htps
-
-#endif

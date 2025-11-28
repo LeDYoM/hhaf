@@ -1,8 +1,6 @@
-module;
+export module htypes:growpolicy;
 
-#include "types.hpp"
-
-module htypes:growpolicy;
+import :btypes;
 
 namespace htps
 {
@@ -30,5 +28,3 @@ public:
 #pragma warning(pop)
 
 }  // namespace htps
-
-#endif

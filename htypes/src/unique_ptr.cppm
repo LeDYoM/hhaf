@@ -1,9 +1,7 @@
-HTPS_PRAGMA_ONCE
-#ifndef HTYPES_UNIQUE_PTR_INCLUDE_HPP
-#define HTYPES_UNIQUE_PTR_INCLUDE_HPP
+export module htypes:unique_ptr;
 
-#include <htypes/include/types.hpp>
-#include <htypes/include/memory/allocator.hpp>
+import :btypes;
+import :allocator;
 
 namespace htps
 {
@@ -127,5 +125,3 @@ template <typename T, typename... Args>
 }
 
 }  // namespace htps
-
-#endif

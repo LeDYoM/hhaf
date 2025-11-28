@@ -1,8 +1,6 @@
-HTPS_PRAGMA_ONCE
-#ifndef HTPS_P_IMPL_POINTER_INCLUDE_HPP
-#define HTPS_P_IMPL_POINTER_INCLUDE_HPP
+export module htypes:pimplp;
 
-#include "types.hpp"
+import :btypes;
 
 namespace htps
 {
@@ -85,5 +83,3 @@ constexpr PImplPointer<T> make_pimplp_forward(Args&&... args) noexcept
 }
 
 }  // namespace htps
-
-#endif

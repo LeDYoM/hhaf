@@ -1,10 +1,11 @@
-HTPS_PRAGMA_ONCE
-#ifndef HTPS_RAWMEMORY_INCLUDE_HPP
-#define HTPS_RAWMEMORY_INCLUDE_HPP
+module;
 
-#include <htypes/include/types.hpp>
-#include <htypes/include/str.hpp>
 #include <cstring>
+
+export module htypes:raw_memory;
+
+import :btypes;
+import :str;
 
 #pragma warning(push)
 #pragma warning(disable : 4514)  // Unused functions in MSVC
@@ -43,7 +44,7 @@ public:
         m_data[data.size()] = static_cast<inner_type>(0);
     }
 
-    RawMemory(RawMemory const& rhs) = default;
+    RawMemory(RawMemory const& rhs)            = default;
     RawMemory& operator=(RawMemory const& rhs) = default;
     RawMemory(RawMemory&&) noexcept            = default;
     RawMemory& operator=(RawMemory&&) noexcept = default;
@@ -87,5 +88,3 @@ private:
 }  // namespace htps
 
 #pragma warning(pop)
-
-#endif

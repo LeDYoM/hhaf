@@ -76,8 +76,7 @@ set(hhaf_core_module_list
   haf_user
   haf_run
 )
-
-#set(module_list "${hhaf_core_module_list};${backend_module_list}")
+#[[
 set(module_list "${hhaf_core_module_list}")
 foreach(target ${module_list})
   message("Adding module: ${target}")
@@ -100,3 +99,4 @@ add_subdirectory(haf_app_middleware)
 #endif()
 
 build_docs("${module_list}")
+]]

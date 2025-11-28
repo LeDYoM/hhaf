@@ -1,11 +1,14 @@
 module;
 
 #include <initializer_list>
-//#include "types.hpp"
-//#include "span.hpp"
 #include <cassert>
+#include <iterator>
 
 export module htypes:array;
+
+import :btypes;
+import :span;
+import :weak_ptr;
 
 namespace htps
 {

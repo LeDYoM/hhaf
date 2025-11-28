@@ -1,9 +1,9 @@
-HTPS_PRAGMA_ONCE
-#ifndef HTYPES_MENUM_INCLUDE_HPP
-#define HTYPES_MENUM_INCLUDE_HPP
+module;
 
 #include <type_traits>
 #include <limits>
+
+export module htypes:menum;
 
 namespace htps
 {
@@ -92,4 +92,3 @@ private:
 
 }  // namespace htps
 
-#endif

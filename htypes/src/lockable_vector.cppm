@@ -1,10 +1,8 @@
-HTPS_PRAGMA_ONCE
-#ifndef HTYPES_LOCKABLE_VECTOR_CONTAINER_INCLUDE_HPP
-#define HTYPES_LOCKABLE_VECTOR_CONTAINER_INCLUDE_HPP
+export module htypes:lvector;
 
-#include "vector.hpp"
-#include "function.hpp"
-#include "algoutils.hpp"
+import :vector;
+import :function;
+import :algoutils;
 
 namespace htps
 {
@@ -240,5 +238,3 @@ private:
     vector<T> remove_cache_;
 };
 }  // namespace htps
-
-#endif

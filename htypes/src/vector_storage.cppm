@@ -1,11 +1,13 @@
-HTPS_PRAGMA_ONCE
-#ifndef HTYPES_VECTOR_STORAGE_INCLUDE_HPP
-#define HTYPES_VECTOR_STORAGE_INCLUDE_HPP
+module;
 
 #include <utility>
-#include "memory/allocator.hpp"
-#include "function.hpp"
-#include "growpolicy.hpp"
+#include <iterator>
+
+export module htypes:vector_storage;
+
+import :allocator;
+import :function;
+import :growpolicy;
 
 namespace htps
 {
@@ -234,5 +236,3 @@ public:
 };
 
 }  // namespace htps
-
-#endif

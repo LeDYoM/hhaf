@@ -1,12 +1,13 @@
-HTPS_PRAGMA_ONCE
-#ifndef HTPS_STR_VIEW_INCLUDE_HPP
-#define HTPS_STR_VIEW_INCLUDE_HPP
+module;
 
-#include "types.hpp"
-#include "str_functions.hpp"
-#include "str_literal.hpp"
-#include "algoutils.hpp"
 #include <compare>
+
+export module htypes:str_view;
+
+import :btypes;
+import :str_functions;
+import :str_literal;
+import :algoutils;
 
 namespace htps
 {
@@ -146,5 +147,3 @@ public:
 using str_view = basic_str_view<char>;
 
 }  // namespace htps
-
-#endif

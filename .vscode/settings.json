@@ -81,7 +81,12 @@
         "forward_list": "cpp",
         "format": "cpp",
         "bitset": "cpp",
-        "charconv": "cpp"
+        "charconv": "cpp",
+        "bit": "cpp",
+        "clocale": "cpp",
+        "csignal": "cpp",
+        "source_location": "cpp",
+        "stop_token": "cpp"
     },
     "C_Cpp.dimInactiveRegions": false,
     "testMate.cpp.log.logSentry": "disable_3",

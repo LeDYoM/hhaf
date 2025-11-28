@@ -1,12 +1,12 @@
-HTPS_PRAGMA_ONCE
-HTPS_PRAGMA_ONCE
-#ifndef HTYPES_SPAN_INCLUDE_HPP
-#define HTYPES_SPAN_INCLUDE_HPP
+module;
 
-#include <htypes/include/types.hpp>
-#include <htypes/include/vector_base.hpp>
 #include <cassert>
 #include <type_traits>
+
+export module htypes:span;
+
+import :btypes;
+import :vector_base;
 
 namespace htps
 {
@@ -89,5 +89,3 @@ template <typename T, size_type Size>
 span(T (&)[Size]) -> span<T>;
 
 }  // namespace htps
-
-#endif

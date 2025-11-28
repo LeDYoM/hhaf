@@ -1,13 +1,6 @@
-module;
+export module htypes:hash_table;
 
-module 
-
-HTPS_PRAGMA_ONCE
-#ifndef HTYPES_HASH_TABLE_INCLUDE_HPP
-#define HTYPES_HASH_TABLE_INCLUDE_HPP
-
-#include <htypes/include/basic_dictionary.hpp>
-#include <htypes/include/str.hpp>
+import :bdictionary;
 
 namespace htps
 {
@@ -20,4 +13,3 @@ using HashTable = BasicDictionary<u32, T>;
 
 }  // namespace htps
 
-#endif

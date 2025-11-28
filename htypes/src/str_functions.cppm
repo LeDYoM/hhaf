@@ -1,8 +1,6 @@
-HTPS_PRAGMA_ONCE
-#ifndef HTPS_STR_FUNCTIONS_INCLUDE_HPP
-#define HTPS_STR_FUNCTIONS_INCLUDE_HPP
+export module htypes:str_functions;
 
-#include "basic_types.hpp"
+import :btypes;
 
 namespace htps
 {
@@ -168,5 +166,3 @@ template <typename CharType>
 }
 
 }  // namespace htps
-
-#endif

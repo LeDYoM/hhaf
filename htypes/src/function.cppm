@@ -2,7 +2,9 @@ module;
 
 #include <cassert>
 
-module htypes:function;
+export module htypes:function;
+
+import :shared_ptr;
 
 namespace htps
 {
@@ -30,7 +32,7 @@ public:
      */
     constexpr function() noexcept : callable_{nullptr} {}
 
-    constexpr function(nullptr_t) noexcept : function{} {}
+    constexpr function(std::nullptr_t) noexcept : function{} {}
 
     /**
      * @brief Construct from a callable object. Normally, a lambda or a pointer

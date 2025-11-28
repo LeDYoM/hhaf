@@ -1,11 +1,11 @@
-HTPS_PRAGMA_ONCE
-HTPS_PRAGMA_ONCE
-#ifndef HTYPES_VECTOR_INCLUDE_HPP
-#define HTYPES_VECTOR_INCLUDE_HPP
+export module htypes:vector;
 
-#include <htypes/include/growpolicy.hpp>
-#include <htypes/include/memory/allocator.hpp>
-#include <htypes/include/vector_base.hpp>
+import :growpolicy;
+import :allocator;
+import :vector_base;
+import :shared_ptr;
+import :unique_ptr;
+import :weak_ptr;
 
 namespace htps
 {
@@ -29,5 +29,3 @@ template <typename T,
           typename GrowPolicy = GrowPolicyUnary>
 using vector_weak_pointers = vector<wptr<T>>;
 }  // namespace htps
-
-#endif

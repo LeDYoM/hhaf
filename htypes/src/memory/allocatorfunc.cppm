@@ -1,9 +1,10 @@
-HTPS_PRAGMA_ONCE
-#ifndef HTYPES_ALLOCATOR_FUNC_1_INCLUDE_HPP
-#define HTYPES_ALLOCATOR_FUNC_1_INCLUDE_HPP
+module;
 
-#include <htypes/include/types.hpp>
 #include <cassert>
+
+export module htypes:allocatorfunc;
+
+import :btypes;
 
 namespace htps
 {
@@ -34,5 +35,3 @@ public:
 };
 
 }  // namespace htps
-
-#endif

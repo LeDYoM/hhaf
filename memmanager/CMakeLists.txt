@@ -29,3 +29,4 @@ build_lib_component(EXPORT_ALL HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}" SOURCES
 set_compile_warning_level_and_cxx_properties_all(${CURRENT_TARGET})
 target_link_libraries(${CURRENT_TARGET} PRIVATE parpar)
 target_include_directories(${CURRENT_TARGET} PRIVATE src)
+target_include_directories(${CURRENT_TARGET} PUBLIC memmanager)

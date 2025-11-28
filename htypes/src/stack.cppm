@@ -1,10 +1,11 @@
-HTPS_PRAGMA_ONCE
-#ifndef HTYPES_STACK_INCLUDE_HPP
-#define HTYPES_STACK_INCLUDE_HPP
+module;
 
 #include <initializer_list>
-#include "types.hpp"
-#include "vector.hpp"
+
+export module htypes:stack;
+
+import :btypes;
+import :vector;
 
 namespace htps
 {
@@ -43,9 +44,9 @@ public:
         m_data{htps::move(ilist)}
     {}
 
-    constexpr stack(const stack& other)     = default;
-    constexpr stack(stack&& other) noexcept = default;
-    constexpr stack& operator=(const stack& other) = default;
+    constexpr stack(const stack& other)                = default;
+    constexpr stack(stack&& other) noexcept            = default;
+    constexpr stack& operator=(const stack& other)     = default;
     constexpr stack& operator=(stack&& other) noexcept = default;
 
     constexpr size_type capacity() const noexcept { return m_data.capacity(); }
@@ -104,5 +105,3 @@ constexpr bool operator!=(const stack<A>& lhs, const stack<A>& rhs) noexcept
     return lhs.m_data != rhs.m_data;
 }
 }  // namespace htps
-
-#endif

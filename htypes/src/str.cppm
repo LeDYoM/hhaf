@@ -1,8 +1,10 @@
-HTPS_PRAGMA_ONCE
-#ifndef HTPS_STR_INCLUDE_HPP
-#define HTPS_STR_INCLUDE_HPP
+module;
 
-#include "basic_str.hpp"
+#include <type_traits>
+
+export module htypes:str;
+
+import :bstr;
 
 namespace htps
 {
@@ -24,5 +26,3 @@ static_assert(std::is_copy_constructible_v<str>,
 using string_vector = vector<str>;
 
 }  // namespace htps
-
-#endif

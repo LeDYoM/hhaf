@@ -1,9 +1,7 @@
-HTPS_PRAGMA_ONCE
-#ifndef HTYPES_WEAK_PTR_INCLUDE_HPP
-#define HTYPES_WEAK_PTR_INCLUDE_HPP
+export module htypes:weak_ptr;
 
-#include <htypes/include/basic_types.hpp>
-#include <htypes/include/shared_ptr.hpp>
+import :btypes;
+import :shared_ptr;
 
 namespace htps
 {
@@ -165,5 +163,3 @@ template <typename T>
 }
 
 }  // namespace htps
-
-#endif

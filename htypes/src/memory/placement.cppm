@@ -1,9 +1,9 @@
-HTPS_PRAGMA_ONCE
-#ifndef HTYPES_PLACEMENT_INCLUDE_HPP
-#define HTYPES_PLACEMENT_INCLUDE_HPP
+module;
 
-#include <utility>
 #include <cassert>
+
+module htypes:placement;
+import :btypes;
 
 namespace htps
 {
@@ -29,7 +29,7 @@ public:
 
         if constexpr (sizeof...(args) > 0U)
         {
-            ::new (static_cast<void*>(where)) T(htps::forward<Args>(args)...);
+//            ::new (static_cast<void*>(where)) T(htps::forward<Args>(args)...);
         }
         else
         {
@@ -46,4 +46,3 @@ public:
 
 }  // namespace htps
 
-#endif
