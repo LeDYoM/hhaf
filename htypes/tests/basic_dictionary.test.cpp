@@ -1,7 +1,6 @@
 #include "catch_include.hpp"
 
-#include <htypes/include/basic_dictionary.hpp>
-#include <htypes/include/types.hpp>
+import htypes;
 
 using namespace htps;
 

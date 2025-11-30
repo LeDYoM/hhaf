@@ -1,7 +1,6 @@
 #include "catch_include.hpp"
 
-#include <htypes/include/types.hpp>
-#include <htypes/include/lockable_vector.hpp>
+import htypes;
 
 using namespace htps;
 

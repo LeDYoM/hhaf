@@ -1,6 +1,6 @@
 #include "catch_include.hpp"
 
-#include <htypes/include/hash.hpp>
+import htypes;
 
 using namespace htps;
 

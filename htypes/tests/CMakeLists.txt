@@ -4,9 +4,9 @@ project(htypes_utests CXX)
 set(CURRENT_TARGET ${PROJECT_NAME})
 
 set(SOURCE_TESTS
-    array
+#    array
     basic_dictionary
-    dictionary
+#[[    dictionary
     function
     hash
     lockable_vector
@@ -22,6 +22,7 @@ set(SOURCE_TESTS
     unique_ptr
     vector
     weak_ptr
+    ]]
 )
 
 add_test_executable_with_main(SOURCE_TESTS ${SOURCE_TESTS})

@@ -15,13 +15,13 @@ target_sources(${CURRENT_TARGET}
 PUBLIC
   FILE_SET CXX_MODULES
   FILES
+    src/array.cppm
     src/memory/alloc_func_memmanager.cppm
     src/memory/alloc_func.cppm
     src/memory/allocator.cppm
     src/memory/allocatorfunc.cppm
     src/memory/placement.cppm
     src/algoutils.cppm
-    src/array.cppm
     src/basic_dictionary.cppm
     src/basic_str.cppm
     src/basic_types.cppm

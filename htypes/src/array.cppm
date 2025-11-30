@@ -3,6 +3,7 @@ module;
 #include <initializer_list>
 #include <cassert>
 #include <iterator>
+#include <cstddef>
 
 export module htypes:array;
 
@@ -12,8 +13,8 @@ import :weak_ptr;
 
 namespace htps
 {
-template <class T, size_type array_size>
-class array final
+template <class T, size_t array_size>
+class array
 {
 public:
     using iterator         = T*;
@@ -66,7 +67,7 @@ public:
                                   const_iterator const _end) :
         array{_begin, static_cast<size_type>(std::distance(_begin, _end))}
     {}
-
+/*
     [[nodiscard]] constexpr array(span<T const> const rhs) :
         array{rhs.cbegin(), rhs.cend()}
     {}
@@ -74,7 +75,7 @@ public:
     [[nodiscard]] constexpr array(span<T> const rhs) :
         array{rhs.cbegin(), rhs.cend()}
     {}
-
+*/
     constexpr array(array&&)      = default;
     constexpr array(const array&) = default;
     constexpr array& operator=(array&&) = default;
@@ -151,7 +152,7 @@ public:
     {
         return back();
     }
-
+/*
     constexpr array& operator=(span<T> const& rhs)
     {
         *this = array{rhs};
@@ -163,7 +164,7 @@ public:
         *this = array{rhs};
         return *this;
     }
-
+*/
 private:
     T buffer_[array_size];
 };

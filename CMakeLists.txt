@@ -57,32 +57,32 @@ target_link_libraries(log_and_types INTERFACE htypes memmanager hlog)
 add_subdirectory(tools)
 
 set(hhaf_core_module_list
-  agloader
-  logger
-  mc_serial
-  facil_math
-  parpar
+#  agloader
+#  logger
+#  mc_serial
+#  facil_math
+#  parpar
   memmanager
   htypes
-  hlog
-  host_haf_interface
-  host_connector
-  hosted_app
-  host
-  backend_dev
-  backend
-  hogl
-  haf
-  haf_user
-  haf_run
+#  hlog
+#  host_haf_interface
+#  host_connector
+#  hosted_app
+#  host
+#  backend_dev
+#  backend
+ # hogl
+ # haf
+ # haf_user
+ # haf_run
 )
-#[[
+
 set(module_list "${hhaf_core_module_list}")
 foreach(target ${module_list})
   message("Adding module: ${target}")
   add_subdirectory(${target})
 endforeach()
-
+#[[
 add_subdirectory(haf_ext)
 
 add_subdirectory(backend_client)

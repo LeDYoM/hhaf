@@ -1,7 +1,6 @@
 #include "catch_include.hpp"
 
-#include <htypes/include/span.hpp>
-#include <htypes/include/vector.hpp>
+import htypes;
 
 using namespace htps;
 

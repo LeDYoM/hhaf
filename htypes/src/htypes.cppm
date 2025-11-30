@@ -1,9 +1,10 @@
 export module htypes;
 
-export import :allocatorfunc;
+//export import :allocatorfunc;
 
-export import :algoutils;
+//export import :algoutils;
 export import :array;
+/*
 export import :bdictionary;
 export import :btypes;
 export import :bstr;
@@ -27,3 +28,4 @@ export import :vector_base;
 export import :vector_storage;
 export import :vector;
 export import :weak_ptr;
+*/

@@ -1,7 +1,6 @@
 #include "catch_include.hpp"
 
-#include <htypes/include/stack.hpp>
-#include <htypes/include/types.hpp>
+import htypes;
 
 #include <stack>
 

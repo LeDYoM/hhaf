@@ -1,8 +1,7 @@
 #include "catch_include.hpp"
 
-#include <htypes/include/types.hpp>
-#include <htypes/include/str.hpp>
-#include <htypes/include/menum.hpp>
+import htypes;
+
 #include <limits>
 
 using namespace htps;
