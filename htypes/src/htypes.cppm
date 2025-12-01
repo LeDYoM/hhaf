@@ -16,6 +16,7 @@ export import :function;
 export import :growpolicy;
 export import :hash_table;
 export import :hash;
+export import :lockable_vector;
 export import :menum;
 export import :pair;
 export import :raw_memory;

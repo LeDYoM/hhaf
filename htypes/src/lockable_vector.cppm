@@ -1,4 +1,4 @@
-export module htypes:lvector;
+export module htypes:lockable_vector;
 
 import :vector;
 import :function;

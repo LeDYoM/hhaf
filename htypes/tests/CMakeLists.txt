@@ -9,7 +9,7 @@ set(SOURCE_TESTS
     dictionary
     function
     hash
-#    lockable_vector
+    lockable_vector
     menum
     pair
     shared_ptr
