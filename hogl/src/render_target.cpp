@@ -7,6 +7,10 @@
 #include "opengl/glad.h"
 #include "opengl/gl_check.hpp"
 
+#include <cassert>
+#include <cmath>
+#include <limits>
+
 using namespace htps;
 
 namespace haf::ogl
@@ -128,7 +132,7 @@ namespace
 [[nodiscard]] inline bool isAlmostEqual(float const lhs,
                                         float const rhs) noexcept
 {
-    return std::fabs(lhs - rhs) < FLT_EPSILON;
+    return std::fabs(lhs - rhs) < std::numeric_limits<float>::epsilon();
 }
 }  // namespace
 

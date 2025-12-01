@@ -2,7 +2,7 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_RENDER_RENDERIZABLE_PRIVATE_INCLUDE_HPP
 #define HAF_RENDER_RENDERIZABLE_PRIVATE_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
+import htypes;
 #include <haf/include/render/renderizable.hpp>
 #include <haf/include/resources/itexture.hpp>
 #include <haf/include/resources/ishader.hpp>

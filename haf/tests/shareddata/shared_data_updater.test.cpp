@@ -1,6 +1,6 @@
 #include "catch_include.hpp"
 
-#include <htypes/include/types.hpp>
+import htypes;
 #include "shareddata/shared_data_system.hpp"
 #include <haf/include/shareddata/shared_data_updater.hpp>
 #include <haf/include/shareddata/shared_data_viewer.hpp>

@@ -9,9 +9,8 @@ HTPS_PRAGMA_ONCE
 #include <haf/include/time/time_view.hpp>
 #include <haf/include/time/timer.hpp>
 
-#include <htypes/include/types.hpp>
+import htypes;
 #include <haf/include/properties/iproperty.hpp>
-#include <htypes/include/function.hpp>
 
 namespace haf::anim
 {

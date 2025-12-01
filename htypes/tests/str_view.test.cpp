@@ -1,6 +1,6 @@
 #include "catch_include.hpp"
 
-#include <htypes/include/str_view.hpp>
+import htypes;
 
 using namespace htps;
 

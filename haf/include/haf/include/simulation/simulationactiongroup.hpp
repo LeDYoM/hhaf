@@ -7,7 +7,7 @@ HTPS_PRAGMA_ONCE
 #include <haf/include/input/key.hpp>
 #include <haf/include/time/time_point.hpp>
 
-#include <htypes/include/types.hpp>
+import htypes;
 
 namespace haf::sys
 {

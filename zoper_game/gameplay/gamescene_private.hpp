@@ -1,7 +1,7 @@
 #ifndef ZOOPER_GAMESCENE_PRIVATE_INCLUDE_HPP
 #define ZOOPER_GAMESCENE_PRIVATE_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
+import htypes;
 
 #include <haf/include/animation/animation_component.hpp>
 #include <haf/include/random/randomnumberscomponent.hpp>

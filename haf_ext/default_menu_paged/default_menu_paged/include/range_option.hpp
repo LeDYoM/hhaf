@@ -1,9 +1,7 @@
 #ifndef HAF_EXT_DEFAULT_MENU_PAGED_RANGE_OPTION_INCLUDE_HPP
 #define HAF_EXT_DEFAULT_MENU_PAGED_RANGE_OPTION_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
-#include <htypes/include/str.hpp>
-#include <htypes/include/menum.hpp>
+import htypes;
 
 namespace haf::exts::dmp
 {

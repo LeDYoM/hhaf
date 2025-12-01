@@ -1,7 +1,7 @@
 #ifndef HAF_HOST_APP_STATE_INCLUDE_HPP
 #define HAF_HOST_APP_STATE_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
+import htypes;
 
 namespace haf::host
 {

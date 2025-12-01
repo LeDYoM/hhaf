@@ -1,8 +1,9 @@
 #include <backend_client/include/default_functions.hpp>
 
-#include <htypes/include/types.hpp>
 #include <backend_dev/include/ibackendregister.hpp>
 #include <backend_client/include/ibackendmanager.hpp>
+
+import htypes;
 
 namespace haf::backend::client
 {

@@ -1,8 +1,8 @@
 #ifndef HAF_HOSTED_APP_IAPP_INCLUDE_HPP
 #define HAF_HOSTED_APP_IAPP_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
-#include <htypes/include/str.hpp>
+import htypes;
+
 #include <host_connector/include/ihost_connector.hpp>
 
 namespace haf::scene

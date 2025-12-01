@@ -5,7 +5,7 @@ import :shared_ptr;
 
 namespace htps
 {
-template <typename T>
+export template <typename T>
 class wptr final
 {
 public:
@@ -136,16 +136,16 @@ private:
     shptr_detail::counter* m_counter{nullptr};
 };
 
-template <typename T>
+export template <typename T>
 wptr(wptr<T>) -> wptr<T>;
 
-template <typename T>
+export template <typename T>
 [[nodiscard]] bool operator==(wptr<T> const& lhs, std::nullptr_t) noexcept
 {
     return lhs.expired();
 }
 
-template <typename T>
+export template <typename T>
 [[nodiscard]] bool operator==(wptr<T> const& lhs, wptr<T> const& rhs) noexcept
 {
     if (lhs.expired() == true && rhs.expired() == true)

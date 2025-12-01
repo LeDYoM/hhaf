@@ -1,7 +1,7 @@
 #ifndef ZOPER_HIGHSCORETEXTCONTROLLER_INCLUDE_HPP
 #define ZOPER_HIGHSCORETEXTCONTROLLER_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
+import htypes;
 #include <haf/include/events/connection.hpp>
 #include <haf/include/scene/scene_node.hpp>
 #include <haf/include/resources/ifont.hpp>

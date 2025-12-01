@@ -2,7 +2,7 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_SYS_SYSTEM_ACCESS_INCLUDE_HPP
 #define HAF_SYS_SYSTEM_ACCESS_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
+import htypes;
 
 namespace haf::scene
 {

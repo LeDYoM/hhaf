@@ -1,11 +1,10 @@
 #ifndef HAF_HOST_CONFIG_INCLUDE_HPP
 #define HAF_HOST_CONFIG_INCLUDE_HPP
 
+import htypes;
+
 #include <hlog/include/hlog.hpp>
-#include <htypes/include/str.hpp>
-#include <htypes/include/vector.hpp>
 #include <parpar/include/parpar.hpp>
-#include <htypes/include/dictionary.hpp>
 
 #include <fstream>
 #include <string>

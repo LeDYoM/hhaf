@@ -1,6 +1,7 @@
 module;
 
 #include <cassert>
+#include <new>
 
 module htypes:placement;
 import :btypes;
@@ -27,9 +28,14 @@ public:
     {
         assert(where != nullptr);
 
-        if constexpr (sizeof...(args) > 0U)
+        if constexpr (sizeof...(args) == 3U)
         {
-//            ::new (static_cast<void*>(where)) T(htps::forward<Args>(args)...);
+            ::new (static_cast<void*>(where)) T();
+        }
+
+        else if constexpr (sizeof...(args) > 0U)
+        {
+            ::new (static_cast<void*>(where)) T(htps::forward<Args>(args)...);
         }
         else
         {
@@ -45,4 +51,3 @@ public:
 };
 
 }  // namespace htps
-

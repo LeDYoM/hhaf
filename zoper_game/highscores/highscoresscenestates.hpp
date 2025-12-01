@@ -1,7 +1,7 @@
 #ifndef ZOPER_HIGHSCORES_SCENE_STATES_INCLUDE_HPP
 #define ZOPER_HIGHSCORES_SCENE_STATES_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
+import htypes;
 
 namespace zoper
 {

@@ -2,10 +2,10 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_FRESOURCES_FONTUTILS_INCLUDE_HPP
 #define HAF_FRESOURCES_FONTUTILS_INCLUDE_HPP
 
+import htypes;
+
 #include <haf/include/resources/ifont.hpp>
-#include <htypes/include/vector.hpp>
 #include <facil_math/include/rect.hpp>
-#include <htypes/include/str.hpp>
 #include "text_render_data.hpp"
 
 namespace haf::res

@@ -3,7 +3,7 @@ HTPS_PRAGMA_ONCE
 #define HAF_COMPONENT_UNORDERED_COMPONENT_GROUP_INCLUDE_HPP
 
 #include <haf/include/haf_export.hpp>
-#include <htypes/include/types.hpp>
+import htypes;
 #include <haf/include/core/log.hpp>
 #include <haf/include/component/component_container_representation.hpp>
 

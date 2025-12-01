@@ -1,8 +1,9 @@
 #ifndef HAF_BACKEND_DEV_IVERTEX_INCLUDE_HPP
 #define HAF_BACKEND_DEV_IVERTEX_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
 #include <facil_math/include/vector2d.hpp>
+
+import htypes;
 
 namespace haf::backend
 {

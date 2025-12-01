@@ -1,6 +1,6 @@
 #include "catch_include.hpp"
 
-#include <htypes/include/types.hpp>
+import htypes;
 #include "time/time_system.hpp"
 #include <haf/include/time/time_point.hpp>
 #include "system/system_base.hpp"

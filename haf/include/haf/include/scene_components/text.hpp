@@ -2,7 +2,7 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_TEXT_COMPONENT_INCLUDE_HPP
 #define HAF_TEXT_COMPONENT_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
+import htypes;
 #include <haf/include/properties/iproperty.hpp>
 #include <haf/include/resources/ifont.hpp>
 #include <haf/include/scene/color.hpp>

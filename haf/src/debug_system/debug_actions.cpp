@@ -1,8 +1,9 @@
 #include <haf/include/debug_system/debug_actions.hpp>
-#include <htypes/include/vector.hpp>
 #include <haf/include/scene/scene_node.hpp>
 
 #include <hlog/include/hlog.hpp>
+
+import htypes;
 
 using namespace haf::input;
 using namespace haf::core;

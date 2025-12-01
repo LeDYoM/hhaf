@@ -3,8 +3,9 @@ HTPS_PRAGMA_ONCE
 #define HAF_RESOURCES_TEXT_RENDER_DATA_INCLUDE_HPP
 
 #include <facil_math/include/rect.hpp>
-#include <htypes/include/vector.hpp>
 #include "character_render_data.hpp"
+
+import htypes;
 
 namespace haf::res
 {

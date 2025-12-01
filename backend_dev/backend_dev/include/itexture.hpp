@@ -1,10 +1,11 @@
 #ifndef HAF_BACKEND_ITEXTURE_HPP
 #define HAF_BACKEND_ITEXTURE_HPP
 
-#include <htypes/include/types.hpp>
 #include <facil_math/include/vector2d.hpp>
 
 #include "iresourceinfo.hpp"
+
+import htypes;
 
 namespace haf::backend
 {

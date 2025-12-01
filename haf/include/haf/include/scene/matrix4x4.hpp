@@ -2,8 +2,8 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_SCENE_MATRIX4X4_INCLUDE_HPP
 #define HAF_SCENE_MATRIX4X4_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
-#include <htypes/include/array.hpp>
+import htypes;
+
 #include <haf/include/haf_export.hpp>
 
 namespace haf::scene

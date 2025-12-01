@@ -1,7 +1,7 @@
 #ifndef HOST_HAF_INTERFACE_ISYSTEMCONTROLLER_INTERFACE_INCLUDE_HPP
 #define HOST_HAF_INTERFACE_ISYSTEMCONTROLLER_INTERFACE_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
+import htypes;
 
 namespace haf
 {

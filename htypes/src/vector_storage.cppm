@@ -15,7 +15,7 @@ namespace htps
  * This class is a container to store sequences of Ts. It can be resized.
  * Other use cases include search, replacement, etc...
  */
-template <typename T, typename Allocator, typename GrowPolicy>
+export template <typename T, typename Allocator, typename GrowPolicy>
 class vector_storage
 {
 private:

@@ -3,7 +3,7 @@
 
 #include "gamebasetile.hpp"
 
-#include <htypes/include/types.hpp>
+import htypes;
 #include <facil_math/include/vector2d.hpp>
 
 #include <boardmanager/include/itile.hpp>

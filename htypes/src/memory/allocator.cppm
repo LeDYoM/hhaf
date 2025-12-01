@@ -4,17 +4,17 @@ import :placement;
 
 #ifdef USER_MEM_MANAGER
 import :alloc_func_memmanager
-template <typename T>
+export template <typename T>
 using ReserveDestroyT = htps::AllocatorMemManagerRaw<T>;
 #else
 import :alloc_func;
-template <typename T>
+export template <typename T>
 using ReserveDestroyT = htps::AllocatorMallocFree<T>;
 #endif
 
 namespace htps
 {
-template <typename T, typename ReserveDestroy = ReserveDestroyT<T>>
+export template <typename T, typename ReserveDestroy = ReserveDestroyT<T>>
 class AllocatorType : public ReserveDestroy, public BasicConstructDestruct<T>
 {
 public:

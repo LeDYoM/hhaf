@@ -23,7 +23,7 @@ namespace htps
  *
  * @tparam char_type Character type to be used
  */
-template <typename char_type>
+export template <typename char_type>
 class basic_str
 {
 public:
@@ -673,20 +673,20 @@ public:
     }
 };
 
-template <typename value_type, typename T>
+export template <typename value_type, typename T>
 constexpr basic_str<value_type>& operator<<(basic_str<value_type>& lhs,
                                             T const& n)
 {
     return lhs.append(n);
 }
 
-template <typename T, typename value_type>
+export template <typename T, typename value_type>
 auto operator+(T&& lhs, basic_str<value_type> const& rhs)
 {
     return basic_str<value_type>(htps::forward<T>(lhs)).append(rhs);
 }
 
-template <typename char_value, typename T, typename... Args>
+export template <typename char_value, typename T, typename... Args>
 constexpr void make_basic_str_internal(basic_str<char_value>& buffer,
                                        T&& arg,
                                        Args&&... args)
@@ -695,13 +695,13 @@ constexpr void make_basic_str_internal(basic_str<char_value>& buffer,
     make_basic_str_internal(buffer, htps::forward<Args>(args)...);
 }
 
-template <typename char_value, typename T>
+export template <typename char_value, typename T>
 constexpr void make_basic_str_internal(basic_str<char_value>& buffer, T&& arg)
 {
     buffer << htps::forward<T>(arg);
 }
 
-template <typename char_value, typename... Args>
+export template <typename char_value, typename... Args>
 constexpr basic_str<char_value> make_basic_str(Args&&... args)
 {
     basic_str<char_value> t;
@@ -709,7 +709,7 @@ constexpr basic_str<char_value> make_basic_str(Args&&... args)
     return t;
 }
 
-template <typename char_value, typename T>
+export template <typename char_value, typename T>
 constexpr basic_str<char_value> make_basic_str(T&& arg)
 {
     basic_str<char_value> t;
@@ -717,37 +717,37 @@ constexpr basic_str<char_value> make_basic_str(T&& arg)
     return t;
 }
 
-template <typename char_value>
+export template <typename char_value>
 inline basic_str<char_value> make_basic_str(u64&& n)
 {
     return basic_str<char_value>::to_str(htps::move(n));
 }
 
-template <typename char_value>
+export template <typename char_value>
 inline basic_str<char_value> make_basic_str(s64&& n)
 {
     return basic_str<char_value>::to_str(htps::move(n));
 }
 
-template <typename char_value>
+export template <typename char_value>
 inline basic_str<char_value> make_basic_str(u32&& n)
 {
     return basic_str<char_value>::to_str(htps::move(n));
 }
 
-template <typename char_value>
+export template <typename char_value>
 inline basic_str<char_value> make_basic_str(s32&& n)
 {
     return basic_str<char_value>::to_str(htps::move(n));
 }
 
-template <typename char_value>
+export template <typename char_value>
 inline basic_str<char_value> make_basic_str(f32&& n)
 {
     return basic_str<char_value>::to_str(htps::move(n));
 }
 
-template <typename char_value>
+export template <typename char_value>
 inline basic_str<char_value> make_basic_str(f64&& n)
 {
     return basic_str<char_value>::to_str(htps::move(n));

@@ -6,6 +6,7 @@ module;
 #include <cassert>
 
 export module htypes:vector_base;
+
 import :function;
 import :growpolicy;
 import :vector_storage;
@@ -22,7 +23,7 @@ namespace htps
  * @tparam Allocator Allocator to be used by the vector
  * @tparam GrowPolicy Policy class to dinamically increment the capacity
  */
-template <typename T, typename Allocator, typename GrowPolicy>
+export template <typename T, typename Allocator, typename GrowPolicy>
 class vector_base final
 {
     vector_storage<T, Allocator, GrowPolicy> storage_;

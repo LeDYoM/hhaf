@@ -9,7 +9,7 @@ namespace htps
 // template <typename T, typename V>
 // using pair = std::pair<T, V>;
 
-template <typename T1, typename T2>
+export template <typename T1, typename T2>
 class pair
 {
 public:

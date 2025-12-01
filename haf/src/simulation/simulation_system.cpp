@@ -8,7 +8,7 @@
 #include <haf/include/filesystem/ifile_serializer.hpp>
 
 #include <mc_serial/include/serializer.hpp>
-#include <htypes/include/types.hpp>
+import htypes;
 #include <facil_math/include/rect.hpp>
 #include <mc_serial/include/object.hpp>
 

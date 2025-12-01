@@ -1,6 +1,6 @@
 #include "gamescene_private.hpp"
 #include "constants.hpp"
-#include <htypes/include/types.hpp>
+import htypes;
 
 #include <haf/include/animation/animation_component.hpp>
 #include <haf/include/random/randomnumberscomponent.hpp>

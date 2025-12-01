@@ -2,8 +2,6 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_DATA_IDESERIALIZABLE_INCLUDE_HPP
 #define HAF_DATA_IDESERIALIZABLE_INCLUDE_HPP
 
-#include <htypes/include/vector.hpp>
-#include <htypes/include/dictionary.hpp>
 #include <facil_math/include/rect.hpp>
 #include <mc_serial/include/object.hpp>
 

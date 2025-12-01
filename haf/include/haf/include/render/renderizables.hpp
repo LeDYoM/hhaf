@@ -2,9 +2,8 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_RENDER_RENDERIZABLES_INCLUDE_HPP
 #define HAF_RENDER_RENDERIZABLES_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
-#include <htypes/include/vector.hpp>
-#include <haf/include/core/types.hpp>
+import htypes;
+
 #include <haf/include/render/renderizable.hpp>
 #include <haf/include/render/renderizable_builder.hpp>
 

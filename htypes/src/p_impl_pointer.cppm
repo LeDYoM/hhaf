@@ -4,7 +4,7 @@ import :btypes;
 
 namespace htps
 {
-template <typename T>
+export template <typename T>
 class PImplPointer final
 {
 public:
@@ -68,14 +68,14 @@ private:
     rptr<T> pointer_;
 };
 
-template <typename T, typename... Args>
+export template <typename T, typename... Args>
 constexpr PImplPointer<T> make_pimplp(Args&&... args) noexcept
 {
     T* p = new T(htps::forward<Args>(args)...);
     return PImplPointer<T>{p};
 }
 
-template <typename T, typename... Args>
+export template <typename T, typename... Args>
 constexpr PImplPointer<T> make_pimplp_forward(Args&&... args) noexcept
 {
     T* p = new T{htps::forward<Args>(args)...};

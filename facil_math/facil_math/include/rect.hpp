@@ -2,8 +2,8 @@ FMA_PRAGMA_ONCE
 #ifndef FACIL_MATH_RECT_INCLUDE_HPP
 #define FACIL_MATH_RECT_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
-#include <htypes/include/str.hpp>
+import htypes;
+
 #include <facil_math/include/vector2d.hpp>
 
 namespace fmath

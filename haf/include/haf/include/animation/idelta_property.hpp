@@ -2,7 +2,7 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_ANIMATION_IDELTA_PROPERTY_INCLUDE_HPP
 #define HAF_ANIMATION_IDELTA_PROPERTY_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
+import htypes;
 #include <haf/include/properties/iproperty.hpp>
 
 namespace haf::anim

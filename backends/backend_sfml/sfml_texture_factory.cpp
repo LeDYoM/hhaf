@@ -1,4 +1,5 @@
-#include <htypes/include/types.hpp>
+import htypes;
+
 
 #include "sfml_texture_factory.hpp"
 #include "sfml_texture.hpp"

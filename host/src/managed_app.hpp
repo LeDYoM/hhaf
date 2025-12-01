@@ -1,8 +1,7 @@
 #ifndef HAF_HOST_MANAGED_APP_INCLUDE_HPP
 #define HAF_HOST_MANAGED_APP_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
-#include <htypes/include/str.hpp>
+import htypes;
 
 #include <hosted_app/include/iapp.hpp>
 

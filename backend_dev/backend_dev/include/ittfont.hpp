@@ -1,9 +1,9 @@
 #ifndef HAF_BACKEND_ITTFONT_HPP
 #define HAF_BACKEND_ITTFONT_HPP
 
-#include <htypes/include/types.hpp>
 #include <facil_math/include/rect.hpp>
-#include <htypes/include/str.hpp>
+
+import htypes;
 
 namespace haf::backend
 {

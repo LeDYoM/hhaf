@@ -1,8 +1,7 @@
 #ifndef ZOPER_HIGHSCORESDATA_INCLUDE_HPP
 #define ZOPER_HIGHSCORESDATA_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
-#include <htypes/include/array.hpp>
+import htypes;
 #include <facil_math/include/rect.hpp>
 #include <haf/include/data/ifullserializable.hpp>
 

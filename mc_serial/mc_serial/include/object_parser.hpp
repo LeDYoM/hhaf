@@ -2,8 +2,7 @@ MCS_PRAGMA_ONCE
 #ifndef MCS_OBJECT_PARSER_INCLUDE_HPP
 #define MCS_OBJECT_PARSER_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
-#include <htypes/include/str.hpp>
+import htypes;
 #include <mc_serial/include/object.hpp>
 
 namespace mcs

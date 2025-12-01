@@ -6,13 +6,13 @@ namespace htps
 {
 static constexpr size_type npos{static_cast<size_type>(-1)};
 
-[[nodiscard]] constexpr size_type strnlen(std::nullptr_t,
+export [[nodiscard]] constexpr size_type strnlen(std::nullptr_t,
                                           size_type = npos) noexcept
 {
     return 0U;
 }
 
-template <typename CharType>
+export template <typename CharType>
 [[nodiscard]] constexpr size_type strnlen(CharType const* lhs,
                                           size_type max_len = npos) noexcept
 {
@@ -27,7 +27,7 @@ template <typename CharType>
     return len;
 }
 
-template <typename CharType>
+export template <typename CharType>
 [[nodiscard]] constexpr int strnncmp(CharType const* const lhs,
                                      size_type lhs_size,
                                      CharType const* const rhs,
@@ -76,7 +76,7 @@ template <typename CharType>
  * if lhs > rhs. The concept of beeing smaller or greater is given by char
  * comparison and size
  */
-template <typename CharType>
+export template <typename CharType>
 [[nodiscard]] constexpr int strncmp(CharType const* const lhs,
                                     CharType const* const rhs,
                                     size_type start   = 0U,
@@ -112,7 +112,7 @@ template <typename CharType>
     return (lhs_size < rhs_size ? -1 : lhs_size > rhs_size ? 1 : 0);
 }
 
-template <typename CharType>
+export template <typename CharType>
 [[nodiscard]] constexpr bool starts_with(const CharType* str_text,
                                          const CharType* to_find) noexcept
 {
@@ -134,7 +134,7 @@ template <typename CharType>
     return *to_find == 0;
 }
 
-template <typename CharType>
+export template <typename CharType>
 [[nodiscard]] constexpr size_type strnfind(
     const CharType* const str_text,
     const CharType* const to_find) noexcept

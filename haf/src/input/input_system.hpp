@@ -2,8 +2,8 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_INPUTSYSTEM_INCLUDE_HPP
 #define HAF_INPUTSYSTEM_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
-#include <htypes/include/vector.hpp>
+import htypes;
+
 #include <haf/include/input/key.hpp>
 
 #include "system/system_base.hpp"

@@ -1,7 +1,7 @@
 #include <haf/include/time/timer_component.hpp>
 
-#include <htypes/include/function.hpp>
-#include <htypes/include/algoutils.hpp>
+import htypes;
+
 #include <hlog/include/hlog.hpp>
 #include <haf/include/scene/scene_node.hpp>
 #include <haf/include/time/timer.hpp>

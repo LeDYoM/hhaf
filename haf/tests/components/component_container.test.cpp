@@ -1,6 +1,6 @@
 #include "catch_include.hpp"
 
-#include <htypes/include/types.hpp>
+import htypes;
 #include <haf/include/scene/scene_node.hpp>
 #include <haf/include/component/component_container.hpp>
 #include <haf/include/component/component.hpp>

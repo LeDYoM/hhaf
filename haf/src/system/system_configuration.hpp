@@ -2,8 +2,7 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_SYSTEM_SYSTEM_CONFIGURATION_TEMPLATE_INCLUDE_HPP
 #define HAF_SYSTEM_SYSTEM_CONFIGURATION_TEMPLATE_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
-#include <htypes/include/str.hpp>
+import htypes;
 
 #include <haf/include/system/subsystem_view.hpp>
 #include <haf/include/filesystem/ifile_serializer.hpp>

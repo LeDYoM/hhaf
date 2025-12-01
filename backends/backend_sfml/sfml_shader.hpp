@@ -1,7 +1,8 @@
 #ifndef HAF_BACKEND_SFML_SHADER_INCLUDE_HPP
 #define HAF_BACKEND_SFML_SHADER_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
+import htypes;
+
 #include <backend_dev/include/ishader.hpp>
 
 namespace sf

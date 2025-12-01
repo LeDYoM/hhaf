@@ -3,7 +3,7 @@ HTPS_PRAGMA_ONCE
 #define HAF_RESOURCEMANAGER_INCLUDE_HPP
 
 #include "haf_private.hpp"
-#include <htypes/include/types.hpp>
+import htypes;
 #include <haf/include/resources/idefault_resources_retriever.hpp>
 #include <haf/include/resources/iresource_retriever.hpp>
 #include <haf/include/resources/iresource_configurator.hpp>

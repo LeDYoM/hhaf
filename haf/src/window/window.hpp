@@ -3,8 +3,7 @@ HTPS_PRAGMA_ONCE
 #define HAF_WINDOW_WINDOW_INCLUDE_HPP
 
 #include "haf_private.hpp"
-#include <htypes/include/types.hpp>
-#include <htypes/include/str.hpp>
+import htypes;
 #include "fps_counter.hpp"
 
 namespace haf::input

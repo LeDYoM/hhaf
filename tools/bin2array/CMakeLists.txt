@@ -1,4 +1,4 @@
-project(bin2array 
+project(bin2array
     DESCRIPTION "Program to convert binary files to C/C++ array files"
     LANGUAGES CXX)
 

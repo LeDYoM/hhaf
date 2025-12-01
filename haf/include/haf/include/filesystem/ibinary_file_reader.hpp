@@ -2,8 +2,9 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_FILESYSTEM_IBINARY_FILE_READER_INCLUDE_HPP
 #define HAF_FILESYSTEM_IBINARY_FILE_READER_INCLUDE_HPP
 
+import htypes;
+
 #include <haf/include/filesystem/path.hpp>
-#include <htypes/include/rawmemory.hpp>
 
 namespace haf::fs
 {

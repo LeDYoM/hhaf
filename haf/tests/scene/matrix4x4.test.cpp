@@ -1,6 +1,6 @@
 #include "catch_include.hpp"
 
-#include <htypes/include/types.hpp>
+import htypes;
 #include <haf/include/scene/matrix4x4.hpp>
 #include "matrix_utils.hpp"
 #include <limits>

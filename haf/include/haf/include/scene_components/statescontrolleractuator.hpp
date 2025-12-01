@@ -2,7 +2,7 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_STATES_CONTROLLER_ACTUATOR_INCLUDE_HPP
 #define HAF_STATES_CONTROLLER_ACTUATOR_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
+import htypes;
 #include <haf/include/scene_components/states_controller_component.hpp>
 
 namespace haf::scene

@@ -8,9 +8,9 @@ import :bstr;
 
 namespace htps
 {
-using str = basic_str<char>;
+export using str = basic_str<char>;
 
-template <typename... Args>
+export template <typename... Args>
 constexpr str make_str(Args&&... args)
 {
     return make_basic_str<typename str::value_type>(
@@ -23,6 +23,6 @@ static_assert(std::is_default_constructible_v<str>,
               "str must be default constructible");
 static_assert(std::is_copy_constructible_v<str>,
               "str must be copy constructible");
-using string_vector = vector<str>;
+export using string_vector = vector<str>;
 
 }  // namespace htps

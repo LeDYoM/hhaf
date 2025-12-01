@@ -2,11 +2,9 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_STATES_CONTROLLER_INCLUDE_HPP
 #define HAF_STATES_CONTROLLER_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
-#include <htypes/include/function.hpp>
+import htypes;
+
 #include <haf/include/events/connection.hpp>
-#include <htypes/include/stack.hpp>
-#include <htypes/include/lockable_vector.hpp>
 #include <hlog/include/hlog.hpp>
 #include <haf/include/component/component.hpp>
 

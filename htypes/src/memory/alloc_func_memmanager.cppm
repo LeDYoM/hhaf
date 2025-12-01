@@ -10,7 +10,7 @@ import :allocatorfunc;
 namespace htps
 {
 
-template <typename T>
+export template <typename T>
 using AllocatorMemManagerRaw =
     htps::AllocatorFunc<T, mmalloc, mfree, mfree_with_size>;
 

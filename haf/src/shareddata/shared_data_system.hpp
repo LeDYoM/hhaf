@@ -2,7 +2,7 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_SYSTEM_SHARED_DATA_INCLUDE_HPP
 #define HAF_SYSTEM_SHARED_DATA_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
+import htypes;
 #include "system/system_base.hpp"
 
 #include <haf/include/shareddata/ishareable.hpp>

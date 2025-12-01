@@ -51,18 +51,18 @@ endforeach()
 
 # Create interface library to add loggger and types with memory management
 # in one line.
-add_library(log_and_types INTERFACE)
-target_link_libraries(log_and_types INTERFACE htypes memmanager hlog)
+#add_library(log_and_types INTERFACE)
+#target_link_libraries(log_and_types INTERFACE htypes memmanager hlog)
 
-add_subdirectory(tools)
+#add_subdirectory(tools)
 
 set(hhaf_core_module_list
-#  agloader
+  agloader
 #  logger
 #  mc_serial
 #  facil_math
 #  parpar
-  memmanager
+#  memmanager
   htypes
 #  hlog
 #  host_haf_interface
@@ -71,10 +71,10 @@ set(hhaf_core_module_list
 #  host
 #  backend_dev
 #  backend
- # hogl
- # haf
- # haf_user
- # haf_run
+#  hogl
+#  haf
+#  haf_user
+#  haf_run
 )
 
 set(module_list "${hhaf_core_module_list}")

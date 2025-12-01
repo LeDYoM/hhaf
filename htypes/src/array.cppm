@@ -13,7 +13,7 @@ import :weak_ptr;
 
 namespace htps
 {
-template <class T, size_t array_size>
+export template <class T, size_t array_size>
 class array
 {
 public:
@@ -67,7 +67,7 @@ public:
                                   const_iterator const _end) :
         array{_begin, static_cast<size_type>(std::distance(_begin, _end))}
     {}
-/*
+
     [[nodiscard]] constexpr array(span<T const> const rhs) :
         array{rhs.cbegin(), rhs.cend()}
     {}
@@ -75,7 +75,7 @@ public:
     [[nodiscard]] constexpr array(span<T> const rhs) :
         array{rhs.cbegin(), rhs.cend()}
     {}
-*/
+
     constexpr array(array&&)      = default;
     constexpr array(const array&) = default;
     constexpr array& operator=(array&&) = default;
@@ -152,7 +152,7 @@ public:
     {
         return back();
     }
-/*
+
     constexpr array& operator=(span<T> const& rhs)
     {
         *this = array{rhs};
@@ -164,12 +164,12 @@ public:
         *this = array{rhs};
         return *this;
     }
-*/
+
 private:
     T buffer_[array_size];
 };
 
-template <class T, size_type array_size>
+export template <class T, size_type array_size>
 [[nodiscard]] constexpr bool operator==(
     array<T, array_size> const& lhs,
     array<T, array_size> const& rhs) noexcept
@@ -177,21 +177,21 @@ template <class T, size_type array_size>
     return std::equal(lhs.cbegin(), lhs.cend(), rhs.cbegin());
 }
 
-template <typename T, size_type S>
+export template <typename T, size_type S>
 using array_shared_pointers = array<sptr<T>, S>;
 
-template <typename T, size_type S>
+export template <typename T, size_type S>
 using array_unique_pointers = array<uptr<T>, S>;
 
-template <typename T, size_type S>
+export template <typename T, size_type S>
 using array_weak_pointers = array<wptr<T>, S>;
 
-template <typename _Tp, typename... _Up>
+export template <typename _Tp, typename... _Up>
 array(_Tp, _Up...)
     -> array<std::enable_if_t<(std::is_same_v<_Tp, _Up> && ...), _Tp>,
              1 + sizeof...(_Up)>;
 
-template <typename T>
+export template <typename T>
 array(T) -> array<T, 1U>;
 
 }  // namespace htps

@@ -2,8 +2,8 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_COMPONENT_DISCRETE_TEXT_INCLUDE_HPP
 #define HAF_COMPONENT_DISCRETE_TEXT_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
-#include <htypes/include/str.hpp>
+import htypes;
+
 #include <haf/include/properties/basic_property.hpp>
 #include <haf/include/properties/property_state.hpp>
 #include <haf/include/component/component.hpp>

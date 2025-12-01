@@ -2,9 +2,8 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_CORE_SYSTEM_RANDOMSYSTEM_INCLUDE_HPP
 #define HAF_CORE_SYSTEM_RANDOMSYSTEM_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
-#include <htypes/include/vector.hpp>
-#include <htypes/include/str.hpp>
+import htypes;
+
 #include "system/system_base.hpp"
 
 namespace haf::sys

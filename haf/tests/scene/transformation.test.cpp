@@ -1,6 +1,6 @@
 #include "catch_include.hpp"
 
-#include <htypes/include/types.hpp>
+import htypes;
 #include <haf/include/scene_components/transformation.hpp>
 
 TEST_CASE("haf::scene::Transformation", "[haf][scene][Transformation]")

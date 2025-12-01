@@ -1,8 +1,7 @@
 #ifndef HAF_EXT_DEFAULT_MENU_PAGED_OPTION_INCLUDE_HPP
 #define HAF_EXT_DEFAULT_MENU_PAGED_OPTION_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
-#include <htypes/include/str.hpp>
+import htypes;
 #include <default_menu_paged/include/range_option.hpp>
 #include <default_menu_paged/include/page_options.hpp>
 

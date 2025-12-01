@@ -2,7 +2,7 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_SYSTEM_TIMESYSTEM_ACCELERATION_INCLUDE_HPP
 #define HAF_SYSTEM_TIMESYSTEM_ACCELERATION_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
+import htypes;
 #include <haf/include/time/time_point.hpp>
 
 namespace haf::sys

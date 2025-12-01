@@ -2,7 +2,7 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_FILESYSTEM_PATH_INCLUDE_HPP
 #define HAF_FILESYSTEM_PATH_INCLUDE_HPP
 
-#include <htypes/include/str.hpp>
+import htypes;
 
 namespace haf::sys
 {

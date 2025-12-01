@@ -2,8 +2,8 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_TIME_TIME_POINT_INCLUDE_HPP
 #define HAF_TIME_TIME_POINT_INCLUDE_HPP
 
-#include <htypes/include/str.hpp>
-#include <htypes/include/types.hpp>
+
+import htypes;
 #include <haf/include/haf_export.hpp>
 
 namespace haf::time

@@ -1,6 +1,6 @@
 #include "catch_include.hpp"
 
-#include <htypes/include/types.hpp>
+import htypes;
 #include <haf/include/debug_system/debug_variable.hpp>
 #include "../../haf/src/debug_system/debug_variables.hpp"
 

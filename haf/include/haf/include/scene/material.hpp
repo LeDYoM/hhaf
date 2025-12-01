@@ -2,8 +2,8 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_SCENE_MATERIAL_INCLUDE_HPP
 #define HAF_SCENE_MATERIAL_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
-#include <htypes/include/str.hpp>
+import htypes;
+
 #include <facil_math/include/rect.hpp>
 #include <haf/include/properties/property_state.hpp>
 #include <haf/include/scene/color.hpp>

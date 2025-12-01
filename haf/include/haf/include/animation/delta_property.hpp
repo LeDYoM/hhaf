@@ -2,7 +2,7 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_ANIMATION_DELTA_PROPERTY_INCLUDE_HPP
 #define HAF_ANIMATION_DELTA_PROPERTY_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
+import htypes;
 #include <haf/include/properties/basic_property.hpp>
 #include <haf/include/properties/wrapper_property.hpp>
 #include <haf/include/animation/idelta_property.hpp>

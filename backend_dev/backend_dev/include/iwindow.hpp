@@ -1,9 +1,9 @@
 #ifndef HAF_BACKEND_IWINDOW_INCLUDE_HPP
 #define HAF_BACKEND_IWINDOW_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
-#include <htypes/include/str.hpp>
 #include "iresourceinfo.hpp"
+
+import htypes;
 
 namespace haf::backend
 {

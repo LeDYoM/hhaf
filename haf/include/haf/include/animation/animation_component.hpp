@@ -2,7 +2,7 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_ANIMATION_ANIMATION_COMPONENT_INCLUDE_HPP
 #define HAF_ANIMATION_ANIMATION_COMPONENT_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
+import htypes;
 #include <haf/include/component/component.hpp>
 #include <haf/include/animation/animation.hpp>
 #include <haf/include/animation/property_animation.hpp>

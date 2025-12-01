@@ -84,7 +84,7 @@ struct ManagedPointer final : public counter
  *
  * @tparam T Type of the owning pointer.
  */
-template <typename T>
+export template <typename T>
 class sptr final
 {
 public:
@@ -283,7 +283,7 @@ private:
     shptr_detail::counter* m_counter{nullptr};
 };
 
-template <typename T, typename... Args>
+export template <typename T, typename... Args>
 [[nodiscard]] sptr<T> msptr(Args&&... args)
 {
     auto t{AllocatorType<T>::allocate(1)};
@@ -291,7 +291,7 @@ template <typename T, typename... Args>
     return sptr<T>{htps::move(t)};
 }
 
-template <class T, class T2>
+export template <class T, class T2>
 [[nodiscard]] sptr<T> dynamic_pointer_cast(sptr<T2> const& other) noexcept
 {
     if (other.m_counter != nullptr)
@@ -309,7 +309,7 @@ template <class T, class T2>
     return {};
 }
 
-template <class T, class T2>
+export template <class T, class T2>
 [[nodiscard]] sptr<T> dynamic_pointer_cast(sptr<T2>&& other) noexcept
 {
     if (other.m_counter != nullptr)
@@ -328,7 +328,7 @@ template <class T, class T2>
     return {};
 }
 
-template <class T, class T2>
+export template <class T, class T2>
 [[nodiscard]] sptr<T> static_pointer_cast(sptr<T2> const& other) noexcept
 {
     if (other.m_counter != nullptr)
@@ -346,7 +346,7 @@ template <class T, class T2>
     return {};
 }
 
-template <class T, class T2>
+export template <class T, class T2>
 [[nodiscard]] sptr<T> static_pointer_cast(sptr<T2>&& other) noexcept
 {
     if (other.m_counter != nullptr)

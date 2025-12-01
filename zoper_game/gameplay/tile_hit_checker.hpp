@@ -1,7 +1,7 @@
 #ifndef ZOOPER_TILE_HIT_LAUNCHER_INCLUDE_HPP
 #define ZOOPER_TILE_HIT_LAUNCHER_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
+import htypes;
 #include <haf/include/types/scene_types.hpp>
 #include <boardmanager/include/itile.hpp>
 #include <boardmanager/include/board_types.hpp>

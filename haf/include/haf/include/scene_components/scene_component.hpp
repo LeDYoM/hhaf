@@ -2,8 +2,8 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_SCENE_SCENE_COMPONENT_INCLUDE_HPP
 #define HAF_SCENE_SCENE_COMPONENT_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
-#include <htypes/include/p_impl_pointer.hpp>
+import htypes;
+
 #include <haf/include/haf_export.hpp>
 #include <haf/include/scene/scene_node.hpp>
 #include <haf/include/properties/basic_property.hpp>

@@ -2,8 +2,7 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_DATA_PROVIDER_RANDOM_NUMBERS_COMPONENT_INCLUDE_HPP
 #define HAF_DATA_PROVIDER_RANDOM_NUMBERS_COMPONENT_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
-#include <htypes/include/str.hpp>
+import htypes;
 
 #include <haf/include/component/component.hpp>
 

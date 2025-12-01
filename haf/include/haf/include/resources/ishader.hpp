@@ -2,9 +2,9 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_SCENE_ISHADER_INTERFACE_INCLUDE_HPP
 #define HAF_SCENE_ISHADER_INTERFACE_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
+import htypes;
+
 #include <facil_math/include/vector2d.hpp>
-#include <htypes/include/str.hpp>
 #include <haf/include/resources/itexture.hpp>
 
 namespace haf::res

@@ -5,7 +5,7 @@ import :allocator;
 
 namespace htps
 {
-template <typename T>
+export template <typename T>
 class uptr
 {
 public:
@@ -89,35 +89,35 @@ private:
     rptr<T> m_pointer{nullptr};
 };
 
-template <typename T>
+export template <typename T>
 [[nodiscard]] constexpr bool operator==(uptr<T> const& lhs,
                                         uptr<T> const& rhs) noexcept
 {
     return lhs.get() == rhs.get();
 }
 
-template <typename T>
+export template <typename T>
 [[nodiscard]] constexpr bool operator==(uptr<T> const& lhs,
                                         const T* const rhs) noexcept
 {
     return lhs.get() == rhs;
 }
 
-template <typename T>
+export template <typename T>
 [[nodiscard]] constexpr bool operator==(uptr<T> const& lhs,
                                         std::nullptr_t) noexcept
 {
     return lhs.get() == nullptr;
 }
 
-template <typename T>
+export template <typename T>
 [[nodiscard]] constexpr bool operator!=(uptr<T> const& lhs,
                                         std::nullptr_t) noexcept
 {
     return lhs.get() != nullptr;
 }
 
-template <typename T, typename... Args>
+export template <typename T, typename... Args>
 [[nodiscard]] uptr<T> muptr(Args&&... args)
 {
     T* p{AllocatorType<T>::make_one(htps::forward<Args>(args)...)};

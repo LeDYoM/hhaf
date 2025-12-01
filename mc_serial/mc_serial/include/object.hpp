@@ -2,11 +2,8 @@ MCS_PRAGMA_ONCE
 #ifndef MCS_OBJECT_INCLUDE_HPP
 #define MCS_OBJECT_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
-#include <htypes/include/str.hpp>
-#include <htypes/include/vector.hpp>
-#include <htypes/include/array.hpp>
-#include <htypes/include/dictionary.hpp>
+import htypes;
+
 #include <type_traits>
 #include <utility>
 

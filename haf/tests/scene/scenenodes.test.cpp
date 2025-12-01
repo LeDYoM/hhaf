@@ -1,7 +1,7 @@
 #include "catch_include.hpp"
 
-#include <htypes/include/types.hpp>
-#include <htypes/include/str.hpp>
+import htypes;
+
 #include <facil_math/include/vector2d.hpp>
 #include <haf/include/scene/scene_node.hpp>
 #include <haf/include/scene/scene_nodes.hpp>

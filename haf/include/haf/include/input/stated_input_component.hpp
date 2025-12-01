@@ -2,7 +2,7 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_STATED_INPUT_COMPONENT_INCLUDE_HPP
 #define HAF_STATED_INPUT_COMPONENT_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
+import htypes;
 #include <haf/include/input/stated_input_component_base.hpp>
 #include <haf/include/component/component_container.hpp>
 #include <haf/include/scene/scene_node.hpp>

@@ -1,7 +1,7 @@
 #include <backend_client/include/default_backend_manager.hpp>
 #include <backend_dev/include/ibackendregister.hpp>
 
-#include <htypes/include/vector.hpp>
+import htypes;
 
 using namespace htps;
 

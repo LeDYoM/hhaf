@@ -8,7 +8,7 @@ export module htypes:menum;
 namespace htps
 {
 
-template <typename T, T ValueMin = T::min, T ValueMax = T::max>
+export template <typename T, T ValueMin = T::min, T ValueMax = T::max>
 class MEnum
 {
 public:

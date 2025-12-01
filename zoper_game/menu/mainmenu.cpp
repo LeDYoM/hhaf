@@ -9,8 +9,8 @@
 #include <haf/include/resources/iresource_retriever.hpp>
 #include <haf/include/resources/ittfont.hpp>
 #include <haf/include/shareddata/ishared_data.hpp>
-#include <htypes/include/function.hpp>
-#include <htypes/include/types.hpp>
+
+import htypes;
 
 using namespace htps;
 using namespace fmath;

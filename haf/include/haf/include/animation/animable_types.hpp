@@ -2,7 +2,7 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_ANIM_ANIMABLETYPE_INCLUDE_HPP
 #define HAF_ANIM_ANIMABLETYPE_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
+import htypes;
 
 namespace haf::anim
 {

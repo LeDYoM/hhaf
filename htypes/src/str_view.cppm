@@ -11,7 +11,7 @@ import :algoutils;
 
 namespace htps
 {
-template <typename char_type>
+export template <typename char_type>
 class basic_str_view
 {
 public:
@@ -144,6 +144,6 @@ public:
     size_type m_size;
 };
 
-using str_view = basic_str_view<char>;
+export using str_view = basic_str_view<char>;
 
 }  // namespace htps

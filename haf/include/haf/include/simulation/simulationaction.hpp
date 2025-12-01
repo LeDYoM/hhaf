@@ -6,7 +6,7 @@ HTPS_PRAGMA_ONCE
 #include <hlog/include/hlog.hpp>
 #include <haf/include/time/time_point.hpp>
 
-#include <htypes/include/types.hpp>
+import htypes;
 #include <facil_math/include/rect.hpp>
 #include <mc_serial/include/object.hpp>
 

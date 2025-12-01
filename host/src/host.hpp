@@ -1,7 +1,8 @@
 #ifndef HAF_HOST_MAIN_INCLUDE_HPP
 #define HAF_HOST_MAIN_INCLUDE_HPP
 
-#include <htypes/include/p_impl_pointer.hpp>
+import htypes;
+
 #include "host_export.hpp"
 
 namespace haf::host

@@ -1,13 +1,14 @@
 #ifndef HAF_BACKEND_SFMLB_REDNERWINDOW_INCLUDE_HPP
 #define HAF_BACKEND_SFMLB_REDNERWINDOW_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
 #include <facil_math/include/vector2d.hpp>
 
 #include <backend_dev/include/iwindow.hpp>
 #include <backend_dev/include/iinputdriver.hpp>
 
 #include "sfml_input_driver.hpp"
+
+import htypes;
 
 namespace sf
 {

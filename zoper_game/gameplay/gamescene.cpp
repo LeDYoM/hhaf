@@ -18,7 +18,7 @@
 
 #include "../zoperprogramcontroller.hpp"
 #include "../keymapping.hpp"
-#include <htypes/include/types.hpp>
+import htypes;
 #include <haf/include/properties/iproperty.hpp>
 
 #include <boardmanager/include/boardmanager.hpp>

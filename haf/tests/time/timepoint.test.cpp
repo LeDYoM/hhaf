@@ -1,7 +1,6 @@
 #include "catch_include.hpp"
 
 #include <haf/include/time/time_point.hpp>
-#include <htypes/include/str.hpp>
 
 #include <type_traits>
 

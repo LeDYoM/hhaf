@@ -10,7 +10,7 @@ import :vector_base;
 
 namespace htps
 {
-template <typename T>
+export template <typename T>
 class span
 {
 public:

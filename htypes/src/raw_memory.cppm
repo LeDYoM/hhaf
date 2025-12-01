@@ -17,7 +17,7 @@ namespace htps
  * This class wraps and owns an array of bytes. Instances are
  * copyable and cheaply movable. A size is maintained.
  */
-class RawMemory
+export class RawMemory
 {
 public:
     using inner_type = char;

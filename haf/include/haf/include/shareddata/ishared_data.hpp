@@ -2,7 +2,7 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_SHAREDDATA_DATA_WRAPPER_INCLUDE_HPP
 #define HAF_SHAREDDATA_DATA_WRAPPER_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
+import htypes;
 #include <haf/include/shareddata/ishareable.hpp>
 #include <haf/include/shareddata/address.hpp>
 

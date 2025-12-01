@@ -1,8 +1,7 @@
 #include "catch_include.hpp"
 
 #include "haf_private.hpp"
-#include <htypes/include/types.hpp>
-#include <htypes/include/str.hpp>
+import htypes;
 
 #include "scene/scene_controller.hpp"
 

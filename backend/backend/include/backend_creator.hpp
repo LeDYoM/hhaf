@@ -1,8 +1,9 @@
 #ifndef HAF_BACKEND_BACKEND_CREATOR_HPP
 #define HAF_BACKEND_BACKEND_CREATOR_HPP
 
-#include <htypes/include/types.hpp>
 #include <backend/include/backend_factory.hpp>
+
+import htypes;
 
 extern "C"
 {

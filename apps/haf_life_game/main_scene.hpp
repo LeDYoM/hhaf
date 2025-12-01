@@ -1,8 +1,9 @@
 #ifndef HF_MAIN_SCENE_INCLUDE_HPP
 #define HF_MAIN_SCENE_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
 #include <haf/include/component/component.hpp>
+
+import htypes;
 
 namespace hl
 {

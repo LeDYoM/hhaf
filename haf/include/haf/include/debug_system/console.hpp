@@ -2,7 +2,8 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_CONSOLE_INCLUDE_HPP
 #define HAF_CONSOLE_INCLUDE_HPP
 
-#include <htypes/include/str.hpp>
+import htypes;
+
 #include <haf/include/component/component.hpp>
 #include <haf/include/component/component_requirements.hpp>
 

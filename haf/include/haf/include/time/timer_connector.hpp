@@ -2,8 +2,8 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_COMPONENT_TIMER_CONNECTOR_COMPONENTEMENT_INCLUDE_HPP
 #define HAF_COMPONENT_TIMER_CONNECTOR_COMPONENTEMENT_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
-#include <htypes/include/function.hpp>
+import htypes;
+
 #include <haf/include/events/connection.hpp>
 #include <haf/include/time/time_point.hpp>
 #include <haf/include/time/time_view.hpp>

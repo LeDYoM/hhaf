@@ -2,11 +2,9 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_SCENE_RENDERIZABLE_INCLUDE_HPP
 #define HAF_SCENE_RENDERIZABLE_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
+import htypes;
 
 #include <haf/include/properties/property_state.hpp>
-#include <htypes/include/function.hpp>
-#include <htypes/include/p_impl_pointer.hpp>
 
 #include <haf/include/scene/color.hpp>
 #include <haf/include/render/renderizable_data.hpp>

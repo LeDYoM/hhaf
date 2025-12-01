@@ -1,7 +1,6 @@
 #include "catch_include.hpp"
 
 #include <parpar/include/parpar_mini.h>
-#include <htypes/include/str_functions.hpp>
 
 using namespace htps;
 using namespace parparmini;

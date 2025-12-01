@@ -2,9 +2,7 @@ PARPAR_PRAGMA_ONCE
 #ifndef PAR_PAR_MINI_INCLUDE_HPP
 #define PAR_PAR_MINI_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
-#include <htypes/include/str_functions.hpp>
-#include <htypes/include/str_view.hpp>
+import htypes;
 
 /**
  * @brief This file implements a small footprint version of parameter parser

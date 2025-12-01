@@ -1,7 +1,7 @@
 #ifndef ZOPER_GAMEPLAY_CONSTANTS_INCLUDE_HPP__
 #define ZOPER_GAMEPLAY_CONSTANTS_INCLUDE_HPP__
 
-#include <htypes/include/types.hpp>
+import htypes;
 #include <facil_math/include/vector2d.hpp>
 
 namespace zoper::gameplay::constants

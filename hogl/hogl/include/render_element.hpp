@@ -1,9 +1,7 @@
 #ifndef HAF_BACKEND_OGL_RENDER_ELEMENT_INCLUDE_HPP
 #define HAF_BACKEND_OGL_RENDER_ELEMENT_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
-#include <htypes/include/array.hpp>
-#include <htypes/include/vector.hpp>
+import htypes;
 
 #include <backend_dev/include/ivertex.hpp>
 #include <hogl/include/vertex_buffer.hpp>

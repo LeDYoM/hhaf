@@ -2,9 +2,9 @@ FMA_PRAGMA_ONCE
 #ifndef FACIL_MATH_VECTOR3D_INCLUDE_HPP
 #define FACIL_MATH_VECTOR3D_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
+import htypes;
+
 #include <facil_math/include/vector2d.hpp>
-#include <htypes/include/str.hpp>
 
 #include <type_traits>
 

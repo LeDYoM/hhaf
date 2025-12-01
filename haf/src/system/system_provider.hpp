@@ -2,9 +2,7 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_SYSTEM_SYSTEM_PROVIDER_INCLUDE_HPP
 #define HAF_SYSTEM_SYSTEM_PROVIDER_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
-#include <htypes/include/str.hpp>
-#include <htypes/include/p_impl_pointer.hpp>
+import htypes;
 #include <haf/include/system/isystem_provider.hpp>
 
 namespace haf

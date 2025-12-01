@@ -6,7 +6,6 @@
 #include "ttfont.hpp"
 #include "bmp_font.hpp"
 
-#include <htypes/include/dictionary.hpp>
 #include <hlog/include/hlog.hpp>
 
 #include <haf/include/resources/ittfont.hpp>
@@ -19,6 +18,8 @@
 #include <facil_math/include/rect.hpp>
 #include <mc_serial/include/object.hpp>
 #include <algorithm>
+
+import htypes;
 
 using namespace htps;
 using namespace haf::res;

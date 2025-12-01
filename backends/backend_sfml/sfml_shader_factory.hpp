@@ -1,8 +1,8 @@
 #ifndef HAF_BACKEND_SFML_SHADERFACTORY_HPP
 #define HAF_BACKEND_SFML_SHADERFACTORY_HPP
 
-#include <htypes/include/types.hpp>
-#include <htypes/include/str.hpp>
+import htypes;
+
 #include <backend_dev/include/iresourcefactories.hpp>
 #include <backend_dev/include/resource_load_parameters.hpp>
 

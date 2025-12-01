@@ -1,7 +1,8 @@
 #include "default_bmp_font_factory.hpp"
-#include <htypes/include/str.hpp>
 #include "default_bmp_font.hpp"
 #include <hlog/include/hlog.hpp>
+
+import htypes;
 
 using namespace htps;
 using namespace logger;

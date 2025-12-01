@@ -2,7 +2,7 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_SYSTEM_TESTS_UTILS_INCLUDE_HPP
 #define HAF_SYSTEM_TESTS_UTILS_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
+import htypes;
 #include "system/system_provider.hpp"
 #include <haf/include/system/subsystem_view.hpp>
 #include "shareddata/shared_data_system.hpp"

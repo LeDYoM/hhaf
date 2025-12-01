@@ -1,7 +1,7 @@
 #include <haf/include/profiler/memory_data_initializer.hpp>
 #include <haf/include/profiler/imemory_data_viewer.hpp>
 
-#include <htypes/include/types.hpp>
+import htypes;
 
 #include <memmanager/include/memmanager.hpp>
 #include <hlog/include/hlog.hpp>

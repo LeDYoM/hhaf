@@ -1,6 +1,6 @@
 #include "catch_include.hpp"
 
-#include <htypes/include/types.hpp>
+import htypes;
 #include <haf/include/scene/scene_node.hpp>
 
 using namespace htps;

@@ -2,7 +2,7 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_INPUT_COMPONENT_BASE_INCLUDE_HPP
 #define HAF_INPUT_COMPONENT_BASE_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
+import htypes;
 #include <haf/include/component/component.hpp>
 #include <haf/include/input/key.hpp>
 

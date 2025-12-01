@@ -2,8 +2,8 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_SYS_SYSTEM_RENDERSYSTEM_INCLUDE_HPP
 #define HAF_SYS_SYSTEM_RENDERSYSTEM_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
-#include <htypes/include/vector.hpp>
+import htypes;
+
 #include "system/system_base.hpp"
 
 namespace haf::sys

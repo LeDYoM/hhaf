@@ -2,8 +2,8 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_SCENE_ISCENE_RENDER_CONTEXT__PROVIDER_INCLUDE_HPP
 #define HAF_SCENE_ISCENE_RENDER_CONTEXT__PROVIDER_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
-#include <htypes/include/str.hpp>
+import htypes;
+
 #include <haf/include/scene/scene_render_context.hpp>
 
 namespace haf::scene

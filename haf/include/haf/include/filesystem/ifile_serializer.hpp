@@ -2,8 +2,8 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_FILESYSTEM_IFILE_SERIALIZER_INCLUDE_HPP
 #define HAF_FILESYSTEM_IFILE_SERIALIZER_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
-#include <htypes/include/str.hpp>
+import htypes;
+
 #include <haf/include/filesystem/path.hpp>
 #include <haf/include/shareddata/ishareable.hpp>
 

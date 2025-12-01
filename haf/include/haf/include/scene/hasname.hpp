@@ -2,7 +2,8 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_SCENE_HASNAME_HPP
 #define HAF_SCENE_HASNAME_HPP
 
-#include <htypes/include/str.hpp>
+import htypes;
+
 #include <haf/include/haf_export.hpp>
 
 namespace haf::sys

@@ -2,9 +2,8 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_SHAREDDATA_ADRESS_INCLUDE_HPP
 #define HAF_SHAREDDATA_ADRESS_INCLUDE_HPP
 
-#include <htypes/include/p_impl_pointer.hpp>
-#include <htypes/include/types.hpp>
-#include <htypes/include/str.hpp>
+import htypes;
+
 #include <facil_math/include/rect.hpp>
 #include <haf/include/haf_export.hpp>
 #include <mc_serial/include/object.hpp>

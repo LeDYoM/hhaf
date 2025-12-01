@@ -1,7 +1,7 @@
 #ifndef HAF_HOST_IHOST_CONNECTOR_INCLUDE_HPP
 #define HAF_HOST_IHOST_CONNECTOR_INCLUDE_HPP
 
-#include <htypes/include/str.hpp>
+import htypes;
 
 namespace haf::host
 {

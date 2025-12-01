@@ -12,8 +12,7 @@ HTPS_PRAGMA_ONCE
 #include "system/system_provider.hpp"
 #include "random/randomsystem.hpp"
 
-#include <htypes/include/types.hpp>
-#include <htypes/include/str.hpp>
+import htypes;
 #include <facil_math/include/rect.hpp>
 #include <mc_serial/include/object.hpp>
 

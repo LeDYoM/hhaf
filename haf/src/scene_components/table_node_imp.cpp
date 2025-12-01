@@ -1,6 +1,5 @@
-#include <htypes/include/types.hpp>
+import htypes;
 #include <facil_math/include/vector2d.hpp>
-#include <htypes/include/str.hpp>
 #include <haf/include/scene_components/table_node_imp.hpp>
 #include <haf/include/scene/scene_node.hpp>
 

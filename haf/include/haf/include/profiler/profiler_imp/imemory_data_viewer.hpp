@@ -2,7 +2,7 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_DEBUG_IMEMORY_DATA_VIEW_IMP_INCLUDE_HPP
 #define HAF_DEBUG_IMEMORY_DATA_VIEW_IMP_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
+import htypes;
 #include <haf/include/profiler/profiler_imp/memory_data_initializer.hpp>
 
 namespace haf::debug

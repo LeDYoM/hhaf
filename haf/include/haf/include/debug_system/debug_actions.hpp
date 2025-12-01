@@ -2,9 +2,9 @@ HTPS_PRAGMA_ONCE
 #ifndef ZOPER_DEBUG_ACTIONS_INCLUDE_HPP
 #define ZOPER_DEBUG_ACTIONS_INCLUDE_HPP
 
-#include <htypes/include/function.hpp>
-#include <htypes/include/p_impl_pointer.hpp>
 #include <haf/include/input/virtual_input_component.hpp>
+
+import htypes;
 
 namespace haf::scene
 {

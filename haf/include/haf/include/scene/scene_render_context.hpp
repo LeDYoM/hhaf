@@ -2,7 +2,7 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_SCENE_SCENE_RENDER_CONTEXT_INCLUDE_HPP
 #define HAF_SCENE_SCENE_RENDER_CONTEXT_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
+import htypes;
 #include <haf/include/scene/matrix4x4.hpp>
 
 namespace haf::scene

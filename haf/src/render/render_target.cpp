@@ -1,10 +1,11 @@
 #include "render_target.hpp"
 
-#include <htypes/include/span.hpp>
 #include <backend_dev/include/ishader.hpp>
 #include <hlog/include/hlog.hpp>
 #include <hogl/include/render_element.hpp>
 #include <hogl/include/render_target.hpp>
+
+import htypes;
 
 using namespace htps;
 

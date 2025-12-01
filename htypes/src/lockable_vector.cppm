@@ -15,7 +15,7 @@ namespace htps
  * internally is part of the provided functionality.
  * @tparam T
  */
-template <class T>
+export template <class T>
 class export LockableVector final
 {
 public:

@@ -2,8 +2,7 @@ PARPAR_PRAGMA_ONCE
 #ifndef PAR_PAR_INCLUDE_HPP
 #define PAR_PAR_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
-#include <htypes/include/str.hpp>
+import htypes;
 
 #include <utility>
 #include <algorithm>

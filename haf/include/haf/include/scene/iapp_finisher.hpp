@@ -2,7 +2,7 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_SCENE_APP_FINISHER_INCLUDE_HPP
 #define HAF_SCENE_APP_FINISHER_INCLUDE_HPP
 
-#include <htypes/include/str.hpp>
+import htypes;
 
 namespace haf::scene
 {

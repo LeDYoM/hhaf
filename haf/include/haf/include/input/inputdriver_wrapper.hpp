@@ -2,9 +2,7 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_BACKEND_SFMLB_INPUTDRIVER_INCLUDE_HPP
 #define HAF_BACKEND_SFMLB_INPUTDRIVER_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
-#include <htypes/include/vector.hpp>
-#include <htypes/include/p_impl_pointer.hpp>
+import htypes;
 
 #include <haf/include/input/key.hpp>
 

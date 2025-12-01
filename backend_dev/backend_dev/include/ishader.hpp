@@ -1,12 +1,13 @@
 #ifndef HAF_BACKEND_ISHADER_INTERFACE_INCLUDE_HPP
 #define HAF_BACKEND_ISHADER_INTERFACE_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
 #include <facil_math/include/vector2d.hpp>
 #include <facil_math/include/rect.hpp>
 
 #include "itexture.hpp"
 #include "imaterial_data.hpp"
+
+import htypes;
 
 namespace haf::backend
 {

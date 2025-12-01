@@ -1,6 +1,6 @@
 #include "catch_include.hpp"
 
-#include <htypes/include/types.hpp>
+import htypes;
 #include <facil_math/include/vector2d.hpp>
 
 using namespace htps;

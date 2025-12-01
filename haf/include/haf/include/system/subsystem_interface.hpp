@@ -2,7 +2,7 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_SYSTEM_SYSTEM_INTERFACE_INCLUDE_HPP
 #define HAF_SYSTEM_SYSTEM_INTERFACE_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
+import htypes;
 #include <haf/include/system/isystem_provider.hpp>
 
 namespace haf::sys

@@ -4,8 +4,7 @@ MCS_PRAGMA_ONCE
 
 #include <mc_serial/include/object.hpp>
 #include <mc_serial/include/object_parser.hpp>
-#include <htypes/include/types.hpp>
-#include <htypes/include/str.hpp>
+import htypes;
 
 namespace mcs
 {

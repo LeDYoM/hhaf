@@ -2,7 +2,7 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_RENDER_FIG_TYPE_T_HPP
 #define HAF_RENDER_FIG_TYPE_T_HPP
 
-#include <htypes/include/types.hpp>
+import htypes;
 
 namespace haf::render
 {

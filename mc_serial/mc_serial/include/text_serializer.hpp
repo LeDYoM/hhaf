@@ -5,7 +5,6 @@ MCS_PRAGMA_ONCE
 #include <mc_serial/include/object.hpp>
 #include <mc_serial/include/object_parser.hpp>
 #include <mc_serial/include/interfaces/iserializable.hpp>
-#include <htypes/include/str.hpp>
 
 namespace mcs
 {

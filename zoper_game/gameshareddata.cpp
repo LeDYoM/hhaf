@@ -1,10 +1,9 @@
 #include "gameshareddata.hpp"
 
-#include <htypes/include/types.hpp>
+import htypes;
 #include <facil_math/include/vector2d.hpp>
 #include <facil_math/include/rect.hpp>
 #include <facil_math/include/rect.hpp>
-#include <htypes/include/str.hpp>
 #include <haf/include/shareddata/ishareable.hpp>
 #include <haf/include/shareddata/address.hpp>
 #include <haf/include/shareddata/shared_data_updater.hpp>

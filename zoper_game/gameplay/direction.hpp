@@ -1,7 +1,7 @@
 #ifndef ZOPER_DIRECTION_INCLUDE_HPP
 #define ZOPER_DIRECTION_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
+import htypes;
 #include <facil_math/include/vector2d.hpp>
 
 namespace zoper

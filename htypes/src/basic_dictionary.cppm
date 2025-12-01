@@ -14,7 +14,7 @@ namespace htps
  * @brief This class contains a group of key_types and their associated values.
  * @tparam T Type of the values stored
  */
-template <typename Key, typename T>
+export template <typename Key, typename T>
 class BasicDictionary final
 {
 public:

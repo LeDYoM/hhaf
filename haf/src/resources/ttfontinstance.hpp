@@ -2,8 +2,7 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_SCENE_TTFONTINSTANCE_INCLUDE_HPP
 #define HAF_SCENE_TTFONTINSTANCE_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
-#include <htypes/include/str.hpp>
+import htypes;
 
 #include <haf/include/resources/itexture.hpp>
 #include <haf/include/resources/ifont.hpp>

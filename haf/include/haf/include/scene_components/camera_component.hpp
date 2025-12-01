@@ -2,8 +2,9 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_SCENE_NODES_CAMERA_COMPONENT_INCLUDE_HPP
 #define HAF_SCENE_NODES_CAMERA_COMPONENT_INCLUDE_HPP
 
+import htypes;
+
 #include <haf/include/haf_export.hpp>
-#include <htypes/include/p_impl_pointer.hpp>
 #include <haf/include/properties/property_state.hpp>
 #include <haf/include/component/component.hpp>
 #include <haf/include/types/scene_types.hpp>

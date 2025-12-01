@@ -11,8 +11,8 @@
 #include "../gameshareddata.hpp"
 #include "../loaders/gameresources.hpp"
 
-#include <htypes/include/types.hpp>
-#include <htypes/include/function.hpp>
+import htypes;
+
 #include <boardmanager/include/boardmanager.hpp>
 #include <boardmanager/include/board_types.hpp>
 #include <haf/include/render/renderizable.hpp>

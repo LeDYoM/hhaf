@@ -2,8 +2,9 @@
 #include "sfml_shader.hpp"
 #include <SFML/Graphics/Shader.hpp>
 #include <filesystem>
-#include <htypes/include/str_literal.hpp>
 #include <iostream>
+
+import htypes;
 
 using namespace htps;
 

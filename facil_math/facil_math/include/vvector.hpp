@@ -2,10 +2,8 @@ FMA_PRAGMA_ONCE
 #ifndef FACIL_MATH_VVECTOR_INCLUDE_HPP
 #define FACIL_MATH_VVECTOR_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
-#include <htypes/include/array.hpp>
-#include <htypes/include/vector.hpp>
-#include <htypes/include/span.hpp>
+import htypes;
+
 #include <facil_math/include/vector_types.hpp>
 #include <facil_math/include/matrix4x4.hpp>
 

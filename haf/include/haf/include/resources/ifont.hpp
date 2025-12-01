@@ -2,10 +2,9 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_SCENE_FONT_INTERFACE_INCLUDE_HPP
 #define HAF_SCENE_FONT_INTERFACE_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
+import htypes;
 
 #include <facil_math/include/rect.hpp>
-#include <htypes/include/str.hpp>
 
 namespace haf::res
 {

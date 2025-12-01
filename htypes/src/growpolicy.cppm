@@ -7,7 +7,7 @@ namespace htps
 #pragma warning(push)
 #pragma warning(disable : 4514)  // Unused functions in MSVC
 
-class GrowPolicyUnary
+export class GrowPolicyUnary
 {
 public:
     static constexpr size_type growSize(size_type const size) noexcept
@@ -16,7 +16,7 @@ public:
     }
 };
 
-class GrowPolicyDouble
+export class GrowPolicyDouble
 {
 public:
     static constexpr size_type growSize(size_type const size) noexcept

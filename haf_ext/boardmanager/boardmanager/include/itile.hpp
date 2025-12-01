@@ -1,7 +1,7 @@
 #ifndef HAF_BOARD_ITILE_HPP
 #define HAF_BOARD_ITILE_HPP
 
-#include <htypes/include/types.hpp>
+import htypes;
 #include <haf/include/types/scene_types.hpp>
 #include <boardmanager/include/board_types.hpp>
 

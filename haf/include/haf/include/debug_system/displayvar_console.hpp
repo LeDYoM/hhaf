@@ -2,9 +2,8 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_DISPLAY_VAR_CONSOLE_INCLUDE_HPP
 #define HAF_DISPLAY_VAR_CONSOLE_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
-#include <htypes/include/str.hpp>
-#include <htypes/include/dictionary.hpp>
+import htypes;
+
 #include <haf/include/debug_system/console.hpp>
 #include <haf/include/debug_system/debug_variable.hpp>
 #include <haf/include/component/component.hpp>

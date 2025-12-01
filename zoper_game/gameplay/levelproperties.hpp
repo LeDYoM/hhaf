@@ -1,7 +1,7 @@
 #ifndef ZOPER_LEVELPROPERTIES_INCLUDE_HPP
 #define ZOPER_LEVELPROPERTIES_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
+import htypes;
 #include <facil_math/include/vector2d.hpp>
 
 #include <haf/include/time/timer_connector.hpp>

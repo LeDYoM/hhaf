@@ -1,6 +1,6 @@
 #include "catch_include.hpp"
 
-#include <htypes/include/types.hpp>
+import htypes;
 #include <haf/include/scene/scene_node.hpp>
 #include "scene/scene_manager.hpp"
 #include "system_test_utils.hpp"

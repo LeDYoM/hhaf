@@ -1,11 +1,9 @@
 #ifndef HAF_BACKEND_RESOUCE_LOAD_PARAMETERS_INCLUDE_HPP
 #define HAF_BACKEND_RESOUCE_LOAD_PARAMETERS_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
-#include <htypes/include/rawmemory.hpp>
-#include <htypes/include/str.hpp>
-#include <htypes/include/rawmemory.hpp>
 #include <backend_dev/include/iresource_manager.hpp>
+
+import htypes;
 
 namespace haf::backend
 {

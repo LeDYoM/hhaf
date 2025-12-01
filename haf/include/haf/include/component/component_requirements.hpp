@@ -2,7 +2,7 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_COMPONENT_COMPONENT_REQUIREMENTS_INCLUDE_HPP
 #define HAF_COMPONENT_COMPONENT_REQUIREMENTS_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
+import htypes;
 #include <haf/include/component/component_container.hpp>
 
 namespace haf::component

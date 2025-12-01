@@ -2,9 +2,7 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_SYSTEM_FILESYSTEM_INCLUDE_HPP
 #define HAF_SYSTEM_FILESYSTEM_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
-#include <htypes/include/vector.hpp>
-#include <htypes/include/rawmemory.hpp>
+import htypes;
 
 #include <haf/include/filesystem/path.hpp>
 #include <haf/include/filesystem/ifile_serializer.hpp>

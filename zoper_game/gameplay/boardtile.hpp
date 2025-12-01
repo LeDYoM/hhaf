@@ -1,7 +1,7 @@
 #ifndef ZOPER_BOARD_TILE_COMPONENT_INCLUDE_HPP
 #define ZOPER_BOARD_TILE_COMPONENT_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
+import htypes;
 #include <haf/include/properties/property_state.hpp>
 #include <haf/include/scene/scene_node.hpp>
 #include <haf/include/scene/color.hpp>

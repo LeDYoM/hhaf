@@ -2,7 +2,7 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_TIME_TIMER_TYPE_INCLUDE_HPP
 #define HAF_TIME_TIMER_TYPE_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
+import htypes;
 
 namespace haf::time
 {

@@ -1,9 +1,9 @@
 #ifndef HAF_BACKEND_FACTORY_HPP
 #define HAF_BACKEND_FACTORY_HPP
 
-#include <htypes/include/types.hpp>
-#include <htypes/include/str.hpp>
 #include <backend_dev/include/iresourcefactories.hpp>
+
+import htypes;
 
 namespace agl
 {

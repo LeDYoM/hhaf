@@ -1,4 +1,4 @@
-#include <htypes/include/types.hpp>
+import htypes;
 #include <haf/include/scene/color.hpp>
 
 namespace haf::scene

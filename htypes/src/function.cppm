@@ -12,7 +12,7 @@ namespace htps
  * @brief Unused general template
  * @tparam typename
  */
-template <typename>
+export template <typename>
 class function;
 
 /**
@@ -230,7 +230,7 @@ private:
  * @return function with the same return type and arguments that the object
  * passed.
  */
-template <typename ReturnType, typename... Args>
+export template <typename ReturnType, typename... Args>
 constexpr auto make_function(ReturnType (*p)(Args...))
 {
     return function<ReturnType(Args...)>(p);
@@ -248,13 +248,13 @@ constexpr auto make_function(ReturnType (*p)(Args...))
  * @return function with the same return type and arguments that the object
  * and member function passed.
  */
-template <typename ReturnType, typename T, typename... Args>
+export template <typename ReturnType, typename T, typename... Args>
 constexpr auto make_function(T* obj, ReturnType (T::*p)(Args...))
 {
     return function<ReturnType(Args...)>(obj, p);
 }
 
-template <typename ReturnType, typename T, typename... Args>
+export template <typename ReturnType, typename T, typename... Args>
 constexpr auto make_function(T const* obj, ReturnType (T::*p)(Args...) const)
 {
     return function<ReturnType(Args...)>(obj, p);

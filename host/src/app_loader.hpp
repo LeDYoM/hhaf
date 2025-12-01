@@ -2,9 +2,7 @@
 #define HAF_HOST_APP_LOADER_INCLUDE_HPP
 
 #include "managed_app.hpp"
-#include <htypes/include/types.hpp>
-#include <htypes/include/function.hpp>
-#include <htypes/include/str.hpp>
+import htypes;
 import agloader;
 
 namespace haf::host

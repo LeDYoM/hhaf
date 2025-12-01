@@ -2,8 +2,7 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_RESOURCES_DEFAULT_BMP_FONT_INCLUDE_HPP
 #define HAF_RESOURCES_DEFAULT_BMP_FONT_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
-#include <htypes/include/rawmemory.hpp>
+import htypes;
 
 #include <backend_dev/include/itexture.hpp>
 #include <backend_dev/include/ibmp_font.hpp>

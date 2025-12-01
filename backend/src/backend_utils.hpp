@@ -1,8 +1,9 @@
 #ifndef HAF_BACKEND_BACKEND_FACTORY_UTILS_INCLUDE_HPP
 #define HAF_BACKEND_BACKEND_FACTORY_UTILS_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
 #include <backend/include/backend_register.hpp>
+
+import htypes;
 
 namespace haf::backend
 {

@@ -1,7 +1,8 @@
 #ifndef HAF_BACKEND_SFMLB_INPUTDRIVER_INCLUDE_HPP
 #define HAF_BACKEND_SFMLB_INPUTDRIVER_INCLUDE_HPP
 
-#include <htypes/include/vector.hpp>
+import htypes;
+
 #include <backend_dev/include/iinputdriver.hpp>
 #include <SFML/Window/Event.hpp>
 

@@ -4,7 +4,7 @@ HTPS_PRAGMA_ONCE
 
 #include "system/system_base.hpp"
 
-#include <htypes/include/types.hpp>
+import htypes;
 #include <haf/include/time/time_point.hpp>
 #include <haf/include/time/time_view.hpp>
 

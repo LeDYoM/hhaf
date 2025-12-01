@@ -112,7 +112,6 @@ function(add_test_executable_with_main)
 
     add_test_executable(${PARAM_LIST})
     add_test_link_with_main()
-    target_link_libraries(${CURRENT_TARGET} PRIVATE haf)
   endif()
 endfunction()
 

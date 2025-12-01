@@ -1,7 +1,7 @@
 #ifndef ZOOPER_GAMESCENE_STATES_INCLUDE_HPP
 #define ZOOPER_GAMESCENE_STATES_INCLUDE_HPP
 
-#include <htypes/include/str.hpp>
+import htypes;
 
 namespace zoper
 {

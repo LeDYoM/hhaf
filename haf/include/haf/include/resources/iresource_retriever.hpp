@@ -2,8 +2,7 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_RESOURCES_RESOURCE_RETRIVER_INCLUDE_HPP
 #define HAF_RESOURCES_RESOURCE_RETRIVER_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
-#include <htypes/include/str.hpp>
+import htypes;
 
 namespace haf::res
 {

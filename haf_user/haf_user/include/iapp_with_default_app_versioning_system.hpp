@@ -1,9 +1,7 @@
 #ifndef HAF_USER_IAPP_WITH_DEFAULT_VERSIONING_SYSTEM_INCLUDE_HPP
 #define HAF_USER_IAPP_WITH_DEFAULT_VERSIONING_SYSTEM_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
-#include <htypes/include/str.hpp>
-#include <htypes/include/str_view.hpp>
+import htypes;
 #include <hosted_app/include/iapp.hpp>
 
 namespace haf::user

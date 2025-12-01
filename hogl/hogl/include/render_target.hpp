@@ -1,9 +1,7 @@
 #ifndef HAF_BACKEND_SFMLB_REDNERTARGET_INCLUDE_HPP
 #define HAF_BACKEND_SFMLB_REDNERTARGET_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
-#include <htypes/include/str.hpp>
-#include <htypes/include/array.hpp>
+import htypes;
 
 #include <facil_math/include/vector2d.hpp>
 #include <facil_math/include/rect.hpp>

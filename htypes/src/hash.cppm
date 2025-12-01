@@ -8,7 +8,7 @@ import :span;
 
 namespace htps
 {
-struct Hasher
+export struct Hasher
 {
     template <typename T = u32, size_type N>
     static consteval T hash(char const (&s)[N]) noexcept

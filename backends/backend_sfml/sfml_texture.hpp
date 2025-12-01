@@ -1,7 +1,8 @@
 #ifndef HAF_BACKEND_SFML_TEXTURE_INCLUDE_HPP
 #define HAF_BACKEND_SFML_TEXTURE_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
+import htypes;
+
 #include <facil_math/include/vector2d.hpp>
 
 #include <backend_dev/include/itexture.hpp>

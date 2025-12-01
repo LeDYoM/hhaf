@@ -1,7 +1,7 @@
 #ifndef HAF_BACKEND_IRESOURCE_DESCRIPTOR_INCLUDE_HPP
 #define HAF_BACKEND_IRESOURCE_DESCRIPTOR_INCLUDE_HPP
 
-#include <htypes/include/str.hpp>
+import htypes;
 
 namespace haf::backend
 {

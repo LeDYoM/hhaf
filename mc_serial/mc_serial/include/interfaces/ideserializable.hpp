@@ -2,9 +2,9 @@ MCS_PRAGMA_ONCE
 #ifndef MCS_IDESERIALIZABLE_INCLUDE_HPP
 #define MCS_IDESERIALIZABLE_INCLUDE_HPP
 
-#include <htypes/include/vector.hpp>
-#include <htypes/include/dictionary.hpp>
 #include <mc_serial/include/object.hpp>
+
+import htypes;
 
 namespace mcs
 {

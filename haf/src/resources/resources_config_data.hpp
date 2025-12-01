@@ -3,8 +3,7 @@ HTPS_PRAGMA_ONCE
 #define HAF_RESOURCES_RESOURCES_CONFIG_DATA_INCLUDE_HPP
 
 #include "haf_private.hpp"
-#include <htypes/include/types.hpp>
-#include <htypes/include/vector.hpp>
+import htypes;
 
 #include <haf/include/data/ideserializable.hpp>
 

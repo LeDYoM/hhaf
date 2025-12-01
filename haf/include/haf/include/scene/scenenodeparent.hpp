@@ -2,8 +2,7 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_SCENE_SCENENODEPARENT_INCLUDE_HPP
 #define HAF_SCENE_SCENENODEPARENT_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
-#include <htypes/include/cast.hpp>
+import htypes;
 
 namespace haf::scene
 {

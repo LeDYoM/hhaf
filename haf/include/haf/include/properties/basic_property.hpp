@@ -2,6 +2,8 @@ HAF_PRAGMA_ONCE
 #ifndef MTPS_BASIC_PROPERTY_INCLUDE_HPP
 #define MTPS_BASIC_PROPERTY_INCLUDE_HPP
 
+import htypes;
+
 #include <haf/include/properties/iproperty.hpp>
 #include <utility>
 

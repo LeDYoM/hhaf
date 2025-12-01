@@ -1,6 +1,6 @@
 #include "catch_include.hpp"
 
-#include <htypes/include/types.hpp>
+import htypes;
 #include <mc_serial/include/object_parser.hpp>
 #include <mc_serial/include/object.hpp>
 

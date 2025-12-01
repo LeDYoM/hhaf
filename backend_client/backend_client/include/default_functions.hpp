@@ -1,10 +1,11 @@
 #ifndef HAF_BACKEND_CLIENT_DEFAULT_FUNCTIONS_INLUDE_HPP
 #define HAF_BACKEND_CLIENT_DEFAULT_FUNCTIONS_INLUDE_HPP
 
-#include <htypes/include/types.hpp>
 #include <backend_dev/include/ibackendregister.hpp>
 #include <backend_client/include/autoregisterfactory.hpp>
 #include <backend_client/include/ibackendmanager.hpp>
+
+import htypes;
 
 namespace haf::backend::client
 {

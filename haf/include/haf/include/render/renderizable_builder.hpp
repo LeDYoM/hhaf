@@ -2,10 +2,8 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_RENDERIZABLE_BUILDER_INCLUDE_HPP
 #define HAF_RENDERIZABLE_BUILDER_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
+import htypes;
 #include <facil_math/include/rect.hpp>
-#include <htypes/include/str.hpp>
-#include <htypes/include/function.hpp>
 
 #include <haf/include/scene/color.hpp>
 #include <haf/include/render/renderizable_builder_data.hpp>

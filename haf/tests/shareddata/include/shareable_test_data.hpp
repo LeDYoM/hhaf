@@ -2,8 +2,7 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_TESTS_SHAREABLE_TEST_DATA_INCLUDE_HPP
 #define HAF_TESTS_SHAREABLE_TEST_DATA_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
-#include <htypes/include/str.hpp>
+import htypes;
 #include <haf/include/shareddata/ishareable.hpp>
 #include <haf/include/shareddata/address.hpp>
 

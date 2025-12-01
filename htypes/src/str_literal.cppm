@@ -8,9 +8,9 @@ import :btypes;
 
 namespace htps
 {
-using str_literal_hash = size_type;
+export using str_literal_hash = size_type;
 
-template <typename char_type, size_type N>
+export template <typename char_type, size_type N>
 struct basic_str_literal
 {
     consteval basic_str_literal(char_type const (&str)[N]) noexcept :
@@ -80,7 +80,7 @@ struct basic_str_literal
     char_type value[N];
 };
 
-template <size_type N>
+export template <size_type N>
 using str_literal = basic_str_literal<char, N>;
 
 }  // namespace htps

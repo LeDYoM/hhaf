@@ -9,9 +9,9 @@ namespace htps
  * @brief This class contains a group of keys and their associated values.
  * @tparam T Type of the values stored
  */
-template <typename T>
+export template <typename T>
 using Dictionary = BasicDictionary<str, T>;
 
-using PureDictionary = Dictionary<str>;
+export using PureDictionary = Dictionary<str>;
 
 }  // namespace htps

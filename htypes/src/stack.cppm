@@ -18,7 +18,7 @@ namespace htps
  * @tparam Allocator Allocator to be used by the vector
  * @tparam GrowPolicy Policy class to dinamically increment the capacity
  */
-template <typename T,
+export template <typename T,
           typename Allocator  = AllocatorType<T>,
           typename GrowPolicy = GrowPolicyUnary>
 class stack final

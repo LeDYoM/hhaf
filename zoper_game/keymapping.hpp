@@ -1,7 +1,8 @@
 #ifndef ZOPER_KEYMAPPING_HPP
 #define ZOPER_KEYMAPPING_HPP
 
-#include <htypes/include/array.hpp>
+import htypes;
+
 #include <facil_math/include/rect.hpp>
 #include <haf/include/shareddata/ishareable.hpp>
 #include <haf/include/input/key.hpp>

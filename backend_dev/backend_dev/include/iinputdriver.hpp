@@ -1,7 +1,8 @@
 #ifndef HAF_BACKEND_IINPUTDRIVER_INCLUDE_HPP
 #define HAF_BACKEND_IINPUTDRIVER_INCLUDE_HPP
 
-#include <htypes/include/vector.hpp>
+import htypes;
+
 #include "ikey.hpp"
 
 namespace haf::backend
