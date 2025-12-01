@@ -32,6 +32,7 @@ PUBLIC
     src/hash_table.cppm
     src/hash.cppm
     src/htypes.cppm
+    src/lockable_vector.cppm
     src/menum.cppm
     src/p_impl_pointer.cppm
     src/pair.cppm

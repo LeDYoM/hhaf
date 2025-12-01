@@ -16,7 +16,7 @@ namespace htps
  * @tparam T
  */
 export template <class T>
-class export LockableVector final
+class LockableVector final
 {
 public:
     using iterator        = typename vector<T>::iterator;

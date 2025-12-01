@@ -1,11 +1,11 @@
 export module htypes;
 
-export import :alloc_func_memmanager;
-export import :alloc_func;
-export import :allocator;
-export import :allocatorfunc;
+//export import :alloc_func_memmanager;
+//export import :alloc_func;
+//export import :allocator;
+//export import :allocatorfunc;
 
-//export import :algoutils;
+export import :algoutils;
 export import :array;
 export import :bdictionary;
 export import :btypes;

@@ -5,11 +5,11 @@ set(CURRENT_TARGET ${PROJECT_NAME})
 
 set(SOURCE_TESTS
     array
-#    basic_dictionary
-#[[    dictionary
+    basic_dictionary
+    dictionary
     function
     hash
-    lockable_vector
+#    lockable_vector
     menum
     pair
     shared_ptr
@@ -22,7 +22,6 @@ set(SOURCE_TESTS
     unique_ptr
     vector
     weak_ptr
-    ]]
 )
 
 add_test_executable_with_main(SOURCE_TESTS ${SOURCE_TESTS})
