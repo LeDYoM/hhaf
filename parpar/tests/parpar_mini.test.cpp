@@ -1,6 +1,7 @@
 #include "catch_include.hpp"
 
-#include <parpar/include/parpar_mini.h>
+import parpar.mini;
+import htypes;
 
 using namespace htps;
 using namespace parparmini;

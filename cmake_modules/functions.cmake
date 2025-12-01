@@ -137,11 +137,11 @@ function(build_lib_component)
     ${CURRENT_TARGET}_TWEAK=${PROJECT_VERSION_TWEAK}
   )
 
-  set_install_options_for_target(${CURRENT_TARGET})
+#  set_install_options_for_target(${CURRENT_TARGET})
 endfunction()
 
 function(build_lib_module C_TARGET)
-  cmake_parse_arguments(LC_BUILD "EXPORT_ALL;STATIC" "" "" ${ARGN})
+  cmake_parse_arguments(LC_BUILD "EXPORT_ALL;STATIC" "" "SOURCES" ${ARGN})
 
   if(LC_BUILD_STATIC)
     message(STATUS "Add library static: ${C_TARGET}")
@@ -159,6 +159,10 @@ function(build_lib_module C_TARGET)
                           PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS true)
   endif()
 
+  target_sources(${C_TARGET} PUBLIC
+    FILE_SET CXX_MODULES
+    FILES ${LC_BUILD_SOURCES})
+
   set_compile_warning_level_and_cxx_properties(${C_TARGET})
 
   # Set defines for project versions using standard cmake nomenclature
@@ -169,7 +173,7 @@ function(build_lib_module C_TARGET)
     ${C_TARGET}_TWEAK=${PROJECT_VERSION_TWEAK}
   )
 
-  set_install_options_for_target(${C_TARGET})
+#  set_install_options_for_target(${C_TARGET})
 endfunction()
 
 function(build_lib_ext)

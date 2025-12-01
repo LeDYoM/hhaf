@@ -23,6 +23,10 @@ set(headers
     memmanager/include/memory_view.hpp
 )
 
+#set(sources
+#    src/memmanager.cpppm)
+#build_lib_module(${CURRENT_TARGET} EXPORT_ALL SOURCES "${sources}")
+
 build_lib_component(EXPORT_ALL HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}" SOURCES
                     "${sources}" HEADERS "${headers}" )
 

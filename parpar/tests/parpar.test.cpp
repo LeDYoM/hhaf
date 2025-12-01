@@ -1,6 +1,7 @@
 #include "catch_include.hpp"
 
-#include <parpar/include/parpar.hpp>
+import parpar;
+import htypes;
 
 using namespace htps;
 using namespace parpar;

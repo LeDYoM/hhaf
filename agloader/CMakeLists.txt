@@ -7,9 +7,6 @@ project(
   LANGUAGES CXX)
 
 set(CURRENT_TARGET agloader)
-build_lib_module(${CURRENT_TARGET})
-
-set_target_properties(${CURRENT_TARGET} PROPERTIES VISIBILITY_INLINES_HIDDEN TRUE)
 
 if(MSVC)
   set(driver_file msvc)
@@ -17,14 +14,13 @@ else()
   set(driver_file linux)
 endif()
 
-target_sources(${CURRENT_TARGET}
-PUBLIC
-  FILE_SET CXX_MODULES
-  FILES
+set(sources
   src/loaded_instance_utils.cppm
   src/loaded_instance_${driver_file}.cppm
   src/loaded_instance.cppm
   src/loader.cppm
 )
 
+build_lib_module(${CURRENT_TARGET} SOURCES ${sources})
+set_target_properties(${CURRENT_TARGET} PROPERTIES VISIBILITY_INLINES_HIDDEN TRUE)
 target_link_libraries(${CURRENT_TARGET} PRIVATE ${CMAKE_DL_LIBS})

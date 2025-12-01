@@ -1,11 +1,11 @@
-PARPAR_PRAGMA_ONCE
-#ifndef PAR_PAR_INCLUDE_HPP
-#define PAR_PAR_INCLUDE_HPP
-
-import htypes;
+module;
 
 #include <utility>
 #include <algorithm>
+
+export module parpar;
+
+import htypes;
 
 namespace parpar
 {
@@ -16,11 +16,11 @@ template <typename T>
 using vector_t = tps::vector<T>;
 
 // Forward declaration of main class.
-class ParametersParser;
+export class ParametersParser;
 
 // Forward declare free functions to create parameters parser objects
-ParametersParser create(vector_t<str_t> commandLine);
-ParametersParser create(int argc, char* argv[]);
+export ParametersParser create(vector_t<str_t> commandLine);
+export ParametersParser create(int argc, char* argv[]);
 
 /**
  * @brief Help to collect, read and check command line parameters
@@ -404,5 +404,3 @@ inline ParametersParser create(int const argc, char const* const argv[])
     return create(tps::move(params));
 }
 }  // namespace parpar
-
-#endif

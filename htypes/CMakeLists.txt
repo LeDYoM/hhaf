@@ -9,12 +9,8 @@ project("HAF Types"
 )
 
 set(CURRENT_TARGET htypes)
-build_lib_module(${CURRENT_TARGET} STATIC)
 
-target_sources(${CURRENT_TARGET}
-PUBLIC
-  FILE_SET CXX_MODULES
-  FILES
+set(sources
     src/array.cppm
     src/memory/alloc_func_memmanager.cppm
     src/memory/alloc_func.cppm
@@ -51,10 +47,7 @@ PUBLIC
     src/weak_ptr.cppm
 )
 
-#build_lib_component(HEADERS_ONLY HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}"
-#              HEADERS ${headers})
-
-#build_command()
+build_lib_module(${CURRENT_TARGET} STATIC SOURCES "${sources}")
 
 # Use Memmamanger
 #target_compile_definitions(${CURRENT_TARGET} INTERFACE USER_MEM_MANAGER)

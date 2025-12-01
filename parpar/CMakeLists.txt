@@ -10,15 +10,12 @@ project("PARameter PARser"
 
 set(CURRENT_TARGET parpar)
 
-set(include_dir parpar/include)
-set(headers
-    ${include_dir}/parpar.hpp
+set(sources
+    src/parpar_mini.cppm
+    src/parpar.cppm
 )
 
-build_lib_component(HEADERS_ONLY HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}"
-              HEADERS ${headers})
+build_lib_module(${CURRENT_TARGET} STATIC SOURCES "${sources}")
 
-set_pragma_once_or_not(PARPAR true INTERFACE)
-target_compile_features(${CURRENT_TARGET} INTERFACE cxx_std_23)
-target_link_libraries(${CURRENT_TARGET} INTERFACE htypes)
+target_link_libraries(${CURRENT_TARGET} PRIVATE htypes)
 addTestingDirectory(tests)

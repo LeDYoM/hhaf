@@ -1,6 +1,6 @@
-PARPAR_PRAGMA_ONCE
-#ifndef PAR_PAR_MINI_INCLUDE_HPP
-#define PAR_PAR_MINI_INCLUDE_HPP
+module;
+
+export module parpar.mini;
 
 import htypes;
 
@@ -9,7 +9,7 @@ import htypes;
  */
 namespace parparmini
 {
-class ParametersParserMini
+export class ParametersParserMini
 {
 public:
     using Index = htps::u32;
@@ -112,5 +112,3 @@ inline [[nodiscard]] ParametersParserMini create(int const argc,
 }
 
 }  // namespace parparmini
-
-#endif
