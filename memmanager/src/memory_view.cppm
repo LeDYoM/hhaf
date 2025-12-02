@@ -1,8 +1,9 @@
-#ifndef MEMMANAGER_MEMORY_VIEW_INCLUDE_HPP
-#define MEMMANAGER_MEMORY_VIEW_INCLUDE_HPP
+module;
 
 #include <cstddef>
 #include <cstdint>
+
+export module memmanager:memoryview;
 
 #include "memory_statistics.hpp"
 

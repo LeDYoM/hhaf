@@ -1,6 +1,11 @@
-#include "configuration.hpp"
+export module memmanager:configuration;
 
 import parpar.mini;
+
+struct Configuration
+{
+    bool AlwaysCheckHeap{false};  // Check heap every alloc/dealloc
+};
 
 Configuration paramsToConfiguration(int const argc, char const* argv[])
 {

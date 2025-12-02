@@ -1,11 +1,15 @@
-#include <memmanager/include/memmanager.hpp>
+module;
+
+#include <cstddef>
 #include <memmanager/include/memory_view.hpp>
 #include "memory_statistics_private.hpp"
 #include "memmanager_platform.hpp"
 #include "configuration.hpp"
 #include <iostream>
 
-void installMemManager(int const argc, char const* argv[])
+export module memmanger:funcs;
+
+export void installMemManager(int const argc, char const* argv[])
 {
     Configuration config{paramsToConfiguration(argc, argv)};
     initPlatformMemManager(config);
@@ -35,7 +39,7 @@ struct Bytes
     }
 };
 
-void finishMemManager(bool const display_log)
+export void finishMemManager(bool const display_log)
 {
     if (display_log)
     {
@@ -60,82 +64,82 @@ void finishMemManager(bool const display_log)
     memm::destroyMemoryStatistics();
 }
 
-void* mmalloc(std::size_t size)
+export void* mmalloc(std::size_t size)
 {
     memm::onAllocated(size);
     return std::malloc(size);
 }
 
-void mfree(void* block)
+export void mfree(void* block)
 {
     memm::onDeallocate(0U);
     std::free(block);
 }
 
-void mfree_with_size(void* block, std::size_t const size)
+export void mfree_with_size(void* block, std::size_t const size)
 {
     memm::onDeallocate(size);
     std::free(block);
 }
 
-void* operator new(std::size_t size)
+export void* operator new(std::size_t size)
 {
     return mmalloc(size);
 }
 
-void* operator new(std::size_t size, const std::nothrow_t&) noexcept
+export void* operator new(std::size_t size, const std::nothrow_t&) noexcept
 {
     return mmalloc(size);
 }
 
-void* operator new[](std::size_t size)
+export void* operator new[](std::size_t size)
 {
     return mmalloc(size);
 }
 
-void* operator new[](std::size_t size, const std::nothrow_t&) noexcept
+export void* operator new[](std::size_t size, const std::nothrow_t&) noexcept
 {
     return mmalloc(size);
 }
 
-void operator delete(void* data) noexcept
+export void operator delete(void* data) noexcept
 {
     return mfree(data);
 }
 
-void operator delete(void* data, const std::nothrow_t&) noexcept
+export void operator delete(void* data, const std::nothrow_t&) noexcept
 {
     return mfree(data);
 }
 
-void operator delete(void* data, std::size_t size)
+export void operator delete(void* data, std::size_t size)
 {
     return mfree_with_size(data, size);
 }
 
-void operator delete(void* data,
+export void operator delete(void* data,
                      std::size_t size,
                      const std::nothrow_t&) noexcept
 {
     return mfree_with_size(data, size);
 }
 
-void operator delete[](void* data)
+export void operator delete[](void* data)
 {
     return mfree(data);
 }
 
-void operator delete[](void* data, std::size_t size)
+export void operator delete[](void* data, std::size_t size)
 {
     return mfree_with_size(data, size);
 }
 
-void operator delete[](void* data, const std::nothrow_t&) noexcept
+export void operator delete[](void* data, const std::nothrow_t&) noexcept
 {
     return mfree(data);
 }
 
-void operator delete[](void* data,
+export void operator delete[](void* data,
                        std::size_t size,
                        const std::nothrow_t&) noexcept
 {
