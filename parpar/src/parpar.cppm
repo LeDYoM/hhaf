@@ -389,12 +389,12 @@ private:
     friend ParametersParser parpar::create(vector_t<str_t> commandLine);
 };
 
-inline ParametersParser create(vector_t<str_t> commandLine)
+ParametersParser create(vector_t<str_t> commandLine)
 {
     return ParametersParser(tps::move(commandLine));
 }
 
-inline ParametersParser create(int const argc, char const* const argv[])
+ParametersParser create(int const argc, char const* const argv[])
 {
     vector_t<str_t> params(argc);
     for (int i = 0; i < argc; ++i)

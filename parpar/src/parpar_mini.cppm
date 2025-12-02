@@ -105,7 +105,7 @@ private:
                                        char const* const argv[]);
 };
 
-inline [[nodiscard]] ParametersParserMini create(int const argc,
+export [[nodiscard]] ParametersParserMini create(int const argc,
                                                  char const* const argv[])
 {
     return ParametersParserMini{argc, argv};
