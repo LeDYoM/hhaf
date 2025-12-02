@@ -1,5 +1,6 @@
 #include "configuration.hpp"
-#include <parpar/include/parpar_mini.h>
+
+import parpar.mini;
 
 Configuration paramsToConfiguration(int const argc, char const* argv[])
 {
