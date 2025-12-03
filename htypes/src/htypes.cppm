@@ -1,6 +1,5 @@
 export module htypes;
 
-//export import :alloc_func_memmanager;
 //export import :alloc_func;
 //export import :allocator;
 //export import :allocatorfunc;

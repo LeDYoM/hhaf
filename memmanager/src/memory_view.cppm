@@ -3,9 +3,9 @@ module;
 #include <cstddef>
 #include <cstdint>
 
-export module memmanager:memoryview;
+export module memmanager:memory_view;
 
-#include "memory_statistics.hpp"
+import :statistics;
 
 namespace memm
 {
@@ -28,5 +28,3 @@ public:
 };
 
 }  // namespace memm
-
-#endif

@@ -1,13 +1,14 @@
 module;
 
 #include <cstddef>
-#include <memmanager/include/memory_view.hpp>
-#include "memory_statistics_private.hpp"
-#include "memmanager_platform.hpp"
-#include "configuration.hpp"
 #include <iostream>
 
-export module memmanger:funcs;
+export module memmanager:funcs;
+
+import :memory_view;
+import :configuration;
+import :statistics;
+import :platform;
 
 export void installMemManager(int const argc, char const* argv[])
 {

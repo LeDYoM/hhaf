@@ -1,13 +1,12 @@
 export module htypes:allocator;
 
 import :placement;
+import :alloc_func;
 
 #ifdef USER_MEM_MANAGER
-import :alloc_func_memmanager
 export template <typename T>
 using ReserveDestroyT = htps::AllocatorMemManagerRaw<T>;
 #else
-import :alloc_func;
 export template <typename T>
 using ReserveDestroyT = htps::AllocatorMallocFree<T>;
 #endif

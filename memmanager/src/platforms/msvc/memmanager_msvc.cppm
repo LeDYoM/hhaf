@@ -1,6 +1,4 @@
-#include "memmanager_platform.hpp"
-#include <memmanager/include/memmanager.hpp>
-#include "configuration.hpp"
+module;
 
 #include <cstdlib>
 #include <new>
@@ -14,6 +12,10 @@
 #include <windows.h>
 #include <crtdbg.h>
 #pragma warning(pop)
+
+export module memmanager:platform;
+
+import :configuration;
 
 #ifndef NDEBUG
 int crtDebugMemAllocHook(int allocType,
@@ -43,6 +45,7 @@ int crtDebugMemAllocHook(int allocType,
 
 bool initPlatformMemManager(Configuration const& config)
 {
+#ifndef NDEBUG
     int newFlag{_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF};
     if (config.AlwaysCheckHeap)
     {
@@ -50,6 +53,7 @@ bool initPlatformMemManager(Configuration const& config)
     }
     _CrtSetDbgFlag(newFlag);
     _CrtSetAllocHook(crtDebugMemAllocHook);
+#endif  // NDEBUG
     return true;
 }
 

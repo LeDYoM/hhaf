@@ -10,10 +10,19 @@ project("HAF Types"
 
 set(CURRENT_TARGET htypes)
 
+set(USE_MEM_MANAGER true)
+
+if (USE_MEM_MANAGER)
+    set(ALLOC_FUNC_FILE_SUFIX "_memmanager")
+else()
+    set(ALLOC_FUNC_FILE_SUFIX "")
+endif()
+
+#target_compile_definitions(${CURRENT_TARGET} INTERFACE USER_MEM_MANAGER)
+
 set(sources
     src/array.cppm
-    src/memory/alloc_func_memmanager.cppm
-    src/memory/alloc_func.cppm
+    src/memory/alloc_func${ALLOC_FUNC_FILE_SUFIX}.cppm
     src/memory/allocator.cppm
     src/memory/allocatorfunc.cppm
     src/memory/placement.cppm
@@ -50,8 +59,8 @@ set(sources
 build_lib_module(${CURRENT_TARGET} STATIC SOURCES "${sources}")
 
 # Use Memmamanger
-#target_compile_definitions(${CURRENT_TARGET} INTERFACE USER_MEM_MANAGER)
-#target_link_libraries(${CURRENT_TARGET} INTERFACE memmanager)
-target_compile_features(${CURRENT_TARGET} INTERFACE cxx_std_23)
+if (USE_MEM_MANAGER)
+    target_link_libraries(${CURRENT_TARGET} INTERFACE memmanager)
+endif()
 
 addTestingDirectory(tests)

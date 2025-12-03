@@ -1,4 +1,4 @@
-#include "memmanager_platform.hpp"
+export module memmanager:platform;
 
 bool initPlatformMemManager(Configuration const&)
 {

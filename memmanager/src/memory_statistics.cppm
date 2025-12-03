@@ -1,13 +1,12 @@
-#ifndef MEMMANAGER_MEMORY_STATISTICS_INCLUDE_HPP
-#define MEMMANAGER_MEMORY_STATISTICS_INCLUDE_HPP
+module;
 
 #include <cstddef>
 #include <cstdint>
-#include "memory_statistics_private.hpp"
 
+export module memmanager:statistics;
 namespace memm
 {
-struct MemoryStatistics
+export struct MemoryStatistics
 {
     std::uint64_t num_alloc_{0U};
     std::uint64_t num_dealloc_{0U};
@@ -22,12 +21,6 @@ MemoryStatistics* getHeadMemoryStatistics();
 bool canAddNode() noexcept;
 MemoryStatistics* getMemoryStatistics() noexcept;
 
-}  // namespace memm
-
-module :private;
-
-namespace
-{
 MemoryStatistics* memory_statistics{nullptr};
 constexpr std::uint_fast32_t kMaxMemoryStatisticsSubBuffer{3U};
 MemoryStatistics* memory_statics_subbuffer{nullptr};
