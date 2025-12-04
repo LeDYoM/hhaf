@@ -18,8 +18,6 @@ else()
     set(ALLOC_FUNC_FILE_SUFIX "")
 endif()
 
-#target_compile_definitions(${CURRENT_TARGET} INTERFACE USER_MEM_MANAGER)
-
 set(sources
     src/array.cppm
     src/memory/alloc_func${ALLOC_FUNC_FILE_SUFIX}.cppm

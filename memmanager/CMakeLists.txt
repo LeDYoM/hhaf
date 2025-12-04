@@ -7,8 +7,14 @@ project("HAF MemManager"
 
 set(CURRENT_TARGET memmanager)
 
+if(MSVC)
+  set(driver_file _msvc)
+else()
+  set(driver_file _null)
+endif()
+
 set(sources
-    src/platforms/msvc/memmanager_msvc.cppm
+    src/platforms/msvc/memmanager${driver_file}.cppm
     src/configuration.cppm
     src/memmanager_funcs.cppm
     src/memmanager.cppm
@@ -17,4 +23,3 @@ set(sources
 )
 
 build_lib_module(${CURRENT_TARGET} EXPORT_ALL SOURCES "${sources}")
-#target_link_libraries(${CURRENT_TARGET} PRIVATE parpar)
