@@ -10,6 +10,8 @@ import :configuration;
 import :statistics;
 import :platform;
 
+namespace memm
+{
 export void installMemManager(int const argc, char const* argv[])
 {
     Configuration config{paramsToConfiguration(argc, argv)};
@@ -82,67 +84,68 @@ export void mfree_with_size(void* block, std::size_t const size)
     memm::onDeallocate(size);
     std::free(block);
 }
+}  // namespace memm
 
 export void* operator new(std::size_t size)
 {
-    return mmalloc(size);
+    return memm::mmalloc(size);
 }
 
 export void* operator new(std::size_t size, const std::nothrow_t&) noexcept
 {
-    return mmalloc(size);
+    return memm::mmalloc(size);
 }
 
 export void* operator new[](std::size_t size)
 {
-    return mmalloc(size);
+    return memm::mmalloc(size);
 }
 
 export void* operator new[](std::size_t size, const std::nothrow_t&) noexcept
 {
-    return mmalloc(size);
+    return memm::mmalloc(size);
 }
 
 export void operator delete(void* data) noexcept
 {
-    return mfree(data);
+    return memm::mfree(data);
 }
 
 export void operator delete(void* data, const std::nothrow_t&) noexcept
 {
-    return mfree(data);
+    return memm::mfree(data);
 }
 
 export void operator delete(void* data, std::size_t size)
 {
-    return mfree_with_size(data, size);
+    return memm::mfree_with_size(data, size);
 }
 
 export void operator delete(void* data,
-                     std::size_t size,
-                     const std::nothrow_t&) noexcept
+                            std::size_t size,
+                            const std::nothrow_t&) noexcept
 {
-    return mfree_with_size(data, size);
+    return memm::mfree_with_size(data, size);
 }
 
 export void operator delete[](void* data)
 {
-    return mfree(data);
+    return memm::mfree(data);
 }
 
 export void operator delete[](void* data, std::size_t size)
 {
-    return mfree_with_size(data, size);
+    return memm::mfree_with_size(data, size);
 }
 
 export void operator delete[](void* data, const std::nothrow_t&) noexcept
 {
-    return mfree(data);
+    return memm::mfree(data);
 }
 
 export void operator delete[](void* data,
-                       std::size_t size,
-                       const std::nothrow_t&) noexcept
+                              std::size_t size,
+                              const std::nothrow_t&) noexcept
 {
-    return mfree_with_size(data, size);
+    return memm::mfree_with_size(data, size);
 }

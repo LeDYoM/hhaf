@@ -14,7 +14,7 @@ int main(int const argc, char const* argv[])
         std::jthread t([]() {});
     }
 
-    installMemManager(argc, argv);
+    memm::installMemManager(argc, argv);
 
     auto* loader{agl::createLoader()};
 

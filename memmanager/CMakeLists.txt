@@ -23,3 +23,5 @@ set(sources
 )
 
 build_lib_module(${CURRENT_TARGET} EXPORT_ALL SOURCES "${sources}")
+
+addTestingDirectory(tests)
