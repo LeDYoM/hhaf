@@ -15,11 +15,14 @@ endif()
 
 set(sources
     src/platforms/msvc/memmanager${driver_file}.cppm
+    src/bytes.cppm
     src/configuration.cppm
+    src/deletes.cppm
     src/memmanager_funcs.cppm
     src/memmanager.cppm
     src/memory_statistics.cppm
     src/memory_view.cppm
+    src/news.cppm
 )
 
 build_lib_module(${CURRENT_TARGET} EXPORT_ALL SOURCES "${sources}")
