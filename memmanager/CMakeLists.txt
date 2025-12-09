@@ -21,6 +21,8 @@ set(sources
     src/memmanager_funcs.cppm
     src/memmanager_funcs_impl.cppm
     src/memmanager.cppm
+    src/memory_statistics_class.cppm
+    src/memory_statistics_impl.cppm
     src/memory_statistics.cppm
     src/memory_view.cppm
     src/news.cppm

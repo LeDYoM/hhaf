@@ -11,10 +11,10 @@ import :bytes;
 
 namespace memm
 {
+static Configuration configuration;
 void installMemManager(int const argc, char const* argv[])
 {
-    Configuration config{paramsToConfiguration(argc, argv)};
-    initPlatformMemManager(config);
+    initPlatformMemManager(configuration);
 
     for (int i = 1; i < argc; ++i)
     {
@@ -24,9 +24,9 @@ void installMemManager(int const argc, char const* argv[])
     memm::initMemoryStatistics();
 }
 
-void installMemManager(Configuration const& configuration)
+void installMemManager(Configuration const&)
 {
-    
+
 }
 
 void finishMemManager(bool const display_log)
