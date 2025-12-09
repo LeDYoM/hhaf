@@ -19,6 +19,7 @@ set(sources
     src/configuration.cppm
     src/deletes.cppm
     src/memmanager_funcs.cppm
+    src/memmanager_funcs_impl.cppm
     src/memmanager.cppm
     src/memory_statistics.cppm
     src/memory_view.cppm
