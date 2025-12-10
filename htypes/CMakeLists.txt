@@ -10,7 +10,7 @@ project("HAF Types"
 
 set(CURRENT_TARGET htypes)
 
-set(USE_MEM_MANAGER true)
+set(USE_MEM_MANAGER false)
 
 if (USE_MEM_MANAGER)
     set(ALLOC_FUNC_FILE_SUFIX "_memmanager")

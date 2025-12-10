@@ -29,6 +29,11 @@ void installMemManager(Configuration const&)
 
 }
 
+void installMemManager()
+{
+    installMemManager(Configuration{});
+}
+
 void finishMemManager(bool const display_log)
 {
     if (display_log)

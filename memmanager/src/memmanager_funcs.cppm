@@ -10,6 +10,7 @@ namespace memm
 {
 export void installMemManager(int const argc, char const* argv[]);
 export void installMemManager(Configuration const& configuration);
+export void installMemManager();
 export void finishMemManager(bool const display_log);
 export void* mmalloc(std::size_t const size);
 export void mfree(void* block);

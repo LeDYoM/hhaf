@@ -2,8 +2,9 @@
 
 import memmanager;
 
-using namespace mem;
+using namespace memm;
 
 TEST_CASE("memmanager", "[memmanager]")
 {
+    installMemManager();
 }
