@@ -90,7 +90,7 @@ void mfree_with_size(void* block, std::size_t const size)
 
 bool isInitialized() noexcept
 {
-    return isInitialized;
+    return initialized;
 }
 
 bool isNativeMemoryLeakDetectorSupported() noexcept
