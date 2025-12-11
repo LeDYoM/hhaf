@@ -11,27 +11,38 @@ import :bytes;
 
 namespace memm
 {
-static Configuration configuration;
-void installMemManager(int const argc, char const* argv[])
+static constinit bool initialized{false};
+
+bool initMemManager(Configuration const& configuration)
 {
-    initPlatformMemManager(configuration);
+    if (!initialized)
+    {
+        initPlatformMemManager(configuration);
+        memm::initMemoryStatistics();
+        initialized = true;
+        return true;
+    }
+    return false;
+}
+
+bool initMemManager()
+{
+    return initMemManager(Configuration{});
+}
+
+bool initMemManager(int const argc, char const* argv[])
+{
+    Configuration configuration;
 
     for (int i = 1; i < argc; ++i)
     {
-        (void)(argv);
+        if (std::strncmp(argv[i], "nomlcheck", 10))
+        {
+            configuration.AlwaysCheckHeap = false;
+        }
     }
 
-    memm::initMemoryStatistics();
-}
-
-void installMemManager(Configuration const&)
-{
-
-}
-
-void installMemManager()
-{
-    installMemManager(Configuration{});
+    return initMemManager(configuration);
 }
 
 void finishMemManager(bool const display_log)
@@ -75,6 +86,21 @@ void mfree_with_size(void* block, std::size_t const size)
 {
     memm::onDeallocate(size);
     std::free(block);
+}
+
+bool isInitialized() noexcept
+{
+    return isInitialized;
+}
+
+bool isNativeMemoryLeakDetectorSupported() noexcept
+{
+    return 
+}
+
+bool isMemoryLeakDetectorActive() noexcept
+{
+    return isInitialized() && isNativeMemoryLeakDetectorSupported();
 }
 
 }  // namespace memm

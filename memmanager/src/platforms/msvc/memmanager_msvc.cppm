@@ -57,4 +57,9 @@ bool initPlatformMemManager(Configuration const& config)
     return true;
 }
 
+bool isPlatformMemoryLeakDetectorSupported()
+{
+    return true;
+}
+
 #endif  // _MSC_VER

@@ -6,5 +6,6 @@ using namespace memm;
 
 TEST_CASE("memmanager", "[memmanager]")
 {
-    installMemManager();
+    CHECK_FALSE(isInitialized());
+    initMemManager();
 }
