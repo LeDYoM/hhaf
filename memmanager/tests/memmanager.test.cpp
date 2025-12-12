@@ -4,8 +4,11 @@ import memmanager;
 
 using namespace memm;
 
-TEST_CASE("memmanager", "[memmanager]")
+TEST_CASE("memmanager:simpleConstructor", "[memmanager]")
 {
     CHECK_FALSE(isInitialized());
-    initMemManager();
+    CHECK(initMemManager());
+    CHECK(isInitialized());
+    CHECK(finishMemManager(false));
+    CHECK_FALSE(isInitialized());
 }

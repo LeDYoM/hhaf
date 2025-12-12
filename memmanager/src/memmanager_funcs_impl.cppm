@@ -45,7 +45,7 @@ bool initMemManager(int const argc, char const* argv[])
     return initMemManager(configuration);
 }
 
-void finishMemManager(bool const display_log)
+bool finishMemManager(bool const display_log)
 {
     if (display_log)
     {
@@ -67,7 +67,17 @@ void finishMemManager(bool const display_log)
         std::cout << std::endl;
     }
 
-    memm::destroyMemoryStatistics();
+    if (initialized)
+    {
+        memm::destroyMemoryStatistics();
+        initialized = false;
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+
 }
 
 void* mmalloc(std::size_t size)
@@ -91,11 +101,6 @@ void mfree_with_size(void* block, std::size_t const size)
 bool isInitialized() noexcept
 {
     return initialized;
-}
-
-bool isNativeMemoryLeakDetectorSupported() noexcept
-{
-    return 
 }
 
 bool isMemoryLeakDetectorActive() noexcept

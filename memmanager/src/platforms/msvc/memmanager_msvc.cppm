@@ -57,7 +57,7 @@ bool initPlatformMemManager(Configuration const& config)
     return true;
 }
 
-bool isPlatformMemoryLeakDetectorSupported()
+bool isNativeMemoryLeakDetectorSupported()
 {
     return true;
 }
