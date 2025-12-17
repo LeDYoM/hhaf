@@ -17,6 +17,7 @@ set(sources
     src/platforms/msvc/memmanager${driver_file}.cppm
     src/bytes.cppm
     src/configuration.cppm
+    src/constants.cppm
     src/deletes.cppm
     src/memmanager_funcs.cppm
     src/memmanager_funcs_impl.cppm

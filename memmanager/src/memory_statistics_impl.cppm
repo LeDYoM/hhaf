@@ -2,51 +2,47 @@ module;
 
 #include <cstddef>
 #include <cstdint>
+#include <algorithm>
+#include <iterator>
 
 module memmanager:statistics;
 
 import :statistics_class;
+import :constants;
 
 namespace memm
 {
-MemoryStatistics* memory_statistics{nullptr};
-constexpr std::uint_fast32_t kMaxMemoryStatisticsSubBuffer{16U};
-MemoryStatistics* memory_statics_subbuffer{nullptr};
+MemoryStatistics memory_statistics[kMemoryStatisticsMaxSize];
 std::uint_fast32_t current{0U};
 MemoryStatistics* currentNode{nullptr};
 
 void updateCurrentNode()
 {
-    currentNode = (memory_statics_subbuffer + current);
+    currentNode = &(memory_statistics[current]);
 }
 
-void resetMemoryStatisticsData(MemoryStatistics* const ms_data)
+void resetMemoryStatisticsData(MemoryStatistics& ms_data)
 {
-    (*ms_data).bytes_alloc_   = 0U;
-    (*ms_data).bytes_dealloc_ = 0U;
-    (*ms_data).num_alloc_     = 0U;
-    (*ms_data).num_dealloc_   = 0U;
+    ms_data = MemoryStatistics{};
 }
 
 void initMemoryStatistics()
 {
-    memory_statistics = new MemoryStatistics();
-    memory_statics_subbuffer =
-        new MemoryStatistics[kMaxMemoryStatisticsSubBuffer];
+    std::ranges::for_each(memory_statistics, resetMemoryStatisticsData);
 }
 
 bool canAddNode() noexcept
 {
-    return current < kMaxMemoryStatisticsSubBuffer;
+    return current < kMemoryStatisticsMaxSize;
 }
 
 bool pushMemoryStatisticsQueue()
 {
-    if (current < kMaxMemoryStatisticsSubBuffer)
+    if (current < kMemoryStatisticsMaxSize)
     {
         updateCurrentNode();
         ++current;
-        resetMemoryStatisticsData(currentNode);
+        resetMemoryStatisticsData(*currentNode);
         return true;
     }
     return false;
@@ -63,57 +59,31 @@ bool popMemoryStatisticsQueue()
     return false;
 }
 
-MemoryStatistics* getHeadMemoryStatistics()
+MemoryStatistics* getHeadMemoryStatistics() noexcept
 {
     return currentNode;
 }
 
 void destroyMemoryStatistics() noexcept
-{
-    if (memory_statics_subbuffer != nullptr)
-    {
-        delete[] memory_statics_subbuffer;
-    }
-
-    if (memory_statistics != nullptr)
-    {
-        delete memory_statistics;
-        memory_statistics = nullptr;
-    }
-}
-
-MemoryStatistics* getMemoryStatistics() noexcept
-{
-    return memory_statistics;
-}
+{}
 
 void onAllocated(std::size_t const size) noexcept
 {
-    if (memory_statistics != nullptr)
-    {
-        memory_statistics->num_alloc_++;
-        memory_statistics->bytes_alloc_ += size;
-    }
+    auto* mstatistics{getHeadMemoryStatistics()};
 
-    if (currentNode != nullptr)
-    {
-        currentNode->num_alloc_++;
-        currentNode->bytes_alloc_ += size;
-    }
+    mstatistics->num_alloc++;
+    mstatistics->bytes_alloc += size;
+
 }
 
 void onDeallocate(std::size_t const size) noexcept
 {
-    if (memory_statistics != nullptr)
-    {
-        memory_statistics->num_dealloc_++;
-        memory_statistics->bytes_dealloc_ += size;
-    }
+    auto* mstatistics{getHeadMemoryStatistics()};
 
     if (currentNode != nullptr)
     {
-        currentNode->num_dealloc_++;
-        currentNode->bytes_dealloc_ += size;
+        mstatistics->num_dealloc++;
+        mstatistics->bytes_dealloc += size;
     }
 }
 

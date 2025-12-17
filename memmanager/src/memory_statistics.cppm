@@ -15,9 +15,8 @@ export void destroyMemoryStatistics() noexcept;
 bool pushMemoryStatisticsQueue();
 bool popMemoryStatisticsQueue();
 
-MemoryStatistics* getHeadMemoryStatistics();
+MemoryStatistics* getHeadMemoryStatistics() noexcept;
 bool canAddNode() noexcept;
-MemoryStatistics* getMemoryStatistics() noexcept;
 
 export void onAllocated(std::size_t const size) noexcept;
 export void onDeallocate(std::size_t const size) noexcept;

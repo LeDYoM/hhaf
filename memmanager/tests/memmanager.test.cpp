@@ -12,3 +12,10 @@ TEST_CASE("memmanager:simpleConstructor", "[memmanager]")
     CHECK(finishMemManager(false));
     CHECK_FALSE(isInitialized());
 }
+
+TEST_CASE("memmanager:simpleConstructor", "[memmanager]")
+{
+    CHECK_FALSE(isInitialized());
+    CHECK(initMemManager());
+    CHECK(isInitialized());
+}
