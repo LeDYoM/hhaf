@@ -16,6 +16,7 @@ bool pushMemoryStatisticsQueue();
 bool popMemoryStatisticsQueue();
 
 MemoryStatistics* getHeadMemoryStatistics() noexcept;
+MemoryStatistics getGlobalMemoryStatistics() noexcept;
 bool canAddNode() noexcept;
 
 export void onAllocated(std::size_t const size) noexcept;

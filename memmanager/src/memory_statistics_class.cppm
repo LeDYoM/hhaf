@@ -15,4 +15,15 @@ export struct MemoryStatistics
     std::uint64_t bytes_dealloc{0U};
 };
 
+MemoryStatistics operator+(MemoryStatistics const& lhs,
+                           MemoryStatistics const& rhs)
+{
+    return MemoryStatistics{
+        .num_alloc{lhs.num_alloc + rhs.num_alloc},
+        .num_dealloc{lhs.num_dealloc + rhs.num_dealloc},
+        .bytes_alloc{lhs.bytes_alloc + rhs.bytes_alloc},
+        .bytes_dealloc{lhs.bytes_dealloc + rhs.bytes_dealloc}
+    };
+}
+
 }  // namespace memm

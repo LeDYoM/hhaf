@@ -64,6 +64,18 @@ MemoryStatistics* getHeadMemoryStatistics() noexcept
     return currentNode;
 }
 
+MemoryStatistics getGlobalMemoryStatistics() noexcept
+{
+    MemoryStatistics* current_ms{std::begin(memory_statistics)};
+    MemoryStatistics result{*current_ms};
+
+    while (current_ms != getHeadMemoryStatistics())
+    {
+
+    }
+    return result;
+}
+
 void destroyMemoryStatistics() noexcept
 {}
 
