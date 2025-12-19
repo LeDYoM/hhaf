@@ -49,18 +49,18 @@ bool finishMemManager(bool const display_log)
 {
     if (display_log)
     {
-        memm::MemoryStatistics const* mem_statistics{
-            memm::getMemoryStatistics()};
+        memm::MemoryStatistics const mem_statistics{
+            memm::getGlobalMemoryStatistics()};
         std::cout << "[MemManager] Number of allocations: "
-                  << mem_statistics->num_alloc_ << "\n";
+                  << mem_statistics.num_alloc << "\n";
         std::cout << "[MemManager] Number of deallocations: "
-                  << mem_statistics->num_dealloc_ << "\n";
-        Bytes allocated{mem_statistics->bytes_alloc_};
+                  << mem_statistics.num_dealloc << "\n";
+        Bytes allocated{mem_statistics.bytes_alloc};
         std::cout << "[MemManager] Bytes allocated:\t" << allocated.bytes
                   << "\t(" << allocated.KBytes() << "KB)\t("
                   << allocated.MBytes() << "MB)"
                   << "\n";
-        Bytes deallocated{mem_statistics->bytes_alloc_};
+        Bytes deallocated{mem_statistics.bytes_alloc};
         std::cout << "[MemManager] Bytes deallocated:\t" << deallocated.bytes
                   << "\t(" << deallocated.KBytes() << "KB)\t("
                   << deallocated.MBytes() << "MB)";

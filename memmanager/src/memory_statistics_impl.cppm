@@ -71,7 +71,7 @@ MemoryStatistics getGlobalMemoryStatistics() noexcept
 
     while (current_ms != getHeadMemoryStatistics())
     {
-
+        result += *(current_ms++);
     }
     return result;
 }
