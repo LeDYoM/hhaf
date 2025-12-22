@@ -4,6 +4,7 @@ project(memmanager_utests CXX)
 set(CURRENT_TARGET ${PROJECT_NAME})
 
 set(SOURCE_TESTS
+    memmanager_statistics
     memmanager
 )
 

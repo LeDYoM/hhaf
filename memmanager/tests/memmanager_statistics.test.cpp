@@ -4,11 +4,10 @@ import memmanager;
 
 using namespace memm;
 
-TEST_CASE("memmanager:simpleConstructor", "[memmanager]")
+TEST_CASE("memmanager:enmptyStatistics", "[memmanager]")
 {
-    CHECK_FALSE(isInitialized());
     CHECK(initMemManager());
     CHECK(isInitialized());
+    MemoryStatistics mg{getGlobalMemoryStatistics()};
     CHECK(finishMemManager(false));
-    CHECK_FALSE(isInitialized());
 }
