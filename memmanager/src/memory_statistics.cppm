@@ -1,6 +1,6 @@
 module;
 
-#include <cstdint>
+#include <cstddef>
 
 export module memmanager:statistics;
 
