@@ -5,20 +5,22 @@ module;
 export module memmanager:statistics;
 
 import :statistics_class;
+import :statistics_impl;
 
 namespace memm
 {
-export void initMemoryStatistics();
+void initMemoryStatistics();
 export void destroyMemoryStatistics() noexcept;
 
-bool pushMemoryStatisticsQueue();
-bool popMemoryStatisticsQueue();
+export bool canAddNode() noexcept;
 
-export MemoryStatistics* getHeadMemoryStatistics() noexcept;
+export bool pushMemoryStatisticsQueue();
+export bool popMemoryStatisticsQueue();
+
+export MemoryStatistics const* getHeadMemoryStatistics() noexcept;
 export MemoryStatistics getGlobalMemoryStatistics() noexcept;
-bool canAddNode() noexcept;
 
-export void onAllocated(std::size_t const size) noexcept;
-export void onDeallocate(std::size_t const size) noexcept;
+void onAllocated(std::size_t const size) noexcept;
+void onDeallocate(std::size_t const size) noexcept;
 
 }  // namespace memm

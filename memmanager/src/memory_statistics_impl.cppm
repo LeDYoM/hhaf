@@ -1,11 +1,11 @@
 module;
 
-#include <cstddef>
 #include <cstdint>
+#include <cstddef>
 #include <algorithm>
 #include <iterator>
 
-module memmanager:statistics;
+module memmanager:statistics_impl;
 
 import :statistics_class;
 import :constants;
@@ -14,12 +14,7 @@ namespace memm
 {
 MemoryStatistics memory_statistics[kMemoryStatisticsMaxSize];
 std::uint_fast32_t current{0U};
-MemoryStatistics* currentNode{nullptr};
-
-void updateCurrentNode()
-{
-    currentNode = &(memory_statistics[current]);
-}
+MemoryStatistics* currentNode{memory_statistics};
 
 void resetMemoryStatisticsData(MemoryStatistics& ms_data)
 {
@@ -29,6 +24,14 @@ void resetMemoryStatisticsData(MemoryStatistics& ms_data)
 void initMemoryStatistics()
 {
     std::ranges::for_each(memory_statistics, resetMemoryStatisticsData);
+}
+
+void destroyMemoryStatistics() noexcept
+{}
+
+void updateCurrentNode()
+{
+    currentNode = &(memory_statistics[current]);
 }
 
 bool canAddNode() noexcept
@@ -59,7 +62,7 @@ bool popMemoryStatisticsQueue()
     return false;
 }
 
-MemoryStatistics* getHeadMemoryStatistics() noexcept
+MemoryStatistics const* getHeadMemoryStatistics() noexcept
 {
     return currentNode;
 }
@@ -75,9 +78,6 @@ MemoryStatistics getGlobalMemoryStatistics() noexcept
     }
     return result;
 }
-
-void destroyMemoryStatistics() noexcept
-{}
 
 void onAllocated(std::size_t const size) noexcept
 {
