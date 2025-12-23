@@ -19,7 +19,7 @@ public:
     MemoryView(MemoryView const&) = delete;
     MemoryView& operator=(MemoryView const&) = delete;
 
-    MemoryStatistics* getCurrentMemoryStatistics() const
+    MemoryStatistics const* getCurrentMemoryStatistics() const
     {
         return getHeadMemoryStatistics();
     }
