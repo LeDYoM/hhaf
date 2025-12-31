@@ -5,10 +5,10 @@ module;
 #include <algorithm>
 #include <iterator>
 
-module memmanager:statistics_impl;
+module memmanager : statistics_impl;
 
-import :statistics_class;
-import :constants;
+import : statistics_class;
+import : constants;
 
 namespace memm
 {
@@ -51,18 +51,6 @@ bool pushMemoryStatisticsQueue()
     return false;
 }
 
-bool popMemoryStatisticsQueue()
-{
-    if (current_index > 0U)
-    {
-        currentNode[current_index - 1U] += currentNode[current_index];
-        --current_index;
-        updateCurrentNode();
-        return true;
-    }
-    return false;
-}
-
 MemoryStatistics const* getDynamicEndMemoryStatistics() noexcept
 {
     return std::next(currentNode);
@@ -71,6 +59,19 @@ MemoryStatistics const* getDynamicEndMemoryStatistics() noexcept
 MemoryStatistics const* getHeadMemoryStatistics() noexcept
 {
     return currentNode;
+}
+
+bool popMemoryStatisticsQueue()
+{
+    if (current_index > 0U)
+    {
+        memory_statistics[current_index - 1U] +=
+            memory_statistics[current_index];
+        --current_index;
+        updateCurrentNode();
+        return true;
+    }
+    return false;
 }
 
 MemoryStatistics* getMutableHeadMemoryStatistics() noexcept
@@ -97,7 +98,6 @@ void onAllocated(std::size_t const size) noexcept
 
     mstatistics->num_alloc++;
     mstatistics->bytes_alloc += size;
-
 }
 
 void onDeallocate(std::size_t const size) noexcept
