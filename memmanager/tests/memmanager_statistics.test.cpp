@@ -150,3 +150,16 @@ TEST_CASE("memmanager:queueStatistics", "[memmanager]")
     CHECK(finishMemManager(false));
 }
 
+namespace
+struct Simple
+TEST_CASE("memmanager:heterogeneous_types", "[memmanager]")
+{
+    CHECK(initMemManager());
+    CHECK(isInitialized());
+    MemoryStatistics mg{getGlobalMemoryStatistics()};
+    CHECK(mg.num_alloc == 0U);
+    CHECK(mg.num_dealloc == 0U);
+    CHECK(mg.bytes_alloc == 0U);
+    CHECK(mg.bytes_dealloc == 0U);
+    CHECK(finishMemManager(false));
+}
