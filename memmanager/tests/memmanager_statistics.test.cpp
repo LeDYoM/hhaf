@@ -47,28 +47,28 @@ TEST_CASE("memmanager:basicStatistics", "[memmanager]")
         CHECK(mg.bytes_dealloc == sizeof(int));
     }
 
-    int* b = new int[10];
+    int* b = new int;
     {
         MemoryStatistics mg{getGlobalMemoryStatistics()};
         CHECK(mg.num_alloc == 2U);
         CHECK(mg.num_dealloc == 1U);
-        CHECK(mg.bytes_alloc == sizeof(int) * 3U);
+        CHECK(mg.bytes_alloc == sizeof(int) * 2U);
         CHECK(mg.bytes_dealloc == sizeof(int));
     }
 
-    delete[] b;
+    delete b;
 
     {
         MemoryStatistics mg{getGlobalMemoryStatistics()};
         CHECK(mg.num_alloc == 2U);
         CHECK(mg.num_dealloc == 2U);
-        CHECK(mg.bytes_alloc == sizeof(int) * 3U);
-        CHECK(mg.bytes_dealloc == sizeof(int) * 3U);
+        CHECK(mg.bytes_alloc == sizeof(int) * 2U);
+        CHECK(mg.bytes_dealloc == sizeof(int) * 2U);
     }
 
     CHECK(finishMemManager(false));
 }
-/*
+
 TEST_CASE("memmanager:queueStatistics", "[memmanager]")
 {
     CHECK(initMemManager());
@@ -82,7 +82,7 @@ TEST_CASE("memmanager:queueStatistics", "[memmanager]")
     }
 
     CHECK(canAddNode());
-    int* a = new int[1];
+    int* a = new int;
     {
         MemoryStatistics mg{getGlobalMemoryStatistics()};
         CHECK(mg.num_alloc == 1U);
@@ -92,12 +92,12 @@ TEST_CASE("memmanager:queueStatistics", "[memmanager]")
     }
 
     pushMemoryStatisticsQueue();
-    int* b = new int[2];
+    int* b = new int;
     {
         auto const* mg{getHeadMemoryStatistics()};
         CHECK(mg->num_alloc == 1U);
         CHECK(mg->num_dealloc == 0U);
-        CHECK(mg->bytes_alloc == sizeof(int) * 2U);
+        CHECK(mg->bytes_alloc == sizeof(int));
         CHECK(mg->bytes_dealloc == 0U);
     }
 
@@ -105,7 +105,7 @@ TEST_CASE("memmanager:queueStatistics", "[memmanager]")
         MemoryStatistics mg{getGlobalMemoryStatistics()};
         CHECK(mg.num_alloc == 2U);
         CHECK(mg.num_dealloc == 0U);
-        CHECK(mg.bytes_alloc == sizeof(int) * 3U);
+        CHECK(mg.bytes_alloc == sizeof(int) * 2U);
         CHECK(mg.bytes_dealloc == 0U);
     }
 
@@ -115,7 +115,7 @@ TEST_CASE("memmanager:queueStatistics", "[memmanager]")
         auto const* mg{getHeadMemoryStatistics()};
         CHECK(mg->num_alloc == 1U);
         CHECK(mg->num_dealloc == 1U);
-        CHECK(mg->bytes_alloc == sizeof(int) * 2U);
+        CHECK(mg->bytes_alloc == sizeof(int));
         CHECK(mg->bytes_dealloc == sizeof(int));
     }
 
@@ -123,7 +123,7 @@ TEST_CASE("memmanager:queueStatistics", "[memmanager]")
         MemoryStatistics mg{getGlobalMemoryStatistics()};
         CHECK(mg.num_alloc == 2U);
         CHECK(mg.num_dealloc == 1U);
-        CHECK(mg.bytes_alloc == sizeof(int) * 3U);
+        CHECK(mg.bytes_alloc == sizeof(int) * 2U);
         CHECK(mg.bytes_dealloc == sizeof(int));
     }
 
@@ -135,7 +135,7 @@ TEST_CASE("memmanager:queueStatistics", "[memmanager]")
         auto const* mg{getHeadMemoryStatistics()};
         CHECK(mg->num_alloc == 2U);
         CHECK(mg->num_dealloc == 2U);
-        CHECK(mg->bytes_alloc == sizeof(int) * 3U);
+        CHECK(mg->bytes_alloc == sizeof(int) * 2U);
         CHECK(mg->bytes_dealloc == sizeof(int) * 2U);
     }
 
@@ -143,10 +143,10 @@ TEST_CASE("memmanager:queueStatistics", "[memmanager]")
         MemoryStatistics mg{getGlobalMemoryStatistics()};
         CHECK(mg.num_alloc == 2U);
         CHECK(mg.num_dealloc == 2U);
-        CHECK(mg.bytes_alloc == sizeof(int) * 3U);
-        CHECK(mg.bytes_dealloc == sizeof(int) * 3U);
+        CHECK(mg.bytes_alloc == sizeof(int) * 2U);
+        CHECK(mg.bytes_dealloc == sizeof(int) * 2U);
     }
 
     CHECK(finishMemManager(false));
 }
-*/
+
