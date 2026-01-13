@@ -151,7 +151,19 @@ TEST_CASE("memmanager:queueStatistics", "[memmanager]")
 }
 
 namespace
+{
 struct Simple
+{
+    char a;
+};
+
+struct Complex
+{
+    double[4] a;
+    int b;
+};
+}  // namespace
+
 TEST_CASE("memmanager:heterogeneous_types", "[memmanager]")
 {
     CHECK(initMemManager());
