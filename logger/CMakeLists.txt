@@ -4,7 +4,7 @@ project(logger
     LANGUAGES CXX)
 
 set(CURRENT_TARGET logger)
-
+#[[
 set(headers
     logger/include/commiters/cout_commiter.hpp
     logger/include/commiters/file_commiter.hpp
@@ -22,9 +22,22 @@ set(headers
 set(sources
     src/commiters/file_commiter.cpp
     src/commiters/thread_commiter.cpp)
+]]
 
-build_lib_component(EXPORT_ALL HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}" SOURCES
-                ${sources} HEADERS ${headers})
+set(sources
+    src/commiters/file_commiter.cppm
+    src/log_asserter.cppm
+    src/log_displayer.cppm
+    src/log_init.cppm
+    src/log.cppm
+    src/logger.cppm
+    src/severity_type.cppm
+)
+
+build_lib_module(${CURRENT_TARGET} EXPORT_ALL SOURCES "${sources}")
+
+#build_lib_component(EXPORT_ALL HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}" SOURCES
+#                ${sources} HEADERS ${headers})
 
 find_package(Threads REQUIRED)
 target_link_libraries(${CURRENT_TARGET} PRIVATE Threads::Threads)

@@ -48,26 +48,26 @@ TEST_CASE("memmanager:basicStatistics", "[memmanager]")
     }
 
     // For now, global operator new and delete cannot be overriden.
-/*
-    int* b = new int[2];
-    {
-        MemoryStatistics mg{getGlobalMemoryStatistics()};
-        CHECK(mg.num_alloc == 2U);
-        CHECK(mg.num_dealloc == 1U);
-        CHECK(mg.bytes_alloc == sizeof(int) * 3U);
-        CHECK(mg.bytes_dealloc == sizeof(int));
-    }
+    /*
+        int* b = new int[2];
+        {
+            MemoryStatistics mg{getGlobalMemoryStatistics()};
+            CHECK(mg.num_alloc == 2U);
+            CHECK(mg.num_dealloc == 1U);
+            CHECK(mg.bytes_alloc == sizeof(int) * 3U);
+            CHECK(mg.bytes_dealloc == sizeof(int));
+        }
 
-    delete[] b;
+        delete[] b;
 
-    {
-        MemoryStatistics mg{getGlobalMemoryStatistics()};
-        CHECK(mg.num_alloc == 2U);
-        CHECK(mg.num_dealloc == 2U);
-        CHECK(mg.bytes_alloc == sizeof(int) * 3U);
-        CHECK(mg.bytes_dealloc == sizeof(int) * 3U);
-    }
-*/
+        {
+            MemoryStatistics mg{getGlobalMemoryStatistics()};
+            CHECK(mg.num_alloc == 2U);
+            CHECK(mg.num_dealloc == 2U);
+            CHECK(mg.bytes_alloc == sizeof(int) * 3U);
+            CHECK(mg.bytes_dealloc == sizeof(int) * 3U);
+        }
+    */
     CHECK(finishMemManager(false));
 }
 
@@ -152,7 +152,6 @@ TEST_CASE("memmanager:queueStatistics", "[memmanager]")
     CHECK(finishMemManager(false));
 }
 
-/*
 namespace
 {
 struct Simple
@@ -162,20 +161,40 @@ struct Simple
 
 struct Complex
 {
-    double[4] a;
+    double a[4];
     int b;
 };
+
+struct Compound
+{
+    Simple simple;
+    Complex complex;
+};
+
 }  // namespace
 
 TEST_CASE("memmanager:heterogeneous_types", "[memmanager]")
 {
     CHECK(initMemManager());
     CHECK(isInitialized());
-    MemoryStatistics mg{getGlobalMemoryStatistics()};
-    CHECK(mg.num_alloc == 0U);
-    CHECK(mg.num_dealloc == 0U);
-    CHECK(mg.bytes_alloc == 0U);
-    CHECK(mg.bytes_dealloc == 0U);
-    CHECK(finishMemManager(false));
+
+    {
+        MemoryStatistics mg{getGlobalMemoryStatistics()};
+        CHECK(mg.num_alloc == 0U);
+        CHECK(mg.num_dealloc == 0U);
+        CHECK(mg.bytes_alloc == 0U);
+        CHECK(mg.bytes_dealloc == 0U);
+        CHECK(finishMemManager(false));
+    }
+
+    Compound* compound = new Compound;
+    delete compound;
+
+    {
+        MemoryStatistics mg{getGlobalMemoryStatistics()};
+        CHECK(mg.num_alloc == 1U);
+        CHECK(mg.num_dealloc == 1U);
+        CHECK(mg.bytes_alloc == sizeof(Compound));
+        CHECK(mg.bytes_dealloc == sizeof(Compound));
+    }
 }
-*/

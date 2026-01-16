@@ -1,9 +1,7 @@
-#ifndef LOGGER_LOGINIT_INCLUDE_HPP
-#define LOGGER_LOGINIT_INCLUDE_HPP
+export module logger:loginit;
 
 namespace logger
 {
-
 /**
  * @brief Log RAII object to construct and destruct the log
  * automatically.
@@ -27,5 +25,3 @@ struct LogInitializer final
 };
 
 }  // namespace logger
-
-#endif
