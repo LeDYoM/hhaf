@@ -1,5 +1,4 @@
-#ifndef HLOG_THREAD_COMMITER_INCLUDE_HPP
-#define HLOG_THREAD_COMMITER_INCLUDE_HPP
+export module logger:thread_commiter;
 
 namespace logger
 {
@@ -34,5 +33,3 @@ struct ThreadCommiter
 };
 
 }  // namespace logger
-
-#endif

@@ -9,7 +9,7 @@ module;
 #include <stop_token>
 #include <memory>
 
-export module logger:thread_commiter;
+export module logger:thread_commiter_impl;
 
 namespace logger
 {

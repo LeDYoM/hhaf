@@ -1,10 +1,13 @@
-#include <logger/include/commiters/thread_commiter.hpp>
+module;
 
 #include <mutex>
 #include <thread>
 #include <queue>
 #include <string>
 #include <atomic>
+
+module logger:thread_commiter_impl_sl;
+import :thread_commiter_sl;
 
 namespace logger
 {
@@ -23,6 +26,8 @@ namespace
 {
 InnerData* m_data{nullptr};
 }
+
+void thread_func();
 
 void ThreadCommiterImpl::init(void (*cmt_log)(const char* const log_stream))
 {
@@ -48,7 +53,7 @@ void ThreadCommiterImpl::finish()
     m_data = nullptr;
 }
 
-void ThreadCommiterImpl::thread_func()
+void thread_func()
 {
     Message message;
 

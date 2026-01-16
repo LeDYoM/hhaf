@@ -26,6 +26,10 @@ set(sources
 
 set(sources
     src/commiters/file_commiter.cppm
+#    src/commiters/thread_commiter_impl_sl.cppm
+    src/commiters/thread_commiter_impl.cppm
+#    src/commiters/thread_commiter_sl.cppm
+    src/commiters/thread_commiter.cppm
     src/log_asserter.cppm
     src/log_displayer.cppm
     src/log_init.cppm
