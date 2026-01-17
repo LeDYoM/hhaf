@@ -1,5 +1,4 @@
-#ifndef LOGGER_LOG_COUT_COMMITER_INCLUDE_HPP
-#define LOGGER_LOG_COUT_COMMITER_INCLUDE_HPP
+export module logger:stream_commiter;
 
 namespace logger
 {
@@ -18,5 +17,3 @@ struct StreamCommiter
 };
 
 }  // namespace logger
-
-#endif

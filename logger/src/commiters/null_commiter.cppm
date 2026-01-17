@@ -1,5 +1,4 @@
-#ifndef LOGGER_LOG_NULL_COMMITER_INCLUDE_HPP
-#define LOGGER_LOG_NULL_COMMITER_INCLUDE_HPP
+export module logger:null_commiter;
 
 namespace logger
 {
@@ -13,5 +12,3 @@ struct NullCommiter
 };
 
 }  // namespace logger
-
-#endif

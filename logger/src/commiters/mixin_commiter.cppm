@@ -1,5 +1,4 @@
-#ifndef LOGGER_LOG_MIXIN_COMMITER_INCLUDE_HPP
-#define LOGGER_LOG_MIXIN_COMMITER_INCLUDE_HPP
+export module logger:mixin_commiter;
 
 namespace logger
 {
@@ -17,5 +16,3 @@ struct MixinCommiter
 };
 
 }  // namespace logger
-
-#endif

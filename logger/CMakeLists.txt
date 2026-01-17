@@ -25,7 +25,11 @@ set(sources
 ]]
 
 set(sources
+    src/commiters/cout_commiter.cppm
     src/commiters/file_commiter.cppm
+    src/commiters/mixin_commiter.cppm
+    src/commiters/null_commiter.cppm
+    src/commiters/stream_commiter.cppm
 #    src/commiters/thread_commiter_impl_sl.cppm
     src/commiters/thread_commiter_impl.cppm
 #    src/commiters/thread_commiter_sl.cppm
