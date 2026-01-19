@@ -2,7 +2,7 @@ module;
 
 #include <utility>
 
-export module logger:ldisplayer;
+export module logger:log_displayer;
 
 namespace logger
 {

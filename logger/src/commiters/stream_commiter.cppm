@@ -2,7 +2,7 @@ export module logger:stream_commiter;
 
 namespace logger
 {
-template <auto Stream>
+export template <auto Stream>
 struct StreamCommiter
 {
     static void init() {}

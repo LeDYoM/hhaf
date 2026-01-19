@@ -2,7 +2,7 @@ export module logger:null_commiter;
 
 namespace logger
 {
-struct NullCommiter
+export struct NullCommiter
 {
     static inline void init() {}
 

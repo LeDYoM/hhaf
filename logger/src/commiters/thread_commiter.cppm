@@ -11,7 +11,7 @@ struct ThreadCommiterImpl
     static void commitlog(const char* const log_stream);
 };
 
-template <typename Commiter>
+export template <typename Commiter>
 struct ThreadCommiter
 {
     static void init()

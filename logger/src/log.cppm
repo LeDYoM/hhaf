@@ -14,7 +14,7 @@ namespace logger
  * @tparam StreamType Class supporting stream of strings
  * @tparam LogCommiter Class that will receive the filtered log messages
  */
-template <bool EnableLogs, typename StreamType, typename LogCommiter>
+export template <bool EnableLogs, typename StreamType, typename LogCommiter>
 struct Log final
 {
 public:

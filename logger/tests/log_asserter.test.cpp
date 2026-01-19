@@ -1,7 +1,7 @@
 #include "catch_include.hpp"
-
-#include <hlog/include/hlog.hpp>
 #include "include/log_stream_test.hpp"
+
+import logger;
 
 TEST_CASE("logasserter_0", "[logger][logasseter]")
 {

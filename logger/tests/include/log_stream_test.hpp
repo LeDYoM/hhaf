@@ -1,9 +1,5 @@
-#ifndef LOGGER_TEST_LOGGERS_INCLUDE_HPP
-#define LOGGER_TEST_LOGGERS_INCLUDE_HPP
-
-#include <logger/include/commiters/null_commiter.hpp>
-#include <logger/include/commiters/thread_commiter.hpp>
-#include <logger/include/log.hpp>
+/*
+import module logger;
 
 class LogStreamTest
 {
@@ -18,5 +14,4 @@ using LogTestNullCommit =
 
 using LogTestThreadNullCommit = logger::
     Log<true, LogStreamTest, logger::ThreadCommiter<logger::NullCommiter>>;
-
-#endif
+*/

@@ -8,7 +8,7 @@ import :stream_commiter;
 
 namespace logger
 {
-//struct COutCommiter : public StreamCommiter<&(std::cout)>
-//{};
+export struct COutCommiter : public StreamCommiter<&(std::cout)>
+{};
 
 }  // namespace logger
