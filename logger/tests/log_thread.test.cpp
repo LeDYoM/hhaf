@@ -1,7 +1,7 @@
 #include "catch_include.hpp"
-#include <logger/include/log_displayer.hpp>
-#include <logger/include/severity_type.hpp>
 #include "include/log_stream_test.hpp"
+
+import logger;
 
 TEST_CASE("log_thread_commiter", "[logger][threadcommiter][logdisplayer]")
 {

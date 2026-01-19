@@ -1,10 +1,7 @@
 #include "catch_include.hpp"
+#include "include/log_stream_test.hpp"
 
 import logger;
-
-//#include <logger/include/log_displayer.hpp>
-//#include <logger/include/severity_type.hpp>
-//#include "include/log_stream_test.hpp"
 
 TEST_CASE("logdisplayer", "[logger][log_severity][logdisplayer]")
 {

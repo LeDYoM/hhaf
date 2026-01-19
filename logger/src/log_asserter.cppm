@@ -7,7 +7,7 @@ module;
 #include <source_location>
 #endif
 
-export module logger:lasserter;
+export module logger:log_asserter;
 
 import :severity_type;
 
@@ -18,7 +18,7 @@ namespace logger
  * Provides constexpr methods that could be eliminated under certain conditions.
  * @tparam LogDisplayerClass Class that performs the actual logging.
  */
-template <typename LogDisplayerClass>
+export template <typename LogDisplayerClass>
 struct LogAsserter
 {
     template <typename T>

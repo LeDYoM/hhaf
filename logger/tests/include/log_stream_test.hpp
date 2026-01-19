@@ -1,5 +1,5 @@
-/*
-import module logger;
+import logger;
+import htypes;
 
 class LogStreamTest
 {
@@ -14,4 +14,3 @@ using LogTestNullCommit =
 
 using LogTestThreadNullCommit = logger::
     Log<true, LogStreamTest, logger::ThreadCommiter<logger::NullCommiter>>;
-*/

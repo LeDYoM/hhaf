@@ -6,9 +6,9 @@ set(CURRENT_TARGET ${PROJECT_NAME})
 set(SOURCE_TESTS
     log
     log_asserter
-#    log_displayer
-#    log_severity
-#    log_thread
+    log_displayer
+    log_severity
+    log_thread
 )
 
 add_test_executable_with_main(SOURCE_TESTS ${SOURCE_TESTS})

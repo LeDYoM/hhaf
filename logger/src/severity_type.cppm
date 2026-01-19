@@ -1,11 +1,11 @@
-export module logger:severity_type;
+export module logger : severity_type;
 
 namespace logger
 {
 /**
  * @brief Encapsulate the severity enumeration and related small functions.
  */
-struct SeverityTypeDefinition
+export struct SeverityTypeDefinition
 {
     /**
      * @brief Enumerator containing the severity type of the message.
@@ -58,7 +58,8 @@ struct SeverityTypeDefinition
     }
 };
 
-template <typename SeverityType, SeverityType::severity_type_t MinSeverity>
+export template <typename SeverityType,
+                 SeverityType::severity_type_t MinSeverity>
 struct SeverityTypeImpl
 {
     using severity_type_t = SeverityType::severity_type_t;
@@ -75,7 +76,7 @@ struct SeverityTypeImpl
     }
 };
 
-template <auto severity>
+export template <auto severity>
 using SeverityTypeActiveTo = SeverityTypeImpl<SeverityTypeDefinition, severity>;
 
 using SeverityType =
