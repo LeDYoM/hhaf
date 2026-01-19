@@ -12,6 +12,14 @@ set(SOURCE_TESTS
 )
 
 add_test_executable_with_main(SOURCE_TESTS ${SOURCE_TESTS})
-#target_sources(${CURRENT_TARGET} PRIVATE include/log_stream_test.hpp)
+
+target_sources(${CURRENT_TARGET} PRIVATE
+    FILE_SET CXX_MODULES
+    FILES
+    include/log_stream_test.cppm
+    include/log_test.cppm
+    include/log_utils_test.cppm
+    )
+
 set_compile_warning_level_and_cxx_properties_for_tests(${CURRENT_TARGET})
 target_link_libraries(${CURRENT_TARGET} PRIVATE logger htypes)
