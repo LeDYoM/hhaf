@@ -5,7 +5,7 @@ set(CURRENT_TARGET ${PROJECT_NAME})
 
 set(SOURCE_TESTS
     log
-#    log_asserter
+    log_asserter
 #    log_displayer
 #    log_severity
 #    log_thread

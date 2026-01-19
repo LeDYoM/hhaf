@@ -28,7 +28,7 @@ struct StringLiteral
  *
  * @tparam LogClass Log class capable of displaying logs.
  */
-template <typename LogClass,
+export template <typename LogClass,
           typename SeverityType,
           bool DisplaySeverity_v       = false,
           StringLiteral DefaultMessage = EmptyString>
