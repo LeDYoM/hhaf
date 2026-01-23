@@ -33,6 +33,11 @@ using KeyValueObject = KeyValuePair<Object>;
 export class Object
 {
 public:
+    static const char* arraySeparator()
+    {
+        return "::";
+    }
+
     using ObjectDictionary = tps::Dictionary<Object>;
     using ValueDictionary  = tps::Dictionary<tps::str>;
 
@@ -329,8 +334,6 @@ public:
         return ((token != values_.end()) ? &(token->second) : nullptr);
     }
 
-    static inline char const * const arraySeparator = "::";
-
     /**
      * @brief Get a @b Value in the array form.
      *
@@ -341,7 +344,7 @@ public:
      */
     Value operator[](const size_t index) const
     {
-        return (*this)[tps::str(arraySeparator) + tps::str::to_str(index)];
+        return (*this)[tps::str(arraySeparator()) + tps::str::to_str(index)];
     }
 
     bool set(std::initializer_list<KeyValueStr> iListValues)
@@ -440,13 +443,13 @@ public:
     bool set(size_t index, tps::str value)
     {
         return set(
-            {tps::pair(tps::str(arraySeparator) + tps::str::to_str(index),
-                            tps::move(value))});
+            {tps::pair(tps::str(arraySeparator()) + tps::str::to_str(index),
+                       tps::move(value))});
     }
 
     bool set(size_t const index, Object value)
     {
-        return set(tps::str(arraySeparator) + tps::str::to_str(index),
+        return set(tps::str(arraySeparator()) + tps::str::to_str(index),
                    tps::move(value));
     }
 
@@ -535,7 +538,7 @@ public:
     template <typename T>
     constexpr static bool isArrayElement(tps::pair<tps::str, T> const& it)
     {
-        return (it.first.starts_with(tps::str(arraySeparator)));
+        return (it.first.starts_with(tps::str(arraySeparator())));
     }
 
 private:

@@ -120,15 +120,15 @@ TEST_CASE("Object create 4", "[Object]")
 
 TEST_CASE("Object: Read array1", "[Object][vector]")
 {
-    Object obj{{str(Object::arraySeparator) + "0", "value1"},
-               {str(Object::arraySeparator) + "1", "value2"}};
+    Object obj{{str(Object::arraySeparator()) + "0", "value1"},
+               {str(Object::arraySeparator()) + "1", "value2"}};
 
     CHECK(obj[0U] == "value1");
     CHECK(obj[1U] == "value2");
 
-    CHECK(obj[str(Object::arraySeparator) + "0"] == "value1");
-    CHECK(obj[str(Object::arraySeparator) + "1"] == "value2");
-    CHECK_FALSE(obj[str(Object::arraySeparator) + "2"].isValid());
+    CHECK(obj[str(Object::arraySeparator()) + "0"] == "value1");
+    CHECK(obj[str(Object::arraySeparator()) + "1"] == "value2");
+    CHECK_FALSE(obj[str(Object::arraySeparator()) + "2"].isValid());
     CHECK_FALSE(obj[2U].isValid());
 }
 
@@ -147,11 +147,11 @@ TEST_CASE("Object: Write array1", "[Object][vector]")
     CHECK(obj[3U].as<f64>() == 1.2);
     CHECK(obj[4U].as<s32>() == 32);
 
-    CHECK(obj[str(Object::arraySeparator) + "0"] == "value1");
-    CHECK(obj[str(Object::arraySeparator) + "1"] == "value2");
-    CHECK(obj[str(Object::arraySeparator) + "2"].as<u32>() == 12345UL);
-    CHECK(obj[str(Object::arraySeparator) + "3"].as<f64>() == 1.2);
-    CHECK(obj[str(Object::arraySeparator) + "4"].as<s32>() == 32);
+    CHECK(obj[str(Object::arraySeparator()) + "0"] == "value1");
+    CHECK(obj[str(Object::arraySeparator()) + "1"] == "value2");
+    CHECK(obj[str(Object::arraySeparator()) + "2"].as<u32>() == 12345UL);
+    CHECK(obj[str(Object::arraySeparator()) + "3"].as<f64>() == 1.2);
+    CHECK(obj[str(Object::arraySeparator()) + "4"].as<s32>() == 32);
 
     CHECK_FALSE(obj[5U].isValid());
 }
@@ -161,12 +161,12 @@ TEST_CASE("Object: Read array2", "[Object][vector]")
     // Initialize with initializer list of objects and initializer list of
     // properties.
     Object obj{{{"key1",
-                 {{str(Object::arraySeparator) + "0", "subvalue0"},
-                  {str(Object::arraySeparator) + "1", "subvalue1"}}},
+                 {{str(Object::arraySeparator()) + "0", "subvalue0"},
+                  {str(Object::arraySeparator()) + "1", "subvalue1"}}},
                 {"key2", {{"subkey2", "subvalue2"}}},
                 {"key3",
                  Object{{"subkey1",
-                         Object{{str(Object::arraySeparator) + "0",
+                         Object{{str(Object::arraySeparator()) + "0",
                                  "subsubvalue"}}}}}},
                {{"key4", "value4"}}};
 
@@ -174,16 +174,16 @@ TEST_CASE("Object: Read array2", "[Object][vector]")
     CHECK(obj["key1"][1U] == "subvalue1");
     CHECK_FALSE(obj["key1"][2U].isValid());
 
-    // The construction [str(Object::arraySeparator) + "Number"] is not really
+    // The construction [str(Object::arraySeparator()) + "Number"] is not really
     // meant to be used, but here it is used to ensure arrays might also be
     // read this way.
-    CHECK(obj["key1"][str(Object::arraySeparator) + "0"] == "subvalue0");
-    CHECK(obj["key1"][str(Object::arraySeparator) + "1"] == "subvalue1");
+    CHECK(obj["key1"][str(Object::arraySeparator()) + "0"] == "subvalue0");
+    CHECK(obj["key1"][str(Object::arraySeparator()) + "1"] == "subvalue1");
 
     CHECK_FALSE(obj["key2"][0U].isValid());
 
     CHECK(obj["key3"]["subkey1"][0U] == "subsubvalue");
-    CHECK(obj["key3"]["subkey1"][str(Object::arraySeparator) + "0"] ==
+    CHECK(obj["key3"]["subkey1"][str(Object::arraySeparator()) + "0"] ==
           "subsubvalue");
 
     CHECK_FALSE(obj["key4"][0U].isValid());
@@ -711,3 +711,4 @@ TEST_CASE("Object with array of custom types and enums and floats",
 
     CHECK(vec == output);
 }
+

@@ -520,7 +520,7 @@ public:
 
         do
         {
-            tps::str property_name{tps::str(Object::arraySeparator) +
+            tps::str property_name{tps::str(Object::arraySeparator()) +
                                    tps::str::to_str(counter)};
             if (!storePendingValueAndAdvance(property_name))
             {
