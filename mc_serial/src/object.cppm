@@ -3,7 +3,7 @@ module;
 #include <type_traits>
 #include <utility>
 
-export module mc_serial:object;
+export module mc_serial : object;
 
 import htypes;
 
@@ -33,48 +33,40 @@ using KeyValueObject = KeyValuePair<Object>;
 export class Object
 {
 public:
-    static const char* arraySeparator()
-    {
-        return "::";
-    }
-
     using ObjectDictionary = tps::Dictionary<Object>;
     using ValueDictionary  = tps::Dictionary<tps::str>;
 
     constexpr Object() noexcept = default;
 
-    inline Object(std::initializer_list<KeyValueStr> iListValues)
+    Object(std::initializer_list<KeyValueStr> iListValues)
     {
         set(tps::move(iListValues));
     }
 
-    inline Object(std::initializer_list<KeyValueObject> iListObjects)
+    Object(std::initializer_list<KeyValueObject> iListObjects)
     {
         set(tps::move(iListObjects));
     }
 
-    inline Object(std::initializer_list<KeyValueObject> iListObjects,
-                  std::initializer_list<KeyValueStr> iListValues)
+    Object(std::initializer_list<KeyValueObject> iListObjects,
+           std::initializer_list<KeyValueStr> iListValues)
     {
         set(tps::move(iListObjects));
         set(tps::move(iListValues));
     }
 
-    inline Object(std::initializer_list<KeyValueStr> iListValues,
-                  std::initializer_list<KeyValueObject> iListObjects)
+    Object(std::initializer_list<KeyValueStr> iListValues,
+           std::initializer_list<KeyValueObject> iListObjects)
     {
         set(tps::move(iListValues));
         set(tps::move(iListObjects));
     }
 
-    constexpr bool operator==(const Object& obj) const noexcept
-    {
-        return values_ == obj.values_ && objects_ == obj.objects_;
-    }
+    [[nodiscard]] bool operator==(const Object& obj) const noexcept = default;
 
-    constexpr bool operator!=(const Object& obj) const noexcept
+    [[nodiscard]] static constexpr char const* arraySeparator() noexcept
     {
-        return !((*this) == obj);
+        return "::";
     }
 
     class Value
@@ -84,31 +76,44 @@ public:
         constexpr Value(Object const* obj) : object_{obj} {}
         constexpr Value(tps::str const* val) : value_{val} {}
 
-        constexpr bool isValid() const noexcept { return object_ || value_; }
-        constexpr bool isValue() const noexcept { return value_ != nullptr; }
-        constexpr bool isObject() const noexcept { return object_ != nullptr; }
+        [[nodiscard]] constexpr bool isValid() const noexcept
+        {
+            return object_ || value_;
+        }
+        [[nodiscard]] constexpr bool isValue() const noexcept
+        {
+            return value_ != nullptr;
+        }
+        [[nodiscard]] constexpr bool isObject() const noexcept
+        {
+            return object_ != nullptr;
+        }
 
-        constexpr bool operator==(tps::str const& key) const noexcept
+        [[nodiscard]] constexpr bool operator==(
+            tps::str const& key) const noexcept
         {
             return ((isValue()) ? (*value_) == key : false);
         }
 
-        constexpr bool operator!=(tps::str const& key) const noexcept
+        [[nodiscard]] constexpr bool operator!=(
+            tps::str const& key) const noexcept
         {
             return !(*this == key);
         }
 
-        constexpr bool operator==(Object const& obj) const noexcept
+        [[nodiscard]] constexpr bool operator==(
+            Object const& obj) const noexcept
         {
             return ((isObject()) ? (*object_) == obj : false);
         }
 
-        constexpr bool operator!=(Object const& obj) const noexcept
+        [[nodiscard]] constexpr bool operator!=(
+            Object const& obj) const noexcept
         {
             return !(*this == obj);
         }
 
-        constexpr bool operator==(Value const& obj) const noexcept
+        [[nodiscard]] constexpr bool operator==(Value const& obj) const noexcept
         {
             if (isObject() == obj.isObject() && isValue() == obj.isValue())
             {
@@ -127,7 +132,7 @@ public:
             return false;
         }
 
-        constexpr bool operator!=(Value const& obj) const noexcept
+        [[nodiscard]] constexpr bool operator!=(Value const& obj) const noexcept
         {
             return !(*this == obj);
         }
@@ -188,7 +193,7 @@ public:
         }
 
         template <typename T>
-        bool as(T& value) const
+        [[nodiscard]] bool as(T& value) const
         {
             if constexpr (std::is_enum_v<T>)
             {
@@ -266,43 +271,49 @@ public:
         }
 
     private:
-        const Object* object_{nullptr};
-        const tps::str* value_{nullptr};
+        Object const* object_{nullptr};
+        tps::str const* value_{nullptr};
     };
 
     using KeyValueValue = KeyValuePair<Value>;
 
-    constexpr tps::size_type size_objects() const noexcept
+    [[nodiscard]] constexpr tps::size_type size_objects() const noexcept
     {
         return objects_.size();
     }
 
-    constexpr tps::size_type size_values() const noexcept
+    [[nodiscard]] constexpr tps::size_type size_values() const noexcept
     {
         return values_.size();
     }
 
-    constexpr tps::size_type size() const noexcept
+    [[nodiscard]] constexpr tps::size_type size() const noexcept
     {
         return size_objects() + size_values();
     }
 
-    constexpr bool empty_objects() const noexcept { return objects_.empty(); }
+    [[nodiscard]] constexpr bool empty_objects() const noexcept
+    {
+        return objects_.empty();
+    }
 
-    constexpr bool empty_values() const noexcept { return values_.empty(); }
+    [[nodiscard]] constexpr bool empty_values() const noexcept
+    {
+        return values_.empty();
+    }
 
-    constexpr tps::size_type empty() const noexcept
+    [[nodiscard]] constexpr tps::size_type empty() const noexcept
     {
         return empty_objects() && empty_values();
     }
 
-    Value getObject(tps::str const& key) const
+    [[nodiscard]] Value getObject(tps::str const& key) const
     {
         auto token{objects_.find_checked(key)};
         return (token.first ? Value(&(token.second->second)) : Value());
     }
 
-    Value getValue(tps::str const& key) const
+    [[nodiscard]] Value getValue(tps::str const& key) const
     {
         auto token(values_.find_checked(key));
         return (token.first ? Value(&(token.second->second)) : Value());
@@ -315,20 +326,20 @@ public:
      * @return Empty invalid @b Value if not found or a @b Value
      * pointing to the data if found.
      */
-    Value operator[](tps::str const& key) const
+    [[nodiscard]] Value operator[](tps::str const& key) const
     {
         // Note: Priority to str
         Value val{getValue(key)};
         return ((val.isValid()) ? val : getObject(key));
     }
 
-    Object* acquireObject(tps::str const& key) noexcept
+    [[nodiscard]] Object* acquireObject(tps::str const& key) noexcept
     {
         auto token(objects_.find(key));
         return ((token != objects_.end()) ? &(token->second) : nullptr);
     }
 
-    tps::str* acquireValue(tps::str const& key) noexcept
+    [[nodiscard]] tps::str* acquireValue(tps::str const& key) noexcept
     {
         auto token(values_.find(key));
         return ((token != values_.end()) ? &(token->second) : nullptr);
@@ -342,7 +353,7 @@ public:
      * Note: You might need to check with @Value::isValid
      * if the value is valid.
      */
-    Value operator[](const size_t index) const
+    [[nodiscard]] Value operator[](const size_t index) const
     {
         return (*this)[tps::str(arraySeparator()) + tps::str::to_str(index)];
     }
