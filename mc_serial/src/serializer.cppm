@@ -1,9 +1,7 @@
-MCS_PRAGMA_ONCE
-#ifndef MCS_SERIALIZER_INCLUDE_HPP
-#define MCS_SERIALIZER_INCLUDE_HPP
+export module mc_serial:serializer;
 
-#include <mc_serial/include/object.hpp>
-#include <mc_serial/include/object_parser.hpp>
+import :object;
+import :object_parser;
 import htypes;
 
 namespace mcs
@@ -39,5 +37,3 @@ public:
 };
 
 }  // namespace mcs
-
-#endif

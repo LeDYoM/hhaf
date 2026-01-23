@@ -1,5 +1,5 @@
 cmake_minimum_required (VERSION 3.14)
-project(mcserial_utests CXX)
+project(mc_serial_utests CXX)
 
 set(CURRENT_TARGET ${PROJECT_NAME})
 

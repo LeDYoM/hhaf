@@ -1,8 +1,7 @@
 #include "catch_include.hpp"
 
 import htypes;
-#include <mc_serial/include/object_parser.hpp>
-#include <mc_serial/include/object.hpp>
+import mc_serial;
 
 using namespace htps;
 using namespace mcs;

@@ -1,8 +1,6 @@
-MCS_PRAGMA_ONCE
-#ifndef MCS_ISERIALIZABLE_INCLUDE_HPP
-#define MCS_ISERIALIZABLE_INCLUDE_HPP
+export module mc_serial:iserializable;
 
-#include <mc_serial/include/object.hpp>
+import :object;
 
 namespace mcs
 {
@@ -13,5 +11,3 @@ public:
     virtual ~ISerializable()                   = default;
 };
 }  // namespace mcs
-
-#endif

@@ -1,10 +1,9 @@
-MCS_PRAGMA_ONCE
-#ifndef MCS_TEXT_SERIALIZER_INCLUDE_HPP
-#define MCS_TEXT_SERIALIZER_INCLUDE_HPP
+export module mc_serial:text_serializer;
 
-#include <mc_serial/include/object.hpp>
-#include <mc_serial/include/object_parser.hpp>
-#include <mc_serial/include/interfaces/iserializable.hpp>
+import :object;
+import :object_parser;
+import :iserializable;
+import :ideserializable;
 
 namespace mcs
 {
@@ -45,5 +44,3 @@ public:
 };
 
 }  // namespace mcs
-
-#endif

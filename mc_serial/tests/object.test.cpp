@@ -1,6 +1,6 @@
 #include "catch_include.hpp"
 
-#include <mc_serial/include/object.hpp>
+import mc_serial;
 import htypes;
 
 using namespace htps;

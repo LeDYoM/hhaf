@@ -1,11 +1,11 @@
-MCS_PRAGMA_ONCE
-#ifndef MCS_OBJECT_INCLUDE_HPP
-#define MCS_OBJECT_INCLUDE_HPP
-
-import htypes;
+module;
 
 #include <type_traits>
 #include <utility>
+
+export module mc_serial:object;
+
+import htypes;
 
 namespace mcs
 {
@@ -30,7 +30,7 @@ using KeyValuePair = tps::pair<tps::str, T>;
 using KeyValueStr    = KeyValuePair<tps::str>;
 using KeyValueObject = KeyValuePair<Object>;
 
-class Object
+export class Object
 {
 public:
     using ObjectDictionary = tps::Dictionary<Object>;
@@ -329,7 +329,7 @@ public:
         return ((token != values_.end()) ? &(token->second) : nullptr);
     }
 
-    static constexpr const char* const arraySeparator = "::";
+    static inline char const * const arraySeparator = "::";
 
     /**
      * @brief Get a @b Value in the array form.
@@ -545,7 +545,7 @@ private:
 
 //////////////////////////////////////////////////////////////////////////////////
 
-template <typename T>
+export template <typename T>
 constexpr const Object& operator>>(Object const& obj, tps::vector<T>& data)
 {
     bool stay{true};
@@ -585,7 +585,7 @@ constexpr const Object& operator>>(Object const& obj, tps::vector<T>& data)
     return obj;
 }
 
-template <typename T, tps::size_type Size>
+export template <typename T, tps::size_type Size>
 constexpr Object const& operator>>(const Object& obj, tps::array<T, Size>& data)
 {
     tps::vector<T> temp;
@@ -596,7 +596,7 @@ constexpr Object const& operator>>(const Object& obj, tps::array<T, Size>& data)
 
 //////////////////////////////////////////////////////////////////
 
-template <typename T>
+export template <typename T>
 inline Object& operator<<(Object& obj, tps::vector<T> const& data)
 {
     tps::size_type counter{0U};
@@ -620,7 +620,7 @@ inline Object& operator<<(Object& obj, tps::vector<T> const& data)
     return obj;
 }
 
-template <typename T, tps::size_type Size>
+export template <typename T, tps::size_type Size>
 inline Object& operator<<(Object& obj, tps::array<T, Size> const& data)
 {
     tps::vector<T> temp(data.cbegin(), data.cend());
@@ -629,5 +629,3 @@ inline Object& operator<<(Object& obj, tps::array<T, Size> const& data)
 }
 
 }  // namespace mcs
-
-#endif

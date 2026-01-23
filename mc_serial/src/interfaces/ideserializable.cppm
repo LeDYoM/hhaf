@@ -1,10 +1,7 @@
-MCS_PRAGMA_ONCE
-#ifndef MCS_IDESERIALIZABLE_INCLUDE_HPP
-#define MCS_IDESERIALIZABLE_INCLUDE_HPP
-
-#include <mc_serial/include/object.hpp>
+export module mc_serial:ideserializable;
 
 import htypes;
+import :object;
 
 namespace mcs
 {
@@ -64,5 +61,3 @@ private:
 };
 
 }  // namespace mcs
-
-#endif

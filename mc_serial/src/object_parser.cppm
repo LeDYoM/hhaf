@@ -1,16 +1,17 @@
-MCS_PRAGMA_ONCE
-#ifndef MCS_OBJECT_PARSER_INCLUDE_HPP
-#define MCS_OBJECT_PARSER_INCLUDE_HPP
+module;
+
+#include <cctype>
+
+export module mc_serial:object_parser;
 
 import htypes;
-#include <mc_serial/include/object.hpp>
+import :object;
 
 namespace mcs
 {
 namespace tps = htps;
 
-enum class TokenType : tps::u8
-{
+export enum class TokenType : tps::u8 {
     Str = 0U,
     OpenObject,
     CloseObject,
@@ -22,8 +23,7 @@ enum class TokenType : tps::u8
     Float
 };
 
-enum class ErrorType : tps::u8
-{
+export enum class ErrorType : tps::u8 {
     NoError = 0U,
     InvalidCharacter,
     UnterminatedString,
@@ -256,7 +256,7 @@ private:
     ErrorContainer& errors_;
 };
 
-class Scaner
+export class Scaner
 {
 public:
     constexpr Scaner(tps::str const& input) :
@@ -268,10 +268,10 @@ public:
         while (!tokenizer_.eof() && error_container_.empty())
         {
             Token t{tokenizer_.nextToken()};
-            //#ifdef LOG_MODE
-            //            LOG("Token found: " << int(t.token_type)
-            //                                << "\t: " << t.value.c_str());
-            //#endif
+            // #ifdef LOG_MODE
+            //             LOG("Token found: " << int(t.token_type)
+            //                                 << "\t: " << t.value.c_str());
+            // #endif
             tokens_.push_back(tps::move(t));
         }
 
@@ -535,7 +535,7 @@ public:
     }
 };
 
-class Parser : public InternalParserInterface
+export class Parser : public InternalParserInterface
 {
 public:
     Parser(tps::vector<Token> tokens) :
@@ -554,7 +554,7 @@ private:
     tps::vector<Token> global_tokens_;
 };
 
-class ObjectCompiler
+export class ObjectCompiler
 {
 public:
     constexpr ObjectCompiler(tps::str const& input) noexcept : input_{input} {}
@@ -642,13 +642,14 @@ struct PropertyWrapper
     tps::str value;
 };
 
-tps::str& operator<<(tps::str& sso,
-                     Object::ValueDictionary::const_iterator const it);
-tps::str& operator<<(tps::str& sso,
-                     Object::ObjectDictionary::const_iterator const it);
-tps::str& operator<<(tps::str& sso, PropertyWrapper const& property_wrapper);
+export tps::str& operator<<(tps::str& sso,
+                            Object::ValueDictionary::const_iterator const it);
+export tps::str& operator<<(tps::str& sso,
+                            Object::ObjectDictionary::const_iterator const it);
+export tps::str& operator<<(tps::str& sso,
+                            PropertyWrapper const& property_wrapper);
 
-inline tps::str& operator<<(tps::str& sso, Object const& obj)
+export inline tps::str& operator<<(tps::str& sso, Object const& obj)
 {
     bool contains_array_only{true};
     bool is_first{true};
@@ -714,7 +715,7 @@ inline tps::str& operator<<(tps::str& sso, Object const& obj)
     return sso;
 }
 
-inline tps::str& operator<<(tps::str& sso,
+export inline tps::str& operator<<(tps::str& sso,
                             PropertyWrapper const& property_wrapper)
 {
     bool const add_double_quotes{(!(property_wrapper.value.is<tps::s32>()) &&
@@ -735,7 +736,7 @@ inline tps::str& operator<<(tps::str& sso,
     return sso;
 }
 
-inline tps::str& operator<<(tps::str& sso,
+export inline tps::str& operator<<(tps::str& sso,
                             Object::ValueDictionary::const_iterator const it)
 {
     if (!Object::isArrayElement(*it))
@@ -746,7 +747,7 @@ inline tps::str& operator<<(tps::str& sso,
     return sso;
 }
 
-inline tps::str& operator<<(tps::str& sso,
+export inline tps::str& operator<<(tps::str& sso,
                             Object::ObjectDictionary::const_iterator const it)
 {
     if (!Object::isArrayElement(*it))
@@ -756,5 +757,3 @@ inline tps::str& operator<<(tps::str& sso,
     return sso;
 }
 }  // namespace mcs
-
-#endif

@@ -10,22 +10,17 @@ project("Mini C serializer"
 
 set(CURRENT_TARGET mc_serial)
 
-set(include_dir mc_serial/include)
-set(headers
-    ${include_dir}/interfaces/ideserializable.hpp
-    ${include_dir}/interfaces/ifullserializable.hpp
-    ${include_dir}/interfaces/iserializable.hpp
-    ${include_dir}/object_parser.hpp
-    ${include_dir}/object.hpp
-    ${include_dir}/serializer.hpp
-    ${include_dir}/text_serializer.hpp
+set(sources
+    src/interfaces/ideserializable.cppm
+    src/interfaces/ifullserializable.cppm
+    src/interfaces/iserializable.cppm
+    src/mc_serial.cppm
+    src/object_parser.cppm
+    src/object.cppm
+    src/serializer.cppm
+    src/text_serializer.cppm
 )
 
-build_lib_component(HEADERS_ONLY HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}"
-              HEADERS ${headers})
-
-set_pragma_once_or_not(MCS true INTERFACE)
-
-target_compile_features(${CURRENT_TARGET} INTERFACE cxx_std_23)
-
+build_lib_module(${CURRENT_TARGET} EXPORT_ALL SOURCES "${sources}")
+target_link_libraries(${CURRENT_TARGET} PRIVATE htypes)
 addTestingDirectory(tests)
