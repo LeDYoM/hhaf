@@ -2,16 +2,7 @@
 #define HAF_HLOG_INCLUDE_HPP
 
 import htypes;
-
-#include <logger/include/log.hpp>
-#include <logger/include/log_displayer.hpp>
-#include <logger/include/log_asserter.hpp>
-#include <logger/include/severity_type.hpp>
-#include <logger/include/log_init.hpp>
-#include <logger/include/commiters/thread_commiter.hpp>
-#include <logger/include/commiters/mixin_commiter.hpp>
-#include <logger/include/commiters/cout_commiter.hpp>
-#include <logger/include/commiters/file_commiter.hpp>
+import logger;
 
 namespace logger
 {

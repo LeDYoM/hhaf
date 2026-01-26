@@ -1,4 +1,4 @@
-export module logger:loginit;
+export module logger:log_init;
 
 namespace logger
 {
@@ -8,7 +8,7 @@ namespace logger
  *
  * @tparam LogType The logger type to manage.
  */
-template <typename LogType>
+export template <typename LogType>
 struct LogInitializer final
 {
     /**

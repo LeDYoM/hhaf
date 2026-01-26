@@ -2,7 +2,7 @@ export module logger:mixin_commiter;
 
 namespace logger
 {
-template <typename... Commiter>
+export template <typename... Commiter>
 struct MixinCommiter
 {
     static inline void init() { (Commiter::init(), ...); }

@@ -1,6 +1,6 @@
 #include "catch_include.hpp"
 
-#include <facil_math/include/matrix4x4.hpp>
+#include <facil_math/facil_math/include/matrix4x4.hpp>
 #include <limits>
 
 using namespace fmath;

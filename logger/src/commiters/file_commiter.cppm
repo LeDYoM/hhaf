@@ -2,13 +2,13 @@ module;
 
 #include <fstream>
 
-module logger:file_commiter;
+export module logger:file_commiter;
 
 namespace logger
 {
 std::ofstream* f{nullptr};
 
-struct FileCommiter
+export struct FileCommiter
 {
     static void init() { f = new std::ofstream("log.txt"); }
 

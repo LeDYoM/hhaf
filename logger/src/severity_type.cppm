@@ -79,7 +79,7 @@ struct SeverityTypeImpl
 export template <auto severity>
 using SeverityTypeActiveTo = SeverityTypeImpl<SeverityTypeDefinition, severity>;
 
-using SeverityType =
+export using SeverityType =
     SeverityTypeActiveTo<SeverityTypeDefinition::severity_type_t::debug>;
 
 }  // namespace logger
