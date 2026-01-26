@@ -11,25 +11,19 @@ project("HAF Types"
 set(CURRENT_TARGET facil_math)
 
 set(include_dir facil_math/include)
-set(headers
-    ${include_dir}/geometry_math.hpp
-    ${include_dir}/math_types.hpp
-    ${include_dir}/matrix4x4_functions.hpp
-    ${include_dir}/matrix4x4.hpp
-    ${include_dir}/rect.hpp
-    ${include_dir}/vector_types.hpp
-    ${include_dir}/vector2d.hpp
-    ${include_dir}/vector3d.hpp
-    ${include_dir}/vector4d.hpp
-    ${include_dir}/vvector_functions.hpp
-    ${include_dir}/vvector.hpp
-  )
+set(sources
+    src/geometry_math.cppm
+    src/math_types.cppm
+    src/matrix4x4_functions.cppm
+    src/matrix4x4.cppm
+    src/rect.cppm
+    src/vector_types.cppm
+    src/vector2d.cppm
+    src/vector3d.cppm
+    src/vector4d.cppm
+    src/vvector_functions.cppm
+    src/vvector.cppm
+)
 
-build_lib_component(HEADERS_ONLY HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}"
-              HEADERS ${headers})
-
-set_pragma_once_or_not(FMA true INTERFACE)
-
-target_compile_features(${CURRENT_TARGET} INTERFACE cxx_std_23)
-
+build_lib_module(${CURRENT_TARGET} EXPORT_ALL SOURCES "${sources}")
 addTestingDirectory(tests)
