@@ -1,16 +1,15 @@
-FMA_PRAGMA_ONCE
-#ifndef FACIL_MATH_VECTOR2D_INCLUDE_HPP
-#define FACIL_MATH_VECTOR2D_INCLUDE_HPP
+module;
 
 #include <type_traits>
 
+export module facil_math:vector2d;
 import htypes;
 
 namespace fmath
 {
 namespace tps = htps;
 
-template <typename T>
+export template <typename T>
 class vector2d
 {
 public:
@@ -78,42 +77,42 @@ public:
     T y;
 };
 
-template <typename T, typename Y>
+export template <typename T, typename Y>
 constexpr vector2d<T> operator+(vector2d<T> const& lhs,
                                 vector2d<Y> const& rhs) noexcept
 {
     return vector2d<T>{lhs} += rhs;
 }
 
-template <typename T, typename Y>
+export template <typename T, typename Y>
 constexpr vector2d<T> operator-(vector2d<T> const& lhs,
                                 vector2d<Y> const& rhs) noexcept
 {
     return vector2d<T>{lhs} -= rhs;
 }
 
-template <typename T, typename Y>
+export template <typename T, typename Y>
 constexpr vector2d<T> operator*(Y const& scalar,
                                 vector2d<T> const& rhs) noexcept
 {
     return vector2d<T>{rhs} *= scalar;
 }
 
-template <typename T, typename Y>
+export template <typename T, typename Y>
 constexpr vector2d<T> operator*(vector2d<T> const& lhs,
                                 Y const& scalar) noexcept
 {
     return scalar * lhs;
 }
 
-template <typename T, typename Y>
+export template <typename T, typename Y>
 constexpr vector2d<T> operator*(vector2d<T> const& lhs,
                                 vector2d<Y> const& rhs) noexcept
 {
     return vector2d<T>{lhs} *= rhs;
 }
 
-template <typename T, typename Y>
+export template <typename T, typename Y>
 constexpr vector2d<Y> operator/(Y const& scalar,
                                 vector2d<T> const& rhs) noexcept
 {
@@ -121,27 +120,27 @@ constexpr vector2d<Y> operator/(Y const& scalar,
                        scalar / static_cast<Y>(rhs.y)};
 }
 
-template <typename T, typename Y>
+export template <typename T, typename Y>
 constexpr vector2d<T> operator/(vector2d<T> const& lhs,
                                 Y const& scalar) noexcept
 {
     return vector2d<T>{lhs} /= scalar;
 }
 
-template <typename T, typename Y>
+export template <typename T, typename Y>
 constexpr vector2d<T> operator/(vector2d<T> const& lhs,
                                 vector2d<Y> const& rhs) noexcept
 {
     return vector2d<T>{lhs} /= rhs;
 }
 
-template <typename T>
+export template <typename T>
 constexpr vector2d<T> operator-(vector2d<T> const& v) noexcept
 {
     return vector2d<T>{-v.x, -v.y};
 }
 
-template <typename T, typename Y>
+export template <typename T, typename Y>
 constexpr bool operator==(vector2d<T> const& lhs,
                           vector2d<Y> const& rhs) noexcept
 
@@ -149,7 +148,7 @@ constexpr bool operator==(vector2d<T> const& lhs,
     return (lhs.x == static_cast<T>(rhs.x) && lhs.y == static_cast<T>(rhs.y));
 }
 
-template <typename T, typename Y>
+export template <typename T, typename Y>
 constexpr bool operator!=(vector2d<T> const& lhs,
                           vector2d<Y> const& rhs) noexcept
 {
@@ -157,14 +156,14 @@ constexpr bool operator!=(vector2d<T> const& lhs,
 }
 
 // Serialization operators
-template <typename T>
+export template <typename T>
 constexpr htps::str& operator<<(htps::str& os, vector2d<T> const& v2d)
 {
     os << "{" << v2d.x << "," << v2d.y << "}";
     return os;
 }
 
-template <typename T>
+export template <typename T>
 constexpr htps::str& operator>>(htps::str& is, vector2d<T> const& v2d)
 {
     return is;
@@ -181,15 +180,13 @@ static_assert(std::is_trivially_copyable_v<vector2d<tps::f32>>,
 static_assert(std::is_trivially_default_constructible_v<vector2d<tps::f32>>,
               "vector4df32 is not trivially default constructible");
 
-using vector2du8  = vector2d<tps::u8>;
-using vector2ds8  = vector2d<tps::s8>;
-using vector2du16 = vector2d<tps::u16>;
-using vector2ds16 = vector2d<tps::s16>;
-using vector2du32 = vector2d<tps::u32>;
-using vector2ds32 = vector2d<tps::s32>;
-using vector2df   = vector2d<tps::f32>;
-using vector2dd   = vector2d<tps::f64>;
-using vector2dst  = vector2d<tps::size_type>;
+export using vector2du8  = vector2d<tps::u8>;
+export using vector2ds8  = vector2d<tps::s8>;
+export using vector2du16 = vector2d<tps::u16>;
+export using vector2ds16 = vector2d<tps::s16>;
+export using vector2du32 = vector2d<tps::u32>;
+export using vector2ds32 = vector2d<tps::s32>;
+export using vector2df   = vector2d<tps::f32>;
+export using vector2dd   = vector2d<tps::f64>;
+export using vector2dst  = vector2d<tps::size_type>;
 }  // namespace fmath
-
-#endif

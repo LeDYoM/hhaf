@@ -12,6 +12,7 @@ set(CURRENT_TARGET facil_math)
 
 set(include_dir facil_math/include)
 set(sources
+    src/facil_math.cppm
     src/geometry_math.cppm
     src/math_types.cppm
     src/matrix4x4_functions.cppm
@@ -26,4 +27,6 @@ set(sources
 )
 
 build_lib_module(${CURRENT_TARGET} EXPORT_ALL SOURCES "${sources}")
+target_link_libraries(${CURRENT_TARGET} PRIVATE htypes)
+
 addTestingDirectory(tests)

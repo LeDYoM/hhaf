@@ -1,39 +1,35 @@
-FMA_PRAGMA_ONCE
-#ifndef FACIL_MATH_VECTOR_TYPES_INCLUDE_HPP
-#define FACIL_MATH_VECTOR_TYPES_INCLUDE_HPP
+export module facil_math:vector_types;
 
-#include <facil_math/include/vector2d.hpp>
-#include <facil_math/include/vector3d.hpp>
-#include <facil_math/include/vector4d.hpp>
+import :vector2d;
+import :vector3d;
+import :vector4d;
 
 namespace fmath
 {
 namespace tps = htps;
 
-template <tps::u8 Size, typename T>
+export template <tps::u8 Size, typename T>
 struct vector_type;
 
-template <typename T>
+export template <typename T>
 struct vector_type<2U, T>
 {
     using type = vector2d<T>;
 };
 
-template <typename T>
+export template <typename T>
 struct vector_type<3U, T>
 {
     using type = vector3d<T>;
 };
 
-template <typename T>
+export template <typename T>
 struct vector_type<4U, T>
 {
     using type = vector4d<T>;
 };
 
-template <tps::u8 Size, typename T>
+export template <tps::u8 Size, typename T>
 using vector_type_t = vector_type<Size, T>::type;
 
 }  // namespace fmath
-
-#endif

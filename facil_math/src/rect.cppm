@@ -1,16 +1,13 @@
-FMA_PRAGMA_ONCE
-#ifndef FACIL_MATH_RECT_INCLUDE_HPP
-#define FACIL_MATH_RECT_INCLUDE_HPP
+export module facil_math:rect;
 
 import htypes;
-
-#include <facil_math/include/vector2d.hpp>
+import :vector2d;
 
 namespace fmath
 {
 namespace tps = htps;
 
-template <typename T>
+export template <typename T>
 struct Rect
 {
     T left{}, top{}, width{}, height{};
@@ -267,20 +264,20 @@ struct Rect
     }
 };
 
-template <typename T>
+export template <typename T>
 [[nodiscard]] constexpr Rect<T> rectFromSize(T const sizeX,
                                              T const sizeY) noexcept
 {
     return {{}, {}, vector2d<T>{sizeX, sizeY}};
 }
 
-template <typename T>
+export template <typename T>
 [[nodiscard]] constexpr Rect<T> rectFromSize(vector2d<T> const& size) noexcept
 {
     return {{}, {}, size};
 }
 
-template <typename T>
+export template <typename T>
 [[nodiscard]] constexpr Rect<T> rectFromCenterAndRadius(
     vector2d<T> const& center,
     vector2d<T> const& radius) noexcept
@@ -289,7 +286,7 @@ template <typename T>
             radius.x * static_cast<T>(2), radius.y * static_cast<T>(2)};
 }
 
-template <typename T>
+export template <typename T>
 [[nodiscard]] constexpr Rect<T> rectFromCenterAndSize(
     vector2d<T> const& center,
     vector2d<T> const& size) noexcept
@@ -297,14 +294,14 @@ template <typename T>
     return rectFromCenterAndRadius<T>(center, size / static_cast<T>(2));
 }
 
-template <typename T>
+export template <typename T>
 constexpr Rect<T> operator+(Rect<T> const& lhs, vector2d<T> const& rhs) noexcept
 {
     return {lhs.left + rhs.x, lhs.top + rhs.y, lhs.width, lhs.height};
 }
 
 // Serialization operators
-template <typename T>
+export template <typename T>
 constexpr htps::str& operator<<(htps::str& os, Rect<T> const& rect)
 {
     os << "{ {" << rect.left << "," << rect.top << "}, {" << rect.width << ","
@@ -312,15 +309,13 @@ constexpr htps::str& operator<<(htps::str& os, Rect<T> const& rect)
     return os;
 }
 
-using Rectu8  = Rect<tps::u8>;
-using Rects8  = Rect<tps::s8>;
-using Rectu16 = Rect<tps::u16>;
-using Rects16 = Rect<tps::s16>;
-using Rects32 = Rect<tps::s32>;
-using Rectu32 = Rect<tps::u32>;
-using Rectf32 = Rect<tps::f32>;
-using Rectf64 = Rect<tps::f64>;
-using Rectst  = Rect<tps::size_type>;
+export using Rectu8  = Rect<tps::u8>;
+export using Rects8  = Rect<tps::s8>;
+export using Rectu16 = Rect<tps::u16>;
+export using Rects16 = Rect<tps::s16>;
+export using Rects32 = Rect<tps::s32>;
+export using Rectu32 = Rect<tps::u32>;
+export using Rectf32 = Rect<tps::f32>;
+export using Rectf64 = Rect<tps::f64>;
+export using Rectst  = Rect<tps::size_type>;
 }  // namespace fmath
-
-#endif

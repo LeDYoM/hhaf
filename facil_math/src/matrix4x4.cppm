@@ -1,11 +1,11 @@
-FMA_PRAGMA_ONCE
-#ifndef FACIL_MATH_MATRIX4X4_INCLUDE_HPP
-#define FACIL_MATH_MATRIX4X4_INCLUDE_HPP
-
-#include <facil_math/include/math_types.hpp>
+module;
 
 #include <cmath>
 #include <cfloat>
+
+export module facil_math:matrix4x4;
+
+import :math_types;
 
 namespace fmath
 {
@@ -14,7 +14,7 @@ namespace tps = htps;
  * @brief Type representing a 4x4 matrix.
  * Used to perform operations on the engine
  */
-class Matrix4x4 final
+export class Matrix4x4 final
 {
 public:
     static constexpr tps::u32 kNumElements{16U};
@@ -251,27 +251,31 @@ private:
     Scalar m_matrix_data[kMatrixNumElements];
 };
 
-inline Matrix4x4 const Matrix4x4::Identity{Matrix4x4{}};
+export inline Matrix4x4 const Matrix4x4::Identity{Matrix4x4{}};
 
-constexpr void setDiagonal(Matrix4x4& m,
-                           fmath::vector4d<Matrix4x4::Scalar> const& v) noexcept
+export constexpr void setDiagonal(
+    Matrix4x4& m,
+    fmath::vector4d<Matrix4x4::Scalar> const& v) noexcept
 {
     m.setDiagonal(v);
 }
 
-constexpr void setDiagonal(Matrix4x4& m,
-                           fmath::vector3d<Matrix4x4::Scalar> const& v) noexcept
+export constexpr void setDiagonal(
+    Matrix4x4& m,
+    fmath::vector3d<Matrix4x4::Scalar> const& v) noexcept
 {
     setDiagonal(m, {v.x, v.y, v.z, Matrix4x4::One});
 }
 
-[[nodiscard]] constexpr Matrix4x4 operator*(Matrix4x4 const& lhs,
-                                            Matrix4x4 const& rhs) noexcept
+export [[nodiscard]] constexpr Matrix4x4 operator*(
+    Matrix4x4 const& lhs,
+    Matrix4x4 const& rhs) noexcept
 {
     return Matrix4x4{lhs} *= rhs;
 }
 
-constexpr bool operator==(Matrix4x4 const& lhs, Matrix4x4 const& rhs) noexcept
+export constexpr bool operator==(Matrix4x4 const& lhs,
+                                 Matrix4x4 const& rhs) noexcept
 {
     for (auto lhs_ci{lhs.cbegin()}, rhs_ci{rhs.cbegin()};
          lhs_ci != lhs.cend() && rhs_ci != rhs.cend(); ++lhs_ci, ++rhs_ci)
@@ -284,21 +288,21 @@ constexpr bool operator==(Matrix4x4 const& lhs, Matrix4x4 const& rhs) noexcept
     return true;
 }
 
-[[nodiscard]] inline bool isAlmostEqual(tps::f32 const lhs,
-                                        tps::f32 const rhs) noexcept
+export [[nodiscard]] inline bool isAlmostEqual(tps::f32 const lhs,
+                                               tps::f32 const rhs) noexcept
 {
     return std::fabs(lhs - rhs) < FLT_EPSILON;
 }
 
-[[nodiscard]] inline bool isAlmostEqual(vector3df const lhs,
-                                        vector3df const rhs) noexcept
+export [[nodiscard]] inline bool isAlmostEqual(vector3df const lhs,
+                                               vector3df const rhs) noexcept
 {
     return isAlmostEqual(lhs.x, rhs.x) && isAlmostEqual(lhs.y, rhs.y) &&
         isAlmostEqual(lhs.z, rhs.z);
 }
 
-[[nodiscard]] constexpr bool isAlmostEqual(Matrix4x4 const& lhs,
-                                           Matrix4x4 const& rhs) noexcept
+export [[nodiscard]] constexpr bool isAlmostEqual(Matrix4x4 const& lhs,
+                                                  Matrix4x4 const& rhs) noexcept
 {
     for (auto lhs_ci{lhs.cbegin()}, rhs_ci{rhs.cbegin()};
          lhs_ci != lhs.cend() && rhs_ci != rhs.cend(); ++lhs_ci, ++rhs_ci)
@@ -311,5 +315,3 @@ constexpr bool operator==(Matrix4x4 const& lhs, Matrix4x4 const& rhs) noexcept
     return true;
 }
 }  // namespace fmath
-
-#endif

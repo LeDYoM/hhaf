@@ -1,14 +1,13 @@
-FMA_PRAGMA_ONCE
-#ifndef FACIL_MATH_VVECTOR_FUNCTIONS_INCLUDE_HPP
-#define FACIL_MATH_VVECTOR_FUNCTIONS_INCLUDE_HPP
+export module facil_math:vvector_functions;
 
-#include <facil_math/include/vvector.hpp>
+import htypes;
+import :vvector;
 
 namespace fmath
 {
 namespace tps = htps;
 
-enum class FaceDirection : tps::u32
+export enum class FaceDirection : tps::u32
 {
     Front = 0U,
     Back,
@@ -18,7 +17,7 @@ enum class FaceDirection : tps::u32
     Down
 };
 
-template <typename T>
+export template <typename T>
 void addPositionFace(vvector3d<T>& v, FaceDirection const fDirection)
 {
     switch (fDirection)
@@ -76,7 +75,7 @@ void addPositionFace(vvector3d<T>& v, FaceDirection const fDirection)
     }
 }
 
-template <typename T>
+export template <typename T>
 void addTextureUVFace(vvector2d<T>& v, FaceDirection const fDirection)
 {
     switch (fDirection)
@@ -122,7 +121,7 @@ void addTextureUVFace(vvector2d<T>& v, FaceDirection const fDirection)
     }
 }
 
-template <typename T>
+export template <typename T>
 void addNormalFace(vvector3d<T>& v, FaceDirection const fDirection)
 {
     switch (fDirection)
@@ -180,7 +179,7 @@ void addNormalFace(vvector3d<T>& v, FaceDirection const fDirection)
     }
 }
 
-template <typename T>
+export template <typename T>
 void addColorFace(vvector4d<T>& v,
                   FaceDirection const fDirection,
                   const vector4df& color)
@@ -216,7 +215,7 @@ void addColorFace(vvector4d<T>& v,
     }
 }
 
-template <typename T>
+export template <typename T>
 void addPositionsCube(vvector3d<T>& v)
 {
     addPositionFace(v, FaceDirection::Down);
@@ -227,7 +226,7 @@ void addPositionsCube(vvector3d<T>& v)
     addPositionFace(v, FaceDirection::Front);
 }
 
-template <typename T>
+export template <typename T>
 void addTextureUVCube(vvector2d<T>& v)
 {
     addTextureUVFace(v, FaceDirection::Down);
@@ -238,7 +237,7 @@ void addTextureUVCube(vvector2d<T>& v)
     addTextureUVFace(v, FaceDirection::Front);
 }
 
-template <typename T>
+export template <typename T>
 void addNormalCube(vvector3d<T>& v)
 {
     addNormalFace(v, FaceDirection::Down);
@@ -249,7 +248,7 @@ void addNormalCube(vvector3d<T>& v)
     addNormalFace(v, FaceDirection::Front);
 }
 
-template <typename T>
+export template <typename T>
 void addColorCube(vvector4d<T>& v, const vector4df& color)
 {
     addColorFace(v, FaceDirection::Down, color);
@@ -260,7 +259,7 @@ void addColorCube(vvector4d<T>& v, const vector4df& color)
     addColorFace(v, FaceDirection::Front, color);
 }
 
-template <typename T>
+export template <typename T>
 void addColorCube(vvector4d<T>& v, const tps::array<vector4df, 6>& colors)
 {
     addColorFace(v, FaceDirection::Down, colors[0]);
@@ -272,5 +271,3 @@ void addColorCube(vvector4d<T>& v, const tps::array<vector4df, 6>& colors)
 }
 
 }  // namespace fmath
-
-#endif

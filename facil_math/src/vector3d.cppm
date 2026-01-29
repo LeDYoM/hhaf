@@ -1,18 +1,16 @@
-FMA_PRAGMA_ONCE
-#ifndef FACIL_MATH_VECTOR3D_INCLUDE_HPP
-#define FACIL_MATH_VECTOR3D_INCLUDE_HPP
-
-import htypes;
-
-#include <facil_math/include/vector2d.hpp>
+module;
 
 #include <type_traits>
+
+export module facil_math:vector3d;
+import htypes;
+import :vector2d;
 
 namespace fmath
 {
 namespace tps = htps;
 
-template <typename T>
+export template <typename T>
 class vector3d
 {
 public:
@@ -127,42 +125,42 @@ public:
     T z;
 };
 
-template <typename T, typename Y>
+export template <typename T, typename Y>
 constexpr vector3d<T> operator+(vector3d<T> const& lhs,
                                 vector3d<Y> const& rhs) noexcept
 {
     return vector3d<T>{lhs} += rhs;
 }
 
-template <typename T, typename Y>
+export template <typename T, typename Y>
 constexpr vector3d<T> operator-(vector3d<T> const& lhs,
                                 vector3d<Y> const& rhs) noexcept
 {
     return vector3d<T>{lhs} -= rhs;
 }
 
-template <typename T, typename Y>
+export template <typename T, typename Y>
 constexpr vector3d<T> operator*(Y const& scalar,
                                 vector3d<T> const& rhs) noexcept
 {
     return vector3d<T>{rhs} *= scalar;
 }
 
-template <typename T, typename Y>
+export template <typename T, typename Y>
 constexpr vector3d<T> operator*(vector3d<T> const& lhs,
                                 Y const& scalar) noexcept
 {
     return scalar * lhs;
 }
 
-template <typename T, typename Y>
+export template <typename T, typename Y>
 constexpr vector3d<T> operator*(vector3d<T> const& lhs,
                                 vector3d<Y> const& rhs) noexcept
 {
     return vector3d<T>{lhs} *= rhs;
 }
 
-template <typename T, typename Y>
+export template <typename T, typename Y>
 constexpr vector3d<Y> operator/(Y const& scalar,
                                 vector3d<T> const& rhs) noexcept
 {
@@ -171,27 +169,27 @@ constexpr vector3d<Y> operator/(Y const& scalar,
                        scalar / static_cast<Y>(rhs.z)};
 }
 
-template <typename T, typename Y>
+export template <typename T, typename Y>
 constexpr vector3d<T> operator/(vector3d<T> const& lhs,
                                 Y const& scalar) noexcept
 {
     return vector3d<T>{lhs} /= scalar;
 }
 
-template <typename T, typename Y>
+export template <typename T, typename Y>
 constexpr vector3d<T> operator/(vector3d<T> const& lhs,
                                 vector3d<Y> const& rhs) noexcept
 {
     return vector3d<T>{lhs} /= rhs;
 }
 
-template <typename T>
+export template <typename T>
 constexpr vector3d<T> operator-(vector3d<T> const& v) noexcept
 {
     return vector3d<T>{-v.x, -v.y, -v.z};
 }
 
-template <typename T, typename Y>
+export template <typename T, typename Y>
 constexpr bool operator==(vector3d<T> const& lhs,
                           vector3d<Y> const& rhs) noexcept
 {
@@ -199,7 +197,7 @@ constexpr bool operator==(vector3d<T> const& lhs,
             lhs.z == static_cast<T>(rhs.z));
 }
 
-template <typename T, typename Y>
+export template <typename T, typename Y>
 constexpr bool operator!=(vector3d<T> const& lhs,
                           vector3d<Y> const& rhs) noexcept
 {
@@ -207,14 +205,14 @@ constexpr bool operator!=(vector3d<T> const& lhs,
 }
 
 // Serialization operators
-template <typename T>
+export template <typename T>
 constexpr htps::str& operator<<(htps::str& os, vector3d<T> const& v3d)
 {
     os << "{" << v3d.x << "," << v3d.y << "," << v3d.z << "}";
     return os;
 }
 
-template <typename T>
+export template <typename T>
 constexpr htps::str& operator>>(htps::str& is, vector3d<T> const& v3d)
 {
     return is;
@@ -231,15 +229,13 @@ static_assert(std::is_trivially_copyable_v<vector3d<tps::f32>>,
 static_assert(std::is_trivially_default_constructible_v<vector3d<tps::f32>>,
               "vector4df32 is not trivially default constructible");
 
-using vector3du8  = vector3d<tps::u8>;
-using vector3ds8  = vector3d<tps::s8>;
-using vector3du16 = vector3d<tps::u16>;
-using vector3ds16 = vector3d<tps::s16>;
-using vector3du32 = vector3d<tps::u32>;
-using vector3ds32 = vector3d<tps::s32>;
-using vector3df   = vector3d<tps::f32>;
-using vector3dd   = vector3d<tps::f64>;
-using vector3dst  = vector3d<tps::size_type>;
+export using vector3du8  = vector3d<tps::u8>;
+export using vector3ds8  = vector3d<tps::s8>;
+export using vector3du16 = vector3d<tps::u16>;
+export using vector3ds16 = vector3d<tps::s16>;
+export using vector3du32 = vector3d<tps::u32>;
+export using vector3ds32 = vector3d<tps::s32>;
+export using vector3df   = vector3d<tps::f32>;
+export using vector3dd   = vector3d<tps::f64>;
+export using vector3dst  = vector3d<tps::size_type>;
 }  // namespace fmath
-
-#endif

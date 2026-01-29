@@ -1,19 +1,18 @@
-FMA_PRAGMA_ONCE
-#ifndef FACIL_MATH_VECTOR4D_INCLUDE_HPP
-#define FACIL_MATH_VECTOR4D_INCLUDE_HPP
-
-import htypes;
-
-#include <facil_math/include/vector2d.hpp>
-#include <facil_math/include/vector3d.hpp>
+module;
 
 #include <type_traits>
+
+export module facil_math:vector4d;
+
+import htypes;
+import :vector2d;
+import :vector3d;
 
 namespace fmath
 {
 namespace tps = htps;
 
-template <typename T>
+export template <typename T>
 class vector4d
 {
 public:
@@ -122,42 +121,42 @@ public:
     T w;
 };
 
-template <typename T, typename Y>
+export template <typename T, typename Y>
 constexpr vector4d<T> operator+(vector4d<T> const& lhs,
                                 vector4d<Y> const& rhs) noexcept
 {
     return vector4d<T>{lhs} += rhs;
 }
 
-template <typename T, typename Y>
+export template <typename T, typename Y>
 constexpr vector4d<T> operator-(vector4d<T> const& lhs,
                                 vector4d<Y> const& rhs) noexcept
 {
     return vector4d<T>{lhs} -= rhs;
 }
 
-template <typename T, typename Y>
+export template <typename T, typename Y>
 constexpr vector4d<T> operator*(Y const& scalar,
                                 vector4d<T> const& rhs) noexcept
 {
     return vector4d<T>{rhs} *= scalar;
 }
 
-template <typename T, typename Y>
+export template <typename T, typename Y>
 constexpr vector4d<T> operator*(vector4d<T> const& lhs,
                                 Y const& scalar) noexcept
 {
     return scalar * lhs;
 }
 
-template <typename T, typename Y>
+export template <typename T, typename Y>
 constexpr vector4d<T> operator*(vector4d<T> const& lhs,
                                 vector4d<Y> const& rhs) noexcept
 {
     return vector4d<T>{lhs} *= rhs;
 }
 
-template <typename T, typename Y>
+export template <typename T, typename Y>
 constexpr vector4d<Y> operator/(Y const& scalar,
                                 vector4d<T> const& rhs) noexcept
 {
@@ -166,27 +165,27 @@ constexpr vector4d<Y> operator/(Y const& scalar,
         scalar / static_cast<Y>(rhs.z), scalar / static_cast<Y>(rhs.w)};
 }
 
-template <typename T, typename Y>
+export template <typename T, typename Y>
 constexpr vector4d<T> operator/(vector4d<T> const& lhs,
                                 Y const& scalar) noexcept
 {
     return vector4d<T>{lhs} /= scalar;
 }
 
-template <typename T, typename Y>
+export template <typename T, typename Y>
 constexpr vector4d<T> operator/(vector4d<T> const& lhs,
                                 vector4d<Y> const& rhs) noexcept
 {
     return vector4d<T>{lhs} /= rhs;
 }
 
-template <typename T>
+export template <typename T>
 constexpr vector4d<T> operator-(vector4d<T> const& v) noexcept
 {
     return vector4d<T>{-v.x, -v.y, -v.z, -v.w};
 }
 
-template <typename T, typename Y>
+export template <typename T, typename Y>
 constexpr bool operator==(vector4d<T> const& lhs,
                           vector4d<Y> const& rhs) noexcept
 {
@@ -194,7 +193,7 @@ constexpr bool operator==(vector4d<T> const& lhs,
             lhs.z == static_cast<T>(rhs.z) && lhs.w == static_cast<T>(rhs.w));
 }
 
-template <typename T, typename Y>
+export template <typename T, typename Y>
 constexpr bool operator!=(vector4d<T> const& lhs,
                           vector4d<Y> const& rhs) noexcept
 {
@@ -202,14 +201,14 @@ constexpr bool operator!=(vector4d<T> const& lhs,
 }
 
 // Serialization operators
-template <typename T>
+export template <typename T>
 constexpr htps::str& operator<<(htps::str& os, vector4d<T> const& v4d)
 {
     os << "{" << v4d.x << "," << v4d.y << "," << v4d.z << "," << v4d.w << "}";
     return os;
 }
 
-template <typename T>
+export template <typename T>
 constexpr htps::str& operator>>(htps::str& is, vector4d<T> const& v4d)
 {
     return is;
@@ -226,15 +225,13 @@ static_assert(std::is_trivially_copyable_v<vector4d<tps::f32>>,
 static_assert(std::is_trivially_default_constructible_v<vector4d<tps::f32>>,
               "vector4df32 is not trivially default constructible");
 
-using vector4du8  = vector4d<tps::u8>;
-using vector4ds8  = vector4d<tps::s8>;
-using vector4du16 = vector4d<tps::u16>;
-using vector4ds16 = vector4d<tps::s16>;
-using vector4du32 = vector4d<tps::u32>;
-using vector4ds32 = vector4d<tps::s32>;
-using vector4df   = vector4d<tps::f32>;
-using vector4dd   = vector4d<tps::f64>;
-using vector4dst  = vector4d<tps::size_type>;
+export using vector4du8  = vector4d<tps::u8>;
+export using vector4ds8  = vector4d<tps::s8>;
+export using vector4du16 = vector4d<tps::u16>;
+export using vector4ds16 = vector4d<tps::s16>;
+export using vector4du32 = vector4d<tps::u32>;
+export using vector4ds32 = vector4d<tps::s32>;
+export using vector4df   = vector4d<tps::f32>;
+export using vector4dd   = vector4d<tps::f64>;
+export using vector4dst  = vector4d<tps::size_type>;
 }  // namespace fmath
-
-#endif

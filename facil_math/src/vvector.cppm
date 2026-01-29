@@ -1,17 +1,14 @@
-FMA_PRAGMA_ONCE
-#ifndef FACIL_MATH_VVECTOR_INCLUDE_HPP
-#define FACIL_MATH_VVECTOR_INCLUDE_HPP
+export module facil_math:vvector;
 
 import htypes;
-
-#include <facil_math/include/vector_types.hpp>
-#include <facil_math/include/matrix4x4.hpp>
+import :vector_types;
+import :matrix4x4;
 
 namespace fmath
 {
 namespace tps = htps;
 
-template <tps::u8 SIZE, typename T>
+export template <tps::u8 SIZE, typename T>
 class vvector
 {
 public:
@@ -98,15 +95,13 @@ private:
     Matrix4x4 m_matrix;
 };
 
-template <typename T>
+export template <typename T>
 using vvector2d = vvector<2U, T>;
 
-template <typename T>
+export template <typename T>
 using vvector3d = vvector<3U, T>;
 
-template <typename T>
+export template <typename T>
 using vvector4d = vvector<4U, T>;
 
 }  // namespace fmath
-
-#endif

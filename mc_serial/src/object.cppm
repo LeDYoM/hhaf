@@ -3,7 +3,7 @@ module;
 #include <type_traits>
 #include <utility>
 
-export module mc_serial : object;
+export module mc_serial:object;
 
 import htypes;
 

@@ -1,16 +1,16 @@
-FMA_PRAGMA_ONCE
-#ifndef FACIL_MATH_MATRIX4X4_FUNCTIONS_INCLUDE_HPP
-#define FACIL_MATH_MATRIX4X4_FUNCTIONS_INCLUDE_HPP
-
-#include <facil_math/include/math_types.hpp>
-#include <facil_math/include/matrix4x4.hpp>
+module;
 
 #include <cmath>
 #include <cfloat>
 
+export module facil_math:matrix4x4_functions;
+import :math_types;
+import :matrix4x4;
+import :geometry_math;
+
 namespace fmath
 {
-[[nodiscard]] inline Matrix4x4 lookat(vector3df const& eye,
+export [[nodiscard]] inline Matrix4x4 lookat(vector3df const& eye,
                                       vector3df const& center,
                                       vector3df const& up) noexcept
 {
@@ -62,7 +62,7 @@ namespace fmath
             ZeroF32};
 }
 
-[[nodiscard]] inline Matrix4x4 perspective(tps::f32 fovy,
+export [[nodiscard]] inline Matrix4x4 perspective(tps::f32 fovy,
                                            tps::f32 const aspect,
                                            tps::f32 const n,
                                            tps::f32 const f) noexcept
@@ -77,7 +77,7 @@ namespace fmath
             ZeroF32, ZeroF32, C,       ZeroF32};
 }
 
-[[nodiscard]] inline Matrix4x4 ortho(tps::f32 const left,
+export [[nodiscard]] inline Matrix4x4 ortho(tps::f32 const left,
                                      tps::f32 const right,
                                      tps::f32 const bottom,
                                      tps::f32 const top,
@@ -106,5 +106,3 @@ namespace fmath
 }
 
 }  // namespace fmath
-
-#endif
