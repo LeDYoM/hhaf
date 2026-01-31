@@ -146,7 +146,7 @@ public:
         return m_matrix_data[index];
     }
 
-    static Matrix4x4 const Identity;
+    __declspec(dllexport) static Matrix4x4 const Identity;
 
     constexpr Matrix4x4& operator*=(Matrix4x4 const& rhs) noexcept
     {
