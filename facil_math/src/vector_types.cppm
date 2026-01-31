@@ -1,8 +1,8 @@
 export module facil_math:vector_types;
 
-import :vector2d;
-import :vector3d;
-import :vector4d;
+export import :vector2d;
+export import :vector3d;
+export import :vector4d;
 
 namespace fmath
 {

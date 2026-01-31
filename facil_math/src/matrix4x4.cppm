@@ -251,7 +251,7 @@ private:
     Scalar m_matrix_data[kMatrixNumElements];
 };
 
-export inline Matrix4x4 const Matrix4x4::Identity{Matrix4x4{}};
+export Matrix4x4 const Matrix4x4::Identity{Matrix4x4{}};
 
 export constexpr void setDiagonal(
     Matrix4x4& m,

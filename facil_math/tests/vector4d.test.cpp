@@ -1,7 +1,7 @@
 #include "catch_include.hpp"
 
-#include <facil_math/include/vector4d.hpp>
 import htypes;
+import facil_math;
 
 using namespace htps;
 using namespace fmath;
