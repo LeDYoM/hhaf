@@ -1,7 +1,7 @@
 #ifndef HAF_BACKEND_ITEXTURE_HPP
 #define HAF_BACKEND_ITEXTURE_HPP
 
-#include <facil_math/include/vector2d.hpp>
+import facil_math;
 
 #include "iresourceinfo.hpp"
 

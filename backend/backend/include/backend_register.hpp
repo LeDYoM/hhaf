@@ -4,6 +4,7 @@
 #include <backend_dev/include/iwindow.hpp>
 #include <backend_dev/include/iresourcefactories.hpp>
 #include <backend_dev/include/ibackendregister.hpp>
+#include <type_traits>
 
 using p_initBackendClient =
     bool (*)(haf::backend::client::IBackendRegister* const);
