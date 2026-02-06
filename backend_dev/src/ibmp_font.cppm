@@ -1,7 +1,6 @@
-#ifndef HAF_BACKEND_IBMPFONT_INCLUDE_HPP
-#define HAF_BACKEND_IBMPFONT_INCLUDE_HPP
+export module backend_dev:ibmp_font;
 
-#include "ifont.hpp"
+import :ifont;
 
 namespace haf::backend
 {
@@ -11,5 +10,3 @@ protected:
     ~IBMPFont() = default;
 };
 }  // namespace haf::backend
-
-#endif

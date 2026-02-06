@@ -1,15 +1,13 @@
-#ifndef HAF_BACKEND_IWINDOW_INCLUDE_HPP
-#define HAF_BACKEND_IWINDOW_INCLUDE_HPP
-
-#include "iresourceinfo.hpp"
+export module backend_dev:iwindow;
 
 import htypes;
+import :iresource_info;
 
 namespace haf::backend
 {
 class IInputDriver;
 
-class IWindow : public IResourceInfo
+export class IWindow : public IResourceInfo
 {
 public:
     /**
@@ -56,5 +54,3 @@ public:
 };
 
 }  // namespace haf::backend
-
-#endif

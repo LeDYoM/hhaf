@@ -1,9 +1,8 @@
-#ifndef HAF_BACKEND_IFACTORY_INCLUDE_HPP
-#define HAF_BACKEND_IFACTORY_INCLUDE_HPP
+export module backend_dev:ifactory;
 
 namespace haf::backend
 {
-template <typename T>
+export template <typename T>
 class IFactoryOf
 {
 public:
@@ -14,5 +13,3 @@ public:
     virtual bool destroy(T*) = 0;
 };
 }  // namespace haf::backend
-
-#endif

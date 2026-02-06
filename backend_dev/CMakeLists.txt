@@ -1,34 +1,30 @@
 project (backend_dev)
-cmake_minimum_required (VERSION 3.11)
+cmake_minimum_required (VERSION 3.28)
 
 set (CURRENT_TARGET ${PROJECT_NAME})
 
-set(include_dir ${PROJECT_SOURCE_DIR}/backend_dev/include)
-set(headers
-    ${include_dir}/camera_data.hpp
-    ${include_dir}/factory_types.hpp
-    ${include_dir}/ibackendregister.hpp
-    ${include_dir}/ibmp_font.hpp
-    ${include_dir}/ifactory.hpp
-    ${include_dir}/ifont.hpp
-    ${include_dir}/iinputdriver.hpp
-    ${include_dir}/ikey.hpp
-    ${include_dir}/imaterial_data.hpp
-    ${include_dir}/iresource_descriptor.hpp
-    ${include_dir}/iresource_manager.hpp
-    ${include_dir}/iresourcefactories.hpp
-    ${include_dir}/iresourcefactory.hpp
-    ${include_dir}/iresourceinfo.hpp
-    ${include_dir}/ishader.hpp
-    ${include_dir}/itexture.hpp
-    ${include_dir}/ittfont.hpp
-    ${include_dir}/ivertex.hpp
-    ${include_dir}/iwindow.hpp
-    ${include_dir}/resource_load_parameters.hpp
+set(sources
+    src/backend_dev.cppm
+    src/factory_types.cppm
+    src/ibackend_register.cppm
+    src/ibmp_font.cppm
+    src/ifactory.cppm
+    src/ifont.cppm
+    src/iinputdriver.cppm
+    src/ikey.cppm
+    src/imaterial_data.cppm
+    src/iresource_descriptor.cppm
+    src/iresource_manager.cppm
+    src/iresource_factories.cppm
+    src/iresource_factory.cppm
+    src/iresource_info.cppm
+    src/ishader.cppm
+    src/itexture.cppm
+    src/ittfont.cppm
+    src/ivertex.cppm
+    src/iwindow.cppm
+    src/resource_load_parameters.cppm
 )
 
-build_lib_component(HEADERS_ONLY
-    HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}"
-    HEADERS ${headers}
-)
-target_link_libraries(${CURRENT_TARGET} INTERFACE htypes)
+build_lib_module(${CURRENT_TARGET} STATIC SOURCES "${sources}")
+target_link_libraries(${CURRENT_TARGET} PRIVATE htypes facil_math)

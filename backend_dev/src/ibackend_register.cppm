@@ -1,14 +1,13 @@
-#ifndef HAF_BACKEND_BACKEND_REGISTER_INLUDE_HPP
-#define HAF_BACKEND_BACKEND_REGISTER_INLUDE_HPP
+export module backend_dev:ibackend_register;
 
-#include <backend_dev/include/iwindow.hpp>
-#include <backend_dev/include/iresourcefactories.hpp>
-#include <backend_dev/include/factory_types.hpp>
-#include <backend_dev/include/ifactory.hpp>
+import :iwindow;
+import :iresource_factories;
+import :factory_types;
+import :ifactory;
 
 namespace haf::backend::client
 {
-class IBackendRegister
+export class IBackendRegister
 {
 public:
     virtual void setFactory(htps::uptr<IWindowFactory>) noexcept         = 0;
@@ -21,5 +20,3 @@ public:
 };
 
 }  // namespace haf::backend::client
-
-#endif

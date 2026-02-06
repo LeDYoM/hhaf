@@ -1,8 +1,6 @@
-#ifndef HAF_BACKEND_DEV_IVERTEX_INCLUDE_HPP
-#define HAF_BACKEND_DEV_IVERTEX_INCLUDE_HPP
+export module backend_dev:ivextex;
 
-#include <facil_math/include/vector2d.hpp>
-
+import facil_math;
 import htypes;
 
 namespace haf::backend
@@ -66,5 +64,3 @@ enum class VertexAttributes : htps::u8
 };
 
 }  // namespace haf::backend
-
-#endif

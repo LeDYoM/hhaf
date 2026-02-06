@@ -1,9 +1,7 @@
-#ifndef HAF_BACKEND_IRESOURCE_FACTORY_INCLUDE_HPP
-#define HAF_BACKEND_IRESOURCE_FACTORY_INCLUDE_HPP
-
-#include <backend_dev/include/resource_load_parameters.hpp>
+export module backend_dev:iresource_factory;
 
 import htypes;
+import :resource_load_parameters;
 
 namespace haf::backend
 {
@@ -17,5 +15,3 @@ public:
         ResourceLoadParameters const& resource_load_parameters) = 0;
 };
 }  // namespace haf::backend
-
-#endif

@@ -1,11 +1,6 @@
-module;
-
-#include <backend_dev/include/iwindow.hpp>
-#include <backend_dev/include/iresourcefactories.hpp>
-#include <backend_dev/include/ibackendregister.hpp>
-
 export module backend:backend_register;
 
+import backend_dev;
 import :backend_log;
 
 export using p_initBackendClient =

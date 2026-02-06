@@ -1,13 +1,10 @@
-#ifndef HAF_BACKEND_RESOUCE_LOAD_PARAMETERS_INCLUDE_HPP
-#define HAF_BACKEND_RESOUCE_LOAD_PARAMETERS_INCLUDE_HPP
+export module backend_dev:resource_load_parameters;
 
-#include <backend_dev/include/iresource_manager.hpp>
-
+import :iresource_manager;
 import htypes;
 
 namespace haf::backend
 {
-
 struct ResourceLoadParameters
 {
     htps::str resource_id;
@@ -30,5 +27,3 @@ struct ResourceLoadParameters
 };
 
 }  // namespace haf::backend
-
-#endif

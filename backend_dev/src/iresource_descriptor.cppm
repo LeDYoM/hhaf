@@ -1,5 +1,4 @@
-#ifndef HAF_BACKEND_IRESOURCE_DESCRIPTOR_INCLUDE_HPP
-#define HAF_BACKEND_IRESOURCE_DESCRIPTOR_INCLUDE_HPP
+export module backend_dev:iresource_descriptor;
 
 import htypes;
 
@@ -17,5 +16,3 @@ struct IResourceDescriptor
     htps::str fileName;
 };
 }  // namespace haf::backend
-
-#endif

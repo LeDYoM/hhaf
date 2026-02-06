@@ -1,9 +1,7 @@
-#ifndef HAF_BACKEND_IINPUTDRIVER_INCLUDE_HPP
-#define HAF_BACKEND_IINPUTDRIVER_INCLUDE_HPP
+export module backend_dev:iinput_driver;
 
 import htypes;
-
-#include "ikey.hpp"
+import :ikey;
 
 namespace haf::backend
 {
@@ -38,5 +36,3 @@ public:
     virtual void readKeyReleased(htps::vector<IKey>& keys_released) const = 0;
 };
 }  // namespace haf::backend
-
-#endif

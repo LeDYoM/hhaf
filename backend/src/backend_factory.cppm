@@ -1,8 +1,3 @@
-module;
-
-#include <backend_dev/include/iresourcefactories.hpp>
-#include <backend_dev/include/iwindow.hpp>
-
 export module backend:backend_factory;
 
 import :backend_register;
@@ -10,6 +5,7 @@ import :backend_log;
 
 import htypes;
 import agloader;
+import backend_dev;
 
 namespace haf::backend
 {

@@ -1,11 +1,9 @@
-#ifndef HAF_BACKEND_ITEXTURE_HPP
-#define HAF_BACKEND_ITEXTURE_HPP
+export module backend_dev:itexture;
 
 import facil_math;
-
-#include "iresourceinfo.hpp"
-
 import htypes;
+
+import :iresource_info;
 
 namespace haf::backend
 {
@@ -18,5 +16,3 @@ public:
     virtual void bind() const               = 0;
 };
 }  // namespace haf::backend
-
-#endif

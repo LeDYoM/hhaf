@@ -1,8 +1,7 @@
-#ifndef HAF_BACKEND_IRESOURCE_MANAGER_INCLUDE_HPP
-#define HAF_BACKEND_IRESOURCE_MANAGER_INCLUDE_HPP
+export module backend_dev:iresource_manager;
 
-#include <backend_dev/include/iresource_descriptor.hpp>
-#include <backend_dev/include/itexture.hpp>
+import :iresource_descriptor;
+import :itexture;
 
 import htypes;
 
@@ -20,5 +19,3 @@ public:
                                     backend::ITexture const* texture) = 0;
 };
 }  // namespace haf::backend
-
-#endif

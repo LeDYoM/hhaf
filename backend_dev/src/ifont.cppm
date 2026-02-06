@@ -1,8 +1,7 @@
-#ifndef HAF_BACKEND_IFONT_HPP
-#define HAF_BACKEND_IFONT_HPP
+export module backend_dev:ifont;
 
-#include <facil_math/include/rect.hpp>
 import htypes;
+import facil_math;
 
 namespace haf::backend
 {
@@ -22,5 +21,3 @@ public:
     virtual htps::str getTexture(char const character)            = 0;
 };
 }  // namespace haf::backend
-
-#endif

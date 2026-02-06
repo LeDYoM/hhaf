@@ -1,8 +1,6 @@
-#ifndef HAF_BACKEND_ITTFONT_HPP
-#define HAF_BACKEND_ITTFONT_HPP
+export module backend_dev:ittfont;
 
-#include <facil_math/include/rect.hpp>
-
+import facil_math;
 import htypes;
 
 namespace haf::backend
@@ -27,5 +25,3 @@ public:
                                  char const character)                    = 0;
 };
 }  // namespace haf::backend
-
-#endif

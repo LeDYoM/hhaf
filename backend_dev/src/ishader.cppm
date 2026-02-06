@@ -1,13 +1,9 @@
-#ifndef HAF_BACKEND_ISHADER_INTERFACE_INCLUDE_HPP
-#define HAF_BACKEND_ISHADER_INTERFACE_INCLUDE_HPP
+export module backend_dev:ishader;
 
-#include <facil_math/include/vector2d.hpp>
-#include <facil_math/include/rect.hpp>
-
-#include "itexture.hpp"
-#include "imaterial_data.hpp"
-
+import :itexture;
+import :imaterial_data;
 import htypes;
+import facil_math;
 
 namespace haf::backend
 {
@@ -30,4 +26,3 @@ public:
 };
 }  // namespace haf::backend
 
-#endif

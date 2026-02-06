@@ -1,5 +1,4 @@
-#ifndef HAF_BACKEND_DEV_IKEY_INCLUDE_HPP
-#define HAF_BACKEND_DEV_IKEY_INCLUDE_HPP
+export module backend_dev:ikey;
 
 import htypes;
 
@@ -116,5 +115,3 @@ enum class IKey : htps::s32
 };
 
 }  // namespace haf::backend
-
-#endif
