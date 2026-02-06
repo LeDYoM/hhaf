@@ -1,13 +1,11 @@
-#ifndef HAF_BACKEND_BACKEND_FACTORY_UTILS_INCLUDE_HPP
-#define HAF_BACKEND_BACKEND_FACTORY_UTILS_INCLUDE_HPP
-
-#include <backend/include/backend_register.hpp>
+export module backend:backend_utils;
 
 import htypes;
+import :backend_register;
 
 namespace haf::backend
 {
-template <typename FactoryType>
+export template <typename FactoryType>
 bool fillFactory(htps::rptr<BackendRegister> const& backend_register,
                  FactoryType** factory_to_fill)
 {
@@ -30,7 +28,7 @@ bool fillFactory(htps::rptr<BackendRegister> const& backend_register,
  * @return true At least one of the factory parameters has been filled
  * @return false None of the factories have been filled
  */
-template <typename FactoryType, typename... FactoryTypes>
+export template <typename FactoryType, typename... FactoryTypes>
 bool fillFactories(htps::rptr<BackendRegister> const& backend_register,
                    FactoryType factory_to_fill,
                    FactoryTypes... factories_to_fill)
@@ -45,7 +43,7 @@ bool fillFactories(htps::rptr<BackendRegister> const& backend_register,
     return result;
 }
 
-template <typename FactoryType>
+export template <typename FactoryType>
 bool emptyFactory(htps::rptr<BackendRegister> const& backend_register,
                   FactoryType** factory_to_empty)
 {
@@ -62,7 +60,7 @@ bool emptyFactory(htps::rptr<BackendRegister> const& backend_register,
     return true;
 }
 
-template <typename FactoryType, typename... FactoryTypes>
+export template <typename FactoryType, typename... FactoryTypes>
 bool emptyFactories(htps::rptr<BackendRegister> const& backend_register,
                     FactoryType factory_to_empty,
                     FactoryTypes... factories_to_empty)
@@ -77,4 +75,3 @@ bool emptyFactories(htps::rptr<BackendRegister> const& backend_register,
     return result;
 }
 }  // namespace haf::backend
-#endif

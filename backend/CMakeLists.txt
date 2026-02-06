@@ -1,25 +1,23 @@
 cmake_minimum_required(VERSION 3.14)
-project(backend)
+project(backend
+    VERSION 0.0.2.0
+    DESCRIPTION "Backend module for haf"
+    # [HOMEPAGE_URL <url-string>]
+    LANGUAGES CXX
+)
 
 set(CURRENT_TARGET ${PROJECT_NAME})
 
-set(SOURCES
-    src/backend_creator.cpp
-    src/backend_factory.cpp
-    src/backend_log.hpp
-    src/backend_register.cpp
-    src/backend_utils.hpp
+set(sources
+    src/backend_creator.cppm
+    src/backend_factory.cppm
+    src/backend_log.cppm
+    src/backend_register.cppm
+    src/backend_utils.cppm
+    src/backend.cppm
 )
 
-set(include_dir ${PROJECT_NAME}/include)
-
-set(headers
-    ${include_dir}/backend_creator.hpp
-    ${include_dir}/backend_factory.hpp
-    ${include_dir}/backend_register.hpp
-)
-build_lib_component(EXPORT_ALL HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}" SOURCES
-                    "${SOURCES}" HEADERS "${headers}")
+build_lib_module(${CURRENT_TARGET} STATIC SOURCES "${sources}")
 
 target_link_libraries(${CURRENT_TARGET} PRIVATE agloader log_and_types facil_math hlog)
 target_link_libraries(${CURRENT_TARGET} PUBLIC backend_dev)
