@@ -2,10 +2,11 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_CORE_RENDER_TARGET_INCLUDE_HPP
 #define HAF_CORE_RENDER_TARGET_INCLUDE_HPP
 
-import htypes;
 #include <facil_math/include/rect.hpp>
 #include <haf/include/properties/property_state.hpp>
 #include <haf/include/scene/matrix4x4.hpp>
+
+import htypes;
 
 namespace haf::ogl
 {

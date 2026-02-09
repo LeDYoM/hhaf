@@ -2,11 +2,11 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_DEBUG_DEBUG_VARIABLES_INCLUDE_HPP
 #define HAF_DEBUG_DEBUG_VARIABLES_INCLUDE_HPP
 
-import htypes;
-
 #include <haf/include/time/time_point.hpp>
 #include <haf/include/debug_system/debug_variable.hpp>
 #include <haf/include/debug_system/debug_types.hpp>
+
+import htypes;
 
 namespace haf::debug
 {

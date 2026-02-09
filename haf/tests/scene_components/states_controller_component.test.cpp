@@ -1,7 +1,8 @@
 #include "catch_include.hpp"
 
-import htypes;
 #include <haf/include/scene_components/states_controller_component.hpp>
+
+import htypes;
 
 using namespace htps;
 using namespace haf;

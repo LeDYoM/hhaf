@@ -2,13 +2,13 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_SYSTEM_FILESYSTEM_INCLUDE_HPP
 #define HAF_SYSTEM_FILESYSTEM_INCLUDE_HPP
 
-import htypes;
-
 #include <haf/include/filesystem/path.hpp>
 #include <haf/include/filesystem/ifile_serializer.hpp>
 #include <haf/include/filesystem/ibinary_file_reader.hpp>
 #include "system/system_base.hpp"
 #include "haf_private.hpp"
+
+import htypes;
 
 namespace haf::sys
 {

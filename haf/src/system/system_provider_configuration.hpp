@@ -3,10 +3,10 @@ HTPS_PRAGMA_ONCE
 #define HAF_SYSTEM_SYSTEM_PROVIDER_CONFIGURATION_INCLUDE_HPP
 
 #include "haf_private.hpp"
-import htypes;
-
 #include <haf/include/data/ideserializable.hpp>
 #include "system/system_configuration.hpp"
+
+import htypes;
 
 namespace haf::sys
 {

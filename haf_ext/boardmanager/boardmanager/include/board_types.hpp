@@ -1,8 +1,9 @@
 #ifndef HEF_EXT_BOARDMANAGER_BOARD_TYPES_INCLUDE_HPP
 #define HEF_EXT_BOARDMANAGER_BOARD_TYPES_INCLUDE_HPP
 
-import htypes;
 #include <facil_math/include/vector2d.hpp>
+
+import htypes;
 
 namespace haf::board
 {

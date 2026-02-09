@@ -1,11 +1,10 @@
 #ifndef HAF_BACKEND_SFML_TTFONTFACTORY_HPP
 #define HAF_BACKEND_SFML_TTFONTFACTORY_HPP
 
-import htypes;
-
 #include <facil_math/include/vector2d.hpp>
 #include <backend_dev/include/iresourcefactories.hpp>
 #include <backend_dev/include/resource_load_parameters.hpp>
+import htypes;
 
 namespace haf::backend::sfmlb
 {

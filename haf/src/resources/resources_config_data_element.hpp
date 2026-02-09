@@ -3,11 +3,13 @@ HTPS_PRAGMA_ONCE
 #define HAF_RESOURCES_RESOURCES_CONFIG_DATA_ELEMENT_INCLUDE_HPP
 
 #include "haf_private.hpp"
-import htypes;
+
 #include <facil_math/include/rect.hpp>
 
 #include <haf/include/shareddata/ishareable.hpp>
 #include "resource_data_description_names.hpp"
+
+import htypes;
 
 namespace haf::res
 {

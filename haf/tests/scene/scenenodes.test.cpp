@@ -1,13 +1,14 @@
 #include "catch_include.hpp"
 
-import htypes;
-
 #include <facil_math/include/vector2d.hpp>
 #include <haf/include/scene/scene_node.hpp>
 #include <haf/include/scene/scene_nodes.hpp>
 
+import htypes;
+
 using namespace htps;
 using namespace fmath;
+
 /*
 namespace
 {

@@ -2,9 +2,9 @@ HAF_PRAGMA_ONCE
 #ifndef HAF_UTILS_OBJECT_FACTORY_INCLUDE_HPP
 #define HAF_UTILS_OBJECT_FACTORY_INCLUDE_HPP
 
-import htypes;
-
 #include <haf/include/core/types.hpp>
+
+import htypes;
 
 namespace haf::utils
 {

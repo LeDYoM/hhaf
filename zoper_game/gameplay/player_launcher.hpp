@@ -1,8 +1,6 @@
 #ifndef ZOOPER_PLAYER_LAUNCHER__INCLUDE_HPP
 #define ZOOPER_PLAYER_LAUNCHER__INCLUDE_HPP
 
-import htypes;
-
 #include "direction.hpp"
 #include "levelproperties.hpp"
 #include "boardgroup.hpp"
@@ -12,6 +10,8 @@ import htypes;
 #include "player.hpp"
 
 #include <boardmanager/include/board_types.hpp>
+
+import htypes;
 
 namespace zoper
 {

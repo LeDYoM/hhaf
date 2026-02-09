@@ -7,15 +7,14 @@
 #include <haf/include/time/time_point.hpp>
 #include <haf/include/filesystem/ifile_serializer.hpp>
 
-#include <mc_serial/include/serializer.hpp>
-import htypes;
-#include <facil_math/include/rect.hpp>
-#include <mc_serial/include/object.hpp>
-
 #include "random/randomsystem.hpp"
 #include "time/time_system.hpp"
 #include "filesystem/file_system.hpp"
 #include "input/input_system.hpp"
+
+import htypes;
+import mc_serial;
+import facil_math;
 
 using namespace htps;
 

@@ -3,12 +3,14 @@
 
 #include "gamebasetile.hpp"
 
-import htypes;
 #include <facil_math/include/vector2d.hpp>
 
 #include <boardmanager/include/itile.hpp>
 #include <haf/include/animation/animation_component.hpp>
 #include <haf/include/scene_components/renderizable_group_component.hpp>
+
+import htypes;
+
 namespace zoper
 {
 /**

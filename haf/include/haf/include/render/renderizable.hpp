@@ -2,8 +2,6 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_SCENE_RENDERIZABLE_INCLUDE_HPP
 #define HAF_SCENE_RENDERIZABLE_INCLUDE_HPP
 
-import htypes;
-
 #include <haf/include/properties/property_state.hpp>
 
 #include <haf/include/scene/color.hpp>
@@ -15,6 +13,8 @@ import htypes;
 #include <haf/include/render/renderizable_data.hpp>
 #include <haf/include/scene/material.hpp>
 #include <haf/include/scene/scene_node.hpp>
+
+import htypes;
 
 namespace haf::render
 {

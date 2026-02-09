@@ -13,8 +13,8 @@ HTPS_PRAGMA_ONCE
 #include "random/randomsystem.hpp"
 
 import htypes;
-#include <facil_math/include/rect.hpp>
-#include <mc_serial/include/object.hpp>
+import facil_math;
+import mc_serial;
 
 namespace haf::sys
 {

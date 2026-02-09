@@ -1,7 +1,6 @@
 #ifndef ZOPER_HIGHSCORESSCENE_INCLUDE_HPP
 #define ZOPER_HIGHSCORESSCENE_INCLUDE_HPP
 
-import htypes;
 #include <haf/include/events/connection.hpp>
 
 #include <haf/include/scene_components/scene_component.hpp>
@@ -10,6 +9,8 @@ import htypes;
 #include <haf/include/resources/ittfont.hpp>
 
 #include "../scene_names.hpp"
+
+import htypes;
 
 namespace zoper
 {

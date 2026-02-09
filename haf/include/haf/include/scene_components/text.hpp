@@ -2,13 +2,14 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_TEXT_COMPONENT_INCLUDE_HPP
 #define HAF_TEXT_COMPONENT_INCLUDE_HPP
 
-import htypes;
 #include <haf/include/properties/iproperty.hpp>
 #include <haf/include/resources/ifont.hpp>
 #include <haf/include/scene/color.hpp>
 #include <haf/include/scene_components/text_base_size.hpp>
 #include <haf/include/component/component.hpp>
 #include <haf/include/properties/property_state.hpp>
+
+import htypes;
 
 namespace haf::scene
 {

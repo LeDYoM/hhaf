@@ -1,7 +1,7 @@
 #include "catch_include.hpp"
 
 import htypes;
-#include <facil_math/include/matrix4x4.hpp>
+import facil_math;
 
 using namespace fmath;
 

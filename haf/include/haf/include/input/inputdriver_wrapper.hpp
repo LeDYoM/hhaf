@@ -2,9 +2,8 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_BACKEND_SFMLB_INPUTDRIVER_INCLUDE_HPP
 #define HAF_BACKEND_SFMLB_INPUTDRIVER_INCLUDE_HPP
 
-import htypes;
-
 #include <haf/include/input/key.hpp>
+import htypes;
 
 namespace haf::backend
 {

@@ -2,9 +2,10 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_SCENE_MATRIX_UTILS_TEST_INCLUDE_HPP
 #define HAF_SCENE_MATRIX_UTILS_TEST_INCLUDE_HPP
 
-import htypes;
 #include <haf/include/scene/matrix4x4.hpp>
 #include <limits>
+
+import htypes;
 
 namespace haf::scene::testing
 {

@@ -2,7 +2,6 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_SCENE_SCENE_NODE_TABLE_IMP_INCLUDE_HPP
 #define HAF_SCENE_SCENE_NODE_TABLE_IMP_INCLUDE_HPP
 
-import htypes;
 #include <facil_math/include/vector2d.hpp>
 #include <haf/include/properties/iproperty.hpp>
 #include <haf/include/properties/property_state.hpp>
@@ -12,6 +11,8 @@ import htypes;
 #include <haf/include/scene/scene_node.hpp>
 #include <haf/include/component/component.hpp>
 #include <haf/include/component/component_requirements.hpp>
+
+import htypes;
 
 namespace haf::scene
 {

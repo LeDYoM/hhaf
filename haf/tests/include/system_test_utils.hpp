@@ -2,13 +2,14 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_SYSTEM_TESTS_UTILS_INCLUDE_HPP
 #define HAF_SYSTEM_TESTS_UTILS_INCLUDE_HPP
 
-import htypes;
 #include "system/system_provider.hpp"
 #include <haf/include/system/subsystem_view.hpp>
 #include "shareddata/shared_data_system.hpp"
 #include "time/time_system.hpp"
 #include "scene/scene_manager.hpp"
 #include "system/system_options_init.hpp"
+
+import htypes;
 
 template <typename T>
 class TestSystem

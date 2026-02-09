@@ -2,14 +2,14 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_SCENE_MATERIAL_INCLUDE_HPP
 #define HAF_SCENE_MATERIAL_INCLUDE_HPP
 
-import htypes;
-
 #include <facil_math/include/rect.hpp>
 #include <haf/include/properties/property_state.hpp>
 #include <haf/include/scene/color.hpp>
 #include <haf/include/haf_export.hpp>
 #include <haf/include/resources/itexture.hpp>
 #include <haf/include/resources/ishader.hpp>
+
+import htypes;
 
 namespace haf::scene
 {

@@ -2,10 +2,10 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_RENDER_RENDERIZABLE_INTERNAL_FUNCTIONS_INCLUDE_HPP
 #define HAF_RENDER_RENDERIZABLE_INTERNAL_FUNCTIONS_INCLUDE_HPP
 
-import htypes;
-
 #include <haf/include/render/renderizable.hpp>
 #include <backend_dev/include/ivertex.hpp>
+
+import htypes;
 
 namespace haf::render
 {

@@ -18,7 +18,6 @@
 
 #include "../zoperprogramcontroller.hpp"
 #include "../keymapping.hpp"
-import htypes;
 #include <haf/include/properties/iproperty.hpp>
 
 #include <boardmanager/include/boardmanager.hpp>
@@ -35,6 +34,8 @@ import htypes;
 #include <haf/include/render/renderizables.hpp>
 #include <haf/include/render/renderizable_builder.hpp>
 #include "../static_data.hpp"
+
+import htypes;
 
 using namespace htps;
 using namespace haf;

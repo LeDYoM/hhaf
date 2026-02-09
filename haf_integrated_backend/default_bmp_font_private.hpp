@@ -2,11 +2,12 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_RESOURCES_BMPFONT_PRIVATE_INCLUDE_HPP
 #define HAF_RESOURCES_BMPFONT_PRIVATE_INCLUDE_HPP
 
-import htypes;
 #include <backend_dev/include/ifont.hpp>
 #include <backend_dev/include/itexture.hpp>
 
 #include "default_bmp_font.hpp"
+
+import htypes;
 
 using namespace htps;
 

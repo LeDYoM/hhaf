@@ -1,9 +1,6 @@
 #ifndef HAF_HOST_INTERNAL_INCLUDE_HPP
 #define HAF_HOST_INTERNAL_INCLUDE_HPP
 
-import parpar;
-import backend;
-
 #include "host.hpp"
 #include "systemcontroller_loader.hpp"
 #include "hosted_application.hpp"
@@ -14,6 +11,9 @@ import backend;
 
 #include <host_haf_interface/include/isystem_controller.hpp>
 #include <hosted_app/include/iapp.hpp>
+
+import parpar;
+import backend;
 
 namespace haf::host
 {

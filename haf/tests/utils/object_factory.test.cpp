@@ -1,10 +1,11 @@
 #include "catch_include.hpp"
 
-import htypes;
 #include <haf/include/utils/object_factory.hpp>
 
 #include <typeinfo>
 #include <typeindex>
+
+import htypes;
 
 using namespace htps;
 using namespace haf;

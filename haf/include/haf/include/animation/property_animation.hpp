@@ -2,9 +2,9 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_ANIM_IPROPERTY_ANIMATION_INCLUDE_HPP
 #define HAF_ANIM_IPROPERTY_ANIMATION_INCLUDE_HPP
 
-import htypes;
 #include <haf/include/animation/animation.hpp>
 #include <haf/include/animation/property_animation_data.hpp>
+import htypes;
 
 namespace haf::scene
 {

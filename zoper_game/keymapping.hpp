@@ -1,13 +1,13 @@
 #ifndef ZOPER_KEYMAPPING_HPP
 #define ZOPER_KEYMAPPING_HPP
 
-import htypes;
-
-#include <facil_math/include/rect.hpp>
 #include <haf/include/shareddata/ishareable.hpp>
 #include <haf/include/input/key.hpp>
 
 #include "gameplay/direction.hpp"
+
+import htypes;
+import facil_math;
 
 namespace zoper
 {

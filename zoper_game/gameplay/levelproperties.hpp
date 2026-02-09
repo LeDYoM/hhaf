@@ -1,7 +1,6 @@
 #ifndef ZOPER_LEVELPROPERTIES_INCLUDE_HPP
 #define ZOPER_LEVELPROPERTIES_INCLUDE_HPP
 
-import htypes;
 #include <facil_math/include/vector2d.hpp>
 
 #include <haf/include/time/timer_connector.hpp>
@@ -11,6 +10,8 @@ import htypes;
 
 #include "../gameshareddata.hpp"
 #include "gamehud.hpp"
+
+import htypes;
 
 namespace zoper
 {

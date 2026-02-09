@@ -2,7 +2,6 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_SCENE_SCENENODE_INCLUDE_HPP
 #define HAF_SCENE_SCENENODE_INCLUDE_HPP
 
-import htypes;
 #include <haf/include/properties/property_state.hpp>
 #include <haf/include/haf_export.hpp>
 #include <haf/include/types/scene_types.hpp>
@@ -14,6 +13,8 @@ import htypes;
 #include <haf/include/component/component_container.hpp>
 #include <haf/include/system/subsystem_view.hpp>
 #include <haf/include/scene_components/transformation.hpp>
+
+import htypes;
 
 namespace haf::scene
 {

@@ -1,10 +1,10 @@
 #include "catch_include.hpp"
 
-import htypes;
 #include <haf/include/scene/scene_node.hpp>
 #include <haf/include/component/component_container.hpp>
 #include <haf/include/component/component.hpp>
 #include <haf/include/component/component_requirements.hpp>
+import htypes;
 
 using namespace htps;
 using namespace haf;

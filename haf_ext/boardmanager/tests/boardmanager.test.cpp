@@ -1,9 +1,10 @@
 #include "catch_include.hpp"
 
-import htypes;
 #include <boardmanager/include/boardmanager.hpp>
 #include <boardmanager/include/iboardmanageractuator.hpp>
 #include <boardmanager/include/itile.hpp>
+
+import htypes;
 
 using namespace htps;
 using namespace haf;

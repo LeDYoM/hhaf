@@ -1,13 +1,13 @@
 #ifndef HAF_HOST_HOSTED_APPLICATION_INCLUDE_HPP
 #define HAF_HOST_HOSTED_APPLICATION_INCLUDE_HPP
 
-import htypes;
-
 #include "app_loader.hpp"
 #include "app_state.hpp"
 #include <hosted_app/include/iapp.hpp>
 #include <host_connector/include/ihost_connector.hpp>
 #include <host_haf_interface/include/isystem_controller.hpp>
+
+import htypes;
 
 namespace haf::host
 {

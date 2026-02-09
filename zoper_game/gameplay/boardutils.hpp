@@ -1,9 +1,9 @@
 #ifndef ZOPER_BOARDUTILS_INCLUDE_HPP
 #define ZOPER_BOARDUTILS_INCLUDE_HPP
 
-import htypes;
-
 #include "direction.hpp"
+
+import htypes;
 
 namespace zoper
 {

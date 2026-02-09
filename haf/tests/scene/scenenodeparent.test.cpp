@@ -1,10 +1,12 @@
 #include "catch_include.hpp"
 
-import htypes;
 #include <haf/include/scene/scene_node.hpp>
 #include <haf/include/scene/scenenode_cast.hpp>
 
+import htypes;
+
 using namespace htps;
+
 /*
 class TestScene : public haf::scene::Scene
 {

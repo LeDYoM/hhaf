@@ -2,11 +2,11 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_SCENE_SCENENODES_INCLUDE_HPP
 #define HAF_SCENE_SCENENODES_INCLUDE_HPP
 
-import htypes;
-
 #include <haf/include/events/connection.hpp>
 #include <haf/include/properties/properties.hpp>
 #include <haf/include/scene/scenenode_cast.hpp>
+
+import htypes;
 
 namespace haf::component
 {

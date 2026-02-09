@@ -1,8 +1,8 @@
 #include "catch_include.hpp"
 
-import htypes;
 #include <haf/include/debug_system/debug_variable.hpp>
 #include "../../haf/src/debug_system/debug_variables.hpp"
+import htypes;
 
 using namespace htps;
 using namespace haf::debug;

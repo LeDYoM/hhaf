@@ -2,9 +2,10 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_TESTS_SHAREABLE_TEST_DATA_INCLUDE_HPP
 #define HAF_TESTS_SHAREABLE_TEST_DATA_INCLUDE_HPP
 
-import htypes;
 #include <haf/include/shareddata/ishareable.hpp>
 #include <haf/include/shareddata/address.hpp>
+
+import htypes;
 
 class ShareableTestData : public haf::shdata::IShareable
 {

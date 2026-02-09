@@ -1,8 +1,9 @@
 #ifndef HAF_BOARD_IBOARDMANAGER_ACTUATOR_HPP
 #define HAF_BOARD_IBOARDMANAGER_ACTUATOR_HPP
 
-import htypes;
 #include "itile.hpp"
+
+import htypes;
 
 namespace haf::board
 {

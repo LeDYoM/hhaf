@@ -1,5 +1,6 @@
-import htypes;
 #include <haf/include/scene/color.hpp>
+
+import htypes;
 
 namespace haf::scene
 {

@@ -1,9 +1,9 @@
 #ifndef HAF_HOST_SYSTEM_CONTROLLER_LOADER_INCLUDE_HPP
 #define HAF_HOST_SYSTEM_CONTROLLER_LOADER_INCLUDE_HPP
 
-import htypes;
-
 #include <host_haf_interface/include/isystem_controller.hpp>
+
+import htypes;
 
 namespace agl
 {

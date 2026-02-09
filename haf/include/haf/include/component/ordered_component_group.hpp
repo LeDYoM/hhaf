@@ -3,9 +3,9 @@ HTPS_PRAGMA_ONCE
 #define HAF_COMPONENT_ORDERED_COMPONENT_GROUP_INCLUDE_HPP
 
 #include <haf/include/haf_export.hpp>
-import htypes;
 #include <haf/include/core/log.hpp>
 #include <haf/include/component/component_container_representation.hpp>
+import htypes;
 
 namespace haf::component
 {

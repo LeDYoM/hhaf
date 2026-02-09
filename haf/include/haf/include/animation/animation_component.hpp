@@ -2,7 +2,6 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_ANIMATION_ANIMATION_COMPONENT_INCLUDE_HPP
 #define HAF_ANIMATION_ANIMATION_COMPONENT_INCLUDE_HPP
 
-import htypes;
 #include <haf/include/component/component.hpp>
 #include <haf/include/animation/animation.hpp>
 #include <haf/include/animation/property_animation.hpp>
@@ -11,8 +10,9 @@ import htypes;
 #include <haf/include/time/timer_component.hpp>
 #include <haf/include/time/timer_connector.hpp>
 #include <haf/include/properties/iproperty.hpp>
-
 #include <haf/include/component/component.hpp>
+
+import htypes;
 
 namespace haf::scene
 {

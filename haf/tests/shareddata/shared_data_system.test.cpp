@@ -1,6 +1,5 @@
 #include "catch_include.hpp"
 
-import htypes;
 #include <haf/include/shareddata/address.hpp>
 
 #include "system/system_base.hpp"
@@ -9,6 +8,8 @@ import htypes;
 
 #include "include/shareable_test_data.hpp"
 #include "system_test_utils.hpp"
+
+import htypes;
 
 using namespace htps;
 using namespace haf;

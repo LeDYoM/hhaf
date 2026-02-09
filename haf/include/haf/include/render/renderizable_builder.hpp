@@ -2,11 +2,12 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_RENDERIZABLE_BUILDER_INCLUDE_HPP
 #define HAF_RENDERIZABLE_BUILDER_INCLUDE_HPP
 
-import htypes;
 #include <facil_math/include/rect.hpp>
 
 #include <haf/include/scene/color.hpp>
 #include <haf/include/render/renderizable_builder_data.hpp>
+
+import htypes;
 
 namespace haf::res
 {

@@ -1,10 +1,11 @@
 #ifndef ZOPER_TOKENZONES_INCLUDE_HPP
 #define ZOPER_TOKENZONES_INCLUDE_HPP
 
-import htypes;
 #include <facil_math/include/rect.hpp>
 
 #include "direction.hpp"
+
+import htypes;
 
 namespace zoper
 {

@@ -2,8 +2,9 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_SYSTEM_SYSTEM_INTERFACE_INCLUDE_HPP
 #define HAF_SYSTEM_SYSTEM_INTERFACE_INCLUDE_HPP
 
-import htypes;
 #include <haf/include/system/isystem_provider.hpp>
+
+import htypes;
 
 namespace haf::sys
 {

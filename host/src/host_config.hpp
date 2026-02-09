@@ -1,13 +1,13 @@
 #ifndef HAF_HOST_CONFIG_INCLUDE_HPP
 #define HAF_HOST_CONFIG_INCLUDE_HPP
 
-import htypes;
-import parpar;
-
 #include <hlog/include/hlog.hpp>
 
 #include <fstream>
 #include <string>
+
+import htypes;
+import parpar;
 
 using namespace htps;
 

@@ -3,8 +3,9 @@ HTPS_PRAGMA_ONCE
 #define HAF_UTILS_TYPE_DATA_INCLUDE_HPP
 
 #include <haf/include/haf_export.hpp>
-import htypes;
 #include <compare>
+
+import htypes;
 
 namespace haf::utils
 {

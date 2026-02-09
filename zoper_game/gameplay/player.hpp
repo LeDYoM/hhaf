@@ -4,8 +4,9 @@
 #include "gamebasetile.hpp"
 #include "direction.hpp"
 
-import htypes;
 #include <haf/include/animation/animation_component.hpp>
+
+import htypes;
 
 namespace zoper
 {

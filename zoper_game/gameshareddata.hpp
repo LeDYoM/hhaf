@@ -1,7 +1,6 @@
 #ifndef ZOPER_GAME_SHARED_DATA_INCLUDE_HPP
 #define ZOPER_GAME_SHARED_DATA_INCLUDE_HPP
 
-import htypes;
 #include <facil_math/include/vector2d.hpp>
 #include <facil_math/include/rect.hpp>
 #include <facil_math/include/rect.hpp>
@@ -9,6 +8,8 @@ import htypes;
 #include <haf/include/shareddata/address.hpp>
 #include <haf/include/shareddata/shared_data_updater.hpp>
 #include <haf/include/shareddata/shared_data_viewer.hpp>
+
+import htypes;
 
 namespace zoper
 {

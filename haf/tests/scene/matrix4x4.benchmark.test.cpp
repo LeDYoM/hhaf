@@ -1,8 +1,9 @@
 #include "catch_include.hpp"
 
-import htypes;
 #include <haf/include/scene/matrix4x4.hpp>
 #include "matrix_utils.hpp"
+
+import htypes;
 
 using namespace haf;
 using namespace haf::scene;

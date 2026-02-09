@@ -1,11 +1,12 @@
 #ifndef ZOOPER_GAMESCENE_INPUT_INCLUDE_HPP
 #define ZOOPER_GAMESCENE_INPUT_INCLUDE_HPP
 
-import htypes;
 #include <haf/include/input/virtual_input_component.hpp>
 #include <haf/include/input/stated_input_component.hpp>
 #include <haf/include/scene_components/states_controller_component.hpp>
 #include "gamescene_states.hpp"
+
+import htypes;
 
 namespace zoper
 {

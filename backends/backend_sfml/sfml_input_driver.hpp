@@ -1,10 +1,10 @@
 #ifndef HAF_BACKEND_SFMLB_INPUTDRIVER_INCLUDE_HPP
 #define HAF_BACKEND_SFMLB_INPUTDRIVER_INCLUDE_HPP
 
-import htypes;
-
 #include <backend_dev/include/iinputdriver.hpp>
 #include <SFML/Window/Event.hpp>
+
+import htypes;
 
 namespace haf::backend::sfmlb
 {

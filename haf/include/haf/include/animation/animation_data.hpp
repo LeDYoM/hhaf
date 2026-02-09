@@ -2,11 +2,13 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_ANIMATION_ANIMATION_DATA_INCLUDE_HPP
 #define HAF_ANIMATION_ANIMATION_DATA_INCLUDE_HPP
 
-import htypes;
+
 #include <haf/include/properties/basic_property.hpp>
 
 #include <haf/include/time/time_point.hpp>
 #include <haf/include/time/timer_connector.hpp>
+
+import htypes;
 
 namespace haf::anim
 {

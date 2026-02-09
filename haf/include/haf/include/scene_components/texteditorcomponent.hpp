@@ -2,11 +2,11 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_COMPONENT_TEXTEDITOR_INCLUDE_HPP
 #define HAF_COMPONENT_TEXTEDITOR_INCLUDE_HPP
 
-import htypes;
-
 #include <haf/include/properties/basic_property.hpp>
 #include <haf/include/events/connection.hpp>
 #include <haf/include/input/virtual_input_component.hpp>
+
+import htypes;
 
 namespace haf::scene
 {

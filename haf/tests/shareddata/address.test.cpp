@@ -1,8 +1,9 @@
 #include "catch_include.hpp"
 
-import htypes;
-#include <facil_math/include/rect.hpp>
 #include <haf/include/shareddata/address.hpp>
+
+import htypes;
+import facil_math;
 
 using namespace htps;
 using namespace haf;

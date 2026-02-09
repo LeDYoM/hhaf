@@ -2,7 +2,7 @@
 #define ZOPER_GAMEPLAY_CONSTANTS_INCLUDE_HPP__
 
 import htypes;
-#include <facil_math/include/vector2d.hpp>
+import facil_math;
 
 namespace zoper::gameplay::constants
 {

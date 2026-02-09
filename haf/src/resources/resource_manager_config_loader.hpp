@@ -3,10 +3,11 @@ HTPS_PRAGMA_ONCE
 #define HAF_RESOURCEMANAGER_CONFIG_LOADER_INCLUDE_HPP
 
 #include "haf_private.hpp"
-import htypes;
 #include "resources_config_data.hpp"
 #include "resource_loaders/iresource_loader.hpp"
 #include <haf/include/resources/iresource_configurator.hpp>
+
+import htypes;
 
 namespace haf::sys
 {

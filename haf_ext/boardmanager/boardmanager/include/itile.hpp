@@ -1,9 +1,10 @@
 #ifndef HAF_BOARD_ITILE_HPP
 #define HAF_BOARD_ITILE_HPP
 
-import htypes;
 #include <haf/include/types/scene_types.hpp>
 #include <boardmanager/include/board_types.hpp>
+
+import htypes;
 
 namespace haf::board
 {

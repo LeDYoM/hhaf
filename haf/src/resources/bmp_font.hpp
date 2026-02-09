@@ -2,9 +2,9 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_SCENE_RESOURCES_BMPFONT_INCLUDE_HPP
 #define HAF_SCENE_RESOURCES_BMPFONT_INCLUDE_HPP
 
-import htypes;
-
 #include <haf/include/resources/ibmp_font.hpp>
+
+import htypes;
 
 namespace haf::backend
 {

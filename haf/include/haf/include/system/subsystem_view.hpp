@@ -2,10 +2,11 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_SYSTEM_SUBSYSTEM_VIEW_INCLUDE_HPP
 #define HAF_SYSTEM_SUBSYSTEM_VIEW_INCLUDE_HPP
 
-import htypes;
 #include <haf/include/system/subsystem_interface.hpp>
 #include <haf/include/system/system_access.hpp>
 #include <hlog/include/hlog.hpp>
+
+import htypes;
 
 namespace haf::sys
 {

@@ -2,10 +2,10 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_FILESYSTEM_IFILE_SERIALIZER_INCLUDE_HPP
 #define HAF_FILESYSTEM_IFILE_SERIALIZER_INCLUDE_HPP
 
-import htypes;
-
 #include <haf/include/filesystem/path.hpp>
 #include <haf/include/shareddata/ishareable.hpp>
+
+import htypes;
 
 namespace haf::sys
 {

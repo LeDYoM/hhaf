@@ -1,11 +1,12 @@
 #include "gamescene_private.hpp"
 #include "constants.hpp"
-import htypes;
 
 #include <haf/include/animation/animation_component.hpp>
 #include <haf/include/random/randomnumberscomponent.hpp>
 #include <haf/include/render/fig_type.hpp>
 #include <haf/include/scene_components/camera_component.hpp>
+
+import htypes;
 
 using namespace haf::scene;
 using namespace haf::render;

@@ -3,8 +3,8 @@ HTPS_PRAGMA_ONCE
 #define HAF_TIME_TIME_POINT_INCLUDE_HPP
 
 
-import htypes;
 #include <haf/include/haf_export.hpp>
+import htypes;
 
 namespace haf::time
 {

@@ -3,9 +3,10 @@ HTPS_PRAGMA_ONCE
 #define HAF_SCENE_SCENE_COMPNENT_PRIVATE_INCLUDE_HPP
 
 #include "haf_private.hpp"
-import htypes;
 #include <haf/include/scene_components/scene_component.hpp>
 #include <haf/include/debug_system/displayvar_console.hpp>
+
+import htypes;
 
 namespace haf::sys
 {

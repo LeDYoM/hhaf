@@ -2,8 +2,9 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_SCENE_SHADER_INCLUDE_HPP
 #define HAF_SCENE_SHADER_INCLUDE_HPP
 
-import htypes;
 #include <haf/include/resources/ishader.hpp>
+
+import htypes;
 
 namespace haf::backend
 {

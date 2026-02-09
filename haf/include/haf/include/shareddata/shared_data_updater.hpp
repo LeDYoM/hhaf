@@ -2,12 +2,13 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_SHAREDDATA_SHAREDDATA_UPDATER_INCLUDE_HPP
 #define HAF_SHAREDDATA_SHAREDDATA_UPDATER_INCLUDE_HPP
 
-import htypes;
 #include <haf/include/shareddata/ishareable.hpp>
 #include <haf/include/shareddata/address.hpp>
 #include <haf/include/shareddata/ishared_data.hpp>
 #include <haf/include/shareddata/shared_data_handler.hpp>
 #include <hlog/include/hlog.hpp>
+
+import htypes;
 
 namespace haf::shdata
 {

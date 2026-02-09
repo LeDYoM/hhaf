@@ -11,8 +11,6 @@
 #include "../gameshareddata.hpp"
 #include "../loaders/gameresources.hpp"
 
-import htypes;
-
 #include <boardmanager/include/boardmanager.hpp>
 #include <boardmanager/include/board_types.hpp>
 #include <haf/include/render/renderizable.hpp>
@@ -23,6 +21,8 @@ import htypes;
 #include <haf/include/time/timer_component.hpp>
 
 #include "../scene_names.hpp"
+
+import htypes;
 
 namespace zoper
 {

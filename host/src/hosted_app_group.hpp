@@ -1,9 +1,8 @@
 #ifndef HAF_HOST_HOSTED_APP_GROUP_INCLUDE_HPP
 #define HAF_HOST_HOSTED_APP_GROUP_INCLUDE_HPP
 
-import htypes;
-
 #include "hosted_application.hpp"
+import htypes;
 
 namespace haf::host
 {

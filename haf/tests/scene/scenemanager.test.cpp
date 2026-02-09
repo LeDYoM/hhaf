@@ -1,9 +1,10 @@
 #include "catch_include.hpp"
 
-import htypes;
 #include <haf/include/scene/scene_node.hpp>
 #include "scene/scene_manager.hpp"
 #include "system_test_utils.hpp"
+
+import htypes;
 
 TEST_CASE("haf::scene::SceneManager", "[haf][scene][scenemanager]")
 {

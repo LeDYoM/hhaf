@@ -2,11 +2,11 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_STATES_CONTROLLER_INCLUDE_HPP
 #define HAF_STATES_CONTROLLER_INCLUDE_HPP
 
-import htypes;
-
 #include <haf/include/events/connection.hpp>
 #include <hlog/include/hlog.hpp>
 #include <haf/include/component/component.hpp>
+
+import htypes;
 
 namespace haf
 {

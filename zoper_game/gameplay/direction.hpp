@@ -2,7 +2,7 @@
 #define ZOPER_DIRECTION_INCLUDE_HPP
 
 import htypes;
-#include <facil_math/include/vector2d.hpp>
+import facil_math;
 
 namespace zoper
 {

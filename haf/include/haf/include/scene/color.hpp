@@ -2,8 +2,9 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_SCENE_COLOR_INCLUDE_HPP
 #define HAF_SCENE_COLOR_INCLUDE_HPP
 
-import htypes;
 #include <haf/include/animation/animable_types.hpp>
+
+import htypes;
 
 namespace haf::scene
 {

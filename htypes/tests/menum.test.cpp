@@ -1,8 +1,8 @@
 #include "catch_include.hpp"
 
-import htypes;
-
 #include <limits>
+
+import htypes;
 
 using namespace htps;
 

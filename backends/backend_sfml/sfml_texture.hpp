@@ -2,10 +2,8 @@
 #define HAF_BACKEND_SFML_TEXTURE_INCLUDE_HPP
 
 import htypes;
-
-#include <facil_math/include/vector2d.hpp>
-
-#include <backend_dev/include/itexture.hpp>
+import facil_math;
+import backend_dev;
 
 namespace sf
 {

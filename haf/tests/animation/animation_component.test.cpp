@@ -1,7 +1,7 @@
 #include "catch_include.hpp"
 
-import htypes;
 #include <haf/include/animation/animation_component.hpp>
+import htypes;
 
 using namespace htps;
 using namespace haf;

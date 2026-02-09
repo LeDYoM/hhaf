@@ -2,9 +2,10 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_SHAREDDATA_SHAREDDATA_HANDLER_INCLUDE_HPP
 #define HAF_SHAREDDATA_SHAREDDATA_HANDLER_INCLUDE_HPP
 
-import htypes;
 #include <haf/include/shareddata/address.hpp>
 #include <haf/include/shareddata/ishared_data.hpp>
+
+import htypes;
 
 namespace haf::shdata
 {

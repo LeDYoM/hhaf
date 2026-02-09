@@ -1,13 +1,13 @@
 #ifndef ZOOPER_GAMESCENE_PRIVATE_INCLUDE_HPP
 #define ZOOPER_GAMESCENE_PRIVATE_INCLUDE_HPP
 
-import htypes;
-
 #include <haf/include/animation/animation_component.hpp>
 #include <haf/include/random/randomnumberscomponent.hpp>
 #include "gamescene.hpp"
 #include "gamescene_state_manager.hpp"
 #include "../keymapping.hpp"
+
+import htypes;
 
 namespace zoper
 {

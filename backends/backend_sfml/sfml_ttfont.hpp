@@ -1,13 +1,13 @@
 #ifndef HAF_BACKEND_SFML_TTFONT_INCLUDE_HPP
 #define HAF_BACKEND_SFML_TTFONT_INCLUDE_HPP
 
-import htypes;
-
 #include <facil_math/include/rect.hpp>
 #include <backend_dev/include/ittfont.hpp>
 #include <backend_dev/include/iresource_manager.hpp>
 #include <backend_dev/include/resource_load_parameters.hpp>
 #include <map>
+
+import htypes;
 
 namespace sf
 {

@@ -1,8 +1,8 @@
 #include <haf/include/scene_components/visibility_selector_component.hpp>
 #include <haf/include/scene/scene_node.hpp>
+#include <hlog/include/hlog.hpp>
 
 import htypes;
-#include <hlog/include/hlog.hpp>
 
 using namespace htps;
 

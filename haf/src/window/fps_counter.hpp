@@ -3,8 +3,9 @@ HTPS_PRAGMA_ONCE
 #define HAF_WINDOW_FPS_COUNTER_INCLUDE_HPP
 
 #include "haf_private.hpp"
-import htypes;
 #include <haf/include/time/time_point.hpp>
+
+import htypes;
 
 namespace haf::backend
 {

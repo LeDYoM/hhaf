@@ -2,10 +2,10 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_SCENE_VISIBILITY_SELECTOR_INCLUDE_HPP
 #define HAF_SCENE_VISIBILITY_SELECTOR_INCLUDE_HPP
 
-import htypes;
 #include <haf/include/properties/property_state.hpp>
-
 #include <haf/include/component/component.hpp>
+
+import htypes;
 
 namespace haf::scene
 {

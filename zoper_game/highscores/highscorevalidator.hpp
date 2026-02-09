@@ -1,9 +1,9 @@
 #ifndef ZOPER_HIGHSCORE_VALIDATOR_INCLUDE_HPP
 #define ZOPER_HIGHSCORE_VALIDATOR_INCLUDE_HPP
 
-import htypes;
-
 #include <haf/include/scene_components/texteditorcomponent.hpp>
+
+import htypes;
 
 namespace zoper
 {

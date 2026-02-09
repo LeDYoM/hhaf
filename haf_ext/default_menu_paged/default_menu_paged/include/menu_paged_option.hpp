@@ -1,9 +1,10 @@
 #ifndef HAF_EXT_DEFAULT_MENU_PAGED_OPTION_INCLUDE_HPP
 #define HAF_EXT_DEFAULT_MENU_PAGED_OPTION_INCLUDE_HPP
 
-import htypes;
 #include <default_menu_paged/include/range_option.hpp>
 #include <default_menu_paged/include/page_options.hpp>
+
+import htypes;
 
 namespace haf::exts::dmp
 {

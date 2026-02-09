@@ -2,9 +2,10 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_SYSTEM_CONTROLLER_INCLUDE_HPP
 #define HAF_SYSTEM_CONTROLLER_INCLUDE_HPP
 
-import htypes;
 #include "system_provider.hpp"
 #include <host_haf_interface/include/isystem_controller.hpp>
+
+import htypes;
 
 namespace haf::backend
 {

@@ -2,9 +2,9 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_SYS_SYSTEM_RENDERSYSTEM_INCLUDE_HPP
 #define HAF_SYS_SYSTEM_RENDERSYSTEM_INCLUDE_HPP
 
-import htypes;
-
 #include "system/system_base.hpp"
+
+import htypes;
 
 namespace haf::sys
 {

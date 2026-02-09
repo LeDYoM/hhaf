@@ -1,9 +1,9 @@
 #ifndef HAF_HOSTED_APP_IAPP_INCLUDE_HPP
 #define HAF_HOSTED_APP_IAPP_INCLUDE_HPP
 
-import htypes;
-
 #include <host_connector/include/ihost_connector.hpp>
+
+import htypes;
 
 namespace haf::scene
 {

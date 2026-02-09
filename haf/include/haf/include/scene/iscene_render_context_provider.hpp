@@ -2,9 +2,9 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_SCENE_ISCENE_RENDER_CONTEXT__PROVIDER_INCLUDE_HPP
 #define HAF_SCENE_ISCENE_RENDER_CONTEXT__PROVIDER_INCLUDE_HPP
 
-import htypes;
-
 #include <haf/include/scene/scene_render_context.hpp>
+
+import htypes;
 
 namespace haf::scene
 {

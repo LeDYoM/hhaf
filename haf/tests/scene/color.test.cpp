@@ -1,8 +1,9 @@
 #include "catch_include.hpp"
 
-import htypes;
 #include <haf/include/scene/color.hpp>
 #include <type_traits>
+
+import htypes;
 
 using namespace htps;
 using namespace haf;

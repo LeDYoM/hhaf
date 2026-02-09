@@ -2,8 +2,8 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_ANIMATION_PROPERTY_ANIMATION_BUILDER_INCLUDE_HPP
 #define HAF_ANIMATION_PROPERTY_ANIMATION_BUILDER_INCLUDE_HPP
 
-import htypes;
 #include <haf/include/animation/property_animation_data.hpp>
+import htypes;
 
 namespace haf::anim
 {

@@ -3,11 +3,11 @@ HTPS_PRAGMA_ONCE
 #define HAF_RESOURCES_RESOURCES_CONFIG_DATA_INCLUDE_HPP
 
 #include "haf_private.hpp"
-import htypes;
 
 #include <haf/include/data/ideserializable.hpp>
-
 #include "resources/resources_config_data_element.hpp"
+
+import htypes;
 
 namespace haf::res
 {

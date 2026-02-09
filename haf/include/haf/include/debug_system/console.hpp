@@ -2,13 +2,13 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_CONSOLE_INCLUDE_HPP
 #define HAF_CONSOLE_INCLUDE_HPP
 
-import htypes;
-
 #include <haf/include/component/component.hpp>
 #include <haf/include/component/component_requirements.hpp>
 
 #include <haf/include/scene_components/table_of.hpp>
 #include <haf/include/scene_components/text.hpp>
+
+import htypes;
 
 namespace haf
 {

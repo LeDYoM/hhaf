@@ -1,10 +1,10 @@
 #ifndef ZOOPER_NEXT_TOKEN_INCLUDE_HPP
 #define ZOOPER_NEXT_TOKEN_INCLUDE_HPP
 
-import htypes;
-
 #include <haf/include/time/timer_component.hpp>
 #include <haf/include/time/timer_connector.hpp>
+
+import htypes;
 
 namespace zoper
 {

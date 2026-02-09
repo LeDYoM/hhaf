@@ -3,11 +3,12 @@ HTPS_PRAGMA_ONCE
 #define HAF_WINDOW_WINDOW_SYSTEM_INCLUDE_HPP
 
 #include "haf_private.hpp"
-import htypes;
 
 #include "system/system_base.hpp"
 #include "window.hpp"
 #include "window_configuration.hpp"
+
+import htypes;
 
 namespace haf::sys
 {

@@ -2,10 +2,11 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_RESOURCES_DEFAULT_BMP_FONT_FACTORY_HPP
 #define HAF_RESOURCES_DEFAULT_BMP_FONT_FACTORY_HPP
 
-import htypes;
 #include <backend_dev/include/iresourcefactories.hpp>
 #include <backend_dev/include/ibmp_font.hpp>
 #include <backend_dev/include/resource_load_parameters.hpp>
+
+import htypes;
 
 namespace haf::res
 {

@@ -1,9 +1,9 @@
 #include "catch_include.hpp"
 
 #include "haf_private.hpp"
-import htypes;
-
 #include "scene/scene_controller.hpp"
+
+import htypes;
 
 using namespace htps;
 

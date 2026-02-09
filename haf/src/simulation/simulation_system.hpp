@@ -3,10 +3,11 @@ HTPS_PRAGMA_ONCE
 #define HAF_CORE_SYSTEM_SIMULATIONSYSTEM_INCLUDE_HPP
 
 #include "haf_private.hpp"
-import htypes;
 #include "system/system_base.hpp"
 #include <haf/include/simulation/simulationactiongroup.hpp>
 #include "simulation/simulation_system_configuration.hpp"
+
+import htypes;
 
 namespace haf::sys
 {

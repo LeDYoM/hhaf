@@ -1,5 +1,3 @@
-import htypes;
-
 #include <backend_dev/include/ikey.hpp>
 #include <backend_dev/include/itexture.hpp>
 #include <backend_dev/include/ishader.hpp>
@@ -9,6 +7,8 @@ import htypes;
 #include <SFML/System/String.hpp>
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/Transform.hpp>
+
+import htypes;
 
 namespace haf::backend::sfmlb
 {

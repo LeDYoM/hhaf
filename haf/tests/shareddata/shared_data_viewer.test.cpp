@@ -1,10 +1,11 @@
 #include "catch_include.hpp"
 
-import htypes;
 #include "shareddata/shared_data_system.hpp"
 #include <haf/include/shareddata/shared_data_viewer.hpp>
 #include "include/shareable_test_data.hpp"
 #include "system_test_utils.hpp"
+
+import htypes;
 
 using namespace htps;
 using namespace haf::shdata;

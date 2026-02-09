@@ -2,10 +2,11 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_TYPES_SCENE_TYPES_INCLUDE_HPP
 #define HAF_TYPES_SCENE_TYPES_INCLUDE_HPP
 
-import htypes;
 #include <facil_math/include/vector2d.hpp>
 #include <facil_math/include/rect.hpp>
 #include <haf/include/types/scene_types.hpp>
+
+import htypes;
 
 namespace haf
 {

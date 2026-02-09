@@ -1,12 +1,12 @@
 #include <haf/include/time/timer_component.hpp>
 
-import htypes;
-
 #include <hlog/include/hlog.hpp>
 #include <haf/include/scene/scene_node.hpp>
 #include <haf/include/time/timer.hpp>
 #include <haf/include/time/time_view.hpp>
 #include <haf/include/system/subsystem_view.hpp>
+
+import htypes;
 
 using namespace htps;
 

@@ -2,10 +2,10 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_RENDER_RENDERIZABLES_INCLUDE_HPP
 #define HAF_RENDER_RENDERIZABLES_INCLUDE_HPP
 
-import htypes;
-
 #include <haf/include/render/renderizable.hpp>
 #include <haf/include/render/renderizable_builder.hpp>
+
+import htypes;
 
 namespace haf::render
 {

@@ -2,7 +2,6 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_RENDER_RENDERIZABLE_PRIVATE_INCLUDE_HPP
 #define HAF_RENDER_RENDERIZABLE_PRIVATE_INCLUDE_HPP
 
-import htypes;
 #include <haf/include/render/renderizable.hpp>
 #include <haf/include/resources/itexture.hpp>
 #include <haf/include/resources/ishader.hpp>
@@ -14,6 +13,8 @@ import htypes;
 #include "resources/shader.hpp"
 #include "renderizable_internal_data.hpp"
 #include <backend_dev/include/ivertex.hpp>
+
+import htypes;
 
 namespace haf::render
 {

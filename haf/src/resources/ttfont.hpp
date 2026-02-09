@@ -2,11 +2,12 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_SCENE_TTFONT_INCLUDE_HPP
 #define HAF_SCENE_TTFONT_INCLUDE_HPP
 
-import htypes;
 #include <facil_math/include/rect.hpp>
 
 #include "texture.hpp"
 #include <haf/include/resources/ittfont.hpp>
+
+import htypes;
 
 namespace haf::backend
 {

@@ -3,12 +3,11 @@ HTPS_PRAGMA_ONCE
 #define HAF_WINDOW_WINDOW_CONFIGURATION_INCLUDE_HPP
 
 #include "haf_private.hpp"
-import htypes;
-
-#include <facil_math/include/vector2d.hpp>
-
 #include <haf/include/data/ideserializable.hpp>
 #include "system/system_configuration.hpp"
+
+import htypes;
+import facil_math;
 
 namespace haf::sys
 {

@@ -2,11 +2,11 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_COMPONENT_TIMER_COMPONENTEMENT_INCLUDE_HPP
 #define HAF_COMPONENT_TIMER_COMPONENTEMENT_INCLUDE_HPP
 
-import htypes;
-
 #include <haf/include/time/timer_connector.hpp>
 #include <haf/include/time/timer_type.hpp>
 #include <haf/include/component/component.hpp>
+
+import htypes;
 
 namespace haf::time
 {

@@ -2,11 +2,11 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_SCENE_SCENE_COMPONENT_INCLUDE_HPP
 #define HAF_SCENE_SCENE_COMPONENT_INCLUDE_HPP
 
-import htypes;
-
 #include <haf/include/haf_export.hpp>
 #include <haf/include/scene/scene_node.hpp>
 #include <haf/include/properties/basic_property.hpp>
+
+import htypes;
 
 namespace haf::scene
 {

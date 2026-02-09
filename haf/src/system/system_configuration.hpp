@@ -2,11 +2,11 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_SYSTEM_SYSTEM_CONFIGURATION_TEMPLATE_INCLUDE_HPP
 #define HAF_SYSTEM_SYSTEM_CONFIGURATION_TEMPLATE_INCLUDE_HPP
 
-import htypes;
-
 #include <haf/include/system/subsystem_view.hpp>
 #include <haf/include/filesystem/ifile_serializer.hpp>
 #include <hlog/include/hlog.hpp>
+
+import htypes;
 
 using namespace logger;
 

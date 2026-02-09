@@ -2,10 +2,10 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_STATED_INPUT_COMPONENT_BASE_INCLUDE_HPP
 #define HAF_STATED_INPUT_COMPONENT_BASE_INCLUDE_HPP
 
-import htypes;
-
 #include <haf/include/input/virtual_input_component.hpp>
 #include <haf/include/input/key.hpp>
+
+import htypes;
 
 namespace haf::input
 {

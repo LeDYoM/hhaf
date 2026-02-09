@@ -1,7 +1,8 @@
-import htypes;
 #include <facil_math/include/vector2d.hpp>
 #include <haf/include/scene_components/table_node_imp.hpp>
 #include <haf/include/scene/scene_node.hpp>
+
+import htypes;
 
 using namespace htps;
 using namespace fmath;

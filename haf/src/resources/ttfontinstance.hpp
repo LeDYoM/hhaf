@@ -2,10 +2,10 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_SCENE_TTFONTINSTANCE_INCLUDE_HPP
 #define HAF_SCENE_TTFONTINSTANCE_INCLUDE_HPP
 
-import htypes;
-
 #include <haf/include/resources/itexture.hpp>
 #include <haf/include/resources/ifont.hpp>
+
+import htypes;
 
 namespace haf::res
 {

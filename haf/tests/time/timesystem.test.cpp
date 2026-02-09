@@ -1,6 +1,5 @@
 #include "catch_include.hpp"
 
-import htypes;
 #include "time/time_system.hpp"
 #include <haf/include/time/time_point.hpp>
 #include "system/system_base.hpp"
@@ -8,6 +7,8 @@ import htypes;
 #include "system_test_utils.hpp"
 
 #include <thread>
+
+import htypes;
 
 using namespace htps;
 using namespace haf;

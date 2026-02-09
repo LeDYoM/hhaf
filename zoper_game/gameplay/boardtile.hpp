@@ -1,12 +1,13 @@
 #ifndef ZOPER_BOARD_TILE_COMPONENT_INCLUDE_HPP
 #define ZOPER_BOARD_TILE_COMPONENT_INCLUDE_HPP
 
-import htypes;
 #include <haf/include/properties/property_state.hpp>
 #include <haf/include/scene/scene_node.hpp>
 #include <haf/include/scene/color.hpp>
 #include <haf/include/render/renderizable.hpp>
 #include <haf/include/scene_components/renderizable_group_component.hpp>
+
+import htypes;
 
 namespace zoper
 {

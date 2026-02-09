@@ -1,9 +1,10 @@
 #include "catch_include.hpp"
 
-import htypes;
 // #include <haf/include/scene_nodes/transformable_scene_node.hpp>
 #include <haf/include/scene/scene_node.hpp>
 #include "matrix_utils.hpp"
+
+import htypes;
 
 using namespace haf;
 using namespace haf::scene;

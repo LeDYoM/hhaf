@@ -1,10 +1,11 @@
 #ifndef HEF_EXT_BOARDMANAGER_BOARDMODEL_INCLUDE_HPP
 #define HEF_EXT_BOARDMANAGER_BOARDMODEL_INCLUDE_HPP
 
-import htypes;
 #include <facil_math/include/vector2d.hpp>
 #include <haf/include/component/component.hpp>
 #include "itile.hpp"
+
+import htypes;
 
 namespace haf::board
 {

@@ -2,9 +2,10 @@ HTPS_PRAGMA_ONCE
 #ifndef HAF_SCENE_TEXTURE_INCLUDE_HPP
 #define HAF_SCENE_TEXTURE_INCLUDE_HPP
 
-import htypes;
 #include <facil_math/include/vector2d.hpp>
 #include <haf/include/resources/itexture.hpp>
+
+import htypes;
 
 namespace haf::backend
 {
