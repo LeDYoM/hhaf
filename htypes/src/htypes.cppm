@@ -18,6 +18,7 @@ export import :hash;
 export import :lockable_vector;
 export import :menum;
 export import :pair;
+export import :pimplp;
 export import :raw_memory;
 export import :shared_ptr;
 export import :span;

@@ -2,9 +2,9 @@
 #define HAF_HOST_CONFIG_INCLUDE_HPP
 
 import htypes;
+import parpar;
 
 #include <hlog/include/hlog.hpp>
-#include <parpar/include/parpar.hpp>
 
 #include <fstream>
 #include <string>
