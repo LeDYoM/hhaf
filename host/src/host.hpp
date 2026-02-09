@@ -2,6 +2,7 @@
 #define HAF_HOST_MAIN_INCLUDE_HPP
 
 #include "host_export.hpp"
+
 import htypes;
 
 namespace haf::host

@@ -2,6 +2,7 @@
 #define HAF_HOST_APP_LOADER_INCLUDE_HPP
 
 #include "managed_app.hpp"
+
 import htypes;
 import agloader;
 

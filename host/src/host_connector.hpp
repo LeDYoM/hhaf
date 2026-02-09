@@ -2,8 +2,8 @@
 #define HAF_HOST_HOST_CONNECTOR_INCLUDE_HPP
 
 #include <host_connector/include/ihost_connector.hpp>
-import htypes;
 
+import htypes;
 
 namespace haf::host
 {
