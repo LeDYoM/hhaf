@@ -1,8 +1,8 @@
-#ifndef HAF_HOST_MANAGED_APP_INCLUDE_HPP
-#define HAF_HOST_MANAGED_APP_INCLUDE_HPP
+module;
 
 #include <hosted_app/include/iapp.hpp>
 
+export module host:managed_app;
 import htypes;
 
 namespace haf::host

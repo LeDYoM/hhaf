@@ -1,8 +1,9 @@
-#ifndef HAF_HOST_CONFIG_INCLUDE_HPP
-#define HAF_HOST_CONFIG_INCLUDE_HPP
+module;
 
 #include <fstream>
 #include <string>
+
+export module host:host_config;
 
 import htypes;
 import parpar;

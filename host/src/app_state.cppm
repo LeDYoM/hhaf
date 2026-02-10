@@ -1,5 +1,4 @@
-#ifndef HAF_HOST_APP_STATE_INCLUDE_HPP
-#define HAF_HOST_APP_STATE_INCLUDE_HPP
+export module host:app_state;
 
 import htypes;
 
@@ -15,5 +14,3 @@ enum class AppState : htps::u8
 };
 
 }  // namespace haf::host
-
-#endif

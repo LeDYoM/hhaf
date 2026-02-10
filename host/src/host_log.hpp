@@ -1,11 +1,8 @@
-#ifndef HAF_HOST_HOST_LOG_INCLUDE_HPP
-#define HAF_HOST_HOST_LOG_INCLUDE_HPP
+export module host:host_log;
 
-#include <hlog/include/hlog.hpp>
+import hlog;
 
 namespace haf
 {
 using HostLogDisplayer = DisplayLog;
 }  // namespace haf
-
-#endif
