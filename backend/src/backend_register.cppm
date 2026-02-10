@@ -1,5 +1,6 @@
 export module backend:backend_register;
 
+import htypes;
 import backend_dev;
 import :backend_log;
 

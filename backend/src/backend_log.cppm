@@ -1,8 +1,6 @@
-module;
-
-#include <hlog/include/hlog.hpp>
-
 export module backend:backend_log;
+
+import hlog;
 
 namespace haf
 {
