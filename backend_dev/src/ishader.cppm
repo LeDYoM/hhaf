@@ -7,7 +7,7 @@ import facil_math;
 
 namespace haf::backend
 {
-class IShader
+export class IShader
 {
 public:
     virtual ~IShader() = default;

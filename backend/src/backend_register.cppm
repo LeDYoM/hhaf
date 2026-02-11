@@ -1,3 +1,7 @@
+module;
+
+#include <type_traits>
+
 export module backend:backend_register;
 
 import htypes;
@@ -13,20 +17,30 @@ namespace haf::backend
 {
 class BackendRegister;
 
-template <typename FactoryType>
+export template <typename FactoryType>
 bool fillFactory(htps::rptr<BackendRegister> const& backend_register,
                  FactoryType** factory_to_fill);
 
-template <typename FactoryType, typename... FactoryTypes>
+export template <typename FactoryType, typename... FactoryTypes>
 bool fillFactories(htps::rptr<BackendRegister> const& backend_register,
                    FactoryType factory_to_fill,
-                   FactoryTypes... factories_to_fill);
+                   FactoryTypes... factories_to_fill)
+{
+    bool result{fillFactory(backend_register, factory_to_fill)};
 
-template <typename FactoryType>
+    if constexpr (sizeof...(FactoryTypes) > 0U)
+    {
+        result |= fillFactories(backend_register, factories_to_fill...);
+    }
+
+    return result;
+}
+
+export template <typename FactoryType>
 bool emptyFactory(htps::rptr<BackendRegister> const& backend_register,
                   FactoryType** factory_to_empty);
 
-template <typename FactoryType, typename... FactoryTypes>
+export template <typename FactoryType, typename... FactoryTypes>
 bool emptyFactories(htps::rptr<BackendRegister> const& backend_register,
                     FactoryType factory_to_empty,
                     FactoryTypes... factories_to_empty);
@@ -74,8 +88,8 @@ public:
         finish_lib_func_ = finish_lib_func;
     }
 
-    template <typename T,
-              typename = std::enable_if_t<std::is_same_v<T, IWindowFactory>>>
+    template <typename T>
+    requires std::is_same_v<T, IWindowFactory>>
     htps::sptr<IWindowFactory> getFactory()
     {
         return window_factory_;
@@ -167,4 +181,18 @@ private:
     htps::sptr<IShaderFactoryFactory> shader_factory_factory_;
     htps::sptr<IBMPFontFactoryFactory> bmpfont_factory_factory_;
 };
+
+export template <typename FactoryType>
+bool fillFactory(htps::rptr<BackendRegister> const& backend_register,
+                 FactoryType** factory_to_fill)
+{
+    if (auto factory{backend_register->getFactory<IFactoryOf<FactoryType>>()};
+        factory != nullptr)
+    {
+        (*factory_to_fill) = factory->create();
+        return (*factory_to_fill) != nullptr;
+    }
+    return true;
+}
+
 }  // namespace haf::backend

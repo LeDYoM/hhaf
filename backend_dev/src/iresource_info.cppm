@@ -4,7 +4,7 @@ import htypes;
 
 namespace haf::backend
 {
-class IResourceInfo
+export class IResourceInfo
 {
 protected:
     virtual ~IResourceInfo() = default;

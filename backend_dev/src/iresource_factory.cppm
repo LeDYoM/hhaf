@@ -5,7 +5,7 @@ import :resource_load_parameters;
 
 namespace haf::backend
 {
-template <typename T>
+export template <typename T>
 class IResourceFactory
 {
 public:

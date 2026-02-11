@@ -4,7 +4,7 @@ import htypes;
 
 namespace haf::backend
 {
-enum class IKey : htps::s32
+export enum class IKey : htps::s32
 {
     Unknown = -1,  ///< Unhandled key
     A       = 0,   ///< The A key

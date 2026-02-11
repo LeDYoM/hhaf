@@ -1,14 +1,14 @@
-export module backend_dev:ivextex;
+export module backend_dev:ivertex;
 
 import facil_math;
 import htypes;
 
 namespace haf::backend
 {
-using iPosition           = fmath::vector2d<htps::f32>;
-using iTextureCoordinates = fmath::vector2d<htps::f32>;
+export using iPosition           = fmath::vector2d<htps::f32>;
+export using iTextureCoordinates = fmath::vector2d<htps::f32>;
 
-struct iColor final
+export struct iColor final
 {
     htps::u8 r;
     htps::u8 g;
@@ -16,7 +16,7 @@ struct iColor final
     htps::u8 a;
 };
 
-struct Vertex
+export struct Vertex
 {
     iPosition position;
     iColor color;
@@ -56,7 +56,7 @@ struct Vertex
     }
 };
 
-enum class VertexAttributes : htps::u8
+export enum class VertexAttributes : htps::u8
 {
     Positions          = 0U,
     Colors             = 1U,

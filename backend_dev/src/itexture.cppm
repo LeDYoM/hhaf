@@ -7,7 +7,7 @@ import :iresource_info;
 
 namespace haf::backend
 {
-class ITexture : public IResourceInfo
+export class ITexture : public IResourceInfo
 {
 public:
     virtual ~ITexture()                     = default;

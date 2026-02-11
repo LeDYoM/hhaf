@@ -4,7 +4,7 @@ import :ifont;
 
 namespace haf::backend
 {
-class IBMPFont : public IFont
+export class IBMPFont : public IFont
 {
 protected:
     ~IBMPFont() = default;

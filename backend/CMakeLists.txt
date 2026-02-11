@@ -19,5 +19,10 @@ set(sources
 
 build_lib_module(${CURRENT_TARGET} STATIC SOURCES "${sources}")
 
-target_link_libraries(${CURRENT_TARGET} PRIVATE agloader log_and_types facil_math hlog)
+target_link_libraries(${CURRENT_TARGET} PRIVATE agloader
+                                                htypes
+                                                memmanager
+                                                facil_math
+                                                hlog)
+
 target_link_libraries(${CURRENT_TARGET} PUBLIC backend_dev)

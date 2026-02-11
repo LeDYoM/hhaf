@@ -5,7 +5,7 @@ import htypes;
 
 namespace haf::backend
 {
-class ITTFont
+export class ITTFont
 {
 public:
     virtual ~ITTFont() = default;

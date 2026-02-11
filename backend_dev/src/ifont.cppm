@@ -5,7 +5,7 @@ import facil_math;
 
 namespace haf::backend
 {
-class IFont
+export class IFont
 {
 protected:
     ~IFont() = default;

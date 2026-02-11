@@ -7,7 +7,7 @@ import htypes;
 
 namespace haf::backend
 {
-class IResourceManager
+export class IResourceManager
 {
 protected:
     ~IResourceManager() = default;

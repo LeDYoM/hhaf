@@ -5,18 +5,6 @@ import :backend_register;
 
 namespace haf::backend
 {
-export template <typename FactoryType>
-bool fillFactory(htps::rptr<BackendRegister> const& backend_register,
-                 FactoryType** factory_to_fill)
-{
-    if (auto factory{backend_register->getFactory<IFactoryOf<FactoryType>>()};
-        factory != nullptr)
-    {
-        (*factory_to_fill) = factory->create();
-        return (*factory_to_fill) != nullptr;
-    }
-    return true;
-}
 
 /**
  * @brief (Try to) register all factory types passed as parameters
@@ -28,20 +16,6 @@ bool fillFactory(htps::rptr<BackendRegister> const& backend_register,
  * @return true At least one of the factory parameters has been filled
  * @return false None of the factories have been filled
  */
-export template <typename FactoryType, typename... FactoryTypes>
-bool fillFactories(htps::rptr<BackendRegister> const& backend_register,
-                   FactoryType factory_to_fill,
-                   FactoryTypes... factories_to_fill)
-{
-    bool result{fillFactory(backend_register, factory_to_fill)};
-
-    if constexpr (sizeof...(FactoryTypes) > 0U)
-    {
-        result |= fillFactories(backend_register, factories_to_fill...);
-    }
-
-    return result;
-}
 
 export template <typename FactoryType>
 bool emptyFactory(htps::rptr<BackendRegister> const& backend_register,

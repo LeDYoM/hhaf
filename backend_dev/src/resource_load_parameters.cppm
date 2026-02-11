@@ -5,7 +5,7 @@ import htypes;
 
 namespace haf::backend
 {
-struct ResourceLoadParameters
+export struct ResourceLoadParameters
 {
     htps::str resource_id;
     htps::RawMemory raw_memory;

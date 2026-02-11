@@ -4,7 +4,7 @@ namespace haf::backend
 {
 class ITexture;
 
-struct IMaterialData
+export struct IMaterialData
 {};
 
 }  // namespace haf::backend

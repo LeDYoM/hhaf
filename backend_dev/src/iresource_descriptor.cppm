@@ -9,7 +9,7 @@ static constexpr char const kResourceTTFont[]  = "ttf";
 static constexpr char const kResourceBMPFont[] = "bmp_font_fnt";
 static constexpr char const kResourceShader[]  = "shader";
 
-struct IResourceDescriptor
+export struct IResourceDescriptor
 {
     htps::str name;
     htps::str type;
