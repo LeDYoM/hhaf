@@ -1,0 +1,120 @@
+export module host:hosted_app_group;
+
+import :hosted_application;
+import :host_connector;
+import :host_log;
+
+import htypes;
+
+namespace haf::host
+{
+class HostedAppGroup final
+{
+public:
+    bool try_add_app(ManagedApp managed_app,
+                     htps::str name,
+                     htps::uptr<HostConnector> host_connector)
+    {
+        LogAsserter::log_assert(managed_app.app != nullptr,
+                                "Received nullptr Application");
+
+        // Store if the app is not already registered
+        bool const is_new_app{!appExists(name)};
+
+        HostLogDisplayer::error_if(!is_new_app,
+                                   "Application already registered");
+
+        if (is_new_app)
+        {
+            HostLogDisplayer::info("Starting Registering app...");
+            auto& new_app = add_app(htps::move(managed_app), htps::move(name),
+                                    htps::move(host_connector));
+            HostLogDisplayer::verbose("Starting new app...");
+            new_app.app_state = AppState::ReadyToStart;
+        }
+
+        return is_new_app;
+    }
+
+    bool removeApp(htps::str const& app_name)
+    {
+        // If the app is found, remove it from the group
+        if (auto const app_iterator{(*this)[app_name]};
+            app_iterator != app_.end())
+        {
+            // Aplication found. Execute unload steps.
+            auto const old_size = app_.size();
+
+            // Remove the application from the list
+            app_.erase_iterator(app_iterator, app_.end());
+
+            auto const new_size{app_.size()};
+
+            // Show logs informing the user
+            HostLogDisplayer::info_if(old_size != new_size, "Application ",
+                                      app_name, " unloaded");
+
+            HostLogDisplayer::info_if(old_size == new_size, "Application ",
+                                      app_name,
+                                      " unloaded, but cannot be deleted");
+
+            return true;
+        }
+
+        return false;
+    }
+
+    [[nodiscard]] bool appExists(htps::str const& name) noexcept
+    {
+        // Search for a pointer to the same app
+        return (app_.cfind(HostedApplication{ManagedApp{}, name, nullptr}) !=
+                app_.cend());
+    }
+
+    /**
+     * @brief Get the App By Name object
+     *
+     * @param app_name Name of the application to search
+     * @return iterator pointing to the app with the specified
+     * name. If the app was not found, dereferencing it is UB.
+     */
+    auto operator[](htps::str const& app_name)
+    {
+        return app_.find_if([&app_name](HostedApplication const& app) {
+            return app.app_name_ == app_name;
+        });
+    }
+
+    [[nodiscard]] bool empty() const noexcept { return app_.empty(); }
+
+    htps::size_type size() const noexcept { return app_.size(); }
+
+    HostedApplication& front() { return *(app_.begin()); }
+
+    HostedApplication& back() { return app_.back(); }
+
+    auto begin() const noexcept { return app_.begin(); }
+
+    auto begin() noexcept { return app_.begin(); }
+
+    auto end() const noexcept { return app_.end(); }
+
+    auto end() noexcept { return app_.end(); }
+
+    void pop_back() noexcept { app_.pop_back(); }
+
+private:
+    htps::vector<HostedApplication> app_;
+    htps::u32 index_current_app{0U};
+
+    HostedApplication& add_app(ManagedApp&& app,
+                               htps::str name,
+                               htps::uptr<HostConnector> host_connector)
+    {
+        app_.emplace_back(htps::move(app), htps::move(name),
+                          htps::move(host_connector));
+        return app_.back();
+    }
+};
+
+}  // namespace haf::host
