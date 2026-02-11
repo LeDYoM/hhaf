@@ -1,11 +1,13 @@
-#ifndef HAF_HOST_HOSTED_APPLICATION_INCLUDE_HPP
-#define HAF_HOST_HOSTED_APPLICATION_INCLUDE_HPP
+module;
 
-#include "app_loader.hpp"
-#include "app_state.hpp"
 #include <hosted_app/include/iapp.hpp>
 #include <host_connector/include/ihost_connector.hpp>
 #include <host_haf_interface/include/isystem_controller.hpp>
+
+export module host:hosted_application;
+
+import :app_loader;
+import :app_state;
 
 import htypes;
 
@@ -15,8 +17,12 @@ class HostedApplication final
 {
 public:
     HostedApplication(ManagedApp managed_app,
-                      htps::str app_name,
-                      htps::uptr<IHostConnector> host_connector) noexcept;
+                      str app_name,
+                      uptr<IHostConnector> host_connector) noexcept :
+        managed_app_{htps::move(managed_app)},
+        app_name_{htps::move(app_name)},
+        host_connector_{htps::move(host_connector)}
+    {}
 
     ManagedApp managed_app_;
     htps::str app_name_;
@@ -43,14 +49,28 @@ public:
      * @brief Defaulted move assignment
      */
     HostedApplication& operator=(HostedApplication&&) = default;
+
+    bool operator==(HostedApplication const& rhs) noexcept
+    {
+        return app_name_ == rhs.app_name_;
+    }
 };
 
-bool operator==(HostedApplication const& lhs,
-                HostedApplication const& rhs) noexcept;
+htps::str appDisplayNameAndVersion(IApp const& app)
+{
+    return make_str(app.getName(), "(", app.getVersion(), ".",
+                    app.getSubVersion(), ".", app.getPatch(), ")");
+}
 
-htps::str appDisplayNameAndVersion(IApp const& app);
-htps::str appDisplayNameAndVersion(ManagedApp const& app);
-htps::str appDisplayNameAndVersion(HostedApplication const& app);
+htps::str appDisplayNameAndVersion(ManagedApp const& app)
+{
+    return appDisplayNameAndVersion(*(app.app));
+}
+
+htps::str appDisplayNameAndVersion(HostedApplication const& app)
+{
+    return appDisplayNameAndVersion(app.managed_app_);
+}
 
 }  // namespace haf::host
 

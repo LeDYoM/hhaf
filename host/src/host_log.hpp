@@ -4,5 +4,5 @@ import hlog;
 
 namespace haf
 {
-using HostLogDisplayer = DisplayLog;
+export using HostLogDisplayer = DisplayLog;
 }  // namespace haf
