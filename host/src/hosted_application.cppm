@@ -17,8 +17,8 @@ class HostedApplication final
 {
 public:
     HostedApplication(ManagedApp managed_app,
-                      str app_name,
-                      uptr<IHostConnector> host_connector) noexcept :
+                      htps::str app_name,
+                      htps::uptr<IHostConnector> host_connector) noexcept :
         managed_app_{htps::move(managed_app)},
         app_name_{htps::move(app_name)},
         host_connector_{htps::move(host_connector)}
@@ -50,7 +50,7 @@ public:
      */
     HostedApplication& operator=(HostedApplication&&) = default;
 
-    bool operator==(HostedApplication const& rhs) noexcept
+    bool operator==(HostedApplication const& rhs) const noexcept
     {
         return app_name_ == rhs.app_name_;
     }
@@ -73,5 +73,3 @@ htps::str appDisplayNameAndVersion(HostedApplication const& app)
 }
 
 }  // namespace haf::host
-
-#endif

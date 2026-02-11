@@ -13,7 +13,7 @@ namespace haf::backend
  * @brief Class representing a factory for backend classes.
  * This class initializes and stores subsystems of a backend.
  */
-class BackendFactory final
+export class BackendFactory final
 {
 public:
     BackendFactory() :

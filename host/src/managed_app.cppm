@@ -3,6 +3,7 @@ module;
 #include <hosted_app/include/iapp.hpp>
 
 export module host:managed_app;
+
 import htypes;
 
 namespace haf::host
@@ -16,5 +17,3 @@ struct ManagedApp
 };
 
 }  // namespace haf::host
-
-#endif

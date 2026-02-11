@@ -13,14 +13,13 @@ namespace haf::host
 class HostConnector final : public IHostConnector
 {
 public:
-    HostConnector::HostConnector(
-        htps::uptr<HostConnectorImpl> host_connector_impl) :
+    HostConnector(htps::uptr<HostConnectorImpl> host_connector_impl) :
         m_host_connector_impl{htps::move(host_connector_impl)}
     {}
 
-    HostConnector::~HostConnector() = default;
+    ~HostConnector() = default;
 
-    bool HostConnector::loadApplication(htps::str const& app_name)
+    bool loadApplication(htps::str const& app_name)
     {
         (void)(app_name);
         return true;

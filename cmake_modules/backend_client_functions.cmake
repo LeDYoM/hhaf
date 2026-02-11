@@ -5,7 +5,9 @@ function(build_concrete_backend)
 
   add_library(${CURRENT_TARGET} SHARED ${LC_BUILD_SOURCES})
   target_link_libraries(${CURRENT_TARGET} PRIVATE
-    log_and_types
+    hlog
+    htypes
+    memmanager
     backend_dev
     backend_client)
 endfunction()

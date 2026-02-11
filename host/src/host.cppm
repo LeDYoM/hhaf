@@ -6,8 +6,10 @@ module;
 
 export module host:host;
 
+import :host_log;
+import :host_internal;
+
 import htypes;
-import host_log;
 
 namespace haf::host
 {
@@ -24,7 +26,7 @@ public:
      * @param argv Pointers to the command line parameters.
      */
     Host(int const argc, char const* argv[]) :
-        p_{make_pimplp<HostPrivate>(argc, argv)}
+        m_internal{muptr<HostInternal>(argc, argv)}
     {
         DisplayLog::info("Starting HostController...");
         DisplayLog::info("Host version: ", host_VERSION, ".", host_SUBVERSION,
@@ -37,16 +39,17 @@ public:
     ~Host()
     {
         DisplayLog::info("Terminating Host...");
-        DisplayLog::verbose_if(!p_->app_group_.empty(), p_->app_group_.size(),
+        DisplayLog::verbose_if(!m_internal->app_group_.empty(),
+                               m_internal->app_group_.size(),
                                " pending apps to be terminated");
 
-        [[maybe_unused]] auto const result{p_->unloadAllApplications()};
+        [[maybe_unused]] auto const result{m_internal->unloadAllApplications()};
 
         DisplayLog::info(result ? "All applications unloaded successfully"
                                 : "Problem unloading some applications");
     }
 
-    bool initialize() { return p_->initialize(); }
+    bool initialize() { return m_internal->initialize(); }
 
     /**
      * @brief Main loop function. When it returns, you can safely destroy
@@ -57,9 +60,9 @@ public:
     {
         try
         {
-            while (!p_->exit)
+            while (!m_internal->exit)
             {
-                p_->exit = p_->update();
+                m_internal->exit = m_internal->update();
             }
 
             return 0;
@@ -76,7 +79,6 @@ public:
     }
 
 private:
-    struct HostPrivate;
-    htps::PImplPointer<HostPrivate> p_;
+    htps::uptr<HostInternal> m_internal;
 };
 }  // namespace haf::host

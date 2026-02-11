@@ -3,6 +3,7 @@ export module host:hosted_app_group;
 import :hosted_application;
 import :host_connector;
 import :host_log;
+import :managed_app;
 
 import htypes;
 
@@ -107,12 +108,13 @@ private:
     htps::vector<HostedApplication> app_;
     htps::u32 index_current_app{0U};
 
-    HostedApplication& add_app(ManagedApp&& app,
+    HostedApplication& add_app(ManagedApp app,
                                htps::str name,
                                htps::uptr<HostConnector> host_connector)
     {
-        app_.emplace_back(htps::move(app), htps::move(name),
-                          htps::move(host_connector));
+        HostedApplication app1{htps::move(app), htps::move(name),
+                          htps::move(host_connector)};
+        app_.push_back(htps::move(app1));
         return app_.back();
     }
 };

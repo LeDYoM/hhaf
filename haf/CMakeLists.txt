@@ -47,7 +47,9 @@ target_link_libraries(${CURRENT_TARGET} PRIVATE
 )
 
 target_link_libraries(${CURRENT_TARGET} PUBLIC
-  log_and_types
+  hlog
+  htypes
+  memmanager
   mc_serial
   parpar
   facil_math

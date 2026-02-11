@@ -5,6 +5,8 @@ module;
 
 export module host:host_config;
 
+import :host_log;
+
 import htypes;
 import parpar;
 import htypes;
@@ -18,7 +20,7 @@ static const char kStartApp[] = "StartApp";
 
 namespace haf::host
 {
-class HostConfig final
+export class HostConfig final
 {
 public:
     HostConfig(int const argc, char const* const argv[]) :
@@ -32,7 +34,7 @@ public:
         std::ifstream config_file{config_file_name_.c_str()};
         if (config_file)
         {
-            DisplayLog::info("Reading config file ", config_file_name_);
+            HostLogDisplayer::info("Reading config file ", config_file_name_);
             std::string key;
             std::string value;
             while (config_file >> key >> value)
@@ -45,7 +47,8 @@ public:
         }
         else
         {
-            DisplayLog::debug("Config file ", config_file_name_, " not found");
+            HostLogDisplayer::debug("Config file ", config_file_name_,
+                                    " not found");
         }
     }
 
@@ -60,15 +63,17 @@ public:
             if (start_file.first)
             {
                 config_file_name_ = start_file.second;
-                DisplayLog::debug("Parameter ", kConfigFileParameter,
-                                  " found with value: ", config_file_name_);
+                HostLogDisplayer::debug(
+                    "Parameter ", kConfigFileParameter,
+                    " found with value: ", config_file_name_);
             }
             else
             {
-                DisplayLog::debug("Config file: ", config_file_name_);
+                HostLogDisplayer::debug("Config file: ", config_file_name_);
             }
 
-            DisplayLog::debug("Loading config file ", config_file_name_, "...");
+            HostLogDisplayer::debug("Loading config file ", config_file_name_,
+                                    "...");
             loadConfigFile();
         }
     }
@@ -81,5 +86,3 @@ private:
 };
 
 }  // namespace haf::host
-
-#endif

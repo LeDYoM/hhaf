@@ -9,29 +9,21 @@ project(
 set(CURRENT_TARGET host)
 
 set(sources
-  src/app_loader.cpp
-  src/app_loader.hpp
-  src/app_state.hpp
-  src/host_config.hpp
-  src/host_connector.cpp
-  src/host_connector.hpp
-  src/host_connectorimpl.cpp
-  src/host_connectorimpl.hpp
-  src/host_export.hpp
-  src/host_internal.cpp
-  src/host_internal.hpp
-  src/host_log.cpp
-  src/host_log.hpp
-  src/host.cpp
-  src/host.hpp
-  src/hosted_app_group.cpp
-  src/hosted_app_group.hpp
-  src/hosted_application.cpp
-  src/hosted_application.hpp
-  src/main.cpp
-  src/managed_app.hpp
-  src/systemcontroller_loader.cpp
-  src/systemcontroller_loader.hpp
+  src/app_loader.cppm
+  src/app_state.cppm
+  src/host_config.cppm
+  src/host_connector_impl.cppm
+  src/host_connector.cppm
+#  src/host_export.hpp
+  src/host_internal.cppm
+  src/host_log.cppm
+  src/host_module.cppm
+  src/host.cppm
+  src/hosted_app_group.cppm
+  src/hosted_application.cppm
+  src/main.cppm
+  src/managed_app.cppm
+  src/system_controller_loader.cppm
 )
 
 build_lib_component(HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}" SOURCES

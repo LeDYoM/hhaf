@@ -1,9 +1,8 @@
 export module host:host_connector_impl;
 
-import :host_internal;
-
 namespace haf::host
 {
+class HostInternal;
 class HostConnectorImpl final
 {
 public:

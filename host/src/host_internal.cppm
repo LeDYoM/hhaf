@@ -5,7 +5,6 @@ module;
 
 export module host:host_internal;
 
-import :host;
 import :hosted_application;
 import :app_loader;
 import :app_state;
@@ -13,6 +12,8 @@ import :system_controller_loader;
 import :host_connector;
 import :host_connector_impl;
 import :host_log;
+import :host_config;
+import :hosted_app_group;
 
 import parpar;
 import backend;
@@ -22,8 +23,7 @@ namespace haf::host
 class HostInternal
 {
 public:
-    HostInternal(int const argc, char const* const argv[])
-        HostInternal::HostInternal(const int argc, char const* const argv[]) :
+    HostInternal(int const argc, char const* const argv[]) :
         argc_{argc},
         argv_{argv},
         backend_factory_{nullptr},

@@ -20,7 +20,7 @@ export class ParametersParser;
 
 // Forward declare free functions to create parameters parser objects
 export ParametersParser create(vector_t<str_t> commandLine);
-export ParametersParser create(int argc, char* argv[]);
+export ParametersParser create(int const argc, char const* const argv[]);
 
 /**
  * @brief Help to collect, read and check command line parameters
@@ -356,9 +356,8 @@ private:
                                 ? SyntaxParserErrorCodes::OptionAlreadySet
                                 : result.first);
 
-                        option_parameters.emplace_back(
-                            result.second.first,
-                            result.second.second);
+                        option_parameters.emplace_back(result.second.first,
+                                                       result.second.second);
                     }
                     break;
 
@@ -385,7 +384,8 @@ private:
     SwitchParameterVector switch_parameters_;
     OptionParameterVector option_parameters;
 
-    friend ParametersParser parpar::create(int argc, char* argv[]);
+    friend ParametersParser parpar::create(int const argc,
+                                           char const* const argv[]);
     friend ParametersParser parpar::create(vector_t<str_t> commandLine);
 };
 

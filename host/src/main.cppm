@@ -1,7 +1,13 @@
-#include <hlog/include/hlog.hpp>
-#include "host.hpp"
+module;
 
 #include "host_export.hpp"
+
+#include <exception>
+
+export module host:main;
+
+import :host;
+import :host_log;
 
 HOST_PRIVATE int host_main(int const argc, char const* argv[]) noexcept
 {
