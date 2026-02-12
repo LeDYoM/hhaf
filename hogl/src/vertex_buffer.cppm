@@ -22,20 +22,6 @@ constexpr bool validNativeHandle(haf::ogl::NativeHandleType const nht) noexcept
     return nht != 0U;
 }
 
-GLenum usageToGlEnum(VertexBuffer::Usage const usage)
-{
-    switch (usage)
-    {
-        case VertexBuffer::Usage::Static:
-            return GL_STATIC_DRAW;
-        case VertexBuffer::Usage::Dynamic:
-            return GL_DYNAMIC_DRAW;
-        case VertexBuffer::Usage::Stream:
-        default:
-            return GL_STREAM_DRAW;
-    }
-}
-
 namespace haf::ogl
 {
 export class VertexBuffer
@@ -57,6 +43,20 @@ public:
         if (validNativeHandle(m_buffer))
         {
             glCheck(glDeleteBuffers(1, &m_buffer));
+        }
+    }
+
+    static GLenum usageToGlEnum(VertexBuffer::Usage const usage)
+    {
+        switch (usage)
+        {
+            case VertexBuffer::Usage::Static:
+                return GL_STATIC_DRAW;
+            case VertexBuffer::Usage::Dynamic:
+                return GL_DYNAMIC_DRAW;
+            case VertexBuffer::Usage::Stream:
+            default:
+                return GL_STREAM_DRAW;
         }
     }
 
