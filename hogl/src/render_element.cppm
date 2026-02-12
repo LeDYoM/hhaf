@@ -98,5 +98,5 @@ private:
     htps::vector<backend::Vertex> vertex_buffer_origin_;
     mutable bool needs_update_;
 };
-#endif
+
 }  // namespace haf::ogl

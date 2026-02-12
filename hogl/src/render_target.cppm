@@ -252,5 +252,3 @@ private:
     }
 };
 }  // namespace haf::ogl
-
-#endif

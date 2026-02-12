@@ -1,12 +1,18 @@
 module;
 
-#include <hogl/opengl/glad.h>
+#include "opengl/glad.h"
 #include "opengl/gl_check.hpp"
+#include <type_traits>
 
-export module hogl:vertex_buffer;
+export module hogl : vertex_buffer;
 
 import backend_dev;
 import htypes;
+
+namespace haf::ogl
+{
+export using NativeHandleType = htps::u32;
+}
 
 static_assert(std::is_same_v<GLuint, haf::ogl::NativeHandleType>,
               "GLuint and size_type should be the same type");
@@ -32,8 +38,6 @@ GLenum usageToGlEnum(VertexBuffer::Usage const usage)
 
 namespace haf::ogl
 {
-using NativeHandleType = htps::u32;
-
 export class VertexBuffer
 {
 public:

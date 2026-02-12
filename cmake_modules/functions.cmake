@@ -163,8 +163,7 @@ function(build_lib_module C_TARGET)
     FILE_SET CXX_MODULES
     FILES ${LC_BUILD_SOURCES})
 
-  target_sources(${C_TARGET} PUBLIC
-    FILES ${LC_BUILD_SOURCES_NM})
+  target_sources(${C_TARGET} PRIVATE ${LC_BUILD_SOURCES_NM})
 
   set_compile_warning_level_and_cxx_properties(${C_TARGET})
 

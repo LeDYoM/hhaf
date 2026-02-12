@@ -1,10 +1,10 @@
-export module hogl:blend_mode;
+export module hogl : blend_mode;
 
 namespace haf::ogl
 {
 struct BlendMode
 {
-    enum Factor
+    enum class Factor
     {
         Zero,              ///< (0, 0, 0, 0)
         One,               ///< (1, 1, 1, 1)
@@ -18,20 +18,22 @@ struct BlendMode
         OneMinusDstAlpha   ///< (1, 1, 1, 1) - (dst.a, dst.a, dst.a, dst.a)
     };
 
-    enum Equation
+    enum class Equation
     {
         Add,             ///< Pixel = Src * SrcFactor + Dst * DstFactor
         Subtract,        ///< Pixel = Src * SrcFactor - Dst * DstFactor
-        ReverseSubtract  ///< Pixel = Dst * DstFactor - Src * SrcFactor
+        ReverseSubtract, ///< Pixel = Dst * DstFactor - Src * SrcFactor
+        Min,
+        Max
     };
 
     constexpr BlendMode() noexcept :
-        colorSrcFactor(BlendMode::SrcAlpha),
-        colorDstFactor(BlendMode::OneMinusSrcAlpha),
-        colorEquation(BlendMode::Add),
-        alphaSrcFactor(BlendMode::One),
-        alphaDstFactor(BlendMode::OneMinusSrcAlpha),
-        alphaEquation(BlendMode::Add)
+        colorSrcFactor(BlendMode::Factor::SrcAlpha),
+        colorDstFactor(BlendMode::Factor::OneMinusSrcAlpha),
+        colorEquation(BlendMode::Equation::Add),
+        alphaSrcFactor(BlendMode::Factor::One),
+        alphaDstFactor(BlendMode::Factor::OneMinusSrcAlpha),
+        alphaEquation(BlendMode::Equation::Add)
     {}
 
     constexpr BlendMode(Factor sourceFactor,
@@ -72,25 +74,36 @@ struct BlendMode
 };
 
 export constexpr BlendMode BlendAlpha(
-    BlendMode::SrcAlpha,
-    BlendMode::OneMinusSrcAlpha,
-    BlendMode::Add,
-    BlendMode::One,
-    BlendMode::OneMinusSrcAlpha,
-    BlendMode::Add);  ///< Blend source and dest according to dest alpha
+    BlendMode::Factor::SrcAlpha,
+    BlendMode::Factor::OneMinusSrcAlpha,
+    BlendMode::Equation::Add,
+    BlendMode::Factor::One,
+    BlendMode::Factor::OneMinusSrcAlpha,
+    BlendMode::Equation::Add);  ///< Blend source and dest according to dest
+                                ///< alpha
 
-export constexpr BlendMode BlendAdd(BlendMode::SrcAlpha,
-                                    BlendMode::One,
-                                    BlendMode::Add,
-                                    BlendMode::One,
-                                    BlendMode::One,
-                                    BlendMode::Add);  ///< Add source to dest
+export constexpr BlendMode BlendAdd(
+    BlendMode::Factor::SrcAlpha,
+    BlendMode::Factor::One,
+    BlendMode::Equation::Add,
+    BlendMode::Factor::One,
+    BlendMode::Factor::One,
+    BlendMode::Equation::Add);  ///< Add source to dest
 
-extern const BlendMode BlendMultiply(
-    BlendMode::DstColor,
-    BlendMode::Zero);  ///< Multiply source and dest
-extern const BlendMode BlendNone(
-    BlendMode::One,
-    BlendMode::Zero);  ///< Overwrite dest with source
+export const BlendMode BlendMultiply(BlendMode::Factor::DstColor,
+                                     BlendMode::Factor::Zero,
+                                     BlendMode::Equation::Add);
+
+export const BlendMode BlendMin(BlendMode::Factor::One,
+                                BlendMode::Factor::One,
+                                BlendMode::Equation::Min);
+
+export const BlendMode BlendMax(BlendMode::Factor::One,
+                                BlendMode::Factor::One,
+                                BlendMode::Equation::Max);
+
+export const BlendMode BlendNone(BlendMode::Factor::One,
+                                 BlendMode::Factor::Zero,
+                                 BlendMode::Equation::Add);
 
 }  // namespace haf::ogl

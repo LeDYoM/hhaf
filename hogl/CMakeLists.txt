@@ -8,21 +8,12 @@ project(
 
 set (CURRENT_TARGET ${PROJECT_NAME})
 
-set(include_dir hogl/include)
-set(headers
-  ${include_dir}/blend_mode.hpp
-  ${include_dir}/render_element.hpp
-  ${include_dir}/render_target.hpp
-  ${include_dir}/renderer.hpp
-  ${include_dir}/vertex_buffer.hpp
-  )
-
 set(sources_nm
-  opengl/gl_check.cpp
-  opengl/gl_check.hpp
-  opengl/glad.cpp
-  opengl/glad.h
-  opengl/khrplatform.h)
+  src/opengl/gl_check.cpp
+  src/opengl/gl_check.hpp
+  src/opengl/glad.cpp
+  src/opengl/glad.h
+  src/opengl/khrplatform.h)
 
 set(sources
   src/blend_mode.cppm
