@@ -1,6 +1,6 @@
 module;
 
-#include "opengl/glad.h"
+#include <hogl/opengl/glad.h>
 #include "opengl/gl_check.hpp"
 
 export module hogl:vertex_buffer;
