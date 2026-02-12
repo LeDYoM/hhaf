@@ -141,7 +141,7 @@ function(build_lib_component)
 endfunction()
 
 function(build_lib_module C_TARGET)
-  cmake_parse_arguments(LC_BUILD "EXPORT_ALL;STATIC" "" "SOURCES" ${ARGN})
+  cmake_parse_arguments(LC_BUILD "EXPORT_ALL;STATIC" "" "SOURCES;SOURCES_NM" ${ARGN})
 
   if(LC_BUILD_STATIC)
     message(STATUS "Add library static: ${C_TARGET}")
@@ -162,6 +162,9 @@ function(build_lib_module C_TARGET)
   target_sources(${C_TARGET} PUBLIC
     FILE_SET CXX_MODULES
     FILES ${LC_BUILD_SOURCES})
+
+  target_sources(${C_TARGET} PUBLIC
+    FILES ${LC_BUILD_SOURCES_NM})
 
   set_compile_warning_level_and_cxx_properties(${C_TARGET})
 

@@ -17,21 +17,21 @@ set(headers
   ${include_dir}/vertex_buffer.hpp
   )
 
-set(sources
-    opengl/gl_check.cpp
-    opengl/gl_check.hpp
-    opengl/glad.cpp
-    opengl/glad.h
-    opengl/khrplatform.h
-    src/blend_mode.cpp
-    src/render_element.cpp
-    src/render_target.cpp
-    src/renderer.cpp
-    src/vertex_buffer.cpp
-    )
+set(sources_nm
+  opengl/gl_check.cpp
+  opengl/gl_check.hpp
+  opengl/glad.cpp
+  opengl/glad.h
+  opengl/khrplatform.h)
 
-build_lib_component(EXPORT_ALL HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}" SOURCES
-                    ${sources} HEADERS ${headers})
+set(sources
+  src/blend_mode.cppm
+  src/render_element.cppm
+  src/render_target.cppm
+  src/renderer.cppm
+  src/vertex_buffer.cppm)
+
+build_lib_module(${CURRENT_TARGET} EXPORT_ALL SOURCES "${sources}" SOURCES_NM "${sources_nm}")
 
 #target_compile_definitions(${CURRENT_TARGET} PRIVATE backend_client_EXPORTS)
 
