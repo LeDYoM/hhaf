@@ -17,35 +17,5 @@ namespace haf::backend
  * @return false None of the factories have been filled
  */
 
-export template <typename FactoryType>
-bool emptyFactory(htps::rptr<BackendRegister> const& backend_register,
-                  FactoryType** factory_to_empty)
-{
-    if (auto factory{backend_register->getFactory<IFactoryOf<FactoryType>>()};
-        factory != nullptr)
-    {
-        if (factory_to_empty != nullptr && *factory_to_empty != nullptr)
-        {
-            factory->destroy(*factory_to_empty);
-            (*factory_to_empty) = nullptr;
-            return true;
-        }
-    }
-    return true;
-}
 
-export template <typename FactoryType, typename... FactoryTypes>
-bool emptyFactories(htps::rptr<BackendRegister> const& backend_register,
-                    FactoryType factory_to_empty,
-                    FactoryTypes... factories_to_empty)
-{
-    bool result{emptyFactory(backend_register, factory_to_empty)};
-
-    if constexpr (sizeof...(FactoryTypes) > 0U)
-    {
-        result |= emptyFactories(backend_register, factories_to_empty...);
-    }
-
-    return result;
-}
 }  // namespace haf::backend

@@ -1,7 +1,7 @@
 #ifndef HAF_OGL_VERTEX_BUFFER_INCLUDE_HPP
 #define HAF_OGL_VERTEX_BUFFER_INCLUDE_HPP
 
-#include "backend_dev/include/ivertex.hpp"
+import backend_dev;
 import htypes;
 
 namespace haf::ogl

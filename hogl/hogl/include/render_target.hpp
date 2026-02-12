@@ -2,9 +2,7 @@
 #define HAF_BACKEND_SFMLB_REDNERTARGET_INCLUDE_HPP
 
 import htypes;
-
-#include <facil_math/include/vector2d.hpp>
-#include <facil_math/include/rect.hpp>
+import facil_math;
 
 namespace haf::backend
 {

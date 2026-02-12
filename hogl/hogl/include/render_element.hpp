@@ -1,10 +1,10 @@
 #ifndef HAF_BACKEND_OGL_RENDER_ELEMENT_INCLUDE_HPP
 #define HAF_BACKEND_OGL_RENDER_ELEMENT_INCLUDE_HPP
 
-import htypes;
-
-#include <backend_dev/include/ivertex.hpp>
 #include <hogl/include/vertex_buffer.hpp>
+
+import htypes;
+import backend_dev;
 
 namespace haf::backend
 {

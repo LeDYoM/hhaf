@@ -2,14 +2,14 @@
 #include <hogl/include/render_element.hpp>
 #include <hogl/include/vertex_buffer.hpp>
 #include <hogl/include/blend_mode.hpp>
-#include "backend_dev/include/ivertex.hpp"
-#include "backend_dev/include/itexture.hpp"
 #include "opengl/glad.h"
 #include "opengl/gl_check.hpp"
 
 #include <cassert>
 #include <cmath>
 #include <limits>
+
+import backend_dev;
 
 using namespace htps;
 

@@ -1,6 +1,7 @@
 module;
 
 #include <type_traits>
+#include <concepts>
 
 export module backend:backend_register;
 
@@ -43,7 +44,17 @@ bool emptyFactory(htps::rptr<BackendRegister> const& backend_register,
 export template <typename FactoryType, typename... FactoryTypes>
 bool emptyFactories(htps::rptr<BackendRegister> const& backend_register,
                     FactoryType factory_to_empty,
-                    FactoryTypes... factories_to_empty);
+                    FactoryTypes... factories_to_empty)
+{
+    bool result{emptyFactory(backend_register, factory_to_empty)};
+
+    if constexpr (sizeof...(FactoryTypes) > 0U)
+    {
+        result |= emptyFactories(backend_register, factories_to_empty...);
+    }
+
+    return result;
+}
 
 export class BackendRegister final : public client::IBackendRegister
 {
@@ -89,39 +100,35 @@ public:
     }
 
     template <typename T>
-    requires std::is_same_v<T, IWindowFactory>>
+        requires std::is_same_v<T, IFactoryOf<IWindow>>
     htps::sptr<IWindowFactory> getFactory()
     {
         return window_factory_;
     }
 
-    template <
-        typename T,
-        typename = std::enable_if_t<std::is_same_v<T, ITTFontFactoryFactory>>>
+    template <typename T>
+        requires std::is_same_v<T, IFactoryOf<ITTFontFactory>>
     htps::sptr<ITTFontFactoryFactory> getFactory() const
     {
         return ttfont_factory_factory_;
     }
 
-    template <
-        typename T,
-        typename = std::enable_if_t<std::is_same_v<T, ITextureFactoryFactory>>>
+    template <typename T>
+        requires std::is_same_v<T, IFactoryOf<ITextureFactory>>
     htps::sptr<ITextureFactoryFactory> getFactory() const
     {
         return texture_factory_factory_;
     }
 
-    template <
-        typename T,
-        typename = std::enable_if_t<std::is_same_v<T, IShaderFactoryFactory>>>
+    template <typename T>
+        requires std::is_same_v<T, IFactoryOf<IShaderFactory>>
     htps::sptr<IShaderFactoryFactory> getFactory() const
     {
         return shader_factory_factory_;
     }
 
-    template <
-        typename T,
-        typename = std::enable_if_t<std::is_same_v<T, IBMPFontFactoryFactory>>>
+    template <typename T>
+        requires std::is_same_v<T, IFactoryOf<IBMPFontFactory>>
     htps::sptr<IBMPFontFactoryFactory> getFactory() const
     {
         return bmpfont_factory_factory_;
@@ -189,8 +196,27 @@ bool fillFactory(htps::rptr<BackendRegister> const& backend_register,
     if (auto factory{backend_register->getFactory<IFactoryOf<FactoryType>>()};
         factory != nullptr)
     {
-        (*factory_to_fill) = factory->create();
+        // TODO: Re-eanble
+        //        (*factory_to_fill) = factory->create();
         return (*factory_to_fill) != nullptr;
+    }
+    return true;
+}
+
+export template <typename FactoryType>
+bool emptyFactory(htps::rptr<BackendRegister> const& backend_register,
+                  FactoryType** factory_to_empty)
+{
+    if (auto factory{backend_register->getFactory<IFactoryOf<FactoryType>>()};
+        factory != nullptr)
+    {
+        if (factory_to_empty != nullptr && *factory_to_empty != nullptr)
+        {
+        // TODO: Re-eanble
+//            factory->destroy(*factory_to_empty);
+            (*factory_to_empty) = nullptr;
+            return true;
+        }
     }
     return true;
 }
