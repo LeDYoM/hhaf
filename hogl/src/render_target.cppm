@@ -16,29 +16,29 @@ import backend_dev;
 import htypes;
 import facil_math;
 
-u32 factorToGlConstant(BlendMode::Factor blendFactor)
+htps::u32 factorToGlConstant(haf::ogl::BlendMode::Factor blendFactor)
 {
     switch (blendFactor)
     {
-        case ogl::BlendMode::Zero:
+        case haf::ogl::BlendMode::Factor::Zero:
             return GL_ZERO;
-        case ogl::BlendMode::One:
+        case haf::ogl::BlendMode::Factor::One:
             return GL_ONE;
-        case ogl::BlendMode::SrcColor:
+        case haf::ogl::BlendMode::Factor::SrcColor:
             return GL_SRC_COLOR;
-        case ogl::BlendMode::OneMinusSrcColor:
+        case haf::ogl::BlendMode::Factor::OneMinusSrcColor:
             return GL_ONE_MINUS_SRC_COLOR;
-        case ogl::BlendMode::DstColor:
+        case haf::ogl::BlendMode::Factor::DstColor:
             return GL_DST_COLOR;
-        case ogl::BlendMode::OneMinusDstColor:
+        case haf::ogl::BlendMode::Factor::OneMinusDstColor:
             return GL_ONE_MINUS_DST_COLOR;
-        case ogl::BlendMode::SrcAlpha:
+        case haf::ogl::BlendMode::Factor::SrcAlpha:
             return GL_SRC_ALPHA;
-        case ogl::BlendMode::OneMinusSrcAlpha:
+        case haf::ogl::BlendMode::Factor::OneMinusSrcAlpha:
             return GL_ONE_MINUS_SRC_ALPHA;
-        case ogl::BlendMode::DstAlpha:
+        case haf::ogl::BlendMode::Factor::DstAlpha:
             return GL_DST_ALPHA;
-        case ogl::BlendMode::OneMinusDstAlpha:
+        case haf::ogl::BlendMode::Factor::OneMinusDstAlpha:
             return GL_ONE_MINUS_DST_ALPHA;
     }
 
@@ -46,15 +46,15 @@ u32 factorToGlConstant(BlendMode::Factor blendFactor)
     return GL_ZERO;
 }
 
-u32 equationToGlConstant(ogl::BlendMode::Equation blendEquation)
+htps::u32 equationToGlConstant(haf::ogl::BlendMode::Equation blendEquation)
 {
     switch (blendEquation)
     {
-        case ogl::BlendMode::Add:
+        case haf::ogl::BlendMode::Equation::Add:
             return GL_FUNC_ADD;
-        case ogl::BlendMode::Subtract:
+        case haf::ogl::BlendMode::Equation::Subtract:
             return GL_FUNC_SUBTRACT;
-        case ogl::BlendMode::ReverseSubtract:
+        case haf::ogl::BlendMode::Equation::ReverseSubtract:
             return GL_FUNC_REVERSE_SUBTRACT;
     }
 
@@ -62,7 +62,7 @@ u32 equationToGlConstant(ogl::BlendMode::Equation blendEquation)
     return GL_FUNC_ADD;
 }
 
-void applyBlendMode(const BlendMode& mode)
+void applyBlendMode(const haf::ogl::BlendMode& mode)
 {
     glCheck(glBlendFuncSeparate(factorToGlConstant(mode.colorSrcFactor),
                                 factorToGlConstant(mode.colorDstFactor),
@@ -130,14 +130,14 @@ public:
 
     htps::str info() const
     {
-        return make_str(
+        return htps::make_str(
             "name:SFMLwRenderTarget;provider:SFML;provider_version:"); /*,
              SFML_VERSION_MAJOR, ".", SFML_VERSION_MINOR, ".",
              SFML_VERSION_PATCH, ";version:0;subversion:3:patch0");*/
     }
 
 private:
-    void resetRenderStates() void RenderTarget::resetRenderStates()
+    void resetRenderStates()
     {
         glCheck(glClientActiveTexture(GL_TEXTURE0));
         glCheck(glActiveTexture(GL_TEXTURE0));
@@ -164,10 +164,10 @@ private:
     void draw(VertexBuffer const& vertexBuffer,
               RenderElement const& render_element)
     {
-        size_type firstVertex = 0;
+        htps::size_type firstVertex = 0;
 
         // Clamp vertexCount to something that makes sense
-        size_type vertexCount = vertexBuffer.getVertexCount();
+        htps::size_type vertexCount = vertexBuffer.getVertexCount();
 
         preDraw(render_element);
 
@@ -200,7 +200,7 @@ private:
         applyTexture(render_element.texture);
     }
 
-    void postDraw(RenderElement const& render_element) { postTexture(); }
+    void postDraw(RenderElement const& /*render_element*/) { postTexture(); }
 
     void applyTexture(backend::ITexture const* const texture)
     {

@@ -1,3 +1,7 @@
+module;
+
+#include <cstddef>
+
 export module hogl:render_element;
 
 import :vertex_buffer;
@@ -24,7 +28,7 @@ public:
 
     void setPositions(backend::iPosition const* const positions)
     {
-        iPosition const* vtemp{positions};
+        backend::iPosition const* vtemp{positions};
         for (auto&& vertex_buffer_origin_element : vertex_buffer_origin_)
         {
             vertex_buffer_origin_element.position = *vtemp;
@@ -35,7 +39,7 @@ public:
 
     void setColors(backend::iColor const* const colors)
     {
-        iColor const* vtemp{colors};
+        backend::iColor const* vtemp{colors};
         for (auto&& vertex_buffer_origin_element : vertex_buffer_origin_)
         {
             vertex_buffer_origin_element.color = *vtemp;
@@ -47,7 +51,7 @@ public:
     void setTexturecoordinates(
         backend::iTextureCoordinates const* const texture_coordinates)
     {
-        iTextureCoordinates const* vtemp{texture_coordinates};
+        backend::iTextureCoordinates const* vtemp{texture_coordinates};
         for (auto&& vertex_buffer_origin_element : vertex_buffer_origin_)
         {
             vertex_buffer_origin_element.texture_coordinates = *vtemp;
@@ -56,7 +60,7 @@ public:
         needs_update_ = true;
     }
 
-    void setTexture(backend::ITexture const* const texture) noexcept
+    void setTexture(backend::ITexture const* const p_texture) noexcept
     {
         texture = p_texture;
     }
@@ -70,21 +74,21 @@ public:
         htps::f32 const* const /*projection_matrix*/) noexcept
     {}
 
-    void setShader(backend::IShader const* const shader) noexcept
+    void setShader(backend::IShader const* const p_shader) noexcept
     {
-        shader = const_cast<IShader*>(p_shader);
+        shader = const_cast<backend::IShader*>(p_shader);
     }
 
     void updateInternalData() const
     {
         if (needs_update_)
         {
-            vertex_buffer_.update(vertex_buffer_origin_.cbegin());
+            vertex_buffer_.update(vertex_buffer_origin_.cbegin(), 0, 0);
             needs_update_ = false;
         }
     }
 
-    VertexBuffer const& vertexBuffer() const noexcept;
+    VertexBuffer const& vertexBuffer() const noexcept
     {
         return vertex_buffer_;
     }

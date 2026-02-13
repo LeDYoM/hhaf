@@ -73,7 +73,7 @@ public:
         }
 
         glCheck(glBindBuffer(GL_ARRAY_BUFFER, m_buffer));
-        glCheck(glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * vertexCount, 0,
+        glCheck(glBufferData(GL_ARRAY_BUFFER, sizeof(backend::Vertex) * vertexCount, 0,
                              usageToGlEnum(m_usage)));
         glCheck(glBindBuffer(GL_ARRAY_BUFFER, 0));
 
@@ -82,8 +82,8 @@ public:
         return true;
     }
 
-    inline htps::size_type getVertexCount() const noexcept { return m_size; }
-
+    htps::size_type getVertexCount() const noexcept { return m_size; }
+/*
     bool update(backend::Vertex const* const vertices)
     {
         // Sanity checks
@@ -91,6 +91,8 @@ public:
         {
             return false;
         }
+
+        htps::size_type const offset = 0;
 
         if (!vertices)
         {
@@ -120,7 +122,7 @@ public:
 
         return true;
     }
-
+*/
     bool update(backend::Vertex const* const vertices,
                 htps::size_type const vertexCount,
                 htps::size_type const offset)
@@ -146,14 +148,14 @@ public:
         // Check if we need to resize or orphan the buffer
         if (vertexCount >= m_size)
         {
-            glCheck(glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * vertexCount,
+            glCheck(glBufferData(GL_ARRAY_BUFFER, sizeof(backend::Vertex) * vertexCount,
                                  0, usageToGlEnum(m_usage)));
 
             m_size = vertexCount;
         }
 
-        glCheck(glBufferSubData(GL_ARRAY_BUFFER, sizeof(Vertex) * offset,
-                                sizeof(Vertex) * vertexCount, vertices));
+        glCheck(glBufferSubData(GL_ARRAY_BUFFER, sizeof(backend::Vertex) * offset,
+                                sizeof(backend::Vertex) * vertexCount, vertices));
 
         glCheck(glBindBuffer(GL_ARRAY_BUFFER, 0));
 
