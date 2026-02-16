@@ -14,6 +14,7 @@ file (GLOB_RECURSE sources
   ${src_dir}/*.cpp
   ${src_dir}/*.hpp)
 
+list(REMOVE_ITEM sources ${CMAKE_CURRENT_SOURCE_DIR}/include/haf/include/core/log.hpp)
 
 set(inc_dir include/haf/include)
 file (GLOB_RECURSE headers "${inc_dir}/*.hpp")
@@ -24,8 +25,7 @@ set(HAF_PUBLIC_INCLUDE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/)
 
 set(HAF_PRIVATE_INCLUDE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
-build_lib_component(EXPORT_ALL HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}/include"
-  SOURCES ${sources} HEADERS ${headers})
+build_lib_module(${CURRENT_TARGET} EXPORT_ALL SOURCES "${sources}" SOURCES_NM "${sources_nm}")
 
 set_compile_warning_level_and_cxx_properties(${CURRENT_TARGET})
 
