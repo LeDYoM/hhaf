@@ -1,8 +1,6 @@
-HTPS_PRAGMA_ONCE
-#ifndef HAF_ANIM_ANIMABLETYPE_INCLUDE_HPP
-#define HAF_ANIM_ANIMABLETYPE_INCLUDE_HPP
+export module haf:animations:animable_types;
 
-import htypes;
+import :core:types;
 
 namespace haf::anim
 {
@@ -15,5 +13,3 @@ PropertyType interpolate(PropertyType const& begin,
 }
 
 }  // namespace haf::anim
-
-#endif

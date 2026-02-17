@@ -1,9 +1,10 @@
-HTPS_PRAGMA_ONCE
-#ifndef HAF_COMPONENT_COMPONENT_INCLUDE_HPP
-#define HAF_COMPONENT_COMPONENT_INCLUDE_HPP
+export module haf:components:component;
 
-#include <haf/include/core/types.hpp>
-#include <haf/include/component/component_order.hpp>
+import :component_order;
+import :core:types;
+import :system_subsystem_view;
+import :scenes:scene_node;
+import :scenes:iscene_render_context_provider;
 
 namespace haf::scene
 {
@@ -62,15 +63,29 @@ public:
      * @brief This function is intended to be override.
      * @return ComponentOrder The expected order for this component
      */
-    virtual ComponentOrder::Value componentOrder() const noexcept;
+    virtual ComponentOrder::Value componentOrder() const noexcept
+    {
+        return ComponentOrder::NoOrder;
+    }
 
-    virtual core::str staticTypeName() const noexcept;
+    virtual core::str staticTypeName() const noexcept { return "Component"; }
 
 protected:
     Component() noexcept = default;
 
-    scene::SceneRenderContext& sceneRenderContext();
-    scene::SceneRenderContext const& sceneRenderContext() const;
+    scene::SceneRenderContext& sceneRenderContext()
+    {
+        return attachedNode()
+            ->subSystem<scene::ISceneRenderContextProvider>()
+            ->sceneRenderContext();
+    }
+
+    scene::SceneRenderContext const& sceneRenderContext() const
+    {
+        return attachedNode()
+            ->subSystem<scene::ISceneRenderContextProvider>()
+            ->sceneRenderContext();
+    }
 
 private:
     void setAttachedNode(pointer const attachedNode) noexcept
@@ -87,5 +102,3 @@ private:
 };
 
 }  // namespace haf::component
-
-#endif

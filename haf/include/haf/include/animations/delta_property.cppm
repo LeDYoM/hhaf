@@ -1,13 +1,9 @@
-HTPS_PRAGMA_ONCE
-#ifndef HAF_ANIMATION_DELTA_PROPERTY_INCLUDE_HPP
-#define HAF_ANIMATION_DELTA_PROPERTY_INCLUDE_HPP
+export module haf:animations:delta_property;
 
-#include <haf/include/properties/basic_property.hpp>
-#include <haf/include/properties/wrapper_property.hpp>
-#include <haf/include/animation/idelta_property.hpp>
-#include <haf/include/animation/animable_types.hpp>
-
-import htypes;
+import :properties;
+import :idelta_property;
+import :animable_types;
+import :core:types;
 
 namespace haf::anim
 {
@@ -89,5 +85,3 @@ htps::uptr<DeltaProperty<PropertyValue>> make_delta_property(
 }
 
 }  // namespace haf::anim
-
-#endif

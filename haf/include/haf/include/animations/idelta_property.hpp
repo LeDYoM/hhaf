@@ -1,9 +1,7 @@
-HTPS_PRAGMA_ONCE
-#ifndef HAF_ANIMATION_IDELTA_PROPERTY_INCLUDE_HPP
-#define HAF_ANIMATION_IDELTA_PROPERTY_INCLUDE_HPP
+export module haf:animations:idelta_property;
 
-#include <haf/include/properties/iproperty.hpp>
-import htypes;
+import :properties;
+import :core:types;
 
 namespace haf::anim
 {
@@ -24,5 +22,3 @@ public:
     virtual ~IDeltaProperty() = default;
 };
 }  // namespace haf::anim
-
-#endif

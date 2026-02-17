@@ -1,9 +1,6 @@
-HTPS_PRAGMA_ONCE
-#ifndef HAF_DATA_IDESERIALIZABLE_INCLUDE_HPP
-#define HAF_DATA_IDESERIALIZABLE_INCLUDE_HPP
+export module haf:data:ideserializable;
 
-#include <facil_math/include/rect.hpp>
-#include <mc_serial/include/object.hpp>
+import :core;
 
 namespace haf::data
 {
@@ -65,5 +62,3 @@ private:
 };
 
 }  // namespace haf::data
-
-#endif

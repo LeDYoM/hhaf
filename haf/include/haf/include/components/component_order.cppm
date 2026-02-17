@@ -1,8 +1,7 @@
-HTPS_PRAGMA_ONCE
-#ifndef HAF_COMPONENT_COMPONENT_ORDER_HPP
-#define HAF_COMPONENT_COMPONENT_ORDER_HPP
+export module haf:components:component_order;
 
-#include <haf/include/core/types.hpp>
+import :component;
+import :core:types;
 
 namespace haf::component
 {
@@ -26,9 +25,10 @@ struct ComponentOrder
     static constexpr ComponentOrder::Value NoOrder{-1};
     Value order{NoOrder};
 
-    static Value orderOfComponent(core::sptr<Component> const& component);
+    static Value orderOfComponent(core::sptr<Component> const& component)
+    {
+        return component->componentOrder();
+    }
 };
 
 }  // namespace haf::component
-
-#endif

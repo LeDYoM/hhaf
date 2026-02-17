@@ -1,14 +1,8 @@
-HTPS_PRAGMA_ONCE
-#ifndef HAF_ANIMATION_ANIMATION_DATA_INCLUDE_HPP
-#define HAF_ANIMATION_ANIMATION_DATA_INCLUDE_HPP
+export haf:animations:animation_data;
 
-
-#include <haf/include/properties/basic_property.hpp>
-
-#include <haf/include/time/time_point.hpp>
-#include <haf/include/time/timer_connector.hpp>
-
-import htypes;
+import :properties;
+import :time;
+import :core:types;
 
 namespace haf::anim
 {
@@ -46,5 +40,3 @@ struct AnimationProperties
 };
 
 }  // namespace haf::anim
-
-#endif

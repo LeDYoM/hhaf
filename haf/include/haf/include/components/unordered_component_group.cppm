@@ -1,11 +1,10 @@
-HTPS_PRAGMA_ONCE
-#ifndef HAF_COMPONENT_UNORDERED_COMPONENT_GROUP_INCLUDE_HPP
-#define HAF_COMPONENT_UNORDERED_COMPONENT_GROUP_INCLUDE_HPP
+module;
 
 #include <haf/include/haf_export.hpp>
-#include <haf/include/core/log.hpp>
-#include <haf/include/component/component_container_representation.hpp>
-import htypes;
+
+export module haf:components:unordered_component_group;
+import :core;
+import :component_container_representation;
 
 namespace haf::component
 {
@@ -18,16 +17,15 @@ class HAF_API UnorderedComponentGroup : public ComponentContainerRepresentation
     using BaseClass = ComponentContainerRepresentation;
 
 public:
+    using BaseClass::clear;
     using BaseClass::getComponent;
     using BaseClass::getComponentFromTypeIndex;
-    using BaseClass::clear;
     using BaseClass::size;
     using BaseClass::operator[];
 
-    void PushBack(core::sptr<Component>&& c);
-    void PushBack(core::sptr<Component> const& c);
+    void PushBack(sptr<Component>&& c) { BaseClass::push_back(core::move(c)); }
+
+    void PushBack(sptr<Component> const& c) { BaseClass::push_back(c); }
 };
 
 }  // namespace haf::component
-
-#endif

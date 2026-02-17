@@ -1,8 +1,6 @@
-HTPS_PRAGMA_ONCE
-#ifndef HAF_DATA_ISERIALIZABLE_INCLUDE_HPP
-#define HAF_DATA_ISERIALIZABLE_INCLUDE_HPP
+export module haf:data:iserializable;
 
-#include <mc_serial/include/object.hpp>
+import :core;
 
 namespace haf::data
 {
@@ -13,5 +11,3 @@ public:
     virtual ~ISerializable()                   = default;
 };
 }  // namespace haf::data
-
-#endif

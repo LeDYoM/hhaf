@@ -1,9 +1,7 @@
-HTPS_PRAGMA_ONCE
-#ifndef HAF_COMPONENT_COMPONENT_REQUIREMENTS_INCLUDE_HPP
-#define HAF_COMPONENT_COMPONENT_REQUIREMENTS_INCLUDE_HPP
+export module haf:components:component_requirements;
 
-#include <haf/include/component/component_container.hpp>
-import htypes;
+import :component_container;
+import :core:types;
 
 namespace haf::component
 {
@@ -42,5 +40,3 @@ private:
     ComponentContainer& m_component_container;
 };
 }  // namespace haf::component
-
-#endif
