@@ -1,8 +1,6 @@
-HTPS_PRAGMA_ONCE
-#ifndef HAF_INPUT_KEY_INCLUDE_HPP
-#define HAF_INPUT_KEY_INCLUDE_HPP
+export module haf:input:key;
 
-import htypes;
+import :core;
 
 namespace haf::input
 {
@@ -138,5 +136,3 @@ constexpr bool isValidKey(Key const key) noexcept
 using KeyState  = bool;
 using KeyStates = KeyState[KeyCount];
 }  // namespace haf::input
-
-#endif

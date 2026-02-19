@@ -1,18 +1,18 @@
-HTPS_PRAGMA_ONCE
-#ifndef HAF_DEBUG_DEBUG_VARIABLE_INCLUDE_HPP
-#define HAF_DEBUG_DEBUG_VARIABLE_INCLUDE_HPP
+export module haf:debug_system:debug_variable;
 
-import htypes;
+import :core;
 
 namespace haf::debug
 {
 class DebugVariable
 {
 public:
-    using value_type = htps::s64;
+    using value_type = core::s64;
 
-    explicit DebugVariable(value_type value) noexcept;
-    void incrementFrame() noexcept;
+    explicit DebugVariable(value_type value) noexcept m_value{core::move(value)}
+    {}
+
+    void incrementFrame() noexcept { ++m_frame; }
 
     value_type value() const noexcept;
     htps::u64 frame() const noexcept;

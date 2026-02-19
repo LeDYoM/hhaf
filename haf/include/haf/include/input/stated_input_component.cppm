@@ -1,15 +1,11 @@
-HTPS_PRAGMA_ONCE
-#ifndef HAF_STATED_INPUT_COMPONENT_INCLUDE_HPP
-#define HAF_STATED_INPUT_COMPONENT_INCLUDE_HPP
+export module haf:input:stated_input_component;
 
-#include <haf/include/input/stated_input_component_base.hpp>
-#include <haf/include/component/component_container.hpp>
-#include <haf/include/scene/scene_node.hpp>
-#include <haf/include/scene_components/states_controller_component.hpp>
-#include <haf/include/events/connection.hpp>
-#include <hlog/include/hlog.hpp>
-
-import htypes;
+import :stated_imput_component_base;
+import :component;
+import :scene;
+import :scene_components;
+import :events;
+import :core;
 
 namespace haf::input
 {
