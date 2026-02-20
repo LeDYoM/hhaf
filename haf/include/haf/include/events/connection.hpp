@@ -1,9 +1,7 @@
-HAF_PRAGMA_ONCE
-#ifndef HAF_EVENTS_CONNECTION_INCLUDE_HPP
-#define HAF_EVENTS_CONNECTION_INCLUDE_HPP
+export module haf:events:connection;
 
-#include <haf/include/core/types.hpp>
-#include <haf/include/events/emitter.hpp>
+import :emitter;
+import :core;
 
 namespace haf::evt
 {
@@ -121,5 +119,3 @@ using shared_connection =
     shared_connection_t<T, core::function, emitter<Args...>, Args...>;
 
 }  // namespace haf::evt
-
-#endif

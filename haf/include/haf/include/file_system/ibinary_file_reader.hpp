@@ -1,3 +1,5 @@
+export module haf:file_system:ibinary_file_reader;
+
 HTPS_PRAGMA_ONCE
 #ifndef HAF_FILESYSTEM_IBINARY_FILE_READER_INCLUDE_HPP
 #define HAF_FILESYSTEM_IBINARY_FILE_READER_INCLUDE_HPP

@@ -1,9 +1,7 @@
-HTPS_PRAGMA_ONCE
-#ifndef HAF_DEBUG_SYSTEM_IDEBUG_VARIABLES_INCLUDE_HPP
-#define HAF_DEBUG_SYSTEM_IDEBUG_VARIABLES_INCLUDE_HPP
+export module haf:debug_system:idebug_variables;
 
-#include <haf/include/debug_system/debug_types.hpp>
-#include <haf/include/debug_system/debug_variable.hpp>
+import :debug_types;
+import :debug_variable;
 
 namespace haf::debug
 {
@@ -29,5 +27,3 @@ protected:
     ~IDebugVariables() = default;
 };
 }  // namespace haf::debug
-
-#endif

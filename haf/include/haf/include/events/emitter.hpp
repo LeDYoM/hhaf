@@ -1,8 +1,6 @@
-HAF_PRAGMA_ONCE
-#ifndef HAF_EVENTS_EMITTER_INCLUDE_HPP
-#define HAF_EVENTS_EMITTER_INCLUDE_HPP
+export module haf:events:emitter;
 
-#include <haf/include/core/types.hpp>
+import :core;
 
 namespace haf::evt
 {
@@ -87,5 +85,3 @@ template <typename... Args>
 using emitter = emitter_t<core::vector, core::function, Args...>;
 
 }  // namespace haf::evt
-
-#endif

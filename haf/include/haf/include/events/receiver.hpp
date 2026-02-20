@@ -1,10 +1,8 @@
-HAF_PRAGMA_ONCE
-#ifndef HAF_EVENTS_RECEIVER_INCLUDE_HPP
-#define HAF_EVENTS_RECEIVER_INCLUDE_HPP
+export module haf:events:receiver;
 
-#include <haf/include/core/types.hpp>
-#include <haf/include/events/emitter.hpp>
-#include <haf/include/events/connection.hpp>
+import :core;
+import :connection;
+import :emitter;
 
 namespace haf::evt
 {
@@ -68,5 +66,3 @@ private:
 using ireceiver = ireceiver_t;
 
 }  // namespace haf::evt
-
-#endif
