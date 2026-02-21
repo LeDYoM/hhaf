@@ -1,6 +1,6 @@
 project(haf_run)
 
-set(sources 
+set(sources
     src/main.cpp
     )
 
