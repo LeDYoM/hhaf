@@ -23,8 +23,8 @@ int main(int const argc, char const* argv[])
     constexpr const char host_library[] = "host";
     if (loader->loadModule(host_library))
     {
-        const auto fp_p_haf_host_main{reinterpret_cast<p_haf_host_main>(
-            loader->loadMethod(host_library, "haf_host_main"))};
+        const auto fp_p_haf_host_main{
+            loader->loadMethod<p_haf_host_main>(host_library, "haf_host_main")};
 
         if (fp_p_haf_host_main != nullptr)
         {
