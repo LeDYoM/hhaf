@@ -10,6 +10,8 @@ set(CMAKE_INSTALL_PREFIX hhaf)
 
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 include(functions)
+include(extern_intern)
+load_agloader()
 
 option(BUILD_PACKAGES "Build packages" ON)
 include(testing)
@@ -57,7 +59,6 @@ target_link_libraries(log_and_types INTERFACE htypes memmanager hlog)
 add_subdirectory(tools)
 
 set(hhaf_core_module_list
-  agloader
   logger
   mc_serial
   facil_math
