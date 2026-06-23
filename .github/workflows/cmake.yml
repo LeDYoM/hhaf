@@ -10,7 +10,7 @@ env:
 
 jobs:
   windows-msvc-17-2022:
-    runs-on: windows-2025
+    runs-on: windows-latest
 
     strategy:
       matrix:
