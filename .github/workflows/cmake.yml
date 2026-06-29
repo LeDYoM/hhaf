@@ -6,7 +6,7 @@ on:
       [main,develop,ghactions_dev]
 
 jobs:
-  windows-msvc-17-2022:
+  windows-msvc:
     runs-on: windows-latest
 
     strategy:
