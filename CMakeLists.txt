@@ -8,6 +8,23 @@ project(
   LANGUAGES CXX)
 set(CMAKE_INSTALL_PREFIX hhaf)
 
+# Start common part to get CMake common scripts
+include(FetchContent)
+
+# Fetch my cmake utils package
+FetchContent_Declare(
+  cmake_ledyom_utils
+  GIT_REPOSITORY https://github.com/LeDYoM/cmake_ledyom_utils.git
+)
+
+FetchContent_MakeAvailable(cmake_ledyom_utils)
+list(APPEND CMAKE_MODULE_PATH ${cmake_ledyom_utils_SOURCE_DIR})
+
+include(c_l_u_a)
+# Finish common part
+
+prepare_cmake_presets()
+
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 include(functions)
 include(extern_intern)
